@@ -26,10 +26,11 @@ Route::post('/Register/Eventee',"eventeeController@ConfirmRegister");
 Route::get('Eventee/Login',"eventeeController@Login")->name('Eventee.login');
 Route::post('Eventee/Login',"eventeeController@ConfirmLogin");
 
-Route::prefix("eventee")->middleware("eventee")->group(function(){
-    Route::get('home','eventeeController@Dashboard')->name('teacher.dashboard');
+Route::prefix("Eventee")->middleware("eventee")->group(function(){
+    Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
+    Route::get('Events','eventeeController@Event')->name('event.index');
+    Route::post('Events/Save','eventeeController@Save')->name('event.Save');
 });
-
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 
 Route::get("/event/login", "AttendeeAuthController@show")->name("attendee_login");

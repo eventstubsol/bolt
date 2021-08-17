@@ -75,4 +75,40 @@ class eventeeController extends Controller
             Log::error($e->getMessage());
         }
     }
+
+    public function Event(){
+        $events = EventSession::where('user_id',Auth::id())->orderBy('created_at','desc')->paginate(5);
+        return view('eventee.events.index',compact('events'));
+    }
+
+    public function Save(Request $req){
+        $event = new EventSession;
+        $event->name = $req->name;
+        $event->user_id = Auth::id();
+        $event->room_id = $req->room;
+        $event->type = $req->type;
+        $event->start_time = $req->start_time;
+        $event->end_time = $req->end_time;
+        if($req->has('zoom_id')){
+            $event->zoom_webinar_id = $req->zoom_id;
+        }
+        if($req->has('zoom_password')){
+            $event->zoom_password = $req->zoom_password;
+        }
+        if($req->type == 'ZOOM_SESSION' || $req->type == 'ZOOM_SESSION' || $req->type == 'ZOOM_SESSION'){
+            $event->zoom_url = $req->urlMain;
+        }
+        else{
+            $event->vimeo_url = $req->urlMain;
+        }
+        if($event->save()){
+            $req->session()->put('eve-sucess', 1);
+            return redirect()->back();
+        }
+        else{
+            $req->session()->put('eve-sucess', 2);
+            return redirect()->back();
+        }
+
+    }
 }
