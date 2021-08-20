@@ -7,6 +7,8 @@ use App\User;
 use App\EventSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
+use App\Event;
 class eventeeController extends Controller
 {
     //
@@ -66,9 +68,10 @@ class eventeeController extends Controller
         }
     }
 
-    public function Dashboard(){
+    public function Dashboard(Request $req){
         try{
-            $events = EventSession::where('user_id',Auth::id())->get();
+            $req->session()->put('MangeEvent',0);
+            $events = Event::where('user_id',Auth::id())->get();
             return view('eventee.dashboard',compact('events')); 
         }
         catch(\Exception $e){
@@ -76,33 +79,22 @@ class eventeeController extends Controller
         }
     }
 
-    public function Event(){
-        $events = EventSession::where('user_id',Auth::id())->orderBy('created_at','desc')->paginate(5);
+    public function Event(Request $req){
+        $req->session()->put('MangeEvent',0);
+        $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->paginate(5);
         return view('eventee.events.index',compact('events'));
     }
 
     public function Save(Request $req){
-        $event = new EventSession;
+        $baseurl = URL::to('/');
+        $event = new Event;
         $event->name = $req->name;
         $event->user_id = Auth::id();
-        $event->room_id = $req->room;
-        $event->type = $req->type;
-        $event->start_time = $req->start_time;
-        $event->end_time = $req->end_time;
-        if($req->has('zoom_id')){
-            $event->zoom_webinar_id = $req->zoom_id;
-        }
-        if($req->has('zoom_password')){
-            $event->zoom_password = $req->zoom_password;
-        }
-        if($req->type == 'ZOOM_SESSION' || $req->type == 'ZOOM_SESSION' || $req->type == 'ZOOM_SESSION'){
-            $event->zoom_url = $req->urlMain;
-        }
-        else{
-            $event->vimeo_url = $req->urlMain;
-        }
+        $event->start_date = $req->start_date;
+        $event->end_date = $req->end_date;
         if($event->save()){
             $req->session()->put('eve-sucess', 1);
+            Event::where('id',$event->id)->update(['link'=>$baseurl . '/Event'.'/'.encrypt($event->id)]);
             return redirect()->back();
         }
         else{

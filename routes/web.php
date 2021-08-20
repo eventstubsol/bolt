@@ -30,6 +30,15 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
+    Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
+
+    Route::get("/reports/leaderboard/{id}", "EventManageController@leaderboardView")->name("event.leaderboard");
+    Route::post("/reports/workshop/{name}/export", "EventManageController@exportWorkshopLogs")->name("event.export.workshopLogs");
+    Route::get("/reports/workshop/{name}/{id}", "EventManageController@workshopReports")->name("event.workshop");
+    Route::post("/reports/workshop/{name}/", "EventManageController@workshopReportsData")->name("event.workshop.api");
+    Route::get("/user/event/{id}","Eventee\UserController@index")->name('eventee.user');
+    Route::get("/user/event/create/{id}","Eventee\UserController@create")->name('eventee.user.create');
+    Route::post("/user/event/store/{id}","Eventee\UserController@store")->name('eventee.user.store');
 });
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 

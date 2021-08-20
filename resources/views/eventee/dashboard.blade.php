@@ -86,7 +86,7 @@
     </div>
 </div>
 @php
-    $eventee = App\EventSession::where('user_id',Auth::id())->orderBy('created_at','desc')->limit(5);
+    $eventee = App\EventSession::where('user_id',Auth::id())->orderBy('created_at','desc')->limit(5)->get();
 @endphp
 <div class="card" style="width: 18rem;">
     <div class="card-body">

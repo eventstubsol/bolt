@@ -46,40 +46,24 @@
                         <tr>
                             <th>#</th>
                             <th>Event Name</th>
-                            <th>Room</th>
-                            <th>Type</th>
                             <th>Url</th>
-                            <th>Start Time</th>
-                            <th>End Time</th>
-                            <th>Webiner Id</th>
-                            <th>Passowrd</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if(App\EventSession::where('user_id',Auth::id())->count() > 0)
+                        @if(App\Event::where('user_id',Auth::id())->count() > 0)
                             @foreach($events as $key => $event)
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $event->name }}</td>
-                                <td>{{ $event->room }}</td>
-                                <td>{{ $event->type }}</td>
-                                @if($event->type == 'ZOOM_SESSION' || $event->type == 'ZOOM_SESSION' || $event->type == 'ZOOM_SESSION')
-                                    <td>{{ $event->zoom_url }}</td>
-                                @else
-                                    <td>{{ $event->vimeo_url }}</td>
-                                @endif
-                                <td>{{ \Carbon\Carbon::parse($event->start_time)->format('Y-m-d H:i:s') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($event->end_time)->format('Y-m-d H:i:s') }}</td>
-                                @if($event->type == 'ZOOM_SESSION' || $event->type == 'ZOOM_SESSION' || $event->type == 'ZOOM_SESSION')
-                                    <td>{{ $event->zoom_webinar_id }}</td>
-                                    <td>{{ $event->zoom_password }}</td>
-                                @else
-                                    <td><center>No Data Available</center></td>
-                                    <td><center>No Data Available</center></td>
-                                @endif
+                                <td id="copyTarget" style="cursor: pointer" onclick="copyclip(this)" data-des="{{ $event->link }}">{{ Str::limit($event->link,50) }}</td>
+                                <td>{{ \Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($event->end_date)->format('d-m-Y') }}</td>
                                 <td>
                                     <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('event.Dashboard',['id'=>encrypt( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
                                     <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </td>
                             </tr>
@@ -114,59 +98,15 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label for="name">Start Time</label>
-                        <input type="time" name="start_time" class="form-control" required>
+                        <label for="name">Start Date</label>
+                        <input type="date" name="start_date" class="form-control" required>
                     </div>
                     <div class="col">
-                        <label for="name">End Time</label>
-                        <input type="time" name="end_time" class="form-control" required>
+                        <label for="name">End Date</label>
+                        <input type="date" name="end_date" class="form-control" required>
                     </div>
                 </div><br>
-                <div class="row">
-                    <div class="col">
-                        <label for="type">Type</label>
-                        <select name="type" class="form-control" required> 
-                            <option value="ZOOM_SESSION" selected>ZOOM_SESSION</option>
-                            <option value="ZOOM_URL">ZOOM_URL</option>
-                            <option value="ZOOM_EXTERNAL">ZOOM_EXTERNAL</option>
-                            <option value="VIMEO_SESSION">VIMEO_SESSION</option>
-                            <option value="VIMEO_ZOOM_EX">VIMEO_ZOOM_EX</option>
-                            <option value="VIMEO_ZOOM_SDK">VIMEO_ZOOM_SDK</option>
-                        </select>
-                    </div><br>
-                    <div class="col">
-                        @php
-                            $rooms = App\sessionRooms::all();
-                        @endphp
-                        <label for="room">Select Room</label>
-                        <select name="room" class="form-control" required> 
-                            @foreach($rooms as $room)
-                                <option value="{{ $room->id }}">{{ $room->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div><br>
-                <div class="row">
-                    <div class="col">
-                        <label for="name">Url</label>
-                        <input type="url" name="urlMain" class="form-control" required>
-                    </div>
-                </div><br>
-                <div class="row">
-                    <div class="form-group" style="font-size: 17px">
-                      &nbsp;&nbsp;&nbsp;<strong>(If Using Zoom Meeting)</strong>
-                    </div>
-                  </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="name">Zoom Id</label>
-                        <input type="text" name="zoom_id" class="form-control" >
-                    </div>
-                    <div class="col">
-                        <label for="name">Zoom Password</label>
-                        <input type="text" name="zoom_password" class="form-control" >
-                    </div>
-                </div>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -185,5 +125,16 @@
       function CreateEvent(){
           $('#createModal').modal('toggle');
       }
+
+      function copyclip(e){
+
+        var link = e.getAttribute('data-des');
+        /* Copy the text inside the text field */
+        navigator.clipboard.writeText(link);
+
+        /* Alert the copied text */
+        alert("Link Copied To Clipboard");
+      }
+      
   </script>
 @endsection
