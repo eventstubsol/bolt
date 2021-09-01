@@ -20,11 +20,12 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 class UserController extends Controller
 {
     //
-    public function index($id){
-        
-        $users = User::orderBy("created_at", "DESC")->where('event_id',decrypt($id))->get();
+    public function index($id)
+    {
+
+        $users = User::orderBy("created_at", "DESC")->where('event_id', decrypt($id))->get();
         // return $users;
-        return view("eventee.users.list",compact("id","users"));
+        return view("eventee.users.list", compact("id", "users"));
     }
 
     /**
@@ -34,7 +35,7 @@ class UserController extends Controller
      */
     public function create($id)
     {
-        return view("eventee.users.create",compact('id'));
+        return view("eventee.users.create", compact('id'));
     }
 
     /**
@@ -43,49 +44,53 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
-    {   
-        try
-        {    
-            $request->validate(['name' => 'required','last_name' => 'required', 'email' => 'required|email|unique:users,email', 'password' => 'required|min:8']);
-            
+    public function store(Request $request, $id)
+    {
+        try {
+            $request->validate(['name' => 'required', 'last_name' => 'required', 'email' => 'required|email|unique:users,email', 'password' => 'required|min:8']);
+
             // $userData = $request->except("_token");
             // $userData["password"] = Hash::make($userData["password"]);
             // $userData["isCometChatAccountExist"] = TRUE;
 
-            $user = new User;
-            $user->name = $request->name;
-            $user->last_name = $request->last_name;
-            $user->event_id = decrypt($id);
-            $user->type = 'attendee';
-            $user->password = password_hash($request->password,PASSWORD_DEFAULT);
-            $user->email = $request->email;
-            $user->isCometChatAccountExist = TRUE;
+            $userCount = User::where('event_id', decrypt($id))->count();
+            if ($userCount < 6) {
+                $user = new User;
+                $user->name = $request->name;
+                $user->last_name = $request->last_name;
+                $user->event_id = decrypt($id);
+                $user->type = 'attendee';
+                $user->password = password_hash($request->password, PASSWORD_DEFAULT);
+                $user->email = $request->email;
+                $user->isCometChatAccountExist = TRUE;
 
 
-            // $user->sendEmailVerificationNotification();
-            // create user in comet chat
-            Http::withHeaders(
-                [
-                    'appId' => env('COMET_CHAT_APP_ID'),
-                    'apiKey' => env('COMET_CHAT_API_KEY'),
-                    "Accept-Encoding"=> "deflate, gzip",
-                    "Content-Encoding"=> "gzip"
-                ]
-            )
-                ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
-                    'uid' => $user->id,
-                    'name' => $user->name
-                ]);
-            if($user->save()){
-                    $request->session()->put('eventee.user',1);
-                    return redirect()->route('eventee.user',$id);
+                // $user->sendEmailVerificationNotification();
+                // create user in comet chat
+                Http::withHeaders(
+                    [
+                        'appId' => env('COMET_CHAT_APP_ID'),
+                        'apiKey' => env('COMET_CHAT_API_KEY'),
+                        "Accept-Encoding" => "deflate, gzip",
+                        "Content-Encoding" => "gzip"
+                    ]
+                )
+                    ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
+                        'uid' => $user->id,
+                        'name' => $user->name
+                    ]);
+                if ($user->save()) {
+                    flash("New User Added")->success();
+                    return redirect()->route('eventee.user', $id);
+                } else {
+                    flash("Something went wrong")->error();
+                    return redirect()->back();
                 }
-                else{
-                    return "Error";
-                }
-        }
-        catch(\Exception $e){
+            } else {
+                flash("Cant Add More Users ,Please Contact Admin To Add More User")->error();
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
     }
@@ -105,8 +110,8 @@ class UserController extends Controller
                         [
                             "appId" => env("COMET_CHAT_APP_ID"),
                             "apiKey" => env("COMET_CHAT_API_KEY"),
-                            "Accept-Encoding"=> "deflate, gzip",
-                            "Content-Encoding"=> "gzip"
+                            "Accept-Encoding" => "deflate, gzip",
+                            "Content-Encoding" => "gzip"
                         ]
                     )
                         ->post(
@@ -117,24 +122,24 @@ class UserController extends Controller
                             ]
                         );
 
-                //     $resp  = Mail::send([], [], function (Message $message) use ($user) {
-                //        $message
-                //            ->to($user->email)
-                //            ->from(env("MAIL_FROM_ADDRESS"), env("MAIL_FROM_NAME"))
-                //            ->replyTo(env('MAIL_TO_ADDRESS'), env('MAIL_TO_NAME'))
-                //            ->embedData([
-                //                'personalizations' => [
-                //                    [
-                //                        'dynamic_template_data' => [
-                //                            'user' => "{$user->name} {$user->last_name}",
-                //                            'email'  => strtolower($user->email),
-                //                        ],
-                //                    ],
-                //                ],
-                //                'template_id' => config("services.sendgrid.templates.register"),
-                //            ], SendgridTransport::SMTP_API_NAME);
-                //    });
-                   
+                    //     $resp  = Mail::send([], [], function (Message $message) use ($user) {
+                    //        $message
+                    //            ->to($user->email)
+                    //            ->from(env("MAIL_FROM_ADDRESS"), env("MAIL_FROM_NAME"))
+                    //            ->replyTo(env('MAIL_TO_ADDRESS'), env('MAIL_TO_NAME'))
+                    //            ->embedData([
+                    //                'personalizations' => [
+                    //                    [
+                    //                        'dynamic_template_data' => [
+                    //                            'user' => "{$user->name} {$user->last_name}",
+                    //                            'email'  => strtolower($user->email),
+                    //                        ],
+                    //                    ],
+                    //                ],
+                    //                'template_id' => config("services.sendgrid.templates.register"),
+                    //            ], SendgridTransport::SMTP_API_NAME);
+                    //    });
+
                 } else {
                     $existingUser->update($user);
                 }
@@ -150,12 +155,11 @@ class UserController extends Controller
      * @param  User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, User $user)
+    public function edit(Request $request, $id, $user_id)
     {
-        if ($request->user()->id == $user->id) {
-            return redirect()->route("home");
-        }
-        return view("user.edit")->with(compact("user"));
+        $user = User::findOrFail($user_id);
+        // return $user;
+        return view("eventee.users.edit", compact("id", "user_id", "user"));
     }
 
     /**
@@ -165,22 +169,12 @@ class UserController extends Controller
      * @param  User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id, $user_id)
     {
         $request->validate(["email" => "required|email", "name" => "required"]);
 
-        $userData = $request->except(["_token", "_method"]);
 
-        if ($userData["password"] !== NULL) {
-            $user->password = Hash::make($userData["password"]);
-        } else {
-            unset($userData["password"]);
-        }
-
-        if ($request->has("verify_email")) {
-            $user->markEmailAsVerified();
-        }
-
+        $user = User::findOrFail($user_id);
         $cometChat = isset($userData["enable_chat"]) ? 'enable' : null;
         $cometChat =  isset($userData["disable_chat"]) ? 'disable' : $cometChat;
 
@@ -190,8 +184,8 @@ class UserController extends Controller
                 $response = Http::withHeaders([
                     'appId' => env('COMET_CHAT_APP_ID'),
                     'apiKey' => env('COMET_CHAT_API_KEY'),
-                    "Accept-Encoding"=> "deflate, gzip",
-                    "Content-Encoding"=> "gzip"
+                    "Accept-Encoding" => "deflate, gzip",
+                    "Content-Encoding" => "gzip"
                 ])
                     ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
                         'uid' => $user->id,
@@ -203,8 +197,8 @@ class UserController extends Controller
                     Http::withHeaders([
                         'appId' => env('COMET_CHAT_APP_ID'),
                         'apiKey' => env('COMET_CHAT_API_KEY'),
-                        "Accept-Encoding"=> "deflate, gzip",
-                        "Content-Encoding"=> "gzip"
+                        "Accept-Encoding" => "deflate, gzip",
+                        "Content-Encoding" => "gzip"
                     ])
                         ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users',  ['uidsToActivate' => [$user->id]]);
                     $user->isCometChatAccountExist = TRUE;
@@ -214,8 +208,8 @@ class UserController extends Controller
                 Http::withHeaders([
                     'appId' => env('COMET_CHAT_APP_ID'),
                     'apiKey' => env('COMET_CHAT_API_KEY'),
-                    "Accept-Encoding"=> "deflate, gzip",
-                    "Content-Encoding"=> "gzip"
+                    "Accept-Encoding" => "deflate, gzip",
+                    "Content-Encoding" => "gzip"
                 ])
                     ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => FALSE]);
                 $user->isCometChatAccountExist = FALSE;
@@ -223,22 +217,21 @@ class UserController extends Controller
         }
 
         // update name in comet chat as well
-        if ($user->name != $userData["name"] && $user->isCometChatAccountExist) {
+        if ($user->name != $request->name && $user->isCometChatAccountExist) {
             Http::withHeaders([
                 'appId' => env('COMET_CHAT_APP_ID'),
                 'apiKey' => env('COMET_CHAT_API_KEY'),
-                "Accept-Encoding"=> "deflate, gzip",
-                "Content-Encoding"=> "gzip"
+                "Accept-Encoding" => "deflate, gzip",
+                "Content-Encoding" => "gzip"
             ])
-                ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["name" => $userData["name"]]);
+                ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["name" => $request->name]);
         }
 
-        $user->name = $userData["name"];
-        $user->email = $userData["email"];
-        $user->type = $userData["type"];
+        $user->name = $request->name;
+        $user->email = $request->email;
         $user->save();
 
-        return redirect()->route("user.edit", compact("user"));
+        return redirect()->route('eventee.user', $id);
     }
 
     /**
@@ -247,17 +240,18 @@ class UserController extends Controller
      * @param  User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Request $req)
     {
-        Http::withHeaders([
-            'appId' => env('COMET_CHAT_APP_ID'),
-            'apiKey' => env('COMET_CHAT_API_KEY'),
-            "Accept-Encoding"=> "deflate, gzip",
-            "Content-Encoding"=> "gzip"
-        ])
-            ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => TRUE]);
+        $user = User::findOrFail($req->id);
+        // Http::withHeaders([
+        //     'appId' => env('COMET_CHAT_APP_ID'),
+        //     'apiKey' => env('COMET_CHAT_API_KEY'),
+        //     "Accept-Encoding"=> "deflate, gzip",
+        //     "Content-Encoding"=> "gzip"
+        // ])
+        //     ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => TRUE]);
         $user->delete();
-        return redirect()->to(route("user.index"));
+        return redirect()->back();
     }
 
     public function changePassword(Request $request)
@@ -315,8 +309,8 @@ class UserController extends Controller
                 "apiKey" => env("COMET_CHAT_API_KEY"),
                 "appId" => env("COMET_CHAT_APP_ID"),
                 "accept" => "application/json",
-                "Accept-Encoding"=> "deflate, gzip",
-                "Content-Encoding"=> "gzip"
+                "Accept-Encoding" => "deflate, gzip",
+                "Content-Encoding" => "gzip"
             ])
                 ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/users", [
                     "uid" => $user->id,
@@ -341,8 +335,8 @@ class UserController extends Controller
                 "apiKey" => env("COMET_CHAT_API_KEY"),
                 "appId" => env("COMET_CHAT_APP_ID"),
                 "accept" => "application/json",
-                "Accept-Encoding"=> "deflate, gzip",
-                "Content-Encoding"=> "gzip"
+                "Accept-Encoding" => "deflate, gzip",
+                "Content-Encoding" => "gzip"
             ])
                 ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
                     "guid" => $booth->id,
@@ -445,11 +439,10 @@ class UserController extends Controller
         }
         if ($request->has("tags") && is_iterable($request->get("tags")) && count($request->get("tags")) > 0) {
             $ids = [];
-             foreach($request->get("tags") as $tagname){
-                if($tagname){
-                    $tag = UserTag::where("tag","like" , $tagname)->with("user_id")->first();
-                    if(isset($tag->user_id))
-                    {
+            foreach ($request->get("tags") as $tagname) {
+                if ($tagname) {
+                    $tag = UserTag::where("tag", "like", $tagname)->with("user_id")->first();
+                    if (isset($tag->user_id)) {
                         foreach ($tag->user_id as $user) {
                             $ids[] = $user->user_id;
                         }
@@ -501,7 +494,7 @@ class UserController extends Controller
         $connectionRequests = UserConnection::where("connection_id", $user->id)->where("status", 0)->limit(NUMBER_OF_CONTACTS_TO_SHOW)->offset($offset)->with("sender.tags")->get();
         $users = [];
         foreach ($connectionRequests as $connectionRequest) {
-            if($connectionRequest->sender){
+            if ($connectionRequest->sender) {
                 $connectionRequest->sender->is_online = $connectionRequest->sender->isOnline();
                 $users[] = $connectionRequest->sender->toArray();
             }
@@ -557,7 +550,7 @@ class UserController extends Controller
         $totalCount = $userQuery->count();
         $contacts = $userQuery->offset($offset)->limit(NUMBER_OF_CONTACTS_TO_SHOW)->get("contact_id");
         foreach ($contacts as $contact) {
-            if($contact->user){
+            if ($contact->user) {
                 $contact->user->is_online = $contact->user->isOnline();
                 $users[] = $contact->user->toArray();
             }

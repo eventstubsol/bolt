@@ -62,12 +62,12 @@ Manage Users
                             <td>{{ $event->name }}</td>
                             <td>{{ $user->created_at }}</td>
                             <td class="text-right">
-                                <a href="{{ route("user.edit", [
-                                        "user" => $user->id
+                                <a href="{{ route("eventee.user.edit", [
+                                        "id" => $id,"user_id"=>$user->id
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit"><i class="fe-edit-2"></i></a>
                                 <button data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
-                                    class="delete btn btn-danger ml-1 " data-id="{{$user->id}}" type="submit"><i
+                                    class="delete btn btn-danger ml-1 " onclick="DeleteData(this)" data-id="{{$user->id}}" type="submit"><i
                                         class="fas fa-trash-alt"></i></button>
 
                             </td>
@@ -87,30 +87,30 @@ Manage Users
 @section("scripts")
 @include("includes.scripts.datatables")
 <script>
+    function DeleteData(e){
+        let id = e.getAttribute("data-id");
+        // alert(id);
+        confirmDelete("Are you sure you want to DELETE User?","Confirm User Delete").then(confirmation=>{
+            if(confirmation){
+                $.ajax({
+                    url:'{{route("eventee.user.delete")}}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id":id
+                    },
+                    method:"post",
+                    success: function(){
+                        t.closest("tr").remove();
+                        $(".tooltip").removeClass("show");
+                    }
+                })
+            }
+        });
+    }
     $(document).ready(function(){
             $("#buttons-container").append('<button class="btn btn-primary" id="sync-account">Sync with Chat</button>')
             $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.user.create",$id) }}">Create New / Bulk Upload</a>')
-            $("body").on("click",".delete",function(e){
-                t = $(this);
-                let deleteUrl = '{{route("user.destroy", [ "user" => ":id" ])}}';
-                let id = t.data("id");
-                confirmDelete("Are you sure you want to DELETE User?","Confirm User Delete").then(confirmation=>{
-                    if(confirmation){
-                        $.ajax({
-                            url:deleteUrl.replace(":id", id),
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "_method": "DELETE"
-                            },
-                            method:"POST",
-                            success: function(){
-                                t.closest("tr").remove();
-                                $(".tooltip").removeClass("show");
-                            }
-                        })
-                    }
-                });
-            });
+            
 
             $("#sync-account").click(async function(){
                 $("#sync-account").attr("disabled", "true");

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}?v=1234" type="text/css">
     <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+   
 
 
     <!-- icons -->
@@ -83,6 +84,13 @@
     </style>
 
     @yield("styles_after")
+    <script src="//code.jquery.com/jquery.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<script>
+    $('#flash-overlay-modal').modal();
+</script>
+
 </head>
 
 
@@ -90,6 +98,8 @@
 
 <!-- Begin page -->
 <div id="wrapper">
+   
+    
 
     <!-- Topbar Start -->
     <div class="navbar-custom">
@@ -106,6 +116,7 @@
                                     <i class="fa fa-user"></i>
                                 </span>
                             @endif
+                           
                             <span class="pro-user-name ml-1">
                                 {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
                             </span>
@@ -239,29 +250,32 @@
                 <div id="sidebar-menu">
                     <ul id="side-menu">
                         @yield('navigation')
-                        @auth
-                            @switch(Auth::user()->type)
+                       
+                         
 
-                                @case("admin")
+                                @if(Auth::user()->type == "admin")
                                 @include("includes.navigation.admin")
-                                @break
 
-                                @case("moderator")
+                                @elseif(Auth::user()->type == "moderator")
                                 @include("includes.navigation.moderator")
-                                @break
+                                
 
-                                @case("exhibiter")
+                                @elseif(Auth::user()->type == "exhibiter")
                                 @include("includes.navigation.exhibitor")
-                                @break
+                               
 
-                                @case("teller")
+                                @elseif(Auth::user()->type == "teller")
                                 @include("includes.navigation.teller")
-                                @break
-                                @case("eventee")
+                                
+                                @elseif(Session::get('MangeEvent') == 1)
+                                @include("includes.navigation.manage")
+
+                                @elseif(Auth::user()->type == "eventee")
                                 @include("includes.navigation.eventee")
-                                @break
-                            @endswitch
-                        @endauth
+
+                                
+                                @endif
+                           
 
                     </ul>
                 </div>
@@ -282,11 +296,12 @@
 
     <div class="content-page">
         <div class="content">
-
+            
             <!-- Start Content-->
             <div class="container-fluid">
 
                 <!-- start page title -->
+                @include('flash::message')
                 @auth
                     <div class="row">
                         <div class="col-12">

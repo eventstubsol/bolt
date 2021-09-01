@@ -39,6 +39,68 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/user/event/{id}","Eventee\UserController@index")->name('eventee.user');
     Route::get("/user/event/create/{id}","Eventee\UserController@create")->name('eventee.user.create');
     Route::post("/user/event/store/{id}","Eventee\UserController@store")->name('eventee.user.store');
+    Route::get('user/event/{id}/{user_id}/edit',"Eventee\UserController@edit")->name('eventee.user.edit');
+    Route::post('user/event/{id}/{user_id}/update',"Eventee\UserController@update")->name('eventee.user.update');
+    Route::post('user/event/delete',"Eventee\UserController@destroy")->name('eventee.user.delete');
+    Route::get("/data-entry/{id}","Eventee\DataEntryController@index")->name('eventee.dataEntry');
+    Route::get('/notification/{id}',"Eventee\NotificationController@index")->name('eventee.notification');
+    Route::get('/notification/create/{id}',"Eventee\NotificationController@create")->name('eventee.notification.create');
+    Route::get('/notification/store/{id}',"Eventee\NotificationController@store")->name('eventee.notification.store');
+    Route::get('/Poll/{id}',"Eventee\PollController@index")->name('eventee.poll');
+    Route::get('qna/{id}',"Eventee\QnaController@index")->name('eventee.qna');
+    Route::get("/polls", "PollController@index")->name("poll.manage"); // list all polls
+    Route::get("/polls/multipleChoice", "PollController@MultipleChoice")->name("poll.multiple"); //multiple choice
+    Route::post("/polls/multipleChoice", "PollController@MultipleChoicePost");
+    Route::get("/polls/create", "PollController@create")->name("poll.create.get"); // get create form
+    Route::post("/polls/create", "PollController@save")->name("poll.create.post"); // create in db
+    Route::get("/polls/edit", "PollController@requestEdit")->name("poll.edit");
+    Route::post("/polls/update", "PollController@pollUpdate")->name("poll.update.post"); // Update db
+    Route::get("/polls/{poll}/edit", "PollController@update")->name("poll.update.get");
+    Route::put("/polls/{poll}/edit", "PollController@update")->name("poll.update.put");
+    Route::delete("/polls/{poll}", "PollController@destroy")->name("poll.delete");
+    Route::get("/polls/{poll}/results", "PollController@resultsView")->name("poll.results"); // View results of poll
+    Route::post("/polls/{poll}/results", "PollController@resultsView")->name("poll.results.api"); // View results of poll
+    Route::get('/poll/total-data','PollController@Polls')->name('polls.data');
+    Route::get('/poll/question','PollController@Questions')->name('poll.question');
+    Route::get('poll/delete/confirm','PollController@confirmData')->name('poll.delete.confirm');
+    Route::post('poll/delete','PollController@Delete')->name('poll.destroy');
+    Route::get('poll/update/status','PollController@updateStatus')->name('poll.status');
+    Route::get("by-laws", "PollController@getByLaws")->name("byLaws.get");
+    Route::post("by-laws", "PollController@submitByLaws")->name("byLaws.submit");
+    Route::post("by-laws/option-select", "PollController@submitByLawsOption")->name("byLaws.optionSubmit");
+    
+
+    Route::POST('/poll/question/edit/{id}',"QuestionController@Edit")->name('eventee.question.edit');
+    Route::post('/poll/question/mcq/{id}','QuestionController@createMcq')->name('poll.mcq');
+    Route::post('poll/wordCloud/{id}','QuestionController@wordCloud')->name('poll.wordcloud');
+    Route::post('poll/rating/{id}','QuestionController@rating')->name('poll.rating');
+    Route::post('poll/survey/{id}','QuestionController@Survey')->name('poll.survey');
+    Route::post('question/delete/{id}','QuestionController@Delete')->name('question.delete');
+    Route::post('mcq/edit/{id}','QuestionController@MCQEdit')->name('mcq.edit');
+    Route::post('surv/edit/{id}','QuestionController@SURVEdit')->name('surv.edit');
+    Route::post('wc/edit/{id}','QuestionController@WCEdit')->name('wc.edit');
+    Route::get('ques/status/{id}','QuestionController@Status')->name('ques.status');
+    Route::get('user/Polls/{id}','UserPollController@index')->name('user.polls');
+    Route::post('user/Polls/update','UserPollController@update')->name('user.polls.update');
+    Route::get('user/Polls/Save','UserPollController@Save')->name('user.polls.save');
+    Route::get('user/poll/answer','UserPollController@Answer')->name('user.poll.answer');
+    Route::get('user/submitWc','UserPollController@WcSubmit')->name('user.poll.submit');
+    Route::get('mcq/data-by-user','QuestionController@UserData')->name('mcq.showData');
+    Route::get('rate/data-by-user','QuestionController@UserRateData')->name('rate.showData');
+    Route::get('wc/data-by-user','QuestionController@UserWcData')->name('wc.showData');
+    Route::get('Go/Mcq/{id}','QuestionController@ShowMCq')->name('ShowMcq');
+    Route::geT('Qna/ShowAnswer','LiveQuestionController@ShowAnswer')->name('eventee.qna.Show');
+    Route::geT('Qna/Save','LiveQuestionController@Save')->name('qna.Save');
+    Route::geT('Qna/Edit','LiveQuestionController@Edit')->name('qna.Edit');
+    Route::get('Qna/Update','LiveQuestionController@Update')->name('qna.Update');
+    Route::get('Qna/Delete','LiveQuestionController@Delete')->name('qna.Delete');
+    Route::get('Qna/Answer','LiveQuestionController@SaveAnswer')->name('qna.Answer');
+    Route::get('admin/Annoucement/{id}','Eventee\AnnounceController@index')->name('eventee.announce');
+    Route::get('License/{id}',"Eventee\LicenseController@index")->name('eventee.license');
+    Route::get('License/create/{id}',"Eventee\LicenseController@create")->name('eventee.license.create');
+    Route::post('License/store/{id}',"Eventee\LicenseController@store")->name('eventee.license.store');
+    Route::get('License/edit/{id}',"Eventee\LicenseController@edit")->name('eventee.license.edit');
+    
 });
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 
