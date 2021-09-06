@@ -12,7 +12,7 @@ class sessionRooms extends Model
     use SoftDeletes;
     public $incrementing = false;
 
-    protected $guarded = ["id"];
+    protected $guarded = [];
 
     public function background(){
         return $this->hasOne("\App\Image", "owner");
