@@ -39,6 +39,11 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('background/edit/{id}/{back_id}','Eventee\BackgroundController@edit')->name('eventee.background.edit');
     Route::post('background/update/{id}/{back_id}','Eventee\BackgroundController@update')->name('eventee.background.update');
 
+    //Menu Add
+    Route::get('/menu/nav/{id}','Eventee\MenuController@index')->name('eventee.menu');
+    Route::post('/menu/store/{id}','Eventee\MenuController@saveMenu')->name('eventee.menu.store');
+    Route::get('/menu/footer/{id}','Eventee\MenuDetailController@index')->name('eventee.menu.footer');
+
     Route::get("/reports/leaderboard/{id}", "EventManageController@leaderboardView")->name("event.leaderboard");
     Route::post("/reports/workshop/{name}/export", "EventManageController@exportWorkshopLogs")->name("event.export.workshopLogs");
     Route::get("/reports/workshop/{name}/{id}", "EventManageController@workshopReports")->name("event.workshop");
