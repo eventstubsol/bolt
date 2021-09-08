@@ -32,6 +32,13 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
 
+    //Background Change
+    Route::get('background/{id}','Eventee\BackgroundController@index')->name('eventee.background');
+    Route::get('background/create/{id}','Eventee\BackgroundController@create')->name('eventee.background.create');
+    Route::post('background/store/{id}','Eventee\BackgroundController@store')->name('eventee.background.store');
+    Route::get('background/edit/{id}/{back_id}','Eventee\BackgroundController@edit')->name('eventee.background.edit');
+    Route::post('background/update/{id}/{back_id}','Eventee\BackgroundController@update')->name('eventee.background.update');
+
     Route::get("/reports/leaderboard/{id}", "EventManageController@leaderboardView")->name("event.leaderboard");
     Route::post("/reports/workshop/{name}/export", "EventManageController@exportWorkshopLogs")->name("event.export.workshopLogs");
     Route::get("/reports/workshop/{name}/{id}", "EventManageController@workshopReports")->name("event.workshop");

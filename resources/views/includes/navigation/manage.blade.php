@@ -192,13 +192,13 @@
 {{--</li>--}}
 
 
-{{-- <li class="menu-title">Site Content</li>
+<li class="menu-title">Site Content</li>
 <li>
     <a href="{{ route("options") }}">
         <i data-feather="file-text"></i>
         <span> General Content</span>
     </a>
-</li> --}}
+</li>
 {{-- <li>
     <a href="#faqs" data-toggle="collapse">
         <i data-feather="help-circle"></i>
@@ -396,6 +396,19 @@
 {{--        </ul>--}}
 {{--    </div>--}}
 {{--</li>--}}
+<li>
+    <a href="#background" data-toggle="collapse">
+        <i class="far fa-images"></i>
+        <span> Background</span>
+    </a>
+    <div class="collapse" id="background">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.background",$id) }}">Manage Backgound</a>
+            </li>
+        </ul>
+    </div>
+</li>
 
 <li>
     <a href="#prizes" data-toggle="collapse">
