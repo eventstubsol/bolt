@@ -23,6 +23,15 @@ if(Auth::user()){
     $email = Auth::user()->email;
 }
 @endphp
+
+@if(Session::get('attendee_reg') == 1)
+    <script type="text/javascript">
+        alert("Attendee Registered Successfully");
+    </script>
+    @php
+        Session::put('attendee_reg',0);
+    @endphp
+@endif
 <form id="form" action="{{ route('attendee_login') }}" method="post">
     @csrf
     <div class="input-group">

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Points;
 use Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -40,17 +41,20 @@ class AttendeeAuthController extends Controller
     // method to attempt login
     public function login(Request $request)
     {
-        $response = Http::asForm()
-            ->post(
-                "https://www.google.com/recaptcha/api/siteverify",
-                [
-                    "secret" => env("RECAPTCHA_SECRET_KEY"),
-                    "response" => $request->post("token")
-                ]
-            );
+        
+        //     $response = Http::asForm()
+        //     ->post(
+        //         "https://www.google.com/recaptcha/api/siteverify",
+        //         [
+        //             "secret" => env("RECAPTCHA_SECRET_KEY"),
+        //             "response" => $request->post("token")
+        //         ]
+        //     );
 
-        $Response = json_decode($response->body(), TRUE);
-
+        //     $Response = json_decode($response->body(), TRUE);
+        
+       
+        
         // if (!$response->successful() || !$Response["success"]) {
         //     $request->old(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")));
         //     return view("auth.attendee_login")
@@ -60,7 +64,6 @@ class AttendeeAuthController extends Controller
         //             "login" => $this->loginT
         //         ]);
         // }
-
         $validation =  env("ATTENDEE_LOGIN_FIELD") == "email" ? "required|email" : "required";
         $request->validate([env("ATTENDEE_LOGIN_FIELD") => $validation]);
         $user = User::with('tags.looking_users')->where(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")))
@@ -116,7 +119,6 @@ class AttendeeAuthController extends Controller
 
     public function saveRegistration(Request $request)
     {
-
         $request->validate([
             'email' => 'required|email|unique:users',
             'name' => 'required',
@@ -142,7 +144,8 @@ class AttendeeAuthController extends Controller
         //             'template_id' => config("services.sendgrid.templates.register"),
         //         ], SendgridTransport::SMTP_API_NAME);
         // });
-        // return redirect(route("attendee_login"));
-        return redirect(route("event"));
+        $request->session()->put('attendee_reg',1);
+        return redirect(route("attendee_login"));
+        // return redirect(route("event"));
     }
 }

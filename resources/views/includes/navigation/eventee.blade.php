@@ -9,10 +9,10 @@
     <div class="collapse" id="report">
         <ul class="nav-second-level">
             <li>
-                <a href="#">Events</a>
+                <a href="{{ route('teacher.dashboard') }}">General</a>
             </li>
             <li>
-                <a href="#">Leaderboard</a>
+                <a href="{{ route('event.index') }}">Events</a>
             </li>
             <!-- <li>
                 <a href="{{ route("reports.auditorium") }}">Auditorium</a>

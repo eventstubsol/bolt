@@ -20,6 +20,7 @@ use \SendGrid\Mail\Mail as Mail;
 use Illuminate\Support\Facades\Date;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Stmt\Catch_;
 
 include_once "clickableAreasConfig.php";
 
@@ -311,6 +312,26 @@ function getRooms(){
      return $sessionroomnames;
 }
 
+function getRoomsEventee($id){
+    $sessionrooms = sessionRooms::where('event_id','Like',$id)->get();
+    if(count($sessionrooms) > 0){
+        $sessionrooms = $sessionrooms->groupBy("master_room");
+        $sessionroomnames = [];
+        foreach($sessionrooms as $master_room=>$rooms){
+                $roomnames = [];
+                foreach($rooms as $room ){
+                    array_push($roomnames,$room->name);
+                }
+                $sessionroomnames[$master_room] = $roomnames;
+        }
+        return $sessionroomnames;
+    }
+    else
+    {
+        return 0;
+    }
+    
+}
 function getAllFields()
 {
     return Content::all();
@@ -363,7 +384,7 @@ function areaStyles($area)
 
 function assetUrl($url = "")
 {
-    return env("DO_PUBLIC_URL") . $url;
+    return "https://congress2021web.fra1.digitaloceanspaces.com/" . $url;
 }
 
 function storageUrl($url = "")

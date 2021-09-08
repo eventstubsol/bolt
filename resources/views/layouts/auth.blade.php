@@ -69,6 +69,9 @@
                 color: #141414;
                 cursor: pointer;
             }
+            .grecaptcha-badge { 
+                visibility: hidden;
+            }
         </style>
     </head>
 
