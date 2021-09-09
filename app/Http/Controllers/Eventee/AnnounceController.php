@@ -10,16 +10,14 @@ class AnnounceController extends Controller
 {
     public function index($id){
         $announcements = Announcement::where('event_id',decrypt($id))->orderBy('id','desc')->paginate(5);
-        return view('admin_annouce.index',compact('announcements','id'));
+        return view('eventee.announce.announce',compact('announcements','id'));
     }
 
     public function create(Request $req){
         $announce = new Announcement;
         $announce->annoucement = $req->announce;
         $announce->subject = $req->subject;
-        if($req->has('event_id')){
-            $announce->event_id = $req->event_id;
-        }
+        $announce->event_id = $req->event_id;   
         $announce->user_id = $req->send;
         if($announce->save()){
             return response()->json(['message'=>'Announcement Saved Successfully','status'=>200]);

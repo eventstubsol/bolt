@@ -31,5 +31,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ArchiveVideos extends Model
 {
     use SoftDeletes;
-    protected $fillable = [ "title", "video_id"];
+    protected $fillable = [ "title", "video_id",'event_id'];
 }

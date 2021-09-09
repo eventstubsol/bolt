@@ -61,7 +61,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/data-entry/{id}","Eventee\DataEntryController@index")->name('eventee.dataEntry');
     Route::get('/notification/{id}',"Eventee\NotificationController@index")->name('eventee.notification');
     Route::get('/notification/create/{id}',"Eventee\NotificationController@create")->name('eventee.notification.create');
-    Route::get('/notification/store/{id}',"Eventee\NotificationController@store")->name('eventee.notification.store');
+    Route::post('/notification/store/{id}',"Eventee\NotificationController@store")->name('eventee.notification.store');
     Route::get('/Poll/{id}',"Eventee\PollController@index")->name('eventee.poll');
     Route::get('qna/{id}',"Eventee\QnaController@index")->name('eventee.qna');
     Route::get("/polls", "PollController@index")->name("poll.manage"); // list all polls
@@ -87,10 +87,10 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     
 
     Route::POST('/poll/question/edit/{id}',"QuestionController@Edit")->name('eventee.question.edit');
-    Route::post('/poll/question/mcq/{id}','QuestionController@createMcq')->name('poll.mcq');
-    Route::post('poll/wordCloud/{id}','QuestionController@wordCloud')->name('poll.wordcloud');
-    Route::post('poll/rating/{id}','QuestionController@rating')->name('poll.rating');
-    Route::post('poll/survey/{id}','QuestionController@Survey')->name('poll.survey');
+    Route::post('/poll/question/mcq/{id}','Eventee\PollController@createMcq')->name('eventee.poll.mcq');
+    Route::post('poll/wordCloud/{id}','Eventee\PollController@wordCloud')->name('eventee.wordcloud');
+    Route::post('poll/rating/{id}','Eventee\PollController@rating')->name('eventee.rating');
+    Route::post('poll/survey/{id}','Eventee\PollController@Survey')->name('eventee.survey');
     Route::post('question/delete/{id}','QuestionController@Delete')->name('question.delete');
     Route::post('mcq/edit/{id}','QuestionController@MCQEdit')->name('mcq.edit');
     Route::post('surv/edit/{id}','QuestionController@SURVEdit')->name('surv.edit');
@@ -112,6 +112,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Qna/Delete','LiveQuestionController@Delete')->name('qna.Delete');
     Route::get('Qna/Answer','LiveQuestionController@SaveAnswer')->name('qna.Answer');
     Route::get('admin/Annoucement/{id}','Eventee\AnnounceController@index')->name('eventee.announce');
+    Route::get('/Annoucement/Create','Eventee\AnnounceController@Create')->name('eventee.announce.create');
     Route::get('License/{id}',"Eventee\LicenseController@index")->name('eventee.license');
     Route::get('License/create/{id}',"Eventee\LicenseController@create")->name('eventee.license.create');
     Route::post('License/store/{id}',"Eventee\LicenseController@store")->name('eventee.license.store');

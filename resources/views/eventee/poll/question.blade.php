@@ -279,7 +279,7 @@ Manage Polls
             </button>
          </div>
          <div class="modal-body">
-            <form id="mcq" action="{{ route('poll.mcq') }}" method="post">
+            <form id="mcq" action="{{ route('eventee.poll.mcq',$id) }}" method="post">
                <input type="hidden" name="poll_id" value="{{ $poll->id }}">
                <input type="hidden" name="event_id" value="{{ decrypt($id) }}">
                <div class="form-group">
@@ -340,7 +340,7 @@ Manage Polls
             </button>
          </div>
          <div class="modal-body">
-            <form id="mcq" action="{{ route('poll.mcq') }}" method="post">
+            <form id="mcq" action="{{ route('eventee.poll.mcq',$id) }}" method="post">
                <input type="hidden" name="poll_id" value="{{ $poll->id }}">
                <input type="hidden" name="event_id" value="{{ decrypt($id) }}">
                <div class="form-group">
@@ -398,7 +398,7 @@ Manage Polls
             </button>
          </div>
          <div class="modal-body">
-            <form id="mcq" action="{{ route('poll.wordcloud') }}" method="post">
+            <form id="mcq" action="{{ route('eventee.wordcloud',$id) }}" method="post">
                <input type="hidden" name="poll_id" value="{{ $poll->id }}">
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Question:</label>
@@ -438,7 +438,7 @@ Manage Polls
             </button>
          </div>
          <div class="modal-body">
-            <form id="mcq" action="{{ route('poll.rating') }}" method="post">
+            <form id="mcq" action="{{ route('eventee.rating',$id) }}" method="post">
                <input type="hidden" name="poll_id" value="{{ $poll->id }}">
                <input type="hidden" name="event_id" value="{{ decrypt($id) }}">
                <div class="form-group">
@@ -492,7 +492,7 @@ Manage Polls
             </button>
          </div>
          <div class="modal-body">
-            <form id="mcq" action="{{ route('poll.survey') }}" method="post">
+            <form id="mcq" action="{{ route('eventee.survey',$id) }}" method="post">
                <input type="hidden" name="poll_id" value="{{ $poll->id }}">
                <input type="hidden" name="evemt_id" value="{{ decrypt($id) }}">
                <div class="form-group">

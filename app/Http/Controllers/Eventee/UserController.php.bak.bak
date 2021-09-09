@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         try {
             
-            $request->validate(['name' => 'required', 'last_name' => 'required', 'email' => 'required', 'password' => 'required|min:6']);
+            $request->validate(['name' => 'required', 'last_name' => 'required', 'email' => 'required|', 'password' => 'required|min:6']);
 
             // $userData = $request->except("_token");
             // $userData["password"] = Hash::make($userData["password"]);
