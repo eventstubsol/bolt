@@ -47,6 +47,7 @@ class UserController extends Controller
     public function store(Request $request, $id)
     {
         try {
+            
             $request->validate(['name' => 'required', 'last_name' => 'required', 'email' => 'required|email|unique:users,email', 'password' => 'required|min:8']);
 
             // $userData = $request->except("_token");
@@ -61,7 +62,14 @@ class UserController extends Controller
                 $user->event_id = decrypt($id);
                 $user->type = 'attendee';
                 $user->password = password_hash($request->password, PASSWORD_DEFAULT);
-                $user->email = $request->email;
+                $mail = UniqueEmail($request->email,$id);
+                if($mail == 0){
+                    $user->email = $request->email;
+                }
+                else{
+                    flash("Same Email ID Already Exist For The Current Event")->error();
+                    return redirect()->back();
+                }
                 $user->isCometChatAccountExist = TRUE;
 
 
@@ -87,7 +95,9 @@ class UserController extends Controller
                     return redirect()->back();
                 }
             } else {
-                flash("Cant Add More Users ,Please Contact Admin To Add More User")->error();
+                $url = route('eventee.license',$id);
+                $message = "Cant Add More Users ,Please Contact Admin To Add More User and upgrade your account.<br />". "<a href='".$url."'>Send Message To Admin For Licence Upgrade</a>";
+                flash($message)->info();
                 return redirect()->back();
             }
         } catch (\Exception $e) {

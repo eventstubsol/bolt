@@ -921,3 +921,13 @@ function UpdateEnv($key,$value){
   
     
 }
+
+function UniqueEmail($email,$id){
+     $exist = User::where('email',$email)->where('event_id',decrypt($id))->count();
+     if($exist > 0){
+         return 1;
+     }
+     else{
+         return 0;
+     }
+ } 
