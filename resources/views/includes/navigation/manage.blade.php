@@ -148,13 +148,13 @@
     </div>
 </li>
 
-{{-- <li>
-    <a href="{{ route("eventSession.videoArchive") }}"  class="nav-second-level"> 
+<li>
+    <a href="{{ route("eventee.videoArchive",$id) }}"  class="nav-second-level"> 
         <span>
             Past Videos Archive
         </span>  
     </a>
-</li> --}}
+</li>
 
 <li>
     <a href="{{ route("eventee.license",$id) }}"  class="nav-second-level"> 

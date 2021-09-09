@@ -44,6 +44,10 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('/menu/store/{id}','Eventee\MenuController@saveMenu')->name('eventee.menu.store');
     Route::get('/menu/footer/{id}','Eventee\MenuDetailController@index')->name('eventee.menu.footer');
 
+    //Post Video
+    Route::get("/session/video-archive/{id}", "Eventee\VideoController@pastSessionVideosArchive")->name("eventee.videoArchive");
+    Route::post("/session/video-archive/{id}", "Eventee\VideoController@savePastSessionVideosArchive")->name("eventee.saveVideoArchive");
+
     Route::get("/reports/leaderboard/{id}", "EventManageController@leaderboardView")->name("event.leaderboard");
     Route::post("/reports/workshop/{name}/export", "EventManageController@exportWorkshopLogs")->name("event.export.workshopLogs");
     Route::get("/reports/workshop/{name}/{id}", "EventManageController@workshopReports")->name("event.workshop");
