@@ -116,7 +116,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('License/{id}',"Eventee\LicenseController@index")->name('eventee.license');
     Route::get('License/create/{id}',"Eventee\LicenseController@create")->name('eventee.license.create');
     Route::post('License/store/{id}',"Eventee\LicenseController@store")->name('eventee.license.store');
-    Route::get('License/edit/{id}',"Eventee\LicenseController@edit")->name('eventee.license.edit');
+    Route::get('License/edit/{id}/{license_id}',"Eventee\LicenseController@edit")->name('eventee.license.edit');
+    Route::post('License/update/{id}/{license_id}',"Eventee\LicenseController@update")->name('eventee.license.update');
     
 });
 Route::get("/", "HomeController@index")->name("home"); //Landing Page

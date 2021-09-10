@@ -38,8 +38,35 @@ class LicenseController extends Controller
         }
     }
 
-    public function edit($id){
+     public function edit($id,$license_id){
         
+        $license = License::findOrFail($license_id);
+        return view('eventee.license.edit',compact('id','license','license_id'));
+        
+        
+    }
+
+    public function update($id,Request $req,$license_id){
+        try
+        {
+            
+            $license = License::findOrFail($license_id);
+            $license->message = $req->message;
+            if($license->save()){
+                flash("Message Updated Successfully")->success();
+                return redirect()->route('eventee.license',$id);
+            }
+            else{
+                flash("Oops! Something went wrong")->error();
+                return redirect()->route('eventee.license.create',$id);
+            }
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage());
+        }
+    }
+
+    public function mail($id){
         try{
             $user = User::findOrFail(Auth::id());
             Mail::to('swarnadeeppramanick2@gmail.com')->send(new testMail);
@@ -48,7 +75,5 @@ class LicenseController extends Controller
             Log::error($e->getMessage());
             return back();
         }
-        
-        
     }
 }

@@ -39,8 +39,7 @@ Licenses
                                     <td>{{ $license->type }}</td>
                                     <td>{{ $license->issue_date }}</td>
                                     <td>
-                                        <a href="{{ route('eventee.license.edit',$id) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                                        <a href="#" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+                                        <a href="{{ route('eventee.license.edit',['id'=>$id,'license_id'=>$license->id]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
                                     </td>   
                                 </tr>
                             @endforeach
