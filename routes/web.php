@@ -48,6 +48,11 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/session/video-archive/{id}", "Eventee\VideoController@pastSessionVideosArchive")->name("eventee.videoArchive");
     Route::post("/session/video-archive/{id}", "Eventee\VideoController@savePastSessionVideosArchive")->name("eventee.saveVideoArchive");
 
+       //options update
+
+    Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
+    Route::post("/options/update", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");
+
     Route::get("/reports/leaderboard/{id}", "EventManageController@leaderboardView")->name("event.leaderboard");
     Route::post("/reports/workshop/{name}/export", "EventManageController@exportWorkshopLogs")->name("event.export.workshopLogs");
     Route::get("/reports/workshop/{name}/{id}", "EventManageController@workshopReports")->name("event.workshop");

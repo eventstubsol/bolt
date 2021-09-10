@@ -1,6 +1,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<li>
+    <a href="{{ route("teacher.dashboard") }}"  class="nav-second-level"> 
+        <i class="fas fa-tachometer-alt"></i>
+        <span>
+            Dashboard
+        </span>  
+    </a>
+</li>
 <li>
     <a href="#report" data-toggle="collapse">
         <i class="mdi mdi-file-multiple"></i>
@@ -194,7 +201,7 @@
 
 <li class="menu-title">Site Content</li>
 <li>
-    <a href="{{ route("options") }}">
+    <a href="{{ route("eventee.options",$id) }}">
         <i data-feather="file-text"></i>
         <span> General Content</span>
     </a>
@@ -239,22 +246,7 @@
     </div>
 </li>
 
-<li>
-    <a href="#menu" data-toggle="collapse">
-        <i class="fa fa-bars"></i>
-        <span> Menu</span>
-    </a>
-    <div class="collapse" id="menu">
-        <ul class="nav-second-level">
-            <li>
-                <a href="{{ route("menu.index") }}">Manage Nav</a>
-            </li>
-            <li>
-                <a href="{{ route("menuDetail.index") }}">Manage Footer</a>
-            </li>
-        </ul>
-    </div>
-</li>
+
 <li>
     <a href="#pages" data-toggle="collapse">
         <i class="mdi mdi-file-multiple"></i>
@@ -396,6 +388,23 @@
 {{--        </ul>--}}
 {{--    </div>--}}
 {{--</li>--}}
+
+<li>
+    <a href="#menu" data-toggle="collapse">
+        <i class="fa fa-bars"></i>
+        <span> Menu</span>
+    </a>
+    <div class="collapse" id="menu">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.menu",$id) }}">Manage Nav</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.menu.footer",$id) }}">Manage Footer</a>
+            </li>
+        </ul>
+    </div>
+</li>
 <li>
     <a href="#background" data-toggle="collapse">
         <i class="far fa-images"></i>
