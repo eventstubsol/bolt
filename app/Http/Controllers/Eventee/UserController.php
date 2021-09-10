@@ -55,7 +55,7 @@ class UserController extends Controller
             // $userData["isCometChatAccountExist"] = TRUE;
 
             $userCount = User::where('event_id', decrypt($id))->count();
-            if ($userCount < 6) {
+            if ($userCount < 5) {
                 $user = new User;
                 $user->name = $request->name;
                 $user->last_name = $request->last_name;
@@ -94,7 +94,7 @@ class UserController extends Controller
                     flash("Something went wrong")->error();
                     return redirect()->back();
                 }
-            } else {
+            } else{
                 $url = route('eventee.license',$id);
                 $message = "Cant Add More Users ,Please Contact Admin To Add More User and upgrade your account.<br />". "<a href='".$url."'>Send Message To Admin For Licence Upgrade</a>";
                 flash($message)->info();
