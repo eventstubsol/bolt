@@ -60,7 +60,7 @@ class UserController extends Controller
                 $user->name = $request->name;
                 $user->last_name = $request->last_name;
                 $user->event_id = decrypt($id);
-                $user->type = 'attendee';
+                $user->type = $request->type;
                 $user->password = password_hash($request->password, PASSWORD_DEFAULT);
                 $mail = UniqueEmail($request->email,$id);
                 if($mail == 0){

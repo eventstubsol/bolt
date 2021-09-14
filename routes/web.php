@@ -53,13 +53,30 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
     Route::post("/options/update", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");
 
-    
+
     //Prize
     Route::get('/Prize/{id}',"Eventee\PrizeController@index")->name('eventee.prize.list');
     Route::get('/Prize/create/{id}',"Eventee\PrizeController@create")->name('eventee.prize.create');
     Route::post('/Prize/store/{id}',"Eventee\PrizeController@store")->name('eventee.prize.store');
     Route::get('/Prize/edit/{id}/{prize_id}',"Eventee\PrizeController@edit")->name('eventee.prize.edit');
     Route::post('/Prize/update/{id}/{prize_id}',"Eventee\PrizeController@update")->name('eventee.prize.update');
+
+
+    //Booth
+    Route::get('/Booths/{id}',"Eventee\BoothController@index")->name('eventee.booth');
+    Route::get('/Booths/create/{id}',"Eventee\BoothController@create")->name('eventee.booth.create');
+    Route::post('/Booths/store/{id}',"Eventee\BoothController@store")->name('eventee.booth.store');
+    Route::get('/Booths/edit/{id}/{booth_id}',"Eventee\BoothController@edit")->name('eventee.booth.edit');
+    Route::post('/Booths/update/{id}/{booth_id}',"Eventee\BoothController@update")->name('eventee.booth.update');
+
+    //Room Setup
+    Route::get('/Rooms/{id}',"Eventee\RoomController@index")->name('eventee.room');
+    Route::get('/Rooms/create/{id}',"Eventee\RoomController@create")->name('eventee.room.create');
+    Route::post('/Rooms/store/{id}',"Eventee\RoomController@store")->name('eventee.room.store');
+    Route::get('/Rooms/edit/{id}/{room_id}',"Eventee\RoomController@edit")->name('eventee.room.edit');
+    Route::post('/Rooms/update/{id}/{room_id}',"Eventee\RoomController@update")->name('eventee.room.update');
+    Route::get('/Rooms/sort/{id}',"Eventee\RoomController@sort")->name('eventee.room.sort');
+
 
     Route::get("/reports/leaderboard/{id}", "EventManageController@leaderboardView")->name("event.leaderboard");
     Route::post("/reports/workshop/{name}/export", "EventManageController@exportWorkshopLogs")->name("event.export.workshopLogs");

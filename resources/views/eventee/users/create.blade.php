@@ -61,7 +61,14 @@ Create Users
                         </span>
                         @enderror
                     </div>
-                    <input type="hidden" name="type" value="attendee">
+                    <div class="form-group mb-3">
+                        <label for="type">Type of User</label>
+                        <select class="form-control" id="user-type" name="type">
+                            @foreach(USER_TYPES as $type)
+                            <option value="{{ $type }}">{{ ucfirst($type) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div>
                         <button class="btn btn-primary" type="submit">Create</button>
                     </div>

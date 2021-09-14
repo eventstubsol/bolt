@@ -451,3 +451,38 @@
         </ul>
     </div>
 </li>
+<li>
+    <a href="#rooms" data-toggle="collapse">
+        <i data-feather="map"></i>
+        <span> Rooms </span>
+    </a>
+    <div class="collapse" id="rooms">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.room",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.room.create",$id) }}">Create</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.room.sort",$id) }}">Sort</a>
+            </li>
+        </ul>
+    </div>
+</li>
+<li>
+    <a href="#booths" data-toggle="collapse">
+        <i data-feather="grid"></i>
+        <span> Booths </span>
+    </a>
+    <div class="collapse" id="booths">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.booth",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.booth.create",$id) }}">Create</a>
+            </li>
+        </ul>
+    </div>
+</li>

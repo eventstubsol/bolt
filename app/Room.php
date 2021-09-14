@@ -46,6 +46,7 @@ class Room extends Model
     protected $fillable = [
         "name",
         "type",
-        "position"
+        "position",
+        "event_id"
     ];
 }
