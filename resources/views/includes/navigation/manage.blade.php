@@ -435,3 +435,19 @@
         </ul>
     </div>
 </li>
+<li>
+    <a href="#prizes" data-toggle="collapse">
+        <i class="mdi mdi-gift-outline"></i>
+        <span> Prizes </span>
+    </a>
+    <div class="collapse" id="prizes">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.prize.list",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.prize.create",$id) }}">Create</a>
+            </li>
+        </ul>
+    </div>
+</li>

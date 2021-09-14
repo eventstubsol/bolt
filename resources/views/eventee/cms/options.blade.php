@@ -21,7 +21,7 @@ $fields = getAllFields();
 </div>
 <form action="{{ route("eventee.updateContent",$id) }}" method="POST">
     @csrf
-    @foreach(CMS_SECTIONS as $section)
+    @foreach(CMS_SECTIONS_2 as $section)
     <div class="row">
         <div class="col-12">
             <div class="card">

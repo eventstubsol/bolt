@@ -82,6 +82,10 @@ define("CMS_SECTIONS", [
     "Hall of Fame",
 ]);
 
+define("CMS_SECTIONS_2", [
+    "General",
+]);
+
 define("CMS_FIELD_TYPES", [
     "text",
     "number",

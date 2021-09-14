@@ -53,6 +53,14 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
     Route::post("/options/update", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");
 
+    
+    //Prize
+    Route::get('/Prize/{id}',"Eventee\PrizeController@index")->name('eventee.prize.list');
+    Route::get('/Prize/create/{id}',"Eventee\PrizeController@create")->name('eventee.prize.create');
+    Route::post('/Prize/store/{id}',"Eventee\PrizeController@store")->name('eventee.prize.store');
+    Route::get('/Prize/edit/{id}/{prize_id}',"Eventee\PrizeController@edit")->name('eventee.prize.edit');
+    Route::post('/Prize/update/{id}/{prize_id}',"Eventee\PrizeController@update")->name('eventee.prize.update');
+
     Route::get("/reports/leaderboard/{id}", "EventManageController@leaderboardView")->name("event.leaderboard");
     Route::post("/reports/workshop/{name}/export", "EventManageController@exportWorkshopLogs")->name("event.export.workshopLogs");
     Route::get("/reports/workshop/{name}/{id}", "EventManageController@workshopReports")->name("event.workshop");

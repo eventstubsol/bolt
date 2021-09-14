@@ -41,7 +41,7 @@ class Prize extends Model
     use UUID;
     public $incrementing = false;
     use SoftDeletes;
-    protected $fillable = ["title","description","criteria_high","criteria_low"];
+    protected $fillable = ["title","description","criteria_high","criteria_low","event_id"];
     public function images(){
         return $this->hasMany("\App\Image", "owner");
     }
