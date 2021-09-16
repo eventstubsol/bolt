@@ -506,3 +506,22 @@
         </ul>
     </div>
 </li>
+<li>
+    <a href="#pages" data-toggle="collapse">
+        <i class="mdi mdi-play"></i>
+        <span> Sessions</span>
+    </a>
+    <div class="collapse" id="pages">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.sessions.index",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.sessions.create",$id) }}">Create</a>
+            </li>
+            <li>
+                <a href="{{ route("elobby",$id) }}">Lobby</a>
+            </li>
+        </ul>
+    </div>
+</li>

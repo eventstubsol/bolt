@@ -22,43 +22,38 @@ use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller
 {
-    public function index()
+    public function index($id)
     {
         // $rooms = sessionRooms::all();
-        $sessions = EventSession::all()->load(["parentroom"]);
+        $sessions = EventSession::where('event_id',decrypt($id))->get()->load(["parentroom"]);
         // $sessions.map($session =>{$session->isLive = isSessionActive($session))
         foreach ($sessions as $session) {
             $session->isLive =  isSessionActive($session);
         }
-
-
-        // dd($sessions[0]->);
-        // $speakers = User::where("type", USER_TYPE_SPEAKER)->get([
-        //     "id",
-        //     "name",
-        //     "email"
-        // ]);
-        return view("sessions.list")
+        // dd($id);
+        return view("eventee.sessions.list")
             ->with(
                 compact([
                     "sessions",
+                    "id"
                 ])
             );
     }
-    public function create()
+    public function create($id)
     {
-        $rooms = sessionRooms::all();
+        $rooms = sessionRooms::where('event_id',$id)->get();
 
         $speakers = User::where("type", USER_TYPE_SPEAKER)->get([
             "id",
             "name",
             "email"
         ]);
-        return view("sessions.createForm")
+        return view("eventee.sessions.createForm")
             ->with(
                 compact([
                     "speakers",
-                    "rooms"
+                    "rooms",
+                    "id"
                 ])
             );
     }
