@@ -31,6 +31,20 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
+    
+    Route::get("/page/event/{id}","Eventee\PageController@index")->name('eventee.pages.index');
+    Route::get("/page/event/create/{id}","Eventee\PageController@create")->name('eventee.pages.create');
+
+    
+     
+    Route::post("/page/event/store/{id}","Eventee\PageController@store")->name('eventee.pages.store');
+    Route::get('page/event/{page}/{id}/edit',"Eventee\PageController@edit")->name('eventee.pages.edit');
+    Route::put('page/event/{page}/{id}/update',"Eventee\PageController@update")->name('eventee.pages.update');
+    Route::delete('page/event/delete',"Eventee\PageController@destroy")->name('eventee.pages.destroy');
+   
+    Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
+    Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
+   
 
     //Background Change
     Route::get('background/{id}','Eventee\BackgroundController@index')->name('eventee.background');
