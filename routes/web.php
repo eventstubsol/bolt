@@ -31,6 +31,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
+    Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
 
     //Background Change
     Route::get('background/{id}','Eventee\BackgroundController@index')->name('eventee.background');

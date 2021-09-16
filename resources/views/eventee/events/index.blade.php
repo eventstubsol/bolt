@@ -40,6 +40,9 @@
                 <h3 class="card-title"><i class="fas fa-calendar-day"></i>&nbsp;&nbsp;Events</h3>
                 <div class="float-right"><button class="btn btn-success" onclick="CreateEvent()">Create Event</button></div>
             </div>
+            <div id="showAlert" class="alert alert-success" role="alert" style="display: none">
+                <center>  Link Copied Successfully </center>
+            </div>
             <div class="card-body">
                 <table class="table table-hover table-striped">
                     <thead>
@@ -58,7 +61,7 @@
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $event->name }}</td>
-                                <td id="copyTarget" style="cursor: pointer" onclick="copyclip(this)" data-des="{{ $event->link }}">{{ Str::limit($event->link,50) }}</td>
+                                <td id="copyTarget" style="cursor: pointer" data-id="{{ $event->link }}" ondblclick="openPage(this)" onclick="copyclip(this)" data-des="{{ $event->link }}">{{ Str::limit($event->link,50) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->end_date)->format('d-m-Y') }}</td>
                                 <td>
@@ -133,7 +136,20 @@
         navigator.clipboard.writeText(link);
 
         /* Alert the copied text */
-        alert("Link Copied To Clipboard");
+        // alert("Link Copied To Clipboard");
+        $('#showAlert').show();
+        setTimeout(
+            function() 
+            {
+                $('#showAlert').hide();
+            }, 
+        5000);
+
+      }
+
+      function openPage(e){
+          var link = e.getAttribute("data-id");
+          window.open(link,'_blank');
       }
       
   </script>
