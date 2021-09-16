@@ -41,7 +41,7 @@ class SessionController extends Controller
     }
     public function create($id)
     {
-        $rooms = sessionRooms::where('event_id',$id)->get();
+        $rooms = sessionRooms::where('event_id',decrypt($id))->get();
 
         $speakers = User::where("type", USER_TYPE_SPEAKER)->get([
             "id",
@@ -58,8 +58,9 @@ class SessionController extends Controller
             );
     }
 
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
+        $event_id = $id;
         $speakers = $request->speakers;
         $request->speakers = null;
         $room = sessionRooms::where("id", $request->room_id)->first();
@@ -67,6 +68,7 @@ class SessionController extends Controller
         $session = EventSession::create($request->all());
         $session->room = $room->name;
         $session->master_room = $room->master_room;
+        $session->event_id = decrypt($id);
         $session->save();
 
         //Old Resoiu
@@ -101,9 +103,9 @@ class SessionController extends Controller
                 ]);
             }
         }
-        return redirect()->to(route("sessions.index"));
+        return redirect()->to(route("eventee.sessions.index",['id'=>$event_id]));
     }
-    public function edit(EventSession $session)
+    public function edit(EventSession $session,$id)
     {
         $session->load(["speakers", "parentroom","resources"]);
         $newspeakers = [];
@@ -132,12 +134,13 @@ class SessionController extends Controller
             "email"
         ]);
 
-        return view('sessions.edit')->with(compact(["session", "rooms", "speakers"]));
+        return view('eventee.sessions.edit')->with(compact(["session", "rooms", "speakers","id"]));
     }
 
 
-    public function update(Request $request, EventSession $session)
+    public function update(Request $request, EventSession $session,$id)
     {
+        $event_id = $id;
         $speakers = $request->speakers;
         $request->speakers = null;
         $session->load("speakers");
@@ -177,7 +180,7 @@ class SessionController extends Controller
                 ]);
             }
         }
-        return redirect()->to(route("sessions.index"));
+        return redirect()->to(route("eventee.sessions.index",['id'=>$event_id]));
     }
 
 
@@ -203,9 +206,10 @@ class SessionController extends Controller
 
     public function destroy(EventSession $session)
     {
+        // dd($session->name);
         $session->delete();
-        // return true;
-        return redirect()->to(route("sessions.index"));
+        return true;
+        // return redirect()->to(route("sessions.index",['id'=>$id]));
     }
 
     public function save(Request $request)

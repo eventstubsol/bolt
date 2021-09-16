@@ -507,11 +507,11 @@
     </div>
 </li>
 <li>
-    <a href="#pages" data-toggle="collapse">
+    <a href="#sessions" data-toggle="collapse">
         <i class="mdi mdi-play"></i>
         <span> Sessions</span>
     </a>
-    <div class="collapse" id="pages">
+    <div class="collapse" id="sessions">
         <ul class="nav-second-level">
             <li>
                 <a href="{{ route("eventee.sessions.index",$id) }}">Manage</a>
@@ -519,8 +519,21 @@
             <li>
                 <a href="{{ route("eventee.sessions.create",$id) }}">Create</a>
             </li>
+        </ul>
+    </div>
+</li>
+<li>
+    <a href="#sessionrooms" data-toggle="collapse">
+        <i class="mdi mdi-play"></i>
+        <span> Session Rooms</span>
+    </a>
+    <div class="collapse" id="sessionrooms">
+        <ul class="nav-second-level">
             <li>
-                <a href="{{ route("elobby",$id) }}">Lobby</a>
+                <a href="{{ route("eventee.sessionrooms.index",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.sessionrooms.create",$id) }}">Create</a>
             </li>
         </ul>
     </div>

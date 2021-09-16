@@ -32,10 +32,18 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
     
+    Route::get("/sessionroom/event/{id}","Eventee\SessionRoomController@index")->name('eventee.sessionrooms.index');
+    Route::get("/sessionroom/event/create/{id}","Eventee\SessionRoomController@create")->name('eventee.sessionrooms.create'); 
+    Route::post("/sessionroom/event/store/{id}","Eventee\SessionRoomController@store")->name('eventee.sessionrooms.store');
+    Route::get('/sessionroom/event/{sessionroom}/{id}/edit',"Eventee\SessionRoomController@edit")->name('eventee.sessionrooms.edit');
+    Route::delete('sessionroom/event/delete',"Eventee\PageController@destroy")->name('eventee.sessionrooms.destroy');
+    
     Route::get("/session/event/{id}","Eventee\SessionController@index")->name('eventee.sessions.index');
     Route::get("/session/event/create/{id}","Eventee\SessionController@create")->name('eventee.sessions.create'); 
     Route::post("/session/event/store/{id}","Eventee\SessionController@store")->name('eventee.sessions.store');
-    Route::get('/session/event/{page}/{id}/edit',"Eventee\SessionController@edit")->name('eventee.sessions.edit');
+    Route::get('/session/event/{session}/{id}/edit',"Eventee\SessionController@edit")->name('eventee.sessions.edit');
+    Route::delete('page/event/delete/{session}/{id}',"Eventee\SessionController@destroy")->name('eventee.sessions.destroy');
+    Route::put('page/event/{session}/{id}/update',"Eventee\SessionController@update")->name('eventee.sessions.update');
     
     //pages routes
     Route::get("/page/event/{id}","Eventee\PageController@index")->name('eventee.pages.index');
