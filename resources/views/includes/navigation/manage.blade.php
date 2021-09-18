@@ -486,3 +486,55 @@
         </ul>
     </div>
 </li>
+
+<li>
+    <a href="#pages" data-toggle="collapse">
+        <i class="mdi mdi-file-multiple"></i>
+        <span> Pages</span>
+    </a>
+    <div class="collapse" id="pages">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.pages.index",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.pages.create",$id) }}">Create</a>
+            </li>
+            <li>
+                <a href="{{ route("elobby",$id) }}">Lobby</a>
+            </li>
+        </ul>
+    </div>
+</li>
+<li>
+    <a href="#sessions" data-toggle="collapse">
+        <i class="mdi mdi-play"></i>
+        <span> Sessions</span>
+    </a>
+    <div class="collapse" id="sessions">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.sessions.index",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.sessions.create",$id) }}">Create</a>
+            </li>
+        </ul>
+    </div>
+</li>
+<li>
+    <a href="#sessionrooms" data-toggle="collapse">
+        <i class="mdi mdi-play"></i>
+        <span> Session Rooms</span>
+    </a>
+    <div class="collapse" id="sessionrooms">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.sessionrooms.index",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.sessionrooms.create",$id) }}">Create</a>
+            </li>
+        </ul>
+    </div>
+</li>
