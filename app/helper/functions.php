@@ -358,7 +358,7 @@ function getFieldId($name,$id, $default = "")
         return $content->first()->value;
     }
     else{
-        $content = Content::where("name", $name)->where('event_id',null)->first();
+        $content = Content::where("name", $name)->first();
         return $content->value;
     }
    
