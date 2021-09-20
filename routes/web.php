@@ -31,10 +31,10 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
-<<<<<<< HEAD
+
     Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
 
-=======
+
     
     Route::get("/sessionroom/event/{id}","Eventee\SessionRoomController@index")->name('eventee.sessionrooms.index');
     Route::get("/sessionroom/event/create/{id}","Eventee\SessionRoomController@create")->name('eventee.sessionrooms.create'); 
@@ -61,7 +61,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
    
     
->>>>>>> 5a516ec530c3e418c3b5fb68adf843f825021f9c
+
     //Background Change
     Route::get('background/{id}','Eventee\BackgroundController@index')->name('eventee.background');
     Route::get('background/create/{id}','Eventee\BackgroundController@create')->name('eventee.background.create');

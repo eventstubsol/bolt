@@ -351,10 +351,17 @@ function getField($name,$default = "")
     $content = Content::where("name", $name)->first();
     return $content ? $content->value : $default;
 }
-function getFieldId($name,$id = "",$default = "")
+function getFieldId($name,$id, $default = "")
 {
-    $content = Content::where(["name"=>$name,"event_id"=>$id])->first();
-    return $content ? $content->value : $default;
+    $content = Content::where("name", $name)->where('event_id',decrypt($id));
+    if($content->count()>0){
+        return $content->first()->value;
+    }
+    else{
+        $content = Content::where("name", $name)->where('event_id',null)->first();
+        return $content->value;
+    }
+   
 }
 
 
