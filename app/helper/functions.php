@@ -346,9 +346,14 @@ function getAllFields($id = null)
     return ContentMaster::all();
 }
 
-function getField($name, $default = "")
+function getField($name,$default = "")
 {
     $content = Content::where("name", $name)->first();
+    return $content ? $content->value : $default;
+}
+function getFieldId($name,$id = "",$default = "")
+{
+    $content = Content::where(["name"=>$name,"event_id"=>$id])->first();
     return $content ? $content->value : $default;
 }
 
