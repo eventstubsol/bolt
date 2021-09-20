@@ -184,7 +184,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 
 Route::get("/event/login", "AttendeeAuthController@show")->name("attendee_login");
-Route::post("/event/login", "AttendeeAuthController@login");
+Route::post("/event/post/login/{id}", "AttendeeAuthController@login")->name('event.user.confirmLogin');
 Route::get("/event/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
 Route::post("/event/register", "AttendeeAuthController@saveRegistration");
 Route::get("/event/session-notifications", "EventController@sendSessionNotifications");
