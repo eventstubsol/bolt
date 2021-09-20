@@ -16,12 +16,13 @@ class CMSController extends Controller
 
     public function optionsUpdate(Request $request,$id){
         $fields = $request->except("_token");
+        $event_id = $id;
         foreach ($fields as $id => $value){
             $field = Content::find($id);
             if($field){
-                $field->update([ "value" => $value,"event_id" => decrypt($id) ]);
+                $field->update([ "value" => $value,"event_id" => decrypt($event_id) ]);
             }
         }
-        return redirect()->to(route("eventee.options",$id));
+        return redirect()->to(route("eventee.options",['id'=>$event_id]));
     }
 }
