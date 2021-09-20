@@ -1,7 +1,7 @@
 <div class="page" id="lobby">
     <div class="video-container positioned">
-        <video class="full-width-videos" src="{{ assetUrl(getField('main_lobby_video')) }}" id="lobby_view" autoplay muted loop poster="{{ assetUrl(getField('main_lobby_video_static')) }}"></video>
-        @foreach(getLobbyLinks() as $link)
+        <video class="full-width-videos" src="{{ assetUrl(getFieldId('main_lobby_video',$event_id)) }}" id="lobby_view" autoplay muted loop poster="{{ assetUrl(getFieldId('main_lobby_video_static',$event_id)) }}"></video>
+        @foreach(getLobbyLinks($event_id) as $link)
 
                 @php
                 $area = [$link->top,$link->left,$link->width,$link->height];
