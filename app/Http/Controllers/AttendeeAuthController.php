@@ -39,7 +39,7 @@ class AttendeeAuthController extends Controller
     }
 
     // method to attempt login
-    public function login(Request $request)
+    public function login(Request $request,$id)
     {
         
         //     $response = Http::asForm()
@@ -67,6 +67,7 @@ class AttendeeAuthController extends Controller
         $validation =  env("ATTENDEE_LOGIN_FIELD") == "email" ? "required|email" : "required";
         $request->validate([env("ATTENDEE_LOGIN_FIELD") => $validation]);
         $user = User::with('tags.looking_users')->where(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")))
+        ->where('event_id',$id)
             //            ->whereIn("type", USER_TYPES_TO_LOGIN_WITH_MEMBERSHIP_ID)
             ->whereNotIn("type", ["admin", "teller", "moderator", "exhibiter", "cms_manager"])
             ->first();

@@ -21,4 +21,8 @@ class LoginController extends Controller
             "id"=>$id
         ]);
     }
+
+    public function confirmLogin(Request $req,$id){
+        
+    }
 }
