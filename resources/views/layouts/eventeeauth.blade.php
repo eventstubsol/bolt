@@ -32,7 +32,7 @@
             }
             body.auth{
                 position:relative;
-                background-image: url("https://congress2021web.fra1.digitaloceanspaces.com/uploads/HFt4Cu8S2OmjkAk8TBNHLRvhHpWUCePFc7AxyJCK.jpg");
+                background-image: url("{{assetUrl(getFieldId($name='login_background',$id =$event_id))}}");
             }
             body.auth .login-container .login-header .logo {
                 display: block;
