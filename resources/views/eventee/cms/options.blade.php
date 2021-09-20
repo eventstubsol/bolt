@@ -14,12 +14,12 @@ CMS Fields Manager
 
 @section("content")
 @php
-$fields = getAllFields();
+$fields = getAllFields($id);
 @endphp
 <div class="progress progress-sm upload mb-2">
     <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
-<form action="{{ route("eventee.updateContent",$id) }}" method="POST">
+<form action="{{ route("eventee.updateContent",['id'=>$id]) }}" method="POST">
     @csrf
     @foreach(CMS_SECTIONS_2 as $section)
     <div class="row">
