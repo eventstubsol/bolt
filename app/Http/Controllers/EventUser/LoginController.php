@@ -17,7 +17,8 @@ class LoginController extends Controller
         return view("eventUser.login")->with([
             "login" => $this->loginT,
             "notFound" => FALSE,
-            "captchaError" => FALSE
+            "captchaError" => FALSE,
+            "id"=>$id
         ]);
     }
 }

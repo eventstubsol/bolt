@@ -25,6 +25,7 @@ Route::get("/Register/Eventee","eventeeController@Regiter")->name('Eventee.regis
 Route::post('/Register/Eventee',"eventeeController@ConfirmRegister");
 Route::get('Eventee/Login',"eventeeController@Login")->name('Eventee.login');
 Route::post('Eventee/Login',"eventeeController@ConfirmLogin");
+Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
 
 Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
@@ -32,7 +33,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
 
-    Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
+
 
 
     
