@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.eventeeauth')
 
 @section('title')
 Event Login
