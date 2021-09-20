@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Date;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\Catch_;
+use App\ContentMaster;
+
 
 include_once "clickableAreasConfig.php";
 
@@ -336,9 +338,12 @@ function getRoomsEventee($id){
     }
     
 }
-function getAllFields()
+function getAllFields($id = null)
 {
-    return Content::all();
+    if($id){
+        return Content::where("event_id",decrypt($id))->get();
+    }
+    return ContentMaster::all();
 }
 
 function getField($name, $default = "")

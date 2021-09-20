@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Content;
+use App\ContentMaster;
 use http\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -13,22 +14,22 @@ class CMSController extends Controller
         return view("cms.create_field")->with("section", $request->get("section", CMS_SECTIONS[0]));
     }
 
-    public function editField(Request $request, Content $field){
+    public function editField(Request $request, ContentMaster $field){
         return view("cms.edit_field")
             ->with(compact("field"));
     }
 
     public function storeField(Request $request){
-        Content::create($request->only(["name", "type", "section"]));
+        ContentMaster::create($request->only(["name", "type", "section"]));
         return redirect()->to(route("home"));
     }
 
-    public function updateField(Request $request, Content $field){
+    public function updateField(Request $request, ContentMaster $field){
         $field->update($request->only(["name", "type", "section"]));
         return redirect()->to(route("home"));
     }
 
-    public function deleteField(Content $field){
+    public function deleteField(ContentMaster $field){
         $field->delete();
         return redirect()->to(route("home"));
     }
@@ -40,7 +41,7 @@ class CMSController extends Controller
     public function optionsUpdate(Request $request){
         $fields = $request->except("_token");
         foreach ($fields as $id => $value){
-            $field = Content::find($id);
+            $field = ContentMaster::find($id);
             if($field){
                 $field->update([ "value" => $value ]);
             }
