@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\ContentMaster;
+use App\Content;
 use Illuminate\Http\Request;
 use App\User;
 use App\EventSession;
@@ -93,6 +95,15 @@ class eventeeController extends Controller
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
         if($event->save()){
+            $contents = ContentMaster::all();
+            foreach($contents as $content){
+                Content::create([
+                    "name"=> $content->name,
+                    "type"=>$content->type,
+                    "section"=>$content->section,
+                    "event_id"=>$event->id
+               ]);
+            }
             $req->session()->put('eve-sucess', 1);
             Event::where('id',$event->id)->update(['link'=>$baseurl . '/Event'.'/'.encrypt($event->id)]);
             return redirect()->back();
