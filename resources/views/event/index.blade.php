@@ -395,7 +395,7 @@ $user = Auth::user();
 
     </style>
     {{-- App favicon --}}
-    <link rel="shortcut icon" href="{{ assetUrl(getField('favicon')) }}">
+    <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}">
     <!-- Icons -->
     <link href={{ asset('assets/css/icons.min.css') }} rel="stylesheet" type="text/css" />
     <script>
@@ -582,7 +582,7 @@ $user = Auth::user();
                     </g>
                 </svg>
             </div>
-            <p>{{ getField('mobilemessage', 'For an immersive experience, please login using a Tablet Device/Laptop/PC Or switch to landscape mode in your mobile phone.') }}
+            <p>{{ getFieldId('mobilemessage',$event_id, 'For an immersive experience, please login using a Tablet Device/Laptop/PC Or switch to landscape mode in your mobile phone.') }}
             </p>
         </div>
     </div>
