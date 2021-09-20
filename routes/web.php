@@ -81,7 +81,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
        //options update
 
     Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
-    Route::post("/options/update", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");
+    Route::post("/options/update/{id}", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");
 
 
     //Prize
