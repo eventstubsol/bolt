@@ -34,6 +34,11 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
 
 
+    //Event Frontend
+
+    // Route::
+
+
 
 
     
@@ -199,10 +204,13 @@ Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin"
 
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
     Route::get("/home", "HomeController@dashboard");
-    Route::get("/event", "EventController@index")->name("event");
+    // Route::get("/event", "EventController@index")->name("event");
     Route::post("/uploadFile", "CMSController@uploadFile")->name("cms.uploadFile");
     Route::get("/me", "EventController@profileInfo")->name("event.profile");
     Route::get('/testS','testController@index');
+
+    Route::get("/event/{id}", "EventController@index")->name("eventee.event");
+
 
     Route::post("/contacts/suggested", "UserController@suggestedContacts")->name("suggestedContacts");
     Route::post("/contacts/attendees", "UserController@allEventAttendees")->name("attendeesURL");
