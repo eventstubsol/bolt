@@ -72,6 +72,9 @@
                 color: #141414;
                 cursor: pointer;
             }
+            .grecaptcha-badge { 
+    visibility: hidden;
+}
         </style>
     </head>
 
@@ -80,7 +83,7 @@
             <div class="login-container {{ Request::is('*/register', '/') ? 'two-cols' : '' }} {{ Request::is('*/verify', '/') ? 'verify' : '' }}">
                 <div class="login-header">
                     <a href="{{ route('login') }}" class="logo">
-                        <img src="{{assetUrl(getField('logo'))}}" alt="NBA-CLS" class="img-responsive">
+                        <img src="{{assetUrl(getFieldId($name = 'logo',$id = $event_id))}}" alt="NBA-CLS" class="img-responsive">
                     </a>
                     <p class="hidden-v" style="font-size:13px">
                     Disclaimer: For an immersive experience, please log onto the platform using a PC (desktop or laptop) and one of the following browsers: Google Chrome, Mozilla Firefox, Microsoft Edge. Although the Virtual Event Platform has been developed to work on all devices, users may experience issues using a mobile phone. If you experience any issues, kindly switch to a PC.

@@ -348,7 +348,7 @@ function getAllFields($id = null)
 
 function getField($name,$default = "")
 {
-    $content = Content::where("name", $name)->first();
+    $content = Content::where("name", $name)->where('event_id',null)->first();
     return $content ? $content->value : $default;
 }
 function getFieldId($name,$id, $default = "")
