@@ -34,9 +34,11 @@ use Dotenv\Result\Success;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $booths = Booth::orderBy("name")->with([
+        $event_id = decrypt($id);
+        // dd($id);
+        $booths = Booth::where("event_id",$event_id)->orderBy("name")->with([
             "images",
             "videos",
             "resources",
@@ -49,16 +51,16 @@ class EventController extends Controller
             "type",
             "boothurl"
         ]);
-        $boothrooms = Room::orderBy("position")->get()->load("booths");
+        $boothrooms = Room::where("event_id",$event_id)->orderBy("position")->get()->load("booths");
 
-        $reports = Report::with(["resources", "video"])->get();
+        $reports = Report::all()->load(["resources", "video"]);
         $FAQs = FAQ::all();
         //        $provisionals = ProvisionalGroup::with(["resource", "video"])->get();
-        $prizes = Prize::with("images")->orderBy("criteria_low")->get();
+        $prizes = Prize::where("event_id",$event_id)->with("images")->orderBy("criteria_low")->get();
         $schedule = getSchedule();
         $user = Auth::user();
-        $pages = Page::with(["links","images"])->get();
-        $sessionrooms = sessionRooms::all()->groupBy("master_room");
+        $pages = Page::where("event_id",$event_id)->with(["links","images"])->get();
+        $sessionrooms = sessionRooms::where("event_id",$event_id)->get()->groupBy("master_room");
         $sessionroomnames = [];
         foreach($sessionrooms as $master_room=>$rooms){
             // if(isset($sessionroomids[$master_room]))
@@ -74,7 +76,7 @@ class EventController extends Controller
             // }
         }
         // dd($sessionroomids);
-        $sessions = EventSession::all()->load(["parentroom"]);
+        $sessions = EventSession::where("event_id",$event_id)->get()->load(["parentroom"]);
         
         
         $user->load("subscriptions");
@@ -84,6 +86,7 @@ class EventController extends Controller
         }
         // dd($pages);
         // dd($schedule);
+        $event_id = $id;
         return view("event.index")
             ->with(
                 compact([
@@ -99,6 +102,7 @@ class EventController extends Controller
                     "sessions",
                     "sessionrooms",
                     "sessionroomnames",
+                    "event_id"
                 ])
             );
     }
