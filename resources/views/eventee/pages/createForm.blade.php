@@ -23,7 +23,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route("page.store") }}" method="post">
+                <form action="{{ route("eventee.pages.store",['id'=>$id]) }}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group mb-3">
                         <label for="name">Name</label>

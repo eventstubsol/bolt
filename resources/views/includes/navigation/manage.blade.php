@@ -524,7 +524,7 @@
 </li>
 <li>
     <a href="#sessionrooms" data-toggle="collapse">
-        <i class="mdi mdi-play"></i>
+        <i  data-feather="home"></i>
         <span> Session Rooms</span>
     </a>
     <div class="collapse" id="sessionrooms">
