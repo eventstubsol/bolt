@@ -67,11 +67,10 @@ class AttendeeAuthController extends Controller
         $validation =  env("ATTENDEE_LOGIN_FIELD") == "email" ? "required|email" : "required";
         $request->validate([env("ATTENDEE_LOGIN_FIELD") => $validation]);
         $user = User::with('tags.looking_users')->where(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")))
-        ->where('event_id',$id)
+        ->where('event_id',decrypt($id))
             //            ->whereIn("type", USER_TYPES_TO_LOGIN_WITH_MEMBERSHIP_ID)
             ->whereNotIn("type", ["admin", "teller", "moderator", "exhibiter", "cms_manager"])
             ->first();
-
         if (!$user) {
             $request->old(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")));
             return view("auth.attendee_login")->with([
@@ -109,7 +108,9 @@ class AttendeeAuthController extends Controller
                 }
             }
             $user->touch();
-            return redirect("/event");
+            // dd("test")
+            return redirect(route("eventee.event",['id'=>$id]));
+            // return redirect("/event");
         }
     }
 

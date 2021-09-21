@@ -74,8 +74,8 @@ class PageController extends Controller
 
         //todo link session rooms to event_id 
 
-        $session_rooms = sessionRooms::all();
-        $page_name = "lobby_".$ids ;
+        $session_rooms = sessionRooms::where("event_id",$ids)->get();
+        $page_name = "lobby_".$ids;
 
         $links = Link::where(["page"=>$page_name])->get();
         $page = (object) [
@@ -170,7 +170,7 @@ class PageController extends Controller
         // $request->validate(["name","url"]);
         $event_id = $id;
         
-        Link::where(["page"=>"lobby_".$id])->delete();
+        Link::where(["page"=>"lobby_".decrypt($id)])->delete();
         if($request->has("linknames")){
             foreach($request->linknames as $id => $linkname){
                 $to = "";

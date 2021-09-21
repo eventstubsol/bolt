@@ -1,10 +1,10 @@
 <div class="page initial" id="home">
     <div class="filler" style="padding-bottom: {{ EXTERNAL_VIDEO_ASSETS_ASPECT }}%"></div>
     <div class="video-containers positioned">
-        <video class="full-width-videos" src="{{ assetUrl(getField('entering_video')) }}" id="entering_view" autoplay muted></video>
+        <video class="full-width-videos" src="{{ assetUrl(getFieldId('entering_video',$event_id)) }}" id="entering_view" autoplay muted></video>
     </div>
     <div class="video-containers positioned " id="mobile_exterior_view">
-        <video class="full-width-videos" src="{{ assetUrl(getField('exterior_view')) }}" id="exterior_view" autoplay muted loop poster="{{ assetUrl(getField('exterior_view_static')) }}"></video>
+        <video class="full-width-videos" src="{{ assetUrl(getFieldId('exterior_view',$event_id)) }}" id="exterior_view" autoplay muted loop poster="{{ assetUrl(getFieldId('exterior_view_static',$event_id)) }}"></video>
     </div>
 </div>
 <script>

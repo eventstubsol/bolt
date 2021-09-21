@@ -285,9 +285,15 @@ define("BY_LAWS_TELLER_ID", "280fd217-8106-46fc-a36b-c5c38b1a3823");
 
 
 
-function getLobbyLinks()
+// function getLobbyLinks()
+// {
+//     $links = Link::where(["page"=>"lobby"])->get();
+//     return $links;
+// }
+function getLobbyLinks($id)
 {
-    $links = Link::where(["page"=>"lobby"])->get();
+    $lobby = "lobby_".decrypt($id);
+    $links = Link::where(["page"=>$lobby])->get();
     return $links;
 }
 function getFilters($filter)
@@ -359,7 +365,7 @@ function getFieldId($name,$id, $default = "")
     }
     else{
         $content = Content::where("name", $name)->first();
-        return $content->value;
+        return $content->value ? $content->value : $default;
     }
    
 }
