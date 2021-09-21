@@ -70,13 +70,14 @@ class BoothController extends Controller
           if($request->has("calendly_link")){
             $booth->calendly_link=$request->calendly_link;
           }
-          else{
-              return "no calen";
-          }
+          // else{
+          //     return "no calen";
+          // }
           
-          if($booth->save()){
+          $booth->save();
+          // if($booth->save()){
             Http::withHeaders([
-                "apiKey" => env("COMET_CHAT_API_KEY"),
+              "apiKey" => env("COMET_CHAT_API_KEY"),
                 "appId" => env("COMET_CHAT_APP_ID")
               ])
                 ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
@@ -99,15 +100,17 @@ class BoothController extends Controller
                 "appId" => env("COMET_CHAT_APP_ID"),
                 "Accept-Encoding"=> "deflate, gzip",
                 "Content-Encoding"=> "gzip"
-              ])
+                ])
                 ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
                 flash("Booth Created Successfully")->success();
-              return redirect()->to(route("eventee.booth",$id)); 
-          }
-          // create group in comet chat
-          
-      }
-      catch(\Exception $e){
+                return redirect()->to(route("eventee.booth",$id)); 
+                // }
+                // create group in comet chat
+                
+              }
+              catch(\Exception $e){
+            dd($e);
+
           Log::error($e->getMessage());
       }
     
