@@ -17,6 +17,25 @@
             height: 100%;
         }
     </style>
+    
+<style>
+   .image_links{
+        border-radius: 5%;  
+        color: white;
+        font-size: 161%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0d613978 !important;
+        border: 5px solid;
+    }
+    .im_names{
+        background: #ffffff78 !important;
+        height: 100%;
+        width: 100%;
+
+    }
+</style>
 @endsection
 
 @section("breadcrumbs")
@@ -25,145 +44,200 @@
 @endsection
 
 @section("content")
-    @php
-        $assetDetails = [];
-        $corousel = [];
-        $link = "";
-        if(is_iterable($booth->images) && isset($booth->images[0])){
-            foreach ($booth->images as $image){
-                if($image->title=="corousel"){
-                    array_push($corousel,$image->url);
-                    $link = $image->link;
-                }else{
-                    $assetDetails[$image->title] = [
-                        "url" => $image->url,
-                        "link" => $image->link,
-                        "type" => "image"
-                    ];
-                }
-            }
-            if(isset($link)){
-            $assetDetails["corousel"] = [
-            "url" =>$corousel,
-            "link"=> $link,
-            "type"=>"corousel",
-            ];
-        }
-        }
-        if(is_iterable($booth->videos) && isset($booth->videos[0])){
-
-            foreach ($booth->videos as $video){
-                if($video->title == "brandvideo"){
-                $assetDetails[$video->title] = [
-                    "url" => $video->url,
-                    "thumbnail" => $video->thumbnail,
-                    "type" => "video"
-                ];
-                }
-            }
-        }
-
-    @endphp
-
     <form action="{{ route("exhibiter.update", [ "booth" => $booth->id ]) }}" method="POST">
         @csrf
         <div class="position-relative">
             <div style="padding-bottom: {{ BOOTH_AREA_IMAGE_ASPECT }}%"></div>
-            
-            @if(strlen($booth->boothurl)>1)
-                <img async src="{{ assetUrl($booth->boothurl) }}" class="positioned booth-bg" alt="">
-            @else
-                <img async src="{{ assetUrl(getField($booth->type)) }}" class="positioned booth-bg" alt="">
-            @endif
-
-            @if(isset(BOOTH_IMAGE_AREAS[$booth->type]))
-                @foreach(BOOTH_IMAGE_AREAS[$booth->type]['assets'] as $slot => $asset)
-                    @php
-                        $value = "";
-                        $link = "";
-                        if(isset($assetDetails[$slot])){
-                            $value = $assetDetails[$slot]['url'];
-                            if(isset($assetDetails[$slot]['link'])){
-                                $link = $assetDetails[$slot]['link'];
-                            }
-                            if($assetDetails[$slot]["type"]=="video"){
-                                $value = $assetDetails[$slot]['thumbnail'];
-                                $link =  $assetDetails[$slot]['url'];
-                            }
-                        }
-                    @endphp
-                <div
-                        class="positioned image-uploader abc"
-                        style="{{ areaStyles($asset['area']) }};
-                        @if($asset['type'] == "image")
-                            z-index:3;
-                            @endif"
-                >
-                @if($asset["type"] != "corousel")
-                    <input type="hidden"
-                           class="upload_input "
-                           @if($asset['type'] == "image")
-                               name="boothimages[]"
-                           @else
-                               name="brandvideothumbnails[]"
-
-                           @endif
-                           value="{{ $value }}"
-                    >
-                    <input
-                            accept="images/*"
-                            type="file"
-                            @if($asset['type'] == "image")
-                            data-name="boothimages"
-                            @else
-                            data-name="brandvideothumbnails"
-                            @endif
-                            data-plugins="dropify"
-                            data-type="image"
-                            data-default-file="{{ assetUrl($value) }}"
-                    />
-                    @else
-                    <div style="width: 100%;height: 100%;" class="corousel-uploader" data-toggle="modal" data-target="#img-uploader" >
-                        @if(!isset($value[0]))
-                            <span style="cursor: pointer;background: white" class="p-1f h-100 d-flex w-100 align-content-center align-items-center">
-                            Click To Upload image
-                            </span>
-                            @else
-                                <div class="carousel slide h-100" data-ride="carousel">
-                                    <div class="carousel-inner h-100" >
-                                        @if(is_iterable($value))
-                                        @foreach($value as $id=>$cimage)
-                                        <div class="carousel-item h-100
-                                        @if($id==0)
-                                        active
-                                        @endif">
-                                            <img async class="d-block img-fluid h-100 w-100"  style="object-fit:cover;" src="{{assetUrl($cimage)}}" alt="First slide">
-                                        </div>
-                                        @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                        @endif
-                    </div>
-                    @endif
-                    <input class="form-control urltooltip"
-                           @if($asset['type'] == "image")
-                           name="boothlinks[]"
-                           @elseif($asset['type'] == "video")
-                           name="brandvideos[]"
-                           @else
-                           name="corousellink"
-                           @endif
-                           type="url"
-                           value="{{ $link }}"
-                           style="width: 100%;"
-                           placeholder="URL"/>
-                </div>
+            <div id="image_demo"  class="im-section" >
+                @if(strlen($booth->boothurl)>1)
+                    <img async src="{{ assetUrl($booth->boothurl) }}" class="positioned booth-bg" alt="">
+                @else
+                    <img async src="{{ assetUrl(getField($booth->type)) }}" class="positioned booth-bg" alt="">
+                @endif
+                @foreach($booth->links as $id => $link)
+                    <div class="im-{{$id}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$id}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
                 @endforeach
-            @endif
+            </div>
+
      </div>
         <div class="row">
             <div class="col-12">
+
+
+
+
+
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title mb-3">links</h4>
+                            <div class="link-section">
+                            @foreach($booth->links as $ids => $link) 
+                                <div class="row">
+                                    <div class="form-group mb-3 col-md-4">
+                                        <label for="linktitles">Name</label>
+                                        <input type="text" value="{{$link->name}}" required  name="linknames[]" class="name-{{$ids}} form-control">
+                                    </div>
+
+
+                                    <div class="form-group mb-3 col-md-4">
+                                        <label for="type">type</label>
+                                        <select required class="form-control type" data-index="{{$ids}}"  name="type[]" >
+                                            @foreach(LINK_TYPES as $type)
+                                            <option data-def="{{$link->type}}" @if($link->type===$type) selected=true @endif  value="{{$type}}">{{$type}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    
+
+                                    <div @if($link->type !== "page") style="display: none;" @endif  class="pages-{{$ids}} pages form-group mb-3 col-md-4">
+                                        <label for="to">to(Page)</label>
+                                        <select     class="form-control" name="pages[]">
+                                            @foreach($pages as $page_to)
+                                                <option @if($link->to === $page_to->name) selected @endif value="{{$page_to->name}}">{{$page_to->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
+                                    <div @if($link->type !== "booth") style="display: none;" @endif  class="booth-{{$ids}} booths form-group mb-3 col-md-4">
+                                        <label for="to">to(Booth)</label>
+                                        <select     class="form-control" name="booths[]">
+                                            @foreach($booths as $booth)
+                                                <option @if($link->to === $booth->id) selected @endif value="{{$booth->id}}">{{$booth->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
+                                    <div @if($link->type!=="session_room") style="display: none;" @endif class="room-{{$ids}} room form-group mb-3 col-md-4">
+                                        <label for="to">to(Session Room)</label>
+                                        <select class="form-control" name="rooms[]" >
+                                            @foreach($session_rooms as $room)
+                                                <option @if($link->to === $room->name) selected @endif value="{{$room->name}}">{{$room->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div @if($link->type!=="zoom") style="display: none;" @endif class="zoom-{{$ids}} zoom form-group mb-3 col-md-4">
+                                        <label for="zoom">Zoom/External Link</label>
+                                        <input @if($link->type==="zoom") value="{{$link->to}}" @endif type="text"   name="zoom[]" class="form-control">
+                                    </div>
+
+                                    
+                                    <div @if($link->type!=="vimeo") style="display: none;" @endif class="vimeo-{{$ids}} vimeo form-group mb-3 col-md-4">
+                                        <label for="vimeo">Vimeo Url</label>
+                                        <input @if($link->type==="vimeo") value="{{$link->to}}" @endif type="text"   name="vimeo[]" class="form-control">
+                                    </div>
+
+                                    <div @if($link->type!=="chat_user") style="display: none;" @endif class="chat_user-{{$ids}} chat_user form-group mb-3 col-md-4">
+                                        <label for="chat_user">Chat User ID</label>
+                                        <input @if($link->type==="chat_user") value="{{$link->to}}" @endif type="text"   name="chatuser[]" class="form-control">
+                                    </div>
+
+                                    <div @if($link->type!=="chat_group") style="display: none;" @endif class="chat_group-{{$ids}} chat_group form-group mb-3 col-md-4">
+                                        <label for="chat_group">Chat Group ID</label>
+                                        <input @if($link->type==="chat_group") value="{{$link->to}}" @endif type="text"   name="chatgroup[]" class="form-control">
+                                    </div>
+                                    
+                                    <div  @if($link->type!=="custom_page")  style="display: none;" @endif  class="custom_page-${n} custom_page form-group mb-3 col-md-4">
+                                        <label for="custom_page">Custom Page route</label>
+                                        <input @if($link->type==="custom_page") value="{{$link->to}}" @endif type="text"   name="custom_page[]" class="form-control">
+                                    </div>
+
+
+                                    <div @if($link->type!=="pdf") style="display: none;" @endif class="image-uploader pdf-{{$ids}} pdf form-group mb-3 col-md-4">
+                                        <label for="pdf">PDF </label>
+                                   
+                                        <input type="hidden" name="pdfs[]" class="upload_input" @if($link->type==="pdf") value="{{$link->to}}" @endif">
+                                        <input type="file"      data-name="pdfs[]" data-plugins="dropify" data-type="application/pdf"  @if($link->type==="pdf") data-default-file="{{assetUrl($link->to)}}" @endif }} />                                   
+                                    </div>
+                                   
+                                    <div class="background_images_{{$ids}} row col-md-12">
+                                        @if(isset($link->background[0]))
+                                            @foreach($link->background as $bgimages)
+                                                <div class="form-group image-uploader mb-3 col-md-4">
+                                                    <label for="bgimages">Background</label>       
+                                                    <input type="hidden" name="bgimages[{{$ids}}][]" class="upload_input"  value="{{$bgimages->url}}"  >
+                                                    <input type="file" data-name="bgimages[{{$ids}}][]" data-plugins="dropify" data-type="image"  data-default-file="{{assetUrl($bgimages->url)}}" />                                   
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary add-image"  data-index="{{$ids}}" >Add Background Image</button>
+                                    </div>
+                                        
+                                    
+                                   
+                                    <div  class="row positioning-{{$ids}} col-md-12" >
+                                    
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="top">top</label>
+                                        <input value="{{$link->top}}" type="number" step="any" required  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
+                                    
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">left</label>
+                                        <input value="{{$link->left}}" type="number" step="any" required  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
+                                    
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">width</label>
+                                        <input value="{{$link->width}}" type="number" step="any" required  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
+
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">height</label>
+                                        <input value="{{$link->height}}" type="number" step="any" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Perspective</label>
+                                        <input value="{{$link->perspective}}" type="number" step="any" required  name="perspective[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Rotation Type</label>
+                                        <input value="{{$link->rotationtype}}"  required  name="rotationtype[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Rotation</label>
+                                        <input value="{{$link->rotation}}" type="number" step="any" required  name="rotation[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
+
+                                     <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
+
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                </div>
+                              @endforeach
+                             
+
+                            </div>
+                            <div>
+                                <button class="btn btn-primary">Save</button>
+                                <button class="btn btn-primary" id="add-link">Add links</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
                 <!-- Card 1  -->
                 <div class="card ">
                     <div class="card-body">
@@ -209,77 +283,39 @@
                             <button class="btn btn-primary" id="add-video">Add Video</button>
                         </div>
                     </div>
-                </div> 
+                 </div> 
                 <!-- Card 4 Resources  -->
 
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="header-title mb-3">Resources</h4>
-                        <div class="resource-section">
-                            @foreach($booth->resources as $resource)
-                                <div class="row">
-                                    <div class="image-uploader mb-3 col-md-4">
-                                        <input type="hidden" name="resources[]" class="upload_input"
-                                               value="{{ $resource->url }}">
-                                        <input type="file" data-name="resources" data-plugins="dropify" data-type="/"
-                                               data-default-file="{{assetUrl($resource->url)}}"/>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title mb-3">Resources</h4>
+                            <div class="resource-section">
+                                @foreach($booth->resources as $resource)
+                                    <div class="row">
+                                        <div class="image-uploader mb-3 col-md-4">
+                                            <input type="hidden" name="resources[]" class="upload_input"
+                                                value="{{ $resource->url }}">
+                                            <input type="file" data-name="resources" data-plugins="dropify" data-type="/"
+                                                data-default-file="{{assetUrl($resource->url)}}"/>
+                                        </div>
+                                        <div class="form-group mb-3 col-md-8">
+                                            <label for="resourcetitles">Title</label>
+                                            <input type="text" id="resourcetitles" name="resourcetitles[]" class="form-control"
+                                                value="{{ $resource->title }}"
+                                                >
+                                            <button class="btn btn-danger mt-2 remove-resource">Remove</button>
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3 col-md-8">
-                                        <label for="resourcetitles">Title</label>
-                                        <input type="text" id="resourcetitles" name="resourcetitles[]" class="form-control"
-                                               value="{{ $resource->title }}"
-                                               >
-                                        <button class="btn btn-danger mt-2 remove-resource">Remove</button>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endforeach
+                            </div>
 
-                        <div>
-                            <button class="btn btn-primary">Save</button>
-                            <button class="btn btn-primary" id="add-resource">Add Resources</button>
+                            <div>
+                                <button class="btn btn-primary">Save</button>
+                                <button class="btn btn-primary" id="add-resource">Add Resources</button>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="img-uploader" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-full-width modal-c">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title pdf-title d-block " id="myLargeModalLabel">Corousal Image Uploader</h4>
-                        <h7 class="modal-title">(Upload 1 Image To Keep the Corousel Static)</h7>
-                        (Maximum Images To be Uploaded: 3)<br/>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body ">
-                        <div class="corousel-section row">
-                            @foreach($booth->images as $image)
-                                @if($image->title=="corousel")
-
-                                    <div class="image-uploader mb-3 col-md-4">
-                                        <input type="hidden"
-                                               class="upload_input c-image"
-                                               name="corouselimages[]"
-                                               value="{{$image->url}}"
-                                        >
-                                        <input
-                                                accept="images/*"
-                                                type="file"
-                                                data-name="corouselimages"
-                                                data-plugins="dropify"
-                                                data-type="image"
-                                                data-default-file="{{assetUrl($image->url)}}"
-                                        />
-                                    </div>
-                                @endif
-                            @endforeach
-
-                        </div>
-                        <button class="btn btn-primary" id="corousel-img">Add Image</button>
-                    </div>
-                </div>
             </div>
         </div>
     </form>
@@ -303,30 +339,7 @@
             initializeFileUploads();
             bindRemoveButton();
         }
-        function addimage(e) {
-            e.preventDefault();
-            if($(".c-image").length<3)
-            {
-            $(".corousel-section").append(`
-             <div class="image-uploader mb-3 col-md-4">
-              <input type="hidden"
-                    class="upload_input c-image"
-                    name="corouselimages[]"
-                />
-                    <input
-                        accept="images/*"
-                        type="file"
-                        data-name="corouselimages"
-                        data-plugins="dropify"
-                        data-type="image"
-                    />
-                </div>`);
-            initializeFileUploads();
-            }else {
-                $("#corousel-img").attr("disabled", true);
-            }
-        }
-
+     
         function addresource(e) {
             e.preventDefault();
             $(".resource-section").append(`
@@ -373,7 +386,6 @@
         $(document).ready(function () {
             $("#add-video").on("click", addvideo);
             $("#add-resource").on("click", addresource);
-            $("#corousel-img").on("click",addimage);
             $(".carousel").carousel("cycle");
             $('.carousel').carousel({
                 interval: 100
@@ -381,4 +393,336 @@
             bindRemoveButton();
         })
     </script>
+    
+<script>
+    let resetflag = true;
+    let links = {!! json_encode($booth->links) !!};
+    let n = links.length;
+    // console.log(n);
+    $(document).ready(function() {
+        
+     
+        
+        $("#add-link").on("click", addlink);
+        // $(".add-image").on("click", addImage);
+
+        $(".type").on("change",toggleVisibility);
+        $(".pos").on("input",changePosition);
+        
+        $(".done").hide();
+        $(".done").on("click",resetPosition)
+        
+
+        bindRemoveButton();
+
+    });
+
+    function addImage(e){
+        e.preventDefault();
+        let target = $(e.target);
+        const index = target.data("index");
+        console.log(index);
+        
+        $(".background_images_"+index).append(
+            `<div class="form-group image-uploader mb-3 col-md-4">
+                <label for="bgimages">Background</label>       
+                <input type="hidden" name="bgimages[${index}][]" class="upload_input">
+                <input type="file" data-name="bgimages[${index}][]" data-plugins="dropify" data-type="image"   />                                   
+            </div>`);
+            initializeFileUploads();
+
+
+    }
+
+    function resetPosition(e){
+        e.preventDefault();
+        let target = $(e.target);
+        const index = target.data("index");
+        $(".done-"+index).hide();
+        $(".positioning-"+index).eq(0).css({
+            position: "static",
+            background: "#ffffff",
+            padding: "0",
+            color: "#6c757d",
+            width: "100%",
+        });
+        resetflag =true;
+    }
+
+    
+    function changePosition(e){
+        
+        let target = $(e.target);
+        
+        
+        const index = target.data("index");
+        if(resetflag){
+            resetflag =false;
+            document.getElementById("image_demo").scrollIntoView(false);
+        }
+        const positions =  $(".pos-"+index).map((i, v) => v.value);
+        $(".done-"+index).show();
+        let name = $(".name-"+index).val();
+        $(".im-"+index).eq(0).css(areaStylesb(positions));
+        console.log(positions)
+        console.log(getRotation(positions))
+        $(".im_name-"+index).eq(0).css(getRotation(positions));
+        $(".im_name-"+index).html(`${name}`);
+        $(".positioning-"+index).eq(0).css({
+            position: "fixed",
+            bottom: "20px",
+            left: "18%",
+            background: "#23283ebd",
+            padding: "15px",
+            color: "white",
+            width: "40%",
+        });
+    }
+    function getRotation(area){
+        if(area[5]=="X"){
+            return {
+                transform: `rotatex(${area[6]}deg)`
+            }
+        }else{
+            return {
+                transform: `rotatey(${area[6]}deg)`
+            }
+        }
+    }
+
+    
+    function areaStylesb(area)
+    {
+        return {
+            position:"absolute",
+             background:"white", 
+             top: area[0]+'%',
+             left: area[1]+'%',
+             width: area[2]+'%',
+             height: area[3]+'%',
+             perspective: area[4]+'px'
+        }
+    }
+
+
+    function toggleVisibility(e){
+        
+        // console.log(e.target.value);
+        // console.log(e.data)
+        const selectbox = $(e.target);
+        const index = selectbox.data('index');
+
+        
+        $(".room-"+index).hide();
+        $(".pages-"+index).hide();
+        $(".zoom-"+index).hide();
+        $(".booth-"+index).hide();
+        $(".vimeo-"+index).hide();
+        $(".pdf-"+index).hide();
+        $(".chat_user-"+index).hide();
+        $(".chat_group-"+index).hide();
+        $(".custom_page-"+index).hide();
+
+        switch(selectbox.val()){
+            case "session_room":
+                $(".room-"+index).show();
+                break;
+            case "page":
+                $(".pages-"+index).show();
+                break;
+            case "zoom":
+                $(".zoom-"+index).show();
+                break;
+            case "booth":
+                $(".booth-"+index).show();
+                break;
+            case "vimeo":
+                $(".vimeo-"+index).show();
+                break;
+            case "pdf":
+                $(".pdf-"+index).show();
+                break;
+            case "chat_user":
+                $(".chat_user-"+index).show();
+                break;
+            case "chat_group":
+                $(".chat_group-"+index).show();
+                break;
+            case "custom_page":
+                $(".custom_page-"+index).show();
+                break;
+        }
+        // console.log(val);
+    }
+
+    function addlink(e) {
+        e.preventDefault();
+        // console.log(n);
+        
+        // console.log(n);
+
+        $(".im-section").append(`
+            <div class="im-${n} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" ><div class="im_names im_name-${n}" style="height:100%; background:red;" >Link ${n} </div></div>      
+        `);
+        
+
+        $(".link-section").append(`
+                                <div class="row">
+                                    <div class="form-group mb-3 col-md-4">
+                                        <label for="linktitles">Name</label>
+                                        <input type="text" required  name="linknames[]" class="name-${n} form-control">
+                                    </div>
+
+
+                                    <div class="form-group mb-3 col-md-4">
+                                        <label for="type">type</label>
+                                        <select required class="form-control type" data-index="${n}"  name="type[]" >
+                                            @foreach(LINK_TYPES as $type)
+                                            <option value="{{$type}}">{{$type}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    
+
+                                    <div  class="pages-${n} pages form-group mb-3 col-md-4">
+                                        <label for="to">to(Page)</label>
+                                        <select value=" " class="form-control" name="pages[]">
+                                            <option selected value=" ">Select Page to Redirect to</option>
+                                            @foreach($pages as $page_to)
+                                                <option value="{{$page_to->name}}">{{$page_to->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
+                                    <div style="display: none;" class="booth-${n} booths form-group mb-3 col-md-4">
+                                        <label for="to">to(Booth)</label>
+                                        <select     class="form-control" name="booths[]">
+                                            @foreach($booths as $booth)
+                                                <option value="{{$booth->id}}">{{$booth->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
+                                    <div style="display: none;" class="room-${n} room form-group mb-3 col-md-4">
+                                        <label for="to">to(Session Room)</label>
+                                        <select value=" " class="form-control" name="rooms[]" >
+                                                <option selected value=" ">Select Session Room</option>
+                                            @foreach($session_rooms as $room)
+                                                <option value="{{$room->name}}">{{$room->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div style="display: none;" class="zoom-${n} zoom form-group mb-3 col-md-4">
+                                        <label for="zoom">Zoom/External Link</label>
+                                        <input type="text"   name="zoom[]" class="form-control">
+                                    </div>
+
+                                    <div style="display: none;" class="vimeo-${n} vimeo form-group mb-3 col-md-4">
+                                        <label for="vimeo">Vimeo Url</label>
+                                        <input type="text"   name="vimeo[]" class="form-control">
+                                    </div>
+
+                                    <div  style="display: none;"  class=" pdf-${n} pdf  mb-3 col-md-4">
+                                        <div class="image-uploader">
+                                        <label for="pdf">PDF </label>
+                                        <input type="hidden" name="pdf[]" class="upload_input">
+                                        <input type="file"    data-name="pdf[]" data-plugins="dropify" data-type="application/pdf" />                                   
+                                        </div>
+                                    </div>
+                                    <div  style="display: none;"  class="chat_user-${n} chat_user form-group mb-3 col-md-4">
+                                        <label for="chat_user">Chat User ID</label>
+                                        <input type="text"   name="chatuser[]" class="form-control">
+                                    </div>
+                                    <div  style="display: none;"  class="chat_group-${n} chat_group form-group mb-3 col-md-4">
+                                        <label for="chat_group">Chat Group ID</label>
+                                        <input type="text"   name="chatgroup[]" class="form-control">
+                                    </div>
+
+                                    <div  style="display: none;"  class="custom_page-${n} custom_page form-group mb-3 col-md-4">
+                                        <label for="custom_page">Custom Page route</label>
+                                        <input type="text"   name="custom_page[]" class="form-control">
+                                    </div>
+
+
+                                    <div class="background_images_${n} row col-md-12">
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary add-image"  data-index="${n}"  >Add Background Image</button>
+                                    </div>
+
+
+                                    <div  class="row positioning-${n}" >
+                                    
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="top">top</label>
+                                        <input type="number" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
+                                    
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">left</label>
+                                        <input type="number" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
+                                    
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">width</label>
+                                        <input type="number" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
+
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">height</label>
+                                        <input type="number" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Perspective</label>
+                                        <input  type="number" step="any" required  name="perspective[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Rotation Type</label>
+                                        <input   required  name="rotationtype[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Rotation</label>
+                                        <input  type="number" step="any" required  name="rotation[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
+
+                                    <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
+
+                                    </div>
+                                        <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                    </div>`);
+            bindRemoveButton();
+        n++;
+            
+            initializeFileUploads();
+        }
+
+
+        function bindRemoveButton() {
+            $(".remove-link").unbind().on("click", removelink);
+            $(".type").on("change",toggleVisibility);
+            $(".pos").on("input",changePosition);
+
+            $(".done").hide();
+            $(".done").on("click",resetPosition)
+            $(".add-image").unbind().on("click", addImage);
+
+
+
+        }
+
+        function removelink(e) {
+            e.preventDefault();
+            confirmDelete("Are you sure you want to delete the Link", "Confirm Link deletion!").then(confirmation => {
+                if (confirmation) {
+                    $(this).closest(".row").remove();
+                }
+            })
+        }
+    </script>
+
+
 @endsection

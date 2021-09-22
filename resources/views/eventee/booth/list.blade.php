@@ -32,7 +32,6 @@
                         <tr>
                             <th>Name</th>
                             <th>Admins</th>
-                            <th>Room</th>
                             <th class="text-right mr-2">Actions</th>
                         </tr>
                     </thead>
@@ -45,14 +44,6 @@
                                 return $user->name;
                             })->toArray())
                           !!}</td>
-                          @php
-                              $room = App\Room::where('id',$booth->room_id);
-                          @endphp
-                          @if($room->count() > 0)
-                          <td>{{$room->first()->name}}</td>
-                          @else
-                          <td>{{ ucfirst("no room selected") }}</td>
-                          @endif
                             <td class="text-right" >
                                 <a href="{{ route("eventee.booth.edit", [
                                         "booth_id" => $booth->id,"id"=>$id

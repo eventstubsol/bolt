@@ -5,15 +5,15 @@
 @endsection
 
 @section("page_title")
-    Pages Page
+    Sessions Page
 @endsection
 
 @section("title")
-    Pages Page
+    Sessions Page
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Pages</li>
+    <li class="breadcrumb-item active">Sessions</li>
 @endsection
 
 @section("content")
@@ -25,19 +25,27 @@
                 <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
-                            <th>Page</th>
+                            <th>Title</th>
+                            <th>Room</th>
+                            <th>Master Room</th>
+                            <th>Timing</th>
+                            <th>Status</th>
                             <th class="text-right mr-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                      @foreach($pages as $page)
+                      @foreach($sessions as $session)
                         <tr>
-                            <td>{{$page->name}}</td>
+                            <td>{{$session->name}}</td>
+                            <th>{{$session->parentroom->name??""}}</th>
+                            <th>{{$session->parentroom->master_room??""}}</th>
+                            <th>{{$session->start_time}}-{{$session->end_time}}</th>
+                            <th>{{$session->isLive?"Live":"Not Live "}}</th>
                             <td class="text-right" >
-                                <a href="{{ route("page.edit", [
-                                        "page" => $page->id
+                                <a href="{{ route("eventee.sessions.edit", [
+                                        "session" => $session->id,'id'=>$id
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
-                                    <button data-toggle="tooltip" data-placement="top" data-id="{{$page->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
+                                    <button data-toggle="tooltip" data-placement="top" data-id="{{$session->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
                             </td>
                         </tr>
                       @endforeach
@@ -56,12 +64,12 @@
     @include("includes.scripts.datatables")
     <script>
         $(document).ready(function(){
-            $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.pages.create",$id) }}">Create New</a>')
+            $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.sessions.create",["id"=>$id]) }}">Create New</a>')
             $("body").on("click",".delete",function(e){
                     t = $(this);
-                    let deleteUrl = '{{route("page.destroy", [ "page" => ":id" ])}}';
+                    let deleteUrl = '{{route("eventee.sessions.destroy", [ "session" => ":id", "id" => $id ])}}';
                     let id = t.data("id");
-                    confirmDelete("Are you sure you want to DELETE Page?","Confirm Page Delete").then(confirmation=>{
+                    confirmDelete("Are you sure you want to DELETE session?","Confirm session Delete").then(confirmation=>{
                         if(confirmation){
                             $.ajax({
                                 url:deleteUrl.replace(":id", id),
