@@ -11,6 +11,9 @@ class Link extends Model
     use UUID;
     public $incrementing = false;
 
+    public function background(){
+        return $this->hasMany("\App\Image", "owner");
+    }
     //For mass assignment whitelisting
     protected $guarded = [
         "id",

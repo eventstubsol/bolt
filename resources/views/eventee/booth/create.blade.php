@@ -3,6 +3,8 @@
 
 @section("styles")
     @include("includes.styles.select")
+@include("includes.styles.fileUploader")
+
 @endsection
 
 
@@ -36,34 +38,13 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="booth_type">Type</label>
-                        <select name="type" class="form-control @error('type') is-invalid @enderror" id="booth_type" required>
-                            <option value="">Select Booth</option>
-                            @foreach(BOOTH_TYPES as $booth_type)
-                                <option value={{$booth_type}}>{{ucfirst($booth_type)}}</option>
-                            @endforeach
-                        </select>
-                         @error('type')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="example-select">Room</label>
-                        <select name="room_id" class="form-control @error('room_id') is-invalid @enderror" id="example-select" required>
-                            <option value="">Select Room</option>
-                            @foreach($rooms as $room)
-                              <option value={{$room->id}}>{{$room->name}}</option>
-                             @endforeach
-                        </select>
-                         @error('room_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
+                    <!-- Booth Background Image Uploader -->
+                    <div class="image-uploader">
+                        <label class="mb-3" for="images">Booth Image</label>
+                        <input type="hidden" name="boothurl" class="upload_input" >
+                        <input type="file" data-name="boothimages" data-plugins="dropify" data-type="image" />
+                     </div>
+
                     <div class="form-group mb-3">
                         <label for="calendly_link">Calendly Link</label>
                         <input type="url" name="calendly_link" class="form-control @error('calendly_link') is-invalid @enderror" id="calendly_link" />
@@ -89,9 +70,7 @@
                         @enderror
                        </div>
 
-                    <div>
                         <input class="btn btn-primary" type="submit" value="Create" />
-                    </div>
                 </form>
                 </div>
             </div>
@@ -102,4 +81,6 @@
 @endsection
   @section("scripts")
     @include("includes.scripts.select")
+  @include("includes.scripts.fileUploader")
+
   @endsection
