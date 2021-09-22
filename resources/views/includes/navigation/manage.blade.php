@@ -419,7 +419,7 @@
     </div>
 </li>
 
-<li>
+<!-- <li>
     <a href="#prizes" data-toggle="collapse">
         <i class="mdi mdi-gift-outline"></i>
         <span> Prizes </span>
@@ -434,7 +434,7 @@
             </li>
         </ul>
     </div>
-</li>
+</li> -->
 <li>
     <a href="#prizes" data-toggle="collapse">
         <i class="mdi mdi-gift-outline"></i>
@@ -524,7 +524,7 @@
 </li>
 <li>
     <a href="#sessionrooms" data-toggle="collapse">
-        <i class="mdi mdi-play"></i>
+        <i  data-feather="home"></i>
         <span> Session Rooms</span>
     </a>
     <div class="collapse" id="sessionrooms">
