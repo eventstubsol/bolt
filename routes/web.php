@@ -395,8 +395,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     });
 
     Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
-        Route::get("/booth/edit/{booth}", "BoothController@adminEdit")->name("exhibiter.edit");
-        Route::post("/booth/edit/{booth}", "BoothController@adminUpdate")->name("exhibiter.update");
+        Route::get("/booth/edit/{booth}", "Eventee\BoothController@adminEdit")->name("exhibiter.edit");
+        Route::post("/booth/edit/{booth}", "Eventee\BoothController@adminUpdate")->name("exhibiter.update");
         Route::get("/booth/{booth}/enquiries", "BoothController@boothEnquiries")->name("exhibiter.enquiries");
         Route::get("/booth/{booth}/enquiries/raw", "BoothController@boothEnquiriesRaw")->name("exhibiter.enquiries.raw");
         // Route::post("/booth/edit/{booth}","BoothController@adminUpdateImages")->name("exhibiter.updateimages");
