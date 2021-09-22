@@ -17,7 +17,7 @@ class LoginController extends Controller
 
         // return decrypt($id);
         $event = Event::findOrFail(decrypt($id));
-        if($event->end_date > Carbon::today()){
+        if($event->end_date < Carbon::today()){
             return view('errors.custom');
         }
         else{

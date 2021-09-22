@@ -104,12 +104,12 @@ class eventeeController extends Controller
                     "event_id"=>$event->id
                ]);
             }
-            $req->session()->put('eve-sucess', 1);
+            flash("Event Saved Successfully")->success();
             Event::where('id',$event->id)->update(['link'=>$baseurl . '/Event'.'/'.encrypt($event->id)]);
             return redirect()->back();
         }
         else{
-            $req->session()->put('eve-sucess', 2);
+            flash("Something Went Wrong")->error();
             return redirect()->back();
         }
 
