@@ -75,6 +75,11 @@ class Booth extends Model
         return $this->hasMany("\App\Resource");
     }
 
+    public function links()
+    {
+        return $this->hasMany("\App\Link","page");
+    }
+
     public function images(){
         return $this->hasMany("\App\Image", "owner");
     }

@@ -16,7 +16,8 @@ use App\BoothAdmin;
 use App\Image;
 
 use App\Video;
-
+use App\Page;
+use App\Link;
 use App\sessionRooms;
 
 use App\Resource;
@@ -54,25 +55,15 @@ class BoothController extends Controller
           else{
               return false;
           }
-          if($request->has("room_id")){
-            $booth->room_id = $request->get("room_id");
-          }
-          else{
-            return false." room Id";
-          }
-         if($request->has("type")){
-            $booth->type = $request->get("type");
-         }
-         else{
-            return false." type ";
+          if($request->has("boothurl")){
+            $booth->boothurl = $request->get("boothurl");
+          }else{
+            return false." Booth url ";
           }
           $booth->event_id = decrypt($id);
           if($request->has("calendly_link")){
             $booth->calendly_link=$request->calendly_link;
           }
-          // else{
-          //     return "no calen";
-          // }
           
           $booth->save();
           // if($booth->save()){
@@ -218,37 +209,92 @@ class BoothController extends Controller
 
   public function adminEdit(Request $req, Booth $booth)
   {
+    $pages = Page::where("event_id",$booth->event_id)->get();
+
+    $booths = Booth::where("event_id",$booth->event_id)->get();
+
+    $session_rooms = sessionRooms::where("event_id",$booth->event_id)->get();
+
+    $booth->load(["images", "videos", "resources","links.background"]);
+    $links = Link::where(["page"=>$booth->id])->with(["background"])->get();
+  
       $booth->load(["images", "videos", "resources"]);
-    return view("exhibitor.edit")->with(compact("booth"));
+    return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms"));
   }
 
   public function adminUpdate(Request $request, Booth $booth)
   {
-    $booth->load(["images", "videos", "resources"]);
-    //upload images
-    Image::where("owner", $booth->id)->delete();
-    $boothlinks = $request->boothlinks;
-    foreach ($request->boothimages as $id => $boothimage) {
-      if (!empty(trim($boothimage))) {
-        $booth->images()->create([
-          "title" => "Slot " . $id,
-          "url" => $boothimage,
-          "link" =>  $boothlinks[$id],
-        ]);
-      }
-    }
-    if ($request->has("corouselimages")) {
-      $link = $request->corousellink ? $request->corousellink : "";
-      foreach ($request->corouselimages as $image) {
-        if (!empty(trim($image))) {
-          $booth->images()->create([
-            "url" => $image,
-            "link" => $link,
-            "title" => "corousel"
+    // dd($request->all());
+    $booth->load(["images", "videos", "resources","links.background"]);
+
+
+
+    $booth->links()->delete();
+    if($request->has("linknames")){
+        foreach($request->linknames as $id => $linkname){
+            $to = "";
+            // dd($request->type);
+            switch($request->type[$id]){
+                case "session_room": 
+                    $to = $request->rooms[$id];
+                    break;
+                case "page":
+                    $to = $request->pages[$id];
+                    break;
+                case "zoom":
+                    $to = $request->zoom[$id];
+                    break;
+                case "booth":
+                    $to = $request->booths[$id];
+                    break;
+                case "vimeo":
+                    $to = $request->vimeo[$id];
+                    break;
+                case "pdf":
+                    $to = $request->pdf[$id];
+                    break;
+                case "chat_user":
+                    $to = $request->chatuser[$id];
+                    break;
+                case "chat_group":
+                    $to = $request->chatgroup[$id];
+                    break;
+                case "custom_page":
+                    $to = $request->custom_page[$id];
+                    break;
+            }
+            $link  =Link::create([
+              "page"=>$booth->id,
+              "name"=> $linkname,
+              "type"=>$request->type[$id],
+              "to"=> $to,
+              "top"=> $request->top[$id],
+              "left"=> $request->left[$id],
+              "width"=> $request->width[$id],
+              "height"=> $request->height[$id],
+              "perspective"=>isset($request->perspective[$id])?$request->perspective[$id]:'',
+              "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
+              "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
           ]);
+          // dd($request->bgimages);
+          if($request->has("bgimages") && isset($request->bgimages[$id]) ){
+            if(count($request->bgimages[$id])>0 ){
+              foreach($request->bgimages[$id] as $bgimage){
+                if($bgimage){ //check if not null
+                  $link->background()->create([
+                    "owner"=>$link->id,
+                    "url" => $bgimage,
+                    "title" => "link"
+                  ]);
+                }
+
+              }
+            }
+
+          }
         }
-      }
     }
+
 
     //uploading videos
     Video::where("owner", $booth->id)->delete();
@@ -262,20 +308,12 @@ class BoothController extends Controller
         }
       }
     }
-    if ($request->has("brandvideos") && is_array($request->brandvideos)) {
-      foreach ($request->brandvideos as $i => $brandvideo) {
-        if (!empty(trim($brandvideo))) {
-          $booth->videos()->create([
-            "url" => $brandvideo,
-            "title" => "brandvideo",
-            "thumbnail" => $request->brandvideothumbnails[$i],
-          ]);
-        }
-      }
-    }
+
+
+
+
 
     //updating resources
-
     $requesturls = $request->resources; //Recieved from form
     $deletedResources = [];
     if(!$requesturls || !is_array($requesturls)){
@@ -308,17 +346,15 @@ class BoothController extends Controller
       }
     }
     //booth description update
-    // if(isset($request->description)&& isset($request->description_two))
     $booth->update([
       "description" => $request->description,
       "description_two" => $request->description_two,
       "url" => $request->url,   //Booth Website
     ]);
 
-      $booth->load(["images", "videos", "resources"]);
+      // $booth->load(["images", "videos", "resources","links"]);
 
-    return redirect()->to(route("exhibiter.update", ["booth" => $booth->id]));
-  }
+    return redirect()->to(route("exhibiter.update", ["booth" => $booth->id]));}
 
   public function boothEnquiries(Booth $booth){
       $booth->load("interests.user");

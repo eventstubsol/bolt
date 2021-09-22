@@ -419,7 +419,7 @@
     </div>
 </li>
 
-<li>
+<!-- <li>
     <a href="#prizes" data-toggle="collapse">
         <i class="mdi mdi-gift-outline"></i>
         <span> Prizes </span>
@@ -434,7 +434,7 @@
             </li>
         </ul>
     </div>
-</li>
+</li> -->
 <li>
     <a href="#prizes" data-toggle="collapse">
         <i class="mdi mdi-gift-outline"></i>
