@@ -52,6 +52,7 @@
                             <th>Url</th>
                             <th>Start Date</th>
                             <th>End Date</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -64,6 +65,13 @@
                                 <td id="copyTarget" style="cursor: pointer" data-id="{{ $event->link }}" ondblclick="openPage(this)" onclick="copyclip(this)" data-des="{{ $event->link }}">{{ Str::limit($event->link,50) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->end_date)->format('d-m-Y') }}</td>
+                                <td>
+                                    @if ($event->end_date > Carbon\Carbon::today())
+                                        <span style="color: red">○ &nbsp;Expired</span>
+                                    @else
+                                        <span style="color: green">○ &nbsp;Active</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
                                     <a href="{{ route('event.Dashboard',['id'=>encrypt( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
