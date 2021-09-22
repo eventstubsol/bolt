@@ -32,6 +32,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
+    Route::get('Event/edit/{id}','EventManageController@Edit')->name('event.Edit');
+    Route::post('Event/update/{id}','EventManageController@update')->name('event.Update');
 
 
     //Event Frontend

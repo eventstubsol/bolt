@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Carbon\Carbon;
+use App\Event;
 
 class EventManageController extends Controller
 {
@@ -76,5 +77,25 @@ class EventManageController extends Controller
             'unique_login_count' => \App\Points::where("points_for", $eventName)->where("created_at", ">=", Carbon::now()->startOf("day"))->distinct("points_to")->count(),
             'last_login_list' => $lastLoginList,
         ];
+    }
+
+    public function edit($id){
+        $event = Event::findOrFail(decrypt($id));
+        return view('eventee.events.edit',compact('id','event'));
+    }
+
+    public function update($id,Request $req){
+        $event = Event::findOrFail(decrypt($id));
+        $event->name = $req->name;
+        $event->start_date = $req->start_date;
+        $event->end_date = $req->end_date;
+        if($event->save()){
+            flash("Event Updated Succesfully")->success();
+            return redirect()->route('event.index',$id);
+        }
+        else{
+            flash("Something Went Wrong")->error();
+            return redirect()->route('event.index',$id);
+        }
     }
 }

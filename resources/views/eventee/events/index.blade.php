@@ -18,21 +18,6 @@
 @endsection
 
 @section('content')
-@if(Session::get('eve-sucess') == 1)
-    <script>
-        alert('Event Added');
-    </script>
-    @php
-        Session::put('eve-sucess',0);
-    @endphp
-@elseif(Session::get('eve-sucess') == 2)
-    <script>
-        alert('Something Went Wrong!!!');
-    </script>
-    @php
-    Session::put('eve-sucess',0);
-    @endphp
-@endif
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -66,16 +51,15 @@
                                 <td>{{ \Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->end_date)->format('d-m-Y') }}</td>
                                 <td>
-                                    @if ($event->end_date > Carbon\Carbon::today())
+                                    @if ($event->end_date < Carbon\Carbon::today())
                                         <span style="color: red">○ &nbsp;Expired</span>
                                     @else
                                         <span style="color: green">○ &nbsp;Active</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('event.Edit',['id'=>encrypt( $event->id )]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
                                     <a href="{{ route('event.Dashboard',['id'=>encrypt( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
-                                    <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </td>
                             </tr>
                             @endforeach
