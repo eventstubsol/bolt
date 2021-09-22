@@ -28,7 +28,8 @@
         <div class="card">
             <div class="card-body">
               <form action="{{ route("eventee.booth.update", [ "booth_id" => $booth->id,"id"=>$id ]) }}" method="post">
-                    {{ csrf_field() }}
+              {{ csrf_field() }}
+                    @method("PUT")
                     <div class="form-group mb-3">
                         <label for="boothname">Booth Name</label>
                         <input autofocus type="text"  id="boothname" name="name" value="{{ $booth->name }}" class="form-control  @error('name') is-invalid @enderror" required>
@@ -38,43 +39,8 @@
                         </span>
                         @enderror
                     </div>
-                      <div class="form-group mb-3">
-                          <label for="booth_type">Type</label>
-                          <select name="type" class="form-control @error('type') is-invalid @enderror" required id="booth_type">
-                              <option value="">Select Type</option>
-                              @foreach(BOOTH_TYPES as $booth_type)
-                                  <option value={{$booth_type}}
-                                    @if($booth_type==$booth->type)
-                                        selected="selected"
-                                          @endif
-                                  >{{ucfirst($booth_type)}}</option>
-                              @endforeach
-                          </select>
-                          @error('type')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                      </div>
+                      
 
-                      <div class="form-group mb-3">
-                        <label for="example-select">Room</label>
-                        <select name="room_id" class="form-control @error('room_id') is-invalid @enderror" id="example-select" required>
-                            <option value="">Select Room</option>
-                            @foreach($rooms as $room)
-                             <option value={{$room->id}}
-                                @if($room->id == $booth->room_id)
-                                  selected
-                                @endif >{{$room->name}}</option>
-                             @endforeach
-                        </select>
-                        @error('room_id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-
-                    </div>
 
                       <div class="form-group mb-3">
                         <label for="calendly_link">Calendly Link</label>
