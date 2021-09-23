@@ -13,10 +13,10 @@ class LoginController extends Controller
     {
         $this->loginT = getLoginVars();
     }
-    public function login($id){
+    public function login($sudomain){
 
         // return decrypt($id);
-        $event = Event::findOrFail(decrypt($id));
+        $event = Event::where("name",$sudomain)->first();
         if($event->end_date < Carbon::today()){
             return view('errors.custom');
         }
@@ -25,7 +25,8 @@ class LoginController extends Controller
                 "login" => $this->loginT,
                 "notFound" => FALSE,
                 "captchaError" => FALSE,
-                "id"=>$id
+                "id"=>$event->id,
+                "subdomain"=>$event->name
             ]);
         }
         

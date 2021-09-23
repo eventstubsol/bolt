@@ -89,8 +89,13 @@ class eventeeController extends Controller
 
     public function Save(Request $req){
         $baseurl = URL::to('/');
+        if(strpos($baseurl,'https')){
+           $baseurl =  str_replace('https://','',$baseurl);
+        }else{
+          $baseurl=  str_replace('http://','',$baseurl);
+        }
         $event = new Event;
-        $event->name = $req->name;
+        $event->name = str_replace(" ","-",trim($req->name));
         $event->user_id = Auth::id();
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
@@ -105,7 +110,7 @@ class eventeeController extends Controller
                ]);
             }
             flash("Event Saved Successfully")->success();
-            Event::where('id',$event->id)->update(['link'=>$baseurl . '/Event'.'/'.encrypt($event->id)]);
+            Event::where('id',$event->id)->update(['link'=> $event->name.'.'.$baseurl.'/Event']);
             return redirect()->back();
         }
         else{

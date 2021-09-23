@@ -52,6 +52,8 @@ class PageController extends Controller
 
 
     public function edit(Page $page,$id){
+        // dd("test");
+
 
         $pages = Page::where('event_id',decrypt($id))->get();
 

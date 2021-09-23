@@ -23,7 +23,7 @@ if(Auth::user()){
     $email = Auth::user()->email;
 }
 @endphp
-<form id="form" action="{{ route('event.user.confirmLogin',$id) }}" method="post">
+<form id="form" action="{{ route('event.user.confirmLogin', ['subdomain' => $subdomain]) }}" method="post">
     @csrf
     <div class="input-group">
         <label for="{{ $login["field"] }}">{{ print_r($login["label"]) }}</label>
