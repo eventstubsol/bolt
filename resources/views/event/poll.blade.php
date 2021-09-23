@@ -110,7 +110,7 @@
         $('#questionModal').modal('toggle');
         
        $.ajax({
-           url:"{{ route('user.polls') }}",
+           url:"{{ route('user.polls',$event_id) }}",
            method:"get",
            data:{'id':pollId},
            success:function(result){

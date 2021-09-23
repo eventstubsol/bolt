@@ -856,7 +856,7 @@ $user = Auth::user();
             setInterval(function() {
                 $('#announce_body ').empty();
                 $.ajax({
-                    url: "{{ route('announcement.popUp') }}",
+                    url: "{{ route('announcement.popUp',$event_id) }}",
                     success: function(result) {
                         if (result != null) {
                             

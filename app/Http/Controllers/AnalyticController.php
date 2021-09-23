@@ -53,27 +53,21 @@ class AnalyticController extends Controller
             $track_id = $request->tracking_id;
             $key1 = PHP_EOL . 'GA_TRACKING_ID';
             $key2 = 'GA_VIEW_ID';
-            if (env('GA_TRACKING_ID')) {
-                return "Something Went Wrong";
-            } else {
-                UpdateEnv($key1, $track_id);
-                UpdateEnv($key2, $view_id);
-                if ($request->hasFile('file')) {
-                    $file = $request->file('file');
-                    $name = $file->getClientOriginalName();
-                    $file_location = public_path('third_party');
-                    $total = $file_location . '/' . $name;
-                    $file->move($file_location, $name);
-                    $api = new Api;
-                    $api->title = $request->title;
-                    $api->type = $request->type;
-                    $api->view_id = $request->view_id;
-                    $api->file_location = $total;
-                    if ($api->save()) {
-                        return redirect()->back();
-                    } else {
-                        return "Something Went Wrong";
-                    }
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $name = $file->getClientOriginalName();
+                $file_location = public_path('third_party');
+                $total = $file_location . '/' . $name;
+                $file->move($file_location, $name);
+                $api = new Api;
+                $api->title = $request->title;
+                $api->type = $request->type;
+                $api->view_id = $request->view_id;
+                $api->file_location = $total;
+                if ($api->save()) {
+                    return redirect()->back();
+                } else {
+                    return "Something Went Wrong";
                 }
 
                 return redirect()->back();

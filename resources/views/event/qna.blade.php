@@ -1,5 +1,6 @@
 @php
 $questions = App\LiveQuestion::where('view', 1)
+    ->where('event_id',decrypt($event_id))
     ->orderBy('created_at', 'desc')
     ->get();
 @endphp
@@ -364,8 +365,11 @@ $questions = App\LiveQuestion::where('view', 1)
 
     function submitQuestion() {
         var question = $('#question').val();
+        var event_id = "{{ $event_id }}";
+        alert(event_id);
         $.get("{{ route('qna.Save') }}", {
-            'question': question
+            'question': question,
+            'event_id' : event_id,
         }, function(result) {
 
             if (result.status == 200) {
