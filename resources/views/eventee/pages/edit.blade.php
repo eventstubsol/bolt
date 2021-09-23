@@ -53,7 +53,7 @@ Edit Page
                
 
 
-                <form action="{{ route("page.update", [ "page" => $page->id ]) }}" method="post">
+                <form action="{{ route("eventee.pages.update", [ "page" => $page->id,"id" => $id ]) }}" method="post">
                     {{ csrf_field() }}
                     @method("PUT")
 

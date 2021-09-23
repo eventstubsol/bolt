@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use App\Event;
+use App\Menu;
 class eventeeController extends Controller
 {
     //
@@ -103,6 +104,14 @@ class eventeeController extends Controller
                     "section"=>$content->section,
                     "event_id"=>$event->id
                ]);
+            }
+            $menusNames = array('Polls','Q&A','Announcements');
+            $manuPos = array(1,2,3);
+            $menuLink = array('#poll-modal','#qna-modal','#announcement-modal');
+            $menuClass = array('fas fa-poll','fa fa-question-circle','fa fa-bullhorn');
+            
+            for($i = 0; $i<count($menusNames); $i++){
+                Menu::create(['name'=>$menusNames[$i],'position'=>$manuPos[$i],'link'=>$menuLink[$i],'iClass'=>$menuClass[$i],'event_id'=>$event->id,'type'=>'footer','parent_id'=>0]);
             }
             flash("Event Saved Successfully")->success();
             Event::where('id',$event->id)->update(['link'=>$baseurl . '/Event'.'/'.encrypt($event->id)]);
