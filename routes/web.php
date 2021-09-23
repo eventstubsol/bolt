@@ -130,7 +130,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('/Booths/create/{id}',"Eventee\BoothController@create")->name('eventee.booth.create');
     Route::post('/Booths/store/{id}',"Eventee\BoothController@store")->name('eventee.booth.store');
     Route::get('/Booths/edit/{id}/{booth_id}',"Eventee\BoothController@edit")->name('eventee.booth.edit');
-    Route::post('/Booths/update/{id}/{booth_id}',"Eventee\BoothController@update")->name('eventee.booth.update');
+    Route::put('/Booths/update/{id}/{booth_id}',"Eventee\BoothController@update")->name('eventee.booth.update');
+    Route::delete('/Booths/delete/{booth}/{id}',"Eventee\BoothController@destroy")->name('eventee.booth.destroy');
 
     //Room Setup
     Route::get('/Rooms/{id}',"Eventee\RoomController@index")->name('eventee.room');
