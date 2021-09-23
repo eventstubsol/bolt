@@ -309,7 +309,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         //Menu And Api
         Route::get('delete/submenu','MenuController@subMenu')->name('delete.submenu');
         Route::get('delete/savePosition','MenuController@SavePosition')->name('delete.savePosition');
-        Route::get('/setStatus','MenuController@setStatus')->name('setStatus');\
+        Route::get('/setStatus','MenuController@setStatus')->name('setStatus');
         Route::get('/getDetails','AnalyticController@GetDetails')->name('detailsApi');
         Route::get('/third/delete','AnalyticController@DeleteData')->name('third.delete');
         Route::post('/updateDetails','AnalyticController@updateData')->name('updateDetails');

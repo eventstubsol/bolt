@@ -34,8 +34,8 @@
                         <tr>
                             <td>{{$page->name}}</td>
                             <td class="text-right" >
-                                <a href="{{ route("page.edit", [
-                                        "page" => $page->id
+                                <a href="{{ route("eventee.pages.edit", [
+                                        "page" => $page->id,"id"=>$id
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
                                     <button data-toggle="tooltip" data-placement="top" data-id="{{$page->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
                             </td>

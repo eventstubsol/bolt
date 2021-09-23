@@ -10,7 +10,7 @@
 }
 </style>
 @php
-    $footers = App\Menu::where('type','footer')->where('status','1')->where('parent_id','0')->orderBy('position','asc')->get();
+    $footers = App\Menu::where('type','footer')->where('event_id',decrypt($event_id))->where('status','1')->where('parent_id','0')->orderBy('position','asc')->get();
 
 @endphp
 <div class="menu-custom navs hidden theme-nav">
