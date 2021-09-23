@@ -20,12 +20,37 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 |
 */
 
+// Route::domain("{subdomain}".'localhost')->group(function(){
+//     Route::get('/',function ($subdomain){
+//         dd($subdomain);
+//     });
+// });
+Route::group(['domain' => '{subdomain}.localhost'], function () {
+    Route::get('/', function ($subdomain) {
+        dd($subdomain);
+        Route::get("/", "HomeController@index")->name("home");
+
+        // return "This will respond to requests for 'admin.localhost/'";
+    });
+    Route::get('/login',"EventUser\LoginController@login");
+    Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
+    Route::middleware(["auth"])->group(function () {
+        Route::get("/event", "EventController@index")->name("eventee.event");
+
+    });
+
+
+
+});
+
+
 Auth::routes();
 Route::get("/Register/Eventee","eventeeController@Regiter")->name('Eventee.register');
 Route::post('/Register/Eventee',"eventeeController@ConfirmRegister");
 Route::get('Eventee/Login',"eventeeController@Login")->name('Eventee.login');
 Route::post('Eventee/Login',"eventeeController@ConfirmLogin");
 Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
+
 
 Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
@@ -191,7 +216,6 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 
 Route::get("/event/login", "AttendeeAuthController@show")->name("attendee_login");
-Route::post("/event/post/login/{id}", "AttendeeAuthController@login")->name('event.user.confirmLogin');
 Route::get("/event/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
 Route::post("/event/register", "AttendeeAuthController@saveRegistration");
 Route::get("/event/session-notifications", "EventController@sendSessionNotifications");
@@ -211,7 +235,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::get("/me", "EventController@profileInfo")->name("event.profile");
     Route::get('/testS','testController@index');
 
-    Route::get("/event/{id}", "EventController@index")->name("eventee.event");
+    // Route::get("/event/{id}", "EventController@index")->name("eventee.event");
 
 
     Route::post("/contacts/suggested", "UserController@suggestedContacts")->name("suggestedContacts");

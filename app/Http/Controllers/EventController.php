@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Booth;
 use App\BoothInterest;
+use App\Event;
 use App\EventSession;
 use App\LoginLog;
 use App\Notification;
@@ -34,10 +35,12 @@ use Dotenv\Result\Success;
 
 class EventController extends Controller
 {
-    public function index($id)
+    public function index($event_name)
     {
-        $event_id = decrypt($id);
-        // dd($id);
+
+        $event_id = Event::where("name",$event_name)->first()->id;
+        // dd($event_id);
+        // $event_id = decrypt($id);
         $booths = Booth::where("event_id",$event_id)->orderBy("name")->with([
             "images",
             "videos",
@@ -86,7 +89,7 @@ class EventController extends Controller
         }
         // dd($pages);
         // dd($schedule);
-        $event_id = $id;
+        // $event_id = $id;
         return view("event.index")
             ->with(
                 compact([
