@@ -44,9 +44,7 @@ class LiveQuestionController extends Controller
         $question = new LiveQuestion;
         $question->user_id = Auth::id();
         $question->view = 0;
-        if($req->has('event_id')){
-            $question->event_id = $req->event_id;
-        }
+        $question->event_id = decrypt($req->event_id);
         $question->question = $req->question;
         if ($question->save()) {
             return response()->json(['message' => 'Your Question Has Been Submitted Successfully', 'status' => 200]);

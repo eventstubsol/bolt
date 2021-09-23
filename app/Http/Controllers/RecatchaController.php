@@ -55,15 +55,8 @@ class RecatchaController extends Controller
         $value = $request->site_key;
         $key2 = 'RECAPTCHA_SECRET_KEY';
         $value2 = $request->secret_key;
-        if(env('RECAPTCHA_SITE_KEY')){
-            return "Something Went Wrong";
-        }
-        else{
-            UpdateEnv($key,$value);
-            UpdateEnv($key2,$value2);
-            Api::create($data);
-            return redirect()->back();
-        }      
+        Api::create($data);
+        return redirect()->back();      
         
     }
 
@@ -155,20 +148,9 @@ class RecatchaController extends Controller
         $gtype  = $request->gtype;
         $base = $request->base;
         $key = PHP_EOL.'COMET_CHAT_APP_ID';
-        if(env('COMET_CHAT_APP_ID')){
-            return "Something Went Wrong";
-        }
-        else{
-            UpdateEnv($key,$appID);        
-            UpdateEnv('COMET_CHAT_REGION',$region);
-            UpdateEnv('COMET_CHAT_AUTH_KEY',$auth);
-            UpdateEnv('COMET_CHAT_API_KEY',$ApiKey);
-            UpdateEnv('COMET_CHAT_GROUP_TYPE',$gtype);
-            UpdateEnv('COMET_CHAT_BASE_URL',$base);
-            API::create(['title'=>$title,'type'=>$request->type,'appkey'=>$request->appkey]);
+        API::create(['title'=>$title,'type'=>$request->type,'appkey'=>$request->appkey]);
 
-            return redirect()->back();   
-        }
+        return redirect()->back();   
         
 
     }
@@ -186,15 +168,9 @@ class RecatchaController extends Controller
 
         ]);
         $key = PHP_EOL.'ZOOM_API_KEY';
-        if(env('ZOOM_API_KEY')){
-            return "Something Went Wrong";
-        }
-        else{
-            UpdateEnv($key,$request->appkey);
-            UpdateEnv('ZOOM_API_SECRET',$request->secret_key);
-            $data = $request->all();
-            Api::create($data);
-            return redirect()->back();
-        }
+       
+        $data = $request->all();
+        Api::create($data);
+        return redirect()->back();
     }
 }

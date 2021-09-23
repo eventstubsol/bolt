@@ -1,5 +1,6 @@
 @php
 $announcements = App\Announcement::where('user_id', 'all')
+    ->where('event_id',decrypt($event_id))
     ->orderBy('id', 'desc')
     ->get();
 @endphp
@@ -141,7 +142,7 @@ $per_announcements = App\Announcement::where('user_id', Auth::id())
                                             data-subject="{{ $announcement->subject }}"
                                             data-announce="{{ $announcement->annoucement }}" data-modal="private"
                                             data-id="{{ $announcement->id }}">
-                                            {{ \Illuminate\Support\Str::limit($announcement->annoucement, 20) }}</td>
+                                            @php echo \Illuminate\Support\Str::limit($announcement->annoucement, 20) @endphp</td>
                                         <td>{{ \Carbon\Carbon::parse($announcement->created_at)->format('d-m-Y') }}
                                         </td>
                                     </tr>
