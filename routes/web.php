@@ -263,7 +263,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::post('surv/edit','QuestionController@SURVEdit')->name('surv.edit');
     Route::post('wc/edit','QuestionController@WCEdit')->name('wc.edit');
     Route::get('ques/status','QuestionController@Status')->name('ques.status');
-    Route::get('user/Polls','UserPollController@index')->name('user.polls');
+    Route::get('user/Polls/{id}','UserPollController@index')->name('user.polls');
     Route::post('user/Polls/update','UserPollController@update')->name('user.polls.update');
     Route::get('user/Polls/Save','UserPollController@Save')->name('user.polls.save');
     Route::get('user/poll/answer','UserPollController@Answer')->name('user.poll.answer');
@@ -279,7 +279,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::get('Qna/Delete','LiveQuestionController@Delete')->name('qna.Delete');
     Route::get('Qna/Answer','LiveQuestionController@SaveAnswer')->name('qna.Answer');
     Route::get('Announcement/Seen','UserAnnounceController@Seen')->name('announcement.Seen');
-    Route::get('Announcement/popUp','UserAnnounceController@PopUp')->name('announcement.popUp');
+    Route::get('Announcement/popUp/{id}','UserAnnounceController@PopUp')->name('announcement.popUp');
     Route::get('Announcement/Close','UserAnnounceController@Close')->name('announcement.Close');
    
     /**
