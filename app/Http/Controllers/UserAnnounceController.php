@@ -26,9 +26,12 @@ class UserAnnounceController extends Controller
         }
     }
 
-    public function PopUp()
+    public function PopUp($id)
     {
-        $announcements = Announcement::where('user_id', 'all')->orWhere('user_id', Auth::id())->orderBy('id', 'desc')->get();
+        $announcements = Announcement::where('user_id', 'all')->orWhere('user_id', Auth::id())
+        ->where('event_id',decrypt($id))
+        ->orderBy('id', 'desc')
+        ->get();
         $announce = [];
         $count = 0;
         foreach ($announcements as $announcement) {

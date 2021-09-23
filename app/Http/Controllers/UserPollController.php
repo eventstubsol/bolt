@@ -13,9 +13,9 @@ use App\UserAnswer;
 class UserPollController extends Controller
 {
     //
-    public function index(Request $req)
+    public function index(Request $req,$id)
     {
-        $question = Question::where('poll_id', $req->id)->where('status', 1)->get();
+        $question = Question::where('event_id', decrypt($id))->where('status', 1)->get();
         return response()->json($question);
     }
 
