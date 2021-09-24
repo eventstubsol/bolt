@@ -75,12 +75,24 @@ class AttendeeAuthController extends Controller
             ->whereNotIn("type", ["admin", "teller", "moderator", "exhibiter", "cms_manager"])
             ->first();
         if (!$user) {
-            $request->old(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")));
-            return view("auth.attendee_login")->with([
+            // dd("not found");
+            return view("eventUser.login")->with([
+                "login" => $this->loginT,
                 "notFound" => TRUE,
                 "captchaError" => FALSE,
-                "login" => $this->loginT
+                "id"=>$event->id,
+                "subdomain"=>$event->name
             ]);
+            // return redirect(route("attendeeLogin",$subdomain))->with([
+            //         "notFound" => TRUE,
+            //         "captchaError" => FALSE,
+            //         "login" => $this->loginT
+            // ]);
+            // return view("auth.attendee_login")->with([
+            //     "notFound" => TRUE,
+            //     "captchaError" => FALSE,
+            //     "login" => $this->loginT
+            // ]);
         } else {
             // if ($user->type == 'attendee' && env("APP_ENV") != "local") {
             //     return view("auth.attendee_login")->with([
