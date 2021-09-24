@@ -1,6 +1,6 @@
 @php
 $announcements = App\Announcement::where('user_id', 'all')
-    ->where('event_id',decrypt($event_id))
+    ->where('event_id',$event_id)
     ->orderBy('id', 'desc')
     ->get();
 @endphp

@@ -8,7 +8,7 @@
             </div>
         </div>
         @php
-            $menus = App\Menu::where('type','nav')->where('event_id',decrypt($event_id))->where('parent_id','0')->where('status','1')->orderBy('position','asc')->get();
+            $menus = App\Menu::where('type','nav')->where('event_id',$event_id)->where('parent_id','0')->where('status','1')->orderBy('position','asc')->get();
         @endphp
         <div class="col-2 col-md-8 fluid-col menu-col">
            <ul class="menu">

@@ -27,12 +27,17 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 // });
 Route::group(['domain' => '{subdomain}.localhost'], function () {
     Route::get('/', function ($subdomain) {
-        dd($subdomain);
-        Route::get("/", "HomeController@index")->name("home");
+        $user = Auth::user();
+        if(!$user){
+            return redirect(route('attendeeLogin',$subdomain));
+        }
+        // dd($subdomain);
+        return redirect(route('eventee.event',$subdomain));
+        // Route::get("/", "HomeController@index")->name("home");
 
         // return "This will respond to requests for 'admin.localhost/'";
     });
-    Route::get('/login',"EventUser\LoginController@login");
+    Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
     Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
     Route::middleware(["auth"])->group(function () {
         Route::get("/event", "EventController@index")->name("eventee.event");
