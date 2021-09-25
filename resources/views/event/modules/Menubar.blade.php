@@ -8,9 +8,16 @@
   background: red;
   color: white;
 }
+.custom-dropdown-menu a i{
+    font-size: 18px !important;
+}    
+.custom-dropdown-menu a{
+    display: flex;
+    flex-direction: row !important;
+}
 </style>
 @php
-    $footers = App\Menu::where('type','footer')->where('event_id',$event_id)->where('status','1')->where('parent_id','0')->orderBy('position','asc')->get();
+    $footers = App\Menu::where('type','footer')->where('event_id',$event_id)->where('status','1')->where('parent_id','0')->orderBy('position','asc')->get()->load(["submenus"]);
 
 @endphp
 <div class="menu-custom navs hidden theme-nav">
@@ -18,59 +25,69 @@
         <ul class="menu">
             
                 @foreach($footers as $footer)
-                    @if($footer->sub == 1)
-                        <li class="custom-dropdown not-booth-menu">
-                            <a class="area">
-                            <i class="{{ $footer->iClass }}"></i>
-                            {{ $footer->name }}
-                            </a>
-                        <div class="custom-dropdown-menu">
-                            @foreach(App\Menu::where('parent_id',$footer->id)->orderBy('position','asc')->get() as $submenu)
-                                @if($submenu->name == 'HEALTH PAVILION')    
-                                    <a class="dropdown-item" href="{{ $submenu->link }}">{{ $submenu->name }}</a>
-                                @else
-                                    <a class="area dropdown-item" data-link="{{ $submenu->link }}">{{ $submenu->name }}</a>
-                                @endif
-                            @endforeach
-                        </div>
-                        </li> 
-                    @else
-                        <li class="not-booth-menu">
-                            @if($footer->name == 'LINKS LOUNGE')
-                                @if(isOpenForPublic("lounge"))
-                                    <a href="javascript:void(0);" class="area" data-link="{{ $footer->link }}">
-                                        <i class="{{ $footer->iClass }}"></i>
-                                        {{ $footer->name }}
-                                    </a>
-                                @else
-                                    <a href="javascript:void(0);" class="area" disabled>
-                                        <i class="{{ $footer->iClass }}"></i>
-                                        LINKS LOUNGE
-                                    </a>
-                                @endif
-                            @elseif($footer->name == 'LINKS CONNECT')
-                                <a class="area" data-link="{{ $footer->link }}"><i class="{{ $footer->iClass }}"></i>{{ $footer->name }}</a>
-                            @elseif($footer->name == 'Polls')
+                   
+                          @if($footer->name == 'Polls')
                                 
-                                <li><a href="javascript:void(0);" data-toggle="modal" data-target="#poll-modal"><i class="fas fa-poll"></i>Polls</a></li>
+                                <li class="not-booth-menu"><a href="javascript:void(0);" data-toggle="modal" data-target="#poll-modal"><i class="fas fa-poll"></i>Polls</a></li>
                             @elseif($footer->name == 'Q&A')
                             
-                                <li><a href="javascript:void(0);" data-toggle="modal" data-target="{{ $footer->link }}"><i class="{{ $footer->iClass }}"></i>Q&A</a></li>
+                                <li class="not-booth-menu"><a href="javascript:void(0);" data-toggle="modal" data-target="{{ $footer->link }}"><i class="{{ $footer->iClass }}"></i>Q&A</a></li>
                             
                                 @elseif($footer->name == 'Announcements')
                             
-                                <li><a href="javascript:void(0);" data-toggle="modal" data-target="#announcement-modal"><i class="{{ $footer->iClass }}"></i>Annoucements</a></li>
+                                <li class="not-booth-menu"><a href="javascript:void(0);" data-toggle="modal" data-target="#announcement-modal"><i class="{{ $footer->iClass }}"></i>Annoucements</a></li>
 
+                               @else
+                               <li class="custom-dropdown not-booth-menu"> 
+                                    {!! getMenuLink($footer) !!}
+                                        <div class=" custom-dropdown-menu">
+                                            @foreach($footer->submenus as $submenu)
+                                                @if($submenu->status)
+                                                    {!! getMenuLink($submenu) !!}
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                </li> 
                                
-                            @else
-                                <a class="area" data-link="{{ $footer->link }}"><i class="{{ $footer->iClass }}"></i>{{ $footer->name }}</a>
                             @endif
-                        </li>
-                        
                          
-                    @endif
                     
                 @endforeach
+                <li class="hidden" id="notbooth_menu_toggle" >
+                    <a href="javascript:void(0);" style="font-size: 22px">
+                        <i class="mdi mdi-chevron-left-circle"></i>
+                    </a>
+                </li>
+                <li class="booth-menu hidden">
+                    <a href="javascript:void(0);" data-modal="description-modal-" class="modal-toggle booth_description">
+                        <i class="mdi mdi-note-text" style="font-size: 22px;"></i>
+                        Description
+                    </a>
+                </li>
+                <li class="booth-menu hidden">
+                    <a href="javascript:void(0);" data-modal="videolist-modal-" class="modal-toggle booth_videos">
+                        <i class="mdi mdi-play" style="font-size: 22px;"></i>
+                        Videos
+                    </a>
+                </li> 
+                <li class="booth-menu hidden">
+                    <a href="javascript:void(0);" data-modal="resourcelist-modal-" class="modal-toggle booth_resources">
+                        <i class="mdi mdi-file-pdf" style="font-size: 22px;"></i>
+                        Resources
+                    </a>
+                </li>
+                <li class="booth-menu hidden">
+                    <a href="javascript:void(0);" class="show-interest">
+                        <i class="mdi mdi-file-pdf" style="font-size: 22px;"></i>
+                        Show Interest
+                    </a>
+                </li>
+                <li class="booth-menu hidden">
+                    <a href="javascript:void(0);"  data-modal="book-a-call-modal-" class="modal-toggle booth_call_booking">
+                        <i class="mdi mdi-calendar" style="font-size: 22px;"></i>
+                        Book a Call
+                    </a>
+                </li>
 
         </ul>
     </div>

@@ -11,8 +11,8 @@ class MenuDetailController extends Controller
     public function index($id)
     {
         //
-        $menus = Menu::where('parent_id','0')->where('type','footer')->where('event_id',decrypt($id))->orderby('position','asc')->get();
-        return view('eventee.menu.footer',compact('menus','id'));
+        $menus = Menu::where('parent_id','0')->where('type','footer')->where('event_id',decrypt($id))->orderby('position','asc')->get()->load(["submenus"]);
+        return view('eventee.menu.footer.footer',compact('menus','id'));
     }
     public function disable(Menu $menu,$id)
     {
@@ -216,8 +216,9 @@ class MenuDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Menu $menu,$id)
     {
-        //
+        $menu->delete();
+        return true;
     }
 }
