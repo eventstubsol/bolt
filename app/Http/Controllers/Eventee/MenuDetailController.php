@@ -14,6 +14,19 @@ class MenuDetailController extends Controller
         $menus = Menu::where('parent_id','0')->where('type','footer')->where('event_id',decrypt($id))->orderby('position','asc')->get();
         return view('eventee.menu.footer',compact('menus','id'));
     }
+    public function disable(Menu $menu,$id)
+    {
+        $menu->status = 0;
+        $menu->save();
+        return true;
+    }
+    public function enable(Menu $menu,$id)
+    {
+        $menu->status = 1;
+        $menu->save();
+        return redirect()->back();
+        
+    }
 
     /**
      * Show the form for creating a new resource.

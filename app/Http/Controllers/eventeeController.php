@@ -101,6 +101,9 @@ class eventeeController extends Controller
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
         if($event->save()){
+            
+            createMenus($event->id);
+
             $contents = ContentMaster::all();
             foreach($contents as $content){
                 Content::create([
