@@ -46,6 +46,16 @@ class MenuController extends Controller
         $session_rooms = sessionRooms::where("event_id",$event_id)->get();
         return view("eventee.menu.createMenu")->with(compact(["id","pages","booths","session_rooms"]));
     }
+    public function createFooter(Request $request,$id)
+    {
+        $event_id = decrypt($id);
+        $pages = Page::where("event_id",$event_id)->get();
+
+        $booths = Booth::where("event_id",$event_id)->get();
+
+        $session_rooms = sessionRooms::where("event_id",$event_id)->get();
+        return view("eventee.menu.footer.createMenu")->with(compact(["id","pages","booths","session_rooms"]));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -115,6 +125,55 @@ class MenuController extends Controller
         // dd($menu);
         return redirect(route("eventee.menu",$id));
     }
+    public function saveFooter(Request $request,$id)
+    {
+        // dd($request->all());
+        $to = '';
+        switch($request->type){
+            case "session_room": 
+                $to = $request->rooms;
+                break;
+            case "page":
+                $to = $request->pages;
+                break;
+            case "zoom":
+                $to = $request->zoom;
+                break;
+            case "booth":
+                $to = $request->booths;
+                break;
+            case "vimeo":
+                $to = $request->vimeo;
+                break;
+            case "pdf":
+                $to = $request->pdf;
+                break;
+            case "chat_user":
+                $to = $request->chatuser;
+                break;
+            case "chat_group":
+                $to = $request->chatgroup;
+                break;
+            case "custom_page":
+                $to = $request->custom_page;
+                break;
+        }
+        $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
+        $menu = new Menu;
+        $menu->name = $request->name;
+        $menu->link = $to;
+        $menu->event_id = decrypt($id);
+        $menu->type = "footer";
+        $menu->position = $positionArr[0]->position ? $positionArr[0]->position : 0 ;
+        if($request->has("isChild") && $request->isChild){
+            $menu->parent_id = $request->parent_id ;
+        }
+        $menu->link_type = $request->type;
+        $menu->iClass = $request->icon;
+        $menu->save();
+        // dd($menu);
+        return redirect(route("eventee.menu.footer",$id));
+    }
 
     /**
      * Display the specified resource.
@@ -147,7 +206,18 @@ class MenuController extends Controller
         $booths = Booth::where("event_id",$event_id)->get();
 
         $session_rooms = sessionRooms::where("event_id",$event_id)->get();
-        return view("eventee.menu.editMenu")->with(compact(["id","pages","booths","session_rooms","menu"]));
+        return view("eventee.menu.footer.editMenu")->with(compact(["id","pages","booths","session_rooms","menu"]));
+    }
+    public function editFooter(Menu $menu,$id)
+    {
+        // dd($menu);
+        $event_id = decrypt($id);
+        $pages = Page::where("event_id",$event_id)->get();
+
+        $booths = Booth::where("event_id",$event_id)->get();
+
+        $session_rooms = sessionRooms::where("event_id",$event_id)->get();
+        return view("eventee.menu.footer.editMenu")->with(compact(["id","pages","booths","session_rooms","menu"]));
     }
     public function updateNav(Request $request,Menu $menu,$id)
     {
@@ -191,6 +261,49 @@ class MenuController extends Controller
            $menu->save();
            // dd($menu);
            return redirect(route("eventee.menu",$id));
+    }
+    public function updateFooter(Request $request,Menu $menu,$id)
+    {
+        //    dd($request->all());
+           $to = '';
+           switch($request->type){
+               case "session_room": 
+                   $to = $request->rooms;
+                   break;
+               case "page":
+                   $to = $request->pages;
+                   break;
+               case "zoom":
+                   $to = $request->zoom;
+                   break;
+               case "booth":
+                   $to = $request->booths;
+                   break;
+               case "vimeo":
+                   $to = $request->vimeo;
+                   break;
+               case "pdf":
+                   $to = $request->pdf;
+                   break;
+               case "chat_user":
+                   $to = $request->chatuser;
+                   break;
+               case "chat_group":
+                   $to = $request->chatgroup;
+                   break;
+               case "custom_page":
+                   $to = $request->custom_page;
+                   break;
+           }
+           $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
+          
+           $menu->name = $request->name;
+           $menu->link = $to;
+           $menu->link_type = $request->type;
+           $menu->iClass = $request->icon;
+           $menu->save();
+           // dd($menu);
+           return redirect(route("eventee.menu.footer",$id));
     }
 
     /**
