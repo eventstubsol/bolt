@@ -9,6 +9,7 @@
         </div>
         @php
             $menus = App\Menu::where('type','nav')->where('event_id',$event_id)->where('parent_id','0')->where('status','1')->orderBy('position','asc')->get();
+            
         @endphp
         <div class="col-2 col-md-8 fluid-col menu-col">
            <ul class="menu">
@@ -26,67 +27,9 @@
                 @elseif($menu->name == 'personalagenda')
                     <li><a data-toggle="modal" id="agenda" data-target="#personal-schedule-modal"><i class="fe-calendar"></i>Personal Agenda</a></li>
                 @else
-                @switch(trim($menu->link_type))
-                    
-                    
-                        @case("zoom")
-                        @case("custom_page")
-                            <li>   
-                                <a  target="_blank" href="{{ $menu->link }}" >      
-                                        <i class="{{ $menu->iClass }}"></i>
-                                        {{ $menu->name }}
-                                </a>
-                            </li>
-                            @break
-                        @case("chat_user")
-                            <li>   
-                                <a  class="chat_user" data-link="{{ $menu->link }}" >    
-                                    <i class="{{ $menu->iClass }}"></i>
-                                        {{ $menu->name }}
-                                </a>
-                            </li>
-                            @break
-                        @case("chat_group")
-                            <li>   
-                                <a   class="chat_group" data-link="{{ $menu->link }}" > 
-                                        <i class="{{ $menu->iClass }}"></i>
-                                        {{ $menu->name }}
-                                </a>
-                            </li>
-                            @break
-                        @case("pdf")
-                            <li class="custom-dropdown not-booth-menu">
-                                <a  style="border:none !important;" class="_df_button" source="{{ assetUrl($menu->link) }}" >
-                                    <i class="{{ $menu->iClass }}"></i>
-                                    {{ $menu->name }}
-                                </a>
-                            </li>
-                            @break
-                        @case("booth")
-                            <li class="custom-dropdown not-booth-menu">
-                                <a data-link="booth/{{$menu->link}}" class="area">
-                                    <i class="{{ $menu->iClass }}"></i>
-                                    {{ $menu->name }}
-                                </a>
-                            </li>
-                            @break
-                        @case("session_room")
-                            <li class="custom-dropdown not-booth-menu">
-                                <a data-link="sessionroom/{{$menu->link}}" class="area">
-                                    <i class="{{ $menu->iClass }}"></i>
-                                    {{ $menu->name }}
-                                </a>
-                            </li>
-                            @break
-                        @case("page")
-                            <li class="custom-dropdown not-booth-menu">
-                                <a data-link="page/{{$menu->link}}" class="area">
-                                    <i class="{{ $menu->iClass }}"></i>
-                                    {{ $menu->name }}
-                                </a>
-                            </li>
-                            @break  
-                    @endswitch
+                    <li class="not-booth-menu">   
+                        {!! getMenuLink($menu) !!}
+                    </li>
                 @endif
             @endforeach
            </ul>

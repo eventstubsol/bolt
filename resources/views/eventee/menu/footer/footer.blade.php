@@ -35,6 +35,7 @@
                         <tr>
                             <th>Menu</th>
                             <th>Status</th>
+                            <th>Type</th>
                             <th class="text-right mr-2">Actions</th>
                         </tr>
                     </thead>
@@ -44,22 +45,30 @@
                         <tr id = "{{ $menu->id }}" class="parent">
                             <td>{{$menu->name}}</td>
                             <td>{{ $menu->status ? 'Active' : 'Disabled' }}</td>
-                         <td class="text-right" >
+                            @if($menu->parent_id > 0)
+                            <td>Child</td>
+                            @else
+                            <td>Parent</td>
+                            @endif
+                            <td class="text-right" >
                               @if($menu->status)
                                 <button class="btn btn-danger disable" data-id="{{$menu->id}}"  > Disable </button>
+                                <a href="{{ route("eventee.menu.edit", [
+                                        "menu" => $menu->id, "id"=>$id,
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
+                            
                               @else
                                 <form action='{{ route("eventee.menu.enable", [ "menu" => $menu->id,"id" => $id ]) }}' method="POST">
                                   {{ csrf_field() }}
                                   @method("PUT")
                                   <button class="btn btn-success activate" data-id="{{$menu->id}}"> Activate </button>
+                                  <a href="{{ route("eventee.footer.edit", [
+                                            "menu" => $menu->id, "id"=>$id,
+                                        ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
                                 </form>
                               @endif
-                              @if($menu->link !== "perm")
-                                <a href="{{ route("eventee.menu.edit", [
-                                          "menu" => $menu->id, "id"=>$id,
-                                      ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
-                                    <button data-toggle="tooltip" data-placement="top" data-id="{{$menu->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
-                              @endif
+                              <button data-toggle="tooltip" data-placement="top" data-id="{{$menu->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
+
                                
                             </td>
                         </tr>
@@ -79,7 +88,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-    $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.menu.create",$id) }}">Create New</a>')
+    $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.footer.create",$id) }}">Create New</a>')
     //setStatus
     $("body").on("click",".disable",function(e){
                     t = $(this);
