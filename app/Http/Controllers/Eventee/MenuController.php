@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Eventee;
 
+use App\Booth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Menu;
+use App\Page;
+use App\sessionRooms;
+use Error;
 use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
@@ -27,11 +31,20 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request,$id)
     {
-        //
         $menu = Menu::findOrFail($request->id);
         return response()->json($menu);
+    }
+    public function createNav(Request $request,$id)
+    {
+        $event_id = decrypt($id);
+        $pages = Page::where("event_id",$event_id)->get();
+
+        $booths = Booth::where("event_id",$event_id)->get();
+
+        $session_rooms = sessionRooms::where("event_id",$event_id)->get();
+        return view("eventee.menu.createMenu")->with(compact(["id","pages","booths","session_rooms"]));
     }
 
     /**
@@ -40,15 +53,67 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        //
-        foreach ($request->position as $positions) {
-            $id = $positions[1];
-            $position = $positions[0];
-            \DB::update('UPDATE menus set position = ? where id = ?', [$position, $id]);
+        try{
+            // //
+            foreach ($request->position as $positions) {
+                $id = $positions[1];
+                $position = $positions[0];
+                \DB::update('UPDATE menus set position = ? where id = ?', [$position, $id]);
+            }
+            return response()->json(['message' => 'success']);
+        }catch(Error $err){
+            dd($err);
         }
-        return response()->json(['message' => 'success']);
+    }
+    public function saveNav(Request $request,$id)
+    {
+        // dd($request->all());
+        $to = '';
+        switch($request->type){
+            case "session_room": 
+                $to = $request->rooms;
+                break;
+            case "page":
+                $to = $request->pages;
+                break;
+            case "zoom":
+                $to = $request->zoom;
+                break;
+            case "booth":
+                $to = $request->booths;
+                break;
+            case "vimeo":
+                $to = $request->vimeo;
+                break;
+            case "pdf":
+                $to = $request->pdf;
+                break;
+            case "chat_user":
+                $to = $request->chatuser;
+                break;
+            case "chat_group":
+                $to = $request->chatgroup;
+                break;
+            case "custom_page":
+                $to = $request->custom_page;
+                break;
+        }
+        $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
+       
+        $menu = new Menu;
+        $menu->name = $request->name;
+        $menu->link = $to;
+        $menu->event_id = decrypt($id);
+        $menu->type = "nav";
+        $menu->parent_id = 0;
+        $menu->position = $positionArr[0]->position ? $positionArr[0]->position : 0 ;
+        $menu->link_type = $request->type;
+        $menu->iClass = $request->icon;
+        $menu->save();
+        // dd($menu);
+        return redirect(route("eventee.menu",$id));
     }
 
     /**
@@ -72,6 +137,60 @@ class MenuController extends Controller
     {
         //
         echo $id;
+    }
+    public function editNav(Menu $menu,$id)
+    {
+        // dd($menu);
+        $event_id = decrypt($id);
+        $pages = Page::where("event_id",$event_id)->get();
+
+        $booths = Booth::where("event_id",$event_id)->get();
+
+        $session_rooms = sessionRooms::where("event_id",$event_id)->get();
+        return view("eventee.menu.editMenu")->with(compact(["id","pages","booths","session_rooms","menu"]));
+    }
+    public function updateNav(Request $request,Menu $menu,$id)
+    {
+           // dd($request->all());
+           $to = '';
+           switch($request->type){
+               case "session_room": 
+                   $to = $request->rooms;
+                   break;
+               case "page":
+                   $to = $request->pages;
+                   break;
+               case "zoom":
+                   $to = $request->zoom;
+                   break;
+               case "booth":
+                   $to = $request->booths;
+                   break;
+               case "vimeo":
+                   $to = $request->vimeo;
+                   break;
+               case "pdf":
+                   $to = $request->pdf;
+                   break;
+               case "chat_user":
+                   $to = $request->chatuser;
+                   break;
+               case "chat_group":
+                   $to = $request->chatgroup;
+                   break;
+               case "custom_page":
+                   $to = $request->custom_page;
+                   break;
+           }
+           $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
+          
+           $menu->name = $request->name;
+           $menu->link = $to;
+           $menu->link_type = $request->type;
+           $menu->iClass = $request->icon;
+           $menu->save();
+           // dd($menu);
+           return redirect(route("eventee.menu",$id));
     }
 
     /**
