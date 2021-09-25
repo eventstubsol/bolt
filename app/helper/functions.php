@@ -291,6 +291,81 @@ define("BY_LAWS_TELLER_ID", "280fd217-8106-46fc-a36b-c5c38b1a3823");
 
 
 
+function getMenuLink($menu){
+    switch(trim($menu->link_type)){
+
+                    
+                    
+    case("zoom"):
+    case("custom_page"):
+            return <<<HTML
+                    <a  target="_blank" href="$menu->link" >      
+                            <i style="font-size:24px;" class="$menu->iClass"></i>
+                             $menu->name 
+                    </a>
+                <!-- </li> -->
+HTML;
+
+        break;
+    case("chat_user"):
+        return <<<HTML
+                <a  class="chat_user not-booth-menu" data-link="$menu->link" >    
+                    <i style="font-size:24px;" class="$menu->iClass"></i>
+                         $menu->name 
+                </a>
+HTML;
+
+        break;
+    case("chat_group"):
+        return <<<HTML
+                <a   class="chat_group not-booth-menu" data-link="$menu->link" > 
+                        <i style="font-size:24px;" class="$menu->iClass"></i>
+                         $menu->name 
+                </a>
+HTML;
+        break;
+    case("pdf"):
+        return <<<HTML
+            <a  style="border:none !important;" class="_df_button" source=" assetUrl($menu->link) " >
+                <i style="font-size:24px;" class="$menu->iClass"></i>
+                 $menu->name 
+            </a>
+HTML;
+        break;
+    case("booth"):
+        return <<<HTML
+            <a data-link="booth/$menu->link" class="area">
+                <i style="font-size:24px;" class="$menu->iClass"></i>
+                 $menu->name 
+            </a>
+HTML;
+        break;
+    case("session_room"):
+        return  <<<HTML
+            <a data-link="sessionroom/$menu->link" class="area">
+                <i style="font-size:24px;" class="$menu->iClass"></i>
+                $menu->name 
+            </a>
+HTML;
+        break;
+    case("page"):
+        return <<<HTML
+                <a data-link="page/$menu->link" class="area">
+                    <i style="font-size:24px;" class="$menu->iClass"></i>
+                     $menu->name 
+                </a>
+HTML;
+
+        break; 
+    default:
+        return <<<HTML
+       
+HTML;
+    }
+}
+
+
+
 // function getLobbyLinks()
 // {
 //     $links = Link::where(["page"=>"lobby"])->get();
@@ -323,7 +398,7 @@ function createMenus($event_id){
         // dd($menu);
         $menuitem = new Menu();
         $menuitem->name = $menu;
-        $menuitem->link = $menu;
+        $menuitem->link = "perm";
         $menuitem->event_id = $event_id;
         $menuitem->type = "nav";
         $menuitem->parent_id = 0;

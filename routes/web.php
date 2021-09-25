@@ -66,6 +66,9 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('Event/update/{id}','EventManageController@update')->name('event.Update');
 
 
+    Route::resources([
+        "menu"=>"Eventee/MenuController",
+    ]);
     //Event Frontend
 
     // Route::
@@ -107,17 +110,26 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('background/edit/{id}/{back_id}','Eventee\BackgroundController@edit')->name('eventee.background.edit');
     Route::post('background/update/{id}/{back_id}','Eventee\BackgroundController@update')->name('eventee.background.update');
 
-    //Menu Add
+    //Navbar Menu 
     Route::get('/menu/nav/{id}','Eventee\MenuController@index')->name('eventee.menu');
     Route::get('/menu/create/{id}','Eventee\MenuController@createNav')->name('eventee.menu.create');
     Route::post('/menu/store/{id}','Eventee\MenuController@saveMenu')->name('eventee.menu.store');
     Route::post('/menu/saveNav/{id}','Eventee\MenuController@saveNav')->name('eventee.menu.saveNav');
-    Route::get('/menu/footer/{id}','Eventee\MenuDetailController@index')->name('eventee.menu.footer');
     Route::delete('/menu/disable/{menu}/{id}','Eventee\MenuDetailController@disable')->name('eventee.menu.disable');
     Route::put('/menu/enable/{menu}/{id}','Eventee\MenuDetailController@enable')->name('eventee.menu.enable');
+    Route::delete('/menu/delete/{menu}/{id}','Eventee\MenuDetailController@destroy')->name('eventee.menu.delete');
     Route::get('/menu/edit/{menu}/{id}','Eventee\MenuController@editNav')->name('eventee.menu.edit');
     Route::put('/menu/update/{menu}/{id}','Eventee\MenuController@updateNav')->name('eventee.menu.update');
+    
+    //Footter
+    
+    Route::get('/menu/footer/{id}','Eventee\MenuDetailController@index')->name('eventee.menu.footer');
+    Route::get('/footer/create/{id}','Eventee\MenuController@createFooter')->name('eventee.footer.create');
+    Route::post('/footer/store/{id}','Eventee\MenuController@saveFooter')->name('eventee.footer.store');
+    Route::get('/footer/edit/{menu}/{id}','Eventee\MenuController@editFooter')->name('eventee.footer.edit');
+    Route::put('/footer/update/{menu}/{id}','Eventee\MenuController@updateFooter')->name('eventee.footer.update');
 
+    
     //Post Video
     Route::get("/session/video-archive/{id}", "Eventee\VideoController@pastSessionVideosArchive")->name("eventee.videoArchive");
     Route::post("/session/video-archive/{id}", "Eventee\VideoController@savePastSessionVideosArchive")->name("eventee.saveVideoArchive");
