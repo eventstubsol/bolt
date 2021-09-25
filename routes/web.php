@@ -27,12 +27,17 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 // });
 Route::group(['domain' => '{subdomain}.localhost'], function () {
     Route::get('/', function ($subdomain) {
-        dd($subdomain);
-        Route::get("/", "HomeController@index")->name("home");
+        $user = Auth::user();
+        if(!$user){
+            return redirect(route('attendeeLogin',$subdomain));
+        }
+        // dd($subdomain);
+        return redirect(route('eventee.event',$subdomain));
+        // Route::get("/", "HomeController@index")->name("home");
 
         // return "This will respond to requests for 'admin.localhost/'";
     });
-    Route::get('/login',"EventUser\LoginController@login");
+    Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
     Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
     Route::middleware(["auth"])->group(function () {
         Route::get("/event", "EventController@index")->name("eventee.event");
@@ -104,8 +109,14 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 
     //Menu Add
     Route::get('/menu/nav/{id}','Eventee\MenuController@index')->name('eventee.menu');
+    Route::get('/menu/create/{id}','Eventee\MenuController@createNav')->name('eventee.menu.create');
     Route::post('/menu/store/{id}','Eventee\MenuController@saveMenu')->name('eventee.menu.store');
+    Route::post('/menu/saveNav/{id}','Eventee\MenuController@saveNav')->name('eventee.menu.saveNav');
     Route::get('/menu/footer/{id}','Eventee\MenuDetailController@index')->name('eventee.menu.footer');
+    Route::delete('/menu/disable/{menu}/{id}','Eventee\MenuDetailController@disable')->name('eventee.menu.disable');
+    Route::put('/menu/enable/{menu}/{id}','Eventee\MenuDetailController@enable')->name('eventee.menu.enable');
+    Route::get('/menu/edit/{menu}/{id}','Eventee\MenuController@editNav')->name('eventee.menu.edit');
+    Route::put('/menu/update/{menu}/{id}','Eventee\MenuController@updateNav')->name('eventee.menu.update');
 
     //Post Video
     Route::get("/session/video-archive/{id}", "Eventee\VideoController@pastSessionVideosArchive")->name("eventee.videoArchive");
@@ -325,7 +336,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
             "sessions" => "SessionController",
             "subscriptions" => "EventSubscriptionController",
             "page"=>"PageController",
-            "menu"=>"MenuController",
+            // "menu"=>"Eventee/MenuController",
             "menuDetail"=>"menuDetailsController",
             "analytic"=>"AnalyticController",
             "recaptcha"=>"RecatchaController",

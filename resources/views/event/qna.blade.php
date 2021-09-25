@@ -1,6 +1,6 @@
 @php
 $questions = App\LiveQuestion::where('view', 1)
-    ->where('event_id',decrypt($event_id))
+    ->where('event_id',$event_id)
     ->orderBy('created_at', 'desc')
     ->get();
 @endphp

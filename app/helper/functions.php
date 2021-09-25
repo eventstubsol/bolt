@@ -22,7 +22,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\Catch_;
 use App\ContentMaster;
-
+use App\Menu;
 
 include_once "clickableAreasConfig.php";
 
@@ -267,6 +267,12 @@ define("EVENT_SESSION_TYPES", [
     VIMEO_ZOOM_SDK,
 ]);
 
+define("MENU_ICONS",[
+    "fe-home",
+    "fe-file",
+    
+]);
+
 
 define("MASTER_ROOMS",[
     "auditorium",
@@ -309,6 +315,22 @@ function getFilters($filter)
             return UserTag::select("tag")->where("tag_group",$filter)->distinct()->get()->toArray();
             break;
     }
+}
+
+function createMenus($event_id){
+    $delfaultMenus =   ["lobby","library","schedule","swagbag","leaderboard","personalagenda"];
+    foreach($delfaultMenus as $id=> $menu){
+        // dd($menu);
+        $menuitem = new Menu();
+        $menuitem->name = $menu;
+        $menuitem->link = $menu;
+        $menuitem->event_id = $event_id;
+        $menuitem->type = "nav";
+        $menuitem->parent_id = 0;
+        $menuitem->position = $id;
+        $menuitem->save();
+    }
+    return true;
 }
 
 function getRooms(){
