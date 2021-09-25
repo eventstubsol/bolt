@@ -3,7 +3,7 @@
         <div class="col-5 col-md-2 fluid-col logo-col">
             <div class="logo-box">
                 <a class="logo area" data-link="lobby">
-                    <img async src="{{ assetUrl(getFieldId('logo',$event_id)) }}" style="max-height: 50px;border-radius: 10px;padding: 0px;">
+                    <img async src="{{ assetUrl(getField('logo')) }}" style="max-height: 50px;border-radius: 10px;padding: 0px;">
                 </a>
             </div>
         </div>
@@ -12,55 +12,83 @@
         @endphp
         <div class="col-2 col-md-8 fluid-col menu-col">
            <ul class="menu">
-                @foreach($menus as $menu)
-                    @if($menu->sub == '0')
-                        @if($menu->name == 'Library')
-                            @if(isOpenForPublic("swagbag"))
-                               <li><a data-toggle="modal" data-target="{{ $menu->link }}"><i class="{{ $menu->iClass }}"></i>{{ $menu->name }}</a></li>
-                            @else
-                               <li><a disabled><i class="{{ $menu->iClass }}"></i>{{ $menu->name }}</a></li>
-                            @endif
-                        @elseif($menu->name == 'Schedule')
-                            <li><a data-toggle="modal" data-target="{{ $menu->link }}"><i class="{{ $menu->iClass }}"></i>{{ $menu->name }}</a></li>
-                        @elseif($menu->name == 'SwagBag')
-                            @if(isOpenForPublic("swagbag"))
-                                <li><a data-toggle="modal" data-target="#swagbag-modal"><i class="fe-shopping-bag"></i>SwagBag</a></li>
-                             @else
-                                <li><a data-toggle="modal" disabled><i class="fe-shopping-bag"></i>SwagBag</a></li>
-                            @endif
-                       
-                        @elseif($menu->name == 'Leaderboard')
-                            @if(isOpenForPublic("leaderboard"))
-                                <li><a class="area" data-link="{{ $menu->link }}"><i class="{{ $menu->iClass }}"></i>{{ $menu->name }}</a></li>
-                            @else
-                                <li><a class="area" disabled><i class="{{ $menu->link }}"></i>{{ $menu->name }}</a></li>
-                            @endif
-                        @elseif($menu->name == 'Personal Agenda')
-                            <li><a data-toggle="modal" id="agenda" data-target="#personal-schedule-modal"><i class="fe-calendar"></i>Personal Agenda</a></li>
-                        @else
-                            <li><a data-link="{{ $menu->link }}" class="area"><i class="{{ $menu->iClass }}"></i>{{ $menu->name }}</a></li>
-                        @endif
-                    @else
-                         <li class="custom-dropdown not-booth-menu">
-                            <a class="area">
-                            <i class="{{ $menu->iClass }}"></i>
-                            {{ $menu->name }}
-                            </a>
-                        <div class="custom-dropdown-menu">
-                            @foreach(App\Menu::where('parent_id',$menu->id)->orderBy('position','asc')->get() as $submenu)
-                                @if($submenu->name == 'HEALTH PAVILION')    
-                                    <a class="dropdown-item" href="{{ $submenu->link }}">{{ $submenu->name }}</a>
-                                @else
-                                    <a class="area dropdown-item" data-link="{{ $submenu->link }}">{{ $submenu->name }}</a>
-                                @endif
-                            @endforeach
-                        </div>
-                        </li>
-                    @endif
+           @foreach($menus as $menu)
+                @if($menu->name === 'lobby')      
+                    <li><a data-link="lobby" class="area"><i class="fe-home"></i>Lobby</a></li>
+                @elseif($menu->name === 'library')
+                    <li><a data-toggle="modal" data-target="#resources-modal"><i class="fe-folder"></i>Library</a></li>
+                @elseif($menu->name == 'schedule')
+                    <li><a data-toggle="modal" data-target="#schedule-modal"><i class="fe-calendar"></i>Schedule</a></li>
+                @elseif($menu->name == 'swagbag')
+                    <li><a data-toggle="modal" data-target="#swagbag-modal"><i class="fe-shopping-bag"></i>SwagBag</a></li>
+                @elseif($menu->name == 'leaderboard')
+                    <li><a class="area" data-link="leaderboard"><i class="fe-bar-chart"></i>Leaderboard</a></li>
+                @elseif($menu->name == 'personalagenda')
+                    <li><a data-toggle="modal" id="agenda" data-target="#personal-schedule-modal"><i class="fe-calendar"></i>Personal Agenda</a></li>
+                @else
+                @switch(trim($menu->link_type))
                     
-                @endforeach
-             
-
+                    
+                        @case("zoom")
+                        @case("custom_page")
+                            <li>   
+                                <a  target="_blank" href="{{ $menu->link }}" >      
+                                        <i class="{{ $menu->iClass }}"></i>
+                                        {{ $menu->name }}
+                                </a>
+                            </li>
+                            @break
+                        @case("chat_user")
+                            <li>   
+                                <a  class="chat_user" data-link="{{ $menu->link }}" >    
+                                    <i class="{{ $menu->iClass }}"></i>
+                                        {{ $menu->name }}
+                                </a>
+                            </li>
+                            @break
+                        @case("chat_group")
+                            <li>   
+                                <a   class="chat_group" data-link="{{ $menu->link }}" > 
+                                        <i class="{{ $menu->iClass }}"></i>
+                                        {{ $menu->name }}
+                                </a>
+                            </li>
+                            @break
+                        @case("pdf")
+                            <li class="custom-dropdown not-booth-menu">
+                                <a  style="border:none !important;" class="_df_button" source="{{ assetUrl($menu->link) }}" >
+                                    <i class="{{ $menu->iClass }}"></i>
+                                    {{ $menu->name }}
+                                </a>
+                            </li>
+                            @break
+                        @case("booth")
+                            <li class="custom-dropdown not-booth-menu">
+                                <a data-link="booth/{{$menu->link}}" class="area">
+                                    <i class="{{ $menu->iClass }}"></i>
+                                    {{ $menu->name }}
+                                </a>
+                            </li>
+                            @break
+                        @case("session_room")
+                            <li class="custom-dropdown not-booth-menu">
+                                <a data-link="sessionroom/{{$menu->link}}" class="area">
+                                    <i class="{{ $menu->iClass }}"></i>
+                                    {{ $menu->name }}
+                                </a>
+                            </li>
+                            @break
+                        @case("page")
+                            <li class="custom-dropdown not-booth-menu">
+                                <a data-link="page/{{$menu->link}}" class="area">
+                                    <i class="{{ $menu->iClass }}"></i>
+                                    {{ $menu->name }}
+                                </a>
+                            </li>
+                            @break  
+                    @endswitch
+                @endif
+            @endforeach
            </ul>
         </div>
         <div class="col-5 col-md-2 fluid-col profile-col">
