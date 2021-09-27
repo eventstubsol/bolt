@@ -5,6 +5,7 @@ function initApp() {
     loader = $(".loader");
     let exteriorView = $("#exterior_view");
     let enteringView = $("#entering_view");
+    let flyIn = $("#flyin_view");
     let pages = $(".page");
     let navs = $('.navs,.hide-on-exterior');
     let currentresbtns = null;
@@ -164,8 +165,31 @@ function initApp() {
         "support"
     ];
     areas.on("click", function (e) {
+        // loader.show();
         const link = $(this).data("link");
         directAccess = false;
+        const flyin = $(e.target).data("flyin");
+        // console.log({e,flyin});
+
+        if(flyin){
+            pages.hide();
+            pages.filter("#flyin").show();
+            flyIn.show();
+
+            flyIn.attr('src', flyin);
+            // waitForVideosLoad(flyin)
+            //     .then(() => loader.fadeOut());
+            flyIn.prop("currentTime", 0).get(0).play();
+            flyIn
+                .off("click")
+                .on("ended", function () {
+                    flyIn.fadeOut();
+                    routie(link);
+                    loader.fadeOut();
+                });
+            return;
+        }
+
         if (!doNotRoute.includes(link)) {
             routie(link);
         } else {

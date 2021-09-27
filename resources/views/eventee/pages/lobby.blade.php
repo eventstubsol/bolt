@@ -157,6 +157,18 @@ $event_id = $id;
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
 
                                     </div>
+                                          
+                                    <div class="flyin  col-md-12">
+                                        
+                                            <div @if(!$link->flyin) style="display:none" @endif class="image-uploader flyin-{{$ids}}">
+                                                <label class="mb-3" for="images">Fly In Video</label>
+                                                <input type="hidden" name="flyin[]" class="upload_input" value={{$link->flyin ? $link->flyin->url : ''}} >
+                                                <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video" data-default-file="{{$link->flyin ? assetUrl($link->flyin->url) : ''}}"  />
+                                            </div>
+                                        
+                                           <button class="btn btn-primary addflyin" data-index="{{$ids}}">Add Fly In Video</button>
+                                    </div>
+
 
 
 
@@ -240,11 +252,29 @@ $event_id = $id;
         
         $(".done").hide();
         $(".done").on("click",resetPosition)
+
+        
+        $(".addflyin").on("click",addFlyIn);
+      
         
 
         bindRemoveButton();
 
     });
+
+
+    function addFlyIn(e){
+        e.preventDefault();
+        console.log("test");
+        let target = $(e.target);
+        const index = target.data("index");
+        console.log({index})
+        $(".flyin-"+index).show();
+        target.hide();
+        initializeFileUploads();
+
+    }
+
 
     function resetPosition(e){
         e.preventDefault();
@@ -452,6 +482,18 @@ $event_id = $id;
 
 
 
+                                    <div class="col-md-12 flyin ">
+                                            <div style="display:none" class="image-uploader flyin-${n}">
+                                                <label class="mb-3" for="images">Fly In Video</label>
+                                                <input type="hidden" name="flyin[]" class="upload_input" >
+                                                <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video"  />
+                                            </div>
+                                            <button class="btn btn-primary addflyin" data-index="${n}">Add Fly In Video</button>
+                                        </div>
+                                   
+
+
+
 
 
 
@@ -474,6 +516,7 @@ $event_id = $id;
 
         $(".done").hide();
         $(".done").on("click",resetPosition)
+        $(".addflyin").on("click",addFlyIn);
 
 
     }
