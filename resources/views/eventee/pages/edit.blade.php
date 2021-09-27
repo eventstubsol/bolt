@@ -43,7 +43,7 @@ Edit Page
             <div id="cont" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
                     <img src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
-                    @foreach($page->links as $id => $link)
+                    @foreach($page->links as $link)
                         <div class="im-{{$id}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
                     @endforeach
                 </div>
@@ -53,7 +53,7 @@ Edit Page
                
 
 
-                <form action="{{ route("eventee.pages.update", [ "page" => $page->id,"id" => $id ]) }}" method="post">
+                <form action="{{ route("eventee.pages.updates", [ "page" => $page->id,"id" => $id ]) }}" method="post">
                     {{ csrf_field() }}
                     @method("PUT")
 
@@ -170,7 +170,17 @@ Edit Page
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
 
                                     </div>
-
+                                    
+                                    <div class="flyin  col-md-12">
+                                        
+                                            <div @if(!$link->flyin) style="display:none" @endif class="image-uploader flyin-{{$ids}}">
+                                                <label class="mb-3" for="images">Fly In Video</label>
+                                                <input type="hidden" name="flyin[]" class="upload_input" value={{$link->flyin ? $link->flyin->url : ''}} >
+                                                <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video" data-default-file="{{$link->flyin ? assetUrl($link->flyin->url) : ''}}"  />
+                                            </div>
+                                        
+                                           <button class="btn btn-primary addflyin" data-index="{{$ids}}">Add Fly In Video</button>
+                                    </div>
 
 
 
@@ -253,11 +263,25 @@ Edit Page
         
         $(".done").hide();
         $(".done").on("click",resetPosition)
+
+        $(".addflyin").on("click",addFlyIn);
         
 
         bindRemoveButton();
 
     });
+
+    function addFlyIn(e){
+        e.preventDefault();
+        console.log("test");
+        let target = $(e.target);
+        const index = target.data("index");
+        console.log({index})
+        $(".flyin-"+index).show();
+        target.hide();
+        initializeFileUploads();
+
+    }
 
     function resetPosition(e){
         e.preventDefault();
@@ -488,6 +512,16 @@ Edit Page
 
                                     </div>
 
+                                        <div class="col-md-12 flyin ">
+                                            <div style="display:none" class="image-uploader flyin-${n}">
+                                                <label class="mb-3" for="images">Fly In Video</label>
+                                                <input type="hidden" name="flyin[]" class="upload_input" >
+                                                <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video"  />
+                                            </div>
+                                            <button class="btn btn-primary addflyin" data-index="${n}">Add Fly In Video</button>
+                                        </div>
+                                   
+
 
 
 
@@ -514,6 +548,8 @@ Edit Page
 
         $(".done").hide();
         $(".done").on("click",resetPosition)
+        $(".addflyin").on("click",addFlyIn);
+
 
 
     }

@@ -674,6 +674,7 @@ $user = Auth::user();
     @include("event.modules.ArchiveVideos")
 
     @include("event.modules.ByLaws")
+    @include("event.modules.FlyIn")
 
 
     <div id="chat_div"></div>

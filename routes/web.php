@@ -27,6 +27,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 // });
 Route::group(['domain' => '{subdomain}.localhost'], function () {
     Route::get('/', function ($subdomain) {
+        // dd($subdomain);
         $user = Auth::user();
         if(!$user){
             return redirect(route('attendeeLogin',$subdomain));
@@ -95,7 +96,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/page/event/create/{id}","Eventee\PageController@create")->name('eventee.pages.create'); 
     Route::post("/page/event/store/{id}","Eventee\PageController@store")->name('eventee.pages.store');
     Route::get('page/event/{page}/{id}/edit',"Eventee\PageController@edit")->name('eventee.pages.edit');
-    Route::put('page/event/{page}/{id}/update',"Eventee\PageController@update")->name('eventee.pages.update');
+    Route::put('page/{page}/{id}/update',"Eventee\PageController@update")->name('eventee.pages.updates');
     Route::delete('page/event/delete',"Eventee\PageController@destroy")->name('eventee.pages.destroy');
    
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
