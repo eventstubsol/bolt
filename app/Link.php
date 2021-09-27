@@ -14,6 +14,11 @@ class Link extends Model
     public function background(){
         return $this->hasMany("\App\Image", "owner");
     }
+
+    public function flyin(){
+        return $this->hasOne("\App\Video", "owner");
+    }
+
     //For mass assignment whitelisting
     protected $guarded = [
         "id",

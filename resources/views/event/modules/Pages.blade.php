@@ -50,7 +50,7 @@
                     style="{{ areaStyles($area) }}; background: transparent; cursor:pointer;"
                 ></a>
             @else
-                <div title="{{ $link->name  }}" class="positioned area" data-link="{{ $to }}" style="{{ areaStyles($area) }}">    
+                <div title="{{ $link->name  }}" data-flyin="{{ $link->flyin ? assetUrl($link->flyin->url) : '' }}" class="positioned area" data-link="{{ $to }}" style="{{ areaStyles($area) }}">    
                     @if($link->type === "vimeo")
                     <a class="video-play positioned fill" href="{{ $link->to }}">
                         <div class="d-flex  positioned h-100 w-100">

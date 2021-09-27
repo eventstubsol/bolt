@@ -28,7 +28,7 @@
                    
                           @if($footer->name == 'Polls')
                                 
-                                <li class="not-booth-menu"><a href="javascript:void(0);" data-toggle="modal" data-target="#poll-modal"><i class="fas fa-poll"></i>Polls</a></li>
+                                <li class="not-booth-menu"><a href="javascript:void(0);" id="poll_toggle" data-toggle="modal" data-target="#poll-modal"><i class="fas fa-poll"></i>Polls</a></li>
                             @elseif($footer->name == 'Q&A')
                             
                                 <li class="not-booth-menu"><a href="javascript:void(0);" data-toggle="modal" data-target="{{ $footer->link }}"><i class="{{ $footer->iClass }}"></i>Q&A</a></li>
