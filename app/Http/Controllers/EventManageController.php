@@ -98,4 +98,11 @@ class EventManageController extends Controller
             return redirect()->route('event.index',$id);
         }
     }
+
+    public function destroy(Request $req){
+        $event = Event::findOrFail($req->id);
+        
+        $event->delete();
+        return response()->json(['message'=>"Event Deleted Succesfully"]);
+    }
 }

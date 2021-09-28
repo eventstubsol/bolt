@@ -253,15 +253,9 @@ class UserController extends Controller
     public function destroy(Request $req)
     {
         $user = User::findOrFail($req->id);
-        // Http::withHeaders([
-        //     'appId' => env('COMET_CHAT_APP_ID'),
-        //     'apiKey' => env('COMET_CHAT_API_KEY'),
-        //     "Accept-Encoding"=> "deflate, gzip",
-        //     "Content-Encoding"=> "gzip"
-        // ])
-        //     ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => TRUE]);
+        
         $user->delete();
-        return redirect()->back();
+        return response()->json(['message'=>"User Deleted Succesfully"]);
     }
 
     public function changePassword(Request $request)
