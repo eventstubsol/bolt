@@ -925,9 +925,9 @@ function getSuggestedTags(){
     return $tags;
 }
 
-function getSchedule(){
+function getSchedule($event_id){
     $schedule = [];
-    $eventsLineup = EventSession::orderBy("start_time")->with("speakers.speaker")->get()->load(["parentroom","resources"]);
+    $eventsLineup = EventSession::where("event_id",$event_id)->orderBy("start_time")->with("speakers.speaker")->get()->load(["parentroom","resources"]);
     foreach ($eventsLineup as $event){
         if(!isset($schedule[$event->master_room])){
             $schedule[$event->master_room] = [];

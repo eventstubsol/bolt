@@ -60,9 +60,9 @@ class EventController extends Controller
         $FAQs = FAQ::all();
         //        $provisionals = ProvisionalGroup::with(["resource", "video"])->get();
         $prizes = Prize::where("event_id",$event_id)->with("images")->orderBy("criteria_low")->get();
-        $schedule = getSchedule();
+        $schedule = getSchedule($event_id);
         $user = Auth::user();
-        $pages = Page::where("event_id",$event_id)->with(["links","images"])->get();
+        $pages = Page::where("event_id",$event_id)->with(["links.flyin","images"])->get();
         $sessionrooms = sessionRooms::where("event_id",$event_id)->get()->groupBy("master_room");
         $sessionroomnames = [];
         foreach($sessionrooms as $master_room=>$rooms){
