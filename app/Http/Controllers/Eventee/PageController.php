@@ -52,7 +52,7 @@ class PageController extends Controller
 
 
     public function edit(Page $page,$id){
-        // dd("test");
+        // dd($id);
 
 
         $pages = Page::where('event_id',decrypt($id))->get();
@@ -61,7 +61,7 @@ class PageController extends Controller
 
         $session_rooms = sessionRooms::all();
 
-        $page->load(["images","links"]);
+        $page->load(["images","links.flyin"]);
         // return $page;
         return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths","id"]));
     }
@@ -94,8 +94,8 @@ class PageController extends Controller
 
     
     public function update(Request $request, Page $page,$id){
+        // dd($request->all());
         $request->validate(["name","url"]);
-        // dd($id);
         $event_id = $id;
         $page->name = $request->name;
         $page->save();
@@ -103,6 +103,7 @@ class PageController extends Controller
         $page->links()->delete();
         if($request->has("linknames")){
             foreach($request->linknames as $id => $linkname){
+
                 $to = "";
                 // dd($request->type);
                 switch($request->type[$id]){
@@ -134,7 +135,7 @@ class PageController extends Controller
                         $to = $request->custom_page[$id];
                         break;
                 }
-                Link::create([
+                $link = Link::create([
                     "page"=>$page->id,
                     "name"=> $linkname,
                     "type"=>$request->type[$id],
@@ -144,6 +145,13 @@ class PageController extends Controller
                     "width"=> $request->width[$id],
                     "height"=> $request->height[$id],
                 ]);
+                if($request->has("flyin") && isset($request->flyin[$id])){
+                    $link->flyin()->create([
+                        "url"=>$request->flyin[$id],
+                        "title"=>$link->name
+                    ]);
+                }
+
             }
         }
 
@@ -197,7 +205,7 @@ class PageController extends Controller
                         $to = $request->custom_page[$id];
                         break;
                 }
-                Link::create([
+                $link = Link::create([
                     "page"=>"lobby_".decrypt($event_id),
                     "name"=> $linkname,
                     "type"=>$request->type[$id],
@@ -207,6 +215,13 @@ class PageController extends Controller
                     "width"=> $request->width[$id],
                     "height"=> $request->height[$id],
                 ]);
+
+                if($request->has("flyin") && isset($request->flyin[$id])){
+                    $link->flyin()->create([
+                        "url"=>$request->flyin[$id],
+                        "title"=>$link->name
+                    ]);
+                }
             }
         }
 
