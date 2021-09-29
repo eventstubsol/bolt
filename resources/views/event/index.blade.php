@@ -636,9 +636,6 @@ $user = Auth::user();
         @include("event.modules.Swagbag")
     @endif
 
-    @if (isOpenForPublic('polls'))
-        @include("event.poll")
-    @endif
 
     @if (isOpenForPublic('lounge'))
         @include("event.modules.Lounge")
@@ -819,6 +816,9 @@ $user = Auth::user();
     <script src="{{ asset('/js/profile/index.js') }}?cb=1611083902568"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=1611083902568"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=1611083902568"></script>
+    @if (isOpenForPublic('polls'))
+        @include("event.poll")
+    @endif
     <style>
         fieldset.scheduler-border {
             border: 1px groove #ddd !important;

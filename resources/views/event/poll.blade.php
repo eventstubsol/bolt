@@ -112,8 +112,9 @@
        $.ajax({
            url:"{{ route('user.polls',$event_id) }}",
            method:"get",
-           data:{'id':pollId},
+           data:{'id':pollId,'sessName':setRoom},
            success:function(result){
+             console.log(result);
            var queslen = result.length;
                $.each(result,function(key,value){
                    var type = '';
@@ -343,7 +344,6 @@ function rateSubmit(){
     var rate = $('#rate').val();
     var questionId = $('#questionId').val();
     $.get("{{ route('user.polls.save') }}",{'id':questionId,'rate':rate},function(result){
-      console.log(result);
         if(app<1){
             $('.rating-box').append('<span class="float=right">Average Rating In this Qurstion is:<b> '+result.rate+'</b></span>');
             app++;
