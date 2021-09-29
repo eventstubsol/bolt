@@ -9,13 +9,14 @@ use App\Poll;
 use App\Answer;
 use App\Question;
 use App\UserAnswer;
-
+use App\sessionRooms;
 class UserPollController extends Controller
 {
     //
-    public function index(Request $req,$id)
+    public function index($id,Request $req)
     {
-        $question = Question::where('event_id', decrypt($id))->where('status', 1)->get();
+        $session = sessionRooms::where('event_id', ($id))->where('name',$req->sessName)->first();
+        $question = Question::where('sroom_id', $session->id)->where('status', 1)->get();
         return response()->json($question);
     }
 

@@ -42,7 +42,6 @@ class AttendeeAuthController extends Controller
     // method to attempt login
     public function login(Request $request,$subdomain)
     {
-        // dd($subdomain);
         $event = Event::where("name",$subdomain)->first();
         
         //     $response = Http::asForm()
@@ -67,14 +66,17 @@ class AttendeeAuthController extends Controller
         //             "login" => $this->loginT
         //         ]);
         // }
-        $validation =  env("ATTENDEE_LOGIN_FIELD") == "email" ? "required|email" : "required";
-        $request->validate([env("ATTENDEE_LOGIN_FIELD") => $validation]);
-        $user = User::with('tags.looking_users')->where(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")))
+        // $validation =  env("ATTENDEE_LOGIN_FIELD") == "email" ? "required|email" : "required";
+        // $request->validate([env("ATTENDEE_LOGIN_FIELD") => $validation]);
+        //dd($event);
+
+        $user = User::with('tags.looking_users')->where("email", $request->post("email"))
         ->where('event_id',$event->id)
             //            ->whereIn("type", USER_TYPES_TO_LOGIN_WITH_MEMBERSHIP_ID)
             ->whereNotIn("type", ["admin", "teller", "moderator", "exhibiter", "cms_manager"])
             ->first();
         if (!$user) {
+
             // dd("not found");
             return view("eventUser.login")->with([
                 "login" => $this->loginT,
@@ -94,6 +96,7 @@ class AttendeeAuthController extends Controller
             //     "login" => $this->loginT
             // ]);
         } else {
+
             // if ($user->type == 'attendee' && env("APP_ENV") != "local") {
             //     return view("auth.attendee_login")->with([
             //         "notFound" => TRUE,

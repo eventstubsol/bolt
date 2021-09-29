@@ -1,4 +1,5 @@
 let loader = $(".loader");
+let setRoom = '';
 function initApp() {
 
     //Wait for video load and then hide loader
@@ -10,6 +11,7 @@ function initApp() {
     let navs = $('.navs,.hide-on-exterior');
     let currentresbtns = null;
     let active_session_list = null;
+
     //Wait for all three main video loads before removing loader
     if (isMobile()) {
         loader.fadeOut();
@@ -788,13 +790,14 @@ function initApp() {
             }
         },
         'booth_directory': function (roomgroup) {
-            console.log("booth")
+            console.log("booth");
             pageChangeActions();
             $("#booth_directory").modal();
             recordPageView("#session-list-" + roomgroup, "Session List " + roomgroup);
         },
         'sessionroom/:room': function (room) {
             console.log(room);
+            setRoom = room;
             let whitelist_for_all = ["Health_Pavilion_Stage","Sponsor_Stage"]
             if ((!whitelist_for_all.includes(room)) && checkAuth() && room != "Sponsor_Stage") {
                 routie("lobby");
