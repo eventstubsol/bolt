@@ -794,6 +794,7 @@ function initApp() {
             recordPageView("#session-list-" + roomgroup, "Session List " + roomgroup);
         },
         'sessionroom/:room': function (room) {
+            console.log(room);
             let whitelist_for_all = ["Health_Pavilion_Stage","Sponsor_Stage"]
             if ((!whitelist_for_all.includes(room)) && checkAuth() && room != "Sponsor_Stage") {
                 routie("lobby");

@@ -171,12 +171,12 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post("/reports/workshop/{name}/export", "EventManageController@exportWorkshopLogs")->name("event.export.workshopLogs");
     Route::get("/reports/workshop/{name}/{id}", "EventManageController@workshopReports")->name("event.workshop");
     Route::post("/reports/workshop/{name}/", "EventManageController@workshopReportsData")->name("event.workshop.api");
-    Route::get("/user/event/{id}","Eventee\UserController@index")->name('eventee.user');
-    Route::get("/user/event/create/{id}","Eventee\UserController@create")->name('eventee.user.create');
-    Route::post("/user/event/store/{id}","Eventee\UserController@store")->name('eventee.user.store');
-    Route::get('user/event/{id}/{user_id}/edit',"Eventee\UserController@edit")->name('eventee.user.edit');
-    Route::post('user/event/{id}/{user_id}/update',"Eventee\UserController@update")->name('eventee.user.update');
-    Route::post('user/event/delete',"Eventee\UserController@destroy")->name('eventee.user.delete');
+    Route::get("/user/{id}","Eventee\UserController@index")->name('eventee.user');
+    Route::get("/user/create/{id}","Eventee\UserController@create")->name('eventee.user.create');
+    Route::post("/user/store/{id}","Eventee\UserController@store")->name('eventee.user.store');
+    Route::get('user/{id}/{user_id}/edit',"Eventee\UserController@edit")->name('eventee.user.edit');
+    Route::post('user/{id}/{user_id}/update',"Eventee\UserController@update")->name('eventee.user.update');
+    Route::post('user/delete',"Eventee\UserController@destroy")->name('eventee.user.delete');
     Route::get("/data-entry/{id}","Eventee\DataEntryController@index")->name('eventee.dataEntry');
     Route::get('/notification/{id}',"Eventee\NotificationController@index")->name('eventee.notification');
     Route::get('/notification/create/{id}',"Eventee\NotificationController@create")->name('eventee.notification.create');
