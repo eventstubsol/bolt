@@ -339,6 +339,7 @@ function initApp() {
             $("#cometchat__widget").show();
 
         }
+        $('.page_video').hide();
         loader.hide();
         $("#audi-content").empty();
         $("#caucus-room-content").empty();
@@ -847,6 +848,8 @@ function initApp() {
                 // CometChatWidget.chatWithGroup(page);
             // }
             // alert(page);
+            let video = $('.video-'+page);
+            
             let whitelist_for_all = ["expo_lobby","sponsor_floor","Vendor_Floor"]
             if ((!whitelist_for_all.includes(page)) && checkAuth()) {
                 routie("lobby");
@@ -862,6 +865,9 @@ function initApp() {
 
                recordPageView("page/" + page, page + " page");
             }
+            video.show();
+            video.prop("currentTime", 0).get(0).play();
+
         },
         'caucus-room': function () {
             pages.hide().filter("#caucus-room-page").show();
