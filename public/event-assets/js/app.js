@@ -821,7 +821,8 @@ function initApp() {
                 const loadContent = () => {
                     // if(window.config.auditoriumEmbed.startsWith(""))
                     console.log(window.config.auditoriumEmbed)
-                    $("#session-content-" + room).empty().append(`<iframe frameborder="0"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=${room}"></iframe>`);
+                    $("#session-content-" + room).empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=${room}"></iframe>`);
+                    $("#session-content-" + room).append(`<div id="video_play_area"></div>`);
                     $(".cc1-chat-win-inpt-wrap input").unbind("mousedown").on("mousedown", function (e) { e.preventDefault(); e.stopImmediatePropagation(); $(e.target).focus() });
                 };
                 let sessionModal = $("#session-modal-" + room);
