@@ -34,13 +34,25 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="image-uploader">
+                    <div class="form-group mb-3">
+                        <label for="name">Content Type</label>
+                        <select name="bg_type" id="bg_type" class="form-control">
+                            <option value="none" checked>None</option>
+                            <option value="image">Image</option>
+                            <option value="video">Video</option>
+                        </select>
+                    </div>
+                    <div class="image-uploader" id="imgBg" style="display: none">
                       <label class="mb-3" for="images">Background Image</label>
                       <input type="hidden" name="url" class="upload_input" >
                       <input type="file" data-name="url" data-plugins="dropify" data-type="image"  />
                     </div>
-
-                   
+                    <div class="image-uploader" id="vidBg" style="display: none">
+                        <label class="mb-3" for="images">Background Video</label>
+                        <input type="hidden" name="video_url" class="upload_input" >
+                        <input type="file" data-name="video_url" data-plugins="dropify" data-type="video"  />
+                    </div>
+                   <br>
                     <div>
                         <button class="btn btn-primary" type="submit">Create</button>
                     </div>
@@ -55,4 +67,37 @@
 
 @section("scripts")
   @include("includes.scripts.fileUploader")
+  <script>
+      $(document).ready(function(){
+        var opt = $('#bg_type').val();
+            if(opt == 'none'){
+                $('#imgBg').hide();
+                $('#vidBg').hide();
+            }
+            else if(opt == 'image'){
+                $('#imgBg').show();
+                $('#vidBg').hide();
+            }
+            else if(opt == 'video'){
+                $('#imgBg').hide();
+                $('#vidBg').show();
+            }
+          $('#bg_type').on('change',function(e){
+              e.preventDefault();
+              var opt = $(this).val();
+              if(opt == 'none'){
+                $('#imgBg').hide();
+                $('#vidBg').hide();
+              }
+              else if(opt == 'image'){
+                $('#imgBg').show();
+                $('#vidBg').hide();
+              }
+              else if(opt == 'video'){
+                $('#imgBg').hide();
+                $('#vidBg').show();
+              }
+          });
+      });
+  </script>
 @endsection
