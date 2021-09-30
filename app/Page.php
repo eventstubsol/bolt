@@ -19,6 +19,9 @@ class Page extends Model
     public function images(){
         return $this->hasMany("\App\Image", "owner");
     }
+    public function videoBg(){
+        return $this->hasOne("App\Video","owner");
+    }
 
     public function links()
     {
