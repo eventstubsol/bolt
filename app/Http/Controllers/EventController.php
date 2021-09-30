@@ -655,10 +655,12 @@ class EventController extends Controller
         try {
             $user = Auth::user();
             $videoId = $request->get("id", false);
+            //room name
             $type = $request->get("type", EVENT_ROOM_AUDI);
-         
+            
             //Fetch Current Session
             $session = $this->getCurrentRunningSession($type);
+           
             
             if (!$session) {
                 //No Session Going On 
@@ -666,6 +668,10 @@ class EventController extends Controller
             }
 
          
+            if($session->type === "VIDEO_SDK"){
+                // dd($session);
+                return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id]));
+            }
 
             //Direct Zoom Redirect
             if($session->type == "ZOOM_EXTERNAL" && strlen($session->zoom_url)){
@@ -723,6 +729,13 @@ class EventController extends Controller
     {
         return view("event.webinar");
     }
+    
+    public function videosdk(Request $request,$meetingId)
+    {
+        // dd($meetingId);
+        return view("event.videosdk")->with(compact(["meetingId"]));
+    }
+
 
     public function webinarEnded()
     {

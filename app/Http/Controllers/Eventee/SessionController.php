@@ -60,12 +60,16 @@ class SessionController extends Controller
 
     public function store(Request $request,$id)
     {
+        // dd($request->all());
         $event_id = $id;
         $speakers = $request->speakers;
         $request->speakers = null;
         $room = sessionRooms::where("id", $request->room_id)->first();
         // $request->room = $room->name;
-        $session = EventSession::create($request->all());
+        $session = EventSession::create($request->except('meetingId',"_token"));
+        if($request->has("meetingId") && $request->meetingId){
+            $session->zoom_webinar_id = $request->meetingId;
+        }
         $session->room = $room->name;
         $session->master_room = $room->master_room;
         $session->event_id = decrypt($id);
