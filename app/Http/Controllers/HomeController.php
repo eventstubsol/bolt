@@ -19,6 +19,10 @@ class HomeController extends Controller
             return redirect(route('attendee_login'));
             return view("landing");
         }
+        if($user->type === "eventee"){
+            return redirect(route('event.index'));
+
+        }
         if(view()->exists("dashboard.".$user->type)){
             if($user->type === 'admin'){
                 return redirect(route('reports.general'));

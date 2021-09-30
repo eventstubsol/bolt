@@ -11,6 +11,9 @@ Manage Polls
 @section("breadcrumbs")
 <li class="breadcrumb-item active">Polls</li>
 @endsection
+@php
+   $sessionRooms = App\sessionRooms::where('event_id',decrypt($id))->get();
+@endphp
 @section('content')
 <div class="row">
    <div class="col-12">
@@ -288,6 +291,16 @@ Manage Polls
                   <input type="hidden" name="type" value="mcq">
                   <input type="text" class="mcqque form-control" id="mcqque" name="question">
                </div>
+               <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Session Room</label>
+                  <select name="sroom_id" class="form-control">
+                     @foreach ($sessionRooms as $room)
+
+                     <option value="{{ $room->id }}">{{ $room->name }}</option>
+                        
+                     @endforeach
+                  </select>
+               </div>
                @php
                   $sessions = App\EventSession::where('event_id',decrypt($id))->orderBy('created_at','desc')->get();
                @endphp
@@ -349,6 +362,16 @@ Manage Polls
                   <input type="hidden" name="type" value="quiz">
                   <input type="text" class="mcqque form-control" id="mcqque" name="question">
                </div>
+               <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Session Room</label>
+                  <select name="sroom_id" class="form-control">
+                     @foreach ($sessionRooms as $room)
+
+                     <option value="{{ $room->id }}">{{ $room->name }}</option>
+                        
+                     @endforeach
+                  </select>
+               </div>
                @if(App\EventSession::where('event_id',decrypt($id))->count() > 0)
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Session Room:</label>
@@ -387,7 +410,7 @@ Manage Polls
    </div>
 </div>
 </div>
-<!--Word Cloud-->
+<!--Word Cloud--> 
 <div class="modal fade" id="wcModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -405,6 +428,16 @@ Manage Polls
                   <input type="hidden" name="correct" id="correct" class="correct" >
                   <input type="hidden" name="type" value="wc">
                   <input type="text" class="mcqque form-control" id="mcqque" name="question" placeholder="Ask Your Question Here">
+               </div>
+               <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Session Room</label>
+                  <select name="sroom_id" class="form-control">
+                     @foreach ($sessionRooms as $room)
+
+                     <option value="{{ $room->id }}">{{ $room->name }}</option>
+                        
+                     @endforeach
+                  </select>
                </div>
                @if(App\EventSession::where('event_id',decrypt($id))->count() > 0)
                <div class="form-group">
@@ -447,6 +480,16 @@ Manage Polls
                   <input type="hidden" name="type" value="rate">
                   <input type="hidden" name="rate" id="rate">
                   <input type="text" class="mcqque form-control" id="mcqque" name="question" placeholder="Ask Your Question Here">
+               </div>
+               <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Session Room</label>
+                  <select name="sroom_id" class="form-control">
+                     @foreach ($sessionRooms as $room)
+
+                     <option value="{{ $room->id }}">{{ $room->name }}</option>
+                        
+                     @endforeach
+                  </select>
                </div>
                @if(App\EventSession::where('event_id',decrypt($id))->count() > 0)
                <div class="form-group">
@@ -499,6 +542,16 @@ Manage Polls
                   <label for="recipient-name" class="col-form-label">Question:</label>
                   <input type="hidden" name="type" value="surv">
                   <input type="text" class="mcqque form-control" id="mcqque" name="question">
+               </div>
+               <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Session Room</label>
+                  <select name="sroom_id" class="form-control">
+                     @foreach ($sessionRooms as $room)
+
+                     <option value="{{ $room->id }}">{{ $room->name }}</option>
+                        
+                     @endforeach
+                  </select>
                </div>
                @if(App\EventSession::where('event_id',decrypt($id))->count() > 0)
                <div class="form-group">

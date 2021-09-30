@@ -47,8 +47,7 @@ class UserController extends Controller
     public function store(Request $request, $id)
     {
         try {
-            
-            $request->validate(['name' => 'required', 'last_name' => 'required', 'email' => 'required', 'password' => 'required|min:6']);
+
 
             // $userData = $request->except("_token");
             // $userData["password"] = Hash::make($userData["password"]);
@@ -75,18 +74,18 @@ class UserController extends Controller
 
                 // $user->sendEmailVerificationNotification();
                 // create user in comet chat
-                Http::withHeaders(
-                    [
-                        'appId' => env('COMET_CHAT_APP_ID'),
-                        'apiKey' => env('COMET_CHAT_API_KEY'),
-                        "Accept-Encoding" => "deflate, gzip",
-                        "Content-Encoding" => "gzip"
-                    ]
-                )
-                    ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
-                        'uid' => $user->id,
-                        'name' => $user->name
-                    ]);
+                // Http::withHeaders(
+                //     [
+                //         'appId' => env('COMET_CHAT_APP_ID'),
+                //         'apiKey' => env('COMET_CHAT_API_KEY'),
+                //         "Accept-Encoding" => "deflate, gzip",
+                //         "Content-Encoding" => "gzip"
+                //     ]
+                // )
+                //     ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
+                //         'uid' => $user->id,
+                //         'name' => $user->name
+                //     ]);
                 if ($user->save()) {
                     flash("New User Added")->success();
                     return redirect()->route('eventee.user', $id);
@@ -253,15 +252,9 @@ class UserController extends Controller
     public function destroy(Request $req)
     {
         $user = User::findOrFail($req->id);
-        // Http::withHeaders([
-        //     'appId' => env('COMET_CHAT_APP_ID'),
-        //     'apiKey' => env('COMET_CHAT_API_KEY'),
-        //     "Accept-Encoding"=> "deflate, gzip",
-        //     "Content-Encoding"=> "gzip"
-        // ])
-        //     ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => TRUE]);
+        
         $user->delete();
-        return redirect()->back();
+        return response()->json(['message'=>"User Deleted Succesfully"]);
     }
 
     public function changePassword(Request $request)
