@@ -47,7 +47,12 @@
                             <td class="text-right" >
                                 <a href="{{ route("eventee.booth.edit", [
                                         "booth_id" => $booth->id,"id"=>$id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>   
+                                    <button data-toggle="tooltip" data-placement="top" data-id="{{$booth->id}}" title="" data-original-title="Delete" class="btn btn-danger ml-1 delete"  type="submit"><i class="fas fa-trash-alt"></i></button>
+                                <a href="{{ route("exhibiter.edit", [
+                                        "booth" => $booth->id
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Contents"><i class="fe-edit-2" ></i></a>
+
                             </td>
                         </tr>
                       @endforeach
@@ -70,7 +75,7 @@
             $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.booth.create",$id) }}">Create New</a>')
             $("body").on("click",".delete",function(e){
                 t = $(this);
-                let deleteUrl = '{{route("booth.destroy", [ "booth" => ":id" ])}}';
+                let deleteUrl = '{{route("eventee.booth.destroy", ["id"=> $id , "booth" => ":id"])}}';
                 let id = t.data("id");
                 confirmDelete("Are you sure you want to DELETE Prize?","Confirm Prize Delete").then(confirmation=>{
                     if(confirmation){

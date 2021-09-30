@@ -29,6 +29,9 @@ Manage Users
 <div class="row">
     <div class="col-12">
         <div class="card">
+            <div id="AlertDelete" class="alert alert-success" role="alert" style="display: none">
+                <center>  User Deleted Successfully </center>
+            </div>
             <div class="card-body">
                 {{--                <div class="float-right d-none d-md-inline-block">--}}
                 {{--                    <div class="btn-group mb-2">--}}
@@ -66,6 +69,7 @@ Manage Users
                                         "id" => $id,"user_id"=>$user->id
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit"><i class="fe-edit-2"></i></a>
+                                <button onclick="deleteUser(this)" data-id="{{ $user->id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
 
                             </td>
                         </tr>
@@ -125,5 +129,24 @@ Manage Users
                 
             });
         });
+
+        function deleteUser(e){
+            var conf = confirm("Do you want to delete this user?");
+            var data = e.closest('tr');
+            if(conf){
+                var userId = e.getAttribute('data-id');
+                var data = e.closest('tr');
+                $.post('{{ route("eventee.user.delete") }}',{'id':userId},function(response){
+                    data.remove();
+                    $('#AlertDelete').show();
+                    setTimeout(
+                        function() 
+                        {
+                            $('#AlertDelete').hide();
+                        }, 
+                    5000);
+                });
+            }
+        }
 </script>
 @endsection

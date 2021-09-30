@@ -119,17 +119,13 @@ class BoothController extends Controller
   }
 
   //Update booth Instance
-  public function update(Request $request,$id, $booth_id){
-      $request->validate(['name' => 'required',
-            'type' => 'required',
-            'room_id' => 'required',
-            'userids' => 'required',
-        ]);
-    $booth = Booth::findOrFail($booth_id);
+  public function update(Request $request,$id,  $booth){
+    $request->validate(['name' => 'required',
+    'userids' => 'required',
+  ]);
+  $booth = Booth::findOrFail($booth);
       $booth->update([
         "name" => $request->get("name"),
-        "room_id" => $request->get("room_id"),
-        "type"=> $request->get("type"),
         "boothurl"=>$request->get("boothurl"),
         "calendly_link"=>$request->get("calendly_link"),
       ]);
@@ -193,7 +189,7 @@ class BoothController extends Controller
   }
 
   //Delete booth
-  public function destroy(Booth $booth)
+  public function destroy(Booth $booth,$id)
   {
     Http::withHeaders([
       "apiKey" => env("COMET_CHAT_API_KEY"),
@@ -204,7 +200,7 @@ class BoothController extends Controller
       ->delete(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id);
 
     $booth->delete();
-    return redirect()->to(route("booth.index"));
+    return redirect()->to(route("booth.index",$id));
   }
 
   public function adminEdit(Request $req, Booth $booth)

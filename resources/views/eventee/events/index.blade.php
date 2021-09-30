@@ -28,6 +28,9 @@
             <div id="showAlert" class="alert alert-success" role="alert" style="display: none">
                 <center>  Link Copied Successfully </center>
             </div>
+            <div id="AlertDelete" class="alert alert-success" role="alert" style="display: none">
+                <center>  Event Deleted Successfully </center>
+            </div>
             <div class="card-body">
                 <table class="table table-hover table-striped">
                     <thead>
@@ -60,6 +63,7 @@
                                 <td>
                                     <a href="{{ route('event.Edit',['id'=>encrypt( $event->id )]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
                                     <a href="{{ route('event.Dashboard',['id'=>encrypt( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
+                                    <button onclick="deleteEvent(this)" data-id="{{ $event->id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             @endforeach
@@ -142,6 +146,25 @@
       function openPage(e){
           var link = e.getAttribute("data-id");
           window.open(link,'_blank');
+      }
+
+      function deleteEvent(e){
+        var conf = confirm("Do you want to delete this event?");
+            if(conf){
+                var eventId = e.getAttribute('data-id');
+                var data = e.closest('tr');
+                $.post('{{ route("event.delete") }}',{'id':eventId},function(response){
+                    
+                    data.remove();
+                    $('#AlertDelete').show();
+                    setTimeout(
+                        function() 
+                        {
+                            $('#AlertDelete').hide();
+                        }, 
+                    5000);
+                    });
+            }
       }
       
   </script>

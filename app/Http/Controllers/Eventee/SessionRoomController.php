@@ -57,7 +57,7 @@ class SessionRoomController extends Controller
 
     public function update(Request $request, sessionRooms $sessionroom,$id){
         $request->validate(["name"=>"required","background"=>"required"]);
-        // dd($sessionroom->id);
+        // dd($sessionroom->load("background")->background);
         $sessionroom->update([
             "name"=>$request->name,
             "master_room"=>isset($request->master_room)?$request->master_room:""
