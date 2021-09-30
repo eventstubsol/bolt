@@ -392,6 +392,12 @@ $user = Auth::user();
         .css-1gvrc8 {
             height: auto !important;
         }
+        #video_play_area{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 2;
+        }
 
     </style>
     {{-- App favicon --}}

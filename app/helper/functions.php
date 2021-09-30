@@ -258,6 +258,7 @@ define('ZOOM_EXTERNAL', "ZOOM_EXTERNAL");
 define('VIMEO_SESSION', "VIMEO_SESSION");
 define('VIMEO_ZOOM_EX', "VIMEO_ZOOM_EX");
 define('VIMEO_ZOOM_SDK', "VIMEO_ZOOM_SDK");
+define('VIDEO_SDK', "VIDEO_SDK");
 
 define("EVENT_SESSION_TYPES", [
     ZOOM_SDK,
@@ -265,6 +266,7 @@ define("EVENT_SESSION_TYPES", [
     VIMEO_SESSION,
     VIMEO_ZOOM_EX,
     VIMEO_ZOOM_SDK,
+    VIDEO_SDK
 ]);
 
 define("MENU_ICONS",[
@@ -681,6 +683,71 @@ function getZoomParameters($meeting_number, $password){
         "apiKey" => $api_key
     ];
     return $parameters;
+}
+
+function getVideoOptions($meetingid){
+    
+    if(Auth::user()){
+        $user  =  Auth::user();
+        $name = Auth::user() ? Auth::user()->name : "Guest";
+        $admin = $user->type === "speaker" ?  true : false;
+    }
+
+    $apiKey= env("VIDEO_SDK_API");
+
+
+     $config = [
+        "name"=> $name,
+        "apiKey"=>$apiKey,
+        "meetingId"=>$meetingid,
+
+        "containerId"=>"video",
+        "redirectOnLeave"=>"https://www.videosdk.live/",
+
+        "micEnabled"=>false,
+        "webcamEnabled"=>false,
+        "participantCanToggleSelfWebcam"=>true,
+        "participantCanToggleSelfMic"=>true,
+
+        "chatEnabled"=>true,
+        "screenShareEnabled"=>true,
+        "pollEnabled"=>true,
+        "whiteBoardEnabled"=>true,
+        "raiseHandEnabled"=>true,
+
+        "recordingEnabled"=>true,
+        "recordingWebhookUrl"=>"https://www.videosdk.live/callback",
+        "participantCanToggleRecording"=>false,
+
+        "brandingEnabled"=>false,
+        "brandLogoURL"=>"",
+        "brandName"=>"",
+        "poweredBy"=>false,
+
+        "participantCanLeave"=>true, // if false, leave button won't be visible
+
+        // Live stream meeting to youtube
+        "livestream"=>[
+            "autoStart"=>true,
+            "outputs"=>[
+                // {
+                //   url=>"rtmp://x.rtmp.youtube.com/live2",
+                //   streamKey=>"<STREAM KEY FROM YOUTUBE>",
+                // },
+            ],
+        ],
+        "permissions"=>[
+            "askToJoin"=>false, // Ask joined participants for entry in meeting
+            "toggleParticipantMic"=>true, // Can toggle other participant's mic
+            "toggleParticipantWebcam"=>true, // Can toggle other participant's webcam
+        ],
+
+        "joinScreen"=>[
+            "visible"=>false, // Show the join screen ?
+            "title"=>"Daily scrum", // Meeting title
+            "meetingUrl"=>"", // Meeting joining url
+        ],
+    ];
 }
 
 function getPollNonVoters($pollId,$userType = false){

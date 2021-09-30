@@ -82,6 +82,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/sessionroom/event/create/{id}","Eventee\SessionRoomController@create")->name('eventee.sessionrooms.create'); 
     Route::post("/sessionroom/event/store/{id}","Eventee\SessionRoomController@store")->name('eventee.sessionrooms.store');
     Route::get('/sessionroom/event/{sessionroom}/{id}/edit',"Eventee\SessionRoomController@edit")->name('eventee.sessionrooms.edit');
+    Route::put('/sessionroom/event/{sessionroom}/{id}/update',"Eventee\SessionRoomController@update")->name('eventee.sessionrooms.update');
     Route::delete('sessionroom/event/delete',"Eventee\PageController@destroy")->name('eventee.sessionrooms.destroy');
     
     Route::get("/session/event/{id}","Eventee\SessionController@index")->name('eventee.sessions.index');
@@ -465,6 +466,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::get("/event/meet", "EventController@meetEmbed")->name("meetEmbed");
     Route::get("/event/current-session", "EventController@getCurrentSession")->name("currentSession");
     Route::get("/event/webinar", "EventController@webinar")->name("webinar");
+    Route::get("/event/videosdk/{meetingId}", "EventController@videosdk")->name("videosdk");
     Route::get("/event/ended", "EventController@webinarEnded")->name("webinarEnded");
     Route::post("/event/{event}/subscribe", "EventSessionsController@subscribe")->name("event.subscribe");
     Route::post("/event/{event}/unsubscribe", "EventSessionsController@unsubscribe")->name("event.unsubscribe");

@@ -68,11 +68,11 @@ class SessionRoomController extends Controller
                 "url" => $request->background,  
             ]);
         }
-        return redirect()->to(route("sessionrooms.index",['id'=>$id]));
+        return redirect()->to(route("eventee.sessionrooms.index",['id'=>$id]));
     }
 
     public function destroy(sessionRooms $sessionroom){
         $sessionroom->delete();
-        return redirect()->to(route("sessionrooms.index"));
+        return redirect()->to(route("eventee.sessionrooms.index"));
     }
 }
