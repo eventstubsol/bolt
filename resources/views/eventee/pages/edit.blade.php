@@ -255,11 +255,11 @@ Edit Page
                     <div class="image-uploader" id="vidBg">
                         <label class="mb-3" for="images">Background Video</label>
                         <input type="hidden" name="video_url" class="upload_input" value="{{$page->videoBg?$page->videoBg->url:''}}">
-                        <input type="file" data-name="video_url" data-plugins="dropify" data-type="video"  />
+                        <input type="file" data-name="video_url" data-plugins="dropify" data-type="video" data-default-file="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" />
                     </div>
                     @endif
                     
-                    <div class="image-uploader" id="imgBg" style="display: none">
+                    {{-- <div class="image-uploader" id="imgBg" style="display: none">
                         <label class="mb-3" for="images">Background Image</label>
                         <input type="hidden" name="url" class="upload_input" >
                         <input type="file" data-name="url" data-plugins="dropify" data-type="image"  />
@@ -268,7 +268,7 @@ Edit Page
                         <label class="mb-3" for="images">Background Video</label>
                         <input type="hidden" name="video_url" class="upload_input" >
                         <input type="file" data-name="video_url" data-plugins="dropify" data-type="video"  />
-                    </div>
+                    </div> --}}
 
                     <div>
                         <input class="btn btn-primary" type="submit" value="Save" />

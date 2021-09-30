@@ -1,7 +1,11 @@
 @foreach($pages as $page)
 <div class="page" data-chat="{{$page->name}}" id="page-{{$page->name}}">
     <div class="position-relative" style="height:100vh;">
+        @if(isset($page->images[0]->url))
         <img async src="{{ assetUrl($page->images[0]->url??'') }}" class=" positioned booth-bg" alt="">
+        @else
+        <video muted class="full-width-videos page_video video-{{ $page->name }}" src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" loop ></video>
+        @endif
         @foreach($page->links as $link)
 
         @php
