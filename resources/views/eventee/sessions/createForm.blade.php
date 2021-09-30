@@ -53,7 +53,7 @@
                     <!-- Session Type -->
                     <div class="form-group mb-3">
                         <label for="example-select-1">Type</label>
-                        <select name="type" class="form-control @error('type') is-invalid @enderror" id="example-select-1" required>
+                        <select name="type" class="form-control @error('type') is-invalid @enderror" id="session_type" required>
                             @foreach(EVENT_SESSION_TYPES as $type)
                               <option value={{$type}} onselect="{{$selected_type = $type}}" >{{ str_replace('_'," ",$type)}}</option>
                              @endforeach
@@ -64,6 +64,8 @@
                         </span>
                         @enderror
                     </div>
+
+                    <input type="text" name="meetingId" id="meetingId" style="display:none"  >
 
                     <!-- Session Rooms -->
                     <div class="form-group mb-3">
@@ -158,7 +160,7 @@
                     </div>
 
                     <div>
-                        <input class="btn btn-primary" type="submit" value="Create" />
+                        <input class="btn btn-primary" type="submit" id="create_session" value="Create" />
                     </div>
                 </form>
             </div>
@@ -208,7 +210,45 @@
     $(document).ready(function() {
         $("#add-resource").on("click", addresource);
         bindRemoveButton();
+
+        $("#session_type").on("change",()=>{
+           let value = $("#session_type").val();
+            if(value === "VIDEO_SDK"){
+               $("#create_session").attr("disabled", true);
+               getMeetingId();
+            }   
+        })
     })
+
+        function getMeetingId(){
+            let token="";
+                fetch("http://localhost:9000/get-token")
+                    .then(r => r.json())
+                    .then((data) => {
+                        localStorage.setItem("jwt", data.token);
+                        token = data.token;
+                        createMeeting();
+                        console.log(data.token);
+                    });
+        
+
+
+            function createMeeting() {
+                var options = {
+                    method: "POST",
+                    headers: { authorization: `${token}` },
+                };
+
+                fetch("https://api.zujonow.com/v1/meetings", options)
+                    .then(r => r.json())
+                    .then(response => {
+                        $("#meetingId").val(response.meetingId);
+                        // $("#meetingId").show();
+                        $("#create_session").attr("disabled", false);
+                        console.log(response.meetingId);
+                    });
+            }
+        }
 </script>
 
 @endsection

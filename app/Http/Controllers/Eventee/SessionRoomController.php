@@ -73,6 +73,6 @@ class SessionRoomController extends Controller
 
     public function destroy(sessionRooms $sessionroom){
         $sessionroom->delete();
-        return redirect()->to(route("sessionrooms.index"));
+        return redirect()->to(route("eventee.sessionrooms.index"));
     }
 }
