@@ -340,6 +340,8 @@ function initApp() {
 
         }
         $('.page_video').hide();
+        $('.room_video').hide();
+        $('.booth_video').hide();
         loader.hide();
         $("#audi-content").empty();
         $("#caucus-room-content").empty();
@@ -492,6 +494,8 @@ function initApp() {
         },
         'booth/:id': function (id) {
             pages.hide();
+            let video = $('.video-'+id);
+            console.log(id);
             $("#notbooth_menu_toggle i").addClass("mdi-chevron-left-circle");
             $("#notbooth_menu_toggle i").removeClass("mdi-chevron-right-circle");
             let resbtns = $(".resourcelist-" + id);
@@ -583,6 +587,8 @@ function initApp() {
             } else {
                 routie(notFoundRoute);
             }
+            video.show();
+            video.prop("currentTime", 0).get(0).play();
         },
         'faq': function () {
             pages.hide();
@@ -799,6 +805,7 @@ function initApp() {
         'sessionroom/:room': function (room) {
             console.log(room);
             setRoom = room;
+            let video = $('.video-'+room);
             let whitelist_for_all = ["Health_Pavilion_Stage","Sponsor_Stage"]
             if ((!whitelist_for_all.includes(room)) && checkAuth() && room != "Sponsor_Stage") {
                 routie("lobby");
@@ -842,6 +849,8 @@ function initApp() {
                 });
                 recordPageView("workshop/" + room, room + " Room");
             }
+            video.show();
+            video.prop("currentTime", 0).get(0).play();
         },
         'page/:page': function (page) {
             // if(page === "auditorium"){

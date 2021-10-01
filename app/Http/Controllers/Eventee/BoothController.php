@@ -48,24 +48,32 @@ class BoothController extends Controller
   public function store(Request $request,$id)
   {
       try{
-          $booth = new Booth();
+        // dd($request->all());
+          $booth = new Booth;
           if($request->has("name")){
             $booth->name = $request->get("name");
+            $booth->bg_type = $request->bg_type;
           }
           else{
               return false;
           }
-          if($request->has("boothurl")){
+          if($request->has("boothurl") && $request->boothurl != null){
             $booth->boothurl = $request->get("boothurl");
-          }else{
-            return false." Booth url ";
           }
+          
           $booth->event_id = decrypt($id);
           if($request->has("calendly_link")){
             $booth->calendly_link=$request->calendly_link;
           }
           
           $booth->save();
+          if($request->has("video_url")  && $request->video_url != null){
+        
+            $booth->videoBg()->create([
+                "url"=>$request->video_url,
+                "title"=>$booth->name
+            ]);
+        }
           // if($booth->save()){
             Http::withHeaders([
               "apiKey" => env("COMET_CHAT_API_KEY"),
@@ -129,7 +137,13 @@ class BoothController extends Controller
         "boothurl"=>$request->get("boothurl"),
         "calendly_link"=>$request->get("calendly_link"),
       ]);
-
+      if($request->has("video_url")  && $request->video_url != null){
+        
+        $booth->videoBg()->create([
+            "url"=>$request->video_url,
+            "title"=>$booth->name
+        ]);
+    }
       // update group
       Http::withHeaders([
           "apiKey" => env("COMET_CHAT_API_KEY"),
