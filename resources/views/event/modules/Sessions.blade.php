@@ -2,10 +2,11 @@
     @foreach($rooms as $room)
         <div class="page" id="sessionroom-{{$room->name}}">
             <div class="position-relative" style="height:100vh;">
-                @if($room->name === "Grand_Ballroom_Portland_Host_Party")
-                   <video class="full-width-videos" src="{{ assetUrl(getField('session_room_video')) }}" id="session_room_video" autoplay muted loop poster="{{ assetUrl(getField('session_room_video_static')) }}"></video>
+                @if(@isset($room->background->url))
+                   
+                   <img async src="{{ assetUrl($room->background->url??'') }}" class="{{$roomgroup}} positioned fill booth-bg" alt="">
                 @else
-                    <img async src="{{ assetUrl($room->background->url??'') }}" class="{{$roomgroup}} positioned fill booth-bg" alt="">
+                <video class="full-width-videos room_video video-{{ $room->name }}" src="{{$room->videoBg?assetUrl($room->videoBg->url):''}}" id="session_room_video" autoplay muted loop></video>
                 @endif
                 @if($roomgroup === 'fireside_chat')
                     <div class="positioned" id="play-session-{{$room->name}}" style="{{ areaStyles(FIRESIDE_SCREEN_AREA) }};display:flex;align-items: center; justify-content: center;cursor: pointer;">

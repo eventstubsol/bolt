@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\sessionRooms;
 use App\Image;
-
+use Illuminate\Support\Facades\Log;
 
 class SessionRoomController extends Controller
 {
@@ -24,29 +24,43 @@ class SessionRoomController extends Controller
     }
 
     public function store(Request $request,$id){
-        $request->validate(["name"=>"required","background"=>"required"]);
+        try{
 
-        //creating new room
-        $room = new sessionRooms([
-            "name"=>$request->name,
-            "master_room"=>isset($request->master_room)?$request->master_room:"",
-            "event_id"=>decrypt($id)
-        ]);
-        $room->save();
-        // dd($room);
-
-
-        //adding background image
-        if (!empty($request->background)) {
-            Image::create([
-                "owner" => $room->id,
-                "title" => $request->name,
-                "url" => $request->background,
+            //creating new room
+            $name = str_replace(" ","_",$request->name);
+            $room = new sessionRooms([
+                "name"=>$name,
+                "master_room"=>isset($request->master_room)?$request->master_room:"",
+                "event_id"=>decrypt($id),
+                "bg_type"=>$request->bg_type,
             ]);
-        }
-
+            $room->save();
+            // dd($room);
+    
+    
+            //adding background image
+            if (!empty($request->background)) {
+                Image::create([
+                    "owner" => $room->id,
+                    "title" => $request->name,
+                    "url" => $request->background,
+                ]);
+            }
+            if($request->has("video_url")  && $request->video_url != null){
         
-        return redirect()->to(route("eventee.sessionrooms.index",['id'=>$id]));
+                $room->videoBg()->create([
+                    "url"=>$request->video_url,
+                    "title"=>$room->name
+                ]);
+            }
+    
+            
+            return redirect()->to(route("eventee.sessionrooms.index",['id'=>$id]));
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage());
+        }
+       
     }
 
     public function edit(sessionRooms $sessionroom,$id){
@@ -56,16 +70,24 @@ class SessionRoomController extends Controller
     }
 
     public function update(Request $request, sessionRooms $sessionroom,$id){
-        $request->validate(["name"=>"required","background"=>"required"]);
+        // $request->validate(["name"=>"required","background"=>"required"]);
         // dd($sessionroom->load("background")->background);
+        $name = str_replace(" ","_",$request->name);
         $sessionroom->update([
-            "name"=>$request->name,
+            "name"=>$name,
             "master_room"=>isset($request->master_room)?$request->master_room:""
         ]);       
         if(isset($request->background)){
             Image::where("owner",$sessionroom->id)->update([
                 "title" => $request->name,
                 "url" => $request->background,  
+            ]);
+        }
+        if($request->has("video_url")  && $request->video_url != null){
+            $sessionroom->videoBg()->delete();
+            $sessionroom->videoBg()->create([
+                "url"=>$request->video_url,
+                "title"=>$sessionroom->name
             ]);
         }
         return redirect()->to(route("eventee.sessionrooms.index",['id'=>$id]));
