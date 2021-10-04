@@ -23,6 +23,10 @@ class Page extends Model
         return $this->hasOne("App\Video","owner");
     }
 
+    public function treasures(){
+        return $this->hasMany("\App\Treasure","owner");
+    }
+
     public function links()
     {
         return $this->hasMany("\App\Link","page");

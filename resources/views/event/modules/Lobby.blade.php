@@ -47,6 +47,6 @@
 
 
                 @endforeach
-        {!! getScavengerItems("lobby") !!}
+        {!! getLobbyItems($event_id) !!}
     </div>
 </div>
