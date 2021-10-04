@@ -11,6 +11,7 @@ use App\Page;
 use App\sessionRooms;
 use Illuminate\Http\Request;
 use App\Event;
+use App\Treasure;
 
 class PageController extends Controller
 {
@@ -80,11 +81,13 @@ class PageController extends Controller
         $page_name = "lobby_".$ids;
 
         $links = Link::where(["page"=>$page_name])->get();
+        $treasures = Treasure::where(["owner"=>$page_name])->get();
         $page = (object) [
             "id"=>$id,
             "name"=>$page_name,
             "links"=>$links,
-            "event_id"=>$id
+            "event_id"=>$id,
+            "treasures"=>$treasures
         ];
         // dd($id);
 
@@ -99,6 +102,20 @@ class PageController extends Controller
         $event_id = $id;
         $page->name = $request->name;
         $page->save();
+
+        $page->treasures()->delete();
+        if($request->has("treasures")){
+            foreach($request->treasures as $index => $treasure_item){
+                $page->treasures()->create([
+                    "url"=>$treasure_item,
+                    "event_id"=> decrypt($id),
+                    "top"=> $request->ttop[$index],
+                    "left"=> $request->tleft[$index],
+                    "width"=> $request->twidth[$index],
+                    "height"=> $request->theight[$index],
+                ]);
+            }
+        }
 
         $page->links()->delete();
         if($request->has("linknames")){
@@ -179,8 +196,22 @@ class PageController extends Controller
     public function Lobbyupdate(Request $request,$id){
         // $request->validate(["name","url"]);
         $event_id = $id;
-        
         Link::where(["page"=>"lobby_".decrypt($id)])->delete();
+        Treasure::where(["owner"=>"lobby_".decrypt($id)])->delete();
+        if($request->has("treasures")){
+            foreach($request->treasures as $index => $treasure_item){
+                Treasure::create([
+                    "owner"=>"lobby_".decrypt($id),
+                    "url"=>$treasure_item,
+                    "event_id"=> decrypt($id),
+                    "top"=> $request->ttop[$index],
+                    "left"=> $request->tleft[$index],
+                    "width"=> $request->twidth[$index],
+                    "height"=> $request->theight[$index],
+                ]);
+            }
+        }
+
         if($request->has("linknames")){
             foreach($request->linknames as $id => $linkname){
                 $to = "";

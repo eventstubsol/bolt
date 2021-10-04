@@ -64,7 +64,7 @@
 
         
   @endforeach
-        {!! getScavengerItems($page->name) !!}
+        {!! getTreasureItems($page->treasures,$page->name) !!}
 </div>
 </div>
 @endforeach

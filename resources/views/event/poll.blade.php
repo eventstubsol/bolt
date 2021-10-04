@@ -154,7 +154,7 @@
 
 
 </script>
-<input type="text" id="answer" class="form-control">
+<!-- <input type="text" id="answer" class="form-control"> -->
 <script>
     var i = 1;
 

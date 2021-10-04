@@ -20,6 +20,10 @@ class Page extends Model
         return $this->hasMany("\App\Image", "owner");
     }
 
+    public function treasures(){
+        return $this->hasMany("\App\Treasure","owner");
+    }
+
     public function links()
     {
         return $this->hasMany("\App\Link","page");
