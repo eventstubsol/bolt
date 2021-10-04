@@ -2,8 +2,10 @@
 @foreach($booths as $booth)
     <div class="page  booth" data-name="{{ $booth->name }}" id="booth-{{ $booth->id }}">
         <div class="position-relative" style="height:100vh">
-            @if(strlen($booth->boothurl)>1)
+            @if(isset($booth->boothurl))
                 <img async src="{{ assetUrl($booth->boothurl) }}" class="positioned booth-bg" alt="">
+            @else
+            <video class="full-width-videos booth_video video-{{ $booth->id }}" src="{{$booth->videoBg?assetUrl($booth->videoBg->url):''}}" id="session_room_video" autoplay muted loop></video>
             @endif
 
             @foreach($booth->links as $link)
@@ -14,7 +16,7 @@
 
 
 
-                $to = "";
+                $to = ""; 
                 switch($link->type)
                 {
                     case "zoom":

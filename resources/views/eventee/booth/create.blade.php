@@ -38,12 +38,25 @@
                         </span>
                         @enderror
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="name">Content Type</label>
+                        <select name="bg_type" id="bg_type" class="form-control">
+                            <option value="none" checked>None</option>
+                            <option value="image">Image</option>
+                            <option value="video">Video</option>
+                        </select>
+                    </div> 
                     <!-- Booth Background Image Uploader -->
-                    <div class="image-uploader">
+                    <div class="image-uploader" id="imgBg" style="display: none">
                         <label class="mb-3" for="images">Booth Image</label>
-                        <input type="hidden" name="boothurl" class="upload_input" >
+                        <input type="hidden" name="boothurl" class="upload_input"  >
                         <input type="file" data-name="boothimages" data-plugins="dropify" data-type="image" />
                      </div>
+                     <div class="image-uploader" id="vidBg" style="display: none">
+                        <label class="mb-3" for="images">Booth Video</label>
+                        <input type="hidden" name="video_url" class="upload_input" >
+                        <input type="file" data-name="video_url" data-plugins="dropify" data-type="video"  />
+                    </div>
 
                     <div class="form-group mb-3">
                         <label for="calendly_link">Calendly Link</label>
@@ -55,6 +68,8 @@
                         @enderror
 
                     </div>
+
+                    
 
                     <div class="mb-3">
                           <label for="user">Select Exhibitor</label>
@@ -82,5 +97,38 @@
   @section("scripts")
     @include("includes.scripts.select")
   @include("includes.scripts.fileUploader")
+  <script>
+      $(document).ready(function(){
+        var opt = $('#bg_type').val();
+            if(opt == 'none'){
+                $('#imgBg').hide();
+                $('#vidBg').hide();
+            }
+            else if(opt == 'image'){
+                $('#imgBg').show();
+                $('#vidBg').hide();
+            }
+            else if(opt == 'video'){
+                $('#imgBg').hide();
+                $('#vidBg').show();
+            }
+          $('#bg_type').on('change',function(e){
+              e.preventDefault();
+              var opt = $(this).val();
+              if(opt == 'none'){
+                $('#imgBg').hide();
+                $('#vidBg').hide();
+              }
+              else if(opt == 'image'){
+                $('#imgBg').show();
+                $('#vidBg').hide();
+              }
+              else if(opt == 'video'){
+                $('#imgBg').hide();
+                $('#vidBg').show();
+              }
+          });
+      });
+  </script>
 
   @endsection

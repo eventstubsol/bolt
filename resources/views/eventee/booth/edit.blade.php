@@ -27,6 +27,13 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div id="image_demo" class="im-section" style="position:relative; padding:0" >
+                    @if(isset($booth->boothurl))
+                    <img src="{{$booth->boothurl?assetUrl($booth->boothurl):''}}" style="min-width:100%" />
+                    @else
+                    <video controls autoplay src="{{$booth->videoBg?assetUrl($booth->videoBg->url):''}}" repeat></video>
+                    @endif
+                </div>
               <form action="{{ route("eventee.booth.update", [ "booth_id" => $booth->id,"id"=>$id ]) }}" method="post">
               {{ csrf_field() }}
                     @method("PUT")
@@ -71,12 +78,19 @@
                         </span>
                         @enderror
                        </div>
+                @if($booth->bg_type == 'image')
                   <div class="image-uploader">
                       <label class="mb-3" for="images">Booth Image</label>
                       <input type="hidden" name="boothurl" class="upload_input" value="{{isset($booth->boothurl)?$booth->boothurl:""}}">
                       <input type="file" data-name="boothimages" data-plugins="dropify" data-type="image" data-default-file={{isset($booth->boothurl)?assetUrl($booth->boothurl):""}} />
                   </div>
-
+                @else
+                    <div class="image-uploader" id="vidBg">
+                        <label class="mb-3" for="images">Background Video</label>
+                        <input type="hidden" name="video_url" class="upload_input" value="{{$booth->videoBg?$booth->videoBg->url:''}}">
+                        <input type="file" data-name="video_url" data-plugins="dropify" data-type="video" data-default-file="{{$booth->videoBg?assetUrl($booth->videoBg->url):''}}" />
+                    </div>
+                @endif
                     <div>
                         <button class="btn btn-primary mt-2">Save</button>
                         <button class="btn btn-danger mt-2  {{ $booth->isPublished() ? "" : "hidden" }}" id="unpublish">Unpublish</button>

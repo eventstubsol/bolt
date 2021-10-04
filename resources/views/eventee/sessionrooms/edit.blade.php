@@ -24,6 +24,13 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div id="image_demo" class="im-section" style="position:relative; padding:0" >
+                    @if(isset($sessionroom->background->url))
+                    <img src="{{$sessionroom->background?assetUrl($sessionroom->background->url):''}}" style="min-width:100%" />
+                    @else
+                    <video controls autoplay src="{{$sessionroom->videoBg?assetUrl($sessionroom->videoBg->url):''}}" repeat></video>
+                    @endif
+                </div>
                 <form action="{{ route("eventee.sessionrooms.update", [ "sessionroom" => $sessionroom->id,'id'=>$id ]) }}" method="post">
                     {{ csrf_field() }}
                     @method("PUT")
@@ -45,16 +52,23 @@
                         </span>
                         @enderror
                     </div>
-
-                    <div class="image-uploader mb-3">
-                        <input type="hidden" class="upload_input" name="background"  value="{{$sessionroom->background->url??''}}">
-                        <input accept="images/*"
-                            type="file"
-                            data-name="background"
-                            data-plugins="dropify"
-                            data-default-file={{assetUrl($sessionroom->background->url??"")}}
-                            data-type="image"/>
-                    </div>
+                    @if($sessionroom->bg_type == 'image' )
+                        <div class="image-uploader mb-3">
+                            <input type="hidden" class="upload_input" name="background"  value="{{$sessionroom->background->url??''}}">
+                            <input accept="images/*"
+                                type="file"
+                                data-name="background"
+                                data-plugins="dropify"
+                                data-default-file={{assetUrl($sessionroom->background->url??"")}}
+                                data-type="image"/>
+                        </div>
+                    @else
+                        <div class="image-uploader" id="vidBg">
+                            <label class="mb-3" for="images">Background Video</label>
+                            <input type="hidden" name="video_url" class="upload_input" value="{{$sessionroom->videoBg?$sessionroom->videoBg->url:''}}">
+                            <input type="file" data-name="video_url" data-plugins="dropify" data-type="video" data-default-file="{{$sessionroom->videoBg?assetUrl($sessionroom->videoBg->url):''}}" />
+                        </div>
+                    @endif
 
                     <div>
                         <input class="btn btn-primary" type="submit" value="Save" />
