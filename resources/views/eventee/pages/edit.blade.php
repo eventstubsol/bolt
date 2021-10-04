@@ -38,17 +38,21 @@ Edit Page
 <div class="row">
     <div class="col-12">
         <div class="card" style="position: relative;" >
-            Visit Page: 
-            <a href="/event#page/{{$page->name}}" target="_blank">here</a>
+            {{-- Visit Page: 
+            <a href="/event#page/{{$page->name}}" target="_blank">here</a> --}}
             <div id="cont" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
-                    <img src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
-                    @foreach($page->links as $ids => $link)
-                        <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
-                    @endforeach
-                    @foreach($page->treasures as $ids => $link)
-                        <div class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
-                    @endforeach
+                    @if(isset($page->images[0]))
+                        <img src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
+                    @else
+                        <video controls autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat></video>
+                    @endif
+                        @foreach($page->links as $ids => $link)
+                            <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
+                        @endforeach
+                        @foreach($page->treasures as $ids => $link)
+                            <div class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
+                        @endforeach
                 </div>
 
             
@@ -200,6 +204,7 @@ Edit Page
                              
 
                             </div>
+                            <br><br>
                             <div>
                                 <button class="btn btn-primary">Save</button>
                                 <button class="btn btn-primary" id="add-link">Add links</button>
@@ -229,11 +234,44 @@ Edit Page
                         </span>
                         @enderror
                     </div>
-                    <div class="image-uploader">
+                    <div class="form-group mb-3">
+                        <label for="name">Content Type</label>
+                        <select name="bg_type" id="bg_type" class="form-control">
+                            @if($pag->bg_type == 'image')
+                            <option value="none">None</option>
+                            <option value="image" selected>Image</option>
+                            <option value="video">Video</option>
+                            @else
+                            <option value="none">None</option>
+                            <option value="image">Image</option>
+                            <option value="video" selected>Video</option>
+                            @endif
+                        </select>
+                    </div>
+                    @if($pag->bg_type == 'image' )
+                    <div class="image-uploader" id="imgBg">
                         <label class="mb-3" for="images">Background Image</label>
                         <input type="hidden" name="url" class="upload_input" value="{{$page->images?$page->images[0]->url:''}}">
                         <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{$page->images?assetUrl($page->images[0]->url):''}}" />
                     </div>
+                    @else
+                    <div class="image-uploader" id="vidBg">
+                        <label class="mb-3" for="images">Background Video</label>
+                        <input type="hidden" name="video_url" class="upload_input" value="{{$page->videoBg?$page->videoBg->url:''}}">
+                        <input type="file" data-name="video_url" data-plugins="dropify" data-type="video" data-default-file="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" />
+                    </div>
+                    @endif
+                    
+                    {{-- <div class="image-uploader" id="imgBg" style="display: none">
+                        <label class="mb-3" for="images">Background Image</label>
+                        <input type="hidden" name="url" class="upload_input" >
+                        <input type="file" data-name="url" data-plugins="dropify" data-type="image"  />
+                    </div>
+                    <div class="image-uploader" id="vidBg" style="display: none">
+                        <label class="mb-3" for="images">Background Video</label>
+                        <input type="hidden" name="video_url" class="upload_input" >
+                        <input type="file" data-name="video_url" data-plugins="dropify" data-type="video"  />
+                    </div> --}}
 
 
                     <!-- Treasure Hunt Items Start -->
@@ -712,6 +750,26 @@ Edit Page
             }
         })
     }
+    $(document).ready(function(){
+
+        $('#bg_type').on('change',function(e){
+              e.preventDefault();
+              var opt = $(this).val();
+              if(opt == 'none'){
+                $('#imgBg').hide();
+                $('#vidBg').hide();
+              }
+              else if(opt == 'image'){
+                $('#imgBg').css('display','block');
+                $('#vidBg').css('display','none');
+              }
+              else if(opt == 'video'){
+                $('#imgBg').css('display','none');
+                $('#vidBg').css('display','block');
+              }
+          });
+      });
+
 </script>
 
 

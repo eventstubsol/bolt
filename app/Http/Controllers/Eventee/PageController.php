@@ -33,16 +33,24 @@ class PageController extends Controller
         $name = str_replace(" ","_",$request->name);
         $page = new Page([
             "name" => $name,
-            'event_id'=>decrypt($id)
+            'event_id'=>decrypt($id),
+            "bg_type" =>$request->bg_type,
         ]);
 
         $page->save();
 
-        if($request->has("url"))
+        if($request->has("url") && $request->url != null)
         {
             $page->images()->create([
                 "url"=>$request->url,
                 "link"=>"",
+                "title"=>$page->name
+            ]);
+        }
+        if($request->has("video_url")  && $request->video_url != null){
+    
+            $page->videoBg()->create([
+                "url"=>$request->video_url,
                 "title"=>$page->name
             ]);
         }
@@ -62,9 +70,11 @@ class PageController extends Controller
 
         $session_rooms = sessionRooms::all();
 
-        $page->load(["images","links.flyin"]);
+        $pag =  Page::where('event_id',decrypt($id))->first();
+
+        $page->load(["images","links.flyin","videoBg"]);
         // return $page;
-        return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths","id"]));
+        return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths","id","pag"]));
     }
 
     public function lobby($id){
@@ -74,7 +84,8 @@ class PageController extends Controller
         $pages = Page::where('event_id',$ids)->get();
 
         $booths = Booth::where('event_id',$ids)->get();
-
+        
+        $pag =  Page::where('event_id',decrypt($id))->first();
         //todo link session rooms to event_id 
 
         $session_rooms = sessionRooms::where("event_id",$ids)->get();
@@ -92,13 +103,14 @@ class PageController extends Controller
         // dd($id);
 
 
-        return view("eventee.pages.lobby")->with(compact(["page","session_rooms","pages","booths","id"]));
+        return view("eventee.pages.lobby")->with(compact(["page","session_rooms","pages","booths","id","pag"]));
     }
 
     
     public function update(Request $request, Page $page,$id){
         // dd($request->all());
         $request->validate(["name","url"]);
+        $pag =  Page::where('event_id',decrypt($id))->first();
         $event_id = $id;
         $page->name = $request->name;
         $page->save();
@@ -173,12 +185,20 @@ class PageController extends Controller
         }
 
 
-        if($request->has("url"))
+        if($request->has("url") && $request->url != null)
         {
             $page->images()->delete();
             $page->images()->create([
                 "url"=>$request->url,
                 "link"=>"",
+                "title"=>$page->name
+            ]);
+        }
+        if($request->has("video_url") && $request->video_url != null)
+        {
+            $page->videoBg()->delete();
+            $page->videoBg()->create([
+                "url"=>$request->video_url,
                 "title"=>$page->name
             ]);
         }
@@ -191,7 +211,7 @@ class PageController extends Controller
         $session_rooms = sessionRooms::all();
         $page->load(["images","links"]);
         $id = $event_id;
-        return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths",'id']));
+        return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths",'id','pag']));
     }
     public function Lobbyupdate(Request $request,$id){
         // $request->validate(["name","url"]);

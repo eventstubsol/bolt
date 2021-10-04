@@ -17,6 +17,9 @@ class sessionRooms extends Model
     public function background(){
         return $this->hasOne("\App\Image", "owner");
     }
+    public function videoBg(){
+        return $this->hasOne("\App\Video", "owner");
+    }
 
 
 }
