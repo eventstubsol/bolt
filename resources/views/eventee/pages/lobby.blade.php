@@ -1,19 +1,20 @@
 @extends("layouts.admin")
 
 @section("page_title")
-Edit Lobby Links
+Edit Page
 @endsection
 
 @section("title")
-Edit Lobby Links
+Edit Page
 @endsection
 
 
 @section("styles")
 @include("includes.styles.fileUploader")
 
+
 <style>
-    .image_links{
+   .image_links{
         border-radius: 5%;  
         color: white;
         font-size: 161%;
@@ -29,8 +30,8 @@ Edit Lobby Links
 
 
 @section("breadcrumbs")
-<li class="breadcrumb-item"><a href="{{ route("eventee.pages.index",['id'=>$id]) }}">Pages</a></li>
-<li class="breadcrumb-item active">Lobby</li>
+<li class="breadcrumb-item"><a href="{{ route("page.index") }}">Pages</a></li>
+<li class="breadcrumb-item active">Edit</li>
 @endsection
 
 @php 
@@ -42,23 +43,21 @@ $event_id = $id;
     <div class="col-12">
         <div class="card" style="position: relative;" >
             Visit Page: 
-            <a href="/event#lobby" target="_blank">here</a>
+            <a href="/event#page/{{$page->name}}" target="_blank">here</a>
             <div id="cont" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
                     <img src="{{ assetUrl(getFieldId('main_lobby_video_static',$event_id)) }}" style="min-width:100%" />
-                    @foreach($page->links as $id => $link)
-                        <div class="im-{{$id}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
+                    @foreach($page->links as $ids => $link)
+                        <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
+                    @endforeach
+                    @foreach($page->treasures as $ids => $link)
+                        <div class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
                     @endforeach
                 </div>
 
-                            
-                @php 
-                $id = $event_id;
-                @endphp
-
+            
 
                
-
 
                 <form action="{{ route('elobbyupdate',['id'=>$id]) }}" method="post">
                     {{ csrf_field() }}
@@ -118,20 +117,40 @@ $event_id = $id;
                                     </div>
 
                                     <div @if($link->type!=="zoom") style="display: none;" @endif class="zoom-{{$ids}} zoom form-group mb-3 col-md-4">
-                                        <label for="zoom">Zoom Url</label>
+                                        <label for="zoom">Zoom/External Link</label>
                                         <input @if($link->type==="zoom") value="{{$link->to}}" @endif type="text"   name="zoom[]" class="form-control">
                                     </div>
 
+                                    
                                     <div @if($link->type!=="vimeo") style="display: none;" @endif class="vimeo-{{$ids}} vimeo form-group mb-3 col-md-4">
                                         <label for="vimeo">Vimeo Url</label>
                                         <input @if($link->type==="vimeo") value="{{$link->to}}" @endif type="text"   name="vimeo[]" class="form-control">
                                     </div>
 
+                                    <div @if($link->type!=="chat_user") style="display: none;" @endif class="chat_user-{{$ids}} chat_user form-group mb-3 col-md-4">
+                                        <label for="chat_user">Chat User ID</label>
+                                        <input @if($link->type==="chat_user") value="{{$link->to}}" @endif type="text"   name="chatuser[]" class="form-control">
+                                    </div>
+
+                                    <div @if($link->type!=="chat_group") style="display: none;" @endif class="chat_group-{{$ids}} chat_group form-group mb-3 col-md-4">
+                                        <label for="chat_group">Chat Group ID</label>
+                                        <input @if($link->type==="chat_group") value="{{$link->to}}" @endif type="text"   name="chatgroup[]" class="form-control">
+                                    </div>
+                                    
                                     <div  @if($link->type!=="custom_page")  style="display: none;" @endif  class="custom_page-${n} custom_page form-group mb-3 col-md-4">
                                         <label for="custom_page">Custom Page route</label>
                                         <input @if($link->type==="custom_page") value="{{$link->to}}" @endif type="text"   name="custom_page[]" class="form-control">
                                     </div>
 
+
+                                    <div @if($link->type!=="pdf") style="display: none;" @endif class="image-uploader pdf-{{$ids}} pdf form-group mb-3 col-md-4">
+                                        <label for="pdf">PDF </label>
+                                        <input type="hidden" name="pdf[]" class="upload_input" @if($link->type==="pdf") value="{{$link->to}}" @endif">
+                                        <input type="file"      data-name="boothimages" data-plugins="dropify" data-type="application/pdf"  @if($link->type==="pdf") data-default-file="{{assetUrl($link->to)}}" @endif }} />                                   
+                                    </div>
+                                    
+
+                                   
                                     <div  class="row positioning-{{$ids}} col-md-12" >
                                     
                                     <div  class="form-group mb-3 col-md-3">
@@ -157,7 +176,7 @@ $event_id = $id;
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
 
                                     </div>
-                                          
+                                    
                                     <div class="flyin  col-md-12">
                                         
                                             <div @if(!$link->flyin) style="display:none" @endif class="image-uploader flyin-{{$ids}}">
@@ -168,8 +187,6 @@ $event_id = $id;
                                         
                                            <button class="btn btn-primary addflyin" data-index="{{$ids}}">Add Fly In Video</button>
                                     </div>
-
-
 
 
 
@@ -204,8 +221,6 @@ $event_id = $id;
 
 
 
-
-
                     <div class="form-group mb-3">
                         <label for="name">Name</label>
                         <input disabled required autofocus type="text" value="lobby" value="{{old('question')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
@@ -220,6 +235,52 @@ $event_id = $id;
                         <input type="hidden" name="url" class="upload_input" value="{{ getFieldId('main_lobby_video_static',$event_id) }}">
                         <input disabled type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{ assetUrl(getFieldId('main_lobby_video_static',$event_id)) }}" />
                     </div>
+
+
+                    <!-- Treasure Hunt Items Start -->
+                        <div id="treasures">
+                            <label class="mb-3" for="images">Treasure Hunt Items</label>
+                            @foreach($page->treasures as $ids =>$treasure)
+                                <div class="row">
+
+                                    <div class="image-uploader col-md-12">
+                                        <input type="hidden" name="treasures[]" class="upload_input" value="{{$treasure?$treasure->url:''}}">
+                                        <input type="file" data-name="treasures[]" data-plugins="dropify" data-type="image" data-default-file="{{$treasure?assetUrl($treasure->url):''}}" />
+                                    </div>
+                                    <div  class="row tpositioning-{{$ids}} col-md-12" >
+                                            
+                                            <div  class="form-group mb-3 col-md-3">
+                                                <label for="top">top</label>
+                                                <input value="{{$treasure->top}}" type="number" required  name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                            </div>
+                                            
+                                            <div  class="form-group mb-3 col-md-3">
+                                                <label for="pos">left</label>
+                                                <input value="{{$treasure->left}}" type="number" required  name="tleft[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                            </div>
+                                            
+                                            <div  class="form-group mb-3 col-md-3">
+                                                <label for="pos">width</label>
+                                                <input value="{{$treasure->width}}" type="number" required  name="twidth[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                            </div>
+
+                                            <div  class="form-group mb-3 col-md-3">
+                                                <label for="pos">height</label>
+                                                <input value="{{$treasure->height}}" type="number" required  name="theight[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                            </div>
+
+                                            <button data-index="{{$ids}}" class="btn btn-primary donet-{{$ids}} donet" >DONE</button>
+
+                                    </div>
+                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                </div>
+
+                            @endforeach
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" id="add-treasure">Add Treasure</button>
+                        </div>
+                    <!-- Treasure Hunt Items End -->
 
                     <div>
                         <input class="btn btn-primary" type="submit" value="Save" />
@@ -240,28 +301,31 @@ $event_id = $id;
     let resetflag = true;
     let links = {!! json_encode($page->links) !!};
     let n = links.length;
+    let treasures = {!! json_encode($page->treasures) !!}
+    let t = treasures.length;
     console.log(n);
     $(document).ready(function() {
         
      
         
         $("#add-link").on("click", addlink);
+        $("#add-treasure").on("click", addTreasure);
 
         $(".type").on("change",toggleVisibility);
         $(".pos").on("input",changePosition);
+        $(".tpos").on("input",changePositiont);
         
         $(".done").hide();
+        $(".donet").hide();
         $(".done").on("click",resetPosition)
+        $(".donet").on("click",resetPositiont)
 
-        
         $(".addflyin").on("click",addFlyIn);
-      
         
 
         bindRemoveButton();
 
     });
-
 
     function addFlyIn(e){
         e.preventDefault();
@@ -275,13 +339,28 @@ $event_id = $id;
 
     }
 
-
     function resetPosition(e){
         e.preventDefault();
         let target = $(e.target);
         const index = target.data("index");
         $(".done-"+index).hide();
         $(".positioning-"+index).eq(0).css({
+            position: "static",
+            background: "#ffffff",
+            padding: "0",
+            color: "#6c757d",
+            width: "100%",
+        });
+        resetflag =true;
+    }
+    
+    function resetPositiont(e){
+        console.log("hello world")
+        e.preventDefault();
+        let target = $(e.target);
+        const index = target.data("index");
+        $(".donet-"+index).hide();
+        $(".tpositioning-"+index).eq(0).css({
             position: "static",
             background: "#ffffff",
             padding: "0",
@@ -322,11 +401,41 @@ $event_id = $id;
     }
 
     
-    function areaStylesb(area)
-    {
+    function changePositiont(e){
+        
+        let target = $(e.target);
+
+        console.log(target);
+        
+        
+        const index = target.data("index");
+        if(resetflag){
+            resetflag =false;
+            document.getElementById("image_demo").scrollIntoView(false);
+        }
+        const positions =  $(".tpos-"+index).map((i, v) => v.value);
+        $(".donet-"+index).show();
+        // let name = $(".name-"+index).val();
+        console.log($(".im-"+index));
+        $(".tim-"+index).eq(0).css(areaStylesb(positions));
+        // $(".tim-"+index).html(`${name}`);
+        $(".tpositioning-"+index).eq(0).css({
+            position: "fixed",
+            bottom: "20px",
+            left: "18%",
+            background: "#23283ebd",
+            padding: "15px",
+            color: "white",
+            width: "40%",
+        });
+        console.log($(".positioning-"+index));
+        console.log(index);
+    }
+
+    
+    function areaStylesb(area){
         return {
             position:"absolute",
-             background:"white", 
              top: area[0]+'%',
              left: area[1]+'%',
              width: area[2]+'%',
@@ -348,6 +457,9 @@ $event_id = $id;
         $(".zoom-"+index).hide();
         $(".booth-"+index).hide();
         $(".vimeo-"+index).hide();
+        $(".pdf-"+index).hide();
+        $(".chat_user-"+index).hide();
+        $(".chat_group-"+index).hide();
         $(".custom_page-"+index).hide();
 
         switch(selectbox.val()){
@@ -366,14 +478,71 @@ $event_id = $id;
             case "vimeo":
                 $(".vimeo-"+index).show();
                 break;
+            case "pdf":
+                $(".pdf-"+index).show();
+                break;
+            case "chat_user":
+                $(".chat_user-"+index).show();
+                break;
+            case "chat_group":
+                $(".chat_group-"+index).show();
+                break;
             case "custom_page":
                 $(".custom_page-"+index).show();
                 break;
-                
         }
         // console.log(val);
     }
 
+    function addTreasure(e) {
+        e.preventDefault();
+        
+        t++;
+        console.log({t});
+
+        $(".im-section").append(`
+            <div class="tim-${t} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" >Treasure Item ${t}</div>      
+        `);
+        
+
+        $("#treasures").append(`
+                                <div class="row">
+                                    <div class="image-uploader col-md-12">
+                                        <input type="hidden" name="treasures[]" class="upload_input" >
+                                        <input type="file" data-name="treasures[]" data-plugins="dropify" data-type="image"/>
+                                    </div>
+                                    <div  class="row tpositioning-${t} col-md-12" >
+                                        
+                                        <div  class="form-group mb-3 col-md-3">
+                                            <label for="top">top</label>
+                                            <input type="number" required  name="ttop[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                        </div>
+                                        
+                                        <div  class="form-group mb-3 col-md-3">
+                                            <label for="pos">left</label>
+                                            <input type="number" required  name="tleft[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                        </div>
+                                        
+                                        <div  class="form-group mb-3 col-md-3">
+                                            <label for="pos">width</label>
+                                            <input type="number" required  name="twidth[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                        </div>
+
+                                        <div  class="form-group mb-3 col-md-3">
+                                            <label for="pos">height</label>
+                                            <input type="number" required  name="theight[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                        </div>
+
+                                        <button data-index="${t}" class="btn btn-primary donet-${t} donet" >DONE</button>
+
+                                    </div>
+                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                </div>
+        `);
+        bindRemoveButton();
+        
+        initializeFileUploads();
+    }
     function addlink(e) {
         e.preventDefault();
         console.log(n);
@@ -382,7 +551,7 @@ $event_id = $id;
         console.log(n);
 
         $(".im-section").append(`
-            <div class="im-${n} image_links" style=" position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" >Link ${n}</div>      
+            <div class="im-${n} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" >Link ${n}</div>      
         `);
         
 
@@ -437,14 +606,29 @@ $event_id = $id;
                                     </div>
 
                                     <div style="display: none;" class="zoom-${n} zoom form-group mb-3 col-md-4">
-                                        <label for="zoom">Zoom Url</label>
+                                        <label for="zoom">Zoom/External Link</label>
                                         <input type="text"   name="zoom[]" class="form-control">
                                     </div>
-
 
                                     <div style="display: none;" class="vimeo-${n} vimeo form-group mb-3 col-md-4">
                                         <label for="vimeo">Vimeo Url</label>
                                         <input type="text"   name="vimeo[]" class="form-control">
+                                    </div>
+
+                                    <div  style="display: none;"  class=" pdf-${n} pdf  mb-3 col-md-4">
+                                        <div class="image-uploader">
+                                        <label for="pdf">PDF </label>
+                                        <input type="hidden" name="pdf[]" class="upload_input">
+                                        <input type="file"    data-name="pdfs" data-plugins="dropify" data-type="application/pdf" />                                   
+                                        </div>
+                                    </div>
+                                    <div  style="display: none;"  class="chat_user-${n} chat_user form-group mb-3 col-md-4">
+                                        <label for="chat_user">Chat User ID</label>
+                                        <input type="text"   name="chatuser[]" class="form-control">
+                                    </div>
+                                    <div  style="display: none;"  class="chat_group-${n} chat_group form-group mb-3 col-md-4">
+                                        <label for="chat_group">Chat Group ID</label>
+                                        <input type="text"   name="chatgroup[]" class="form-control">
                                     </div>
 
                                     <div  style="display: none;"  class="custom_page-${n} custom_page form-group mb-3 col-md-4">
@@ -452,7 +636,6 @@ $event_id = $id;
                                         <input type="text"   name="custom_page[]" class="form-control">
                                     </div>
 
-                                    
 
                                     <div  class="row positioning-${n}" >
                                     
@@ -480,9 +663,7 @@ $event_id = $id;
 
                                     </div>
 
-
-
-                                    <div class="col-md-12 flyin ">
+                                        <div class="col-md-12 flyin ">
                                             <div style="display:none" class="image-uploader flyin-${n}">
                                                 <label class="mb-3" for="images">Fly In Video</label>
                                                 <input type="hidden" name="flyin[]" class="upload_input" >
@@ -503,9 +684,10 @@ $event_id = $id;
 
 
                                     <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
-                                </div>
-    `);
+                                </div>`);
         bindRemoveButton();
+        
+        initializeFileUploads();
     }
 
 
@@ -513,12 +695,14 @@ $event_id = $id;
         $(".remove-link").unbind().on("click", removelink);
         $(".type").on("change",toggleVisibility);
         $(".pos").on("input",changePosition);
+        $(".tpos").on("input",changePositiont);
+       
 
         $(".done").hide();
         $(".done").on("click",resetPosition)
+        $(".donet").hide();
+        $(".donet").on("click",resetPositiont)
         $(".addflyin").on("click",addFlyIn);
-
-
     }
 
     function removelink(e) {

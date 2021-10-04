@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\Catch_;
 use App\ContentMaster;
 use App\Menu;
+use App\Treasure;
 
 include_once "clickableAreasConfig.php";
 
@@ -530,6 +531,34 @@ function getScavengerItems($page)
             </div>
             ";
         }
+    }
+    return $toReturn;
+}
+function getTreasureItems($treasures,$page_name)
+{
+    // return "";
+    $toReturn = "";
+    foreach ($treasures as $index => $treasure) {
+        $toReturn .= "
+        <div class='scavenger-item positioned' data-page='".$page_name."' data-index='$index' style='" . areaStyles([$treasure->top,$treasure->left,$treasure->width,$treasure->height]) . "' data-name='treasure_hunt_item' title='treasure_hunt_item' >
+            <img async class='fill positioned' src='" . assetUrl($treasure->url) . "' style='object-fit:contain;' alt='' />
+        </div>
+        ";
+    }
+    return $toReturn;
+}
+function getLobbyItems($event_id)
+{
+    
+    // return "";
+    $toReturn = "";
+    $treasures = Treasure::where(["owner"=>"lobby_".$event_id])->get();
+    foreach ($treasures as $index => $treasure) {
+        $toReturn .= "
+        <div class='scavenger-item positioned' data-page='lobby' data-index='$index' style='" . areaStyles([$treasure->top,$treasure->left,$treasure->width,$treasure->height]) . "' data-name='treasure_hunt_item' title='treasure_hunt_item' >
+            <img async class='fill positioned' src='" . assetUrl($treasure->url) . "' style='object-fit:contain;' alt='' />
+        </div>
+        ";
     }
     return $toReturn;
 }
