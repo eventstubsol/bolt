@@ -43,13 +43,16 @@ Edit Page
             <div id="cont" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
                     @if(isset($page->images[0]))
-                    <img src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
+                        <img src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
                     @else
-                    <video controls autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat></video>
+                        <video controls autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat></video>
                     @endif
-                    @foreach($page->links as $link)
-                        <div class="im-{{$id}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
-                    @endforeach
+                        @foreach($page->links as $ids => $link)
+                            <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
+                        @endforeach
+                        @foreach($page->treasures as $ids => $link)
+                            <div class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
+                        @endforeach
                 </div>
 
             
@@ -270,6 +273,52 @@ Edit Page
                         <input type="file" data-name="video_url" data-plugins="dropify" data-type="video"  />
                     </div> --}}
 
+
+                    <!-- Treasure Hunt Items Start -->
+                        <div id="treasures">
+                            <label class="mb-3" for="images">Treasure Hunt Items</label>
+                            @foreach($page->treasures as $ids =>$treasure)
+                                <div class="row">
+
+                                    <div class="image-uploader col-md-12">
+                                        <input type="hidden" name="treasures[]" class="upload_input" value="{{$treasure?$treasure->url:''}}">
+                                        <input type="file" data-name="treasures[]" data-plugins="dropify" data-type="image" data-default-file="{{$treasure?assetUrl($treasure->url):''}}" />
+                                    </div>
+                                    <div  class="row tpositioning-{{$ids}} col-md-12" >
+                                            
+                                            <div  class="form-group mb-3 col-md-3">
+                                                <label for="top">top</label>
+                                                <input value="{{$treasure->top}}" type="number" required  name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                            </div>
+                                            
+                                            <div  class="form-group mb-3 col-md-3">
+                                                <label for="pos">left</label>
+                                                <input value="{{$treasure->left}}" type="number" required  name="tleft[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                            </div>
+                                            
+                                            <div  class="form-group mb-3 col-md-3">
+                                                <label for="pos">width</label>
+                                                <input value="{{$treasure->width}}" type="number" required  name="twidth[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                            </div>
+
+                                            <div  class="form-group mb-3 col-md-3">
+                                                <label for="pos">height</label>
+                                                <input value="{{$treasure->height}}" type="number" required  name="theight[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                            </div>
+
+                                            <button data-index="{{$ids}}" class="btn btn-primary donet-{{$ids}} donet" >DONE</button>
+
+                                    </div>
+                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                </div>
+
+                            @endforeach
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" id="add-treasure">Add Treasure</button>
+                        </div>
+                    <!-- Treasure Hunt Items End -->
+
                     <div>
                         <input class="btn btn-primary" type="submit" value="Save" />
                     </div>
@@ -289,18 +338,24 @@ Edit Page
     let resetflag = true;
     let links = {!! json_encode($page->links) !!};
     let n = links.length;
+    let treasures = {!! json_encode($page->treasures) !!}
+    let t = treasures.length;
     console.log(n);
     $(document).ready(function() {
         
      
         
         $("#add-link").on("click", addlink);
+        $("#add-treasure").on("click", addTreasure);
 
         $(".type").on("change",toggleVisibility);
         $(".pos").on("input",changePosition);
+        $(".tpos").on("input",changePositiont);
         
         $(".done").hide();
+        $(".donet").hide();
         $(".done").on("click",resetPosition)
+        $(".donet").on("click",resetPositiont)
 
         $(".addflyin").on("click",addFlyIn);
         
@@ -327,6 +382,22 @@ Edit Page
         const index = target.data("index");
         $(".done-"+index).hide();
         $(".positioning-"+index).eq(0).css({
+            position: "static",
+            background: "#ffffff",
+            padding: "0",
+            color: "#6c757d",
+            width: "100%",
+        });
+        resetflag =true;
+    }
+    
+    function resetPositiont(e){
+        console.log("hello world")
+        e.preventDefault();
+        let target = $(e.target);
+        const index = target.data("index");
+        $(".donet-"+index).hide();
+        $(".tpositioning-"+index).eq(0).css({
             position: "static",
             background: "#ffffff",
             padding: "0",
@@ -367,11 +438,41 @@ Edit Page
     }
 
     
-    function areaStylesb(area)
-    {
+    function changePositiont(e){
+        
+        let target = $(e.target);
+
+        console.log(target);
+        
+        
+        const index = target.data("index");
+        if(resetflag){
+            resetflag =false;
+            document.getElementById("image_demo").scrollIntoView(false);
+        }
+        const positions =  $(".tpos-"+index).map((i, v) => v.value);
+        $(".donet-"+index).show();
+        // let name = $(".name-"+index).val();
+        console.log($(".im-"+index));
+        $(".tim-"+index).eq(0).css(areaStylesb(positions));
+        // $(".tim-"+index).html(`${name}`);
+        $(".tpositioning-"+index).eq(0).css({
+            position: "fixed",
+            bottom: "20px",
+            left: "18%",
+            padding: "15px",
+            background: "#23283ebd",
+            color: "white",
+            width: "40%",
+        });
+        console.log($(".positioning-"+index));
+        console.log(index);
+    }
+
+    
+    function areaStylesb(area){
         return {
             position:"absolute",
-             background:"white", 
              top: area[0]+'%',
              left: area[1]+'%',
              width: area[2]+'%',
@@ -430,6 +531,55 @@ Edit Page
         // console.log(val);
     }
 
+    function addTreasure(e) {
+        e.preventDefault();
+        
+        t++;
+        console.log({t});
+
+        $(".im-section").append(`
+            <div class="tim-${t} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" >Treasure Item ${t}</div>      
+        `);
+        
+
+        $("#treasures").append(`
+                                <div class="row">
+                                    <div class="image-uploader col-md-12">
+                                        <input type="hidden" name="treasures[]" class="upload_input" >
+                                        <input type="file" data-name="treasures[]" data-plugins="dropify" data-type="image"/>
+                                    </div>
+                                    <div  class="row tpositioning-${t} col-md-12" >
+                                        
+                                        <div  class="form-group mb-3 col-md-3">
+                                            <label for="top">top</label>
+                                            <input type="number" required  name="ttop[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                        </div>
+                                        
+                                        <div  class="form-group mb-3 col-md-3">
+                                            <label for="pos">left</label>
+                                            <input type="number" required  name="tleft[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                        </div>
+                                        
+                                        <div  class="form-group mb-3 col-md-3">
+                                            <label for="pos">width</label>
+                                            <input type="number" required  name="twidth[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                        </div>
+
+                                        <div  class="form-group mb-3 col-md-3">
+                                            <label for="pos">height</label>
+                                            <input type="number" required  name="theight[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                        </div>
+
+                                        <button data-index="${t}" class="btn btn-primary donet-${t} donet" >DONE</button>
+
+                                    </div>
+                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                </div>
+        `);
+        bindRemoveButton();
+        
+        initializeFileUploads();
+    }
     function addlink(e) {
         e.preventDefault();
         console.log(n);
@@ -571,8 +721,7 @@ Edit Page
 
 
                                     <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
-                                </div>
-    `);
+                                </div>`);
         bindRemoveButton();
         
         initializeFileUploads();
@@ -583,13 +732,14 @@ Edit Page
         $(".remove-link").unbind().on("click", removelink);
         $(".type").on("change",toggleVisibility);
         $(".pos").on("input",changePosition);
+        $(".tpos").on("input",changePositiont);
+       
 
         $(".done").hide();
         $(".done").on("click",resetPosition)
+        $(".donet").hide();
+        $(".donet").on("click",resetPositiont)
         $(".addflyin").on("click",addFlyIn);
-
-
-
     }
 
     function removelink(e) {
