@@ -205,9 +205,11 @@ class EventController extends Controller
         return view("dashboard.reports.leader");
     }
 
-    public function leaderboard()
+    public function leaderboard($id)
     {
+        // return $id;
         return User::orderBy("points", "desc")
+            ->where("event_id",$id)
             ->where("points", ">", 0)
             ->limit(env("LEADERBOARD_LIMIT", 50))
             ->get(["name", "points", "last_name"])
