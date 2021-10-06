@@ -474,7 +474,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::post("/event/{event}/subscribe", "EventSessionsController@subscribe")->name("event.subscribe");
     Route::post("/event/{event}/unsubscribe", "EventSessionsController@unsubscribe")->name("event.unsubscribe");
 
-    Route::post("/leaderboard", "EventController@leaderboard")->name("leaderboard");
+    Route::post("/leaderboard/{id}", "EventController@leaderboard")->name("leaderboard");
     Route::get("/add-to-bag", "EventController@addToBag")->name("addToBag");
     Route::get("/delete-from-bag", "EventController@deleteFromBag")->name("deleteFromBag");
     Route::get("/get-swag-bag", "EventController@getSwagBag")->name("getSwagBag");
