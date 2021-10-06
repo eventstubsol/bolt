@@ -747,7 +747,7 @@ $user = Auth::user();
         // console.log( {!! json_encode(getSuggestedTags()) !!} );
         const config = {
             baseRoute: "{{ url('/') }}",
-            leaderboard: "{{ route('leaderboard') }}",
+            leaderboard: "{{ route('leaderboard',['id'=>$event_id]) }}",
             token: "{{ csrf_token() }}",
             trackEvent: "{{ route('trackEvent') }}",
             getswagBag: "{{ route('getSwagBag') }}",
