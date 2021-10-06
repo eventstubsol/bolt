@@ -1138,6 +1138,7 @@ function showLeaderboard(inLoop = false) {
         method: "POST",
         data: { _token: config.token },
         success: function (leaderboard) {
+            // console.log({leaderboard});
             loader.hide();
             list.html(leaderboard.map(([name, points]) => {
                 return `<li class="score-item"><div class="info"><p>${name}</p><span>${points} points</span></div></li>`;
@@ -1145,6 +1146,7 @@ function showLeaderboard(inLoop = false) {
         },
         error: function (err) {
             loader.hide();
+            console.log({err});
             if (!inLoop) {
                 showMessage(
                     "Error loading the leaderboard. Please try again in some time",
