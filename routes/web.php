@@ -68,6 +68,14 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('event/delete',"EventManageController@destroy")->name('event.delete');
 
 
+    Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
+    Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
+    Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
+    Route::get('/Form/preview/{id}',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
+    Route::get('/Form/addField/{id}',"Eventee\FormController@AddField")->name('eventee.form.addfield');
+    Route::post('/Form/SaveField/{id}',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
+
+
     Route::resources([
         "menu"=>"Eventee/MenuController",
     ]);
@@ -493,6 +501,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::get("/delegates-list", "EventController@getDelegatesList")->name("delegateList");
     Route::post("/updates/check", "EventController@contentTicker")->name("contentTicker");
     Route::get("/updates/check", "EventController@contentTicker")->name("contentTicker");
+
+
 });
 
 Route::get("/usercreate",function ()
