@@ -65,6 +65,9 @@ Manage Users
                             <td>{{ $event->name }}</td>
                             <td>{{ $user->created_at }}</td>
                             <td class="text-right">
+							    <a href="{{ route("eventee.user.information", [
+                                    "id" => $id,"user_id"=>$user->id
+                                ]) }}" class="btn btn-info" ><i class="fas fa-eye"></i></a>
                                 <a href="{{ route("eventee.user.edit", [
                                         "id" => $id,"user_id"=>$user->id
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title=""

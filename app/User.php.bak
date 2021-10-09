@@ -175,7 +175,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'website_link',
         'company_website_link',
         'isCometChatAccountExist',
-		'event_id',
+		 'event_id',
     ];
 
     /**
