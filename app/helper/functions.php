@@ -27,6 +27,7 @@ use App\Treasure;
 
 include_once "clickableAreasConfig.php";
 
+
 define("USER_TYPE_DELEGATE", "delegate");
 define("BY_LAWS_POLL", "b0e7dbbd-a6f3-4898-9a08-a188de3a0884");
 
@@ -374,6 +375,11 @@ HTML;
 //     $links = Link::where(["page"=>"lobby"])->get();
 //     return $links;
 // }
+
+function imageUrl($image){
+    $sourceUrl = "file:///G:/event/Development/public";
+    return $sourceUrl.$image;
+}
 function getLobbyLinks($id)
 {
     $lobby = "lobby_".$id;

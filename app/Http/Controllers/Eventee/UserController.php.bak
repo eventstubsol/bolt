@@ -668,8 +668,9 @@ class UserController extends Controller
     }
 
 	 public function information($id,$user_id){
+        $userData = [];
         $user = User::findOrFail($user_id);
-        $user_data = UserData::where('user_id',$user->id)->get();
-        return view('eventee.users.info',compact('id','user_data','user'));           
+        $user_data = UserData::where('user_id',$user->id);
+        return view();           
     }
 }

@@ -169,7 +169,7 @@ class AttendeeAuthController extends Controller
        
     }
 
-    public function saveRegistration(Request $request,$subdomain)
+     public function saveRegistration(Request $request,$subdomain)
     {
         $event = Event::where("name",$subdomain)->first();
         $userField = $request->userfields;
