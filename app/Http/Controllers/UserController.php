@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy("created_at", "DESC")->get();
+        $users = User::where('type','eventee')->orderBy("created_at", "DESC")->get();
         return view("user.list")->with(compact("users"));
     }
 
@@ -131,12 +131,15 @@ class UserController extends Controller
      * @param  User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, User $user)
+    public function edit(Request $request, $id)
     {
-        if ($request->user()->id == $user->id) {
-            return redirect()->route("home");
-        }
+        $user = User::findOrFail($id);
         return view("user.edit")->with(compact("user"));
+    }
+
+    public function lobby(){
+        $users = User::where('type','eventee')->orderBy('type','desc')->get();
+        return view('user.lobby',compact('users'));
     }
 
     /**

@@ -1,7 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<li>
+{{-- <li>
     <a href="#report" data-toggle="collapse">
         <i class="mdi mdi-file-multiple"></i>
         <span> Reports <span class="badge  badge-success" >NEW</span> </span>
@@ -41,9 +41,9 @@
             @endforeach
         </ul>
     </div>
-</li>
+</li> --}}
 
-<li>
+{{-- <li>
 
     <a href="#booth-reports" data-toggle="collapse">
         <i class="mdi mdi-file-multiple"></i>
@@ -147,7 +147,7 @@
             Past Videos Archive
         </span>  
     </a>
-</li>
+</li> --}}
 
 
 {{--<li>
@@ -177,14 +177,14 @@
 {{--</li>--}}
 
 
-<li class="menu-title">Site Content</li>
+{{-- <li class="menu-title">Site Content</li>
 <li>
     <a href="{{ route("options") }}">
         <i data-feather="file-text"></i>
         <span> General Content</span>
     </a>
-</li>
-<li>
+</li> --}}
+{{-- <li>
     <a href="#faqs" data-toggle="collapse">
         <i data-feather="help-circle"></i>
         <span> FAQs</span>
@@ -363,7 +363,7 @@
             </li>
         </ul>
     </div>
-</li>
+</li> --}}
 
 {{--<li>--}}
 {{--    <a href="#provisional" data-toggle="collapse">--}}
@@ -382,7 +382,7 @@
 {{--    </div>--}}
 {{--</li>--}}
 
-<li>
+{{-- <li>
     <a href="#prizes" data-toggle="collapse">
         <i class="mdi mdi-gift-outline"></i>
         <span> Prizes </span>
@@ -394,6 +394,60 @@
             </li>
             <li>
                 <a href="{{ route("prize.create") }}">Create</a>
+            </li>
+        </ul>
+    </div>
+</li> --}}
+
+<li>
+    <a href="#report" data-toggle="collapse">
+        <i class="mdi mdi-file-multiple"></i>
+        <span> Reports <span class="badge  badge-success" >NEW</span> </span>
+    </a>
+    <div class="collapse" id="report">
+        <ul class="nav-second-level">
+            <li>
+                <a href="#users" data-toggle="collapse">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <span> Users </span>
+                </a>
+                <div class="collapse" id="users">
+                    <ul class="nav-second-level">
+                        <li>
+                            <a href="{{ route("user.index") }}">Manage</a>
+                        </li>
+                        <li>
+                            <a href="{{ route("user.lobby") }}">Lobby</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="#package" data-toggle="collapse">
+                    <i class="fas fa-archive"></i>
+                    <span> Packages </span>
+                </a>
+                <div class="collapse" id="package">
+                    <ul class="nav-second-level">
+                        <li>
+                            <a href="{{ route("package.index") }}">Manage</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="#license" data-toggle="collapse">
+                    <i class="fas fa-id-badge"></i>
+                    <span> License </span>
+                </a>
+                <div class="collapse" id="license">
+                    <ul class="nav-second-level">
+                        <li>
+                            <a href="{{ route("license.index") }}">Manage</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>
