@@ -31,12 +31,12 @@ Manage Users
                 <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Type</th>
-                            <th>Member Id</th>
-                            <th>Created At</th>
-                            <th class="text-right mr-2">Actions</th>
+                            <th width="30%">Name</th>
+                            <th width="30%">Email</th>
+                            <th width="20%">Type</th>
+                            
+                            <th width="15%">Created At</th>
+                            <th width="5%" class="text-right mr-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,16 +45,14 @@ Manage Users
                             <td>{{ $user->name }} {{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->type }}</td>
-                            <td>{{ $user->member_id }}</td>
+                            
                             <td>{{ $user->created_at }}</td>
                             <td class="text-right">
                                 <a href="{{ route("user.edit", [
                                         "user" => $user->id
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit"><i class="fe-edit-2"></i></a>
-                                <button data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
-                                    class="delete btn btn-danger ml-1 " data-id="{{$user->id}}" type="submit"><i
-                                        class="fas fa-trash-alt"></i></button>
+                               
 
                             </td>
                         </tr>
@@ -74,8 +72,8 @@ Manage Users
 @include("includes.scripts.datatables")
 <script>
     $(document).ready(function(){
-            $("#buttons-container").append('<button class="btn btn-primary" id="sync-account">Sync with Chat</button>')
-            $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("user.create") }}">Create New / Bulk Upload</a>')
+            // $("#buttons-container").append('<button class="btn btn-primary" id="sync-account">Sync with Chat</button>')
+            // $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("user.create") }}">Create New / Bulk Upload</a>')
             $("body").on("click",".delete",function(e){
                 t = $(this);
                 let deleteUrl = '{{route("user.destroy", [ "user" => ":id" ])}}';

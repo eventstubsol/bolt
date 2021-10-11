@@ -357,7 +357,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
     //Admin Prefixed Routes and also will check if user is admin or not
     Route::prefix("admin")->middleware("checkAccess:admin")->group(function () {
-
+        Route::get('/user/lobby',"UserController@lobby")->name('user.lobby');
         Route::resources([
             "faq" => "FaqController",
             "room" => "RoomController",
@@ -385,6 +385,20 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::post('/updateCaptcha','RecatchaController@updateCatcha')->name('updateCaptcha');
         Route::get('/Comet','RecatchaController@Comet')->name('comet.index');
         Route::post('/Comet','RecatchaController@CometSave');
+
+        
+        //Package
+        Route::get('/package','PackageController@index')->name('package.index');
+        Route::get('/package/create','PackageController@create')->name('package.create');
+        Route::post('/package/store','PackageController@store')->name('package.store');
+        Route::get('/package/edit/{id}','PackageController@edit')->name('package.edit');
+        Route::Post('/package/update/{id}','PackageController@update')->name('package.update');
+        Route::Post('/package/delete/{id}','PackageController@destroy')->name('package.destroy');
+
+        //License
+        Route::get('/license',"LicenseController@index")->name('license.index');
+        Route::get('/license/edit/{id}',"LicenseController@edit")->name('license.edit');
+        Route::post('license/update/{id}',"LicenseController@update")->name('license.update');
 
         Route::get('/Zoom','RecatchaController@Zoom')->name('zoom.index');
         Route::post('/Zoom','RecatchaController@ZoomSave');
