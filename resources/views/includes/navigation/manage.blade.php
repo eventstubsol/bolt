@@ -213,6 +213,22 @@
         </ul>
     </div>
 </li>
+<li>
+    <a href="#lounge" data-toggle="collapse">
+        <i data-feather="grid"></i>
+        <span> Lounge </span>
+    </a>
+    <div class="collapse" id="lounge">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.lounge.index",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.lounge.create",$id) }}">Create</a>
+            </li>
+        </ul>
+    </div>
+</li>
 
 <li>
     <a href="#pages" data-toggle="collapse">

@@ -20,6 +20,7 @@ use App\UserTagLinks;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\FAQ;
+use App\NetworkingTable;
 use App\Page;
 use App\Resource;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,8 @@ class EventController extends Controller
             "type",
             "boothurl"
         ]);
+        $tables = NetworkingTable::where("event_id",$event_id)->get();
+        // dd($tables);
         $boothrooms = Room::where("event_id",$event_id)->orderBy("position")->get()->load("booths");
 
         $reports = Report::all()->load(["resources", "video"]);
@@ -105,7 +108,9 @@ class EventController extends Controller
                     "sessions",
                     "sessionrooms",
                     "sessionroomnames",
-                    "event_id"
+                    "event_id",
+                    "tables",
+                    "event_name"
                 ])
             );
     }
