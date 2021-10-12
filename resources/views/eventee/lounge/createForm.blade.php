@@ -1,0 +1,149 @@
+@extends("layouts.admin")
+
+@section("page_title")
+    Create Lounge Table 
+@endsection
+
+
+@section("styles")
+    @include("includes.styles.wyswyg")
+    @include("includes.styles.select")
+    @include("includes.styles.fileUploader")
+@endsection
+
+
+@section("title")
+    Create Lounge Table
+@endsection
+
+@section("breadcrumbs")
+    <li class="breadcrumb-item"><a href="{{ route("eventee.lounge.index",["id"=>$id]) }}">Sessions</a></li>
+    <li class="breadcrumb-item active">Create</li>
+@endsection
+
+@section("content")
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+            <form action="{{ route("eventee.lounge.store",['id'=>$id]) }}" method="post">
+                    {{ csrf_field() }}
+                    <!-- Session Name -->
+                    <div class="form-group mb-3">
+                        <label for="name">Title</label>
+                        <input required autofocus type="text"  id="name" value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                   
+                    <!-- Number of Participants   -->
+
+                    <div class="form-group mb-3">
+                        
+                        <label>Number of Seats</label>
+                        <input type="number" name="seats" class="form-control ">
+                    </div>
+
+                    <input type="text" name="meetingId" class="form-control " id="meetingId" style="display:none"  >
+ 
+
+
+                    <div>
+                        <input class="btn btn-primary" type="submit" id="create_session" value="Create" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section("scripts")
+@include("includes.scripts.wyswyg")
+@include("includes.scripts.fileUploader")
+
+@include("includes.scripts.select")
+
+<script>
+    function removeresource(e) {
+        e.preventDefault();
+        confirmDelete("Are you sure you want to delete the Resource", "Confirm Resource deletion!").then(confirmation => {
+            if (confirmation) {
+                $(this).closest(".row").remove();
+            }
+        })
+    }
+
+    function bindRemoveButton() {
+        $(".remove-resource").unbind().on("click", removeresource);
+    }
+
+    function addresource(e) {
+        e.preventDefault();
+        $(".resource-section").append(`
+                <div class="row">
+                  <div class="image-uploader mb-3 col-md-4">
+                    <input type="hidden" name="resources[]" class="upload_input">
+                    <input type="file" data-name="resources" data-plugins="dropify" data-type="/" />
+                  </div>
+                  <div class="form-group mb-3 col-md-8">
+                      <label for="resourcetitles">Title</label>
+                      <input type="text"  id="resourcetitles" name="resourcetitles[]" class="form-control" >
+                        <button class="btn btn-danger remove-resource mt-2">Remove</button>
+                  </div>
+                </div>
+          `);
+        bindRemoveButton();
+        initializeFileUploads();
+    }
+    $(document).ready(function() {
+        $("#create_session").attr("disabled", true);
+        getMeetingId();
+        $("#add-resource").on("click", addresource);
+        bindRemoveButton();
+
+        $("#session_type").on("change",()=>{
+           let value = $("#session_type").val();
+            if(value === "VIDEO_SDK"){
+               $("#create_session").attr("disabled", true);
+               getMeetingId();
+            }   
+        })
+    })
+
+        function getMeetingId(){
+            let token="";
+                fetch("http://localhost:9000/get-token")
+                    .then(r => r.json())
+                    .then((data) => {
+                        localStorage.setItem("jwt", data.token);
+                        token = data.token;
+                        createMeeting();
+                        console.log(data.token);
+                    });
+        
+
+
+            function createMeeting() {
+                var options = {
+                    method: "POST",
+                    headers: { authorization: `${token}` },
+                };
+
+                fetch("https://api.zujonow.com/v1/meetings", options)
+                    .then(r => r.json())
+                    .then(response => {
+                        $("#meetingId").val(response.meetingId);
+                        // $("#meetingId").show();
+                        $("#create_session").attr("disabled", false);
+                        console.log(response.meetingId);
+                    });
+            }
+        }
+</script>
+
+@endsection

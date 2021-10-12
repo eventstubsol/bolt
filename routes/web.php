@@ -44,9 +44,14 @@ Route::group(['domain' => '{subdomain}.localhost'], function () {
     Route::post("/event/register", "AttendeeAuthController@saveRegistration")->name("attendee_register.confirm");
     Route::middleware(["auth"])->group(function () {
         Route::get("/event", "EventController@index")->name("eventee.event");
+        Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
+        Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
+        Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
         
 
     });
+
+
 
 
 
@@ -119,12 +124,17 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('page/event/{page}/{id}/edit',"Eventee\PageController@edit")->name('eventee.pages.edit');
     Route::put('page/{page}/{id}/update',"Eventee\PageController@update")->name('eventee.pages.updates');
     Route::delete('page/event/delete',"Eventee\PageController@destroy")->name('eventee.pages.destroy');
-   
+    
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
-   
     
-
+    Route::get("/lounge/event/{id}","Eventee\LoungeController@index")->name('eventee.lounge.index');
+    Route::get("/lounge/event/create/{id}","Eventee\LoungeController@create")->name('eventee.lounge.create'); 
+    Route::post("/lounge/event/store/{id}","Eventee\LoungeController@store")->name('eventee.lounge.store');
+    Route::get('lounge/event/{table}/{id}/edit',"Eventee\LoungeController@edit")->name('eventee.lounge.edit');
+    Route::put('lounge/{table}/{id}/update',"Eventee\LoungeController@update")->name('eventee.lounge.update');
+    Route::delete('lounge/event/delete',"Eventee\LoungeController@destroy")->name('eventee.lounge.destroy');
+   
     //Background Change
     Route::get('background/{id}','Eventee\BackgroundController@index')->name('eventee.background');
     Route::get('background/create/{id}','Eventee\BackgroundController@create')->name('eventee.background.create');
