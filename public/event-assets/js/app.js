@@ -11,6 +11,7 @@ function initApp() {
     let navs = $('.navs,.hide-on-exterior');
     let currentresbtns = null;
     let active_session_list = null;
+    let loungeInterval = null;
 
     //Wait for all three main video loads before removing loader
     if (isMobile()) {
@@ -30,6 +31,22 @@ function initApp() {
     }
     //initMenu();
     initSideMenu();
+
+    function setAreas(){
+        let areas = $(".area");
+        const doNotRoute = [
+            "support"
+        ];
+        areas.on("click", function (e) {
+            const link = $(this).data("link");
+            directAccess = false;
+            if (!doNotRoute.includes(link)) {
+                routie(link);
+            } else {
+                e.preventDefault();
+            }
+        });
+    }
 
     //Support chat opening
     $(".open-support-chat").on("click", function (e) {
@@ -329,8 +346,85 @@ function initApp() {
         });
     })
 
+    function setLoungeLinks(){
+        $(".lounge_meeting").on("click",(e)=>{
+            let meetingId= $(e.target).data("meeting");
+            let tableId= $(e.target).data("table");
+            let participant_interval = setInterval(addParticipant,25000,tableId);
+            // addParticipant(tableId);
+            
+            $("#lounge-session-content").empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.videoSDK.replace(":id",meetingId)}"></iframe>`);
+            $("#lounge-session-content").append(`<div id="video_play_area"></div>`);
+            $("#lounge_modal").unbind().on("hide.bs.modal", function () {
+                console.log("opened")
+                clearInterval(participant_interval);
+                removeParticipant(tableId);
+                $("#lounge-session-content").empty();
+            });
+        })
+    }
+
+    function updateLounge(){
+
+        console.log("test interval 1");
+        console.log(window.config.updateLounge);
+        let addingParticipant = false;
+        let last_add = 0;
+        loungeInterval = setInterval(function(){
+            console.log("test interval")
+                let now = Date.now();
+                if (addingParticipant && last_add + 5000 > now) { return false; } //If already requesting and last request was less than 5 seconds ago, then dont refresh again
+                addingParticipant = true;
+                last_add = now;
+                $.ajax({
+                    url: window.config.updateLounge,
+                    success: function (html) {
+                        console.log(html);
+                        $("#lounge_tables").html(html);
+                        setAreas();
+                        setLoungeLinks();
+                    }
+                });
+        },30000);
+    }
+    let addingParticipant = false;
+    let last_add = 0;
+    function addParticipant(tableId){
+        let now = Date.now();
+        if (addingParticipant && last_add + 5000 > now) { return false; } //If already requesting and last request was less than 5 seconds ago, then dont refresh again
+        addingParticipant = true;
+        last_add = now;
+
+        console.log("participant added");
+        $.ajax({
+            url: window.config.addParticipant.replace(":id", tableId),
+            method: "POST",
+            success: function (html) {
+                console.log("participant added");
+                // $("#description-" + id).html(html[0]);
+                // $("#description-two-" + id).html(html[1]);
+                // console.log(html);
+            }
+        });
+    }
+    function removeParticipant(tableId){
+        $.ajax({
+            url: window.config.removeParicipant.replace(":id", tableId),
+            method: "POST",
+
+            success: function (html) {
+                console.log("participant removed");
+                // $("#description-" + id).html(html[0]);
+                // $("#description-two-" + id).html(html[1]);
+                // console.log(html);
+            }
+        });
+    }
+
     function pageChangeActions(changeChat = true) {
         // $("#cometchat__widget").show();
+        clearInterval(loungeInterval);
+
         currentresbtns = null;
         if (changeChat)
             CometChatWidget.chatWithGroup('general');
@@ -439,6 +533,15 @@ function initApp() {
                 routie("expo-hall");
             }
             pageChangeActions();
+        },
+        'networking': function () {
+            pages.hide();
+            pages.filter("#networking").show();
+            setLoungeLinks();
+            pageChangeActions();
+            setTimeout(() => {
+                updateLounge();
+            }, 2000);
         },
         "museum": function () {
             if (checkAuth()) {
