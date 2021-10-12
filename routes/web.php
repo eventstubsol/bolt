@@ -40,11 +40,15 @@ Route::group(['domain' => '{subdomain}.localhost'], function () {
     });
     Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
     Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
+    Route::get("/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
+    Route::post("/event/register", "AttendeeAuthController@saveRegistration")->name("attendee_register.confirm");
     Route::middleware(["auth"])->group(function () {
         Route::get("/event", "EventController@index")->name("eventee.event");
         Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
         Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
         Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
+        
+
     });
 
 
@@ -70,6 +74,21 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Event/edit/{id}','EventManageController@Edit')->name('event.Edit');
     Route::post('Event/update/{id}','EventManageController@update')->name('event.Update');
     Route::post('event/delete',"EventManageController@destroy")->name('event.delete');
+
+	Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
+    Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
+    Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
+    Route::get('/Form/preview/{id}',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
+    Route::get('/Form/addField/{id}',"Eventee\FormController@AddField")->name('eventee.form.addfield');
+    Route::post('/Form/SaveField/{id}',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
+
+
+    Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
+    Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
+    Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
+    Route::get('/Form/preview/{id}',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
+    Route::get('/Form/addField/{id}',"Eventee\FormController@AddField")->name('eventee.form.addfield');
+    Route::post('/Form/SaveField/{id}',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
 
 
     Route::resources([
@@ -186,6 +205,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/user/create/{id}","Eventee\UserController@create")->name('eventee.user.create');
     Route::post("/user/store/{id}","Eventee\UserController@store")->name('eventee.user.store');
     Route::get('user/{id}/{user_id}/edit',"Eventee\UserController@edit")->name('eventee.user.edit');
+    Route::get('user/{id}/{user_id}/info',"Eventee\UserController@information")->name('eventee.user.information');
     Route::post('user/{id}/{user_id}/update',"Eventee\UserController@update")->name('eventee.user.update');
     Route::post('user/delete',"Eventee\UserController@destroy")->name('eventee.user.delete');
     Route::get("/data-entry/{id}","Eventee\DataEntryController@index")->name('eventee.dataEntry');
@@ -253,8 +273,6 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 
 Route::get("/event/login", "AttendeeAuthController@show")->name("attendee_login");
-Route::get("/event/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
-Route::post("/event/register", "AttendeeAuthController@saveRegistration");
 Route::get("/event/session-notifications", "EventController@sendSessionNotifications");
 
 Route::get("privacy-policy", "HomeController@privacyPolicy")->name("privacyPolicy");
@@ -349,7 +367,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
     //Admin Prefixed Routes and also will check if user is admin or not
     Route::prefix("admin")->middleware("checkAccess:admin")->group(function () {
-
+        Route::get('/user/lobby',"UserController@lobby")->name('user.lobby');
         Route::resources([
             "faq" => "FaqController",
             "room" => "RoomController",
@@ -377,6 +395,20 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::post('/updateCaptcha','RecatchaController@updateCatcha')->name('updateCaptcha');
         Route::get('/Comet','RecatchaController@Comet')->name('comet.index');
         Route::post('/Comet','RecatchaController@CometSave');
+
+        
+        //Package
+        Route::get('/package','PackageController@index')->name('package.index');
+        Route::get('/package/create','PackageController@create')->name('package.create');
+        Route::post('/package/store','PackageController@store')->name('package.store');
+        Route::get('/package/edit/{id}','PackageController@edit')->name('package.edit');
+        Route::Post('/package/update/{id}','PackageController@update')->name('package.update');
+        Route::Post('/package/delete/{id}','PackageController@destroy')->name('package.destroy');
+
+        //License
+        Route::get('/license',"LicenseController@index")->name('license.index');
+        Route::get('/license/edit/{id}',"LicenseController@edit")->name('license.edit');
+        Route::post('license/update/{id}',"LicenseController@update")->name('license.update');
 
         Route::get('/Zoom','RecatchaController@Zoom')->name('zoom.index');
         Route::post('/Zoom','RecatchaController@ZoomSave');
@@ -502,6 +534,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::get("/delegates-list", "EventController@getDelegatesList")->name("delegateList");
     Route::post("/updates/check", "EventController@contentTicker")->name("contentTicker");
     Route::get("/updates/check", "EventController@contentTicker")->name("contentTicker");
+
+
 });
 
 Route::get("/usercreate",function ()

@@ -1,0 +1,70 @@
+.defaults{
+    font-size: 20px;
+    width: 50%;
+    display: inline-block;
+    flex-direction: row;
+    padding: 5px;
+    border: 1px solid darkblue;
+    height:fit-content;
+    
+}
+.defaults li{
+    border: 1px solid black;
+    background: #BDBEBD;
+    color:black;
+    padding: 5px;
+    
+    
+}
+.activeInp{
+    flex-direction: row;
+    padding: 5px;
+}
+#divset{
+    display: flex;
+    padding: 15px;
+    height: fit-content;
+}
+
+.heading{
+    letter-spacing: 1px;
+    font-size: 15px;
+    height: 10px;
+    flex-direction: row;
+    width: 100%;
+}
+.defaultItems{
+    flex-direction: row;
+    width: 100%;
+    padding: 25px;
+}
+
+.activeInp li{
+    border: 1px solid black;
+    background: #BDBEBD;
+    color:rgb(6, 128, 22);
+    font-weight: 700;
+    padding: 5px;
+    overflow-y: scroll;
+}
+.activeInp{
+    font-size: 20px;
+    width: 50%;
+    display: inline-block;
+    flex-direction: row;
+    padding: 5px;
+    border: 1px solid darkcyan;
+    justify-content: left;
+
+}
+#save{
+    width: 5rem;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+

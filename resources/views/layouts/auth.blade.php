@@ -73,6 +73,11 @@
                 visibility: hidden;
             }
         </style>
+		<script src="//code.jquery.com/jquery.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script>
+            $('#flash-overlay-modal').modal();
+        </script>
     </head>
 
     <body class="auth">
@@ -82,6 +87,7 @@
                     <a href="{{ route('login') }}" class="logo">
                         <img src="{{assetUrl(getField('logo'))}}" alt="NBA-CLS" class="img-responsive">
                     </a>
+					@include('flash::message')
                     <p class="hidden-v" style="font-size:13px">
                     Disclaimer: For an immersive experience, please log onto the platform using a PC (desktop or laptop) and one of the following browsers: Google Chrome, Mozilla Firefox, Microsoft Edge. Although the Virtual Event Platform has been developed to work on all devices, users may experience issues using a mobile phone. If you experience any issues, kindly switch to a PC.
                     <p class="mb-0 hidden-v">@yield('subtitle-text')</p>

@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Mail;
+use App\UserData;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
+use stdClass;
 
 class UserController extends Controller
 {
@@ -663,5 +665,11 @@ class UserController extends Controller
         $user = Auth::user();
         $user->devices()->create(["device_id" => $device_id]);
         return ["success" => true];
+    }
+
+	 public function information($id,$user_id){
+        $user = User::findOrFail($user_id);
+        $user_data = UserData::where('user_id',$user->id)->get();
+        return view('eventee.users.info',compact('id','user_data','user'));           
     }
 }
