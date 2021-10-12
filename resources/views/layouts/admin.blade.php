@@ -13,6 +13,7 @@
 
     <!-- App css -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
+	<link rel="stylesheet" href="{{ asset('assets/css/form.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}?v=1234" type="text/css">
     <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />

@@ -14,6 +14,10 @@ use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Mail;
+use App\FormStruct;
+use App\Form;
+use App\FormField;
+use App\UserData;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 class AttendeeAuthController extends Controller
@@ -133,20 +137,67 @@ class AttendeeAuthController extends Controller
         }
     }
 
-    public function showRegistrationForm()
+   public function showRegistrationForm($subdomain)
     {
-        return view("auth.register_attendee");
+        $event = Event::where("name",$subdomain)->first();
+
+        $form = Form::where('event_id',$event->id);
+        if($form->count() > 0){
+            $form = $form->first();
+            $fieldsFinal = [];
+            $fields = FormField::where('form_id',$form->id)->get();
+            $eveFields = [];
+            foreach($fields as $field){
+                $formF = FormStruct::where('id',$field->struct_id)->where('event_id',$event->id)->get();
+                foreach($formF as $f){
+                    array_push($eveFields,$f->field);
+                }
+                $fieldset = new \stdClass();
+                $struct = FormStruct::findOrFail($field->struct_id);
+                $fieldset->label = $struct->label;
+                $fieldset->fieldName = $struct->field;
+                $fieldset->type = $struct->type;
+                array_push($fieldsFinal,$fieldset);
+            }
+            // return $fieldsFinal;
+            return view("auth.register_attendee",compact('fieldsFinal','subdomain','eveFields'));
+        }
+        else{
+            flash("Register Page is not ready yet")->error();
+            return redirect()->route('attendeeLogin');
+        }
+       
     }
 
-    public function saveRegistration(Request $request)
+    public function saveRegistration(Request $request,$subdomain)
     {
-        $request->validate([
-            'email' => 'required|email|unique:users',
-            'name' => 'required',
-        ]);
-        $user = new User($request->all());
-        $user->password = Hash::make($request->get('_token'));
-        $user->save();
+        $event = Event::where("name",$subdomain)->first();
+        $userField = $request->userfields;
+        $data = $request->all();
+        $data['event_id'] = $event->id;
+       
+        // return $data;
+        $user = new User($data);
+        if($user->save()){
+            if($request->hasFile('image')){
+                $file = $request->file('image');
+                $name = $file->getClientOriginalName();
+                $destinationPath = public_path().'/uploads/profilepic';
+                $file->move($destinationPath, $name);
+                User::where('id',$user->id)->update(['profileImage'=>'/uploads/profilepic/'.$name]);
+            }
+            for($i = 0;$i < count($userField) ;$i++){
+                if($request->has($userField[$i])){
+                    $userData = new UserData;
+                    $userData->user_id = $user->id;
+                    $userData->user_field = $userField[$i];
+                    $userData->field_value = $data[$userField[$i]];
+                    $userData->save();
+                }
+            }
+            flash("Registered Successfully")->success();
+            return redirect()->route('attendeeLogin',$subdomain);
+        }
         $user->sendEmailVerificationNotification();
         Auth::login($user);
         // Mail::send([], [], function (Message $message) use ($user) {
@@ -166,7 +217,7 @@ class AttendeeAuthController extends Controller
         //         ], SendgridTransport::SMTP_API_NAME);
         // });
         $request->session()->put('attendee_reg',1);
-        return redirect(route("attendee_login"));
+        return redirect(route("attendee_login",$subdomain));
         // return redirect(route("event"));
     }
 }

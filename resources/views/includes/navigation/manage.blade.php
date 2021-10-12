@@ -91,6 +91,25 @@
     </div>
 </li>
 <li>
+    <a href="#form" data-toggle="collapse">
+        <i class="fas fa-align-justify"></i>
+        <span> Form</span>
+    </a>
+    <div class="collapse" id="form">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.form",['id'=>$id]) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.form.create",['id'=>$id]) }}">Create</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.form.addfield",['id'=>$id]) }}">Add Field</a>
+            </li>
+        </ul>
+    </div>
+</li>
+<li>
     <a href="{{ route('eventee.dataEntry',$id) }}"  class="nav-second-level">
         <i data-feather="users"></i>
         <span> Data Entry</span>

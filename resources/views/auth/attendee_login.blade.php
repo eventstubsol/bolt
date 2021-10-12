@@ -63,12 +63,6 @@ if(Auth::user()){
         <button class="theme-btn btn primary-filled" onclick="onSubmit">Login</button>
     </div>
     <div class="clearfix"></div>
-     <div class="input-group input-footer">
-        <p class="text">Doesn't Have An Account?<a href="{{ route('attendee_register') }}"> - CLICK HERE</a></p>
-    </div>
-    <div class="input-group input-footer">
-        <p class="text">Register As A Event Admin.<a href="{{ route('Eventee.register') }}"> Click here</a></p>
-    </div>
     <div class="clearfix"></div>
 </form>
 @endsection

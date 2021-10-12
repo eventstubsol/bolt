@@ -175,6 +175,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'website_link',
         'company_website_link',
         'isCometChatAccountExist',
+		'event_id',
     ];
 
     /**
@@ -361,5 +362,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function qna(){
         return $this->belongsTo(App\LiveQuestion::class);
+    }
+    public function package(){
+        $this->hasOne("App/Package");
     }
 }
