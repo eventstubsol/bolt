@@ -399,26 +399,21 @@
     </div>
 </li> --}}
 
-<li>
-    <a href="#report" data-toggle="collapse">
-        <i class="mdi mdi-file-multiple"></i>
-        <span> Reports <span class="badge  badge-success" >NEW</span> </span>
-    </a>
-    <div class="collapse" id="report">
-        <ul class="nav-second-level">
+<li class="menu-title">Administration</li>
+        <ul class="nav-second-level" style="list-style: none">
             <li>
                 <a href="#users" data-toggle="collapse">
                     <i class="fa fa-users" aria-hidden="true"></i>
                     <span> Users </span>
                 </a>
                 <div class="collapse" id="users">
-                    <ul class="nav-second-level">
+                    <ul class="nav-second-level" style="list-style: none">
                         <li>
                             <a href="{{ route("user.index") }}">Manage</a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="{{ route("user.lobby") }}">Lobby</a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
             </li>
@@ -428,7 +423,7 @@
                     <span> Packages </span>
                 </a>
                 <div class="collapse" id="package">
-                    <ul class="nav-second-level">
+                    <ul class="nav-second-level" style="list-style: none">
                         <li>
                             <a href="{{ route("package.index") }}">Manage</a>
                         </li>
@@ -442,7 +437,7 @@
                     <span> License </span>
                 </a>
                 <div class="collapse" id="license">
-                    <ul class="nav-second-level">
+                    <ul class="nav-second-level" style="list-style: none">
                         <li>
                             <a href="{{ route("license.index") }}">Manage</a>
                         </li>
@@ -450,5 +445,4 @@
                 </div>
             </li>
         </ul>
-    </div>
-</li>
+    
