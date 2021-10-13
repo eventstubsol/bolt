@@ -658,6 +658,7 @@ $user = Auth::user();
     @include("event.modules.Profile")
 
     @include("event.modules.chat")
+    @include("event.modules.networking")
 
     @include("event.modules.Confirmation")
 
@@ -747,6 +748,10 @@ $user = Auth::user();
         // console.log( {!! json_encode(getSuggestedTags()) !!} );
         const config = {
             baseRoute: "{{ url('/') }}",
+            videoSDK: "{{route('videosdk',['meetingId'=>':id'])}}",
+            addParticipant: "{{route('addParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
+            removeParicipant: "{{route('removeParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
+            updateLounge: "{{route('updateLounge',['subdomain'=>$event_name])}}",
             leaderboard: "{{ route('leaderboard',['id'=>$event_id]) }}",
             token: "{{ csrf_token() }}",
             trackEvent: "{{ route('trackEvent') }}",
@@ -860,29 +865,29 @@ $user = Auth::user();
                 });
             }, 15000);
             var countT = 1;
-            setInterval(function() {
-                $('#announce_body ').empty();
-                $.ajax({
-                    url: "{{ route('announcement.popUp',$event_id) }}",
-                    success: function(result) {
-                        if (result != null) {
+            // setInterval(function() {
+            //     $('#announce_body ').empty();
+            //     $.ajax({
+            //         url: "{{ route('announcement.popUp',$event_id) }}",
+            //         success: function(result) {
+            //             if (result != null) {
                             
-                            $.each(result, function(index, value) {
-                              $('#announce_body ').append("<fieldset class='scheduler-border'><b>" +value.subject +"</b><legend class='scheduler-border'></legend><ul class='list-group'><li class='list-group-item'>" +value.announce +"</li></ul></fieldset>");
-                                $('#myModal').modal('toggle');
-                                countT++;
-                            });
-                            $('#seenAnn').attr('data-id', countT);
-                        }
-                        else{
-                            alert(0);
-                            $('#myModal').modal('hide');
-                        }
+            //                 $.each(result, function(index, value) {
+            //                   $('#announce_body ').append("<fieldset class='scheduler-border'><b>" +value.subject +"</b><legend class='scheduler-border'></legend><ul class='list-group'><li class='list-group-item'>" +value.announce +"</li></ul></fieldset>");
+            //                     $('#myModal').modal('toggle');
+            //                     countT++;
+            //                 });
+            //                 $('#seenAnn').attr('data-id', countT);
+            //             }
+            //             else{
+            //                 alert(0);
+            //                 $('#myModal').modal('hide');
+            //             }
 
 
-                    },
-                });
-            }, 10000);
+            //         },
+            //     });
+            // }, 100000);
 
 
         });
