@@ -28,8 +28,9 @@ Manage License
                             <th width="20%">Name</th>
                             <th width="30%">Email</th>
                             <th width="10%">Type</th>
-                            <th width="20%">Package Type</th>
+                            <th width="10%">Package Type</th>
                             <th width="15%">Created At</th>
+                            <th width="10%">Expiry Date</th>
                     
                         </tr>
                     </thead>
@@ -44,6 +45,11 @@ Manage License
                             @endphp
                             <td>{{ $package->name }}</td>
                             <td>{{ $user->created_at }}</td>
+                            @if($user->expiry_date == null)
+                                <td>{{ ucfirst('none') }}</td>
+                            @else
+                                <td>{{ $user->expiry_date }}</td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

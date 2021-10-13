@@ -20,10 +20,11 @@ class FormController extends Controller
     }
 
     public function create($id){
-        $structs = FormStruct::where('event_id',decrypt($id))
-        ->orWhere('event_id',0)
+        $structsDefault = FormStruct::Where('event_id',0)
         ->get();
-        return view('eventee.forms.create',compact('id','structs'));
+        $structEvent = FormStruct::Where('event_id',decrypt($id))
+        ->get();
+        return view('eventee.forms.create',compact('id','structsDefault','structEvent'));
     }
     public function SaveForm(Request $req){
         $form_fields = $req->fields;
@@ -68,8 +69,14 @@ class FormController extends Controller
        }
     }
 
-    public function AddField($id){
-        return view('eventee.forms.field',compact('id'));
+    public function Edit($id,$form_id){
+        $form = Form::findOrFail($form_id);
+        $form_fields = FormField::where('form_id',$form->id)->get();
+        $structsDefault = FormStruct::Where('event_id',0)
+        ->get();
+        $structEvent = FormStruct::Where('event_id',decrypt($id))
+        ->get();
+        return view('eventee.forms.edit',compact('id','form_id','form','form_fields','structsDefault','structEvent'));
     }
 
     public function SaveField($id,Request $req){
@@ -81,7 +88,7 @@ class FormController extends Controller
         $form->field = $field_name;
         if($form->save()){
             flash("New Field Has Been Added Successfully")->success();
-            return redirect()->route('eventee.form',$id);
+            return redirect()->back();
         }
         else{
             flash("Something Went Wrong")->error();

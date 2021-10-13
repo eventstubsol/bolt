@@ -27,10 +27,10 @@
                     <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Fields</th>
-                                <th class="text-right mr-2">Actions</th>
+                                <th width="10%">#</th>
+                                <th width="20%">Name</th>
+                                <th width="10%">Fields</th>
+                                <th width="40%">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,10 +42,11 @@
                                 @endphp
                                 <td width="10%">{{ $fieldCount }}</td>
                                 <td width="10%">
-                                    <center>
+                                   
+                                        {{-- <a href="{{ route('eventee.form.edit',['id'=>$id,'form_id'=>$form->id]) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a> --}}
                                         <a href="{{ route('eventee.form.preview',$id) }}" class="btn btn-warning"><i class="far fa-eye"></i></a>
                                         <a onclick="confiemDelete(this)" data-id="{{ $form->id }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                                    </center>
+                                 
                                 </td>  
                             @endforeach
                         </tbody>
