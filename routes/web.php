@@ -25,7 +25,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 //         dd($subdomain);
 //     });
 // });
-Route::group(['domain' => '{subdomain}.localhost'], function () {
+Route::group(['domain' => '{subdomain}.virturo.io'], function () {
     Route::get('/', function ($subdomain) {
         // dd($subdomain);
         $user = Auth::user();
