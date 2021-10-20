@@ -186,13 +186,15 @@ class AttendeeAuthController extends Controller
                 $file->move($destinationPath, $name);
                 User::where('id',$user->id)->update(['profileImage'=>'/uploads/profilepic/'.$name]);
             }
-            for($i = 0;$i < count($userField) ;$i++){
-                if($request->has($userField[$i])){
-                    $userData = new UserData;
-                    $userData->user_id = $user->id;
-                    $userData->user_field = $userField[$i];
-                    $userData->field_value = $data[$userField[$i]];
-                    $userData->save();
+            if(is_array($userField)){
+                for($i = 0;$i < count($userField) ;$i++){
+                    if($request->has($userField[$i])){
+                        $userData = new UserData;
+                        $userData->user_id = $user->id;
+                        $userData->user_field = $userField[$i];
+                        $userData->field_value = $data[$userField[$i]];
+                        $userData->save();
+                    }
                 }
             }
             flash("Registered Successfully")->success();

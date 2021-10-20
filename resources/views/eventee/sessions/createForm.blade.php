@@ -219,35 +219,20 @@
             }   
         })
     })
+        function uuid(){
+            var dt = new Date().getTime();
+            var uuid = 'xxxx-4xxx-yxxx'.replace(/[xy]/g, function(c) {
+                var r = (dt + Math.random()*16)%16 | 0;
+                dt = Math.floor(dt/16);
+                return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+            });
+            return uuid;
+        }
 
         function getMeetingId(){
-            let token="";
-                fetch("http://localhost:9000/get-token")
-                    .then(r => r.json())
-                    .then((data) => {
-                        localStorage.setItem("jwt", data.token);
-                        token = data.token;
-                        createMeeting();
-                        console.log(data.token);
-                    });
-        
-
-
-            function createMeeting() {
-                var options = {
-                    method: "POST",
-                    headers: { authorization: `${token}` },
-                };
-
-                fetch("https://api.zujonow.com/v1/meetings", options)
-                    .then(r => r.json())
-                    .then(response => {
-                        $("#meetingId").val(response.meetingId);
-                        // $("#meetingId").show();
-                        $("#create_session").attr("disabled", false);
-                        console.log(response.meetingId);
-                    });
-            }
+            $("#meetingId").val(uuid());
+            $("#create_session").attr("disabled", false);
+            console.log(response.meetingId);
         }
 </script>
 

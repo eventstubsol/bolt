@@ -68,10 +68,10 @@
           },
         permissions: {
           askToJoin: false, // Ask joined participants for entry in meeting
-          toggleParticipantMic: false, // Can toggle other participant's mic
-          toggleParticipantWebcam: false, // Can toggle other participant's webcam
+          toggleParticipantMic: true, // Can toggle other participant's mic
+          toggleParticipantWebcam: true, // Can toggle other participant's webcam
         },
-
+ 
         joinScreen: {
           visible: false, // Show the join screen ?
           title: "Daily scrum", // Meeting title
