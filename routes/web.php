@@ -19,8 +19,14 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//SUBDOMAIN ROUTING FOR ATTENDEES
-Route::group(['domain' => '{subdomain}.localhost'], function () {
+
+// Route::domain("{subdomain}".'localhost')->group(function(){
+//     Route::get('/',function ($subdomain){
+//         dd($subdomain);
+//     });
+// });
+$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
+Route::group(['domain' => $url], function () {
     Route::get('/', function ($subdomain) {
         // dd($subdomain);
         $user = Auth::user();
@@ -74,7 +80,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
     Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
     Route::get('/Form/preview/{id}',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
-    Route::get('/Form/addField/{id}',"Eventee\FormController@AddField")->name('eventee.form.addfield');
+    Route::get('/Form/edit/{id}/{form_id}',"Eventee\FormController@edit")->name('eventee.form.edit');
     Route::post('/Form/SaveField/{id}',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
 
 

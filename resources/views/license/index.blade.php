@@ -29,6 +29,9 @@ Manage License
                             <th>Event Name</th>
                             <th>Message</th>
                             <th>License Type</th>
+                            <th>Event Created On</th>
+                            <th>Event End On</th>
+                            <th>Number Of Users</th>
                             <th>Status</th>
                             <th>Issued On</th>
                             <th>Actions</th>
@@ -39,11 +42,15 @@ Manage License
                         <tr>
                             @php
                                 $event = App\Event::where('id',$license->event_id)->first();
+                                $userCount = App\User::where('event_id',$event->id)->count();
                             @endphp
                             <td>{{ $key+1 }}</td>
                             <td>{{ $event->name }}</td>
                             <td>{{ $license->message }}</td>
                             <td>{{ $license->type }}</td>
+                            <td>{{ $event->start_date }}</td>
+                            <td>{{ $event->end_date }}</td>
+                            <td>{{ $userCount }}</td>
                             @if ($license->status == 0)
                                 <td style="color:red">Unsolved</td>
                             @else
