@@ -39,8 +39,25 @@
                             </a>
                         
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach($structsDefault as $struct)
-                                <li class="dropdown-item"><input onclick="getID(this)" class="check" type="checkbox" data-id="{{ $struct->id }}" value="0">&nbsp;{{ $struct->label }}</li>
+                                @foreach ($form_fields as $field)
+                                @php
+                                    $mainField = App\FormStruct::findOrFail($field->struct_id);
+                                @endphp
+                           
+                                
+                               
+                                    
+                                        <li class="dropdown-item"><input onclick="getID(this)" class="check" type="checkbox" checked data-id="{{ $mainField->id }}" value="0">&nbsp;{{ $mainField->label }}</li>
+                                    
+                                        {{-- @foreach($structsDefault as $struct)
+                                            @if ($struct->id != $field->struct_id)
+                                                <li class="dropdown-item"><input onclick="getID(this)" class="check" type="checkbox" data-id="{{ $struct->id }}" value="0">&nbsp;{{ $struct->label }}</li>
+                                            @endif
+                                        @endforeach --}}
+                                
+                                    
+                                    
+                               
                             @endforeach
                             </div>
                         </div>

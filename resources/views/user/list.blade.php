@@ -36,6 +36,8 @@ Manage Users
                             <th width="20%">Type</th>
                             
                             <th width="15%">Created At</th>
+                            <th width="10%">Package Type</th>
+                            <th width="10%">Expiry Date</th>
                             <th width="5%" class="text-right mr-2">Actions</th>
                         </tr>
                     </thead>
@@ -47,6 +49,15 @@ Manage Users
                             <td>{{ $user->type }}</td>
                             
                             <td>{{ $user->created_at }}</td>
+                            @php
+                              $package = App\Package::findOrFail($user->package_id);   
+                            @endphp
+                            <td>{{ $package->name }}</td>
+                            @if($user->expiry_date == null)
+                                <td>{{ ucfirst('none') }}</td>
+                            @else
+                                <td>{{ $user->expiry_date }}</td>
+                            @endif
                             <td class="text-right">
                                 <a href="{{ route("user.edit", [
                                         "user" => $user->id
