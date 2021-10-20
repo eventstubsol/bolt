@@ -94,29 +94,49 @@ class LoungeController extends Controller
 HTML; 
 
 
+
+
         foreach($tables as $i=>$table){
 
             $avs = $table->availableSeats();
             $html = $html . <<<HTML
-            <div class="table_container">
+                        <div class="table_container">
+                            <a class="lounge_meeting"   data-toggle="modal" data-table="$table->id" data-target="#lounge_modal"  data-meeting="$table->meeting_id">$table->name</a>
+                            <span> Total Seats: $table->seats</span>
+                            <span> Available Seats: $avs</span>
+                            <ul>
+                    HTML;
+            $participants = $table->participants()->get()->load(["user"]);
+            for($i = 0;$i<$table->seats ;$i++){
+                $participant = isset($participants[$i])?$participants[$i]:null;
+                $n = $i+1;
+                if($participant!==null){
 
-             <a class="lounge_meeting"   data-toggle="modal" data-table="$table->id" data-target="#lounge_modal"  data-meeting="$table->meeting_id">$table->name</a>
-             <span> Total Seats: $table->seats</span>
-             <span> Available Seats: $avs</span>
-             <ul>
-HTML;
-            foreach($table->participants()->get()->load(["user"]) as $participant){
                 $name = $participant->user->name." ".$participant->user->last_name;
-                $src = assetUrl($participant->user->profileImage);
+                $src = $participant->user->profileImage? assetUrl($participant->user->profileImage):null;
                 $html = $html . <<<HTML
-                
-                <li><img width="30" class="profile_image" src="$src">$name</li>
-HTML;                
+                            <div>                 
+                        HTML;           
+                if($src){
+                    $html = $html . <<<HTML
+                        <img width="30" class="profile_image" src="$src">                    
+                    HTML;           
+                }
+                $html = $html . <<<HTML
+                                    $name
+                                </div>     
+                        HTML;           
+                }else{
+                    $html = $html . <<<HTML
+                    <div> Seat $n  </div>               
+                HTML;     
+                }
+
             }
             $html = $html . <<<HTML
-            </ul>
-            </div>
-HTML;
+                            </ul>
+                        </div>
+                    HTML;
         }
 
         $html = $html . <<<HTML

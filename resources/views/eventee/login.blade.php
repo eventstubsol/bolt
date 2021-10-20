@@ -26,10 +26,13 @@
     @csrf
     <div class="input-group">
         <label for="emailaddress">Email address</label>
-        <input value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" type="email" id="emailaddress" name="email" placeholder="Enter your email" />
-        @error('email')
-        <span class="invalid-feedback" role="alert">{{ $message }}</span>
-        @enderror
+        <br>
+        <div class="input-group input-group-merge mb-3">
+            <input value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" type="email" id="emailaddress" name="email" placeholder="Enter your email" />
+            @error('email')
+                <span class="invalid-feedback" role="alert">{{ $message }}</span>
+            @enderror
+        </div>
     </div>
 
     <div class="input-group">
@@ -46,13 +49,18 @@
             @enderror
         </div>
     </div>
+    <br>
 
-    <div class="input-group input-footer">
-        <p class="text">Register As A Eventee<a href="{{ route('Eventee.register') }}"> Click here</a></p>
-        <button class="theme-btn btn primary-filled" type="submit">Login</button>
-    </div>
+    <button class="theme-btn btn primary-filled" type="submit">Login</button>
+
+
+    
     <div class="clearfix"></div>
 </form>
+@endsection
+
+@section("form_footer")
+    <p class="text">Register As An Event Admin<a href="{{ route('Eventee.register') }}"> Click here</a></p>
 @endsection
 
 @section('extra')

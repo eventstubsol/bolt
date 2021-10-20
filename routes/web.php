@@ -19,12 +19,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::domain("{subdomain}".'localhost')->group(function(){
-//     Route::get('/',function ($subdomain){
-//         dd($subdomain);
-//     });
-// });
+//SUBDOMAIN ROUTING FOR ATTENDEES
 Route::group(['domain' => '{subdomain}.localhost'], function () {
     Route::get('/', function ($subdomain) {
         // dd($subdomain);

@@ -20,25 +20,34 @@
         /* flex: 4 auto; */
         position: relative;
     }
+    .table_container ul li {
+        background: red;
+        padding: 10px;
+        border-radius: 45px;
+        position: relative;
+    }
 
     .table_container a{
         font-size: 30px;
         color:white !important;
     }
-    .table_container ul li{
-        background: red;
-        padding:10px;
-    }
     .table_container ul {
         list-style-type: none;
         position: absolute;
-        top: 0;
-        left: -84px;
+        top: -32px;
+        left: -15px;
+        display: flex;
+        justify-content: space-between;
+        width: 300px;
     }
     img.profile_image {
         width: 30px;
         border-radius: 50%;
         display: inline-block;
+        position: absolute;
+        top: -110%;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
 </style>
