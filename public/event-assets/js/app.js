@@ -371,7 +371,7 @@ function initApp() {
 
     function updateLounge(){
 
-        console.log("test interval 1");
+        // console.log("test interval 1");
         console.log(window.config.updateLounge);
         let addingParticipant = false;
         let last_add = 0;
@@ -384,7 +384,7 @@ function initApp() {
                     url: window.config.updateLounge,
                     success: function (html) {
                         addingParticipant = true;
-                        console.log(html);
+                        // console.log(html);
                         $("#lounge_tables").html(html);
                         setAreas();
                         setLoungeLinks();
@@ -428,7 +428,7 @@ function initApp() {
 
     function pageChangeActions(changeChat = true) {
         // $("#cometchat__widget").show();
-        clearInterval(loungeInterval);
+        // clearInterval(loungeInterval);
 
         currentresbtns = null;
         if (changeChat)
@@ -941,7 +941,7 @@ function initApp() {
                 // }
                 const loadContent = () => {
                     // if(window.config.auditoriumEmbed.startsWith(""))
-                    console.log(window.config.auditoriumEmbed)
+                    // console.log(window.config.auditoriumEmbed)
                     $("#session-content-" + room).empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=${room}"></iframe>`);
                     $("#session-content-" + room).append(`<div id="video_play_area"></div>`);
                     $(".cc1-chat-win-inpt-wrap input").unbind("mousedown").on("mousedown", function (e) { e.preventDefault(); e.stopImmediatePropagation(); $(e.target).focus() });
