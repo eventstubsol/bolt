@@ -123,7 +123,7 @@ class eventeeController extends Controller
                 Menu::create(['name'=>$menusNames[$i],'position'=>$manuPos[$i],'link'=>$menuLink[$i],'iClass'=>$menuClass[$i],'event_id'=>$event->id,'type'=>'footer','parent_id'=>0]);
             }
             flash("Event Saved Successfully")->success();
-            Event::where('id',$event->id)->update(['link'=> $event->name.'.'.str_replace('https://','',$baseurl).'']);
+            Event::where('id',$event->id)->update(['link'=> $event->slug.'.'.str_replace('https://','',$baseurl).'']);
             return redirect()->back();
         }
         else{
