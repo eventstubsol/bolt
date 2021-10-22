@@ -139,6 +139,12 @@ class AttendeeAuthController extends Controller
 
    public function showRegistrationForm($subdomain)
     {
+        // try{
+        //     dd($subdomain);
+        // }
+        // catch(\Exception $e){
+        //     Log::error($e->getMessage());
+        // }
         $event = Event::where("name",$subdomain)->first();
 
         $form = Form::where('event_id',$event->id);
@@ -157,6 +163,8 @@ class AttendeeAuthController extends Controller
                 $fieldset->label = $struct->label;
                 $fieldset->fieldName = $struct->field;
                 $fieldset->type = $struct->type;
+                $fieldset->placeholder = $field->placeholder;
+                $fieldset->required = $field->required;
                 array_push($fieldsFinal,$fieldset);
             }
             // return $fieldsFinal;
