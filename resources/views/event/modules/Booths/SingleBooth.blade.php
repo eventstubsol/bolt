@@ -1,11 +1,11 @@
 @if(isOpenForPublic("booths"))
 @foreach($booths as $booth)
     <div class="page  booth" data-name="{{ $booth->name }}" id="booth-{{ $booth->id }}">
-        <div class="position-relative" style="height:100vh">
-            @if(isset($booth->boothurl))
-                <img async src="{{ assetUrl($booth->boothurl) }}" class="positioned booth-bg" alt="">
-            @else
-            <video class="full-width-videos booth_video video-{{ $booth->id }}" src="{{$booth->videoBg?assetUrl($booth->videoBg->url):''}}" id="session_room_video" autoplay muted loop></video>
+        <div data-test="{{$booth->vidbg_url}}" class="position-relative" style="height:100vh">
+            @if(isset($booth->vidbg_url))
+            <video class="full-width-videos booth_video video-{{ $booth->id }}" src="{{assetUrl($booth->vidbg_url)}}" id="session_room_video" autoplay muted loop></video>
+            @elseif(isset($booth->boothurl))
+            <img async src="{{ assetUrl($booth->boothurl) }}" class="positioned booth-bg" alt="">
             @endif
 
             @foreach($booth->links as $link)

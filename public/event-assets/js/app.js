@@ -438,9 +438,9 @@ function initApp() {
             $("#cometchat__widget").show();
 
         }
-        $('.page_video').hide();
-        $('.room_video').hide();
-        $('.booth_video').hide();
+        // $('.page_video').hide();
+        // $('.room_video').hide();
+        // $('.booth_video').hide();
         loader.hide();
         $("#audi-content").empty();
         $("#caucus-room-content").empty();

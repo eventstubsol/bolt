@@ -47,15 +47,14 @@
     <form action="{{ route("exhibiter.update", [ "booth" => $booth->id ]) }}" method="POST">
         @csrf
         <div class="position-relative">
-            <div style="padding-bottom: {{ BOOTH_AREA_IMAGE_ASPECT }}%"></div>
-            <div id="image_demo"  class="im-section" >
-                @if(strlen($booth->boothurl)>1)
-                    <img async src="{{ assetUrl($booth->boothurl) }}" class="positioned booth-bg" alt="">
-                @else
-                    <img async src="{{ assetUrl(getField($booth->type)) }}" class="positioned booth-bg" alt="">
+            <div id="image_demo"  class="im-section" style="position:relative; padding:0" >
+                @if(isset($booth->vidbg_url))
+                    <video loop class="full-width-videos" autoplay src="{{$booth->vidbg_url?assetUrl($booth->vidbg_url):''}}" repeat style="width: 100%"></video>
+                @elseif(isset($booth->boothurl))
+                    <img src="{{$booth->boothurl?assetUrl($booth->boothurl):''}}" style="min-width:100%" />
                 @endif
-                @foreach($booth->links as $id => $link)
-                    <div class="im-{{$id}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$id}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
+                @foreach($booth->links as $ids => $link)
+                    <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$ids}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
                 @endforeach
             </div>
 
@@ -193,18 +192,22 @@
                                         <input value="{{$link->height}}" type="number" step="any" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
                                     </div>
                                     <div  class="form-group mb-3 col-md-3">
-                                        <label for="pos">Perspective</label>
-                                        <input value="{{$link->perspective}}" type="number" step="any" required  name="perspective[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                        <label for="pos">Perspective Type</label>
+                                        <select name="rotationtype[]" data-index="{{$ids}}" class="pers pos pos-{{$ids}} form-control" id="">
+                                            <option value="">None</option>
+                                            <option @if($link->rotationtype=="X") selected @endif value="X">X</option>
+                                            <option @if($link->rotationtype=="Y") selected @endif value="Y">Y</option>
+                                        </select>
                                     </div>
-                                    <div  class="form-group mb-3 col-md-3">
-                                        <label for="pos">Rotation Type</label>
-                                        <input value="{{$link->rotationtype}}"  required  name="rotationtype[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    
+                                    <div @if(!($link->rotationtype)) style="display:none" @endif  class="pr-{{$ids}} form-group mb-3 col-md-3">
+                                            <label for="pos">Perspective</label>
+                                            <input value="{{$link->perspective}}" type="number" step="any"  name="perspective[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
                                     </div>
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div @if(!($link->rotationtype)) style="display:none" @endif  class="rt-{{$ids}} form-group mb-3 col-md-3">
                                         <label for="pos">Rotation</label>
-                                        <input value="{{$link->rotation}}" type="number" step="any" required  name="rotation[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                        <input value="{{$link->rotation}}" type="number" step="any"  name="rotation[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
                                     </div>
-
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
 
                                     </div>
@@ -411,6 +414,8 @@
         
         $(".done").hide();
         $(".done").on("click",resetPosition)
+
+        $(".pers").on("change",togglePerspective);
         
 
         bindRemoveButton();
@@ -479,14 +484,19 @@
         });
     }
     function getRotation(area){
-        if(area[5]=="X"){
+        if(area[4]=="X"){
             return {
                 transform: `rotatex(${area[6]}deg)`
             }
-        }else{
+        }else if(area[4]=="Y"){
             return {
                 transform: `rotatey(${area[6]}deg)`
             }
+        }else{
+            return {
+                transform: `rotatey(0deg)`
+            }
+
         }
     }
 
@@ -500,7 +510,7 @@
              left: area[1]+'%',
              width: area[2]+'%',
              height: area[3]+'%',
-             perspective: area[4]+'px'
+             perspective: area[5]+'px'
         }
     }
 
@@ -551,6 +561,25 @@
             case "custom_page":
                 $(".custom_page-"+index).show();
                 break;
+        }
+        // console.log(val);
+    }
+    function togglePerspective(e){
+        
+        // console.log(e.target.value);
+        // console.log(e.data)
+        const selectbox = $(e.target);
+        const index = selectbox.data('index');
+
+        
+        $(".pr-"+index).hide();
+        $(".rt-"+index).hide();
+        
+        switch(selectbox.val()){
+            case "X":
+            case "Y":
+                $(".pr-"+index).show();
+                $(".rt-"+index).show();
         }
         // console.log(val);
     }
@@ -655,7 +684,7 @@
                                     </div>
 
 
-                                    <div  class="row positioning-${n}" >
+                                    <div  class="row positioning-${n} col-md-12" >
                                     
                                     <div  class="form-group mb-3 col-md-3">
                                         <label for="top">top</label>
@@ -677,16 +706,20 @@
                                         <input type="number" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} form-control">
                                     </div>
                                     <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Perspective Type</label>
+                                        <select name="rotationtype[]" data-index="${n}" class="pers pos pos-${n} form-control">
+                                            <option value="">None</option>
+                                            <option value="X">X</option>
+                                            <option value="Y">Y</option>
+                                        </select>
+                                    </div>
+                                    <div style="display: none;"   class="pr-${n} form-group mb-3 col-md-3">
                                         <label for="pos">Perspective</label>
-                                        <input  type="number" step="any" required  name="perspective[]" data-index="${n}" class="pos pos-${n} form-control">
+                                        <input  type="number" step="any"   name="perspective[]" data-index="${n}" class="pos pos-${n} form-control">
                                     </div>
-                                    <div  class="form-group mb-3 col-md-3">
-                                        <label for="pos">Rotation Type</label>
-                                        <input   required  name="rotationtype[]" data-index="${n}" class="pos pos-${n} form-control">
-                                    </div>
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div  style="display: none;"  class="rt-${n} form-group mb-3 col-md-3">
                                         <label for="pos">Rotation</label>
-                                        <input  type="number" step="any" required  name="rotation[]" data-index="${n}" class="pos pos-${n} form-control">
+                                        <input  type="number" step="any"   name="rotation[]" data-index="${n}" class="pos pos-${n} form-control">
                                     </div>
 
                                     <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
@@ -709,7 +742,8 @@
             $(".done").hide();
             $(".done").on("click",resetPosition)
             $(".add-image").unbind().on("click", addImage);
-
+            $(".pers").on("change",togglePerspective);
+        
 
 
         }

@@ -30,9 +30,9 @@ class SessionRoomController extends Controller
             $name = str_replace(" ","_",$request->name);
             $room = new sessionRooms([
                 "name"=>$name,
-                "master_room"=>isset($request->master_room)?$request->master_room:"",
+                // "master_room"=>isset($request->master_room)?$request->master_room:"",
                 "event_id"=>decrypt($id),
-                "bg_type"=>$request->bg_type,
+                // "bg_type"=>$request->bg_type,
             ]);
             $room->save();
             // dd($room);
@@ -75,7 +75,11 @@ class SessionRoomController extends Controller
         $name = str_replace(" ","_",$request->name);
         $sessionroom->update([
             "name"=>$name,
-            "master_room"=>isset($request->master_room)?$request->master_room:""
+            "master_room"=>isset($request->master_room)?$request->master_room:"",
+            "top"=> $request->top,
+            "left"=> $request->left,
+            "width"=> $request->width,
+            "height"=> $request->height,
         ]);       
         if(isset($request->background)){
             Image::where("owner",$sessionroom->id)->update([
@@ -83,8 +87,8 @@ class SessionRoomController extends Controller
                 "url" => $request->background,  
             ]);
         }
+        $sessionroom->videoBg()->delete();
         if($request->has("video_url")  && $request->video_url != null){
-            $sessionroom->videoBg()->delete();
             $sessionroom->videoBg()->create([
                 "url"=>$request->video_url,
                 "title"=>$sessionroom->name
