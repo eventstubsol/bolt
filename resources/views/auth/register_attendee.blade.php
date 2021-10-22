@@ -5,6 +5,10 @@
         /* body.auth .login-container .form .register label{
             display: block;
         } */
+        form{
+            overflow: scroll;
+            max-height: 20rem;
+        }
     </style>
 @endsection
 

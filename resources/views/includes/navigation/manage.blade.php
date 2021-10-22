@@ -103,9 +103,6 @@
             <li>
                 <a href="{{ route("eventee.form.create",['id'=>$id]) }}">Create</a>
             </li>
-            <li>
-                <a href="{{ route("eventee.form.addfield",['id'=>$id]) }}">Add Field</a>
-            </li>
         </ul>
     </div>
 </li>
