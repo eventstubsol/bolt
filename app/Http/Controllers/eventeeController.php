@@ -96,7 +96,8 @@ class eventeeController extends Controller
           $baseurl=  str_replace('http://','',$baseurl);
         }
         $event = new Event;
-        $event->name = str_replace(" ","-",trim($req->name));
+        $event->name = trim($req->name);
+        $event->slug = str_replace(" ","-",trim($req->name));
         $event->user_id = Auth::id();
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
