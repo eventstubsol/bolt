@@ -16,7 +16,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         if(!$user){
-            return redirect(route('attendee_login'));
+            return redirect(route('Eventee.login'));
             return view("landing");
         }
         if($user->type === "eventee"){

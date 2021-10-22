@@ -34,7 +34,7 @@ if(Auth::user()){
 @endif
 <form id="form" action="{{ route('attendee_login') }}" method="post">
     @csrf
-    <div class="input-group">
+    <div class="">
         <label for="{{ $login["field"] }}">{{ print_r($login["label"]) }}</label>
         <input value="{{ old($login["field"]) ?? $email }}" class="form-control @error($login["field"]) is-invalid @enderror"
             type="{{ $login["field"] == 'email' ? 'email' : 'text' }}" id="" name="{{ $login["field"] }}"
@@ -50,17 +50,17 @@ if(Auth::user()){
         @endif
     </div>
 
-    <div class="input-group">
+    <div class="">
         <input type="hidden" id="token" name="token">
     </div>
 
-    <div class="input-group input-footer">
-        <div style="display: flex;flex-direction:column">
-        <p class="text" >EXHIBITOR LOGIN<a href="{{ route('login') }}"> - CLICK HERE</a></p><br><br>
-        <p class="text" >EVENTEE LOGIN<a href="{{ route('Eventee.login') }}"> - CLICK HERE</a></p>
-        </div>
+    <div class="input-footer">
+        {{-- <div style="display: flex;flex-direction:column"> --}}
+        {{-- <p class="text" >EXHIBITOR LOGIN<a href="{{ route('login') }}"> - CLICK HERE</a></p><br><br>
+        <p class="text" >EVENTEE LOGIN<a href="{{ route('Eventee.login') }}"> - CLICK HERE</a></p> --}}
+        {{-- </div> --}}
         
-        <button class="theme-btn btn primary-filled" onclick="onSubmit">Login</button>
+        <button class="theme-btn btn primary-filled mt-3" onclick="onSubmit">Login</button>
     </div>
     <div class="clearfix"></div>
     <div class="clearfix"></div>

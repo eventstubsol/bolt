@@ -74,16 +74,7 @@ define("BOOTH_TYPES", [
 
 
 define("CMS_SECTIONS", [
-    "Streams",
-    "Slido",
     "General",
-    "Booth Rooms",
-    "Booth",
-    "Homepage",
-    "Auditorium",
-    "Caucus Rooms",
-    "Workshop",
-    "Hall of Fame",
 ]);
 
 define("CMS_SECTIONS_2", [
@@ -905,7 +896,7 @@ function getLoginVars(){
         "field" => "email",
         "placeholder" => "Email",
         "text" => "Enter email address",
-        "label" => "Enter your email to login to the event"
+        "label" => "Enter your email to login "
     ];
 }
 

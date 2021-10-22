@@ -72,6 +72,8 @@
             <!-- end container -->
         </div>
         <!-- end page -->
+        
+        @yield('scripts_after')
 
 
         <!-- Vendor js -->

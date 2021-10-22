@@ -1,4 +1,4 @@
-@extends('layouts.eventeeauth')
+@extends('layouts.auth')
 
 @section('title')
 Event Login
@@ -25,11 +25,12 @@ if(Auth::user()){
 @endphp
 <form id="form" action="{{ route('event.user.confirmLogin', ['subdomain' => $subdomain]) }}" method="post">
     @csrf
-    <div class="input-group">
-        <label for="{{ $login["field"] }}">{{ print_r($login["label"]) }}</label>
-        <input value="{{ old($login["field"]) ?? $email }}" class="form-control @error($login["field"]) is-invalid @enderror"
+    <div class="">
+        <label for="{{ $login["field"] }}">{{ $login["label"] }}</label>
+        
+        <input value="{{ old($login["field"]) ?? $email }}" class="form-control mb-3 @error($login["field"]) is-invalid @enderror"
             type="{{ $login["field"] == 'email' ? 'email' : 'text' }}" id="" name="{{ $login["field"] }}"
-            placeholder="{{ $login["label"] }}" />
+            placeholder="{{ $login["placeholder"] }}" />
         @error($login["field"])
         <span class="invalid-feedback" role="alert">{{ print_r($message)  }}</span>
         @enderror
