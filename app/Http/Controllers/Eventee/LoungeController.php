@@ -80,52 +80,85 @@ class LoungeController extends Controller
         
         $tables->load(["participants.user"]);
 
-        // foreach($tables as $i=> $table){
-        //     $participants = [];
-        //     foreach($table->participants as $participant){
-        //         array_push($participants,$participant->user);
-        //     }
-        //     // $tables[$i]->participantss = $participants;
-        //     $tables[$i]->participants = [];
-        // }
+        
+        return view("event.modules.loungeTables")->with(compact("tables"));
+    }
+//     public function updateLounge($subdomain)
+//     {
+//         $event = Event::where("name",$subdomain)->first();
+//         Participant::where("updated_at", '<=', Carbon::now()->subtract('30','seconds'))->delete();
 
-        $html = <<<HTML
-            <div class="lounge_container">
-HTML; 
+//         $tables =  NetworkingTable::where("event_id",$event->id)->get();
+        
+//         $tables->load(["participants.user"]);
+//         // dd($tables)
+
+//         // foreach($tables as $i=> $table){
+//         //     $participants = [];
+//         //     foreach($table->participants as $participant){
+//         //         array_push($participants,$participant->user);
+//         //     }
+//         //     // $tables[$i]->participantss = $participants;
+//         //     $tables[$i]->participants = [];
+//         // }
+
+//         $html = <<<HTML
+//             <div class="lounge_container">
+// HTML; 
 
 
-        foreach($tables as $i=>$table){
 
-            $avs = $table->availableSeats();
-            $html = $html . <<<HTML
-            <div class="table_container">
 
-             <a class="lounge_meeting"   data-toggle="modal" data-table="$table->id" data-target="#lounge_modal"  data-meeting="$table->meeting_id">$table->name</a>
-             <span> Total Seats: $table->seats</span>
-             <span> Available Seats: $avs</span>
-             <ul>
-HTML;
-            foreach($table->participants()->get()->load(["user"]) as $participant){
-                $name = $participant->user->name." ".$participant->user->last_name;
-                $src = assetUrl($participant->user->profileImage);
-                $html = $html . <<<HTML
-                
-                <li><img width="30" class="profile_image" src="$src">$name</li>
-HTML;                
-            }
-            $html = $html . <<<HTML
-            </ul>
-            </div>
-HTML;
-        }
+//         foreach($tables as $i=>$table){
 
-        $html = $html . <<<HTML
-        </div>
-HTML;
+//             $avs = $table->availableSeats();
+//             $html = $html . <<<HTML
+//                         <div class="table_container">
+//                             <a class="lounge_meeting"   data-toggle="modal" data-table="$table->id" data-target="#lounge_modal"  data-meeting="$table->meeting_id">$table->name</a>
+//                             <span> Total Seats: $table->seats</span>
+//                             <span> Available Seats: $avs</span>
+//                             <ul>
+//                     HTML;
+//             $participants = $table->participants()->get()->load(["user"]);
+//             for($i = 0;$i<$table->seats ;$i++){
+//                 $participant = isset($participants[$i])?$participants[$i]:null;
+//                 $n = $i+1;
+//                 if($participant!==null){
+
+//                 $name = $participant->user->name." ".$participant->user->last_name;
+//                 $src = $participant->user->profileImage? assetUrl($participant->user->profileImage):null;
+//                 $html = $html . <<<HTML
+//                             <div>                 
+//                         HTML;           
+//                 if($src){
+//                     $html = $html . <<<HTML
+//                         <img width="30" class="profile_image" src="$src">                    
+//                     HTML;           
+//                 }
+//                 $html = $html . <<<HTML
+//                                     $name
+//                                 </div>     
+//                         HTML;           
+//                 }else{
+//                     $html = $html . <<<HTML
+//                     <div> Seat $n  </div>               
+//                 HTML;     
+//                 }
+
+//             }
+//             $html = $html . <<<HTML
+//                             </ul>
+//                         </div>
+//                     HTML;
+//         }
+
+//         $html = $html . <<<HTML
+//         </div>
+// HTML;
 
     
-    return $html;
-    }
+//     return $html;
+//     }
 
 
 

@@ -11,7 +11,7 @@ function initApp() {
     let navs = $('.navs,.hide-on-exterior');
     let currentresbtns = null;
     let active_session_list = null;
-    let loungeInterval = null;
+    let loungeInterval = false;
 
     //Wait for all three main video loads before removing loader
     if (isMobile()) {
@@ -337,6 +337,11 @@ function initApp() {
             clearInterval(contentTicker);
         }
     }
+    function clearLounge(){
+        if(loungeInterval !== false){
+            clearInterval(loungeInterval);
+        }
+    }
 
     $(".zoom_urls").on("click", function () {
         t = $(this);
@@ -350,7 +355,7 @@ function initApp() {
         $(".lounge_meeting").on("click",(e)=>{
             let meetingId= $(e.target).data("meeting");
             let tableId= $(e.target).data("table");
-            let participant_interval = setInterval(addParticipant,25000,tableId);
+            let participant_interval = setInterval(addParticipant,15000,tableId);
             // addParticipant(tableId);
             
             $("#lounge-session-content").empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.videoSDK.replace(":id",meetingId)}"></iframe>`);
@@ -366,26 +371,26 @@ function initApp() {
 
     function updateLounge(){
 
-        console.log("test interval 1");
+        // console.log("test interval 1");
         console.log(window.config.updateLounge);
         let addingParticipant = false;
         let last_add = 0;
         loungeInterval = setInterval(function(){
             console.log("test interval")
                 let now = Date.now();
-                if (addingParticipant && last_add + 5000 > now) { return false; } //If already requesting and last request was less than 5 seconds ago, then dont refresh again
-                addingParticipant = true;
-                last_add = now;
+                if (!addingParticipant && last_add + 5000 > now) { return false; } //If already requesting and last request was less than 5 seconds ago, then dont refresh again
+                last_add = false;
                 $.ajax({
                     url: window.config.updateLounge,
                     success: function (html) {
-                        console.log(html);
+                        addingParticipant = true;
+                        // console.log(html);
                         $("#lounge_tables").html(html);
                         setAreas();
                         setLoungeLinks();
                     }
                 });
-        },30000);
+        },10000);
     }
     let addingParticipant = false;
     let last_add = 0;
@@ -423,7 +428,7 @@ function initApp() {
 
     function pageChangeActions(changeChat = true) {
         // $("#cometchat__widget").show();
-        clearInterval(loungeInterval);
+        // clearInterval(loungeInterval);
 
         currentresbtns = null;
         if (changeChat)
@@ -442,6 +447,7 @@ function initApp() {
         $("#workshop-content").empty();
         navs.removeClass('hidden');
         clearContentTicker();
+        clearLounge();
         $("#audi-modal").modal("hide");
         $("#caucus-modal").modal("hide");
         $("#workshop-modal").modal("hide");
@@ -935,7 +941,7 @@ function initApp() {
                 // }
                 const loadContent = () => {
                     // if(window.config.auditoriumEmbed.startsWith(""))
-                    console.log(window.config.auditoriumEmbed)
+                    // console.log(window.config.auditoriumEmbed)
                     $("#session-content-" + room).empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=${room}"></iframe>`);
                     $("#session-content-" + room).append(`<div id="video_play_area"></div>`);
                     $(".cc1-chat-win-inpt-wrap input").unbind("mousedown").on("mousedown", function (e) { e.preventDefault(); e.stopImmediatePropagation(); $(e.target).focus() });
