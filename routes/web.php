@@ -49,14 +49,7 @@ Route::group(['domain' => $url], function () {
         Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
         Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
         Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
-        
-
     });
-
-
-
-
-
 });
 
 
@@ -127,7 +120,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post("/page/event/store/{id}","Eventee\PageController@store")->name('eventee.pages.store');
     Route::get('page/event/{page}/{id}/edit',"Eventee\PageController@edit")->name('eventee.pages.edit');
     Route::put('page/{page}/{id}/update',"Eventee\PageController@update")->name('eventee.pages.updates');
-    Route::delete('page/event/delete',"Eventee\PageController@destroy")->name('eventee.pages.destroy');
+    Route::delete('page/event/delete/{page}',"Eventee\PageController@destroy")->name('eventee.pages.destroy');
     
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
