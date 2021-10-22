@@ -65,15 +65,10 @@ class BoothController extends Controller
           if($request->has("calendly_link")){
             $booth->calendly_link=$request->calendly_link;
           }
-          
-          $booth->save();
           if($request->has("video_url")  && $request->video_url != null){
-        
-            $booth->videoBg()->create([
-                "url"=>$request->video_url,
-                "title"=>$booth->name
-            ]);
-        }
+            $booth->vidbg_url = $request->video_url;
+          }
+          $booth->save();
           // if($booth->save()){
             Http::withHeaders([
               "apiKey" => env("COMET_CHAT_API_KEY"),
@@ -136,13 +131,12 @@ class BoothController extends Controller
         "name" => $request->get("name"),
         "boothurl"=>$request->get("boothurl"),
         "calendly_link"=>$request->get("calendly_link"),
+        
       ]);
       if($request->has("video_url")  && $request->video_url != null){
         
-        $booth->videoBg()->create([
-            "url"=>$request->video_url,
-            "title"=>$booth->name
-        ]);
+        $booth->vidbg_url = $request->video_url;
+        $booth->save();
     }
       // update group
       Http::withHeaders([

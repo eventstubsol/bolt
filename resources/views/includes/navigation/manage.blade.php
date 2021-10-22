@@ -1,7 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <li>
-    <a href="{{ route("teacher.dashboard") }}"  class="nav-second-level"> 
+    <a href="{{ route("event.Dashboard",['id'=>$id]) }}"  class="nav-second-level"> 
         <i class="fas fa-tachometer-alt"></i>
         <span>
             Dashboard
@@ -102,9 +102,6 @@
             </li>
             <li>
                 <a href="{{ route("eventee.form.create",['id'=>$id]) }}">Create</a>
-            </li>
-            <li>
-                <a href="{{ route("eventee.form.addfield",['id'=>$id]) }}">Add Field</a>
             </li>
         </ul>
     </div>

@@ -44,7 +44,7 @@
                                 <a href="{{ route("eventee.sessionrooms.edit", [
                                         "sessionroom" => $sessionroom->id,'id'=>$id
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
-                                    <button data-toggle="tooltip" data-placement="top" data-id="{{$sessionroom->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
+                                    <button data-toggle="tooltip" data-placement="top" data-id="{{$sessionroom->id}}" onclick="DeleteRoom(this)" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
                             </td>
                         </tr>
                       @endforeach
@@ -63,28 +63,37 @@
     @include("includes.scripts.datatables")
     <script>
         $(document).ready(function(){
-            $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.sessionrooms.create",["id"=>$id]) }}">Create New</a>')
-            $("body").on("click",".delete",function(e){
-                    t = $(this);
-                    let deleteUrl = '{{route("sessionrooms.destroy", [ "sessionroom" => ":id" ])}}';
-                    let id = t.data("id");
+            $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.sessionrooms.create",["id"=>$id]) }}">Create New</a>');
+           
+        });
+
+        
+    </script>
+
+    <script>
+        function DeleteRoom(e){
+            let id = e.getAttribute("data-id");
+            let deleteUrl = '{{route("eventee.sessionrooms.destroy")}}';
+            
+
                     confirmDelete("Are you sure you want to DELETE sessionroom?","Confirm sessionroom Delete").then(confirmation=>{
                         if(confirmation){
                             $.ajax({
-                                url:deleteUrl.replace(":id", id),
+                                url:deleteUrl,
                                 data: {
                                     "_token": "{{ csrf_token() }}",
-                                    "_method": "DELETE"
+                                    "_method": "DELETE",
+                                    "id":id,
                                 },
                                 method:"POST",
                                 success: function(){
-                                    t.closest("tr").remove();
+                                    e.closest("tr").remove();
                                     $(".tooltip").removeClass("show");
                                 }
                             })
                         }
                     });
-                });
-        });
+                
+        }
     </script>
 @endsection

@@ -39,7 +39,7 @@ class EventController extends Controller
     public function index($event_name)
     {
 
-        $event_id = Event::where("name",$event_name)->first()->id;
+        $event_id = Event::where("slug",$event_name)->first()->id;
         // dd($event_id);
         // $event_id = decrypt($id);
         $booths = Booth::where("event_id",$event_id)->orderBy("name")->with([
