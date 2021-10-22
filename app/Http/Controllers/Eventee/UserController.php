@@ -48,29 +48,26 @@ class UserController extends Controller
      */
     public function store(Request $request, $id)
     {
-        try {
-
+       
 
             // $userData = $request->except("_token");
             // $userData["password"] = Hash::make($userData["password"]);
             // $userData["isCometChatAccountExist"] = TRUE;
-
+            
             $userCount = User::where('event_id', decrypt($id))->count();
             if ($userCount < 5) {
+                $userEmail = User::where('email',$request->email)->where('event_id',decrypt($id))->count();
+                if($userEmail > 0){
+                    flash("Same Email ID Already Exist For The Current Event")->error();
+                    return redirect()->back();
+                }
                 $user = new User;
                 $user->name = $request->name;
                 $user->last_name = $request->last_name;
                 $user->event_id = decrypt($id);
                 $user->type = $request->type;
                 $user->password = password_hash($request->password, PASSWORD_DEFAULT);
-                $mail = UniqueEmail($request->email,$id);
-                if($mail == 0){
-                    $user->email = $request->email;
-                }
-                else{
-                    flash("Same Email ID Already Exist For The Current Event")->error();
-                    return redirect()->back();
-                }
+                $user->email = $request->email;
                 $user->isCometChatAccountExist = TRUE;
 
 
@@ -101,9 +98,7 @@ class UserController extends Controller
                 flash($message)->info();
                 return redirect()->back();
             }
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
+       
     }
 
     public function bulk_create(Request $request)
@@ -182,8 +177,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id, $user_id)
     {
-        $request->validate(["email" => "required|email", "name" => "required"]);
-
+        
 
         $user = User::findOrFail($user_id);
         $cometChat = isset($userData["enable_chat"]) ? 'enable' : null;
