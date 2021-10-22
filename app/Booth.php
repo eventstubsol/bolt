@@ -106,9 +106,7 @@ class Booth extends Model
         return $this;
     }
 
-    public function videoBg(){
-        return $this->hasOne("\App\Video", "owner");
-    }
+ 
 
     public function unpublish(){
         $this->status = 0;
