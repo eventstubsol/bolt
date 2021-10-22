@@ -68,7 +68,6 @@ function submitForm2(){
         var field = document.getElementsByClassName('placeholder2');
         var checkbox = document.getElementsByClassName('check');
         var form_id = $('#form_id').val();
-        alert(form_id);
         var placeholder = [];
 
         if((field) != "" && $('.CheckDone').prop("checked", true)){
@@ -120,6 +119,7 @@ function SaveCustomField(){
         success:function(response){
             if(response.code == 200){
                 customField();
+                $('#exampleModal').modal('toggle');
                 // alert("Field Added Successfully");
             }
             else{
@@ -142,10 +142,10 @@ function AllFields(){
             if(res.code == 200){
                 $.each(res.fields,function(index,value){
                     if(value.required == 1){
-                        $('#third-tbody').append('<tr><td colspan = "4"><center><input class="form-control" type="'+ value.type +'" placeholder="'+value.placeholder+'" required></center></td></tr>');
+                        $('#third-tbody').append('<tr><td>'+ value.label+'</td><td colspan = "4"><center><input class="form-control" type="'+ value.type +'" placeholder="'+value.placeholder+'" required></center></td></tr>');
                     }
                     else{
-                        $('#third-tbody').append('<tr><td colspan = "4"><center><input class="form-control" type="'+ value.type +'" placeholder="'+value.placeholder+'"></center></td></tr>');
+                        $('#third-tbody').append('<tr><td>'+ value.label+'</td><td colspan = "4"><center><input class="form-control" type="'+ value.type +'" placeholder="'+value.placeholder+'"></center></td></tr>');
                     }
                 });
             }

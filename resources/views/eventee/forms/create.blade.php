@@ -121,7 +121,7 @@
                             <tfoot>
                                 <tr>
                                     {{-- <td colspan="4"><button type ="button" class="prev btn btn-success" id="prev" onclick="goBack1st()">Previous</button> --}}
-                                 <button type ="button" class="mainbtn btn btn-success" id="save" onclick="submitForm2()">Save & Next</button></td> 
+                                 <td colspan="4"><button type ="button" class="mainbtn btn btn-success" id="save" onclick="submitForm2()">Save & Next</button></td> 
                                 </tr>
                              
                             </tfoot>
@@ -145,14 +145,15 @@
                         <h3>Review Form</h3>
                         <table class="fieldTable">
                             <thead>
-                                <th width="100%" colspan="4">Fields </th>
+                                <th width="20%" >Label</th>
+                                <th width="80%" colspan="3">Fields </th>
                             </thead>
                             <tbody id="third-tbody">
                                
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    {{-- <td colspan="4"><button type ="button" class="prev btn btn-success" id="prev" onclick="goBack2nd()">Previous</button> --}}
+                                    <td colspan="4"><a href="{{ route('eventee.form',$id) }}" class="mainbtn btn btn-success"  >Back To Main</a>
                                 </tr>
                              
                             </tfoot>
