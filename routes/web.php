@@ -26,6 +26,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 //     });
 // });
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
+// $url = '{subdomain}.localhost';
 Route::group(['domain' => $url], function () {
     Route::get('/', function ($subdomain) {
         // dd($subdomain);
@@ -111,7 +112,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('/sessionroom/event/{sessionroom}/{id}/edit',"Eventee\SessionRoomController@edit")->name('eventee.sessionrooms.edit');
     Route::put('/sessionroom/event/{sessionroom}/{id}/update',"Eventee\SessionRoomController@update")->name('eventee.sessionrooms.update');
 
-    Route::delete('sessionroom/event/delete',"Eventee\PageController@destroy")->name('eventee.sessionrooms.destroy');
+    Route::delete('sessionroom/event/delete',"Eventee\SessionRoomController@destroy")->name('eventee.sessionrooms.destroy');
     
     Route::get("/session/event/{id}","Eventee\SessionController@index")->name('eventee.sessions.index');
     Route::get("/session/event/create/{id}","Eventee\SessionController@create")->name('eventee.sessions.create'); 

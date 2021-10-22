@@ -16,10 +16,17 @@
     <form method="POST" class="register mt-2" action="{{ route('attendee_register.confirm',$subdomain) }}" enctype="multipart/form-data">
         @csrf
         @foreach ($fieldsFinal as $field)
+                    @if($field->required == 1)
                     <div class="form-group">
                         {{-- <p>{{ $field->label }}</p> --}}
-                        <input class="form-control" type="{{ $field->type }}" name="{{ $field->fieldName }}" placeholder="{{ $field->label }}">
+                        <input class="form-control" type="{{ $field->type }}" name="{{ $field->fieldName }}" placeholder="{{ $field->placeholder }}" required>
                     </div>
+                    @else
+                    <div class="form-group">
+                        {{-- <p>{{ $field->label }}</p> --}}
+                        <input class="form-control" type="{{ $field->type }}" name="{{ $field->fieldName }}" placeholder="{{ $field->placeholder }}">
+                    </div>
+                    @endif
                     <br>
         @endforeach
         @for($i = 0;$i<count($eveFields);$i++)

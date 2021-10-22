@@ -93,8 +93,9 @@ class SessionRoomController extends Controller
         return redirect()->to(route("eventee.sessionrooms.index",['id'=>$id]));
     }
 
-    public function destroy(sessionRooms $sessionroom){
+    public function destroy(Request $req){
+        $sessionroom = sessionRooms::findOrFail($req->id);
         $sessionroom->delete();
-        return redirect()->to(route("eventee.sessionrooms.index"));
+        return response()->json(['message'=>"Done"]);
     }
 }
