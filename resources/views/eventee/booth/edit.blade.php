@@ -31,7 +31,7 @@
                     @if(isset($booth->boothurl))
                     <img src="{{$booth->boothurl?assetUrl($booth->boothurl):''}}" style="min-width:100%" />
                     @else
-                    <video controls autoplay src="{{$booth->videoBg?assetUrl($booth->videoBg->url):''}}" repeat></video>
+                    <video controls class="full-width-videos" autoplay src="{{$booth->videoBg?assetUrl($booth->videoBg->url):''}}" repeat></video>
                     @endif
                 </div>
               <form action="{{ route("eventee.booth.update", [ "booth_id" => $booth->id,"id"=>$id ]) }}" method="post">
