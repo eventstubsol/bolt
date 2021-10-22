@@ -253,8 +253,10 @@
                         @yield('navigation')
                        
                          
-
-                                @if(Auth::user()->type == "admin")
+                                @if(Session::get('MangeEvent') == 1)
+                                @include("includes.navigation.manage")
+                                
+                                @elseif(Auth::user()->type == "admin")
                                 @include("includes.navigation.admin")
 
                                 @elseif(Auth::user()->type == "moderator")
@@ -268,8 +270,7 @@
                                 @elseif(Auth::user()->type == "teller")
                                 @include("includes.navigation.teller")
                                 
-                                @elseif(Session::get('MangeEvent') == 1)
-                                @include("includes.navigation.manage")
+                               
 
                                 @elseif(Auth::user()->type == "eventee")
                                 @include("includes.navigation.eventee")
