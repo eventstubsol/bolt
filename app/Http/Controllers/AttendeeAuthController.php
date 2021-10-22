@@ -46,7 +46,7 @@ class AttendeeAuthController extends Controller
     // method to attempt login
     public function login(Request $request,$subdomain)
     {
-        $event = Event::where("name",$subdomain)->first();
+        $event = Event::where("slug",$subdomain)->first();
         
         //     $response = Http::asForm()
         //     ->post(
@@ -145,7 +145,7 @@ class AttendeeAuthController extends Controller
         // catch(\Exception $e){
         //     Log::error($e->getMessage());
         // }
-        $event = Event::where("name",$subdomain)->first();
+        $event = Event::where("slug",$subdomain)->first();
 
         $form = Form::where('event_id',$event->id);
         if($form->count() > 0){
@@ -179,7 +179,7 @@ class AttendeeAuthController extends Controller
 
     public function saveRegistration(Request $request,$subdomain)
     {
-        $event = Event::where("name",$subdomain)->first();
+        $event = Event::where("slug",$subdomain)->first();
         $userField = $request->userfields;
         $data = $request->all();
         $data['event_id'] = $event->id;
