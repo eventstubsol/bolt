@@ -30,11 +30,12 @@ class PageController extends Controller
 
     public function store(Request $request,$id)
     {
+        // dd($request->all());
         $name = str_replace(" ","_",$request->name);
         $page = new Page([
             "name" => $name,
             'event_id'=>decrypt($id),
-            "bg_type" =>$request->bg_type,
+            // "bg_type" =>$request->bg_type,
         ]);
 
         $page->save();
@@ -194,9 +195,9 @@ class PageController extends Controller
                 "title"=>$page->name
             ]);
         }
+        $page->videoBg()->delete();
         if($request->has("video_url") && $request->video_url != null)
         {
-            $page->videoBg()->delete();
             $page->videoBg()->create([
                 "url"=>$request->video_url,
                 "title"=>$page->name
@@ -287,6 +288,6 @@ class PageController extends Controller
     {
         // dd($page);
         $page->delete();
-        return redirect()->to(route("page.index"));
+        return ["success"=>true];
     }
 }

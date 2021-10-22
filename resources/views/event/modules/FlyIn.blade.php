@@ -3,9 +3,7 @@
     <div class="video-containers positioned">
         <video class="full-width-videos" src="" id="flyin_view" autoplay muted></video>
     </div>
-    <!-- <div class="video-containers positioned " id="mobile_exterior_view">
-        <video class="full-width-videos" src="{{ assetUrl(getFieldId('exterior_view',$event_id)) }}" id="exterior_view" autoplay muted loop poster="{{ assetUrl(getFieldId('exterior_view_static',$event_id)) }}"></video>
-    </div> -->
+   
 </div>
 <script>
     function isMobile() {
