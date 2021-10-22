@@ -61,6 +61,7 @@ Manage License
                                 "id" => $license->id
                             ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title=""
                             data-original-title="Edit"><i class="fe-edit-2"></i></a>
+                            <a href="{{ route('event.Dashboard',['id'=>encrypt( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
                             </td>
                         </tr>
                         @endforeach

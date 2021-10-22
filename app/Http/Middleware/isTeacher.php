@@ -18,7 +18,7 @@ class isTeacher
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        if(Auth::check() && $user->type == 'eventee'){
+        if(Auth::check() && ($user->type == 'eventee' || $user->type == 'admin')){
             return $next($request);
         }
         abort(404);

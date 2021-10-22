@@ -28,7 +28,7 @@
                     @if(isset($sessionroom->background->url))
                     <img src="{{$sessionroom->background?assetUrl($sessionroom->background->url):''}}" style="min-width:100%" />
                     @else
-                    <video controls autoplay src="{{$sessionroom->videoBg?assetUrl($sessionroom->videoBg->url):''}}" repeat></video>
+                    <video class="full-width-videos" controls autoplay src="{{$sessionroom->videoBg?assetUrl($sessionroom->videoBg->url):''}}" repeat></video>
                     @endif
                 </div>
                 <form action="{{ route("eventee.sessionrooms.update", [ "sessionroom" => $sessionroom->id,'id'=>$id ]) }}" method="post">

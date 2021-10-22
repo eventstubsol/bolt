@@ -253,8 +253,10 @@
                         @yield('navigation')
                        
                          
-
-                                @if(Auth::user()->type == "admin")
+                                @if(Session::get('MangeEvent') == 1)
+                                @include("includes.navigation.manage")
+                                
+                                @elseif(Auth::user()->type == "admin")
                                 @include("includes.navigation.admin")
 
                                 @elseif(Auth::user()->type == "moderator")
@@ -268,8 +270,7 @@
                                 @elseif(Auth::user()->type == "teller")
                                 @include("includes.navigation.teller")
                                 
-                                @elseif(Session::get('MangeEvent') == 1)
-                                @include("includes.navigation.manage")
+                               
 
                                 @elseif(Auth::user()->type == "eventee")
                                 @include("includes.navigation.eventee")
@@ -309,7 +310,7 @@
                             <div class="page-title-box">
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="{{ route("home") }}">Home</a></li>
+                                        {{-- <li class="breadcrumb-item"><a href="{{ route("home") }}">Home</a></li> --}}
                                         @yield("breadcrumbs")
                                     </ol>
                                 </div>

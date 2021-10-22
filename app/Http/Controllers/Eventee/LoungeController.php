@@ -73,7 +73,7 @@ class LoungeController extends Controller
 
     public function updateLounge($subdomain)
     {
-        $event = Event::where("name",$subdomain)->first();
+        $event = Event::where("slug",$subdomain)->first();
         Participant::where("updated_at", '<=', Carbon::now()->subtract('30','seconds'))->delete();
 
         $tables =  NetworkingTable::where("event_id",$event->id)->get();
@@ -85,7 +85,7 @@ class LoungeController extends Controller
     }
 //     public function updateLounge($subdomain)
 //     {
-//         $event = Event::where("name",$subdomain)->first();
+//         $event = Event::where("slug",$subdomain)->first();
 //         Participant::where("updated_at", '<=', Carbon::now()->subtract('30','seconds'))->delete();
 
 //         $tables =  NetworkingTable::where("event_id",$event->id)->get();

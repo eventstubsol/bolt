@@ -26,6 +26,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 //     });
 // });
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
+// $url = '{subdomain}.localhost';
 Route::group(['domain' => $url], function () {
     Route::get('/', function ($subdomain) {
         // dd($subdomain);
@@ -72,17 +73,19 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 	Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
     Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
     Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
-    Route::get('/Form/preview/{id}',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
+    Route::post('/Form/preview/',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
     Route::get('/Form/edit/{id}/{form_id}',"Eventee\FormController@edit")->name('eventee.form.edit');
-    Route::post('/Form/SaveField/{id}',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
+    Route::post('/Form/SaveField',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
+    Route::post('Form/CustomFields',"Eventee\FormController@CustomField")->name('eventee.form.custom');
+    Route::post('Form/SaveCustomFields',"Eventee\FormController@CustomFieldSave")->name('eventee.form.customSave');
+    Route::post('/Form/Delete',"Eventee\FormController@Destroy")->name('form.destroy');
 
-
-    Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
-    Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
-    Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
-    Route::get('/Form/preview/{id}',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
-    Route::get('/Form/addField/{id}',"Eventee\FormController@AddField")->name('eventee.form.addfield');
-    Route::post('/Form/SaveField/{id}',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
+    // Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
+    // Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
+    // Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
+    // Route::get('/Form/preview/{id}',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
+    // Route::get('/Form/addField/{id}',"Eventee\FormController@AddField")->name('eventee.form.addfield');
+    // Route::post('/Form/SaveField/{id}',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
 
 
     Route::resources([
@@ -102,7 +105,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('/sessionroom/event/{sessionroom}/{id}/edit',"Eventee\SessionRoomController@edit")->name('eventee.sessionrooms.edit');
     Route::put('/sessionroom/event/{sessionroom}/{id}/update',"Eventee\SessionRoomController@update")->name('eventee.sessionrooms.update');
 
-    Route::delete('sessionroom/event/delete',"Eventee\PageController@destroy")->name('eventee.sessionrooms.destroy');
+    Route::delete('sessionroom/event/delete',"Eventee\SessionRoomController@destroy")->name('eventee.sessionrooms.destroy');
     
     Route::get("/session/event/{id}","Eventee\SessionController@index")->name('eventee.sessions.index');
     Route::get("/session/event/create/{id}","Eventee\SessionController@create")->name('eventee.sessions.create'); 
