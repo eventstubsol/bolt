@@ -4,7 +4,7 @@
         <video class="full-width-videos" src="{{ assetUrl(getFieldId('entering_video',$event_id)) }}" id="entering_view" autoplay muted></video>
     </div>
     <div class="video-containers positioned " id="mobile_exterior_view">
-        <video class="full-width-videos" src="{{ assetUrl(getFieldId('exterior_view',$event_id)) }}" id="exterior_view" autoplay muted loop poster="{{ assetUrl(getFieldId('exterior_view_static',$event_id)) }}"></video>
+        <video class="full-width-videos" src="{{ assetUrl(getFieldId('exterior_view_video',$event_id)) }}" id="exterior_view" autoplay muted loop poster="{{ assetUrl(getFieldId('exterior_view_image',$event_id)) }}"></video>
     </div>
 </div>
 <script>

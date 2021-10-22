@@ -52,7 +52,7 @@ class BoothController extends Controller
           $booth = new Booth;
           if($request->has("name")){
             $booth->name = $request->get("name");
-            $booth->bg_type = $request->bg_type;
+            // $booth->bg_type = $request->bg_type;
           }
           else{
               return false;
