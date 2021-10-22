@@ -45,7 +45,7 @@ Edit Page
                     @if(isset($page->images[0]))
                         <img src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
                     @else
-                        <video controls autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat></video>
+                        <video class="full-width-videos" controls autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat></video>
                     @endif
                         @foreach($page->links as $ids => $link)
                             <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
