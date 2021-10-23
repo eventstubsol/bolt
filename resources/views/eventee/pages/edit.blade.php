@@ -42,11 +42,11 @@ Edit Page
             <a href="/event#page/{{$page->name}}" target="_blank">here</a> --}}
             <div id="cont" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
-                    @if(isset($page->images[0]))
-                        <img src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
-                    @else
-                        <video class="full-width-videos" controls autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat></video>
-                    @endif
+                        @if($page->videoBg)
+                            <video loop autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat style="min-width:100%; width:100%;"></video>
+                        @elseif(isset($page->images[0]))
+                            <img data-test="{{$page->videoBg}}" src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
+                        @endif
                         @foreach($page->links as $ids => $link)
                             <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
                         @endforeach
@@ -248,19 +248,16 @@ Edit Page
                             @endif
                         </select>
                     </div>
-                    @if($pag->bg_type == 'image' )
                     <div class="image-uploader" id="imgBg">
                         <label class="mb-3" for="images">Background Image</label>
                         <input type="hidden" name="url" class="upload_input" value="{{$page->images?$page->images[0]->url:''}}">
                         <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{$page->images?assetUrl($page->images[0]->url):''}}" />
                     </div>
-                    @else
                     <div class="image-uploader" id="vidBg">
-                        <label class="mb-3" for="images">Background Video</label>
+                        <label class="mb-3" for="images">Background Video (Optional)</label>
                         <input type="hidden" name="video_url" class="upload_input" value="{{$page->videoBg?$page->videoBg->url:''}}">
                         <input type="file" data-name="video_url" data-plugins="dropify" data-type="video" data-default-file="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" />
                     </div>
-                    @endif
                     
                     {{-- <div class="image-uploader" id="imgBg" style="display: none">
                         <label class="mb-3" for="images">Background Image</label>

@@ -59,10 +59,11 @@
             $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.pages.create",$id) }}">Create New</a>')
             $("body").on("click",".delete",function(e){
                     t = $(this);
-                    let deleteUrl = '{{route("page.destroy", [ "page" => ":id" ])}}';
+                    let deleteUrl = '{{route("eventee.pages.destroy", [ "page" => ":id" ])}}';
                     let id = t.data("id");
                     confirmDelete("Are you sure you want to DELETE Page?","Confirm Page Delete").then(confirmation=>{
                         if(confirmation){
+                            console.log(deleteUrl.replace(":id", id));
                             $.ajax({
                                 url:deleteUrl.replace(":id", id),
                                 data: {
