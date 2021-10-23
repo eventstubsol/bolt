@@ -176,6 +176,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'company_website_link',
         'isCometChatAccountExist',
 		'event_id',
+        'subtype'
     ];
 
     /**
@@ -199,6 +200,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function points()
     {
         return $this->hasMany("\App\Points", "to");
+    }
+    public function subtype()
+    {
+        return $this->belongsTo("\App\UserSubtype", "id","subtype");
     }
 
     public function getFullName()
