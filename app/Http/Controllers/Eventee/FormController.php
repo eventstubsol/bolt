@@ -15,7 +15,7 @@ class FormController extends Controller
 {
     //
     public function index($id){
-        $forms = Form::where('event_id',decrypt($id))->paginate(5);
+        $forms = Form::where('event_id',$id)->paginate(5);
         return view('eventee.forms.index',compact('id','forms'));
     }
 
@@ -95,7 +95,7 @@ class FormController extends Controller
         $form_fields = FormField::where('form_id',$form->id)->get();
         $structsDefault = FormStruct::Where('event_id',0)
         ->get();
-        $structEvent = FormStruct::Where('event_id',decrypt($id))
+        $structEvent = FormStruct::Where('event_id',$id)
         ->get();
         return view('eventee.forms.edit',compact('id','form_id','form','form_fields','structsDefault','structEvent'));
     }

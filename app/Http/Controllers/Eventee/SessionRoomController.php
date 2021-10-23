@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 class SessionRoomController extends Controller
 {
     public function index($id){
-        $sessionrooms = sessionRooms::where('event_id',decrypt($id))->get();
+        $sessionrooms = sessionRooms::where('event_id',$id)->get();
         // dd($sessionrooms);
         return view("eventee.sessionrooms.list")
             ->with(compact("sessionrooms","id"));
@@ -31,7 +31,7 @@ class SessionRoomController extends Controller
             $room = new sessionRooms([
                 "name"=>$name,
                 // "master_room"=>isset($request->master_room)?$request->master_room:"",
-                "event_id"=>decrypt($id),
+                "event_id"=>$id,
                 // "bg_type"=>$request->bg_type,
             ]);
             $room->save();

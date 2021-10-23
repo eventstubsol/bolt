@@ -10,7 +10,7 @@ use App\LiveAnswer;
 class QnaController extends Controller
 {
     public function Index($id){
-        $questions = LiveQuestion::where('event_id',decrypt($id))->orderBy('id','desc')->paginate(8);
+        $questions = LiveQuestion::where('event_id',$id)->orderBy('id','desc')->paginate(8);
         return view('admin_qna.qna',compact('questions','id'));
     }
 

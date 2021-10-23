@@ -25,7 +25,7 @@ class UserController extends Controller
     public function index($id)
     {
 
-        $users = User::orderBy("created_at", "DESC")->where('event_id', decrypt($id))->get();
+        $users = User::orderBy("created_at", "DESC")->where('event_id', ($id))->get();
         // return $users;
         return view("eventee.users.list", compact("id", "users"));
     }
@@ -54,9 +54,9 @@ class UserController extends Controller
             // $userData["password"] = Hash::make($userData["password"]);
             // $userData["isCometChatAccountExist"] = TRUE;
             
-            $userCount = User::where('event_id', decrypt($id))->count();
+            $userCount = User::where('event_id', ($id))->count();
             if ($userCount < 5) {
-                $userEmail = User::where('email',$request->email)->where('event_id',decrypt($id))->count();
+                $userEmail = User::where('email',$request->email)->where('event_id',$id)->count();
                 if($userEmail > 0){
                     flash("Same Email ID Already Exist For The Current Event")->error();
                     return redirect()->back();
@@ -64,7 +64,7 @@ class UserController extends Controller
                 $user = new User;
                 $user->name = $request->name;
                 $user->last_name = $request->last_name;
-                $user->event_id = decrypt($id);
+                $user->event_id = $id;
                 $user->type = $request->type;
                 $user->password = password_hash($request->password, PASSWORD_DEFAULT);
                 $user->email = $request->email;

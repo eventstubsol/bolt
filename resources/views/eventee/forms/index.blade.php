@@ -34,7 +34,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if(App\Form::where('event_id',decrypt($id))->count() > 0)
+                            @if(App\Form::where('event_id',$id)->count() > 0)
                             @foreach($forms as $key => $form)
                             <tr>
                                 <td width="10%">{{ $key+1 }}</td>

@@ -17,8 +17,8 @@ class PageController extends Controller
 {
     public function index($id)
     {
-        $pages = Page::where('event_id',decrypt($id))->with((['images','links']))->get();
-        // $pages = Event::where('id',decrypt($id))->with(["pages"])->get()->pluck('product');
+        $pages = Page::where('event_id',$id)->with((['images','links']))->get();
+        // $pages = Event::where('id',$id)->with(["pages"])->get()->pluck('product');
         // $pages->load(['images','links']);
         return view("eventee.pages.list")->with(compact("pages","id"));
     }
@@ -34,7 +34,7 @@ class PageController extends Controller
         $name = str_replace(" ","_",$request->name);
         $page = new Page([
             "name" => $name,
-            'event_id'=>decrypt($id),
+            'event_id'=>$id,
             // "bg_type" =>$request->bg_type,
         ]);
 
@@ -65,13 +65,13 @@ class PageController extends Controller
         // dd($id);
 
 
-        $pages = Page::where('event_id',decrypt($id))->get();
+        $pages = Page::where('event_id',$id)->get();
 
         $booths = Booth::all();
 
         $session_rooms = sessionRooms::all();
 
-        $pag =  Page::where('event_id',decrypt($id))->first();
+        $pag =  Page::where('event_id',$id)->first();
 
         $page->load(["images","links.flyin","videoBg"]);
         // return $page;
@@ -79,14 +79,14 @@ class PageController extends Controller
     }
 
     public function lobby($id){
-        $ids = decrypt($id);
+        $ids = $id;
         // dd($id);
 
         $pages = Page::where('event_id',$ids)->get();
 
         $booths = Booth::where('event_id',$ids)->get();
         
-        $pag =  Page::where('event_id',decrypt($id))->first();
+        $pag =  Page::where('event_id',$id)->first();
         //todo link session rooms to event_id 
 
         $session_rooms = sessionRooms::where("event_id",$ids)->get();
@@ -111,7 +111,7 @@ class PageController extends Controller
     public function update(Request $request, Page $page,$id){
         // dd($request->all());
         $request->validate(["name","url"]);
-        $pag =  Page::where('event_id',decrypt($id))->first();
+        $pag =  Page::where('event_id',$id)->first();
         $event_id = $id;
         $page->name = $request->name;
         $page->save();
@@ -121,7 +121,7 @@ class PageController extends Controller
             foreach($request->treasures as $index => $treasure_item){
                 $page->treasures()->create([
                     "url"=>$treasure_item,
-                    "event_id"=> decrypt($id),
+                    "event_id"=> $id,
                     "top"=> $request->ttop[$index],
                     "left"=> $request->tleft[$index],
                     "width"=> $request->twidth[$index],
@@ -217,14 +217,14 @@ class PageController extends Controller
     public function Lobbyupdate(Request $request,$id){
         // $request->validate(["name","url"]);
         $event_id = $id;
-        Link::where(["page"=>"lobby_".decrypt($id)])->delete();
-        Treasure::where(["owner"=>"lobby_".decrypt($id)])->delete();
+        Link::where(["page"=>"lobby_".$id])->delete();
+        Treasure::where(["owner"=>"lobby_".$id])->delete();
         if($request->has("treasures")){
             foreach($request->treasures as $index => $treasure_item){
                 Treasure::create([
-                    "owner"=>"lobby_".decrypt($id),
+                    "owner"=>"lobby_".$id,
                     "url"=>$treasure_item,
-                    "event_id"=> decrypt($id),
+                    "event_id"=> $id,
                     "top"=> $request->ttop[$index],
                     "left"=> $request->tleft[$index],
                     "width"=> $request->twidth[$index],

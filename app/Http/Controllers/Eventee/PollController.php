@@ -16,7 +16,7 @@ class PollController extends Controller
     //
     public function index($id){
         $poll  = Poll::where('id', '039f3918-e5b1-4189-82b1-3d3aa737ff7f')->first();
-        $questions = Question::where('event_id', decrypt($id))->orderBy('status', 'DESC')->paginate(8);
+        $questions = Question::where('event_id', $id)->orderBy('status', 'DESC')->paginate(8);
         $answers = [];
         return view('eventee.poll.question', compact('poll', 'questions','id'));
         // return $questions;
@@ -80,7 +80,7 @@ class PollController extends Controller
             $question->event_id = $request->wc_event_id;
             $question->sroom_id = $request->sroom_id;
             if ($question->save()) {
-                \DB::UPDATE("UPDATE questions SET event_id = ? Where id = ?",[decrypt($id),$question->id]);
+                \DB::UPDATE("UPDATE questions SET event_id = ? Where id = ?",[$id,$question->id]);
                 flash('Poll Added Successfully')->success();
                 return redirect()->back();
             } else {
@@ -103,13 +103,13 @@ class PollController extends Controller
             $question = new Question;
             $question->poll_id = $poll_id;
             $question->type = $type;
-            // $question->event_id = decrypt($id);
+            // $question->event_id = $id;
             $question->question = $questions;
             $question->rate = $rating;
             $question->sroom_id = $request->sroom_id;
             $question->event_id = $request->rate_event_id;
             if ($question->save()) {
-                \DB::UPDATE("UPDATE questions SET event_id = ? Where id = ?",[decrypt($id),$question->id]);
+                \DB::UPDATE("UPDATE questions SET event_id = ? Where id = ?",[$id,$question->id]);
                 flash('Poll Added Successfully')->success();
                 return redirect()->back();
             }
@@ -139,7 +139,7 @@ class PollController extends Controller
             $question->sroom_id = request()->sroom_id;
             // return "error";
             if ($question->save()) {
-                \DB::UPDATE("UPDATE questions SET event_id = ? Where id = ?",[decrypt($id),$question->id]);
+                \DB::UPDATE("UPDATE questions SET event_id = ? Where id = ?",[$id,$question->id]);
                 for ($i = 0; $i < count($answer); $i++) {
                     $answers = new Answer;
                     $answers->question_id = $question->id;

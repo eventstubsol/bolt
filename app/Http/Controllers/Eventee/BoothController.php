@@ -28,7 +28,7 @@ class BoothController extends Controller
     //
     public function index($id)
   {
-    $booths = Booth::with(["room", "admins"])->where('event_id',decrypt($id))->get(["id", "name", "url","type","boothurl","room_id"]);
+    $booths = Booth::with(["room", "admins"])->where('event_id',$id)->get(["id", "name", "url","type","boothurl","room_id"]);
 
     return view("eventee.booth.list")
       ->with(compact(["booths","id"]));
@@ -38,8 +38,8 @@ class BoothController extends Controller
   //booth create form
   public function create($id)
   {
-    $rooms = Room::where('event_id',decrypt($id))->get()->load("booths");
-    $users = User::where("type", "exhibiter")->where('event_id',decrypt($id))->get();
+    $rooms = Room::where('event_id',$id)->get()->load("booths");
+    $users = User::where("type", "exhibiter")->where('event_id',$id)->get();
     return view("eventee.booth.create")
       ->with(compact(["rooms", "users","id"]));
   }
@@ -61,7 +61,7 @@ class BoothController extends Controller
             $booth->boothurl = $request->get("boothurl");
           }
           
-          $booth->event_id = decrypt($id);
+          $booth->event_id = $id;
           if($request->has("calendly_link")){
             $booth->calendly_link=$request->calendly_link;
           }
@@ -113,10 +113,10 @@ class BoothController extends Controller
   //Show edit form
   public function edit($id,$booth_id)
   {
-    $rooms = Room::where('event_id',decrypt($id))->get();
+    $rooms = Room::where('event_id',$id)->get();
     $booth = Booth::findOrFail($booth_id);
     $booth->load(["admins", "room"]);
-    $users = User::where("type", "exhibiter")->where('event_id',decrypt($id))->get();
+    $users = User::where("type", "exhibiter")->where('event_id',$id)->get();
     return view("eventee.booth.edit")
       ->with(compact(["booth", "rooms", "users","id"]));
   }

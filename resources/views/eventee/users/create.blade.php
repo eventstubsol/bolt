@@ -20,7 +20,7 @@ Create Users
             <div class="card-body">
                 <form action="{{ route("eventee.user.store",$id) }}" method="post" id="userForm">
                     @csrf
-                    <input type="hidden" name="event_id" value="{{ decrypt($id) }}">
+                    <input type="hidden" name="event_id" value="{{ ($id) }}">
                     <div class="form-group mb-3">
                         <label for="name">Name</label>
                         <input autofocus required value="{{ old('name') }}" type="text" id="name" name="name"

@@ -444,7 +444,7 @@ function getRoomsEventee($id){
 function getAllFields($id = null)
 {
     if($id){
-        return Content::where("event_id",decrypt($id))->get();
+        return Content::where("event_id",($id))->get();
     }
     return ContentMaster::all();
 }
@@ -461,8 +461,14 @@ function getFieldId($name,$id, $default = "")
         return $content->first()->value;
     }
     else{
-        $content = Content::where("name", $name)->first();
-        return $content->value ? $content->value : $default;
+        $content = Content::where("name", $name);
+        if($content->count() > 0){
+            return $content->first()->value;
+        }
+        else{
+            return null;   
+        }
+       
     }
    
 }

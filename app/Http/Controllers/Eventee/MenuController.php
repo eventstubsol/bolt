@@ -22,7 +22,7 @@ class MenuController extends Controller
     public function index($id)
     {
         //
-        $menus = Menu::where('parent_id', '0')->where('type', 'nav')->where('event_id',decrypt($id))->orderby('position', 'asc')->get();
+        $menus = Menu::where('parent_id', '0')->where('type', 'nav')->where('event_id',$id)->orderby('position', 'asc')->get();
         return view('eventee.menu.menu', compact('menus','id'));
     }
 
@@ -38,7 +38,7 @@ class MenuController extends Controller
     }
     public function createNav(Request $request,$id)
     {
-        $event_id = decrypt($id);
+        $event_id = $id;
         $pages = Page::where("event_id",$event_id)->get();
 
         $booths = Booth::where("event_id",$event_id)->get();
@@ -48,7 +48,7 @@ class MenuController extends Controller
     }
     public function createFooter(Request $request,$id)
     {
-        $event_id = decrypt($id);
+        $event_id = $id;
         $pages = Page::where("event_id",$event_id)->get();
 
         $booths = Booth::where("event_id",$event_id)->get();
@@ -115,7 +115,7 @@ class MenuController extends Controller
         $menu = new Menu;
         $menu->name = $request->name;
         $menu->link = $to;
-        $menu->event_id = decrypt($id);
+        $menu->event_id = $id;
         $menu->type = "nav";
         $menu->parent_id = 0;
         $menu->position = $positionArr[0]->position ? $positionArr[0]->position : 0 ;
@@ -162,7 +162,7 @@ class MenuController extends Controller
         $menu = new Menu;
         $menu->name = $request->name;
         $menu->link = $to;
-        $menu->event_id = decrypt($id);
+        $menu->event_id = $id;
         $menu->type = "footer";
         $menu->position = $positionArr[0]->position ? $positionArr[0]->position : 0 ;
         if($request->has("isChild") && $request->isChild){
@@ -200,7 +200,7 @@ class MenuController extends Controller
     public function editNav(Menu $menu,$id)
     {
         // dd($menu);
-        $event_id = decrypt($id);
+        $event_id = $id;
         $pages = Page::where("event_id",$event_id)->get();
 
         $booths = Booth::where("event_id",$event_id)->get();
@@ -211,7 +211,7 @@ class MenuController extends Controller
     public function editFooter(Menu $menu,$id)
     {
         // dd($menu);
-        $event_id = decrypt($id);
+        $event_id = $id;
         $pages = Page::where("event_id",$event_id)->get();
 
         $booths = Booth::where("event_id",$event_id)->get();
@@ -399,7 +399,7 @@ class MenuController extends Controller
                 $menu = new Menu;
                 $menu->name = $request->name;
                 $menu->link = $request->link;
-                $menu->event_id = decrypt($id);
+                $menu->event_id = $id;
                 $menu->type = $request->type;
                 $menu->parent_id = $request->parent_id;
                 $menu->position = $newPosition;
@@ -419,7 +419,7 @@ class MenuController extends Controller
                 $menu->name = $request->name;
                 $menu->link = $request->link;
                 $menu->type = $request->type;
-                $menu->event_id = decrypt($id);
+                $menu->event_id = $id;
                 $menu->parent_id = 0;
                 $menu->position = $newPosition;
                 $menu->sub = 0;
@@ -436,7 +436,7 @@ class MenuController extends Controller
                 $menu->link = $request->link;
                 $menu->type = $request->type;
                 $menu->parent_id = 0;
-                $menu->event_id = decrypt($id);
+                $menu->event_id = $id;
                 $menu->position = $newPosition;
                 $menu->sub = 1;
                 if($menu->save()){

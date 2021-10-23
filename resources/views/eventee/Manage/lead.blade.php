@@ -21,11 +21,11 @@
     <script>
         function showLeaderboard(inLoop = false){
             let list = $("#list-of-people");
-            let id = "{{ decrypt($id) }}";
+            let id = "{{ ($id) }}";
             $.ajax({
-                url: '{{ route("eventee.leaderboard") }}',
+                url: '{{ route("leaderboard") }}',
                 method: "POST",
-                data: { _token: '{{ csrf_token() }}',id:"{{ decrypt($id) }}" },
+                data: { _token: '{{ csrf_token() }}',id:"{{ ($id) }}" },
                 success: function(leaderboard){
                    
                     if(leaderboard.length > 0){

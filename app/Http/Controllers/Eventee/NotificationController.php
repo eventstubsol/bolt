@@ -44,11 +44,11 @@ class NotificationController extends Controller
                 "url" => $request->post("url", NULL),
                 "message" => $request->post("message"),
                 "roles" => implode(", ", $request->post("roles")),
-                "event_id" => decrypt($id),
+                "event_id" => $id,
             ]);
  
              $notifications = PushNotification::orderBy("created_at")->get();
-             return view("notification.list")->with(compact("notifications"));
+             return view("eventee.notification.index")->with(compact("notifications","id"));
          } else {
              return $resp->body();
          }

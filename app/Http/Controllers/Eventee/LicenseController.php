@@ -14,7 +14,7 @@ class LicenseController extends Controller
 {
     //
     public function index($id){
-        $licenses = License::where('event_id',decrypt($id))->paginate(5);
+        $licenses = License::where('event_id',$id)->paginate(5);
         return view('eventee.license.index',compact('id','licenses'));
     }
 
@@ -26,7 +26,7 @@ class LicenseController extends Controller
         $license = new License;
         $license->type = 'User License';
         $license->message = $req->message;
-        $license->event_id = decrypt($id);
+        $license->event_id = $id;
         $license->issue_date = date('Y-m-d');
         if($license->save()){
             flash("Message Sent Successfully")->success();

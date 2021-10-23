@@ -9,7 +9,7 @@ use App\Announcement;
 class AnnounceController extends Controller
 {
     public function index($id){
-        $announcements = Announcement::where('event_id',decrypt($id))->orderBy('id','desc')->paginate(5);
+        $announcements = Announcement::where('event_id',$id)->orderBy('id','desc')->paginate(5);
         return view('eventee.announce.announce',compact('announcements','id'));
     }
 

@@ -62,7 +62,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('event.Edit',['id'=>encrypt( $event->id )]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('event.Dashboard',['id'=>encrypt( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
+                                    <a href="{{ route('event.Dashboard',['id'=>( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
                                     <button onclick="deleteEvent(this)" data-id="{{ $event->id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
