@@ -41,7 +41,7 @@ Edit Lobby Links
             <a href="/event#lobby" target="_blank">here</a>
             <div id="cont" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
-                    <img src="{{ assetUrl(getField('main_lobby_video_static')) }}" style="min-width:100%" />
+                    <img src="{{ assetUrl(getField('main_lobby_image')) }}" style="min-width:100%" />
                     @foreach($page->links as $id => $link)
                         <div class="im-{{$id}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
                     @endforeach
@@ -197,8 +197,8 @@ Edit Lobby Links
                     </div>
                     <div class="image-uploader">
                         <label class="mb-3" for="images">Background Image</label>
-                        <input type="hidden" name="url" class="upload_input" value="{{ getField('main_lobby_video_static') }}">
-                        <input disabled type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{ assetUrl(getField('main_lobby_video_static')) }}" />
+                        <input type="hidden" name="url" class="upload_input" value="{{ getField('main_lobby_image') }}">
+                        <input disabled type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{ assetUrl(getField('main_lobby_image')) }}" />
                     </div>
 
                     <div>

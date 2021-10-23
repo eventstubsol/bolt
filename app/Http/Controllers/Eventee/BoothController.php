@@ -52,7 +52,7 @@ class BoothController extends Controller
           $booth = new Booth;
           if($request->has("name")){
             $booth->name = $request->get("name");
-            $booth->bg_type = $request->bg_type;
+            // $booth->bg_type = $request->bg_type;
           }
           else{
               return false;
@@ -123,6 +123,7 @@ class BoothController extends Controller
 
   //Update booth Instance
   public function update(Request $request,$id,  $booth){
+    // dd($request->all());
     $request->validate(['name' => 'required',
     'userids' => 'required',
   ]);
@@ -131,13 +132,10 @@ class BoothController extends Controller
         "name" => $request->get("name"),
         "boothurl"=>$request->get("boothurl"),
         "calendly_link"=>$request->get("calendly_link"),
+        "vidbg_url" => $request->get("video_url")
         
       ]);
-      if($request->has("video_url")  && $request->video_url != null){
-        
-        $booth->vidbg_url = $request->video_url;
-        $booth->save();
-    }
+      $booth->save();
       // update group
       Http::withHeaders([
           "apiKey" => env("COMET_CHAT_API_KEY"),
@@ -223,6 +221,7 @@ class BoothController extends Controller
     $links = Link::where(["page"=>$booth->id])->with(["background"])->get();
   
       $booth->load(["images", "videos", "resources"]);
+      // dd("test");
     return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms"));
   }
 
@@ -267,6 +266,7 @@ class BoothController extends Controller
                     $to = $request->custom_page[$id];
                     break;
             }
+            // dd(isset($request->rotationtype[$id])?$request->rotationtype[$id]:'');
             $link  =Link::create([
               "page"=>$booth->id,
               "name"=> $linkname,
@@ -280,6 +280,7 @@ class BoothController extends Controller
               "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
               "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
           ]);
+          // dd($link);
           // dd($request->bgimages);
           if($request->has("bgimages") && isset($request->bgimages[$id]) ){
             if(count($request->bgimages[$id])>0 ){

@@ -53,7 +53,8 @@ class EventController extends Controller
             "calendly_link",
             "url",
             "type",
-            "boothurl"
+            "boothurl",
+            "vidbg_url"
         ]);
         $tables = NetworkingTable::where("event_id",$event_id)->get();
         // dd($tables);
@@ -90,7 +91,7 @@ class EventController extends Controller
         foreach ($user->subscriptions as $subscription) {
             $subscriptions[] = $subscription->session_id;
         }
-        // dd($pages);
+        // dd($booths);
         // dd($schedule);
         // $event_id = $id;
         return view("event.index")
