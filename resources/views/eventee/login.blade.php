@@ -28,7 +28,7 @@
         <label for="emailaddress">Email address</label>
         <br>
         <div class="input-group input-group-merge mb-3">
-            <input value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" type="email" id="emailaddress" name="email" placeholder="Enter your email" />
+            <input value="{{ old('email') }}" class="field form-control @error('email') is-invalid @enderror" type="email" id="emailaddress" name="email" placeholder="Enter your email" />
             @error('email')
                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
             @enderror
@@ -38,7 +38,7 @@
     <div class="input-group">
         <label for="password">Password</label>
         <div class="input-group input-group-merge">
-            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter your password" />
+            <input type="password" name="password" id="password" class="field form-control @error('password') is-invalid @enderror" placeholder="Enter your password" />
             <div class="input-group-append" data-password="false">
                 <div class="input-group-text">
                     <span class="password-eye"></span>
@@ -51,7 +51,7 @@
     </div>
     <br>
 
-    <button class="theme-btn btn primary-filled" type="submit">Login</button>
+    <button class="log-btn theme-btn btn primary-filled" type="submit">Login</button>
 
 
     
