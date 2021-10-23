@@ -36,7 +36,7 @@ if(Auth::user()){
     @csrf
     <div class="">
         <label for="{{ $login["field"] }}">{{ print_r($login["label"]) }}</label>
-        <input value="{{ old($login["field"]) ?? $email }}" class="form-control @error($login["field"]) is-invalid @enderror"
+        <input value="{{ old($login["field"]) ?? $email }}" class="field form-control @error($login["field"]) is-invalid @enderror"
             type="{{ $login["field"] == 'email' ? 'email' : 'text' }}" id="" name="{{ $login["field"] }}"
             placeholder="{{ $login["label"] }}" />
         @error($login["field"])

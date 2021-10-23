@@ -1,0 +1,15 @@
+.field:focus{
+    border-bottom: 3px solid #42DA12;
+    
+    
+}
+.field{
+    padding: 13px 12px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.log-btn:hover{
+    background-color: #264b1a;
+    border-bottom: 3px solid #21b8cc;
+    padding: 12px 24px;
+}

@@ -10,7 +10,7 @@
     <!-- App css -->
     <link href="{{asset("assets/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet">
     <link href="{{asset("assets/css/app.min.css")}}" rel="stylesheet" type="text/css" id="app-default-stylesheet">
-
+    <link rel="stylesheet" href="{{ asset("assets/css/log.css") }}">
     {{-- <link href="{{asset("assets/css/bootstrap-dark.min.css")}}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" disabled="disabled"> --}}
     {{-- <link href="{{asset("assets/css/app-dark.min.css")}}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" disabled="disabled"> --}}
     <link href="{{ asset('assets/css/auth.css') }}?x=123" rel="stylesheet" type="text/css" />

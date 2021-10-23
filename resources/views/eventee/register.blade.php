@@ -14,7 +14,7 @@
         <div class="form-group row input-group">
             <div class="form-control">
                 <label for="name">First Name</label>
-                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="first-name" placeholder="First Name" autofocus>
+                <input id="name" type="text" class="field form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="first-name" placeholder="First Name" autofocus>
                 @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -24,13 +24,13 @@
 
             <div class="form-control">
                 <label for="last_name">Last Name</label>
-                <input id="last_name" type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" required autocomplete="family-name" placeholder="Last Name">
+                <input id="last_name" type="text" class="field form-control" name="last_name" value="{{ old('last_name') }}" required autocomplete="family-name" placeholder="Last Name">
             </div>
         </div>
         <div class="form-group row input-group">
             <div class="form-control">
                 <label for="email" >Corporate E-Mail Address</label>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Address" >
+                <input id="email" type="email" class="field form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Address" >
 
                 @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -41,22 +41,22 @@
 
             <div class="form-control">
                 <label for="phone" >Phone Number</label>
-                <input id="phone" type="tel" class="form-control " name="phone" value="{{ old('phone') }}" autocomplete="tel" placeholder="Phone Number">
+                <input id="phone" type="tel" class="field form-control " name="phone" value="{{ old('phone') }}" autocomplete="tel" placeholder="Phone Number">
             </div>
             <div class="form-control">
                 <label for="password" >Password</label>
-                <input id="password" type="password" class="form-control " name="password" value="{{ old('password') }}" placeholder="Password">
+                <input id="password" type="password" class="field form-control " name="password" value="{{ old('password') }}" placeholder="Password">
             </div>
         </div>
 
         <div class="form-group row input-group">
             <div class="form-control">
                 <label for="job_title" >Job Title</label>
-                <input id="job_title" type="text" class="form-control " name="job_title" value="{{ old('job_title') }}" placeholder="Job Title">
+                <input id="job_title" type="text" class="field form-control " name="job_title" value="{{ old('job_title') }}" placeholder="Job Title">
             </div>
         </div>
 
-        <div class="form-group row input-group">
+        <div class="field form-group row input-group">
             <div class="form-control">
                 <label for="country" >Country</label>
                 <select id="country" class="form-control" name="country">
@@ -309,7 +309,7 @@
                 </select>
             </div>
 
-            <div class="form-control">
+            <div class="field form-control">
                 <label for="industry">Industry</label>
                 <select id="industry" class="form-control" name="industry">
                     <option value="">Choose industry</option>
@@ -330,7 +330,7 @@
 
         <div class="input-group form-group">
             <div class="col-md-12 mb-2">
-                <button type="submit" class="theme-btn btn primary-filled">{{ __('Register') }}</button>
+                <button type="submit" class="log-btn theme-btn btn primary-filled">{{ __('Register') }}</button>
             </div>
         </div>
     </form>
