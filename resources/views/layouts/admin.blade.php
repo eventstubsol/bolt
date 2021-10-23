@@ -252,28 +252,26 @@
                     <ul id="side-menu">
                         @yield('navigation')
                        
-                                @if(Session::get('MangeEvent') == 1)
-                                    @if(isset($id))
+                                @if(Session::get('MangeEvent') == 1 || isset($id))
                                         @include("includes.navigation.manage")
-                                    @endif
                                 @elseif(Auth::user()->type == "admin")
-                                @include("includes.navigation.admin")
+                                    @include("includes.navigation.admin")
 
                                 @elseif(Auth::user()->type == "moderator")
-                                @include("includes.navigation.moderator")
+                                    @include("includes.navigation.moderator")
                                 
 
                                 @elseif(Auth::user()->type == "exhibiter")
-                                @include("includes.navigation.exhibitor")
+                                    @include("includes.navigation.exhibitor")
                                
 
                                 @elseif(Auth::user()->type == "teller")
-                                @include("includes.navigation.teller")
+                                    @include("includes.navigation.teller")
                                 
                                
 
                                 @elseif(Auth::user()->type == "eventee")
-                                @include("includes.navigation.eventee")
+                                    @include("includes.navigation.eventee")
 
                                 
                                 @endif
