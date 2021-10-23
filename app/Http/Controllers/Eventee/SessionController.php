@@ -25,7 +25,7 @@ class SessionController extends Controller
     public function index($id)
     {
         // $rooms = sessionRooms::all();
-        $sessions = EventSession::where('event_id',decrypt($id))->get()->load(["parentroom"]);
+        $sessions = EventSession::where('event_id',$id)->get()->load(["parentroom"]);
         // $sessions.map($session =>{$session->isLive = isSessionActive($session))
         foreach ($sessions as $session) {
             $session->isLive =  isSessionActive($session);
@@ -41,7 +41,7 @@ class SessionController extends Controller
     }
     public function create($id)
     {
-        $rooms = sessionRooms::where('event_id',decrypt($id))->get();
+        $rooms = sessionRooms::where('event_id',$id)->get();
 
         $speakers = User::where("type", USER_TYPE_SPEAKER)->get([
             "id",
@@ -72,7 +72,7 @@ class SessionController extends Controller
         }
         $session->room = $room->name;
         $session->master_room = $room->master_room;
-        $session->event_id = decrypt($id);
+        $session->event_id = $id;
         $session->save();
 
         //Old Resoiu

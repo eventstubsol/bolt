@@ -16,7 +16,7 @@ class LoungeController extends Controller
 {
     public function index($id)
     {
-        $tables = NetworkingTable::where("event_id",decrypt($id))->get();
+        $tables = NetworkingTable::where("event_id",$id)->get();
         return view("eventee.lounge.list")->with(compact(["tables","id"]));
     }
     public function create($id)
@@ -30,7 +30,7 @@ class LoungeController extends Controller
             "name"=>$request->name,
             "seats"=>$request->seats,
             "meeting_id"=>$request->meetingId,
-            "event_id"=>decrypt($id)
+            "event_id"=>$id
         ]);
         // dd("done");
         return redirect(route("eventee.lounge.index",$id));

@@ -49,7 +49,14 @@ Route::group(['domain' => $url], function () {
         Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
         Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
         Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
+        
+
     });
+
+
+
+
+
 });
 
 
@@ -120,7 +127,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post("/page/event/store/{id}","Eventee\PageController@store")->name('eventee.pages.store');
     Route::get('page/event/{page}/{id}/edit',"Eventee\PageController@edit")->name('eventee.pages.edit');
     Route::put('page/{page}/{id}/update',"Eventee\PageController@update")->name('eventee.pages.updates');
-    Route::delete('page/event/delete/{page}',"Eventee\PageController@destroy")->name('eventee.pages.destroy');
+    Route::delete('page/event/delete',"Eventee\PageController@destroy")->name('eventee.pages.destroy');
     
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
@@ -512,7 +519,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::post("/event/{event}/subscribe", "EventSessionsController@subscribe")->name("event.subscribe");
     Route::post("/event/{event}/unsubscribe", "EventSessionsController@unsubscribe")->name("event.unsubscribe");
 
-    Route::post("/leaderboard/{id}", "EventController@leaderboard")->name("leaderboard");
+    Route::post("/leaderboard", "EventController@leaderboard")->name("leaderboard");
     Route::get("/add-to-bag", "EventController@addToBag")->name("addToBag");
     Route::get("/delete-from-bag", "EventController@deleteFromBag")->name("deleteFromBag");
     Route::get("/get-swag-bag", "EventController@getSwagBag")->name("getSwagBag");

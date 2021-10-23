@@ -12,7 +12,7 @@ Manage Polls
 <li class="breadcrumb-item active">Polls</li>
 @endsection
 @php
-   $sessionRooms = App\sessionRooms::where('event_id',decrypt($id))->get();
+   $sessionRooms = App\sessionRooms::where('event_id',$id)->get();
 @endphp
 @section('content')
 <div class="row">
@@ -284,7 +284,7 @@ Manage Polls
          <div class="modal-body">
             <form id="mcq" action="{{ route('eventee.poll.mcq',$id) }}" method="post">
                <input type="hidden" name="poll_id" value="{{ $poll->id }}">
-               <input type="hidden" name="event_id" value="{{ decrypt($id) }}">
+               <input type="hidden" name="event_id" value="{{ $id }}">
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Question:</label>
                   <input type="hidden" name="correct" id="correct" class="correct">
@@ -302,9 +302,9 @@ Manage Polls
                   </select>
                </div>
                @php
-                  $sessions = App\EventSession::where('event_id',decrypt($id))->orderBy('created_at','desc')->get();
+                  $sessions = App\EventSession::where('event_id',$id)->orderBy('created_at','desc')->get();
                @endphp
-               @if(App\EventSession::where('event_id',decrypt($id))->count() > 0)
+               @if(App\EventSession::where('event_id',$id)->count() > 0)
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Session Room:</label>
                   <select name="mcq_event_id" id="mcq_event_id" class="form-control">
@@ -355,7 +355,7 @@ Manage Polls
          <div class="modal-body">
             <form id="mcq" action="{{ route('eventee.poll.mcq',$id) }}" method="post">
                <input type="hidden" name="poll_id" value="{{ $poll->id }}">
-               <input type="hidden" name="event_id" value="{{ decrypt($id) }}">
+               <input type="hidden" name="event_id" value="{{ $id }}">
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Question:</label>
                   <input type="hidden" name="correct" id="correct" class="correct">
@@ -372,7 +372,7 @@ Manage Polls
                      @endforeach
                   </select>
                </div>
-               @if(App\EventSession::where('event_id',decrypt($id))->count() > 0)
+               @if(App\EventSession::where('event_id',$id)->count() > 0)
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Session Room:</label>
                   <select name="mcq_event_id" id="mcq_event_id" class="form-control">
@@ -439,7 +439,7 @@ Manage Polls
                      @endforeach
                   </select>
                </div>
-               @if(App\EventSession::where('event_id',decrypt($id))->count() > 0)
+               @if(App\EventSession::where('event_id',$id)->count() > 0)
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Session Room:</label>
                   <select name="wc_event_id" id="wc_event_id" class="form-control">
@@ -473,7 +473,7 @@ Manage Polls
          <div class="modal-body">
             <form id="mcq" action="{{ route('eventee.rating',$id) }}" method="post">
                <input type="hidden" name="poll_id" value="{{ $poll->id }}">
-               <input type="hidden" name="event_id" value="{{ decrypt($id) }}">
+               <input type="hidden" name="event_id" value="{{ $id }}">
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Question:</label>
                   <input type="hidden" name="correct" id="correct" class="correct" >
@@ -491,7 +491,7 @@ Manage Polls
                      @endforeach
                   </select>
                </div>
-               @if(App\EventSession::where('event_id',decrypt($id))->count() > 0)
+               @if(App\EventSession::where('event_id',$id)->count() > 0)
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Session Room:</label>
                   <select name="rate_event_id" id="rate_event_id" class="form-control">
@@ -537,7 +537,7 @@ Manage Polls
          <div class="modal-body">
             <form id="mcq" action="{{ route('eventee.survey',$id) }}" method="post">
                <input type="hidden" name="poll_id" value="{{ $poll->id }}">
-               <input type="hidden" name="evemt_id" value="{{ decrypt($id) }}">
+               <input type="hidden" name="evemt_id" value="{{ $id }}">
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Question:</label>
                   <input type="hidden" name="type" value="surv">
@@ -553,7 +553,7 @@ Manage Polls
                      @endforeach
                   </select>
                </div>
-               @if(App\EventSession::where('event_id',decrypt($id))->count() > 0)
+               @if(App\EventSession::where('event_id',$id)->count() > 0)
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Session Room:</label>
                   <select name="surv_event_id" id="surv_event_id" class="form-control">
@@ -604,7 +604,7 @@ Manage Polls
             <form action="{{ route('wc.edit') }}" method="post">
                {{ csrf_field() }}
                <input type="hidden" name="id" id="wcId">
-               <input type="hidden" name="event_id" value="{{ decrypt($id) }}">
+               <input type="hidden" name="event_id" value="{{ $id }}">
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Question:</label>
                   <input type="text" class="form-control" id="wcquest" name="question">
@@ -632,7 +632,7 @@ Manage Polls
             <form action="{{ route('surv.edit') }}" method="post">
                {{ csrf_field() }}
                <input type="hidden" name="id" id="survId">
-               <input type="hidden" name="event_id" value="{{ decrypt($id) }}">
+               <input type="hidden" name="event_id" value="{{ $id }}">
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Question:</label>
                   <input type="text" class="form-control" id="survQuestion" name="question">
@@ -663,7 +663,7 @@ Manage Polls
          <div class="modal-body">
             <form id="mcq" action="{{ route('poll.rating') }}" method="post">
                <input type="hidden" name="poll_id" value="{{ $poll->id }}">
-               <input type="hidden" name="event_id" value="{{ decrypt($id) }}">
+               <input type="hidden" name="event_id" value="{{ $id }}">
                <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Question:</label>
                   <input type="hidden" name="id" id="rateId" class="rateId" >

@@ -32,7 +32,7 @@ Licenses
                         </tr>
                     </thead>
                     <tbody>
-                        @if(App\License::where('event_id',decrypt($id))->count() > 0)
+                        @if(App\License::where('event_id',$id)->count() > 0)
                             @foreach($licenses as $key => $license)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>

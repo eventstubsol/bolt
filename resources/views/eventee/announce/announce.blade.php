@@ -117,7 +117,7 @@
                             <label for="question">Send To</label>
                             <select class="form-control" id="send_to" required>
                                 <option value="all">All</option>
-                                @foreach(App\User::where('type','attendee')->where('event_id',decrypt($id))->get() as  $user)
+                                @foreach(App\User::where('type','attendee')->where('event_id',$id)->get() as  $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
@@ -168,7 +168,7 @@
             var announce = $('#announce').val();
             var send_to = $('#send_to').val();
             var subject = $('#subject').val();
-            var event_id = "{{ decrypt($id) }}";
+            var event_id = "{{ $id }}";
             if($('#announce').val()){
                 $.get("{{ route('eventee.announce.create') }}",{'event_id':event_id,'announce':announce,'send':send_to,'subject':subject},function(result){
                     if(result.status == 200){

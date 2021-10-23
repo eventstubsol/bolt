@@ -401,7 +401,7 @@ class VideoController extends Controller
     }
 
     public function pastSessionVideosArchive($id){
-        $videos = ArchiveVideos::where('event_id',decrypt($id))->get();
+        $videos = ArchiveVideos::where('event_id',$id)->get();
         return view("eventee.video.video")->with(compact("videos",'id'));
     }
 
@@ -418,11 +418,11 @@ class VideoController extends Controller
                 ArchiveVideos::create([
                     "title" => $title,
                     "video_id" => $videoIds[$index],
-                    "event_id" => decrypt($id),
+                    "event_id" => $id,
                 ]);
             }
         }
-        $videos = ArchiveVideos::where('event_id',decrypt($id))->get();
+        $videos = ArchiveVideos::where('event_id',$id)->get();
         return view("eventee.video.video")->with(compact("videos",'id'));
     }
 

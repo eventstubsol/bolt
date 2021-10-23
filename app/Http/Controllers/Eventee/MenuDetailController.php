@@ -11,7 +11,7 @@ class MenuDetailController extends Controller
     public function index($id)
     {
         //
-        $menus = Menu::where('parent_id','0')->where('type','footer')->where('event_id',decrypt($id))->orderby('position','asc')->get()->load(["submenus"]);
+        $menus = Menu::where('parent_id','0')->where('type','footer')->where('event_id',$id)->orderby('position','asc')->get()->load(["submenus"]);
         return view('eventee.menu.footer.footer',compact('menus','id'));
     }
     public function disable(Menu $menu,$id)
