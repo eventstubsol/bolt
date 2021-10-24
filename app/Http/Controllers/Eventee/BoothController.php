@@ -222,7 +222,9 @@ class BoothController extends Controller
   
       $booth->load(["images", "videos", "resources"]);
       // dd("test");
-    return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms"));
+      $id=null;
+      // dd(isset($id));
+    return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms","id"));
   }
 
   public function adminUpdate(Request $request, Booth $booth)
@@ -358,6 +360,7 @@ class BoothController extends Controller
     ]);
 
       // $booth->load(["images", "videos", "resources","links"]);
+     
 
     return redirect()->to(route("exhibiter.update", ["booth" => $booth->id]));}
 

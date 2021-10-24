@@ -102,6 +102,14 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 
     // Route::
 
+    Route::get("/subtypes/{id}","Eventee\UserController@subTypesList")->name('eventee.subtypes');
+    Route::get("/subtype/create/{id}","Eventee\UserController@subTypecreate")->name('eventee.subtype.create');
+    Route::post("/subtype/{id}","Eventee\UserController@subTypestore")->name('eventee.subtype.store');
+    Route::get("/subtype/{id}/{subtype}","Eventee\UserController@subTypeedit")->name('eventee.subtype.edit');
+    Route::put("/subtype/update/{id}/{subtype}","Eventee\UserController@subTypeupdate")->name('eventee.subtype.update');
+    Route::delete("/subtype/delete/{id}","Eventee\UserController@subTypedelete")->name('eventee.subtype.destroy');
+  
+
 
 
 

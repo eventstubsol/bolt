@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Mail;
 use App\UserData;
+use App\UserSubtype;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 use stdClass;
 
@@ -39,6 +40,17 @@ class UserController extends Controller
     {
         return view("eventee.users.create", compact('id'));
     }
+    
+    public function subTypesList($id)
+    {
+        $subtypes = UserSubtype::where('event_id',$id)->get();
+        return view("eventee.subtype.list",compact("id","subtypes"));
+    }
+   
+    public function subTypecreate($id)
+    {
+        return view("eventee.subtype.create", compact('id'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -46,6 +58,24 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function subTypestore(Request $request, $id)
+    {
+        $usertype = UserSubtype::create([
+            'name'=>$request->name,
+            'event_id'=>$id
+        ]);
+        return redirect(route("eventee.subtypes",$id));
+    }
+    public function subTypedelete(Request $request, UserSubtype $id)
+    {
+        // dd($id);
+        $id->delete();
+        return true;
+    }
+
+
+
+
     public function store(Request $request, $id)
     {
        
@@ -167,7 +197,12 @@ class UserController extends Controller
         // return $user;
         return view("eventee.users.edit", compact("id", "user_id", "user"));
     }
+    
+    public function subTypeedit(Request $request, $id, UserSubtype $subtype)
+    {
+        return view("eventee.subtype.edit", compact("id", "subtype"));
 
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -175,6 +210,14 @@ class UserController extends Controller
      * @param  User  $user
      * @return \Illuminate\Http\Response
      */
+    public function subTypeupdate(Request $request, $id, UserSubtype $subtype)
+    {
+        $subtype->update([
+            "name"=>$request->name
+        ]);
+        return redirect(route("eventee.subtypes",$id));
+        // dd($subtype);
+    }
     public function update(Request $request, $id, $user_id)
     {
         
