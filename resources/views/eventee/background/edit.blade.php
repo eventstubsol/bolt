@@ -25,7 +25,7 @@
                 <form action="{{ route("eventee.background.update",['id'=>$id,'back_id'=>$back_id]) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @php
-                            $menus = App\Menu::where('event_id',decrypt($id))->get();
+                            $menus = App\Menu::where('event_id', ($id))->get();
                     @endphp
                     <div class="form-group mb-3">
                         <label for="message">Select Menu</label>

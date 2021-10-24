@@ -80,12 +80,12 @@ class EventManageController extends Controller
     }
 
     public function edit($id){
-        $event = Event::findOrFail(decrypt($id));
+        $event = Event::findOrFail( ($id));
         return view('eventee.events.edit',compact('id','event'));
     }
 
     public function update($id,Request $req){
-        $event = Event::findOrFail(decrypt($id));
+        $event = Event::findOrFail( ($id));
         $event->name = $req->name;
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;

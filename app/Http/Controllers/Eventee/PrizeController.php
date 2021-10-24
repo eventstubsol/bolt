@@ -14,7 +14,7 @@ class PrizeController extends Controller
     //
     public function index($id)
     {
-        $prizes = Prize::where('event_id',decrypt($id))->get();
+        $prizes = Prize::where('event_id', ($id))->get();
         return view("eventee.prize.list")
             ->with(compact("prizes","id"));
     }
@@ -48,7 +48,7 @@ class PrizeController extends Controller
             "description" => $request->description,
             "criteria_high" => $request->criteria_high,
             "criteria_low" => $request->criteria_low,
-            "event_id" => decrypt($id),
+            "event_id" =>  ($id),
         ]);
         Image::where("owner", $prize->id)->delete();
         if (!empty($request->imageurl)) {

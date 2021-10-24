@@ -15,7 +15,7 @@ class LoginController extends Controller
     }
     public function login($sudomain){
 
-        // return decrypt($id);
+        // return  ($id);
         $event = Event::where("slug",$sudomain)->first();
         if($event->end_date < Carbon::today()){
             return view('errors.custom');

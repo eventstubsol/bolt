@@ -461,13 +461,9 @@ function getFieldId($name,$id, $default = "")
         return $content->first()->value;
     }
     else{
-        $content = Content::where("name", $name);
-        if($content->count() > 0){
-            return $content->first()->value;
-        }
-        else{
-            return null;   
-        }
+        $content = Content::where("name", $name)->first();
+        $content ? $content->value : $default;  
+        
        
     }
    
@@ -1146,7 +1142,7 @@ function UpdateEnv($key,$value){
 }
 
 function UniqueEmail($email,$id){
-     $exist = User::where('email',$email)->where('event_id',decrypt($id))->count();
+     $exist = User::where('email',$email)->where('event_id', ($id))->count();
      if($exist > 0){
          return 1;
      }
