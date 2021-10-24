@@ -20,7 +20,7 @@ class CMSController extends Controller
         foreach ($fields as $id => $value){
             $field = Content::find($id);
             if($field){
-                $field->update([ "value" => $value,"event_id" => decrypt($event_id) ]);
+                $field->update([ "value" => $value,"event_id" => $event_id ]);
             }
         }
         return redirect()->to(route("eventee.options",['id'=>$event_id]));
