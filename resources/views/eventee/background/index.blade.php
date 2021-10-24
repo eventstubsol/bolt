@@ -33,7 +33,7 @@ Background
                         </tr>
                     </thead>
                     <tbody>
-                        @if(App\Background::where('event_id',decrypt($id))->count() > 0)
+                        @if(App\Background::where('event_id', ($id))->count() > 0)
                             @foreach($backgrounds as $key => $background)
                                 <tr>
                                     <td width="20px">{{ $key + 1 }}</td>

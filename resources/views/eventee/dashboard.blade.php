@@ -104,7 +104,7 @@
                 @foreach($eventee as $event)
                 <tr>
                    
-                        <td><a href="{{ route('event.Dashboard',['id'=>encrypt( $event->id )]) }}" style="text-decoration: none">{{ $event->name }}</a></td>
+                        <td><a href="{{ route('event.Dashboard',['id'=>( $event->id )]) }}" style="text-decoration: none">{{ $event->name }}</a></td>
                         <td>
                             @if ($event->end_date < Carbon\Carbon::today())
                                 <span style="color: red">○ &nbsp;Expired</span>

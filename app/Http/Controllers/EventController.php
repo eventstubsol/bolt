@@ -41,7 +41,7 @@ class EventController extends Controller
 
         $event_id = Event::where("slug",$event_name)->first()->id;
         // dd($event_id);
-        // $event_id = decrypt($id);
+        // $event_id =  ($id);
         $booths = Booth::where("event_id",$event_id)->orderBy("name")->with([
             "images",
             "videos",

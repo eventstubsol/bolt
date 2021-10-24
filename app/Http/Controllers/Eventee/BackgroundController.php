@@ -11,7 +11,7 @@ class BackgroundController extends Controller
 {
     //
     public function index($id){
-        $backgrounds = Background::where('event_id',decrypt($id))->paginate(5);
+        $backgrounds = Background::where('event_id', ($id))->paginate(5);
         return view('eventee.background.index',compact('id','backgrounds'));
     }
 
@@ -31,7 +31,7 @@ class BackgroundController extends Controller
             $image->move($location,$imageName);
             $background = new Background;
             $background->menu_id = $req->menu;
-            $background->event_id = decrypt($id);
+            $background->event_id =  ($id);
             $background->location = 'backgrounds'.'/'.$imageName;
             if($background->save()){
                 flash('Background Image Uploaded Succesfully')->success();
@@ -47,7 +47,7 @@ class BackgroundController extends Controller
     }
 
     public function edit($id,$back_id){
-        $background = Background::findOrFail(decrypt($back_id));
+        $background = Background::findOrFail( ($back_id));
         return view('eventee.background.edit',compact('background','id','back_id'));
     }
 
@@ -61,9 +61,9 @@ class BackgroundController extends Controller
             $imageName = $image->getClientOriginalName();
             $location = public_path('backgrounds');
             $image->move($location,$imageName);
-            $background = Background::findOrFail(decrypt($back_id));
+            $background = Background::findOrFail( ($back_id));
             $background->menu_id = $req->menu;
-            $background->event_id = decrypt($id);
+            $background->event_id =  ($id);
             $background->location = 'backgrounds'.'/'.$imageName;
             if($background->save()){
                 flash('Background Image Updated Succesfully')->success();

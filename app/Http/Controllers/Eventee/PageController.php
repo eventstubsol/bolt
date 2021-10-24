@@ -258,7 +258,7 @@ class PageController extends Controller
                         break;
                 }
                 $link = Link::create([
-                    "page"=>"lobby_".decrypt($event_id),
+                    "page"=>"lobby_". ($event_id),
                     "name"=> $linkname,
                     "type"=>$request->type[$id],
                     "to"=> $to,

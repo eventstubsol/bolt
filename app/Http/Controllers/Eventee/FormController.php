@@ -28,7 +28,7 @@ class FormController extends Controller
     }
     public function SaveForm(Request $req){
         $form_fields = $req->fields;
-        $event_id = decrypt($req->event_id);
+        $event_id =  ($req->event_id);
         $placeholder = $req->placeholder;
         $required = $req->required;
         if(count($required) < count($placeholder)){
@@ -64,7 +64,7 @@ class FormController extends Controller
     public function ShowPreview(Request $req){
        try{
         $fieldsFinal = [];
-        $event_id = decrypt($req->event_id);
+        $event_id =  ($req->event_id);
         $form = Form::where('event_id',$event_id)->first();
         $fields = FormField::where('form_id',$form->id)->get();
         foreach($fields as $field){
@@ -105,7 +105,7 @@ class FormController extends Controller
         $form = new FormStruct;
         $form->label = $req->label;
         $form->type = $req->type;
-        $form->event_id = decrypt($req->event_id);
+        $form->event_id =  ($req->event_id);
         $form->field = $field_name;
         if($form->save()){
             return response()->json(['code'=>200]);
@@ -117,7 +117,7 @@ class FormController extends Controller
     }
 
     public function CustomField(Request $req){
-        $event_id = decrypt($req->event_id);
+        $event_id =  ($req->event_id);
         $structsEvent = FormStruct::Where('event_id',$event_id)
         ->get();
         if(count($structsEvent)>0){
@@ -130,7 +130,7 @@ class FormController extends Controller
 
     public function CustomFieldSave(Request $req){
         $form_fields = $req->fields;
-        // $event_id = decrypt($req->event_id);
+        // $event_id =  ($req->event_id);
         $form_id = $req->form_id;
         $placeholder = $req->placeholder;
         $required = $req->required;

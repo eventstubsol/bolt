@@ -9,7 +9,7 @@ class RoomController extends Controller
 {
     //
     public function index($id){
-        $rooms = Room::orderBy("position")->where("event_id",decrypt($id))->get();;
+        $rooms = Room::orderBy("position")->where("event_id", ($id))->get();;
         return view("eventee.room.list")
             ->with(compact("rooms","id"));
     }
@@ -28,7 +28,7 @@ class RoomController extends Controller
           "name" => $request->name,
           "type" => $request->type,
           "position"=>$roomsCount,
-          "event_id"=>decrypt($id),
+          "event_id"=> ($id),
         ]);
         flash("Room Saved Successfully")->success();
         return redirect()->to(route("eventee.room",$id));
@@ -58,7 +58,7 @@ class RoomController extends Controller
   
     public function sort($id)
     {
-       $rooms = Room::orderBy("position")->where("event_id",decrypt($id))->get();
+       $rooms = Room::orderBy("position")->where("event_id", ($id))->get();
         return view("eventee.room.sort")
             ->with(compact("rooms","id"));
     }
