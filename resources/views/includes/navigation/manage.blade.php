@@ -85,6 +85,9 @@
                 <a href="{{ route("eventee.user",['id'=>$id]) }}">Manage</a>
             </li>
             <li>
+                <a href="{{ route("eventee.subtypes",['id'=>$id]) }}">Manage Types</a>
+            </li>
+            <li>
                 <a href="{{ route("eventee.user.create",['id'=>$id]) }}">Create</a>
             </li>
         </ul>
