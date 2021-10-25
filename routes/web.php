@@ -71,6 +71,7 @@ Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.log
 Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
     Route::get('Events','eventeeController@Event')->name('event.index');
+    Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
     Route::get('Event/edit/{id}','EventManageController@Edit')->name('event.Edit');
