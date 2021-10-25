@@ -35,7 +35,7 @@
             line-height: 2em;
         }
         .auth-fluid{
-            background: url("{{assetUrl(getField('login_background',$id))}}") !important;
+            background: url("{{assetUrl(getFieldId('login_background',$id))}}") !important;
         }
         body.auth .login-container .login-header .logo {
             display: block;
