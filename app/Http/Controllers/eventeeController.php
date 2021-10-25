@@ -16,7 +16,8 @@ class eventeeController extends Controller
 {
     //
     public function Regiter(){
-        return view('eventee.register');
+        $id = null;
+        return view('eventee.register')->with(compact("id"));
     }
 
     public function ConfirmRegister(Request $request){
@@ -51,7 +52,8 @@ class eventeeController extends Controller
     }
 
     public function Login(){
-        return view('eventee.login');
+        $id=null;
+        return view('eventee.login')->with(compact("id"));
     }
 
     public function ConfirmLogin(Request $req){
