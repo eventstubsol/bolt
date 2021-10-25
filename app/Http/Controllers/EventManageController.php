@@ -86,7 +86,8 @@ class EventManageController extends Controller
 
     public function update($id,Request $req){
         $event = Event::findOrFail( ($id));
-        $event->name = $req->name;
+        $event->name = trim($req->name);
+        $event->slug = str_replace(" ","-",strtolower($req->event_slug));
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
         if($event->save()){
