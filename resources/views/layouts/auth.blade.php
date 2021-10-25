@@ -35,7 +35,7 @@
             line-height: 2em;
         }
         .auth-fluid{
-            background: url("{{assetUrl(getField('login_background'))}}") !important;
+            background: url("{{assetUrl(getFieldId('login_background',$id))}}") !important;
         }
         body.auth .login-container .login-header .logo {
             display: block;
@@ -108,7 +108,7 @@
                         <div class="auth-logo">
                             <a href="index.html" class="logo text-center">
                                 <span class="logo-lg">
-                                    <img src="{{assetUrl(getField('logo'))}}" alt="" height="82">
+                                    <img src="{{assetUrl(getFieldId('logo',$id))}}" alt="" height="82">
                                 </span>
                             </a>
 
