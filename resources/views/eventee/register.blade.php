@@ -1,5 +1,8 @@
 @extends('layouts.auth')
+@section('title')
 
+    Register
+@endsection
 @section("styles_after")
     <style>
         /* body.auth .login-container .form .register label{

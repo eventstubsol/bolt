@@ -454,7 +454,7 @@ function getField($name,$default = "")
     $content = Content::where("name", $name)->where('event_id',null)->first();
     return $content ? $content->value : $default;
 }
-function getFieldId($name,$id, $default = "")
+function getFieldId($name,$id=null, $default = "")
 {
     $content = Content::where("name", $name)->where('event_id',$id);
     if($content->count()>0){
