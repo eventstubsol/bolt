@@ -29,6 +29,7 @@
                             <tr>
                                 <th >#</th>
                                 <th>Name</th>
+                                <th>URL</th>
                                 <th>Fields</th>
                                 <th >Actions</th>
                             </tr>
@@ -37,15 +38,16 @@
                             @if(App\Form::where('event_id',$id)->count() > 0)
                             @foreach($forms as $key => $form)
                             <tr>
-                                <td width="10%">{{ $key+1 }}</td>
-                                <td width="70%">{{ $form->name }}</td>
+                                <td >{{ $key+1 }}</td>
+                                <td >   https://virturo.io/register/{{ $form->slug }}</td>
+                                <td >{{ $form->name }}</td>
                                 @php
                                     $fieldCount = App\FormField::where('form_id',$form->id)->count()
                                 @endphp
-                                <td width="10%">{{ $fieldCount }}</td>
-                                <td width="10%">
+                                <td >{{ $fieldCount }}</td>
+                                <td >
                                    
-                                        {{-- <a href="{{ route('eventee.form.edit',['id'=>$id,'form_id'=>$form->id]) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a> --}}
+                                        {{-- <a href="{{ route('editForm',['id'=>$id,'form'=>$form->id]) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a> --}}
                                         {{-- <a href="{{ route('eventee.form.preview',$id) }}" class="btn btn-warning"><i class="far fa-eye"></i></a> --}}
                                         <a onclick="confiemDelete(this)" data-id="{{ $form->id }}" ata-toggle="tooltip" data-placement="top" data-original-title="Delete" class="btn btn-danger ml-1 delete"><span style="color: white"><i class="fas fa-trash"></i></span></a>
                                  
@@ -59,7 +61,6 @@
                             @endif
                         </tbody>
                     </table>
-                    {{ $forms->links() }}
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->

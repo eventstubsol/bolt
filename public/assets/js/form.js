@@ -2,11 +2,11 @@
 var event_id = $('#event_id').val();
 var dataId = [];
 var checkboxes = [];
-let customFieldUrl = "http://127.0.0.1:8000/Eventee/Form/CustomFields";
-let SaveFieldUrl = "http://127.0.0.1:8000/Eventee/Form/SaveField";
-let CustomSaveField = "http://127.0.0.1:8000/Eventee/Form/SaveCustomFields";
-let FinalPreview = "http://127.0.0.1:8000/Eventee/Form/preview";
-let deleteUrl = "http://127.0.0.1:8000/Eventee/Form/Delete";
+let customFieldUrl = "http://localhost:8000/Eventee/Form/CustomFields";
+let SaveFieldUrl = "http://localhost:8000/Eventee/Form/SaveField";
+let CustomSaveField = "http://localhost:8000/Eventee/Form/SaveCustomFields";
+let FinalPreview = "http://localhost:8000/Eventee/Form/preview";
+let deleteUrl = "http://localhost:8000/Eventee/Form/Delete";
 function customField(){
     // var weburl = "{{route('eventee.form.custom'),:id}}";
     // weburl.replace(':id',event_id);

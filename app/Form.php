@@ -9,6 +9,6 @@ class Form extends Model
     //
     protected $guarded = [];
     public function fields(){
-        $this->hasMany("App\FormField","form_id");
+       return $this->hasMany("App\FormField","form_id");
     }
 }

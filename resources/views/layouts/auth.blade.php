@@ -116,7 +116,9 @@
                     </div>
 
                     <!-- title-->
-                     <h4 class="mt-0 ml-2 mb-3">Sign In</h4>
+                     <h4 class="mt-0 ml-2 mb-3">
+                         @yield("form_title")
+                     </h4>
                     {{-- <p class="text-muted mb-4">Enter your email address and password to access account.</p> --}} 
 
                     <div class="auth">
