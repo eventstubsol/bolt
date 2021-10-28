@@ -18,6 +18,9 @@ use App\FormStruct;
 use App\Form;
 use App\FormField;
 use App\UserData;
+use App\UserSubtype;
+use Aws\Api\Validator;
+use Dotenv\Exception\ValidationException;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 class AttendeeAuthController extends Controller
@@ -87,7 +90,7 @@ class AttendeeAuthController extends Controller
                 "notFound" => TRUE,
                 "captchaError" => FALSE,
                 "id"=>$event->id,
-                "subdomain"=>$event->name
+                "subdomain"=>$event->slug
             ]);
             // return redirect(route("attendeeLogin",$subdomain))->with([
             //         "notFound" => TRUE,
@@ -137,6 +140,16 @@ class AttendeeAuthController extends Controller
         }
     }
 
+   public function showRegistration($subdomain,$slug){
+        $form = Form::where("slug",$slug)->first();
+        $id = Event::where("slug",$subdomain)->first()->id;
+        $subtypes = UserSubtype::where('event_id',$id)->get();
+        $form->load("fields.formStruct");
+        $email = FALSE;
+        // $form = (object) ($form ->toArray());
+        // return $form;
+        return view("eventee.form.registration")->with(compact("id","subdomain","form","email","subtypes"));
+   }
    public function showRegistrationForm($subdomain)
     {
         // try{
@@ -175,6 +188,31 @@ class AttendeeAuthController extends Controller
             return redirect()->route('attendeeLogin');
         }
        
+    }
+
+    public function confirmReg(Request $request,$subdomain){
+        // dd($request->all());
+        $request->validate([
+            'email' => 'required|email',
+            'name' => 'required',
+        ]);
+        $event = Event::where("slug",$subdomain)->first();
+        $checkuser = User::where("email",$request->email)->where("event_id",$event->id)->get();
+        if($checkuser->count()){
+            return back()->with(["email"=>"Email Already Taken"]);
+        }
+        $user = new User($request->all());
+        $user->save();
+        $userdatas = $request->except("name","email","phone","country","job_title","event_id","_token","type","subtype");
+        foreach($userdatas as $feild => $userdata){
+            $userData = new UserData;
+            $userData->user_id = $user->id;
+            $userData->user_field = $feild;
+            $userData->field_value = $userdata;
+            $userData->save();
+        }
+        flash("Registered Successfully")->success();
+        return redirect()->route('attendeeLogin',$subdomain);
     }
 
     public function saveRegistration(Request $request,$subdomain)

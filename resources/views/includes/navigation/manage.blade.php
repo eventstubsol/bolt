@@ -94,6 +94,22 @@
     </div>
 </li>
 <li>
+    <a href="#forms" data-toggle="collapse">
+        <i data-feather="users"></i>
+        <span> Registrations</span>
+    </a>
+    <div class="collapse" id="forms">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.form",['id'=>$id]) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("createForm",['id'=>$id]) }}">Create Registration Form</a>
+            </li>
+        </ul>
+    </div>
+</li>
+<li>
     <a href="#form" data-toggle="collapse">
         <i class="fas fa-align-justify"></i>
         <span> Form</span>

@@ -9,9 +9,9 @@ class FormField extends Model
     //
     protected $guarded = [];
     public function formStruct(){
-        $this->belongsTo("App\FormStruct",'struct');
+        return $this->hasOne("App\FormStruct","id","struct_id");
     }
     public function form(){
-        $this->belongsTo("App\Form");
+       return $this->belongsTo("App\Form");
     }
 }

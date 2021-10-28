@@ -42,6 +42,16 @@ define("CLICKABLE_AREA_TYPES",[
 "PAGE",
 "BOOTH",
 ]);
+// "Radio Button",
+define("FORMTYPES",[
+"Text"=>"text",
+"Email"=>"email",
+"Phone"=>"tel",
+"Select Box/Dropdown"=>"select",
+"Image"=>"image",
+"Country"=>"country",
+"User Subtype"=>"subtype"
+]);
 
 define('LINK_TYPES', [
     'page',
