@@ -39,8 +39,8 @@
                             @foreach($forms as $key => $form)
                             <tr>
                                 <td >{{ $key+1 }}</td>
-                                <td >   https://virturo.io/register/{{ $form->slug }}</td>
                                 <td >{{ $form->name }}</td>
+                                <td >   {{ $subdomain }}.virturo.io/register/{{ $form->slug }}</td>
                                 @php
                                     $fieldCount = App\FormField::where('form_id',$form->id)->count()
                                 @endphp
@@ -74,6 +74,29 @@
 <script>
     $(document).ready(function(){
         $("#card-body").append('<a class="btn btn-primary" style="float:right;" href="{{ route("eventee.form.create",$id) }}">Create New Form</a>')
+        $("body").on("click",".delete",function(e){
+                    t = $(this);
+                    console.log("testing")
+                    let deleteUrl = '{{route("form.destroy", [ "form" => ":id" ])}}';
+                    let id = t.data("id");
+                    confirmDelete("Are you sure you want to DELETE Form?","Confirm Form Delete").then(confirmation=>{
+                        if(confirmation){
+                            console.log(deleteUrl.replace(":id", id));
+                            $.ajax({
+                                url:deleteUrl.replace(":id", id),
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    "_method": "DELETE"
+                                },
+                                method:"POST",
+                                success: function(){
+                                    t.closest("tr").remove();
+                                    $(".tooltip").removeClass("show");
+                                }
+                            })
+                        }
+                    });
+                });
     });
 
 </script>

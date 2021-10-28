@@ -232,7 +232,6 @@
         function getMeetingId(){
             $("#meetingId").val(uuid());
             $("#create_session").attr("disabled", false);
-            console.log(response.meetingId);
         }
 </script>
 
