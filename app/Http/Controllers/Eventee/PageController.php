@@ -205,11 +205,11 @@ class PageController extends Controller
         }
 
         
-        $pages = Page::all();
+        $pages = Page::where("event_id",$event_id)->get();
 
-        $booths = Booth::all();
+        $booths = Booth::where("event_id",$event_id)->get();
 
-        $session_rooms = sessionRooms::all();
+        $session_rooms = sessionRooms::where("event_id",$event_id)->get();
         $page->load(["images","links"]);
         $id = $event_id;
         return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths",'id','pag']));
