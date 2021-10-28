@@ -6,7 +6,7 @@
                 
                 <video class="full-width-videos room_video video-{{ $room->name }}" src="{{$room->videoBg?assetUrl($room->videoBg->url):''}}" id="session_room_video" autoplay muted loop></video>
                 @elseif(isset($room->background->url))
-                <img async src="{{ assetUrl($room->background->url??'') }}" class="{{$roomgroup}} positioned fill booth-bg" alt="">
+                <img async src="{{ assetUrl($room->background->url??'') }}" class="{{$roomgroup}} positioned booth-bg" alt="">
                 @endif
               
                     <div class="positioned" id="play-session-{{$room->name}}" style="{{ areaStyles([$room->top,$room->left,$room->width,$room->height]) }};display:flex;align-items: center; justify-content: center;cursor: pointer;">
