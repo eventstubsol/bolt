@@ -170,10 +170,10 @@
 @endsection
 
 @section("scripts")
+@include("includes.scripts.select")
 @include("includes.scripts.wyswyg")
 @include("includes.scripts.fileUploader")
 
-@include("includes.scripts.select")
 
 <script>
     function removeresource(e) {

@@ -136,7 +136,7 @@ Create Menu
                         <label for="message-text" class="col-form-label">Parent Menus</label>
                         <select class="parent_id form-control"  name="parent_id">
                             @php
-                                $footers = App\Menu::where('type','footer')->where('parent_id',0)->get();
+                                $footers = App\Menu::where('type','footer')->where('parent_id',0)->where("event_id",$id)->get();
                             @endphp
                             @foreach($footers as $footer)
                                 <option value="{{ $footer->id }}">{{ $footer->name }}</option>
