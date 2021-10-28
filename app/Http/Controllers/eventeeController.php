@@ -99,7 +99,7 @@ class eventeeController extends Controller
         }
         $event = new Event;
         $event->name = trim($req->name);
-        $event->slug = str_replace(" ","-",trim($req->name));
+        $event->slug = str_replace(" ","-",strtolower($req->event_slug));
         $event->user_id = Auth::id();
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;

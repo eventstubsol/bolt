@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Carbon\Carbon;
 use App\Event;
+use Illuminate\Support\Facades\URL;
 
 class EventManageController extends Controller
 {
@@ -85,8 +86,17 @@ class EventManageController extends Controller
     }
 
     public function update($id,Request $req){
+        $baseurl = URL::to('/');
+        if(strpos($baseurl,'https')){
+           $baseurl =  str_replace('https://','',$baseurl);
+        }else{
+          $baseurl=  str_replace('http://','',$baseurl);
+        }
         $event = Event::findOrFail( ($id));
-        $event->name = $req->name;
+        $event->name = trim($req->name);
+        $slug =str_replace(" ","-",strtolower($req->event_slug));
+        $event->slug = str_replace(" ","-",strtolower($req->event_slug));
+        $event->link = $slug.'.'.str_replace('https://','',$baseurl).'';
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
         if($event->save()){
