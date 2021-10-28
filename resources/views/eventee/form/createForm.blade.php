@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="name">Slug</label>
-                        https://vituro.io/register/<input required autofocus type="text" id="slug"  value="{{old('slug')}}" name="slug" class="form-control   @error('slug') is-invalid @enderror">
+                        {{ $subdomain }}.virturo.io/register/<input required autofocus type="text" id="slug"  value="{{old('slug')}}" name="slug" class="form-control   @error('slug') is-invalid @enderror">
                         @error('slug')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

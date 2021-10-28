@@ -15,8 +15,9 @@ class FormController extends Controller
 {
     public function index($id)
     {
+        $subdomain = Event::where("id",$id)->first()->slug;
         $forms = Form::where('event_id',$id)->get();
-        return view('eventee.forms.index',compact('id','forms'));
+        return view('eventee.form.index',compact('id','forms',"subdomain"));
     }
     public function getForm($id,Form $form)
     {
@@ -24,10 +25,11 @@ class FormController extends Controller
         return view("eventee.form.registration")->with(compact("id","form"));
     }
     public function create($id){
+        $subdomain = Event::where("id",$id)->first()->slug;
         $structsDefault = FormStruct::Where('event_id',0)->orWhere('event_id',-1)->get();
         // $structsMandats = FormStruct::Where('event_id',-1)->get();
             // dd($structsDefault);
-        return view("eventee.form.createForm")->with(compact("id","structsDefault"));
+        return view("eventee.form.createForm")->with(compact("id","structsDefault","subdomain"));
     }
     public function edit($id,Form $form){
         $structsDefault = FormStruct::Where('event_id',0)
@@ -86,17 +88,9 @@ class FormController extends Controller
 
         // return view("")->with(compact("id"));
     }
-    public function Destroy(Request $req){
-        $form = Form::findOrFail($req->form_id);
-        $formFields = FormField::where('form_id',$req->form_id);
-        if($formFields->delete()){
-            if($form->delete()){
-                return response()->json(['code'=>200]);
-            }
-            else{
-                return response()->json(['code'=>500]);
-            }
-
-        }
+    public function Destroy(Request $req,Form $form){
+        // $form = Form::findOrFail($req->form_id);
+        $formFields = FormField::where('form_id',$form->id);
+        $form->delete();
     }
 }
