@@ -88,7 +88,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('/Form/SaveField',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
     Route::post('Form/CustomFields',"Eventee\FormController@CustomField")->name('eventee.form.custom');
     Route::post('Form/SaveCustomFields',"Eventee\FormController@CustomFieldSave")->name('eventee.form.customSave');
-    Route::post('/Form/Delete',"Eventee\FormController@Destroy")->name('form.destroy');
+    // Route::post('/Form/Delete',"Eventee\FormController@Destroy")->name('form.destroy');
 
 
     Route::get("/forms/all/{id}","Eventee\FormController@index")->name("forms");
@@ -96,6 +96,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/form/create/{id}","Eventee\FormController@create")->name("createForm");
     Route::post("/form/store/{id}","Eventee\FormController@store")->name("forms.store");
     Route::get("/form/edit/{id}/{form}","Eventee\FormController@edit")->name("editForm");
+    Route::delete('/form/delete/{form}',"Eventee\FormController@Destroy")->name('form.destroy');
+
 
     // Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
     // Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
