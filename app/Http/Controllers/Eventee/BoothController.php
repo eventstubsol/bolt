@@ -209,7 +209,7 @@ class BoothController extends Controller
     return redirect()->to(route("booth.index",$id));
   }
 
-  public function adminEdit(Request $req, Booth $booth)
+  public function adminEdit(Request $req, Booth $booth,$id)
   {
     $pages = Page::where("event_id",$booth->event_id)->get();
 
@@ -222,13 +222,14 @@ class BoothController extends Controller
   
       $booth->load(["images", "videos", "resources"]);
       // dd("test");
-      $id=null;
+      // $id=null;
       // dd(isset($id));
     return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms","id"));
   }
 
-  public function adminUpdate(Request $request, Booth $booth)
+  public function adminUpdate(Request $request, Booth $booth,$id)
   {
+    $event_id = $id;
     // dd($request->all());
     $booth->load(["images", "videos", "resources","links.background"]);
 
@@ -361,8 +362,8 @@ class BoothController extends Controller
 
       // $booth->load(["images", "videos", "resources","links"]);
      
-
-    return redirect()->to(route("exhibiter.update", ["booth" => $booth->id]));}
+    $id = $event_id;
+    return redirect()->to(route("exhibiter.update", ["booth" => $booth->id,"id"=>$id]));}
 
   public function boothEnquiries(Booth $booth){
       $booth->load("interests.user");
