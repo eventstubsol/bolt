@@ -252,7 +252,7 @@
                     <ul id="side-menu">
                         @yield('navigation')
                        
-                                @if(Session::get('MangeEvent') == 1 && isset($id) && $id !=null)
+                                @if( isset($id) && $id !=null)
                                         @include("includes.navigation.manage")
                                 @elseif(Auth::user()->type == "admin")
                                     @include("includes.navigation.admin")
