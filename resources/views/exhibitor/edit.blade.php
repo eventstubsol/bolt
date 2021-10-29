@@ -44,7 +44,7 @@
 @endsection
 
 @section("content")
-    <form action="{{ route("exhibiter.update", [ "booth" => $booth->id ]) }}" method="POST">
+    <form action="{{ route("exhibiter.update", [ "booth" => $booth->id ,"id"=>$id]) }}" method="POST">
         @csrf
         <div class="position-relative">
             <div id="image_demo"  class="im-section" style="position:relative; padding:0" >
