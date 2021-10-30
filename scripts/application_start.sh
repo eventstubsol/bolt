@@ -2,12 +2,12 @@
 
 # give permission to the files inside /secure_docs directory
 
-sudo chmod -R 775 /var/www/html
-sudo chown -Rf www-data:www-data /var/www/html/*
+sudo chmod -R 775 /var/www/test
+sudo chown -Rf www-data:www-data /var/www/test
 
 # navigate into current working directory
 
-cd /var/www/html
+cd /var/www/test
 
 # install node modules
 
