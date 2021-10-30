@@ -1,5 +1,6 @@
 <?php
 
+use App\Event;
 use App\User;
 use Carbon\Carbon;
 use App\Menu;
@@ -29,6 +30,10 @@ $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virtur
 // $url = '{subdomain}.localhost';
 Route::group(['domain' => $url], function () {
     Route::get('/', function ($subdomain) {
+        $event = Event::where("slug",$subdomain)->first();
+        if(!$event){
+            return "No Event ".$subdomain;
+        }
         // dd($subdomain);
         $user = Auth::user();
         if(!$user){
