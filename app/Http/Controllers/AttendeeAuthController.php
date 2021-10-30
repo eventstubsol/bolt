@@ -135,13 +135,16 @@ class AttendeeAuthController extends Controller
             $user->touch();
             // dd("test");
 
-            return redirect(route("eventee.event",['subdomain'=>$event->name]));
+            return redirect(route("eventee.event",['subdomain'=>$event->slug]));
             // return redirect("/event");
         }
     }
 
    public function showRegistration($subdomain,$slug){
         $form = Form::where("slug",$slug)->first();
+        if(!$form){
+            return "form not found";
+        }
         $id = Event::where("slug",$subdomain)->first()->id;
         $subtypes = UserSubtype::where('event_id',$id)->get();
         $form->load("fields.formStruct");

@@ -287,6 +287,7 @@
                             </select>
                         </div>
                     @break
+
                 @case("subtype")
                         @php
                             $options = $subtypes;
