@@ -2,11 +2,11 @@
 
 # give permission to the files inside /secure_docs directory
 
-sudo chmod -R 775 /var/www/html/Development
+sudo chmod -R 775 /home/ubuntu/Development
 
 # navigate into current working directory
 
-cd /var/www/html/Development
+cd /home/ubuntu/Development
 
 # install node modules
 
