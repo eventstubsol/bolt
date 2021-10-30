@@ -6,7 +6,7 @@ files:
 
 – source: .
 
-destination: /var/www/html
+destination: /home/ubuntu/vipnew
 
 hooks:
 

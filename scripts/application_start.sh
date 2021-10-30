@@ -2,12 +2,11 @@
 
 # give permission to the files inside /secure_docs directory
 
-sudo chmod -R 775 /var/www/html
-sudo chown -Rf www-data:www-data /var/www/html
+sudo chmod -R 775 /home/ubuntu/vipnew
 
 # navigate into current working directory
 
-cd /var/www/html
+cd /home/ubuntu/vipnew
 
 # install node modules
 
