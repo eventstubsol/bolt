@@ -60,11 +60,20 @@ class UserController extends Controller
      */
     public function subTypestore(Request $request, $id)
     {
-        $usertype = UserSubtype::create([
-            'name'=>$request->name,
-            'event_id'=>$id
-        ]);
-        return redirect(route("eventee.subtypes",$id));
+        $check = UserSubtype::where('name',$request->name)->where('event_id',$id)->count();
+        if($check < 1){
+            $usertype = UserSubtype::create([
+                'name'=>$request->name,
+                'event_id'=>$id
+            ]);
+            flash("Subtype is created")->success();
+            return redirect(route("eventee.subtypes",$id));
+        }
+        else{
+            flash("Cannot Create Same Sub Types")->error();
+            return redirect()->back();
+        }
+        
     }
     public function subTypedelete(Request $request, UserSubtype $id)
     {
@@ -86,7 +95,7 @@ class UserController extends Controller
             
             $userCount = User::where('event_id', ($id))->count();
             if ($userCount < 5) {
-                $userEmail = User::where('email',$request->email)->where('event_id',$id)->count();
+                $userEmail = User::where('email','like','%'.$request->email.'%')->where('event_id',$id)->count();
                 if($userEmail > 0){
                     flash("Same Email ID Already Exist For The Current Event")->error();
                     return redirect()->back();

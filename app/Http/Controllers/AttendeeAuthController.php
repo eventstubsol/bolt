@@ -49,8 +49,8 @@ class AttendeeAuthController extends Controller
     // method to attempt login
     public function login(Request $request,$subdomain)
     {
+        // return $subdomain;
         $event = Event::where("slug",$subdomain)->first();
-        
         //     $response = Http::asForm()
         //     ->post(
         //         "https://www.google.com/recaptcha/api/siteverify",
@@ -82,6 +82,7 @@ class AttendeeAuthController extends Controller
             //            ->whereIn("type", USER_TYPES_TO_LOGIN_WITH_MEMBERSHIP_ID)
             ->whereNotIn("type", ["admin", "teller", "moderator", "exhibiter", "cms_manager"])
             ->first();
+        
         if (!$user) {
 
             // dd("not found");
@@ -135,7 +136,7 @@ class AttendeeAuthController extends Controller
             $user->touch();
             // dd("test");
 
-            return redirect(route("eventee.event",['subdomain'=>$event->name]));
+            return redirect(route("eventee.event",['subdomain'=>$event->slug]));
             // return redirect("/event");
         }
     }

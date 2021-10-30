@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use App\Event;
+use Illuminate\Support\Facades\Http;
 use App\Menu;
 class eventeeController extends Controller
 {
@@ -97,6 +98,14 @@ class eventeeController extends Controller
         }else{
           $baseurl=  str_replace('http://','',$baseurl);
         }
+        // $response = Http::withHeaders([
+        //     'key' => '53530868315e72004e53efaff6ecbfb728e308f2',
+        //     'secret' => 'efcb34c45cf67af3a828fb5886687a9b658c6cdf'
+        // ])->post(env('COMET_CHAT_CREATE_APP'), [
+        //     'name' => trim($req->name),
+        //     'region' => 'us'
+        // ]);
+        // return $response;
         $event = new Event;
         $event->name = trim($req->name);
         $event->slug = str_replace(" ","-",strtolower($req->event_slug));
