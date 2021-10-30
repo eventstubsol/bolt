@@ -16,7 +16,7 @@ ApplicationStop:
 
 timeout: 300
 
-runas: ubuntu
+runas: root
 
 ApplicationStart:
 
@@ -24,4 +24,4 @@ ApplicationStart:
 
 timeout: 300
 
-runas: ubuntu
+runas: root
