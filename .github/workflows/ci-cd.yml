@@ -9,27 +9,7 @@ on:
       - viptest
 
 jobs:
-  buildAndTest:
-    name: CI Pipeline
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ['12.x']
 
-    steps:
-      - uses: actions/checkout@v2
-
-      # Initialize Node.js
-      - name: Install Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      # Install project dependencies, test and build
-      - name: Install dependencies
-        run: npm install
-      - name: Run build
-        run: npm run build
   deploy:
     name: CD Pipeline
     runs-on: ubuntu-latest
@@ -42,20 +22,6 @@ jobs:
         s3-bucket: ['virturo-code']
         s3-filename: ['development']
 
-    needs: buildAndTest
-    steps:
-
-      # Initialize Node.js
-      - name: Install Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      # Install project dependencies and build
-      - name: Install dependencies
-        run: npm install
-      - name: Run build
-        run: npm run build
 
       # Install AWS CLI 2
       - name: Install AWS CLI 2
