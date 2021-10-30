@@ -42,12 +42,4 @@ id: deploy
 
 run: |
 
-aws deploy create-deployment \
-
-–application-name event-virturo \
-
-–deployment-group-name development \
-
-–deployment-config-name CodeDeployDefault.OneAtATime \
-
-–github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+aws deploy create-deployment –application-name event-virturo –deployment-group-name development –deployment-config-name CodeDeployDefault.OneAtATime -github-location repository=${{ github.repository }},commitId=${{ github.sha }}
