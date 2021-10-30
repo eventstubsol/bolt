@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 use Mail;
 use App\UserData;
 use App\UserSubtype;
+use App\Imports\UserImport;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 use stdClass;
 
@@ -717,5 +719,23 @@ class UserController extends Controller
         $user = User::findOrFail($user_id);
         $user_data = UserData::where('user_id',$user->id)->get();
         return view('eventee.users.info',compact('id','user_data','user'));           
+    }
+
+    public function ShowPage($id){
+        return view('eventee.users.showpage',compact('id'));
+    }
+
+    public function Import($id,Request $req){
+        if($req->hasFile('excel_file')){
+            $file = $req->file('excel_file');
+            Excel::import(new UserImport(),$file);
+            flash("Data Updated Successfully")->success();
+            return redirect()->route('eventee.user',$id);
+        }
+        else{
+            flash("Please Upload The File Properly")->error();
+            return redirect()->back();
+        }
+        
     }
 }

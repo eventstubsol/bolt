@@ -18,6 +18,7 @@ Create Users
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <a style="float: right" class="btn btn-primary" href="{{ route("eventee.user.showpage",$id) }}">Bulk Upload</a> <br><hr>        
                 <form action="{{ route("eventee.user.store",$id) }}" method="post" id="userForm">
                     @csrf
                     <input type="hidden" name="event_id" value="{{ ($id) }}">
