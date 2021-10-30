@@ -25,9 +25,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # Install project dependencies, test and build
-      - name: Install dependencies
-        run: npm install
+
 
   deploy:
     name: CD Pipeline
@@ -36,10 +34,10 @@ jobs:
       matrix:
         python-version: [3.8]
         node-version: ['12.x']
-        appname: ['aws-codedeploy']
-        deploy-group: ['staging']
-        s3-bucket: ['aws-codedeploy-deployments']
-        s3-filename: ['staging-aws-codedeploy-${{ github.sha }}']
+        appname: ['event-virturo']
+        deploy-group: ['development']
+        s3-bucket: ['event-code']
+        s3-filename: ['development-aws-codedeploy-${{ github.sha }}']
 
     needs: buildAndTest
     steps:
