@@ -6,7 +6,7 @@ on:
       - master
   pull_request:
     branches:
-      - master
+      - viptest
 
 jobs:
   buildAndTest:
@@ -41,7 +41,7 @@ jobs:
         appname: ['event-virturo']
         deploy-group: ['development']
         s3-bucket: ['virturo-code']
-        s3-filename: ['development-event-virturo-${{ github.sha }}']
+        s3-filename: ['development']
 
     needs: buildAndTest
     steps:
