@@ -9,7 +9,6 @@ on:
       - viptest
 
 jobs:
-
   deploy:
     name: CD Pipeline
     runs-on: ubuntu-latest
