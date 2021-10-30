@@ -403,7 +403,7 @@ function getFilters($filter)
 }
 
 function createMenus($event_id){
-    $delfaultMenus =   ["lobby","library","schedule","swagbag","leaderboard","personalagenda"];
+    $delfaultMenus =   ["lobby","library","schedule","swagbag","leaderboard","personalagenda","lounge"];
     foreach($delfaultMenus as $id=> $menu){
         // dd($menu);
         $menuitem = new Menu();

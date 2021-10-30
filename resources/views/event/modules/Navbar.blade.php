@@ -13,9 +13,10 @@
         @endphp
         <div class="col-2 col-md-8 fluid-col menu-col">
            <ul class="menu">
-               <li><a data-link="networking" class="area"><i class="fe-home"></i>Lounge</a></li>
-           @foreach($menus as $menu)
-                @if($menu->name === 'lobby')      
+               @foreach($menus as $menu)
+                @if($menu->name === 'lounge')      
+                    <li><a data-link="networking" class="area"><i class="fe-home"></i>Lounge</a></li>
+                @elseif($menu->name === 'lobby')      
                     <li><a data-link="lobby" class="area"><i class="fe-home"></i>Lobby</a></li>
                 @elseif($menu->name === 'library')
                     <li><a data-toggle="modal" data-target="#resources-modal"><i class="fe-folder"></i>Library</a></li>
