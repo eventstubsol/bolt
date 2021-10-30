@@ -728,7 +728,8 @@ class UserController extends Controller
     public function Import($id,Request $req){
         if($req->hasFile('excel_file')){
             $file = $req->file('excel_file');
-            Excel::import(new UserImport(),$file);
+            // $file->event_id = $id;
+            Excel::import(new UserImport($id),$file);
             flash("Data Updated Successfully")->success();
             return redirect()->route('eventee.user',$id);
         }
