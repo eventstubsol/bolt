@@ -108,7 +108,7 @@
                         <div class="auth-logo">
                             <a href="index.html" class="logo text-center">
                                 <span class="logo-lg">
-                                    <img src="{{assetUrl(getFieldId('logo',$id,"uploads\/btny9AwnPDd8yU9yMnu7g4djqfzeKgsjQMNMVCfb.png"))}}" alt="" height="82">
+                                    <img src="{{assetUrl(getFieldId('logo',$id,"uploads/xmbGmR1olTbfKNwonBymeJv0mJV9emC2EK9bjCdF.png"))}}" alt="" height="82">
                                 </span>
                             </a>
 
