@@ -26,7 +26,7 @@ class LoginController extends Controller
                 "notFound" => FALSE,
                 "captchaError" => FALSE,
                 "id"=>$event->id,
-                "subdomain"=>$event->name
+                "subdomain"=>$event->slug
             ]);
         }
         

@@ -32,7 +32,9 @@ Manage Users
             <div id="AlertDelete" class="alert alert-success" role="alert" style="display: none">
                 <center>  User Deleted Successfully </center>
             </div>
+            
             <div class="card-body">
+                <a style="float: right" class="btn btn-primary" href="{{ route("eventee.user.create",$id) }}">Create New / Bulk Upload</a>
                 {{--                <div class="float-right d-none d-md-inline-block">--}}
                 {{--                    <div class="btn-group mb-2">--}}
                 {{--                        <a class="btn btn-primary" href="{{ route("user.create") }}">Create
@@ -89,7 +91,7 @@ Manage Users
 
 
 @section("scripts")
-@include("includes.scripts.datatables")
+{{-- @include("includes.scripts.datatables") --}}
 <script>
     function DeleteData(e){
         let id = e.getAttribute("data-id");
@@ -113,25 +115,25 @@ Manage Users
     }
     $(document).ready(function(){
             $("#buttons-container").append('<button class="btn btn-primary" id="sync-account">Sync with Chat</button>')
-            $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.user.create",$id) }}">Create New / Bulk Upload</a>')
+            $("#buttons-container").append('')
             
 
-            $("#sync-account").click(async function(){
-                $("#sync-account").attr("disabled", "true");
-                $("#sync-account").addClass("disabled");
-                $("#sync-account").text("Syncing")
+        //     $("#sync-account").click(async function(){
+        //         $("#sync-account").attr("disabled", "true");
+        //         $("#sync-account").addClass("disabled");
+        //         $("#sync-account").text("Syncing")
 
-                while (true) {
-                    let body = await(await fetch("{{ route('sync-users') }}", {credentials: "include"})).json();
-                    if(body.success) {
-                        location.reload(true)
-                    } else {
-                        $("#sync-account").text("Syncing " + body.left + " / " + body.total)
-                    }
-                }
+        //         while (true) {
+        //             let body = await(await fetch("{{ route('sync-users') }}", {credentials: "include"})).json();
+        //             if(body.success) {
+        //                 location.reload(true)
+        //             } else {
+        //                 $("#sync-account").text("Syncing " + body.left + " / " + body.total)
+        //             }
+        //         }
                 
-            });
-        });
+        //     });
+        // });
 
         function deleteUser(e){
             var conf = confirm("Do you want to delete this user?");
