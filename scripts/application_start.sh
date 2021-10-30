@@ -3,6 +3,7 @@
 # give permission to the files inside /secure_docs directory
 
 sudo chmod -R 775 /var/www/html
+sudo chown -Rf www-data:www-data /var/www/html/*
 
 # navigate into current working directory
 
