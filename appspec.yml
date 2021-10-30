@@ -6,7 +6,7 @@ files:
 
 – source: .
 
-destination: /home/ubuntu/test/
+destination: /var/www/html/
 
 hooks:
 
