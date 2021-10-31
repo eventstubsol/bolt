@@ -207,7 +207,7 @@ class AttendeeAuthController extends Controller
         }
         $user = new User($request->all());
         $user->save();
-        $userdatas = $request->except("name","email","phone","country","job_title","event_id","_token","type","subtype");
+        $userdatas = $request->except("name","email","phone","country","job_title","event_id","_token","type","subtype","profileImage");
         foreach($userdatas as $feild => $userdata){
             $userData = new UserData;
             $userData->user_id = $user->id;

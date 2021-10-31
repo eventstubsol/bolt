@@ -101,7 +101,9 @@
 <div id="wrapper">
    
     
-
+    @php
+        $user  = Auth::user();
+    @endphp
     <!-- Topbar Start -->
     <div class="navbar-custom">
         <div class="container-fluid">
@@ -110,8 +112,8 @@
                     <li class="dropdown notification-list topbar-dropdown">
                         <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
                            data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                             @if(isset(Auth::user()->profileImage))
-                                <img src="{{assetUrl(Auth::user()->profileImage)}}" class="avatar-sm round-icon">
+                             @if(isset($user->profileImage))
+                                <img src="{{assetUrl($user->profileImage)}}" class="avatar-sm round-icon">
                             @else
                                 <span class="round-icon">
                                     <i class="fa fa-user"></i>
@@ -119,7 +121,7 @@
                             @endif
                            
                             <span class="pro-user-name ml-1">
-                                {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
+                                {{ $user->name }} <i class="mdi mdi-chevron-down"></i>
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -129,18 +131,15 @@
                             </div>
 
                             <!-- item-->
-                             <a href="/event#profile" class="dropdown-item notify-item">
-                            <i class="fe-user"></i> <span>My Account</span>
-                        </a>
-                             <a href="/event" class="dropdown-item notify-item">
-                                <i class="fa fa-eye"></i> <span>Visit Event</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            @if($user->type === 'eventee')
+                                <a href="{{ route('event.index')}} " class="dropdown-item notify-item">
+                                    <i class="fe-user"></i> <span>My Events</span>
+                                </a>
+                            @endif
+                            {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="fe-settings"></i>
                                 <span>Settings</span>
-                            </a>
+                            </a> --}}
 
                             <div class="dropdown-divider"></div>
 
@@ -198,18 +197,37 @@
                             <i class="fe-menu"></i>
                         </button>
                     </li>
+                    @if($user->type === 'eventee')
+                        
+                        <li class="dropdown notification-list topbar-dropdown">
+                            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
+                            data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                               
+                                <span class="pro-user-name ml-1" style="font-size: 18px; font-weight: bold;">
+                                    @if(isset($id))
+                                        @php
+                                            $event = App\Event::findOrFail($id);
+                                        @endphp
+                                        {{strtoupper($event->name)}}
+                                    @else
+                                        All Events
+                                    @endif
+                                        <i class="mdi mdi-chevron-down"></i>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                               @php
+                                    $events = App\Event::where('user_id',Auth::id())->orderBy('id','desc')->get();
+                               @endphp
 
-                    <li>
-                        <!-- Mobile menu toggle (Horizontal Layout)-->
-                        <a class="navbar-toggle nav-link" data-toggle="collapse" data-target="#topnav-menu-content">
-                            <div class="lines">
-                                <span></span>
-                                <span></span>
-                                <span></span>
+                                    @foreach ($events as $event)
+                                            <a class="@if(isset($id) &&($event->id==$id)) text-blue @endif  dropdown-item" href="{{ route('event.Dashboard',['id'=>( $event->id )]) }}" class="btn btn-warning">{{$event->name}}</a>
+                                    @endforeach
+                                <!-- item-->
                             </div>
-                        </a>
-                        <!-- End mobile menu toggle-->
-                    </li>
+                        </li>
+                 
+                    @endif
 
                 </ul>
             @endauth

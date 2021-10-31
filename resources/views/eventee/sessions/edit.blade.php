@@ -56,7 +56,7 @@ Create Update
                     <!-- Session Type -->
                     <div class="form-group mb-3">
                         <label for="example-select-1">Type</label>
-                        <select name="type" class="form-control @error('type') is-invalid @enderror" id="example-select-1" required>
+                        <select id="session_type" name="type" class="form-control @error('type') is-invalid @enderror" id="example-select-1" required>
                             @foreach(EVENT_SESSION_TYPES as $type)
                             <option @if($type===$session->type) selected="true" @endif value={{$type}} onselect="{{$selected_type = $type}}" >{{ str_replace('_'," ",$type)}}</option>
                             @endforeach
@@ -67,6 +67,10 @@ Create Update
                         </span>
                         @enderror
                     </div>
+
+                    
+                    <input type="text" name="meetingId" id="meetingId" style="display:none"  >
+
 
                     <!-- Session Rooms -->
                     <div class="form-group mb-3">
@@ -102,25 +106,25 @@ Create Update
 
 
                     <!-- Vimeo URL -->
-                    <div class="form-group">
+                    <div class="form-group input_feilds VIMEO_SESSION VIMEO_ZOOM_SDK VIMEO_ZOOM_EX">
                         <label class="form-label">Vimeo URL</label>
                         <input value="{{$session->vimeo_url ??''}}" name="vimeo_url" type="number" class="form-control" />
                     </div>
 
                     <!-- Zoom URL -->
-                    <div class="form-group">
+                    <div class="form-group  input_feilds ZOOM_SDK VIMEO_ZOOM_SDK">
                         <label class="form-label">Zoom Webinar Id / Zoom Url (In case we want an external link)</label>
                         <input value="{{$session->zoom_webinar_id??''}}" type="number" name="zoom_webinar_id" class="form-control" />
                     </div>
 
                     <!-- Zoom Password -->
-                    <div class="form-group">
+                    <div class="form-group input_feilds  ZOOM_SDK VIMEO_ZOOM_SDK">
                         <label class="form-label">Zoom Webinar Password</label>
                         <input value="{{$session->zoom_password??''}}" type="number" name="zoom_password" class="form-control" />
                     </div>
 
                     <!-- Past Video Recording -->
-                    <div class="form-group">
+                    <div class="form-group ">
                         <label class="form-label">Past Video Recording</label>
                         <input value="{{$session->past_video??''}}" type="number" name="past_video" class="form-control" />
                     </div>
@@ -137,7 +141,7 @@ Create Update
                     </div>
 
                     <!-- Zoom Direct URL -->
-                    <div class="form-group">
+                    <div class="form-group input_feilds ZOOM_EXTERNAL VIMEO_ZOOM_EX">
                         <label class="form-label">Zoom Url (In case we want an external link)</label>
                         <input type="string" value="{{$session->zoom_url??''}}" name="zoom_url" class="form-control" />
                     </div>
@@ -171,7 +175,7 @@ Create Update
                     </div>
 
                     <div>
-                        <input class="btn btn-primary" type="submit" value="Save" />
+                        <input class="btn btn-primary" id="create_session" type="submit" value="Save" />
                     </div>
                 </form>
             </div>
@@ -224,6 +228,45 @@ Create Update
     $(document).ready(function() {
         $("#add-resource").on("click", addresource);
         bindRemoveButton();
+        $("#meetingId").show();
+        $("#meetingId").val("{{$session->zoom_webinar_id}}");
+
+        $(".input_feilds").hide();
+        $("."+$("#session_type").val()).show()
+        
+        $("#session_type").on("change",(e)=>{
+            console.log("hello")
+           let value = $("#session_type").val();
+            if(value === "VIDEO_SDK"){
+               $("#create_session").attr("disabled", true);
+               getMeetingId();
+            }   
+            changeType(e);
+        })
+        // $("#session_type").on("change",changeType);
     })
+
+    function changeType(e){
+        console.log(e.target.value);
+        $(".input_feilds").hide();
+        $("."+e.target.value).show();
+    }
+
+    
+    function uuid(){
+        var dt = new Date().getTime();
+        var uuid = 'xxxx-4xxx-yxxx'.replace(/[xy]/g, function(c) {
+            var r = (dt + Math.random()*16)%16 | 0;
+            dt = Math.floor(dt/16);
+            return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+    }
+
+    function getMeetingId(){
+        $("#meetingId").val(uuid());
+        console.log("done")
+        $("#create_session").attr("disabled", false);
+    }
 </script>
 @endsection
