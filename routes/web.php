@@ -57,6 +57,9 @@ Route::group(['domain' => $url], function () {
         Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
         Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
         
+        Route::post("/leaderboard/{id}", "EventController@leaderboard")->name("leaderboard");
+        Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
+
 
     });
 
@@ -313,7 +316,7 @@ Route::get("privacy-policy", "HomeController@privacyPolicy")->name("privacyPolic
 Route::get("faq", "HomeController@faqs")->name("faq");
 Route::get("schedule", "EventSessionsController@schedule")->name("schedule");
 Route::get("schedule-raw", "EventSessionsController@scheduleRaw")->name("scheduleRaw");
-Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
+// Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
 Route::get("/notifications/send", "NotificationController@send")->name("sendNotifications");
 Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
 
@@ -549,7 +552,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::post("/event/{event}/subscribe", "EventSessionsController@subscribe")->name("event.subscribe");
     Route::post("/event/{event}/unsubscribe", "EventSessionsController@unsubscribe")->name("event.unsubscribe");
 
-    Route::post("/leaderboard", "EventController@leaderboard")->name("leaderboard");
+    // Route::post("/leaderboard", "EventController@leaderboard")->name("leaderboard");
     Route::get("/add-to-bag", "EventController@addToBag")->name("addToBag");
     Route::get("/delete-from-bag", "EventController@deleteFromBag")->name("deleteFromBag");
     Route::get("/get-swag-bag", "EventController@getSwagBag")->name("getSwagBag");

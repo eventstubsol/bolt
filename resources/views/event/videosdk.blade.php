@@ -32,8 +32,7 @@
           meetingId: "{{$meetingId}}",
 
           containerId: "video_play_area",
-          redirectOnLeave: "https://www.videosdk.live/",
-
+          
           micEnabled: false,
           webcamEnabled: false,
           participantCanToggleSelfWebcam: true,

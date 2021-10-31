@@ -15,7 +15,7 @@ $user = Auth::user();
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ getFieldId('title', 'Event',$event_id) }}</title>
+    <title>{{ getFieldId('title', $event_id,$event_name) }}</title>
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
     <link href={{ asset('assets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.css') }}">
@@ -752,12 +752,12 @@ $user = Auth::user();
             addParticipant: "{{route('addParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
             removeParicipant: "{{route('removeParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
             updateLounge: "{{route('updateLounge',['subdomain'=>$event_name])}}",
-            leaderboard: "{{ route('leaderboard',['id'=>$event_id]) }}",
+            leaderboard: "{{ route('leaderboard',['subdomain'=>$event_name,'id'=>$event_id]) }}",
             token: "{{ csrf_token() }}",
             trackEvent: "{{ route('trackEvent') }}",
             getswagBag: "{{ route('getSwagBag') }}",
             addtoBag: "{{ route('addToBag') }}",
-            subscription_raw: "{{ route('subscription_raw') }}",
+            subscription_raw: "{{ route('subscription_raw',['subdomain'=>$event_name]) }}",
             deletefromBag: "{{ route('deleteFromBag') }}",
             boothDetails: "{{ route('boothDetails', ['booth' => 'BID']) }}",
             delegateList: "{{ route('delegateList') }}",
