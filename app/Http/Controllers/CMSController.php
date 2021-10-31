@@ -51,7 +51,7 @@ class CMSController extends Controller
 
     public function uploadFile(Request $request){
         $path = $request->file('file')->store('/uploads',env("UPLOADS_FILE_DRIVER", "public"));
-
+        // $path =  Storage::disk('s3')->put('/uploads', $request->file('file'));
         return [
             "success" => true,
             "path" => $path,
