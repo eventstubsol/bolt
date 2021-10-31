@@ -665,6 +665,7 @@ class EventController extends Controller
             $videoId = $request->get("id", false);
             //room name
             $type = $request->get("type", EVENT_ROOM_AUDI);
+            $event_id = $request->get("event_id");
             
             //Fetch Current Session
             $session = $this->getCurrentRunningSession($type);
@@ -761,26 +762,10 @@ class EventController extends Controller
 
     private function getCurrentRunningSession($room)
     {
-        if ($room === "caucus") {
-            $user = Auth::user();
-            $room = strtolower($user->region_name);
-            if (in_array($room, REGIONS)) {
-                $session = getCurrentSession($room);
-                if ($session && $session->id) {
-                    return $session;
-                }
-            }
-            if (isset(REGIONS_NAMES_TO_VALUE[$room])) {
-                $session = getCurrentSession(REGIONS_NAMES_TO_VALUE[$room]);
-                if ($session && $session->id) {
-                    return $session;
-                }
-            }
-        } else {
-            $session = getCurrentSession(strtoupper($room));
-            if ($session && $session->id) {
-                return $session;
-            }
+        $user = Auth::user();
+        $session = getCurrentSession(strtoupper($room),$user->event_id);
+        if ($session && $session->id) {
+            return $session;
         }
         return false;
     }
