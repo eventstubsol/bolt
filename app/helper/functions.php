@@ -851,8 +851,8 @@ function isSessionActive(EventSession $session){
     return $session->start_time && $session->start_time->isPast() && $session->end_time && !$session->end_time->add(5, "mins")->isPast();
 }
 
-function getCurrentSession($where){
-    $sessions = EventSession::where("room", $where)->get();
+function getCurrentSession($where,$event_id){
+    $sessions = EventSession::where("room", $where)->where("event_id",$event_id)->get();
     foreach ($sessions as $session){
         if(isSessionActive($session)){
            return $session;
