@@ -189,7 +189,7 @@ class EventSessionsController extends Controller
 
     public function getPolls(){
         $timezone = env("APP_TIMEZONE", "GST");
-        $session = getCurrentSession(EVENT_ROOM_AUDI);
+        $session = null;//getCurrentSession(EVENT_ROOM_AUDI);
         $toReturn = [
             "poll" => false,
         ];
