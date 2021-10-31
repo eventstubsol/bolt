@@ -70,6 +70,14 @@ Create Users
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="type">Subtype of User</label>
+                        <select class="form-control" name="subtype">
+                            @foreach($subtypes as $type)
+                            <option value="{{ $type->name }}">{{ ucfirst($type->name) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div>
                         <button class="btn btn-primary" type="submit">Create</button>
                     </div>
