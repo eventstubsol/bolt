@@ -211,7 +211,7 @@ class EventController extends Controller
         return view("dashboard.reports.leader");
     }
 
-    public function leaderboard($id)
+    public function leaderboard($subdomain,$id)
     {
         // return $id;
         return User::orderBy("points", "desc")

@@ -11,6 +11,7 @@ use App\EventSession;
 use App\Vote;
 use App\VoteOption;
 use App\ArchiveVideos;
+use App\Event;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Auth;
 
@@ -448,8 +449,9 @@ class EventSessionsController extends Controller
         }
         return view("event.modules.schedule")->with(compact(["schedule", "subscriptions"]));
     }
-    public function subscription_raw(){
-        $schedule = getSchedule();
+    public function subscription_raw($subdomain){
+        $id = Event::where("slug",$subdomain)->first()->id;
+        $schedule = getSchedule($id);
         $subscriptions = [];
         $user = Auth::user();
         if($user){
