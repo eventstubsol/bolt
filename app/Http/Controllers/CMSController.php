@@ -50,7 +50,8 @@ class CMSController extends Controller
     }
 
     public function uploadFile(Request $request){
-        $path = $request->file('file')->store('uploads',env("UPLOADS_FILE_DRIVER", "public"));
+        $path = $request->file('file')->store('/uploads',env("UPLOADS_FILE_DRIVER", "public"));
+
         return [
             "success" => true,
             "path" => $path,

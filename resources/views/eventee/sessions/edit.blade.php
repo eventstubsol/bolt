@@ -228,7 +228,7 @@ Create Update
     $(document).ready(function() {
         $("#add-resource").on("click", addresource);
         bindRemoveButton();
-        $("#meetingId").show();
+        // $("#meetingId").show();
         $("#meetingId").val("{{$session->zoom_webinar_id}}");
 
         $(".input_feilds").hide();
