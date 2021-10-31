@@ -40,7 +40,9 @@ class UserController extends Controller
      */
     public function create($id)
     {
-        return view("eventee.users.create", compact('id'));
+        $subtypes = UserSubtype::where('event_id',$id)->get();
+
+        return view("eventee.users.create", compact('id',"subtypes"));
     }
     
     public function subTypesList($id)
@@ -95,8 +97,8 @@ class UserController extends Controller
             // $userData["password"] = Hash::make($userData["password"]);
             // $userData["isCometChatAccountExist"] = TRUE;
             
-            $userCount = User::where('event_id', ($id))->count();
-            if ($userCount < 5) {
+            // $userCount = User::where('event_id', ($id))->count();
+            // if ($userCount < 5) {
                 $userEmail = User::where('email','like','%'.$request->email.'%')->where('event_id',$id)->count();
                 if($userEmail > 0){
                     flash("Same Email ID Already Exist For The Current Event")->error();
@@ -110,6 +112,7 @@ class UserController extends Controller
                 $user->password = password_hash($request->password, PASSWORD_DEFAULT);
                 $user->email = $request->email;
                 $user->isCometChatAccountExist = TRUE;
+                $user->subtype = $request->subtype;
 
 
                 // $user->sendEmailVerificationNotification();
@@ -133,12 +136,12 @@ class UserController extends Controller
                     flash("Something went wrong")->error();
                     return redirect()->back();
                 }
-            } else{
-                $url = route('eventee.license',$id);
-                $message = "Cant Add More Users ,Please Contact Admin To Add More User and upgrade your account.<br />". "<a href='".$url."'>Send Message To Admin For Licence Upgrade</a>";
-                flash($message)->info();
-                return redirect()->back();
-            }
+            // } else{
+                // $url = route('eventee.license',$id);
+                // $message = "Cant Add More Users ,Please Contact Admin To Add More User and upgrade your account.<br />". "<a href='".$url."'>Send Message To Admin For Licence Upgrade</a>";
+                // flash($message)->info();
+                // return redirect()->back();
+            // }
        
     }
 
@@ -205,8 +208,10 @@ class UserController extends Controller
     public function edit(Request $request, $id, $user_id)
     {
         $user = User::findOrFail($user_id);
+        $subtypes = UserSubtype::where('event_id',$id)->get();
+
         // return $user;
-        return view("eventee.users.edit", compact("id", "user_id", "user"));
+        return view("eventee.users.edit", compact("id", "user_id", "user","subtypes"));
     }
     
     public function subTypeedit(Request $request, $id, UserSubtype $subtype)
@@ -231,8 +236,6 @@ class UserController extends Controller
     }
     public function update(Request $request, $id, $user_id)
     {
-        
-
         $user = User::findOrFail($user_id);
         $cometChat = isset($userData["enable_chat"]) ? 'enable' : null;
         $cometChat =  isset($userData["disable_chat"]) ? 'disable' : $cometChat;
@@ -288,6 +291,7 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->subtype = $request->subtype;
         $user->save();
 
         return redirect()->route('eventee.user', $id);

@@ -7,9 +7,39 @@
         } */
         form{
             overflow-y: auto;
-            max-height: 35rem;
+            max-height: 20rem;
         }
+        
+        
+        ::-webkit-scrollbar-track
+        {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+            
+	        border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar
+        {
+            width: 10px;
+            background-color: #F5F5F5;
+        }
+
+        ::-webkit-scrollbar-thumb
+        {
+            
+	        border-radius: 10px;
+            background-color: #00a15f;
+            border: 2px solid #00a15f;
+        }
+        form *{
+            margin-right: 30px;
+        }
+
     </style>
+     
+    @include("includes.styles.fileUploader")
+
 @endsection
 
 @section("form_title")
@@ -29,14 +59,15 @@
                 @case("email")
                 @case("tel")
                         <div class="form-group">
-                            <label for="{{ $struct->label }}">{{ $struct->label }}</label>
-                            <input @if($field->required) required @endif class="form-control" type="{{ $struct->type }}" placeholder="{{ $form->placeholder}}" name="{{ $struct->field }}">
+                            <label for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label>
+                            <input @if($field->required) required @endif class="form-control" type="{{ $struct->type }}" placeholder="{{ $field->placeholder ?? $struct->label
+                            }}" name="{{ $struct->field }}">
                         </div>
                         
                     @break
                 @case("country")
                         <div class="form-group">
-                            <label for="country" >Country</label>
+                            <label for="country" >{{ $field->placeholder ?? $struct->label }}</label>
                             <select id="country" class="form-control" name="country">
                                 <option value="Afganistan">Afghanistan</option>
                                 <option value="Albania">Albania</option>
@@ -288,6 +319,17 @@
                         </div>
                     @break
 
+                @case("image")
+                    <div class="image-uploader profilepic">
+                        <label class="mb-3" for="images">{{ $field->placeholder }}</label>
+                        <input type="hidden" name="profileImage" class="upload_input"  >
+                        <input type="file" data-name="profileImage" data-plugins="dropify" data-type="image" />
+                    </div>
+                    {{-- <div className="image-uploader profilepic">
+                        <input type="hidden" id="profileurl"  className="upload_input" name="profileImage" />
+                        <input accept="images/*" type="file" data-name="imageurl" data-plugins="dropify" data-type="image" />
+                    </div> --}}
+                    @break
                 @case("subtype")
                         @php
                             $options = $subtypes;
@@ -334,4 +376,13 @@
             </div>
         </div>
     </form>
+@endsection
+
+@section("scripts_after")
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+@include("includes.scripts.fileUploader")
+
+<script src="{{ asset('assets/js/app.min.js') }}"></script>
+
+
 @endsection

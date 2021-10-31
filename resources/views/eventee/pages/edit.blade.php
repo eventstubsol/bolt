@@ -48,10 +48,10 @@ Edit Page
                             <img data-test="{{$page->videoBg}}" src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
                         @endif
                         @foreach($page->links as $ids => $link)
-                            <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
+                            <div data-index="{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
                         @endforeach
                         @foreach($page->treasures as $ids => $link)
-                            <div class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
+                            <div data-index="{{$ids}}" class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
                         @endforeach
                 </div>
 
@@ -70,7 +70,7 @@ Edit Page
                             <h4 class="header-title mb-3">links</h4>
                             <div class="link-section">
                             @foreach($page->links as $ids => $link) 
-                                <div class="row">
+                                <div class="row positioning-{{$ids}} border border-primary p-2 mt-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
                                         <input type="text" value="{{$link->name}}" required  name="linknames[]" class="name-{{$ids}} form-control">
@@ -152,7 +152,7 @@ Edit Page
                                     
 
                                    
-                                    <div  class="row positioning-{{$ids}} col-md-12" >
+                                    <div  class="row col-md-12" >
                                     
                                     <div  class="form-group mb-3 col-md-3">
                                         <label for="top">top</label>
@@ -185,19 +185,19 @@ Edit Page
                                                 <input type="hidden" name="flyin[]" class="upload_input" value={{$link->flyin ? $link->flyin->url : ''}} >
                                                 <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video" data-default-file="{{$link->flyin ? assetUrl($link->flyin->url) : ''}}"  />
                                             </div>
+                                            
+                                        </div>
                                         
-                                           <button class="btn btn-primary addflyin" data-index="{{$ids}}">Add Fly In Video</button>
-                                    </div>
-
-
-
-
-
-
-
-
-
-
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    <button class="btn btn-primary mt-2 mb-4 mr-3 addflyin" data-index="{{$ids}}">Add Fly In Video</button>
                                     <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
                                 </div>
                               @endforeach
@@ -234,20 +234,6 @@ Edit Page
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="name">Content Type</label>
-                        <select name="bg_type" id="bg_type" class="form-control">
-                            @if($pag->bg_type == 'image')
-                            <option value="none">None</option>
-                            <option value="image" selected>Image</option>
-                            <option value="video">Video</option>
-                            @else
-                            <option value="none">None</option>
-                            <option value="image">Image</option>
-                            <option value="video" selected>Video</option>
-                            @endif
-                        </select>
-                    </div>
                     <div class="image-uploader" id="imgBg">
                         <label class="mb-3" for="images">Background Image</label>
                         <input type="hidden" name="url" class="upload_input" value="{{$page->images?$page->images[0]->url:''}}">
@@ -258,18 +244,7 @@ Edit Page
                         <input type="hidden" name="video_url" class="upload_input" value="{{$page->videoBg?$page->videoBg->url:''}}">
                         <input type="file" data-name="video_url" data-plugins="dropify" data-type="video" data-default-file="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" />
                     </div>
-                    
-                    {{-- <div class="image-uploader" id="imgBg" style="display: none">
-                        <label class="mb-3" for="images">Background Image</label>
-                        <input type="hidden" name="url" class="upload_input" >
-                        <input type="file" data-name="url" data-plugins="dropify" data-type="image"  />
-                    </div>
-                    <div class="image-uploader" id="vidBg" style="display: none">
-                        <label class="mb-3" for="images">Background Video</label>
-                        <input type="hidden" name="video_url" class="upload_input" >
-                        <input type="file" data-name="video_url" data-plugins="dropify" data-type="video"  />
-                    </div> --}}
-
+                   
 
                     <!-- Treasure Hunt Items Start -->
                         <div id="treasures">
@@ -355,6 +330,7 @@ Edit Page
         $(".donet").on("click",resetPositiont)
 
         $(".addflyin").on("click",addFlyIn);
+        $(".image_links").on("click",changePosition)
         
 
         bindRemoveButton();
@@ -386,6 +362,8 @@ Edit Page
             width: "100%",
         });
         resetflag =true;
+        document.getElementsByClassName("positioning-"+index)[0].scrollIntoView(false);
+
     }
     
     function resetPositiont(e){
@@ -402,6 +380,8 @@ Edit Page
             width: "100%",
         });
         resetflag =true;
+        
+        document.getElementsByClassName(".tpositioning-"+index)[0].scrollIntoView(false);
     }
 
     
@@ -703,7 +683,6 @@ Edit Page
                                                 <input type="hidden" name="flyin[]" class="upload_input" >
                                                 <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video"  />
                                             </div>
-                                            <button class="btn btn-primary addflyin" data-index="${n}">Add Fly In Video</button>
                                         </div>
                                    
 
@@ -716,7 +695,7 @@ Edit Page
 
 
 
-
+                                        <button class="btn btn-primary addflyin" data-index="${n}">Add Fly In Video</button>
                                     <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
                                 </div>`);
         bindRemoveButton();
