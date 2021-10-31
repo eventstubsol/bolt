@@ -517,7 +517,7 @@ function areaStyles($area)
 
 function assetUrl($url = "")
 {
-    return "https://congress2021web.fra1.digitaloceanspaces.com/" . $url;
+    return env("UPLOADS_FILE_DRIVER") === "spaces" ? ( env("DO_PUBLIC_URL") . $url ):( env("AWS_URL") . $url);
 }
 
 function storageUrl($url = "")
