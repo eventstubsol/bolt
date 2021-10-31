@@ -737,8 +737,7 @@ function getVideoOptions($meetingid){
         "meetingId"=>$meetingid,
 
         "containerId"=>"video",
-        "redirectOnLeave"=>"https://www.videosdk.live/",
-
+      
         "micEnabled"=>false,
         "webcamEnabled"=>false,
         "participantCanToggleSelfWebcam"=>true,
