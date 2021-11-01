@@ -6,6 +6,9 @@
       form{
         display: inline !important;
       }
+      #savebtn{
+          margin-left:1.5rem;
+      }
       </style>
 @endsection
 
@@ -27,7 +30,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-          <div id="buttons-container" class="card-header" >
+          <div id="buttons-container" class="card-header" style="display:inline-flex">
           </div>
             <div class="card-body">
                 <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
@@ -41,7 +44,7 @@
                 
                     <tbody class="sort">
                       @foreach($menus as $menu)
-                        <tr id = "{{ $menu->id }}" class="parent">
+                        <tr data-id = "{{ $menu->id }}" class="parent" data-position ="{{ $menu->position }}">
                             <td>{{$menu->name}}</td>
                             <td>{{ $menu->status ? 'Active' : 'Disabled' }}</td>
                          <td class="text-right" >
@@ -77,9 +80,10 @@
 
 
 <script type="text/javascript">
-
+var position = [];
 $(document).ready(function(){
     $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.menu.create",$id) }}">Create New</a>')
+    $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success" onclick="SavePositions()" style="display:none">Save</button>')
     //setStatus
     $("body").on("click",".disable",function(e){
                     t = $(this);
@@ -130,5 +134,41 @@ $(document).ready(function(){
                     });
                 });
         });
+
+        $('.sort').sortable({
+            update:function(event , ui){
+                $(this).children().each(function(index){
+                    if($(this).attr('data-position') != (index + 1)){
+                        $(this).attr('data-position',(index + 1)).addClass('updated');
+                        $('#savebtn').css('display','block');
+                    }
+                
+                });
+                saveNewPoisition();
+            }
+        });
+        function saveNewPoisition(){
+            
+            $('.updated').each(function(){
+                position.push([$(this).attr('data-id'), $(this).attr('data-position')]);
+            });
+        }
+
+        function SavePositions(){
+            // console.log(position);
+            $.ajax({
+                data: {"position":position},
+                method: 'POST',
+                url: '{{ route('menu.store') }}',
+                success:function(response){
+                  alert(response.message);
+                  $('#savebtn').css('display','none');
+                },
+                error:function(response){
+                  console.log(403);
+                }
+               
+            });
+        }
 </script>
 @endsection
