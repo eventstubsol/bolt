@@ -23,6 +23,7 @@ class MenuController extends Controller
     {
         //
         $menus = Menu::where('parent_id', '0')->where('type', 'nav')->where('event_id',$id)->orderby('position', 'asc')->get();
+        // return $menus;
         return view('eventee.menu.menu', compact('menus','id'));
     }
 

@@ -180,6 +180,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('/menu/store/{id}','Eventee\MenuController@saveMenu')->name('eventee.menu.store');
     Route::post('/menu/saveNav/{id}','Eventee\MenuController@saveNav')->name('eventee.menu.saveNav');
     Route::delete('/menu/disable/{menu}/{id}','Eventee\MenuDetailController@disable')->name('eventee.menu.disable');
+    Route::post("/menu/savePosition","MenuController@store")->name('menu.store');
     Route::put('/menu/enable/{menu}/{id}','Eventee\MenuDetailController@enable')->name('eventee.menu.enable');
     Route::delete('/menu/delete/{menu}/{id}','Eventee\MenuDetailController@destroy')->name('eventee.menu.delete');
     Route::get('/menu/edit/{menu}/{id}','Eventee\MenuController@editNav')->name('eventee.menu.edit');
