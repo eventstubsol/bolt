@@ -274,10 +274,20 @@ define("EVENT_SESSION_TYPES", [
     VIDEO_SDK
 ]);
 
+
+//f=> Feather Icon 
+//tt => Two Tone
+//md => Material Design
 define("MENU_ICONS",[
     "fe-home",
-    "fe-file",
-    
+   "fe-file",
+   "fe-bar-chart",
+   "fe-briefcase",
+    "fe-calendar",
+    "fe-radio",
+    "fe-clock",
+    "fe-file-text"
+
 ]);
 
 
