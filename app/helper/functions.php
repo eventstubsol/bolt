@@ -280,13 +280,13 @@ define("EVENT_SESSION_TYPES", [
 //md => Material Design
 define("MENU_ICONS",[
     "fe-home",
-   "fe-file",
    "fe-bar-chart",
    "fe-briefcase",
     "fe-calendar",
     "fe-radio",
     "fe-clock",
-    "fe-file-text"
+    "fe-file-text",
+    "fe-play-circle"
 
 ]);
 

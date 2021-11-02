@@ -156,7 +156,8 @@ Create Menu
 
         function formatState(state){
                 if(!state.id)  return state.text;
-                let newstate  =  $(`<span><i class=${state.id}> ${state.id.replace("fe-","") } </i></span>`);
+                let iconname = state.id.replace("fe-","");
+                let newstate  =  $(`<span><i class=${state.id}> ${iconname.replace("-text","") } </i></span>`);
                 return newstate;
         }
 
