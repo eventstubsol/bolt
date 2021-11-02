@@ -70,7 +70,7 @@ Edit Page
                             <h4 class="header-title mb-3">links</h4>
                             <div class="link-section">
                             @foreach($page->links as $ids => $link) 
-                                <div class="row positioning-{{$ids}} border border-primary p-2 mt-2">
+                                <div class="row  border border-primary p-2 mt-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
                                         <input type="text" value="{{$link->name}}" required  name="linknames[]" class="name-{{$ids}} form-control">
@@ -152,7 +152,7 @@ Edit Page
                                     
 
                                    
-                                    <div  class="row col-md-12" >
+                                    <div  class="row col-md-12 positioning-{{$ids}}" >
                                     
                                     <div  class="form-group mb-3 col-md-3">
                                         <label for="top">top</label>
@@ -520,7 +520,7 @@ Edit Page
         
 
         $("#treasures").append(`
-                                <div class="row">
+                                <div class="row ">
                                     <div class="image-uploader col-md-12">
                                         <input type="hidden" name="treasures[]" class="upload_input" >
                                         <input type="file" data-name="treasures[]" data-plugins="dropify" data-type="image"/>
@@ -570,7 +570,7 @@ Edit Page
         
 
         $(".link-section").append(`
-                                <div class="row">
+                                <div class="row  border border-primary p-2 mt-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
                                         <input type="text" required  name="linknames[]" class="name-${n} form-control">
@@ -695,8 +695,8 @@ Edit Page
 
 
 
-                                        <button class="btn btn-primary addflyin" data-index="${n}">Add Fly In Video</button>
-                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                        <button class="btn btn-primary  mt-2 mb-4 addflyin" data-index="${n}">Add Fly In Video</button>
+                                    <button class="btn btn-danger mt-2 mb-4 ml-2 remove-link">Remove</button>
                                 </div>`);
         bindRemoveButton();
         
@@ -716,6 +716,8 @@ Edit Page
         $(".donet").hide();
         $(".donet").on("click",resetPositiont)
         $(".addflyin").on("click",addFlyIn);
+        $(".image_links").on("click",changePosition)
+
     }
 
     function removelink(e) {
