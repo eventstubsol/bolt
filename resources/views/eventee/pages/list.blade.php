@@ -61,6 +61,7 @@
                     t = $(this);
                     let deleteUrl = '{{route("eventee.pages.destroy", [ "page" => ":id" ])}}';
                     let id = t.data("id");
+                    console.log(deleteUrl)
                     confirmDelete("Are you sure you want to DELETE Page?","Confirm Page Delete").then(confirmation=>{
                         if(confirmation){
                             console.log(deleteUrl.replace(":id", id));

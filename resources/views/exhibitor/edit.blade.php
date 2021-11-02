@@ -407,7 +407,7 @@
      
         
         $("#add-link").on("click", addlink);
-        // $(".add-image").on("click", addImage);
+        $(".add-image").on("click", addImage);
 
         $(".type").on("change",toggleVisibility);
         $(".pos").on("input",changePosition);

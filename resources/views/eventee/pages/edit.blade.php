@@ -149,6 +149,20 @@ Edit Page
                                         <input type="hidden" name="pdf[]" class="upload_input" @if($link->type==="pdf") value="{{$link->to}}" @endif">
                                         <input type="file"      data-name="boothimages" data-plugins="dropify" data-type="application/pdf"  @if($link->type==="pdf") data-default-file="{{assetUrl($link->to)}}" @endif }} />                                   
                                     </div>
+
+
+                                    <div class="background_images_{{$ids}} row col-md-12">
+                                        @if(isset($link->background[0]))
+                                            @foreach($link->background as $bgimages)
+                                                <div class="form-group image-uploader mb-3 col-md-4">
+                                                    <label for="bgimages">Background</label>       
+                                                    <input type="hidden" name="bgimages[{{$ids}}][]" class="upload_input"  value="{{$bgimages->url}}"  >
+                                                    <input type="file" data-name="bgimages[{{$ids}}][]" data-plugins="dropify" data-type="image"  data-default-file="{{assetUrl($bgimages->url)}}" />                                   
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                   
                                     
 
                                    
@@ -197,6 +211,7 @@ Edit Page
                                         
                                         
                                         
+                                    <button class="btn btn-primary mt-2 mb-4 mr-2  add-image"  data-index="{{$ids}}" >Add Background Image</button>
                                     <button class="btn btn-primary mt-2 mb-4 mr-3 addflyin" data-index="{{$ids}}">Add Fly In Video</button>
                                     <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
                                 </div>
@@ -319,6 +334,8 @@ Edit Page
         
         $("#add-link").on("click", addlink);
         $("#add-treasure").on("click", addTreasure);
+        // $(".add-image").on("click", addImage);
+
 
         $(".type").on("change",toggleVisibility);
         $(".pos").on("input",changePosition);
@@ -348,6 +365,23 @@ Edit Page
         initializeFileUploads();
 
     }
+    function addImage(e){
+        e.preventDefault();
+        let target = $(e.target);
+        const index = target.data("index");
+        console.log(index);
+        
+        $(".background_images_"+index).append(
+            `<div class="form-group image-uploader mb-3 col-md-4">
+                <label for="bgimages">Background</label>       
+                <input type="hidden" name="bgimages[${index}][]" class="upload_input">
+                <input type="file" data-name="bgimages[${index}][]" data-plugins="dropify" data-type="image"   />                                   
+            </div>`);
+            initializeFileUploads();
+
+
+    }
+
 
     function resetPosition(e){
         e.preventDefault();
@@ -386,6 +420,7 @@ Edit Page
 
     
     function changePosition(e){
+        
         
         let target = $(e.target);
         
@@ -649,7 +684,8 @@ Edit Page
                                         <label for="custom_page">Custom Page route</label>
                                         <input type="text"   name="custom_page[]" class="form-control">
                                     </div>
-
+                                    <div class="background_images_${n} row col-md-12">
+                                    </div>
 
                                     <div  class="row positioning-${n}" >
                                     
@@ -694,7 +730,7 @@ Edit Page
 
 
 
-
+                                        <button class="btn btn-primary mt-2 mb-4 mr-2  add-image"  data-index="${n}"  >Add Background Image</button>
                                         <button class="btn btn-primary  mt-2 mb-4 addflyin" data-index="${n}">Add Fly In Video</button>
                                     <button class="btn btn-danger mt-2 mb-4 ml-2 remove-link">Remove</button>
                                 </div>`);
@@ -717,6 +753,7 @@ Edit Page
         $(".donet").on("click",resetPositiont)
         $(".addflyin").on("click",addFlyIn);
         $(".image_links").on("click",changePosition)
+        $(".add-image").unbind("click").on("click", addImage);
 
     }
 
