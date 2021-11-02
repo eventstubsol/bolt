@@ -92,12 +92,12 @@ class PageController extends Controller
         $session_rooms = sessionRooms::where("event_id",$ids)->get();
         $page_name = "lobby_".$ids;
 
-        $links = Link::where(["page"=>$page_name])->get();
+        $links = Link::where(["page"=>$page_name])->get()->load("background");
         $treasures = Treasure::where(["owner"=>$page_name])->get();
         $page = (object) [
             "id"=>$id,
             "name"=>$page_name,
-            "links.background"=>$links,
+            "links"=>$links,
             "event_id"=>$id,
             "treasures"=>$treasures
         ];
