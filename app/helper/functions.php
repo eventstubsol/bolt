@@ -62,7 +62,9 @@ define('LINK_TYPES', [
     "chat_user",
     "chat_group",
     "pdf",
-    "custom_page"
+    "custom_page",
+    "lobby",
+    "back"
 ]);
 
 

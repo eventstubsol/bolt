@@ -164,6 +164,8 @@ class PageController extends Controller
                     case "custom_page":
                         $to = $request->custom_page[$id];
                         break;
+                    case "lobby":
+                        $to = "lobby";
                 }
                 $link = Link::create([
                     "page"=>$page->id,
