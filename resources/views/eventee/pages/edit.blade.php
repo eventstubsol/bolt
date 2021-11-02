@@ -12,18 +12,29 @@ Edit Page
 @section("styles")
 @include("includes.styles.fileUploader")
 
+<style>
+    .positioned .dropify-wrapper {
+        height: 100%;
+    }
+</style>
 
 <style>
-   .image_links{
-        border-radius: 5%;  
-        color: white;
-        font-size: 161%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #0d613978 !important;
-        border: 5px solid;
-    }
+.image_links{
+    border-radius: 5%;  
+    color: white;
+    font-size: 161%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0d613978 !important;
+    border: 5px solid;
+}
+.im_names{
+    background: #ffffff78 !important;
+    height: 100%;
+    width: 100%;
+
+}
 </style>
 @endsection
 
@@ -48,7 +59,9 @@ Edit Page
                             <img data-test="{{$page->videoBg}}" src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
                         @endif
                         @foreach($page->links as $ids => $link)
-                            <div data-index="{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
+                            <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$ids}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
+           
+                            {{-- <div data-index="{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;  perspective:{{$link->perspective}}px;" >{{$link->name}}</div> --}}
                         @endforeach
                         @foreach($page->treasures as $ids => $link)
                             <div data-index="{{$ids}}" class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
@@ -69,7 +82,7 @@ Edit Page
                         <div class="card-body">
                             <h4 class="header-title mb-3">links</h4>
                             <div class="link-section">
-                            @foreach($page->links as $ids => $link) 
+                                @foreach($page->links as $ids => $link) 
                                 <div class="row  border border-primary p-2 mt-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
@@ -187,11 +200,29 @@ Edit Page
                                         <label for="pos">height</label>
                                         <input value="{{$link->height}}" type="number" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
                                     </div>
-
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Perspective Type</label>
+                                        <select name="rotationtype[]" data-index="{{$ids}}" class="pers pos pos-{{$ids}} form-control" id="">
+                                            <option value="">None</option>
+                                            <option @if($link->rotationtype=="X") selected @endif value="X">X</option>
+                                            <option @if($link->rotationtype=="Y") selected @endif value="Y">Y</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div @if(!($link->rotationtype)) style="display:none" @endif  class="pr-{{$ids}} form-group mb-3 col-md-3">
+                                            <label for="pos">Perspective</label>
+                                            <input value="{{$link->perspective}}" type="number" step="any"  name="perspective[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
+                                    <div @if(!($link->rotationtype)) style="display:none" @endif  class="rt-{{$ids}} form-group mb-3 col-md-3">
+                                        <label for="pos">Rotation</label>
+                                        <input value="{{$link->rotation}}" type="number" step="any"  name="rotation[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
 
                                     </div>
-                                    
+
+                                     <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
+    
                                     <div class="flyin  col-md-12">
                                         
                                             <div @if(!$link->flyin) style="display:none" @endif class="image-uploader flyin-{{$ids}}">
@@ -349,7 +380,8 @@ Edit Page
         $(".addflyin").on("click",addFlyIn);
         $(".image_links").on("click",changePosition)
         
-
+        $(".pers").on("change",togglePerspective);
+    
         bindRemoveButton();
 
     });
@@ -435,7 +467,9 @@ Edit Page
         let name = $(".name-"+index).val();
         console.log($(".im-"+index));
         $(".im-"+index).eq(0).css(areaStylesb(positions));
-        $(".im-"+index).html(`${name}`);
+        // $(".im-"+index).html(`${name}`);
+        $(".im_name-"+index).eq(0).css(getRotation(positions));
+        $(".im_name-"+index).html(`${name}`);
         $(".positioning-"+index).eq(0).css({
             position: "fixed",
             bottom: "20px",
@@ -448,6 +482,23 @@ Edit Page
         console.log($(".positioning-"+index));
         console.log(index);
     }
+    function getRotation(area){
+        if(area[4]=="X"){
+            return {
+                transform: `rotatex(${area[6]}deg)`
+            }
+        }else if(area[4]=="Y"){
+            return {
+                transform: `rotatey(${area[6]}deg)`
+            }
+        }else{
+            return {
+                transform: `rotatey(0deg)`
+            }
+
+        }
+    }
+
 
     
     function changePositiont(e){
@@ -488,8 +539,28 @@ Edit Page
              top: area[0]+'%',
              left: area[1]+'%',
              width: area[2]+'%',
-             height: area[3]+'%'
+             height: area[3]+'%',
+             perspective: area[5]+'px'
         }
+    }
+    function togglePerspective(e){
+        
+        // console.log(e.target.value);
+        // console.log(e.data)
+        const selectbox = $(e.target);
+        const index = selectbox.data('index');
+
+        
+        $(".pr-"+index).hide();
+        $(".rt-"+index).hide();
+        
+        switch(selectbox.val()){
+            case "X":
+            case "Y":
+                $(".pr-"+index).show();
+                $(".rt-"+index).show();
+        }
+        // console.log(val);
     }
 
 
@@ -549,8 +620,12 @@ Edit Page
         t++;
         console.log({t});
 
+        // $(".im-section").append(`
+        //     <div class="tim-${t} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" >Treasure Item ${t}</div>      
+        // `);
+        
         $(".im-section").append(`
-            <div class="tim-${t} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" >Treasure Item ${t}</div>      
+        <div class="im-${n} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" ><div class="im_names im_name-${n}" style="height:100%; background:red;" >Link ${n} </div></div>      
         `);
         
 
@@ -708,6 +783,22 @@ Edit Page
                                         <label for="pos">height</label>
                                         <input type="number" required  name="height[]" data-index="${n}" class="pos pos-${n} form-control">
                                     </div>
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Perspective Type</label>
+                                        <select name="rotationtype[]" data-index="${n}" class="pers pos pos-${n} form-control">
+                                            <option value="">None</option>
+                                            <option value="X">X</option>
+                                            <option value="Y">Y</option>
+                                        </select>
+                                    </div>
+                                    <div style="display: none;"   class="pr-${n} form-group mb-3 col-md-3">
+                                        <label for="pos">Perspective</label>
+                                        <input  type="number" step="any"   name="perspective[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
+                                    <div  style="display: none;"  class="rt-${n} form-group mb-3 col-md-3">
+                                        <label for="pos">Rotation</label>
+                                        <input  type="number" step="any"   name="rotation[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
 
                                     <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
 
@@ -754,7 +845,8 @@ Edit Page
         $(".addflyin").on("click",addFlyIn);
         $(".image_links").on("click",changePosition)
         $(".add-image").unbind("click").on("click", addImage);
-
+        $(".pers").on("change",togglePerspective);
+        
     }
 
     function removelink(e) {

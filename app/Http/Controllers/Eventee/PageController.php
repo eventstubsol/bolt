@@ -176,6 +176,10 @@ class PageController extends Controller
                     "left"=> $request->left[$id],
                     "width"=> $request->width[$id],
                     "height"=> $request->height[$id],
+                    "perspective"=>isset($request->perspective[$id])?$request->perspective[$id]:'',
+                    "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
+                    "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
+               
                 ]);
                 if($request->has("bgimages") && isset($request->bgimages[$id]) ){
                     if(count($request->bgimages[$id])>0 ){
@@ -282,6 +286,10 @@ class PageController extends Controller
                     "left"=> $request->left[$id],
                     "width"=> $request->width[$id],
                     "height"=> $request->height[$id],
+                    "perspective"=>isset($request->perspective[$id])?$request->perspective[$id]:'',
+                    "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
+                    "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
+               
                 ]);
                 if($request->has("bgimages") && isset($request->bgimages[$id]) ){
                     if(count($request->bgimages[$id])>0 ){
