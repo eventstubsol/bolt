@@ -55,7 +55,7 @@ class PageController extends Controller
                 "title"=>$page->name
             ]);
         }
-        // $pages = Page::with(["images", "links"])->get();
+        // $pages = Page::with(["images", "links.background"])->get();
         // return view("pages.list")->with(compact("pages"));
         return redirect()->to(route("eventee.pages.index",['id'=>$id]));
     }
@@ -97,7 +97,7 @@ class PageController extends Controller
         $page = (object) [
             "id"=>$id,
             "name"=>$page_name,
-            "links"=>$links,
+            "links.background"=>$links,
             "event_id"=>$id,
             "treasures"=>$treasures
         ];
@@ -177,6 +177,20 @@ class PageController extends Controller
                     "width"=> $request->width[$id],
                     "height"=> $request->height[$id],
                 ]);
+                if($request->has("bgimages") && isset($request->bgimages[$id]) ){
+                    if(count($request->bgimages[$id])>0 ){
+                      foreach($request->bgimages[$id] as $bgimage){
+                        if($bgimage){ //check if not null
+                          $link->background()->create([
+                            "owner"=>$link->id,
+                            "url" => $bgimage,
+                            "title" => "link"
+                          ]);
+                        }
+        
+                      }
+                    }
+                }
                 if($request->has("flyin") && isset($request->flyin[$id])){
                     $link->flyin()->create([
                         "url"=>$request->flyin[$id],
@@ -212,7 +226,7 @@ class PageController extends Controller
         $booths = Booth::where("event_id",$event_id)->get();
 
         $session_rooms = sessionRooms::where("event_id",$event_id)->get();
-        $page->load(["images","links"]);
+        $page->load(["images","links.background"]);
         $id = $event_id;
         return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths",'id','pag']));
     }
@@ -269,6 +283,20 @@ class PageController extends Controller
                     "width"=> $request->width[$id],
                     "height"=> $request->height[$id],
                 ]);
+                if($request->has("bgimages") && isset($request->bgimages[$id]) ){
+                    if(count($request->bgimages[$id])>0 ){
+                      foreach($request->bgimages[$id] as $bgimage){
+                        if($bgimage){ //check if not null
+                          $link->background()->create([
+                            "owner"=>$link->id,
+                            "url" => $bgimage,
+                            "title" => "link"
+                          ]);
+                        }
+        
+                      }
+                    }
+                }
 
                 if($request->has("flyin") && isset($request->flyin[$id])){
                     $link->flyin()->create([
