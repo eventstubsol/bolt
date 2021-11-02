@@ -69,7 +69,7 @@ class PageController extends Controller
 
         $booths = Booth::where('event_id',$id)->get();
 
-        $session_rooms = sessionRooms::all();
+        $session_rooms = sessionRooms::where('event_id',$id)->get();
 
         $pag =  Page::where('event_id',$id)->first();
 
