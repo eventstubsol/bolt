@@ -131,7 +131,7 @@ class SessionController extends Controller
         // dd($session);        
 
 
-        $rooms = sessionRooms::all();
+        $rooms = sessionRooms::where('event_id',$id)->get();
         $speakers = User::where("type", USER_TYPE_SPEAKER)->get([
             "id",
             "name",
@@ -340,7 +340,8 @@ class SessionController extends Controller
     public function getPolls()
     {
         $timezone = env("APP_TIMEZONE", "GST");
-        $session = null; getCurrentSession(EVENT_ROOM_AUDI);
+        $session = null;
+        //  getCurrentSession(EVENT_ROOM_AUDI);
         $toReturn = [
             "poll" => false,
         ];
