@@ -26,8 +26,8 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 //         dd($subdomain);
 //     });
 // });
-$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
-// $url = '{subdomain}.localhost';
+// $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
+$url = '{subdomain}.localhost';
 Route::group(['domain' => $url], function () {
     Route::get('/', function ($subdomain) {
         $event = Event::where("slug",$subdomain)->first();
@@ -532,6 +532,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::post("/booth/edit/{booth}/{id}", "Eventee\BoothController@adminUpdate")->name("exhibiter.update");
         Route::get("/booth/{booth}/enquiries", "BoothController@boothEnquiries")->name("exhibiter.enquiries");
         Route::get("/booth/{booth}/enquiries/raw", "BoothController@boothEnquiriesRaw")->name("exhibiter.enquiries.raw");
+        Route::POST('booth/video/delete','Eventee\BoothController@deleteVideo')->name('booth.video.delete');
         // Route::post("/booth/edit/{booth}","BoothController@adminUpdateImages")->name("exhibiter.updateimages");
     });
 

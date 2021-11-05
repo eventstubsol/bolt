@@ -269,14 +269,14 @@
                                 @if($boothvideo->title != "brandvideo")
                                 <div class="form-group mb-3 col-12">
                                     <label for="boothvideos">URL</label>
-                                    <input type="url" id="boothvideos" name="boothvideos[]" class="form-control mb-2"
+                                    <input type="text" id="boothvideos" name="boothvideos[]" class="form-control mb-2"
                                            value="{{ $boothvideo->url }}"
                                     >
                                     <label for="videotitles">Title</label>
                                     <input type="text" id="videotitles" name="videotitles[]" class="form-control mb-2"
                                            value="{{ $boothvideo->title }}"
                                     >
-                                    <button class="btn btn-danger mb-2 remove-video">Remove</button>
+                                    <button type="button" data-id="{{ $boothvideo->id }}" onclick="deleteVideo(this)" class="btn btn-danger mb-2 ">Remove</button>
                                 </div>
                                 @endif
                             @endforeach
@@ -734,19 +734,19 @@
         }
 
 
-        function bindRemoveButton() {
-            $(".remove-link").unbind().on("click", removelink);
-            $(".type").on("change",toggleVisibility);
-            $(".pos").on("input",changePosition);
+        // function bindRemoveButton() {
+        //     $(".remove-link").unbind().on("click", removelink);
+        //     $(".type").on("change",toggleVisibility);
+        //     $(".pos").on("input",changePosition);
 
-            $(".done").hide();
-            $(".done").on("click",resetPosition)
-            $(".add-image").unbind().on("click", addImage);
-            $(".pers").on("change",togglePerspective);
+        //     $(".done").hide();
+        //     $(".done").on("click",resetPosition)
+        //     $(".add-image").unbind().on("click", addImage);
+        //     $(".pers").on("change",togglePerspective);
         
 
 
-        }
+        // }
 
         function removelink(e) {
             e.preventDefault();
@@ -756,7 +756,38 @@
                 }
             })
         }
+
+        function deleteVideo(e){
+            let videoId = e.getAttribute('data-id');
+            confirmDelete("Are you sure you want to delete the Link", "Confirm Link deletion!").then(confirmation => {
+                if (confirmation) {
+                    $.post("{{ route('booth.video.delete') }}",{id:videoId},function(response){
+                        if(response.code == 200){
+                            (e).closest(".form-group").remove();
+                        }
+                        else{
+                            alert(response.message);
+                        }
+                    });
+                    
+                }
+            })
+            
+            // $.ajax({
+            //     url:"{{ route('booth.video.delete') }}",
+            //     method:"POST",
+            //     data:{"_token":"{{ csrf_token() }}",'id':videoId},
+            //     success:function(response){
+            //         alert(reposnse.message);
+            //     }
+            //     error:function(response){
+            //         alert(response.message);
+            //     }
+            // });
+        }
     </script>
+
+
 
 
 @endsection

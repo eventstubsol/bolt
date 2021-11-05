@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\BoothInterest;
 use App\Booth;
 
+
 use App\Room;
 use Illuminate\Support\Facades\Log;
 use App\User;
@@ -211,6 +212,7 @@ class BoothController extends Controller
 
   public function adminEdit(Request $req, Booth $booth,$id)
   {
+  
     $pages = Page::where("event_id",$booth->event_id)->get();
 
     $booths = Booth::where("event_id",$booth->event_id)->get();
@@ -409,6 +411,23 @@ class BoothController extends Controller
   public function unpublish(Booth $booth){
       $booth->unpublish();
       return ['success' => true];
+  }
+
+  public function deleteVideo(Request $req){
+    try{
+      $id = $req->id;
+      $video = Video::findOrFail($id);
+      if($video->delete()){
+        return response()->json(["code"=>200,"message"=>"Video Deleted"]);
+      }
+      else{
+        return response()->json(["code"=>500,"message"=>"Something Went Wrong"]);
+      }
+    }
+    catch(\Exception $e){
+      Log::error($e->getMessage());
+    }
+   
   }
 
 }
