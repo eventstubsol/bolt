@@ -50,7 +50,7 @@
                         <input type="file" data-name="resources" data-plugins="dropify" data-type="/" data-default-file="{{($report->resources[1]->url  ?? false) ? assetUrl($report->resources[1]->url) : ""}}"/ >
                     </div>
 
-                    <div class="video-sections row">
+                    <div class="">
                         <div class="form-group mb-3 col-12">
                             <label for="videos">Video URL</label>
                             <input type="url" value="{{$report->video->url ?? ""}}"  id="videos" name="video" class="form-control mb-2" >
