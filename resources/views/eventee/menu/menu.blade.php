@@ -157,7 +157,7 @@ $(document).ready(function(){
         function SavePositions(){
             // console.log(position);
             $.ajax({
-                data: {"position":position},
+                data: {"position":position,"event_id":"{{ $id }}"},
                 method: 'POST',
                 url: '{{ route('menu.store') }}',
                 success:function(response){
