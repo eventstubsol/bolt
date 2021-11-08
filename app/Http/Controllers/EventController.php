@@ -61,7 +61,7 @@ class EventController extends Controller
         $boothrooms = Room::where("event_id",$event_id)->orderBy("position")->get()->load("booths");
 
         $reports = Report::all()->load(["resources", "video"]);
-        $FAQs = FAQ::all();
+        $FAQs = FAQ::where("event_id",$event_id)->get();
         //        $provisionals = ProvisionalGroup::with(["resource", "video"])->get();
         $prizes = Prize::where("event_id",$event_id)->with("images")->orderBy("criteria_low")->get();
         $schedule = getSchedule($event_id);
