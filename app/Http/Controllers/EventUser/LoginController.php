@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Event;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     //
@@ -32,7 +33,10 @@ class LoginController extends Controller
         
     }
 
-    public function confirmLogin(Request $req,$id){
-        
+    public function logout($subdomain){
+        if(Auth::check()){
+            Auth::logout();
+            return redirect()->route('attendeeLogin',$subdomain);
+        }        
     }
 }

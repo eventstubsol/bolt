@@ -57,7 +57,7 @@
                             </a>
                             <div class="dropdown-divider"></div>
                         @endif
-                        <a class="dropdown-item notify-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a class="dropdown-item notify-item" href="{{ route('attendeeLogout',$event_name) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="fe-log-out mr-1"></i>
                             <span>Logout</span>
                         </a>
