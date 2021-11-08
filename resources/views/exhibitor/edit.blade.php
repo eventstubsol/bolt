@@ -340,7 +340,7 @@
             </div>
           `);
             initializeFileUploads();
-            bindRemoveButton();
+            bindRemoveButtons();
         }
      
         function addresource(e) {
@@ -358,7 +358,7 @@
                   </div>
                 </div>
           `);
-            bindRemoveButton();
+            bindRemoveButtons();
             initializeFileUploads();
         }
 
@@ -381,7 +381,7 @@
             })
         }
 
-        function bindRemoveButton(){
+        function bindRemoveButtons(){
             $(".remove-video").unbind().on("click",removevideo);
             $(".remove-resource").unbind().on("click",removeresource);
         }
@@ -393,7 +393,7 @@
             $('.carousel').carousel({
                 interval: 100
             });
-            bindRemoveButton();
+            bindRemoveButtons();
         })
     </script>
     
