@@ -65,7 +65,7 @@ define('LINK_TYPES', [
     "custom_page",
     "lobby",
     "back",
-    "FAQ"
+    "faq"
 ]);
 
 

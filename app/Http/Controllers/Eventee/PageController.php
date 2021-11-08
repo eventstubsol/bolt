@@ -167,7 +167,7 @@ class PageController extends Controller
                     case "lobby":
                         $to = "lobby";
                     case "faq":
-                        $to = "faq";
+                        $to = "FAQ";
                 }
                 $link = Link::create([
                     "page"=>$page->id,
@@ -279,7 +279,7 @@ class PageController extends Controller
                         $to = $request->custom_page[$id];
                         break;
                     case "faq":
-                        $to = "faq";
+                        $to = "FAQ";
                         break;
                 }
                 $link = Link::create([
