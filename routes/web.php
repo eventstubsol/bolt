@@ -46,6 +46,7 @@ Route::group(['domain' => $url], function () {
         // return "This will respond to requests for 'admin.localhost/'";
     });
     Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
+    Route::get('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
     Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
     // Route::get("/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
     // Route::post("/event/register", "AttendeeAuthController@saveRegistration")->name("attendee_register.confirm");
