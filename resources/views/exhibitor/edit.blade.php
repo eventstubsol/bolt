@@ -381,10 +381,10 @@
             })
         }
 
-        function bindRemoveButton(){
-            $(".remove-video").unbind().on("click",removevideo);
-            $(".remove-resource").unbind().on("click",removeresource);
-        }
+        // function bindRemoveButton(){
+        //     $(".remove-video").unbind().on("click",removevideo);
+        //     $(".remove-resource").unbind().on("click",removeresource);
+        // }
 
         $(document).ready(function () {
             $("#add-video").on("click", addvideo);
@@ -734,19 +734,19 @@
         }
 
 
-        // function bindRemoveButton() {
-        //     $(".remove-link").unbind().on("click", removelink);
-        //     $(".type").on("change",toggleVisibility);
-        //     $(".pos").on("input",changePosition);
+        function bindRemoveButton() {
+            $(".remove-link").unbind().on("click", removelink);
+            $(".type").on("change",toggleVisibility);
+            $(".pos").on("input",changePosition);
 
-        //     $(".done").hide();
-        //     $(".done").on("click",resetPosition)
-        //     $(".add-image").unbind().on("click", addImage);
-        //     $(".pers").on("change",togglePerspective);
+            $(".done").hide();
+            $(".done").on("click",resetPosition)
+            $(".add-image").unbind().on("click", addImage);
+            $(".pers").on("change",togglePerspective);
         
 
 
-        // }
+        }
 
         function removelink(e) {
             e.preventDefault();
