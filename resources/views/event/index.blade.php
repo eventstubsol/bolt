@@ -636,7 +636,7 @@ $user = Auth::user();
         @include("event.modules.MeetGreet")
     @endif
 
-    {{-- @include("event.modules.Faq") --}}
+    @include("event.modules.Faq")
 
     @if (isOpenForPublic('swagbag'))
         @include("event.modules.Swagbag")
