@@ -382,6 +382,17 @@
         }
 
         function bindRemoveButton(){
+            $(".type").on("change",toggleVisibility);
+            $(".add-image").unbind().on("click", addImage);
+
+            $(".type").unbind().on("change",toggleVisibility);
+            $(".pos").unbind().on("input",changePosition);
+
+            $(".done").unbind().hide();
+            $(".done").unbind().on("click",resetPosition)
+
+            $(".pers").unbind().on("change",togglePerspective);
+
             $(".remove-video").unbind().on("click",removevideo);
             $(".remove-resource").unbind().on("click",removeresource);
         }
@@ -407,15 +418,15 @@
      
         
         $("#add-link").on("click", addlink);
-        $(".add-image").on("click", addImage);
+        // $(".add-image").on("click", addImage);
 
-        $(".type").on("change",toggleVisibility);
-        $(".pos").on("input",changePosition);
+        // $(".type").on("change",toggleVisibility);
+        // $(".pos").on("input",changePosition);
         
-        $(".done").hide();
-        $(".done").on("click",resetPosition)
+        // $(".done").hide();
+        // $(".done").on("click",resetPosition)
 
-        $(".pers").on("change",togglePerspective);
+        // $(".pers").on("change",togglePerspective);
         
 
         bindRemoveButton();
