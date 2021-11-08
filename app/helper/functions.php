@@ -1,5 +1,7 @@
 <?php
 //All functions defined in this file will be accessible all through the project including View
+
+use App\Api;
 use App\Content;
 use App\Poll;
 use App\User;
@@ -65,7 +67,8 @@ define('LINK_TYPES', [
     "custom_page",
     "lobby",
     "back",
-    "faq"
+    "faq",
+    "photo-booth"
 ]);
 
 
@@ -307,6 +310,14 @@ define("CREATOR_TELLER_LINKS", [
 
 define("BY_LAWS_TELLER_ID", "280fd217-8106-46fc-a36b-c5c38b1a3823");
 
+function api($var,$event_id,$default = ""){
+    $api = Api::where("variable",$var)->where("event_id",$event_id)->first();
+    if($api){
+        return $api->key;
+    }else{
+        return $default;
+    }
+}
 
 
 function getMenuLink($menu){

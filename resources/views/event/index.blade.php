@@ -469,7 +469,7 @@ $user = Auth::user();
     <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=1611083902568">
     <link href="{{ asset('assets/css/custom.css') }}?v=36475567" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GA_TRACKING_ID') }}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
         $user = Auth::user();
     @endphp

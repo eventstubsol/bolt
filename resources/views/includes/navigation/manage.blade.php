@@ -24,6 +24,13 @@
                 <a href="{{ route("eventee.subtypes",['id'=>$id]) }}">Manage Types</a>
             </li>
             <li>
+                <a href="{{ route("access.index",['id'=>$id]) }}"  class="nav-second-level"> 
+                    <span>
+                        Access Control
+                    </span>  
+                </a>
+            </li>
+            <li>
                 <a href="{{ route("eventee.user.create",['id'=>$id]) }}">Create</a>
             </li>
         </ul>
@@ -162,13 +169,28 @@
 
 
 <li class="menu-title">Site Content</li>
-<li>
-    <a href="{{ route("eventee.options",$id) }}">
-        <i data-feather="file-text"></i>
-        <span> General Content</span>
-    </a>
-</li>
 
+
+<li>
+    <a href="#settings" data-toggle="collapse">
+        <i class="fa fa-cog"></i>
+        <span> Settings</span>
+    </a>
+    <div class="collapse" id="settings">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.options",$id) }}">
+                    <span> General Content</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.integrations",$id) }}">
+                    <span> Integrations </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
 <li>
     <a href="#menu" data-toggle="collapse">
         <i class="fa fa-bars"></i>

@@ -919,6 +919,9 @@ function initApp() {
             if ((!whitelist_for_all.includes(room)) && checkAuth() && room != "Sponsor_Stage") {
                 routie("lobby");
             } else {
+                if($("#sessionroom-" + room).length===0){
+                    routie("lobby");
+                }
                 pages.hide().filter("#sessionroom-" + room).show();
                 if(room==="Program-Workshop-2"||room==="Program-Workshop-1"){
                     trackEvent({
@@ -972,6 +975,9 @@ function initApp() {
             if ((!whitelist_for_all.includes(page)) && checkAuth()) {
                 routie("lobby");
             } else {
+                if($("#page-" + page).length===0){
+                    routie("lobby");
+                }
                 pages.hide().filter("#page-" + page).show();
                 if(page==="Program-Workshop-2"||page==="Program-Workshop-1"){
                     trackEvent({

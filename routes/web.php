@@ -106,6 +106,12 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     // Route::post('/Form/Delete',"Eventee\FormController@Destroy")->name('form.destroy');
 
 
+    //Access Control
+    Route::get("/access/{id}", "HomeController@accessControl")->name("access.index");
+    Route::post("/access/{id}", "HomeController@updateAccess")->name("access.store");
+ 
+
+
     Route::get("/forms/all/{id}","Eventee\FormController@index")->name("forms");
     Route::get("/register/{id}/{form}","Eventee\FormController@getForm")->name("getForm");
     Route::get("/form/create/{id}","Eventee\FormController@create")->name("createForm");
@@ -208,6 +214,9 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 
        //options update
 
+    Route::get("/integrations/{id}", "EventController@integrations")->name("eventee.integrations");
+    Route::post("/integrations/update/{id}", "EventController@integrationsUpdate")->name("eventee.integrationsUpdate");
+    
     Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
     Route::post("/options/update/{id}", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");
 
