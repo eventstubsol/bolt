@@ -64,7 +64,8 @@ define('LINK_TYPES', [
     "pdf",
     "custom_page",
     "lobby",
-    "back"
+    "back",
+    "FAQ"
 ]);
 
 

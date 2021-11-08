@@ -24,6 +24,7 @@
             case "chat_group":
             case "pdf":
             case "lobby":
+            case "faq":
                 $to = $link->to;
                 break;
              case "session_room":
