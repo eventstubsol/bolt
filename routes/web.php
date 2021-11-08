@@ -89,6 +89,12 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('Event/update/{id}','EventManageController@update')->name('event.Update');
     Route::post('event/delete',"EventManageController@destroy")->name('event.delete');
 
+    //FAQS Section
+    Route::get("faq/{id}", "Eventee\FaqController@index")->name("eventee.faq");
+    Route::get("faq/create/{id}", "Eventee\FaqController@create")->name("eventee.faq.create");
+    Route::POST("faq/save/{id}", "Eventee\FaqController@store")->name("eventee.faq.save");
+    Route::get("faq/edit/{id}/{faq_id}", "Eventee\FaqController@edit")->name("eventee.faq.edit");
+    Route::post("faq/update/{id}/{faq_id}", "Eventee\FaqController@update")->name("eventee.faq.update");
 	Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
     Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
     Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');

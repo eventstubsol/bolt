@@ -29,6 +29,23 @@
         </ul>
     </div>
 </li>
+
+<li>
+    <a href="#faq" data-toggle="collapse">
+        <i class="fas fa-question-circle"></i>
+        <span> FAQ</span>
+    </a>
+    <div class="collapse" id="faq">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.faq",['id'=>$id]) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.faq.create",['id'=>$id]) }}">Create</a>
+            </li>
+        </ul>
+    </div>
+</li>
 <li>
     <a href="#forms" data-toggle="collapse">
         <i data-feather="users"></i>
