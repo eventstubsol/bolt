@@ -66,6 +66,9 @@
                                 </tr>
                         @endif
                     </tbody>
+                    <tfoot>
+                        <span style="float: right">{{ $faqs->links() }}</span>
+                    </tfoot>
                 </table>
             </div>
         </div>
