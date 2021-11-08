@@ -36,7 +36,10 @@
         }
         .auth-fluid{
             @if(isset($id))
-            background: url("{{assetUrl(getFieldId('login_background',$id))}}") ;
+                background: url("{{assetUrl(getFieldId('login_background',$id))}}") ;
+            @else
+                background: url("{{assetUrl(getField('login_background'))}}"); 
+
             @endif
             background-size: cover;
             background-repeat: no-repeat;
@@ -114,6 +117,8 @@
                                 <span class="logo ">
                                     @if(isset($id))
                                     <img src="{{assetUrl(getFieldId('logo',$id,"uploads/xmbGmR1olTbfKNwonBymeJv0mJV9emC2EK9bjCdF.png"))}}" alt="" height="82">
+                                    @else   
+                                    <img src="{{assetUrl(getField('logo',"uploads/xmbGmR1olTbfKNwonBymeJv0mJV9emC2EK9bjCdF.png"))}}" alt="" height="82">
                                     @endif
                                 </span>
                             </a>
