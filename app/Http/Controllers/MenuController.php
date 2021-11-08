@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Menu;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\DB;
 class MenuController extends Controller
 {
     /**
@@ -44,7 +44,7 @@ class MenuController extends Controller
         foreach ($request->position as $positions) {
             $id = $positions[1];
             $position = $positions[0];
-            \DB::update('UPDATE menus set position = ? where id = ? and  event_id = ?', [$position, $id,$request->event_id]);
+            DB::update('UPDATE menus set position = ? where id = ? and  event_id = ?', [$position, $id,$request->event_id]);
         }
         return response()->json(['message' => 'success']);
     }
