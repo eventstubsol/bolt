@@ -281,6 +281,9 @@ class PageController extends Controller
                     case "faq":
                         $to = "FAQ";
                         break;
+                    case "photo-booth":
+                        $to = "photo-booth";
+                        break;
                 }
                 $link = Link::create([
                     "page"=>"lobby_". ($event_id),
