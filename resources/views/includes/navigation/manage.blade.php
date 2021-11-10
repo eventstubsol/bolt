@@ -47,6 +47,22 @@
     </div>
 </li>
 <li>
+    <a href="#mail" data-toggle="collapse">
+        <i class="fa fa-envelope" aria-hidden="true"></i>
+        <span> Mail</span>
+    </a>
+    <div class="collapse" id="mail">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.mail",['id'=>$id]) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.faq.create",['id'=>$id]) }}">New Mail</a>
+            </li>
+        </ul>
+    </div>
+</li>
+<li>
     <a href="#forms" data-toggle="collapse">
         <i data-feather="users"></i>
         <span> Registrations</span>
