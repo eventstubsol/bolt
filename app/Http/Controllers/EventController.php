@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\AccessSpecifiers;
+use App\Api;
 use App\Booth;
 use App\BoothInterest;
 use App\Event;
@@ -61,7 +63,7 @@ class EventController extends Controller
         $boothrooms = Room::where("event_id",$event_id)->orderBy("position")->get()->load("booths");
 
         $reports = Report::all()->load(["resources", "video"]);
-        $FAQs = FAQ::all();
+        $FAQs = FAQ::where("event_id",$event_id)->get();
         //        $provisionals = ProvisionalGroup::with(["resource", "video"])->get();
         $prizes = Prize::where("event_id",$event_id)->with("images")->orderBy("criteria_low")->get();
         $schedule = getSchedule($event_id);
@@ -82,11 +84,23 @@ class EventController extends Controller
 
             // }
         }
+
+        $access_specifiers = AccessSpecifiers::where("event_id",$event_id)->get()->groupBy("page_id");
+       
+        foreach($access_specifiers as $id=> $access ){
+            $arr = [];
+            foreach($access as $accessTo){
+                array_push($arr,$accessTo->user_type);
+            }
+            $access_specifiers[$id] = $arr;
+        }
+
+
         // dd($sessionroomids);
         $sessions = EventSession::where("event_id",$event_id)->get()->load(["parentroom"]);
         
-        
         $user->load("subscriptions");
+        // dd($user);
         $subscriptions = [];
         foreach ($user->subscriptions as $subscription) {
             $subscriptions[] = $subscription->session_id;
@@ -111,7 +125,8 @@ class EventController extends Controller
                     "sessionroomnames",
                     "event_id",
                     "tables",
-                    "event_name"
+                    "event_name",
+                    "access_specifiers"
                 ])
             );
     }
@@ -130,6 +145,32 @@ class EventController extends Controller
                 "type" => "public"
             ]);
             return true;
+    }
+
+    public function integrations($id)
+    {
+        $apis = Api::where("event_id",$id)->get();
+        $envs = [];
+        foreach($apis as $api){
+            $envs[$api->variable] = $api->key;
+        }
+        // dd($envs);
+        return view("eventee.integrations.list")->with(compact("id","envs"));
+    }
+    public function integrationsUpdate(Request $request,$id)
+    {
+        // if($request->RECAPTCHA_SITE_KEY || $request->RECAPTCHA_SECRET_KEY){
+            foreach($request->except("_token") as $var => $key){
+                Api::updateOrCreate([
+                            "variable"=> $var,
+                            "event_id"=>$id
+                        ],[
+                                "key"=>$key
+                            ]
+                        );
+            }
+            return redirect(route("eventee.integrations",$id));
+        // dd($request->except("_token"));
     }
 
     public function addToBag(Request $request)

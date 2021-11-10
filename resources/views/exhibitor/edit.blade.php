@@ -269,14 +269,14 @@
                                 @if($boothvideo->title != "brandvideo")
                                 <div class="form-group mb-3 col-12">
                                     <label for="boothvideos">URL</label>
-                                    <input type="text" id="boothvideos" name="boothvideos[]" class="form-control mb-2"
+                                    <input type="url"  name="boothvideos[]" class="form-control mb-2"
                                            value="{{ $boothvideo->url }}"
                                     >
                                     <label for="videotitles">Title</label>
-                                    <input type="text" id="videotitles" name="videotitles[]" class="form-control mb-2"
+                                    <input type="text"  name="videotitles[]" class="form-control mb-2"
                                            value="{{ $boothvideo->title }}"
                                     >
-                                    <button type="button" data-id="{{ $boothvideo->id }}" onclick="deleteVideo(this)" class="btn btn-danger mb-2 ">Remove</button>
+                                    <button class="btn btn-danger mb-2 remove-video">Remove</button>
                                 </div>
                                 @endif
                             @endforeach
@@ -340,7 +340,7 @@
             </div>
           `);
             initializeFileUploads();
-            bindRemoveButton();
+            bindRemoveButtons();
         }
      
         function addresource(e) {
@@ -358,7 +358,7 @@
                   </div>
                 </div>
           `);
-            bindRemoveButton();
+            bindRemoveButtons();
             initializeFileUploads();
         }
 
@@ -381,10 +381,10 @@
             })
         }
 
-        // function bindRemoveButton(){
-        //     $(".remove-video").unbind().on("click",removevideo);
-        //     $(".remove-resource").unbind().on("click",removeresource);
-        // }
+        function bindRemoveButtons(){
+            $(".remove-video").unbind().on("click",removevideo);
+            $(".remove-resource").unbind().on("click",removeresource);
+        }
 
         $(document).ready(function () {
             $("#add-video").on("click", addvideo);
@@ -393,7 +393,7 @@
             $('.carousel').carousel({
                 interval: 100
             });
-            bindRemoveButton();
+            bindRemoveButtons();
         })
     </script>
     
@@ -756,38 +756,7 @@
                 }
             })
         }
-
-        function deleteVideo(e){
-            let videoId = e.getAttribute('data-id');
-            confirmDelete("Are you sure you want to delete the Link", "Confirm Link deletion!").then(confirmation => {
-                if (confirmation) {
-                    $.post("{{ route('booth.video.delete') }}",{id:videoId},function(response){
-                        if(response.code == 200){
-                            (e).closest(".form-group").remove();
-                        }
-                        else{
-                            alert(response.message);
-                        }
-                    });
-                    
-                }
-            })
-            
-            // $.ajax({
-            //     url:"{{ route('booth.video.delete') }}",
-            //     method:"POST",
-            //     data:{"_token":"{{ csrf_token() }}",'id':videoId},
-            //     success:function(response){
-            //         alert(reposnse.message);
-            //     }
-            //     error:function(response){
-            //         alert(response.message);
-            //     }
-            // });
-        }
     </script>
-
-
 
 
 @endsection

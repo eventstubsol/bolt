@@ -15,6 +15,9 @@
                     case "custom_page":
                     case "zoom":
                     case "booth":
+                    case "lobby":
+                    case "faq":
+                    case "photo-booth":
                         $to = $link->to;
                         break;
                     case "session_room":

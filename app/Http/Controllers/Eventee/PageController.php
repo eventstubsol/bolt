@@ -166,6 +166,8 @@ class PageController extends Controller
                         break;
                     case "lobby":
                         $to = "lobby";
+                    case "faq":
+                        $to = "FAQ";
                 }
                 $link = Link::create([
                     "page"=>$page->id,
@@ -275,6 +277,12 @@ class PageController extends Controller
                         break;
                     case "custom_page":
                         $to = $request->custom_page[$id];
+                        break;
+                    case "faq":
+                        $to = "FAQ";
+                        break;
+                    case "photo-booth":
+                        $to = "photo-booth";
                         break;
                 }
                 $link = Link::create([

@@ -290,9 +290,11 @@ class UserController extends Controller
         }
 
         $user->name = $request->name;
+        $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->subtype = $request->subtype;
         $user->save();
+        // dd($user);
 
         return redirect()->route('eventee.user', $id);
     }
