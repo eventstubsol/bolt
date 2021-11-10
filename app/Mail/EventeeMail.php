@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CheckMail extends Mailable
+class EventeeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,12 +16,12 @@ class CheckMail extends Mailable
      *
      * @return void
      */
-    public function __construct($subject,$message)
+    public function __construct($event,$subject,$message)
     {
         //
-        // $this->middleware('eventee');
+        $this->event = $event;
         $this->subject = $subject;
-        $this->message = $message;
+        $this->message = $message; 
     }
 
     /**
@@ -31,6 +31,11 @@ class CheckMail extends Mailable
      */
     public function build()
     {
-        return $this->view('test.name');
+        return $this->markdown('emails.eventee')->with([
+            'event'=>$this->event,
+            'subject'=>$this->subject,
+            'message'=>$this->message
+
+        ]);
     }
 }

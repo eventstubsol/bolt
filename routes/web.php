@@ -95,6 +95,14 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::POST("faq/save/{id}", "Eventee\FaqController@store")->name("eventee.faq.save");
     Route::get("faq/edit/{id}/{faq_id}", "Eventee\FaqController@edit")->name("eventee.faq.edit");
     Route::post("faq/update/{id}/{faq_id}", "Eventee\FaqController@update")->name("eventee.faq.update");
+
+    //Mailables
+    Route::get('mail/{id}',"Eventee\MailController@index")->name('eventee.mail');
+    Route::get('mail/create/{id}',"Eventee\MailController@create")->name('eventee.mail.create');
+    Route::post('mail/send/{id}',"Eventee\MailController@send")->name('eventee.mail.send');
+
+
+
 	Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
     Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
     Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
