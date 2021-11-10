@@ -19,7 +19,7 @@
             ></a>
     </div>
 </div>
-<!-- Resources -->
+{{-- <!-- Resources -->
 <div class="modal fade theme-modal" id="faqs-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -52,4 +52,4 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<!-- End Resources -->
+<!-- End Resources --> --}}
