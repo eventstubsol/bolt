@@ -67,7 +67,7 @@ class HomeController extends Controller
     }
 
     public function updateAccess(Request $request,$id){
-        AccessSpecifiers::truncate();
+        AccessSpecifiers::where("event_id",$id)->delete();
         foreach($request->all() as $room=>$access_ids){
             if(strpos($room, 'pages-')!==false || strpos($room, 'rooms-')!==false ){
                 $user_type = str_replace("pages-", '',$room);

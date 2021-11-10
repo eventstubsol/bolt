@@ -290,8 +290,7 @@ define("MENU_ICONS",[
     "fe-radio",
     "fe-clock",
     "fe-file-text",
-    "fe-play-circle"
-
+    "fe-play-circle",
 ]);
 
 
