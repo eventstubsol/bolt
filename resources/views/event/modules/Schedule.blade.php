@@ -114,7 +114,7 @@
                                                         $id = $event['id'];
                                                         $l++;
                                                     @endphp
-                                                    <ul class="list-unstyled timeline-sm"> 
+                                                    <ul style="padding-left: 110px !important;" class="list-unstyled timeline-sm"> 
                                                         <li class="timeline-sm-item">
                                                             <span class="timeline-sm-date">
                                                                 {{ $event['start_date']['dts'] }} - <br> {{ $event['start_date']['dte'] }}
