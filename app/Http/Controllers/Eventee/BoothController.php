@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 use App\User;
 
 use App\BoothAdmin;
-
+use App\Event;
 use App\Image;
 
 use App\Video;
@@ -71,15 +71,15 @@ class BoothController extends Controller
           }
           $booth->save();
           // if($booth->save()){
-            Http::withHeaders([
-              "apiKey" => env("COMET_CHAT_API_KEY"),
-                "appId" => env("COMET_CHAT_APP_ID")
-              ])
-                ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
-                  "type" => strtolower(env("COMET_CHAT_GROUP_TYPE")),
-                  "guid" => $booth->id,
-                  "name" => $booth->name
-                ]);
+            // Http::withHeaders([
+            //   "apiKey" => env("COMET_CHAT_API_KEY"),
+            //     "appId" => env("COMET_CHAT_APP_ID")
+            //   ])
+            //     ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
+            //       "type" => strtolower(env("COMET_CHAT_GROUP_TYPE")),
+            //       "guid" => $booth->id,
+            //       "name" => $booth->name
+            //     ]);
           
               $user_ids = $request->get("userids");
               foreach ($user_ids as $user_id) {
@@ -90,13 +90,13 @@ class BoothController extends Controller
               }
           
               // create group admin
-              Http::withHeaders([
-                "apiKey" => env("COMET_CHAT_API_KEY"),
-                "appId" => env("COMET_CHAT_APP_ID"),
-                "Accept-Encoding"=> "deflate, gzip",
-                "Content-Encoding"=> "gzip"
-                ])
-                ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
+              // Http::withHeaders([
+              //   "apiKey" => env("COMET_CHAT_API_KEY"),
+              //   "appId" => env("COMET_CHAT_APP_ID"),
+              //   "Accept-Encoding"=> "deflate, gzip",
+              //   "Content-Encoding"=> "gzip"
+              //   ])
+              //   ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
                 flash("Booth Created Successfully")->success();
                 return redirect()->to(route("eventee.booth",$id)); 
                 // }
@@ -198,18 +198,25 @@ class BoothController extends Controller
   //Delete booth
   public function destroy(Booth $booth,$id)
   {
-    Http::withHeaders([
-      "apiKey" => env("COMET_CHAT_API_KEY"),
-      "appId" => env("COMET_CHAT_APP_ID"),
-      "Accept-Encoding"=> "deflate, gzip",
-      "Content-Encoding"=> "gzip"
-    ])
-      ->delete(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id);
+    // dd($booth);
+    // Http::withHeaders([
+    //   "apiKey" => env("COMET_CHAT_API_KEY"),
+    //   "appId" => env("COMET_CHAT_APP_ID"),
+    //   "Accept-Encoding"=> "deflate, gzip",
+    //   "Content-Encoding"=> "gzip"
+    // ])
+    //   ->delete(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id);
 
     $booth->delete();
-    return redirect()->to(route("booth.index",$id));
+    return true;
   }
 
+  public function exhibiterhome($subdomain){
+    // dd($subdomain);
+    $id = Event::where("slug",$subdomain)->first()->id;
+    return view("dashboard.exhibiter")->with(compact("id"));
+
+  }
   public function adminEdit(Request $req, Booth $booth,$id)
   {
   

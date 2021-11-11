@@ -1,4 +1,4 @@
-<div class="mb-3" >
+{{-- <div class="mb-3" >
    
     <!-- List of Dates in Event -->
     <ul class="nav nav-pills navtab-bg nav-justified" style="margin: 0px -5px;">
@@ -191,4 +191,4 @@
                 </div>  
             @endforeach
         </div>
-</div>
+</div> --}}

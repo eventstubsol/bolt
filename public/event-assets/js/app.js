@@ -137,6 +137,7 @@ function initApp() {
                     console.log("Hello World")
                     e.preventDefault();
                     let t = $(this);
+                    console.log(t);
                     t.prop("disabled", true);
                     if (t.data("id")) {
                         $.ajax({
@@ -147,6 +148,11 @@ function initApp() {
                             },
                             success: function () {
                                 // t.parent().find("a").prop("disabled", false).hide().filter(".subscribe-to-event").show();
+                                $(".sa-"+t.data("id")).show();
+                                $(".sr-"+t.data("id")).hide();
+                                t.hide().filter(".subscribe-to-event").show();
+                                t.parent().find("a").filter(".subscribe-to-event").show();
+                         
                                 t.parent().parent().hide();
                                 showMessage("Unsubscribed to session. ", "success");
                             },
@@ -220,6 +226,9 @@ function initApp() {
         // console.log("hello")
         e.preventDefault();
         let t = $(this);
+
+        console.log( t);
+        console.log( t.data("id"));
         t.prop("disabled", true);
         if (t.data("id")) {
             $.ajax({
@@ -230,7 +239,10 @@ function initApp() {
                 },
                 success: function () {
                     showMessage("Subscribed to session. You will now get a priority notification few minutes prior to session.", "success");
-                    t.parent().find("a").prop("disabled", false).hide().filter(".unsubscribe-event").show();
+                    t.hide();
+                    $(".sa-"+t.data("id")).hide();
+                    $(".sr-"+t.data("id")).show();
+                    t.parent().find("a").filter(".unsubscribe-event").show();
                 },
                 error: function () {
                     showMessage("Error occurred while subscribing to session. Please try again later or refresh page.", "error");
@@ -239,9 +251,11 @@ function initApp() {
         }
     });
     $(".unsubscribe-event").on("click", function (e) {
-        console.log("Hello World")
         e.preventDefault();
         let t = $(this);
+        console.log(t.data("id"));
+        
+        console.log("Hello World")
         t.prop("disabled", true);
         if (t.data("id")) {
             $.ajax({
@@ -251,7 +265,8 @@ function initApp() {
                     _token: window.config.token,
                 },
                 success: function () {
-                    t.parent().find("a").prop("disabled", false).hide().filter(".subscribe-to-event").show();
+                    t.hide().filter(".subscribe-to-event").show();
+                    t.parent().find("a").filter(".subscribe-to-event").show();
                 },
                 error: function () {
                     showMessage("Error occurred while disabling session notification. Please try again later or refresh page.", "error");

@@ -83,7 +83,7 @@ class AttendeeAuthController extends Controller
         $user = User::with('tags.looking_users')->where("email", $request->post("email"))
         ->where('event_id',$event->id)
             //            ->whereIn("type", USER_TYPES_TO_LOGIN_WITH_MEMBERSHIP_ID)
-            ->whereNotIn("type", ["admin", "teller", "moderator", "exhibiter", "cms_manager"])
+            ->whereNotIn("type", ["admin","eventee", "cms_manager"])
             ->first();
         
         if (!$user) {
@@ -108,13 +108,9 @@ class AttendeeAuthController extends Controller
             // ]);
         } else {
 
-            // if ($user->type == 'attendee' && env("APP_ENV") != "local") {
-            //     return view("auth.attendee_login")->with([
-            //         "notFound" => TRUE,
-            //         "captchaError" => FALSE,
-            //         "login" => $this->loginT
-            //     ]);
-            // }
+            if ($user->type !== 'attendee' ) {
+                return redirect( route("exhibitorLogin",['subdomain'=>$subdomain,'email'=>$user->email]));
+            }
             \DB::table("sessions")->where("user_id", $user->id)->whereNotIn("id", [session()->getId()])->delete();
             Auth::login($user);
             LoginLog::create(["ip" => $request->ip(), "user_id" => $user->id]);
@@ -156,6 +152,39 @@ class AttendeeAuthController extends Controller
         // $form = (object) ($form ->toArray());
         // return $form;
         return view("eventee.form.registration")->with(compact("id","subdomain","form","email","subtypes"));
+   }
+
+   public function exhibitorlogin($subdomain,Request $req)
+   {
+    try{
+        $event = Event::where("slug",$subdomain)->first();
+        $user = User::where('email',$req->email)->first();
+        $pass = password_verify($req->password,$user->password);
+        if($pass ){
+            Auth::login($user);
+                // return $user->type;
+            if($user->type === "exhibiter"){
+                return redirect(route("exhibiterhome",$subdomain));
+            }
+            // if(view()->exists("dashboard.".$user->type)){
+            // }
+            // return redirect(route('home'));
+        }
+        else{
+            return view("auth.exhibiter")->with([
+                "email" => $req->email,
+                "login" => $this->loginT,
+                "notFound" => TRUE,
+                "captchaError" => FALSE,
+                "id"=>$event->id,
+                "subdomain"=>$event->slug
+            ]);
+            return $pass;
+        }
+    }
+    catch(\Exception $e){
+        Log::error($e->getMessage());
+    }
    }
    public function showRegistrationForm($subdomain)
     {

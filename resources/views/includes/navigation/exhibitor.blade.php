@@ -4,7 +4,7 @@ $booths = getBooths();
 @endphp
 @foreach($booths as $booth)
 <li>
-    <a href="{{route('exhibiter.update', ['booth' => $booth])}}">
+    <a href="{{route('exhibiter.update', ['booth' => $booth,'id'=>$id])}}">
          <i data-feather="grid"></i>
         <span>{{$booth->name}}</span>
     </a>

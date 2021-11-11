@@ -584,7 +584,7 @@ function getLobbyItems($event_id)
     $treasures = Treasure::where(["owner"=>"lobby_".$event_id])->get();
     foreach ($treasures as $index => $treasure) {
         $toReturn .= "
-        <div class='scavenger-item positioned' data-page='lobby' data-index='$index' style='" . areaStyles([$treasure->top,$treasure->left,$treasure->width,$treasure->height]) . "' data-name='treasure_hunt_item' title='treasure_hunt_item' >
+        <div class='scavenger-item positioned' data-page='lobby' data-index='$index' style='" . areaStyles([$treasure->top,$treasure->left,$treasure->width,$treasure->height]) . "' data-name='treasure_hunt_item_$index' title='treasure_hunt_item_$index' >
             <img async class='fill positioned' src='" . assetUrl($treasure->url) . "' style='object-fit:contain;' alt='' />
         </div>
         ";
@@ -1053,11 +1053,8 @@ function getSchedule($event_id){
     $schedule = [];
     $eventsLineup = EventSession::where("event_id",$event_id)->orderBy("start_time")->with("speakers.speaker")->get()->load(["parentroom","resources"]);
     foreach ($eventsLineup as $event){
-        if(!isset($schedule[$event->master_room])){
-            $schedule[$event->master_room] = [];
-        }
-        if(!isset($schedule[$event->master_room][$event->room])){
-            $schedule[$event->master_room][$event->room] = [];
+        if(!isset($schedule[$event->room])){
+            $schedule[$event->room] = [];
         }
         $now = Carbon::now();
         $status = 0; //Not Started
@@ -1069,14 +1066,13 @@ function getSchedule($event_id){
             $status = 3; //Starting soon
         }
         if($event->start_time && $event->end_time){
-            $schedule[$event->master_room][$event->room][$event->id] = [
+            $schedule[$event->room][$event->id] = [
                 "start_time" => $event->start_time->utc()->toString(),
                 "start_date" => [
                     "m" => $event->start_time->format("l, M dS"),
                     "dts" => $event->start_time->format("h:i A"),
                     "dte" => $event->end_time->format("h:i A"),
                 ],
-                "master_room" => $event->master_room,
                 "end_time" => $event->end_time->toString(),
                 "status" => $status,
                 "name" => $event->name,

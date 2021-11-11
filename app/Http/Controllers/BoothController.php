@@ -294,10 +294,10 @@ class BoothController extends Controller
     return redirect()->to(route("exhibiter.update", ["booth" => $booth->id]));
   }
 
-  public function boothEnquiries(Booth $booth){
+  public function boothEnquiries(Booth $booth,$id){
       $booth->load("interests.user");
 //      return $booth;
-      return view("exhibitor.enquiries")->with(compact("booth"));
+      return view("exhibitor.enquiries")->with(compact(["booth","id"]));
   }
 
   public function boothEnquiriesRaw(Booth $booth){
