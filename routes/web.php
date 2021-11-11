@@ -39,6 +39,10 @@ Route::group(['domain' => $url], function () {
         if(!$user){
             return redirect(route('attendeeLogin',$subdomain));
         }
+        if($user->type === "exhibiter"){
+            return redirect(route("exhibiterhome",$subdomain));
+        }
+        // if($user->type)
         // dd($subdomain);
         return redirect(route('eventee.event',$subdomain));
         // Route::get("/", "HomeController@index")->name("home");
@@ -46,13 +50,18 @@ Route::group(['domain' => $url], function () {
         // return "This will respond to requests for 'admin.localhost/'";
     });
     Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
+    Route::get('/exhibitorlogin/{email}',"EventUser\LoginController@exhibitorlogin")->name("exhibitorLogin");
     Route::get('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
     Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
+    Route::post("/event/post/exhibitorlogin", "AttendeeAuthController@exhibitorlogin")->name("exhibiter.login");
     // Route::get("/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
     // Route::post("/event/register", "AttendeeAuthController@saveRegistration")->name("attendee_register.confirm");
     Route::get("/register/{slug}", "AttendeeAuthController@showRegistration")->name("attendee_registe");
+    Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
+        Route::get("/booths", "Eventee\BoothController@exhibiterhome")->name("exhibiterhome");
+    });
     Route::post("/event/register", "AttendeeAuthController@confirmReg")->name("attendee_register.confirmReg");
-    Route::middleware(["auth"])->group(function () {
+    Route::middleware(["auth"])->group(function ($subdomain) {
         Route::get("/event", "EventController@index")->name("eventee.event");
         Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
         Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
@@ -186,7 +195,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post("/lounge/event/store/{id}","Eventee\LoungeController@store")->name('eventee.lounge.store');
     Route::get('lounge/event/{table}/{id}/edit',"Eventee\LoungeController@edit")->name('eventee.lounge.edit');
     Route::put('lounge/{table}/{id}/update',"Eventee\LoungeController@update")->name('eventee.lounge.update');
-    Route::delete('lounge/event/delete',"Eventee\LoungeController@destroy")->name('eventee.lounge.destroy');
+    Route::delete('lounge/delete/{id}/{table}',"Eventee\LoungeController@destroy")->name('eventee.lounge.destroy');
    
     //Background Change
     Route::get('background/{id}','Eventee\BackgroundController@index')->name('eventee.background');
@@ -554,9 +563,9 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
         Route::get("/booth/edit/{booth}/{id}", "Eventee\BoothController@adminEdit")->name("exhibiter.edit");
         Route::post("/booth/edit/{booth}/{id}", "Eventee\BoothController@adminUpdate")->name("exhibiter.update");
-        Route::get("/booth/{booth}/enquiries", "BoothController@boothEnquiries")->name("exhibiter.enquiries");
-        Route::get("/booth/{booth}/enquiries/raw", "BoothController@boothEnquiriesRaw")->name("exhibiter.enquiries.raw");
-        Route::POST('booth/video/delete','Eventee\BoothController@deleteVideo')->name('booth.video.delete');
+        Route::get("/booth/{booth}/enquiries/{id}", "BoothController@boothEnquiries")->name("exhibiter.enquiries");
+        Route::get("/booth/{booth}/enquiries/raw/", "BoothController@boothEnquiriesRaw")->name("exhibiter.enquiries.raw");
+        // Route::POST('booth/video/delete','Eventee\BoothController@deleteVideo')->name('booth.video.delete');
         // Route::post("/booth/edit/{booth}","BoothController@adminUpdateImages")->name("exhibiter.updateimages");
     });
 

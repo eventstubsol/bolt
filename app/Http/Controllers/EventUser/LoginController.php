@@ -32,6 +32,25 @@ class LoginController extends Controller
         }
         
     }
+    public function exhibitorLogin($sudomain,$email){
+
+        // return  ($email);
+        $event = Event::where("slug",$sudomain)->first();
+        if($event->end_date < Carbon::today()){
+            return view('errors.custom');
+        }
+        else{
+            return view("auth.exhibiter")->with([
+                "email" => $email,
+                "login" => $this->loginT,
+                "notFound" => FALSE,
+                "captchaError" => FALSE,
+                "id"=>$event->id,
+                "subdomain"=>$event->slug
+            ]);
+        }
+        
+    }
 
     public function logout($subdomain){
         if(Auth::check()){

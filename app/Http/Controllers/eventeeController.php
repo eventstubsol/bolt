@@ -67,7 +67,7 @@ class eventeeController extends Controller
                 return redirect(route('teacher.dashboard'));
             }
             else{
-                return $user->type;
+                return redirect(back());
             }
         }
         catch(\Exception $e){

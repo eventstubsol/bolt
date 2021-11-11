@@ -82,6 +82,14 @@
             align-items: center;
             justify-content: center;
         }
+        .visit_event:hover{
+            color: white;
+        }
+        .visit_event{
+            padding: 22px;
+            display: block;
+            color: white;
+        }
     </style>
 
     @yield("styles_after")
@@ -197,7 +205,6 @@
                             <i class="fe-menu"></i>
                         </button>
                     </li>
-                    @if($user->type === 'eventee')
                         
                         <li class="dropdown notification-list topbar-dropdown">
                             <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
@@ -215,6 +222,8 @@
                                         <i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </a>
+                              @if($user->type === 'eventee')
+                  
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                @php
                                     $events = App\Event::where('user_id',Auth::id())->orderBy('id','desc')->get();
@@ -225,9 +234,15 @@
                                     @endforeach
                                 <!-- item-->
                             </div>
-                        </li>
-                 
                     @endif
+                    
+                        @if(isset($id))
+                            <li class=" color-primary">
+                                <a class="visit_event" href="http://{{$event->link}}/event" target="_blank">Visit Event</a>    
+                            </li>
+                        @endif
+                </li>
+                 
 
                 </ul>
             @endauth
@@ -269,8 +284,10 @@
                 <div id="sidebar-menu">
                     <ul id="side-menu">
                         @yield('navigation')
-                       
-                                @if( isset($id) && $id !=null)
+                        
+                                @if(Auth::user()->type == "exhibiter")
+                                     @include("includes.navigation.exhibitor")
+                                @elseif( isset($id) && $id !=null)
                                         @include("includes.navigation.manage")
                                 @elseif(Auth::user()->type == "admin")
                                     @include("includes.navigation.admin")
@@ -279,9 +296,6 @@
                                     @include("includes.navigation.moderator")
                                 
 
-                                @elseif(Auth::user()->type == "exhibiter")
-                                    @include("includes.navigation.exhibitor")
-                               
 
                                 @elseif(Auth::user()->type == "teller")
                                     @include("includes.navigation.teller")

@@ -62,7 +62,7 @@
                     t = $(this);
                     let deleteUrl = '{{route("eventee.lounge.destroy", [ "table" => ":id", "id" => $id ])}}';
                     let id = t.data("id");
-                    confirmDelete("Are you sure you want to DELETE session?","Confirm session Delete").then(confirmation=>{
+                    confirmDelete("Are you sure you want to DELETE table?","Confirm table Delete").then(confirmation=>{
                         if(confirmation){
                             $.ajax({
                                 url:deleteUrl.replace(":id", id),
