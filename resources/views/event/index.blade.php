@@ -997,6 +997,24 @@ $user = Auth::user();
     <script src="{{ asset('dflip/js/dflip.min.js') }}" type="text/javascript"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script> --}}
     <script async src="https://app.popkit.club/pixel/3c26bfdb333b6fecd7284b84b0465334"></script>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script>
+        var event_id = "{{ $id }}";
+        console.log(event_id);
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+    
+        var pusher = new Pusher('123b7f594f1f360676a6', {
+          cluster: 'ap2'
+        });
+        
+        var channel = pusher.subscribe('Notification');
+        channel.bind('notification-sent', function(data) {
+          console.log(data.title);
+          console.log(data.message);
+        });
+      </script>
 </body>
 
 </html>
