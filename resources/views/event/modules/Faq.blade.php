@@ -24,7 +24,7 @@
                         class="collapse"
                         @endif
                         aria-labelledby="heading{{ $faq->id }}" data-parent="#accordion">
-                        <div class="faq-content">{{$faq->answer}}</div>
+                        <div class="faq-content">{!! $faq->answer !!}</div>
                     </div>
                 </div>
             @endforeach

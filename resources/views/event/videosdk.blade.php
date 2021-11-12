@@ -37,6 +37,7 @@
           webcamEnabled: false,
           participantCanToggleSelfWebcam: true,
           participantCanToggleSelfMic: true,
+          redirectOnLeave: false,
 
           chatEnabled: true,
           screenShareEnabled: true,
