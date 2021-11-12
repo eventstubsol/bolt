@@ -61,7 +61,7 @@
                     <tbody>                        
                         @if(count($announcements) < 1)
                             <tr>
-                                <td colspan="4"><center>No Data Available</center></td>
+                                <td colspan="5"><center>No Data Available</center></td>
                             </tr>
                         @else
                             @foreach ($announcements as $key => $announcement)
