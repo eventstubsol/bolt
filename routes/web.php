@@ -28,8 +28,8 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 // });
 
 
-// $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
-$url = '{subdomain}.localhost';
+$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
+// $url = '{subdomain}.localhost';
 Route::group(['domain' => $url], function () {
     Route::get('/', function ($subdomain) {
         $event = Event::where("slug",$subdomain)->first();
