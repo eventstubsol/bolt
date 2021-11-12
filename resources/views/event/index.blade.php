@@ -403,6 +403,25 @@ $user = Auth::user();
         }
 
     </style>
+    {{-- Notification Modal --}}
+    <!-- Small modal -->
+        <div class="consent-notification hide-on-exterior"  id="notification-smallModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="card">
+                
+                <div class="card-body">
+                    <div class="card-title" id="notification-head">
+
+                    </div>
+                    <div id="notification-body"></div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-danger" onclick="offNotification()" style="cursor: pointer;float: right;">Close</button>
+                </div>
+                    
+            </div>
+            
+        </div>
+        
     {{-- App favicon --}}
     <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}">
     <!-- Icons -->
@@ -1011,9 +1030,24 @@ $user = Auth::user();
         
         var channel = pusher.subscribe(slug);
         channel.bind('notification-sent', function(data) {
-          console.log(data.title);
-          console.log(data.message);
+            let consentNotify = $('.consent-notification');
+            $('#notification-head').empty();
+            $('#notification-body').empty();
+            $('#notification-head').html('<h4>Subject:&nbsp;'+data.title+'</h4>');
+            $('#notification-body').html('<h5>Message:&nbsp;'+data.message+'</h5>');
+            consentNotify.removeClass('enable');
+            $('#notification-smallModal').addClass('enable');
+            
+
+            console.log(data.title);
+            console.log(data.message);
         });
+        function offNotification(){
+           
+            let consentNotify = $('.consent-notification');
+            consentNotify.addClass('enable');
+            $('#notification-smallModal').removeClass('enable');
+        }
       </script>
 </body>
 
