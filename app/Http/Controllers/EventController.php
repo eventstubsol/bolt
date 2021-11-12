@@ -126,7 +126,8 @@ class EventController extends Controller
                     "event_id",
                     "tables",
                     "event_name",
-                    "access_specifiers"
+                    "access_specifiers",
+                    
                 ])
             );
     }
