@@ -158,7 +158,7 @@ class AttendeeAuthController extends Controller
    {
     try{
         $event = Event::where("slug",$subdomain)->first();
-        $user = User::where('email',$req->email)->first();
+        $user = User::where('email',$req->email)->where("event_id",$event->id)->first();
         $pass = password_verify($req->password,$user->password);
         if($pass ){
             Auth::login($user);
@@ -179,7 +179,8 @@ class AttendeeAuthController extends Controller
                 "id"=>$event->id,
                 "subdomain"=>$event->slug
             ]);
-            return $pass;
+            return "Invalid Credentials";
+            
         }
     }
     catch(\Exception $e){
