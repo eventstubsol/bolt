@@ -16,18 +16,19 @@ class NotificationEvent implements ShouldBroadcast
     
     public $message;
     public $title;
-
+    public $slug;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message,$title)
+    public function __construct($message,$title,$slug)
     {
         //
         $this->title = $title;
         $this->message = $message;
+        $this->slug = $slug;
     }
 
     /**
@@ -37,7 +38,7 @@ class NotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('Notification');
+        return new Channel($this->slug);
     }
 
     public function broadcastWith () {
