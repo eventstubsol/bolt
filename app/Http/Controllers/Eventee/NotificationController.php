@@ -8,6 +8,7 @@ use App\Device;
 use App\Notification;
 use App\User;
 use App\Events\NotificationEvent;
+use App\Event;
 use App\PushNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -54,8 +55,9 @@ class NotificationController extends Controller
         //  } else {
         //      return $resp->body();
         //  }
+        $event = Event::findOrFail($id);
         try{
-            event(new NotificationEvent($request->message,$request->title));
+            event(new NotificationEvent($request->message,$request->title,$id));
         }
        catch(\Exception $e){
            Log::error($e->getMessage());
