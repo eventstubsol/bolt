@@ -236,6 +236,7 @@ class UserController extends Controller
     }
     public function update(Request $request, $id, $user_id)
     {
+        // dd($request->all());
         $user = User::findOrFail($user_id);
         $cometChat = isset($userData["enable_chat"]) ? 'enable' : null;
         $cometChat =  isset($userData["disable_chat"]) ? 'disable' : $cometChat;
@@ -293,6 +294,9 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->subtype = $request->subtype;
+        if($request->passsword){
+            $user->password = Hash::make($request->pasword);
+        }
         $user->save();
         // dd($user);
 
