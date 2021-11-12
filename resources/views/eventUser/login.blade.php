@@ -13,9 +13,9 @@ Hello there!
 @endsection
 
 @section('scripts_before')
-@if(isset($id) && api('RECAPTCHA_SECRET_KEY',$id) && api('RECAPTCHA_SITE_KEY',$id))
+{{-- @if(isset($id) && api('RECAPTCHA_SECRET_KEY',$id) && api('RECAPTCHA_SITE_KEY',$id))
 <script src="https://www.google.com/recaptcha/api.js?render={{ api('RECAPTCHA_SITE_KEY',$id)}}"></script>
-@endif
+@endif --}}
 @endsection
 
 @section('form')
