@@ -82,6 +82,10 @@
                         <label for="name">COMET_CHAT_API_KEY </label>
                         <input  autofocus type="text" value="{{ $envs['COMET_CHAT_API_KEY'] ?? '' }}"  name="COMET_CHAT_API_KEY" class="form-control">
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="name">COMET_CHAT_WIDGET_ID </label>
+                        <input  autofocus type="text" value="{{ $envs['COMET_CHAT_WIDGET_ID'] ?? '' }}"  name="COMET_CHAT_WIDGET_ID" class="form-control">
+                    </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
