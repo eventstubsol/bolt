@@ -213,9 +213,9 @@
                                 <span class="pro-user-name ml-1" style="font-size: 18px; font-weight: bold;">
                                     @if(isset($id))
                                         @php
-                                            $event = App\Event::findOrFail($id);
+                                            $curr_event = App\Event::findOrFail($id);
                                         @endphp
-                                        {{strtoupper($event->name)}}
+                                        {{strtoupper($curr_event->name)}}
                                     @else
                                         All Events
                                     @endif
@@ -238,7 +238,7 @@
                     
                         @if(isset($id))
                             <li class=" color-primary">
-                                <a class="visit_event" href="http://{{$event->link}}/event" target="_blank">Visit Event</a>    
+                                <a class="visit_event" href="http://{{$curr_event->link}}/event" target="_blank">Visit Event</a>    
                             </li>
                         @endif
                 </li>
