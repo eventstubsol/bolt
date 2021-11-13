@@ -133,25 +133,23 @@ Manage Users
         //         }
                 
         //     });
-        // });
+        });
 
         function deleteUser(e){
-            var conf = confirm("Do you want to delete this user?");
+            // var conf = confirm("Do you want to delete this user?");
+            var userId = e.getAttribute('data-id');
+            // alert(userId);
             var data = e.closest('tr');
-            if(conf){
-                var userId = e.getAttribute('data-id');
-                var data = e.closest('tr');
-                $.post('{{ route("eventee.user.delete") }}',{'id':userId},function(response){
-                    data.remove();
-                    $('#AlertDelete').show();
-                    setTimeout(
-                        function() 
-                        {
-                            $('#AlertDelete').hide();
-                        }, 
-                    5000);
-                });
-            }
+            confirmDelete("Are you sure you want to DELETE User?","Confirm User Delete").then(confirmation=>{
+                if(confirmation){
+                    
+                    var data = e.closest('tr');
+                    $.post('{{ route("eventee.user.delete") }}',{'id':userId},function(response){
+                        data.remove();
+                        
+                    });
+                }
+            });
         }
 </script>
 @endsection
