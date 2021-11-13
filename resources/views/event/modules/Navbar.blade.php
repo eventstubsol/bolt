@@ -1,3 +1,17 @@
+@php
+    $notifications = App\PushNotification::where('event_id',$event_id)->get();
+    $finalnote = [];
+    // foreach ($notifications as $note) {
+    //     $notification_seen = App\SeenNotification::where('notification_id',$note)->where('user_id',Auth::id())->count();
+    //     if($notification_seen < 1){
+    //         $seen = new \stdClass();
+    //         $seen->id = $note->id;
+    //         $seen->
+    //     }
+    // }
+@endphp
+
+
 <div class="navbar-custom navs hidden theme-nav">
     <div class="container-fluid row">
         <div class="col-5 col-md-2 fluid-col logo-col">
@@ -34,6 +48,49 @@
                     </li>
                 @endif
             @endforeach
+           </ul>
+           <ul class="list-unstyled topnav-menu float-end mb-0">
+            <li class="dropdown notification-list topbar-dropdown">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                    <i class="fe-bell noti-icon"></i>
+                    <span class="badge bg-danger rounded-circle noti-icon-badge">9</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-lg">
+    
+                    <!-- item-->
+                    <div class="dropdown-item noti-title">
+                        <h5 class="m-0">
+                            <span class="float-end">
+                                <a href="" class="text-dark">
+                                    <small>Clear All</small>
+                                </a>
+                            </span>Notification
+                        </h5>
+                    </div>
+    
+                    <div class="noti-scroll" data-simplebar>
+    
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                            <div class="notify-icon">
+                                <img src="../assets/images/users/user-1.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                            <p class="notify-details">Cristina Pride</p>
+                            <p class="text-muted mb-0 user-msg">
+                                <small>Hi, How are you? What about our next meeting</small>
+                            </p>
+                        </a>
+    
+                        
+                    </div>
+    
+                    <!-- All-->
+                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                        View all
+                        <i class="fe-arrow-right"></i>
+                    </a>
+    
+                </div>
+            </li>
            </ul>
         </div>
         <div class="col-5 col-md-2 fluid-col profile-col">
