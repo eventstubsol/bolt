@@ -32,9 +32,10 @@ $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virtur
 // $url = '{subdomain}.localhost';
 Route::group(['domain' => $url], function () {
     Route::get('/', function ($subdomain) {
+        $eveCount = Event::where("slug",$subdomain)->count();
         $event = Event::where("slug",$subdomain)->first();
-        if(!$event){
-            return "No Event ".$subdomain;
+        if($eveCount < 1){
+            return view('errors.404');
         }
         // dd($subdomain);
         $user = Auth::user();
