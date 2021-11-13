@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AccessSpecifiers;
+use App\Event;
 use App\Page;
 use App\sessionRooms;
 use App\User;
@@ -68,6 +69,7 @@ class HomeController extends Controller
 
     public function updateAccess(Request $request,$id){
         AccessSpecifiers::where("event_id",$id)->delete();
+        dd($request->all());
         foreach($request->all() as $room=>$access_ids){
             if(strpos($room, 'pages-')!==false || strpos($room, 'rooms-')!==false ){
                 $user_type = str_replace("pages-", '',$room);
@@ -100,8 +102,10 @@ class HomeController extends Controller
         return redirect('event');
     }
 
-    public function faqs(){
-        $FAQs = \App\FAQ::all();
+    public function faqs($subdomain){
+        // dd($subdomain);
+        $event_id = Event::where("slug",$subdomain)->first()->id;
+        $FAQs = \App\FAQ::where("event_id",$event_id);
         return view("event.faq")->with(compact("FAQs"));
     }
 
