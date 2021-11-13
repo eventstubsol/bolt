@@ -9,9 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class PushNotification extends Model
 {
-    use UUID;
+   
     use SoftDeletes;
     
     public $table = "push_notification";
     protected $fillable = ["title","url","message","roles"];
+
+    public function Seen(){
+        $this->hasMany('App/SeenNotification');
+    }
 }

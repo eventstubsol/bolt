@@ -42,13 +42,7 @@ class NotificationController extends Controller
 
 
         // if ($resp->successful()) {
-        //     PushNotification::create([
-        //         "title" => $request->post("title"),
-        //         "url" => $request->post("url", NULL),
-        //         "message" => $request->post("message"),
-        //         "roles" => implode(", ", $request->post("roles")),
-        //         "event_id" => $id,
-        //     ]);
+        //     
  
         //      $notifications = PushNotification::orderBy("created_at")->get();
         //      return view("eventee.notification.index")->with(compact("notifications","id"));
@@ -56,12 +50,16 @@ class NotificationController extends Controller
         //      return $resp->body();
         //  }
         $event = Event::findOrFail($id);
-        try{
-            event(new NotificationEvent($request->message,$request->title,$id));
-        }
-       catch(\Exception $e){
-           Log::error($e->getMessage());
-       }
+        PushNotification::create([
+            "title" => $request->post("title"),
+            "url" => $request->post("url", NULL),
+            "message" => $request->post("message"),
+            "roles" => implode(", ", $request->post("roles")),
+            "event_id" => $id,
+        ]);
+            event(new NotificationEvent($request->message,$request->title,$event->slug));
+            flash("Notification Sent To User")->success();
+            return redirect()->route('eventee.notification',$id);
     }
 
     public function send(Request $request)
