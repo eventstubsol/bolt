@@ -93,6 +93,12 @@ class eventeeController extends Controller
     }
 
     public function Save(Request $req){
+        $slug = str_replace(" ","-",strtolower($req->event_slug));
+        $eve = Event::where('slug',$slug)->count();
+        if($eve > 0){
+            flash("An Event With The Same Name Already Exist")->error();
+            return redirect()->back();
+        }
         $baseurl = URL::to('/');
         if(strpos($baseurl,'https')){
            $baseurl =  str_replace('https://','',$baseurl);
