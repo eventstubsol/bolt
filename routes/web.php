@@ -107,6 +107,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::POST("faq/save/{id}", "Eventee\FaqController@store")->name("eventee.faq.save");
     Route::get("faq/edit/{id}/{faq_id}", "Eventee\FaqController@edit")->name("eventee.faq.edit");
     Route::post("faq/update/{id}/{faq_id}", "Eventee\FaqController@update")->name("eventee.faq.update");
+    Route::post('faq/delete','Eventee\FaqController@delete')->name('eventee.faq.delete');
 
     //Mailables
     Route::get('mail/{id}',"Eventee\MailController@index")->name('eventee.mail');
@@ -136,7 +137,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/register/{id}/{form}","Eventee\FormController@getForm")->name("getForm");
     Route::get("/form/create/{id}","Eventee\FormController@create")->name("createForm");
     Route::post("/form/store/{id}","Eventee\FormController@store")->name("forms.store");
-    Route::get("/form/edit/{id}/{form}","Eventee\FormController@edit")->name("editForm");
+    Route::get("/form/rearrange/{id}/{form}","Eventee\FormController@rearrange")->name("rearrange");
+    Route::post("/form/savePosition","Eventee\FormController@savePosition")->name('form.position');
     Route::delete('/form/delete/{form}',"Eventee\FormController@Destroy")->name('form.destroy');
 
 
