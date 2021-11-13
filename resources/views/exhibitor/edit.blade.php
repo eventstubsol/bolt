@@ -471,6 +471,7 @@
         $(".im-"+index).eq(0).css(areaStylesb(positions));
         console.log(positions)
         console.log(getRotation(positions))
+        console.log({positions,index,name})
         $(".im_name-"+index).eq(0).css(getRotation(positions));
         $(".im_name-"+index).html(`${name}`);
         $(".positioning-"+index).eq(0).css({

@@ -51,6 +51,8 @@ Route::group(['domain' => $url], function () {
 
         // return "This will respond to requests for 'admin.localhost/'";
     });
+    
+    Route::get("/faq", "HomeController@faqs")->name("faq");
     Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
     Route::get('/exhibitorlogin/{email}',"EventUser\LoginController@exhibitorlogin")->name("exhibitorLogin");
     Route::get('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
