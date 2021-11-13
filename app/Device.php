@@ -25,6 +25,6 @@ use App\UUID;
  */
 class Device extends Model
 {
-    use UUID;
+
     protected $fillable = ["device_id"];
 }

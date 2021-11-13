@@ -15,9 +15,10 @@ class CreateUsersTable extends Migration
     {
         // \Illuminate\Support\Facades\DB::statement('SET SESSION sql_require_primary_key=0');
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid("id")->primary();
-            $table->string('name')->index();
+            $table->id()->index();
+            $table->string('name');
             $table->string("last_name")->nullable();
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('job_title')->nullable();

@@ -1,3 +1,67 @@
+{{-- <style>
+    ul{
+        list-style:none;
+    }
+    ul .dropdown .notification-list{
+        list-style:none;
+    }
+    .nav-link {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: #6658dd;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    }
+    .waves-effect {
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+        overflow: hidden;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    
+    }
+    .navbar-custom .dropdown .nav-link.show {
+        background-color: rgba(255,255,255,.05);
+    }
+    .navbar-custom .topnav-menu .nav-link {
+        padding: 0 15px;
+        color: rgba(255,255,255,.6);
+        min-width: 32px;
+        display: block;
+        line-height: 70px;
+        text-align: center;
+        max-height: 70px;
+    }
+    .dropdown-toggle {
+    white-space: nowrap;
+    }
+    [role=button] {
+        cursor: pointer;
+    }
+    a {
+        color: #6658dd;
+        text-decoration: none;
+    }
+    *, ::after, ::before {
+        box-sizing: border-box;
+    }
+    user agent stylesheet
+    a:-webkit-any-link {
+        color: -webkit-link;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    style attribute {
+        visibility: visible;
+        opacity: 1;
+    }
+    .profile{
+        left:0;
+    }
+</style> --}}
+<script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
 <div class="navbar-custom navs hidden theme-nav">
     <div class="container-fluid row">
         <div class="col-5 col-md-2 fluid-col logo-col">
@@ -35,7 +99,103 @@
                 @endif
             @endforeach
            </ul>
+           <ul class="list-unstyled  menu" style="left:0;">
+                 <li class="dropdown notification-list topbar-dropdown">
+                <a class="nav-link dropdown-toggle waves-effect waves-light" id="dropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fe-bell noti-icon"></i>
+                    <span class="badge bg-danger rounded-circle noti-icon-badge">9</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-lg" aria-labelledby="dropdownMenuLink">
+    
+                    <!-- item-->
+                    <div class="dropdown-item noti-title">
+                        <h5 class="m-0">
+                            <span class="float-end">
+                                <a href="" class="text-dark">
+                                    <small>Clear All</small>
+                                </a>
+                            </span>Notification
+                        </h5>
+                    </div>
+    
+                    <div class="noti-scroll" data-simplebar>
+    
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                            <div class="notify-icon">
+                                <img src="../assets/images/users/user-1.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                            <p class="notify-details">Cristina Pride</p>
+                            <p class="text-muted mb-0 user-msg">
+                                <small>Hi, How are you? What about our next meeting</small>
+                            </p>
+                        </a>
+    
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <div class="notify-icon bg-primary">
+                                <i class="mdi mdi-comment-account-outline"></i>
+                            </div>
+                            <p class="notify-details">Caleb Flakelar commented on Admin
+                                <small class="text-muted">1 min ago</small>
+                            </p>
+                        </a>
+    
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <div class="notify-icon">
+                                <img src="../assets/images/users/user-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+                            <p class="notify-details">Karen Robinson</p>
+                            <p class="text-muted mb-0 user-msg">
+                                <small>Wow ! this admin looks good and awesome design</small>
+                            </p>
+                        </a>
+    
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <div class="notify-icon bg-warning">
+                                <i class="mdi mdi-account-plus"></i>
+                            </div>
+                            <p class="notify-details">New user registered.
+                                <small class="text-muted">5 hours ago</small>
+                            </p>
+                        </a>
+    
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <div class="notify-icon bg-info">
+                                <i class="mdi mdi-comment-account-outline"></i>
+                            </div>
+                            <p class="notify-details">Caleb Flakelar commented on Admin
+                                <small class="text-muted">4 days ago</small>
+                            </p>
+                        </a>
+    
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <div class="notify-icon bg-secondary">
+                                <i class="mdi mdi-heart"></i>
+                            </div>
+                            <p class="notify-details">Carlos Crouch liked
+                                <b>Admin</b>
+                                <small class="text-muted">13 days ago</small>
+                            </p>
+                        </a>
+                    </div>
+    
+                    <!-- All-->
+                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                        View all
+                        <i class="fe-arrow-right"></i>
+                    </a>
+    
+                </div>
+            </li>
+                </ul>
         </div>
+
+        
+
+
         <div class="col-5 col-md-2 fluid-col profile-col">
             <div class="extra">
                 @auth
@@ -66,6 +226,9 @@
                         </form>
                     </div>
                 </div>
+               
+                
+                
                 <div class="mob-menu ml-2 d-none">
                     <a href="void:javascript(0);">
                         <span class="round-icon">
