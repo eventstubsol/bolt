@@ -57,7 +57,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class EventSession extends Model
 {
-    use UUID;
+   
     use SoftDeletes;
 
     protected $fillable = [

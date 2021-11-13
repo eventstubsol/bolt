@@ -55,9 +55,7 @@ use App\UUID;
  */
 class Booth extends Model
 {
-    use SoftDeletes;
-    use UUID;
-    public $incrementing = false;
+    use SoftDeletes;    
 
     //For mass assignment whitelisting
     protected $guarded = [
