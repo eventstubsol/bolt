@@ -1036,8 +1036,7 @@ $user = Auth::user();
         });
         function offNotification(){
            
-            let consentNotify = $('.consent-notification');
-            consentNotify.addClass('enable');
+            
             $('#notification-smallModal').removeClass('enable');
         }
       </script>
