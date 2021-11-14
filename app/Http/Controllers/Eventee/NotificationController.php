@@ -41,7 +41,6 @@ class NotificationController extends Controller
 
         // $resp = sendGeneralNotification($request->post("title"), $request->post("message"), $request->post("url", NULL), $request->post("roles"));
 
-<<<<<<< HEAD
         
         
         // PushNotification::create([
@@ -68,7 +67,6 @@ class NotificationController extends Controller
         }
         
         
-=======
 
         // if ($resp->successful()) {
         //     
@@ -89,7 +87,6 @@ class NotificationController extends Controller
             event(new NotificationEvent($request->message,$request->title,$event->slug));
             flash("Notification Sent To User")->success();
             return redirect()->route('eventee.notification',$id);
->>>>>>> master
     }
 
     public function send(Request $request)
