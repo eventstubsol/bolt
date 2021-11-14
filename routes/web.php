@@ -184,7 +184,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('/session/event/{session}/{id}/edit',"Eventee\SessionController@edit")->name('eventee.sessions.edit');
     Route::delete('page/event/delete/{session}/{id}',"Eventee\SessionController@destroy")->name('eventee.sessions.destroy');
     Route::put('page/event/{session}/{id}/update',"Eventee\SessionController@update")->name('eventee.sessions.update');
-    Route::post('/sessionroom/Bulkdelete',"Eventee\SessionController@BulkDelete")->name('eventee.sessions.bulkDelete');
+    Route::post('/session/Bulkdelete',"Eventee\SessionController@BulkDelete")->name('eventee.sessions.bulkDelete');
     
     //pages routes
     Route::get("/page/event/{id}","Eventee\PageController@index")->name('eventee.pages.index');

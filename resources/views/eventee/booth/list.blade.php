@@ -45,6 +45,7 @@
                 <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr class="head">
+                            <th class="checks" style="display: none">#</th>
                             <th>Name</th>
                             <th>Admins</th>
                             <th class="text-right mr-2">Actions</th>
@@ -53,6 +54,7 @@
                     <tbody>
                       @foreach($booths as $booth)
                         <tr class="checkedbox" data-id="{{ $booth->id }}">
+                          <td width="5%" class="incheck" style="display: none" ><input type="checkbox"  onclick="checkedValue(this)"  class="inchecked"></td>
                           <td>{{$booth->name ?? ""}}</td>
                           <td>{!!
                             implode("<Br/>",$booth->admins->map(function($user){
@@ -85,6 +87,12 @@
 @section("scripts")
     @include("includes.scripts.datatables")
     <script>
+        var incheck = $('.incheck');
+        var checks = $('.checks');
+        $(document).ready(function(){
+            checks.hide();
+            incheck.hide();
+        });
          var deleteArr = [];
         $(document).ready(function(){
             // $("#buttons-container").append('<button class="btn btn-primary" id="sync-account">Sync with Chat</button>');
@@ -139,10 +147,12 @@
         var appendcheck = 0;
         function AddCheckBox(e){
             var button = $('.addbox');
-            var appended = ' <td width="5%" class="incheck" ><input type="checkbox"  onclick="checkedValue(this)"  class="inchecked"></td>';
+            
             if(appendcheck == 0){
-                $('.head').append('<th class="thead">#</th>');
-                $('.checkedbox').append(appended);
+                // $('.head').append('<th class="thead">#</th>');
+                // $('.checkedbox').append(appended);
+                checks.show();
+                incheck.show();
                 $('.deleteBulk').show();
                 appendcheck = 1;
                 button.text("Cancel");
@@ -150,8 +160,9 @@
                 button.removeClass('btn-info');
             }
             else{
-                $('.thead').remove();
-                $('.incheck').remove();
+                checks.hide();
+                incheck.hide();
+                
                 $('.deleteBulk').hide();
                 appendcheck = 0;
                 button.text("Bulk Delete");
