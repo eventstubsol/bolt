@@ -52,6 +52,7 @@ Manage Users
                 <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr class="head">
+                            <th class="checks" style="display: none">#</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Type</th>
@@ -68,6 +69,7 @@ Manage Users
                             $event = App\Event::findOrFail($user->event_id);
                         @endphp
                         <tr class="checkedbox" data-id="{{ $user->id }}">
+                            <td width="5%" class="incheck" style="display: none" ><input type="checkbox"  onclick="checkedValue(this)"  class="inchecked"></td>
                             <td>{{ $user->name }} {{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->type }}</td>
@@ -101,6 +103,12 @@ Manage Users
 @section("scripts")
 @include("includes.scripts.datatables")
 <script>
+     var incheck = $('.incheck');
+     var checks = $('.checks');
+    $(document).ready(function(){
+        checks.hide();
+        incheck.hide();
+    });
     function DeleteData(e){
         let id = e.getAttribute("data-id");
         // alert(id);
@@ -168,10 +176,13 @@ Manage Users
         var deleteArr = [];
         function AddCheckBox(e){
             var button = $('.addbox');
-            var appended = ' <td width="5%" class="incheck" ><input type="checkbox"  onclick="checkedValue(this)"  class="inchecked"></td>';
+           
+            // var appended = ' ';
             if(appendcheck == 0){
-                $('.head').append('<th class="thead">#</th>');
-                $('.checkedbox').append(appended);
+                // $('.head').append('<th class="thead">#</th>');
+                // $('.checkedbox').append(appended);
+                checks.show();
+                incheck.show();
                 $('.deleteBulk').show();
                 appendcheck = 1;
                 button.text("Cancel");
@@ -179,8 +190,9 @@ Manage Users
                 button.removeClass('btn-info');
             }
             else{
-                $('.thead').remove();
-                $('.incheck').remove();
+                checks.hide();
+                incheck.hide();
+              
                 $('.deleteBulk').hide();
                 appendcheck = 0;
                 button.text("Bulk Delete");
