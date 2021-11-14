@@ -16,7 +16,7 @@
     }
 @endphp
 
-{-- <style>
+<style>
     ul{
         list-style:none;
     }
@@ -77,7 +77,7 @@
     .profile{
         left:0;
     }
-</style> --}}
+</style> 
 <script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
 <script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
 <div class="navbar-custom navs hidden theme-nav">
