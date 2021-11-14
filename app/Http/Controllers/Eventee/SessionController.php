@@ -600,4 +600,24 @@ class SessionController extends Controller
         $event->unsubscribe();
         return ['success' => true];
     }
+
+    public function BulkDelete(Request $req){
+        $ids = $req->ids;
+        $totalcount = 0;
+        for($i = 0 ; $i < count($ids); $i++){
+            $session = SessionPoll::findOrFail($ids[$i]);
+            $session->delete();
+            $sessionCount = SessionPoll::where('id',$ids[$i])->count();
+            if($sessionCount > 0){
+                $totalcount++;
+            }
+
+        }
+        if(($totalcount)>0){
+        return response()->json(['code'=>500,"Message"=>"Something Went Wrong"]);
+        }
+        else{
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+        }
+    }
 }

@@ -41,18 +41,31 @@ class NotificationController extends Controller
 
         // $resp = sendGeneralNotification($request->post("title"), $request->post("message"), $request->post("url", NULL), $request->post("roles"));
 
-        $notification = event(new NotificationEvent($request->message,$request->title,$event->slug));
         
-        PushNotification::create([
-            "title" => $request->post("title"),
-            "url" => $request->post("url", NULL),
-            "message" => $request->post("message"),
-            "roles" => implode(", ", $request->post("roles")),
-            "event_id" => $id,
-        ]);
         
-        flash("Notification Sent Succesfully")->success();
-        return redirect()->route('eventee.notification',$id);
+        // PushNotification::create([
+        //     "title" => $request->post("title"),
+        //     "url" => $request->post("url", NULL),
+        //     "message" => $request->post("message"),
+        //     "roles" => implode(", ", $request->post("roles")),
+        //     "event_id" => $id,
+        // ]);
+        $notify = new PushNotification;
+        $notify->title = $request->post("title");
+        $notify->url = $request->post("url", NULL);
+        $notify->message = $request->post("message");
+        $notify->roles =implode(", ", $request->post("roles"));
+        $notify->event_id = $id;
+        if($notify->save()){
+            $notification = event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id));
+            flash("Notification Sent Succesfully")->success();
+            return redirect()->route('eventee.notification',$id);
+        }
+        else{
+            flash("Something Went Wrong")->error();
+            return redirect()->back();
+        }
+        
         
     }
 

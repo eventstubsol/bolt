@@ -121,7 +121,7 @@
                  <li class="dropdown notification-list topbar-dropdown">
                 <a class="nav-link dropdown-toggle waves-effect waves-light" id="dropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <i class="fe-bell noti-icon"></i>
-                    <span id="count" class="badge bg-danger rounded-circle noti-icon-badge">{{ $noteCount }}</span>
+                    <span id="count" class="badge count bg-danger rounded-circle noti-icon-badge">{{ $noteCount }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-lg" aria-labelledby="dropdownMenuLink">
     
@@ -137,7 +137,7 @@
                         </h5>
                     </div>
     
-                    <div class="noti-scroll" id="notificationBody" data-simplebar>
+                    <div class="notificationBody noti-scroll" id="notificationBody" data-simplebar>
                         @foreach ($finalnotes as $notification)
                             <a href="javascript:void(0);" onclick="showNotification(this)" data-id="{{ $notification->id }}" data-title="{{  $notification->title  }}" data-message="{{  $notification->message  }}" class="dropdown-item notify-item active">
                                 <div class="notify-icon">
