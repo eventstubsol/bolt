@@ -72,7 +72,8 @@ class EventSession extends Model
         'zoom_password',
         'past_video',
         "room_id",
-        "zoom_url"
+        "zoom_url",
+        'event_id'
     ];
 
     protected $dates = ["start_time", "end_time"];
