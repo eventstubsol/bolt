@@ -200,7 +200,6 @@ function initApp() {
             let capture = $("#photo-capture");
             await gallery.attr("src" , $(this).data("gallery"));
             await capture.attr("src" , $(this).data("capture"));
-            console.log("photobooth");
         }
 
         if(flyin){
@@ -229,6 +228,16 @@ function initApp() {
         }
     });
 
+    $(".videosdk").on("click", function (e) {
+        meeting_id = $(this).data("meeting");
+        if(meeting_id){
+            $("#videosdk-session-content").empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.videoSDK.replace(":id",meeting_id)}"></iframe>`);
+            $("#videosdk-session-content").append(`<div id="video_play_area"></div>`);
+            $("#videosdk_modal").unbind().on("hide.bs.modal", function () {
+                $("#videosdk-session-content").empty();
+            });
+        }
+    });
     $(".subscribe-to-event").on("click", function (e) {
         // console.log("hello")
         e.preventDefault();

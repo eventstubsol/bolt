@@ -170,32 +170,34 @@
     
         </div>
     
-    
-    <div data-backdrop="static"  class="modal fade embed-modal slido-container-modal" id="lounge_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <div class="modal-body">
-                    <div class="position-relative">
-                        <div style="padding-bottom: {{ AUDI_IMAGE_ASPECT }}%"></div>
-                        <div id="lounge-session-content" class="positioned fill" >
-                            
-                        </div>
+   
+</div>
+
+ 
+<div data-backdrop="static"  class="modal fade embed-modal slido-container-modal" id="lounge_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div class="modal-body">
+                <div class="position-relative">
+                    <div style="padding-bottom: {{ AUDI_IMAGE_ASPECT }}%"></div>
+                    <div id="lounge-session-content" class="positioned fill" >
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div data-backdrop="static"  class="modal fade embed-modal slido-container-modal" id="table_full" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <div class="modal-body">
-                    <div class="position-relative">
-                        <div style="padding-bottom: {{ AUDI_IMAGE_ASPECT }}%"></div>
-                        <div id="lounge-session-content" class="positioned fill" >
-                            No Seats Left
-                        </div>
+</div>
+<div data-backdrop="static"  class="modal fade embed-modal slido-container-modal" id="table_full" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div class="modal-body">
+                <div class="position-relative">
+                    <div style="padding-bottom: {{ AUDI_IMAGE_ASPECT }}%"></div>
+                    <div id="lounge-session-content" class="positioned fill" >
+                        No Seats Left
                     </div>
                 </div>
             </div>
