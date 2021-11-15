@@ -68,7 +68,7 @@ define('LINK_TYPES', [
     "lobby",
     "back",
     "faq",
-    "photo-booth"
+    "photobooth"
 ]);
 
 

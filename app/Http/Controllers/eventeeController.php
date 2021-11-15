@@ -55,12 +55,14 @@ class eventeeController extends Controller
 
     public function Login(){
         $id=null;
+        // dd("test");
         return view('eventee.login')->with(compact("id"));
     }
 
     public function ConfirmLogin(Request $req){
         try{
-            $user = User::where('email',$req->email)->where("event_id",0)->first();
+            $user = User::where('email',$req->email)->first();
+            // dd($user);
             $pass = password_verify($req->password,$user->password);
             if($pass && $user->type == 'eventee'){
                 Auth::login($user);

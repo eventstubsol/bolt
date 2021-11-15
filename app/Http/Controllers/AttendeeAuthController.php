@@ -51,7 +51,7 @@ class AttendeeAuthController extends Controller
     {
         // return $subdomain;
         $event = Event::where("slug",$subdomain)->first();
-            if(api('RECAPTCHA_SECRET_KEY',$event->id) && api('RECAPTCHA_SITE_KEY',$event->id)){
+            if(env('RECAPTCHA_SECRET_KEY') && env('RECAPTCHA_SITE_KEY')){
                 // dd("shubh");
                 $response = Http::asForm()
                 ->post(
@@ -72,7 +72,8 @@ class AttendeeAuthController extends Controller
                     ->with([
                         "notFound" => FALSE,
                         "captchaError" => TRUE,
-                        "login" => $this->loginT
+                        "login" => $this->loginT,
+                        "subdomain"=>$subdomain
                     ]);
             }
         }
