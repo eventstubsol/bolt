@@ -32,10 +32,9 @@ $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virtur
 // $url = '{subdomain}.localhost';
 Route::group(['domain' => $url], function () {
     Route::get('/', function ($subdomain) {
-        $eveCount = Event::where("slug",$subdomain)->count();
         $event = Event::where("slug",$subdomain)->first();
-        if($eveCount < 1){
-            return view('errors.404');
+        if(!$event){
+            return "No Event ".$subdomain;
         }
         // dd($subdomain);
         $user = Auth::user();
@@ -109,7 +108,6 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::POST("faq/save/{id}", "Eventee\FaqController@store")->name("eventee.faq.save");
     Route::get("faq/edit/{id}/{faq_id}", "Eventee\FaqController@edit")->name("eventee.faq.edit");
     Route::post("faq/update/{id}/{faq_id}", "Eventee\FaqController@update")->name("eventee.faq.update");
-    Route::post('faq/delete','Eventee\FaqController@delete')->name('eventee.faq.delete');
 
     //Mailables
     Route::get('mail/{id}',"Eventee\MailController@index")->name('eventee.mail');
@@ -139,8 +137,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/register/{id}/{form}","Eventee\FormController@getForm")->name("getForm");
     Route::get("/form/create/{id}","Eventee\FormController@create")->name("createForm");
     Route::post("/form/store/{id}","Eventee\FormController@store")->name("forms.store");
-    Route::get("/form/rearrange/{id}/{form}","Eventee\FormController@rearrange")->name("rearrange");
-    Route::post("/form/savePosition","Eventee\FormController@savePosition")->name('form.position');
+    Route::get("/form/edit/{id}/{form}","Eventee\FormController@edit")->name("editForm");
     Route::delete('/form/delete/{form}',"Eventee\FormController@Destroy")->name('form.destroy');
 
 
@@ -170,26 +167,21 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 
 
 
-    //Session Room
+    
     Route::get("/sessionroom/event/{id}","Eventee\SessionRoomController@index")->name('eventee.sessionrooms.index');
     Route::get("/sessionroom/event/create/{id}","Eventee\SessionRoomController@create")->name('eventee.sessionrooms.create'); 
     Route::post("/sessionroom/event/store/{id}","Eventee\SessionRoomController@store")->name('eventee.sessionrooms.store');
     Route::get('/sessionroom/event/{sessionroom}/{id}/edit',"Eventee\SessionRoomController@edit")->name('eventee.sessionrooms.edit');
     Route::put('/sessionroom/event/{sessionroom}/{id}/update',"Eventee\SessionRoomController@update")->name('eventee.sessionrooms.update');
+
     Route::delete('sessionroom/event/delete',"Eventee\SessionRoomController@destroy")->name('eventee.sessionrooms.destroy');
-    Route::post('/sessionroom/Bulkdelete',"Eventee\SessionRoomController@BulkDelete")->name('eventee.sessionrooms.bulkDelete');
-    Route::post('/sessionroom/DeleteAll',"Eventee\SessionRoomController@DeleteAll")->name('eventee.sessionrooms.deleteAll');
-
-
-    //Session
+    
     Route::get("/session/event/{id}","Eventee\SessionController@index")->name('eventee.sessions.index');
     Route::get("/session/event/create/{id}","Eventee\SessionController@create")->name('eventee.sessions.create'); 
     Route::post("/session/event/store/{id}","Eventee\SessionController@store")->name('eventee.sessions.store');
     Route::get('/session/event/{session}/{id}/edit',"Eventee\SessionController@edit")->name('eventee.sessions.edit');
     Route::delete('page/event/delete/{session}/{id}',"Eventee\SessionController@destroy")->name('eventee.sessions.destroy');
     Route::put('page/event/{session}/{id}/update',"Eventee\SessionController@update")->name('eventee.sessions.update');
-    Route::post('/session/Bulkdelete',"Eventee\SessionController@BulkDelete")->name('eventee.sessions.bulkDelete');
-    Route::post('/session/DeleteAll',"Eventee\SessionController@DeleteAll")->name('eventee.sessions.deleteAll');
     
     //pages routes
     Route::get("/page/event/{id}","Eventee\PageController@index")->name('eventee.pages.index');
@@ -198,10 +190,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('page/event/{page}/{id}/edit',"Eventee\PageController@edit")->name('eventee.pages.edit');
     Route::put('page/{page}/{id}/update',"Eventee\PageController@update")->name('eventee.pages.updates');
     Route::delete('page/event/delete/{page}',"Eventee\PageController@destroy")->name('eventee.pages.destroy');
-    Route::post('/page/Bulkdelete',"Eventee\PageController@BulkDelete")->name('eventee.pages.bulkDelete');
-    Route::post('/page/DeleteAll',"Eventee\PageController@DeleteAll")->name('eventee.pages.deleteAll');
-
-
+    
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
     
@@ -268,7 +257,6 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('/Booths/edit/{id}/{booth_id}',"Eventee\BoothController@edit")->name('eventee.booth.edit');
     Route::put('/Booths/update/{id}/{booth_id}',"Eventee\BoothController@update")->name('eventee.booth.update');
     Route::delete('/Booths/delete/{booth}/{id}',"Eventee\BoothController@destroy")->name('eventee.booth.destroy');
-    Route::post('/Booths/Bulkdelete',"Eventee\BoothController@BulkDelete")->name('eventee.booth.bulkDelete');
 
     //Room Setup
     Route::get('/Rooms/{id}',"Eventee\RoomController@index")->name('eventee.room');
@@ -294,8 +282,6 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('user/delete',"Eventee\UserController@destroy")->name('eventee.user.delete');
     Route::get('user/import/{id}',"Eventee\UserController@ShowPage")->name('eventee.user.showpage');
     Route::post('user/import/{id}',"Eventee\UserController@Import")->name('eventee.user.import');
-    Route::post('/user/Bulkdelete',"Eventee\UserController@BulkDelete")->name('eventee.user.bulkDelete');
-    Route::post('/user/DeleteAll',"Eventee\UserController@DeleteAll")->name('eventee.user.deleteAll');
 
     Route::get("/data-entry/{id}","Eventee\DataEntryController@index")->name('eventee.dataEntry');
     Route::get('/notification/{id}',"Eventee\NotificationController@index")->name('eventee.notification');
@@ -359,8 +345,6 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('License/update/{id}/{license_id}',"Eventee\LicenseController@update")->name('eventee.license.update');
     
 });
-
-Route::post('notification/seen','UerNotifiicationController@seen')->name('notification.user.seen');
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 
 Route::get("/event/login", "AttendeeAuthController@show")->name("attendee_login");
