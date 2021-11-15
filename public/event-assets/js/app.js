@@ -189,7 +189,7 @@ function initApp() {
     const doNotRoute = [
         "support"
     ];
-    areas.on("click", function (e) {
+    areas.on("click", async function (e) {
         // loader.show();
         const link = $(this).data("link");
         directAccess = false;
@@ -198,10 +198,10 @@ function initApp() {
         if(photobooth){
             let gallery = $("#photo-gallery");
             let capture = $("#photo-capture");
-            gallery.attr("src" , $(this).data("gallery"));
-            capture.attr("src" , $(this).data("capture"));
+            await gallery.attr("src" , $(this).data("gallery"));
+            await capture.attr("src" , $(this).data("capture"));
+            console.log("photobooth");
         }
-        // console.log({e,flyin});
 
         if(flyin){
             pages.hide();
@@ -1051,7 +1051,7 @@ function initApp() {
                 recordPageView("infodesk", "Infodesk");
             }
         },
-        'photo-booth/:id': function (id) {
+        'photo-booth': function (id) {
             if (checkAuth()) {
                 routie("lobby");
             } else {
