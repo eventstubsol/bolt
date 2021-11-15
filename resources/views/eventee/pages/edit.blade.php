@@ -759,7 +759,7 @@ Edit Page
                                         </div>
                                     </div>
 
-                                    <div  style="display: none;" class="image-uploader ph-{{$ids}} ph form-group mb-3 col-md-4">
+                                    <div  style="display: none;" class="image-uploader ph-${n} ph form-group mb-3 col-md-4">
                                         <label for="phb">Photobooth Capture Link</label>
                                         <input  type="text"   name="capture_link[]" class="form-control">
                                         <label for="phb">Photobooth Gallery Link</label>
