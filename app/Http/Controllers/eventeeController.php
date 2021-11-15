@@ -95,6 +95,12 @@ class eventeeController extends Controller
     }
 
     public function Save(Request $req){
+        $slug = str_replace(" ","-",strtolower($req->event_slug));
+        $eve = Event::where('slug',$slug)->count();
+        if($eve > 0){
+            flash("An Event With The Same Name Already Exist")->error();
+            return redirect()->back();
+        }
         $baseurl = URL::to('/');
         if(strpos($baseurl,'https')){
            $baseurl =  str_replace('https://','',$baseurl);
@@ -128,14 +134,14 @@ class eventeeController extends Controller
                     "event_id"=>$event->id
                ]);
             }
-            $menusNames = array('Polls','Q&A','Announcements');
-            $manuPos = array(1,2,3);
-            $menuLink = array('#poll-modal','#qna-modal','#announcement-modal');
-            $menuClass = array('fas fa-poll','fa fa-question-circle','fa fa-bullhorn');
+            // $menusNames = array('Polls','Q&A','Announcements');
+            // $manuPos = array(1,2,3);
+            // $menuLink = array('#poll-modal','#qna-modal','#announcement-modal');
+            // $menuClass = array('fas fa-poll','fa fa-question-circle','fa fa-bullhorn');
             
-            for($i = 0; $i<count($menusNames); $i++){
-                Menu::create(['name'=>$menusNames[$i],'position'=>$manuPos[$i],'link'=>$menuLink[$i],'iClass'=>$menuClass[$i],'event_id'=>$event->id,'type'=>'footer','parent_id'=>0]);
-            }
+            // for($i = 0; $i<count($menusNames); $i++){
+            //     Menu::create(['name'=>$menusNames[$i],'position'=>$manuPos[$i],'link'=>$menuLink[$i],'iClass'=>$menuClass[$i],'event_id'=>$event->id,'type'=>'footer','parent_id'=>0]);
+            // }
             flash("Event Saved Successfully")->success();
             Event::where('id',$event->id)->update(['link'=> $event->slug.'.'.str_replace('https://','',$baseurl).'']);
             return redirect()->back();
