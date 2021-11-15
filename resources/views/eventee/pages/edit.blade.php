@@ -163,6 +163,14 @@ Edit Page
                                         <input type="file"      data-name="boothimages" data-plugins="dropify" data-type="application/pdf"  @if($link->type==="pdf") data-default-file="{{assetUrl($link->to)}}" @endif }} />                                   
                                     </div>
 
+                                    {{-- Photobooth  --}}
+                                    <div @if($link->type!=="photobooth") style="display: none;" @endif class="image-uploader ph-{{$ids}} ph form-group mb-3 col-md-4">
+                                        <label for="phb">Photobooth Capture Link</label>
+                                        <input @if($link->type==="photobooth") value="{{$link->to}}" @endif type="text"   name="capture_link[]" class="form-control">
+                                        <label for="phb">Photobooth Gallery Link</label>
+                                        <input @if($link->type==="photobooth") value="{{$link->url}}" @endif type="text"   name="gallery_link[]" class="form-control">
+                                    </div>
+
 
                                     <div class="background_images_{{$ids}} row col-md-12">
                                         @if(isset($link->background[0]))
@@ -581,6 +589,7 @@ Edit Page
         $(".chat_user-"+index).hide();
         $(".chat_group-"+index).hide();
         $(".custom_page-"+index).hide();
+        $(".ph-"+index).hide();
 
         switch(selectbox.val()){
             case "session_room":
@@ -609,6 +618,9 @@ Edit Page
                 break;
             case "custom_page":
                 $(".custom_page-"+index).show();
+                break;
+            case "photobooth":
+                $(".ph-"+index).show();
                 break;
         }
         // console.log(val);
@@ -745,6 +757,13 @@ Edit Page
                                         <input type="hidden" name="pdf[]" class="upload_input">
                                         <input type="file"    data-name="pdfs" data-plugins="dropify" data-type="application/pdf" />                                   
                                         </div>
+                                    </div>
+
+                                    <div  style="display: none;" class="image-uploader ph-{{$ids}} ph form-group mb-3 col-md-4">
+                                        <label for="phb">Photobooth Capture Link</label>
+                                        <input  type="text"   name="capture_link[]" class="form-control">
+                                        <label for="phb">Photobooth Gallery Link</label>
+                                        <input  type="text"   name="gallery_link[]" class="form-control">
                                     </div>
                                     <div  style="display: none;"  class="chat_user-${n} chat_user form-group mb-3 col-md-4">
                                         <label for="chat_user">Chat User ID</label>

@@ -22,6 +22,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div id="buttons-container"></div>
                 <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>

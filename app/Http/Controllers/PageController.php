@@ -82,7 +82,7 @@ class PageController extends Controller
     
     public function update(Request $request, Page $page){
         $request->validate(["name","url"]);
-        // dd($request);
+        dd($request->all());
         $page->name = $request->name;
         $page->save();
 
@@ -90,6 +90,7 @@ class PageController extends Controller
         if($request->has("linknames")){
             foreach($request->linknames as $id => $linkname){
                 $to = "";
+                $url = "";
                 // dd($request->type);
                 switch($request->type[$id]){
                     case "session_room": 
@@ -119,6 +120,10 @@ class PageController extends Controller
                     case "custom_page":
                         $to = $request->custom_page[$id];
                         break;
+                    case "photobooth":
+                        $to = $request->capture_link[$id];
+                        $url = $request->gallery_link[$id];
+                        break;
                 }
                 Link::create([
                     "page"=>$page->id,
@@ -129,6 +134,7 @@ class PageController extends Controller
                     "left"=> $request->left[$id],
                     "width"=> $request->width[$id],
                     "height"=> $request->height[$id],
+                    "url" => $url
                 ]);
             }
         }

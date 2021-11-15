@@ -18,6 +18,7 @@
 
 
                     $to = "";
+                    $url = "";
                     switch($link->type)
                     {
                         case "zoom":
@@ -28,8 +29,9 @@
                         case "pdf":
                         case "lobby":
                         case "faq":
-                        case "photo-booth":
+                        case "photobooth":
                             $to = $link->to;
+                            $url = $link->url;
                             break;
                         case "session_room":
                             $to = "sessionroom/".$link->to;
@@ -67,6 +69,9 @@
                         <div title="{{ $link->name  }}" class="positioned chat_group" data-link="{{ $to }}" style="{{ areaStyles($area) }}; background: transparent; cursor:pointer;">    </div>
                     @elseif($link->type === "pdf")
                         <div title="{{ $link->name  }}" class="positioned _df_button" source="{{ assetUrl($to) }}" style="{{ areaStyles($area) }}; background: transparent;cursor:pointer;">    </div>
+                    @elseif($link->type === "photobooth")
+                        <div title="{{ $link->name  }}"  class="photobooth positioned area" data-link="photo-booth" data-capture="{{$link->to}}" data-gallery="{{$link->url}}" style="{{ areaStyles($area) }}">    
+                        </div>
                     @else
                         @if($to ==="FAQ")
                             <a class="positioned" data-toggle="modal" data-target="#faqs-modal"

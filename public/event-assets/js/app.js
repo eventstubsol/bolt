@@ -194,6 +194,13 @@ function initApp() {
         const link = $(this).data("link");
         directAccess = false;
         const flyin = $(e.target).data("flyin");
+        const photobooth = $(e.target).data("capture");
+        if(photobooth){
+            let gallery = $("#photo-gallery");
+            let capture = $("#photo-capture");
+            gallery.attr("src" , $(this).data("gallery"));
+            capture.attr("src" , $(this).data("capture"));
+        }
         // console.log({e,flyin});
 
         if(flyin){
@@ -1044,7 +1051,7 @@ function initApp() {
                 recordPageView("infodesk", "Infodesk");
             }
         },
-        'photo-booth': function () {
+        'photo-booth/:id': function (id) {
             if (checkAuth()) {
                 routie("lobby");
             } else {
@@ -1055,6 +1062,12 @@ function initApp() {
                 let galleryBtn = $("#gallery");
                 let capture = $("#photo-capture");
                 let captureBtn = $("#capture");
+                console.log($(this).data("gallery"));
+                console.log(this);
+                console.log($(this));
+                console.log($(this).data("capture"));
+                gallery.attr("src" , $(this).data("gallery"));
+                capture.attr("src" , $(this).data("capture"));
                 capture.hide();
                 gallery.show();
                 galleryBtn.hide();
