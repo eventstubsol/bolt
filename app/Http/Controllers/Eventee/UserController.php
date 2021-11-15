@@ -293,6 +293,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
+        $user->type = $request->type;
         $user->subtype = $request->subtype;
         if($request->passsword){
             $user->password = Hash::make($request->pasword);
@@ -767,5 +768,13 @@ class UserController extends Controller
         else{
         return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
         }
+    }
+
+    public function DeleteAll(Request $req){
+        $users = User::where('event_id',$req->id)->get();
+        foreach($users as $user){
+            $user->delete();
+        }
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
     }
 }

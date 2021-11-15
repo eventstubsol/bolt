@@ -33,7 +33,7 @@
                 <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr class="head">  
-                            <th class="checks" style="display: none">#</th>
+                            <th class="checks" style="display: none"><input type="checkbox" class="checkall"></th>
                             <th>Title</th>
                             <th>Room</th>
                             <th>Master Room</th>
@@ -108,6 +108,7 @@
 
         var appendcheck = 0;
         var deleteArr = [];
+        var deltype = 0;
         function AddCheckBox(e){
             var button = $('.addbox');
             var appended = ' <td width="5%" class="incheck" ><input type="checkbox"  onclick="checkedValue(this)"  class="inchecked"></td>';
@@ -139,7 +140,7 @@
             var data_id = e.closest('tr').getAttribute('data-id');
             if(deleteArr.indexOf(data_id) == -1){
                 deleteArr.push(data_id);
-               
+                deltype = 1;
             }
             else{
                
@@ -152,24 +153,49 @@
             
         }
         function BulkDelete(){
-            if(deleteArr.length < 1){
-                alert("Please Select The CheckBoxe First");
+            if(deltype == 1){
+                if(deleteArr.length < 1){
+                    alert("Please Select The CheckBoxe First");
+                }
+                else{
+                
+                    $.post("{{ route('eventee.sessions.bulkDelete')}}",{'ids': deleteArr},function(response){
+                        if(response.code == 200){
+                            $('#successAlert').show()
+                            $('#errorAlert').hide();
+                            setTimeout(function(){ location.reload(); }, 2000);
+                        }
+                        else{
+                            $('#errorAlert').show()
+                            $('#successAlert').hide()
+                            $('#errorAlert').html(response.message);
+                        }
+                    });
+                }
             }
-            else{
-               
-                $.post("{{ route('eventee.sessions.bulkDelete')}}",{'ids': deleteArr},function(response){
+            else if(deltype == 2){
+                $.post("{{ route('eventee.sessions.deleteAll') }}",{'id': "{{ $id }}" },function(response){
                     if(response.code == 200){
-                        $('#successAlert').show()
-                        $('#errorAlert').hide();
-                        setTimeout(function(){ location.reload(); }, 2000);
+                            $('#successAlert').show()
+                            $('#errorAlert').hide();
+                            setTimeout(function(){ location.reload(); }, 2000);
                     }
                     else{
                         $('#errorAlert').show()
                         $('#successAlert').hide()
                         $('#errorAlert').html(response.message);
                     }
-                });
+               });
             }
+            else{
+                alert("Please Select The CheckBoxe First");
+           }
         }
+        $(document).ready(function(){
+            $('.checkall').on('click',function(){
+                $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+                deltype = 2; 
+            });
+        });
     </script>
 @endsection

@@ -122,4 +122,12 @@ class SessionRoomController extends Controller
         return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
         }
     }
+
+    public function DeleteAll(Request $req){
+        $sessionrooms = sessionRooms::where('event_id',$req->id)->get();
+        foreach($sessionrooms as $sessionroom){
+            $sessionroom->delete();
+        }
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+    }
 }

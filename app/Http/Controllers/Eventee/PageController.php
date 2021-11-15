@@ -356,4 +356,12 @@ class PageController extends Controller
         return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
         }
     }
+
+    public function DeleteAll(Request $req){
+        $pages = Page::where('event_id',$req->id)->get();
+        foreach($pages as $page){
+            $page->delete();
+        }
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+    }
 }

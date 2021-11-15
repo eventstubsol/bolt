@@ -620,4 +620,11 @@ class SessionController extends Controller
         return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
         }
     }
+    public function DeleteAll(Request $req){
+        $sessions = SessionPoll::where('event_id',$req->id)->get();
+        foreach($sessions as $session){
+            $session->delete();
+        }
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+    }
 }
