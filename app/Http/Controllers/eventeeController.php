@@ -60,7 +60,7 @@ class eventeeController extends Controller
 
     public function ConfirmLogin(Request $req){
         try{
-            $user = User::where('email',$req->email)->first();
+            $user = User::where('email',$req->email)->where("event_id",0)->first();
             $pass = password_verify($req->password,$user->password);
             if($pass && $user->type == 'eventee'){
                 Auth::login($user);
