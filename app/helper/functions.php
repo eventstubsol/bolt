@@ -68,7 +68,8 @@ define('LINK_TYPES', [
     "lobby",
     "back",
     "faq",
-    "photobooth"
+    "photobooth",
+    "videosdk"
 ]);
 
 

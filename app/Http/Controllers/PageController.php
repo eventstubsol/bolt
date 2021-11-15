@@ -82,7 +82,7 @@ class PageController extends Controller
     
     public function update(Request $request, Page $page){
         $request->validate(["name","url"]);
-        dd($request->all());
+        // dd($request->all());
         $page->name = $request->name;
         $page->save();
 
