@@ -295,6 +295,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
+        $user->type = $request->type;
         $user->subtype = $request->subtype;
         if($request->passsword){
             $user->password = Hash::make($request->pasword);
