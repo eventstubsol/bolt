@@ -9,7 +9,6 @@ use App\FormStruct;
 use App\Form;
 use App\FormField;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
 
 
 class FormController extends Controller
@@ -93,36 +92,5 @@ class FormController extends Controller
         // $form = Form::findOrFail($req->form_id);
         $formFields = FormField::where('form_id',$form->id);
         $form->delete();
-    }
-
-    public function rearrange(Request $req,$id,$form_id){
-        $form = Form::findOrFail($form_id);
-        $form_field = FormField::where('form_id',$form->id)->get();
-        $structs =[];
-
-        foreach($form_field  as $field){
-            $fieldset = new \stdClass();
-            $formStruct = FormStruct::findOrFail($field->struct_id);
-            $fieldset->label = $formStruct->label;
-            $fieldset->id = $field->id;
-            $fieldset->position = $field->position;
-            array_push($structs,$fieldset);
-        }
-    
-        return view('eventee.form.rearrange',compact('id','form','structs'));
-    }
-
-    public function savePosition(Request $request)
-    {
-        //
-        
-        foreach ($request->position as $positions) {
-            $position = $positions[1];
-            $id = $positions[0];
-            // echo $id." position ".$position."<br>";
-            DB::update('UPDATE form_fields set position = ? where id = ? ', [$position, $id]);
-        }
-        
-        return response()->json(['message' => 'success']);
     }
 }
