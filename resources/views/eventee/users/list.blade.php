@@ -29,20 +29,12 @@ Manage Users
 <div class="row">
     <div class="col-12">
         <div class="card">
-            
-            <div class="card-header">
-                <div id="AlertDelete" class="alert alert-success" role="alert" style="display: none">
-                    <center>  User Deleted Successfully </center>
-                </div>
-                <div class="alert alert-success" role="alert" id="successAlert" style="display: none">
-                        Selected Booths Have Deleted Successfully, Please Wait 2 Seconds....
-                  </div>
-                  <div class="alert alert-danger" role="alert" id="errorAlert" style="display: none">
-                    
-                </div>
+            <div id="AlertDelete" class="alert alert-success" role="alert" style="display: none">
+                <center>  User Deleted Successfully </center>
             </div>
+            
             <div class="card-body">
-                
+                <a style="float: right" class="btn btn-primary" href="{{ route("eventee.user.create",$id) }}">Create New / Bulk Upload</a>
                 {{--                <div class="float-right d-none d-md-inline-block">--}}
                 {{--                    <div class="btn-group mb-2">--}}
                 {{--                        <a class="btn btn-primary" href="{{ route("user.create") }}">Create
@@ -51,12 +43,11 @@ Manage Users
                 {{--                </div>--}}
                 <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
-                        <tr class="head">
-                            <th class="checks" style="display: none"><input type="checkbox" class="checkall"></th>
+                        <tr>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Type</th>
-                            
+                            <th>Member Id</th>
                             <th>Event</th>
                             <th>Created At</th>
                             <th class="text-right mr-2">Actions</th>
@@ -68,12 +59,11 @@ Manage Users
                         @php
                             $event = App\Event::findOrFail($user->event_id);
                         @endphp
-                        <tr class="checkedbox" data-id="{{ $user->id }}">
-                            <td width="5%" class="incheck" style="display: none" ><input type="checkbox"  onclick="checkedValue(this)"  class="inchecked"></td>
+                        <tr>
                             <td>{{ $user->name }} {{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->type }}</td>
-                            
+                            <td>{{ $user->member_id }}</td>
                             <td>{{ $event->name }}</td>
                             <td>{{ $user->created_at }}</td>
                             <td class="text-right">
@@ -101,14 +91,8 @@ Manage Users
 
 
 @section("scripts")
-@include("includes.scripts.datatables")
+{{-- @include("includes.scripts.datatables") --}}
 <script>
-     var incheck = $('.incheck');
-     var checks = $('.checks');
-    $(document).ready(function(){
-        checks.hide();
-        incheck.hide();
-    });
     function DeleteData(e){
         let id = e.getAttribute("data-id");
         // alert(id);
@@ -129,13 +113,9 @@ Manage Users
             }
         });
     }
-    
     $(document).ready(function(){
-        
-            // $("#buttons-container").append('<button class="btn btn-primary" id="sync-account">Sync with Chat</button>')
-            $("#buttons-container").append('<a style="float: right" class="btn btn-primary" href="{{ route("eventee.user.create",$id) }}">Create New / Bulk Upload</a>');
-            $("#buttons-container").append('<button type="button" onclick="AddCheckBox(this)" class="addbox btn btn-info" >Bulk Delete</button>');
-            $("#buttons-container").append('<button class="deleteBulk btn btn-danger float-right" onclick="BulkDelete()" style="display: none">Delete</button>');
+            $("#buttons-container").append('<button class="btn btn-primary" id="sync-account">Sync with Chat</button>')
+            $("#buttons-container").append('')
             
 
         //     $("#sync-account").click(async function(){
@@ -153,118 +133,25 @@ Manage Users
         //         }
                 
         //     });
-        });
+        // });
 
         function deleteUser(e){
-            // var conf = confirm("Do you want to delete this user?");
-            var userId = e.getAttribute('data-id');
-            // alert(userId);
+            var conf = confirm("Do you want to delete this user?");
             var data = e.closest('tr');
-            confirmDelete("Are you sure you want to DELETE User?","Confirm User Delete").then(confirmation=>{
-                if(confirmation){
-                    
-                    var data = e.closest('tr');
-                    $.post('{{ route("eventee.user.delete") }}',{'id':userId},function(response){
-                        data.remove();
-                        
-                    });
-                }
-            });
-        }
-
-        var appendcheck = 0;
-        var deleteArr = [];
-        var deltype = 0;
-        function AddCheckBox(e){
-            var button = $('.addbox');
-           
-            // var appended = ' ';
-            if(appendcheck == 0){
-                // $('.head').append('<th class="thead">#</th>');
-                // $('.checkedbox').append(appended);
-                checks.show();
-                incheck.show();
-                $('.deleteBulk').show();
-                appendcheck = 1;
-                button.text("Cancel");
-                button.addClass('btn-danger');
-                button.removeClass('btn-info');
-            }
-            else{
-                checks.hide();
-                incheck.hide();
-              
-                $('.deleteBulk').hide();
-                appendcheck = 0;
-                button.text("Bulk Delete");
-                button.removeClass('btn-danger');
-                button.addClass('btn-info');
-            }
-        }
-
-        function checkedValue(e){
-            var data_id = e.closest('tr').getAttribute('data-id');
-            if(deleteArr.indexOf(data_id) == -1){
-                deleteArr.push(data_id);
-                deltype = 1;
-               
-            }
-            else{
-               
-                for(var i = 0 ; i < deleteArr.length; i++){
-                   if(deleteArr[i] == data_id){
-                       deleteArr.splice(i,1);
-                   }
-               }
-             
-            }
-            
-        }
-        function BulkDelete(){
-           if(deltype == 1){
-            if(deleteArr.length < 1){
-                alert("Please Select The CheckBoxe First");
-            }
-            else{
-               
-                $.post("{{ route('eventee.user.bulkDelete')}}",{'ids': deleteArr},function(response){
-                    if(response.code == 200){
-                        $('#successAlert').show()
-                        $('#errorAlert').hide();
-                        setTimeout(function(){ location.reload(); }, 2000);
-                    }
-                    else{
-                        $('#errorAlert').show()
-                        $('#successAlert').hide()
-                        $('#errorAlert').html(response.message);
-                    }
+            if(conf){
+                var userId = e.getAttribute('data-id');
+                var data = e.closest('tr');
+                $.post('{{ route("eventee.user.delete") }}',{'id':userId},function(response){
+                    data.remove();
+                    $('#AlertDelete').show();
+                    setTimeout(
+                        function() 
+                        {
+                            $('#AlertDelete').hide();
+                        }, 
+                    5000);
                 });
             }
-           }
-           else if(deltype == 2){
-               $.post("{{ route('eventee.user.deleteAll') }}",{'id': "{{ $id }}" },function(response){
-                    if(response.code == 200){
-                            $('#successAlert').show()
-                            $('#errorAlert').hide();
-                            setTimeout(function(){ location.reload(); }, 2000);
-                    }
-                    else{
-                        $('#errorAlert').show()
-                        $('#successAlert').hide()
-                        $('#errorAlert').html(response.message);
-                    }
-               });
-           }
-           else{
-                alert("Please Select The CheckBoxe First");
-           }
         }
-
-        $(document).ready(function(){
-            $('.checkall').on('click',function(){
-                $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
-                deltype = 2; 
-            });
-        });
 </script>
 @endsection

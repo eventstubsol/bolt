@@ -57,7 +57,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class EventSession extends Model
 {
-   
+    use UUID;
     use SoftDeletes;
 
     protected $fillable = [
@@ -72,8 +72,7 @@ class EventSession extends Model
         'zoom_password',
         'past_video',
         "room_id",
-        "zoom_url",
-        'event_id'
+        "zoom_url"
     ];
 
     protected $dates = ["start_time", "end_time"];

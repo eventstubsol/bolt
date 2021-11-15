@@ -55,15 +55,4 @@ class FaqController extends Controller
             return redirect()->back();
         }
     }
-
-    public function delete(Request $req){
-        $id = $req->id;
-        $faq = FAQ::findOrFail($id);
-        if($faq->delete()){
-            return response()->json(['code'=>200]);
-        }
-        else{
-            return response()->json(['code'=>500]);
-        }
-    }
 }
