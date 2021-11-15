@@ -162,10 +162,16 @@ class AttendeeAuthController extends Controller
         $user = User::where('email',$req->email)->where("event_id",$event->id)->first();
         $pass = password_verify($req->password,$user->password);
         if($pass ){
+            // dd($user);
             Auth::login($user);
                 // return $user->type;
+            LoginLog::create(["ip" => $req->ip(), "user_id" => $user->id]);
+           
             if($user->type === "exhibiter"){
                 return redirect(route("exhibiterhome",$subdomain));
+            }
+            if($user->type === "speaker"){
+                return redirect(route("eventee.event",['subdomain'=>$event->slug]));
             }
             // if(view()->exists("dashboard.".$user->type)){
             // }

@@ -59,6 +59,7 @@
                 if(data.success && data.path){
                     callback(data.path);
                 }else{
+                    showMessage("File Size Should not be greater than 12 MB", "error");
                     callback(false);
                 }
                 // your callback here
