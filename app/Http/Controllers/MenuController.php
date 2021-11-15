@@ -41,14 +41,11 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         //
-        
         foreach ($request->position as $positions) {
-            $position = $positions[1];
-            $id = $positions[0];
-            // echo $id." position ".$position."<br>";
+            $id = $positions[1];
+            $position = $positions[0];
             DB::update('UPDATE menus set position = ? where id = ? and  event_id = ?', [$position, $id,$request->event_id]);
         }
-        
         return response()->json(['message' => 'success']);
     }
 
