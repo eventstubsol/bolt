@@ -35,7 +35,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Option extends Model
 {
-    use UUID;
+
     use SoftDeletes;
 
     protected $fillable = ["text", "sort_order"];
