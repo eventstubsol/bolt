@@ -42,8 +42,7 @@ use App\UUID;
 class Points extends Model
 {
     use SoftDeletes;
-    use UUID;
-    public $incrementing = false;
+
 
     protected $fillable = [
         "points_to",

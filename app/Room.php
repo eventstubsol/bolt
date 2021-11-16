@@ -37,8 +37,6 @@ use App\UUID;
 class Room extends Model
 {
     use SoftDeletes;
-    use UUID;
-    public $incrementing = false;
     public function booths(){
         return $this->hasMany("\App\Booth")->where("status", 1);
     }
