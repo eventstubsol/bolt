@@ -39,7 +39,7 @@
                             <td>{{ $notification->message }}</td>
                             <td>{{ $notification->url ?? 'N/A' }}</td>
                             <td>{{ $notification->roles }}</td>
-                            <td>{{ $notification->created_at }}</td>
+                            <td>{{ Carbon\Carbon::parse($notification->created_at)->format('D-d-m-Y  H:i:s T') }}</td>
                         </tr>
                     @endforeach
                     </tbody>
