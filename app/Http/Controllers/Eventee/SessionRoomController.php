@@ -102,4 +102,32 @@ class SessionRoomController extends Controller
         $sessionroom->delete();
         return response()->json(['message'=>"Done"]);
     }
+
+    public function BulkDelete(Request $req){
+        $ids = $req->ids;
+        $totalcount = 0;
+        for($i = 0 ; $i < count($ids); $i++){
+            $page = sessionRooms::findOrFail($ids[$i]);
+            $page->delete();
+            $pageCount = sessionRooms::where('id',$ids[$i])->count();
+            if($pageCount > 0){
+                $totalcount++;
+            }
+
+        }
+        if(($totalcount)>0){
+        return response()->json(['code'=>500,"Message"=>"Something Went Wrong"]);
+        }
+        else{
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+        }
+    }
+
+    public function DeleteAll(Request $req){
+        $sessionrooms = sessionRooms::where('event_id',$req->id)->get();
+        foreach($sessionrooms as $sessionroom){
+            $sessionroom->delete();
+        }
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+    }
 }
