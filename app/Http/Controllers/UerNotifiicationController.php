@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\SeenNotification;
+use App\PushNotification;
 class UerNotifiicationController extends Controller
 {
     //
@@ -24,4 +25,17 @@ class UerNotifiicationController extends Controller
             return response()->json(['code'=>500]);
         }
     }
+    public function seenAll(Request $req){
+        $event_id = $req->id;
+        $notes = PushNotification::where('event_id',$event_id)->get();
+        foreach($notes as $note){
+            $seen = new SeenNotification;
+            $seen->notification_id = $note->id;
+            $seen->user_id = Auth::id();
+            $seen->seen = 1;
+            $seen->save();
+        }
+        return response()->json(['code'=>200]);
+    }
+            
 }
