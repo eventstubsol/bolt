@@ -201,13 +201,15 @@ $(document).ready(function(){
         }
 
         function SavePositions(){
-            console.log(final);
+            // console.log(final);
             $.ajax({
                 url:"{{ route('menu.store') }}",
                 method:"POST",
                 data:{"menu":final},
                 success:function(response){
-                    console.log(response);
+                    alert("Changes Made Successfully");
+                    $('#savebtn').hide();
+
                 }
             });
         }
