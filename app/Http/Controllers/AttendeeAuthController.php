@@ -143,9 +143,8 @@ class AttendeeAuthController extends Controller
 
    public function showRegistration($subdomain,$slug){
         $form = Form::where("slug",$slug)->first();
-        $formCount = Form::where("slug",$slug)->count();
-        if($formCount < 1){
-            return view('erros.404');
+        if(!$form){
+            return "form not found";
         }
         $id = Event::where("slug",$subdomain)->first()->id;
         $subtypes = UserSubtype::where('event_id',$id)->get();

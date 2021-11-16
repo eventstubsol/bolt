@@ -161,7 +161,6 @@ $(document).ready(function(){
                 method: 'POST',
                 url: '{{ route('menu.store') }}',
                 success:function(response){
-                    // console.log(response);
                   alert(response.message);
                   $('#savebtn').css('display','none');
                 },
