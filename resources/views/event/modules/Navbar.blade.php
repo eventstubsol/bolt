@@ -163,6 +163,21 @@
         
 
 
+        <div class=" col-md-2 fluid-col ">
+            <div class="extra">
+                @auth
+                <div class="custom-dropdown profile">
+                    <a href="javascript:void(0);" class="menu-trigger">
+                        Test
+                    </a>
+                    <div class="custom-dropdown-menu">
+                       Hello
+                    </div>
+                </div>  
+                @endauth
+              
+            </div>
+        </div>
         <div class="col-5 col-md-2 fluid-col profile-col">
             <div class="extra">
                 @auth

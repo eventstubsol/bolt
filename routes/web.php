@@ -35,6 +35,7 @@ Route::group(['domain' => $url], function () {
         $eveCount = Event::where("slug",$subdomain)->count();
         $event = Event::where("slug",$subdomain)->first();
         if($eveCount < 1){
+            // dd("here");
             return view('errors.404');
         }
         // dd($subdomain);
