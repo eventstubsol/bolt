@@ -149,5 +149,7 @@ class NotificationController extends Controller
         });
 
         return "Sent";
+ 
     }
 }
+

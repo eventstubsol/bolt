@@ -223,6 +223,25 @@
           $('#count').html(0);
           $('#notificationBody').empty();
           $('#notificationBody').html('<h6><center>No Notification Available</center></h6>');
+          $.get("{{ route('notification.user.seenAll') }}",{id:"{{ $event_id }}"},function(response){
+            if(response.code == 200){
+                      console.log("Done");
+                  }
+                  else{
+                      console.log("error");
+                  }
+          });
+        //   $.ajax({
+        //       url:"{{ route('notification.user.seenAll') }}",
+        //       method:"GET",
+        //       data:{
+        //           id:"{{ $event_id }}"
+        //       }
+        //       success:function(response){
+                 
+        //       }
+        //   });
+
       }
 
       function showNotification(e){
