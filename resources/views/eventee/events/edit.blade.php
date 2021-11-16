@@ -61,7 +61,7 @@
                         <div class="row">
                             <div class="col">
                                 <label for="name">Start Date</label>
-                                <input type="date" name="start_date" value="{{ $event->start_date }}" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
+                                <input type="date" name="start_date" value="{{ $event->start_date }}"  class="form-control" required>
                             </div>
                             <div class="col">
                                 <label for="name">End Date</label>
