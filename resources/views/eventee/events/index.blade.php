@@ -180,19 +180,22 @@
       }
 
       function deleteEvent(e){
-        var eventId = e.getAttribute('data-id');
-        var data = e.closest('tr');
-        confirmDelete("Are you sure you want to DELETE Event?","Confirm Event Delete").then(confirmation=>{
-            if(confirmation){
-              
+        var conf = confirm("Do you want to delete this event?");
+            if(conf){
+                var eventId = e.getAttribute('data-id');
+                var data = e.closest('tr');
                 $.post('{{ route("event.delete") }}',{'id':eventId},function(response){
-                    // console.log(response);
-                    data.remove();
-                   
                     
-                });
+                    data.remove();
+                    $('#AlertDelete').show();
+                    setTimeout(
+                        function() 
+                        {
+                            $('#AlertDelete').hide();
+                        }, 
+                    5000);
+                    });
             }
-        });
       }
      $(document).ready(function(){
          $('#event_name').on('input',function(){
