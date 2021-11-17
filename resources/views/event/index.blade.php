@@ -406,7 +406,7 @@ $user = Auth::user();
     {{-- App favicon --}}
     <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}">
     <!-- Icons -->
-    <link href="https://coderthemes.com/ubold/layouts/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href={{ asset('eassets/css/icons.css') }} rel="stylesheet" type="text/css" />
     <script>
         var ua = window.navigator.userAgent;
         var msie = ua.indexOf("MSIE ");
