@@ -202,11 +202,11 @@ var PRESENTATION = DFLIP;
      * Refer to advance-examples
      */
     //(NON-OPTION) source link for PDF.JS file
-    pdfjsSrc: "js/libs/pdf.min.js",
+    pdfjsSrc: "js/libs/pdf.js",
     //(NON-OPTION) source link for PDFcompatibility.JS file
     pdfjsCompatibilitySrc: "js/libs/compatibility.js",
     //(NON-OPTION) source link for PDF.WORKER.JS file
-    pdfjsWorkerSrc: "js/libs/pdf.worker.min.js",
+    pdfjsWorkerSrc: "js/libs/pdf.worker.js",
     //(NON-OPTION) source link for THREE.JS file
     threejsSrc: "js/libs/three.min.js",
     //(NON-OPTION) source link for MOCKUP.JS file
