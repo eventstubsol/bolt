@@ -640,7 +640,7 @@ File: Icons Css File
 
 @font-face {
   font-family: "Material Design Icons";
-  src: {{ asset("assets/fonts/materialdesignicons-webfont.eot?v=5.0.45");}}
+  src: {{ asset("assets/fonts/materialdesignicons-webfont.eot?v=5.0.45")}};
   src: {{ asset("assets/fonts/materialdesignicons-webfont.eot?#iefix&v=5.0.45")}} format("embedded-opentype"), {{ asset("assets/fonts/materialdesignicons-webfont.woff2?v=5.0.45")}} format("woff2"), {{ asset("assets/fonts/materialdesignicons-webfont.woff?v=5.0.45")}} format("woff"), {{ asset("assets/fonts/materialdesignicons-webfont.ttf?v=5.0.45")}} format("truetype");
   font-weight: normal;
   font-style: normal; }
