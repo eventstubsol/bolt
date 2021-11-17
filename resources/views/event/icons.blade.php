@@ -22903,7 +22903,7 @@ readers do not read off random characters that represent icons */
 @font-face {
   font-family: "weathericons";
   src: {{ asset("assets/fonts/weathericons-regular-webfont.eot")}};
-  /* src: {{ asset("assets/fonts/weathericons-regular-webfont.eot?#iefix")}} format("embedded-opentype"), {{ asset("assets/fonts/weathericons-regular-webfont.woff2")}} format("woff2"), {{ asset("assets/fonts/weathericons-regular-webfont.woff")}} format("woff"), {{ asset("assets/fonts/weathericons-regular-webfont.ttf") format("truetype")}}, {{ asset("assets/fonts/weathericons-regular-webfont.svg#weather_iconsregular")}} format("svg"); */
+  src: {{ asset("assets/fonts/weathericons-regular-webfont.eot" )}} format("embedded-opentype"), {{ asset("assets/fonts/weathericons-regular-webfont.woff2")}} format("woff2"), {{ asset("assets/fonts/weathericons-regular-webfont.woff")}} format("woff"), {{ asset("assets/fonts/weathericons-regular-webfont.ttf") format("truetype")}}, {{ asset("assets/fonts/weathericons-regular-webfont.svg#weather_iconsregular")}} format("svg");
   font-weight: normal;
   font-style: normal; }
 
