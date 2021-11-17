@@ -1,0 +1,7 @@
+
+<IfModule headers_module>
+      Header set Access-Control-Allow-Origin "*"
+</IfModule>
+<FilesMatch "\.(ttf|ttc|otf|eot|woff|woff2|font.css|css|js)$">
+    Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
