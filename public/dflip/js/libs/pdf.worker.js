@@ -1761,7 +1761,7 @@ $exports.store = store;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.LZWStream = exports.StringStream = exports.StreamsSequenceStream = exports.Stream = exports.RunLengthStream = exports.PredictorStream = exports.NullStream = exports.JpxStream = exports.JpegStream = exports.FlateStream = exports.DecodeStream = exports. Stream = exports.AsciiHexStream = exports.Ascii85Stream = undefined;
+exports.LZWStream = exports.StringStream = exports.StreamsSequenceStream = exports.Stream = exports.RunLengthStream = exports.PredictorStream = exports.NullStream = exports.JpxStream = exports.JpegStream = exports.FlateStream = exports.DecodeStream = exports.DecryptStream = exports.AsciiHexStream = exports.Ascii85Stream = undefined;
 
 var _util = __w_pdfjs_require__(0);
 
@@ -2551,18 +2551,18 @@ var JpxStream = function JpxStreamClosure() {
   };
   return JpxStream;
 }();
-var  Stream = function  StreamClosure() {
-  function  Stream(str, maybeLength,  ) {
+var DecryptStream = function DecryptStreamClosure() {
+  function DecryptStream(str, maybeLength, decrypt) {
     this.str = str;
     this.dict = str.dict;
-    // this.  =  ;
+    this.decrypt = decrypt;
     this.nextChunk = null;
     this.initialized = false;
     DecodeStream.call(this, maybeLength);
   }
   var chunkSize = 512;
-   Stream.prototype = Object.create(DecodeStream.prototype);
-   Stream.prototype.readBlock = function  Stream_readBlock() {
+  DecryptStream.prototype = Object.create(DecodeStream.prototype);
+  DecryptStream.prototype.readBlock = function DecryptStream_readBlock() {
     var chunk;
     if (this.initialized) {
       chunk = this.nextChunk;
@@ -2576,8 +2576,8 @@ var  Stream = function  StreamClosure() {
     }
     this.nextChunk = this.str.getBytes(chunkSize);
     var hasMoreData = this.nextChunk && this.nextChunk.length > 0;
-    var   = this. ;
-    chunk =  (chunk, !hasMoreData);
+    var decrypt = this.decrypt;
+    chunk = decrypt(chunk, !hasMoreData);
     var bufferLength = this.bufferLength;
     var i,
         n = chunk.length;
@@ -2587,7 +2587,7 @@ var  Stream = function  StreamClosure() {
     }
     this.bufferLength = bufferLength;
   };
-  return  Stream;
+  return DecryptStream;
 }();
 var Ascii85Stream = function Ascii85StreamClosure() {
   function Ascii85Stream(str, maybeLength) {
@@ -2867,7 +2867,7 @@ var NullStream = function NullStreamClosure() {
 }();
 exports.Ascii85Stream = Ascii85Stream;
 exports.AsciiHexStream = AsciiHexStream;
-exports. Stream =  Stream;
+exports.DecryptStream = DecryptStream;
 exports.DecodeStream = DecodeStream;
 exports.FlateStream = FlateStream;
 exports.JpegStream = JpegStream;
@@ -4420,7 +4420,7 @@ var Parser = function ParserClosure() {
       if ((0, _util.isString)(buf1)) {
         var str = buf1;
         if (cipherTransform) {
-          str = cipherTransform. String(str);
+          str = cipherTransform.decryptString(str);
         }
         return str;
       }
@@ -15047,7 +15047,7 @@ var ARCFourCipher = function ARCFourCipherClosure() {
       return output;
     }
   };
-  ARCFourCipher.prototype. Block = ARCFourCipher.prototype.encryptBlock;
+  ARCFourCipher.prototype.decryptBlock = ARCFourCipher.prototype.encryptBlock;
   return ARCFourCipher;
 }();
 var calculateMD5 = function calculateMD5Closure() {
@@ -15507,7 +15507,7 @@ var calculateSHA384 = function calculateSHA384Closure() {
 var NullCipher = function NullCipherClosure() {
   function NullCipher() {}
   NullCipher.prototype = {
-     Block: function NullCipher_ Block(data) {
+    decryptBlock: function NullCipher_decryptBlock(data) {
       return data;
     }
   };
@@ -15553,7 +15553,7 @@ var AES128Cipher = function AES128CipherClosure() {
     }
     return result;
   }
-  function  128(input, key) {
+  function decrypt128(input, key) {
     var state = new Uint8Array(16);
     state.set(input);
     var i, j, k;
@@ -15697,7 +15697,7 @@ var AES128Cipher = function AES128CipherClosure() {
     this.buffer = new Uint8Array(16);
     this.bufferPosition = 0;
   }
-  function  Block2(data, finalize) {
+  function decryptBlock2(data, finalize) {
     var i,
         j,
         ii,
@@ -15712,7 +15712,7 @@ var AES128Cipher = function AES128CipherClosure() {
       if (bufferLength < 16) {
         continue;
       }
-      var plain =  128(buffer, this.key);
+      var plain = decrypt128(buffer, this.key);
       for (j = 0; j < 16; ++j) {
         plain[j] ^= iv[j];
       }
@@ -15749,7 +15749,7 @@ var AES128Cipher = function AES128CipherClosure() {
     return output;
   }
   AES128Cipher.prototype = {
-     Block: function AES128Cipher_ Block(data, finalize) {
+    decryptBlock: function AES128Cipher_decryptBlock(data, finalize) {
       var i,
           sourceLength = data.length;
       var buffer = this.buffer,
@@ -15764,8 +15764,8 @@ var AES128Cipher = function AES128CipherClosure() {
       this.iv = buffer;
       this.buffer = new Uint8Array(16);
       this.bufferLength = 0;
-      this. Block =  Block2;
-      return this. Block(data.subarray(16), finalize);
+      this.decryptBlock = decryptBlock2;
+      return this.decryptBlock(data.subarray(16), finalize);
     },
     encrypt: function AES128Cipher_encrypt(data, iv) {
       var i,
@@ -15859,7 +15859,7 @@ var AES256Cipher = function AES256CipherClosure() {
     }
     return result;
   }
-  function  256(input, key) {
+  function decrypt256(input, key) {
     var state = new Uint8Array(16);
     state.set(input);
     var i, j, k;
@@ -16003,7 +16003,7 @@ var AES256Cipher = function AES256CipherClosure() {
     this.buffer = new Uint8Array(16);
     this.bufferPosition = 0;
   }
-  function  Block2(data, finalize) {
+  function decryptBlock2(data, finalize) {
     var i,
         j,
         ii,
@@ -16018,7 +16018,7 @@ var AES256Cipher = function AES256CipherClosure() {
       if (bufferLength < 16) {
         continue;
       }
-      var plain =  256(buffer, this.key);
+      var plain = decrypt256(buffer, this.key);
       for (j = 0; j < 16; ++j) {
         plain[j] ^= iv[j];
       }
@@ -16055,7 +16055,7 @@ var AES256Cipher = function AES256CipherClosure() {
     return output;
   }
   AES256Cipher.prototype = {
-     Block: function AES256Cipher_ Block(data, finalize, iv) {
+    decryptBlock: function AES256Cipher_decryptBlock(data, finalize, iv) {
       var i,
           sourceLength = data.length;
       var buffer = this.buffer,
@@ -16075,8 +16075,8 @@ var AES256Cipher = function AES256CipherClosure() {
       }
       this.buffer = new Uint8Array(16);
       this.bufferLength = 0;
-      this. Block =  Block2;
-      return this. Block(data, finalize);
+      this.decryptBlock = decryptBlock2;
+      return this.decryptBlock(data, finalize);
     },
     encrypt: function AES256Cipher_encrypt(data, iv) {
       var i,
@@ -16156,7 +16156,7 @@ var PDF17 = function PDF17Closure() {
       hashData.set(userBytes, password.length + ownerKeySalt.length);
       var key = calculateSHA256(hashData, 0, hashData.length);
       var cipher = new AES256Cipher(key);
-      return cipher. Block(ownerEncryption, false, new Uint8Array(16));
+      return cipher.decryptBlock(ownerEncryption, false, new Uint8Array(16));
     },
     getUserKey: function PDF17_getUserKey(password, userKeySalt, userEncryption) {
       var hashData = new Uint8Array(password.length + 8);
@@ -16164,7 +16164,7 @@ var PDF17 = function PDF17Closure() {
       hashData.set(userKeySalt, password.length);
       var key = calculateSHA256(hashData, 0, hashData.length);
       var cipher = new AES256Cipher(key);
-      return cipher. Block(userEncryption, false, new Uint8Array(16));
+      return cipher.decryptBlock(userEncryption, false, new Uint8Array(16));
     }
   };
   return PDF17;
@@ -16246,7 +16246,7 @@ var PDF20 = function PDF20Closure() {
       hashData.set(userBytes, password.length + ownerKeySalt.length);
       var key = calculatePDF20Hash(password, hashData, userBytes);
       var cipher = new AES256Cipher(key);
-      return cipher. Block(ownerEncryption, false, new Uint8Array(16));
+      return cipher.decryptBlock(ownerEncryption, false, new Uint8Array(16));
     },
     getUserKey: function PDF20_getUserKey(password, userKeySalt, userEncryption) {
       var hashData = new Uint8Array(password.length + 8);
@@ -16254,7 +16254,7 @@ var PDF20 = function PDF20Closure() {
       hashData.set(userKeySalt, password.length);
       var key = calculatePDF20Hash(password, hashData, []);
       var cipher = new AES256Cipher(key);
-      return cipher. Block(userEncryption, false, new Uint8Array(16));
+      return cipher.decryptBlock(userEncryption, false, new Uint8Array(16));
     }
   };
   return PDF20;
@@ -16267,14 +16267,14 @@ var CipherTransform = function CipherTransformClosure() {
   CipherTransform.prototype = {
     createStream: function CipherTransform_createStream(stream, length) {
       var cipher = new this.StreamCipherConstructor();
-      return new _stream. Stream(stream, length, function cipherTransform Stream(data, finalize) {
-        return cipher. Block(data, finalize);
+      return new _stream.DecryptStream(stream, length, function cipherTransformDecryptStream(data, finalize) {
+        return cipher.decryptBlock(data, finalize);
       });
     },
-     String: function CipherTransform_ String(s) {
+    decryptString: function CipherTransform_decryptString(s) {
       var cipher = new this.StringCipherConstructor();
       var data = (0, _util.stringToBytes)(s);
-      data = cipher. Block(data, true);
+      data = cipher.decryptBlock(data, true);
       return (0, _util.bytesToString)(data);
     }
   };
@@ -39453,7 +39453,7 @@ var Type1Parser = function Type1ParserClosure() {
   function isHexDigit(code) {
     return code >= 48 && code <= 57 || code >= 65 && code <= 70 || code >= 97 && code <= 102;
   }
-  function  (data, key, discardNumber) {
+  function decrypt(data, key, discardNumber) {
     if (discardNumber >= data.length) {
       return new Uint8Array(0);
     }
@@ -39466,21 +39466,21 @@ var Type1Parser = function Type1ParserClosure() {
       r = (data[i] + r) * c1 + c2 & (1 << 16) - 1;
     }
     var count = data.length - discardNumber;
-    var  ed = new Uint8Array(count);
+    var decrypted = new Uint8Array(count);
     for (i = discardNumber, j = 0; j < count; i++, j++) {
       var value = data[i];
-       ed[j] = value ^ r >> 8;
+      decrypted[j] = value ^ r >> 8;
       r = (value + r) * c1 + c2 & (1 << 16) - 1;
     }
-    return  ed;
+    return decrypted;
   }
-  function  Ascii(data, key, discardNumber) {
+  function decryptAscii(data, key, discardNumber) {
     var r = key | 0,
         c1 = 52845,
         c2 = 22719;
     var count = data.length,
         maybeLength = count >>> 1;
-    var  ed = new Uint8Array(maybeLength);
+    var decrypted = new Uint8Array(maybeLength);
     var i, j;
     for (i = 0, j = 0; i < count; i++) {
       var digit1 = data[i];
@@ -39494,11 +39494,11 @@ var Type1Parser = function Type1ParserClosure() {
       }
       if (i < count) {
         var value = parseInt(String.fromCharCode(digit1, digit2), 16);
-         ed[j++] = value ^ r >> 8;
+        decrypted[j++] = value ^ r >> 8;
         r = (value + r) * c1 + c2 & (1 << 16) - 1;
       }
     }
-    return Array.prototype.slice.call( ed, discardNumber, j);
+    return Array.prototype.slice.call(decrypted, discardNumber, j);
   }
   function isSpecial(c) {
     return c === 0x2F || c === 0x5B || c === 0x5D || c === 0x7B || c === 0x7D || c === 0x28 || c === 0x29;
@@ -39507,7 +39507,7 @@ var Type1Parser = function Type1ParserClosure() {
     if (encrypted) {
       var data = stream.getBytes();
       var isBinary = !(isHexDigit(data[0]) && isHexDigit(data[1]) && isHexDigit(data[2]) && isHexDigit(data[3]));
-      stream = new _stream.Stream(isBinary ?  (data, EEXEC_ENCRYPT_KEY, 4) :  Ascii(data, EEXEC_ENCRYPT_KEY, 4));
+      stream = new _stream.Stream(isBinary ? decrypt(data, EEXEC_ENCRYPT_KEY, 4) : decryptAscii(data, EEXEC_ENCRYPT_KEY, 4));
     }
     this.seacAnalysisEnabled = !!seacAnalysisEnabled;
     this.stream = stream;
@@ -39574,7 +39574,7 @@ var Type1Parser = function Type1ParserClosure() {
       if (lenIV === -1) {
         return bytes;
       }
-      return  (bytes, CHAR_STRS_ENCRYPT_KEY, lenIV);
+      return decrypt(bytes, CHAR_STRS_ENCRYPT_KEY, lenIV);
     },
     extractFontProgram: function Type1Parser_extractFontProgram() {
       var stream = this.stream;
