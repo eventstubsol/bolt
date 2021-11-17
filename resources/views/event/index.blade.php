@@ -994,7 +994,7 @@ $user = Auth::user();
             })
         })
     </script>
-    <script src="{{ asset('dflip/js/dflip.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('dflip/js/dflip.js') }}" type="text/javascript"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script> --}}
     <script async src="https://app.popkit.club/pixel/3c26bfdb333b6fecd7284b84b0465334"></script>
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
