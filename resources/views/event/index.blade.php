@@ -16,8 +16,8 @@ $user = Auth::user();
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ getFieldId('title', $event_id,$event_name) }}</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
-    <link href={{ asset('assets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('eassets/css/bootstrap.min.css') }}" type="text/css">
+    <link href={{ asset('eassets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.css') }}">
     <style>
         #photo-capture-2 {
@@ -31,11 +31,11 @@ $user = Auth::user();
         }
 
         .menu-custom .menu li a .menu-icon.courses {
-            background-image: url(/assets/images/menu/final/guide.png);
+            background-image: url(/eassets/images/menu/final/guide.png);
         }
 
         .menu-custom .menu li a:hover .menu-icon.courses {
-            background-image: url(/assets/images/menu/final/guide.png);
+            background-image: url(/eassets/images/menu/final/guide.png);
         }
 
         .full-width-videos {
@@ -406,7 +406,7 @@ $user = Auth::user();
     {{-- App favicon --}}
     <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}">
     <!-- Icons -->
-    <link href={{ asset('assets/css/icons.min.css') }} rel="stylesheet" type="text/css" />
+    <link href={{ asset('eassets/css/icons.min.css') }} rel="stylesheet" type="text/css" />
     <script>
         var ua = window.navigator.userAgent;
         var msie = ua.indexOf("MSIE ");
@@ -468,9 +468,9 @@ $user = Auth::user();
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link href="{{ asset('/dflip/css/dflip.css') }}?cb=16110839025682" rel="stylesheet" type="text/css">
     <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=16110839025682" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=16110839025682" type="text/css">
+    <link rel="stylesheet" href="{{ asset('eassets/css/app.min.css') }}?cb=16110839025682" type="text/css">
     <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=16110839025682">
-    <link href="{{ asset('assets/css/custom.css') }}?v=36475567" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('eassets/css/custom.css') }}?v=36475567" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
@@ -821,8 +821,8 @@ $user = Auth::user();
         window.config = config;
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=16110839025682"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}?cb=16110839025682"></script>
+    <script src="{{ asset('eassets/js/vendor.min.js') }}?cb=16110839025682"></script>
+    <script src="{{ asset('eassets/js/app.min.js') }}?cb=16110839025682"></script>
     <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=16110839025682"></script>
     <script src="{{ asset('event-assets/js/app.js') }}?cb=16110839025682"></script>
     <script src="{{ asset('/js/chat/app.js') }}?cb=16110839025682"></script>
@@ -963,7 +963,7 @@ $user = Auth::user();
     @include("includes.scripts.sweetalert2")
 
     {{-- Select2 init --}}
-    <script src={{ asset('assets/libs/select2/js/select2.min.js') }}></script>
+    <script src={{ asset('eassets/libs/select2/js/select2.min.js') }}></script>
     <script>
         function initializeSelect() {
             $('[data-toggle="select2"]').select2({
