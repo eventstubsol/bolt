@@ -462,7 +462,7 @@ $user = Auth::user();
             });
         });
     </script>
-    @include("./icons")
+    @include("event.icons")
     @include("includes.styles.sweetalert2")
     @include("includes.styles.fileUploader")
     <!-- Custom -->
