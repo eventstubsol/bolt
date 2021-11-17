@@ -202,11 +202,11 @@ var PRESENTATION = DFLIP;
      * Refer to advance-examples
      */
     //(NON-OPTION) source link for PDF.JS file
-    pdfjsSrc: "js/libs/pdf.js",
+    pdfjsSrc: "js/libs/pdf.min.js",
     //(NON-OPTION) source link for PDFcompatibility.JS file
     pdfjsCompatibilitySrc: "js/libs/compatibility.js",
     //(NON-OPTION) source link for PDF.WORKER.JS file
-    pdfjsWorkerSrc: "js/libs/pdf.worker.js",
+    pdfjsWorkerSrc: "js/libs/pdf.worker.min.js",
     //(NON-OPTION) source link for THREE.JS file
     threejsSrc: "js/libs/three.min.js",
     //(NON-OPTION) source link for MOCKUP.JS file
@@ -8791,10 +8791,10 @@ DFLIP.parseLinks = function (links) {
       //PRESENTATION.defaults.backgroundImage = "blank"; "images/textures/white.jpg";
       //PRESENTATION.defaults.textureLoadFallback = dFlipLocation + "images/textures/white.jpg";
       DFLIP.defaults.mockupjsSrc = dFlipLocation + "js/libs/mockup.min.js";
-      DFLIP.defaults.pdfjsSrc = dFlipLocation + "js/libs/pdf.js";
+      DFLIP.defaults.pdfjsSrc = dFlipLocation + "js/libs/pdf.min.js";
       DFLIP.defaults.pdfjsCompatibilitySrc = dFlipLocation + "js/libs/compatibility.js";
       DFLIP.defaults.threejsSrc = dFlipLocation + "js/libs/three.min.js";
-      DFLIP.defaults.pdfjsWorkerSrc = dFlipLocation + "js/libs/pdf.worker.js";
+      DFLIP.defaults.pdfjsWorkerSrc = dFlipLocation + "js/libs/pdf.worker.min.js";
       DFLIP.defaults.soundFile = dFlipLocation + "sound/turn2.mp3";
       DFLIP.defaults.imagesLocation = dFlipLocation + "images";
       DFLIP.defaults.imageResourcesPath = dFlipLocation + "images/pdfjs/";
