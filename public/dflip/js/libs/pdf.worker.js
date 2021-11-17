@@ -2555,7 +2555,7 @@ var  Stream = function  StreamClosure() {
   function  Stream(str, maybeLength,  ) {
     this.str = str;
     this.dict = str.dict;
-    this.  =  ;
+    // this.  =  ;
     this.nextChunk = null;
     this.initialized = false;
     DecodeStream.call(this, maybeLength);
