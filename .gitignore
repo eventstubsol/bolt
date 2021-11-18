@@ -10,3 +10,14 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+
+app/Booth.php
+app/BoothAdmin.php
+app/Content.php
+app/Device.php
+app/EventSession.php
+app/Option.php
+app/Points.php
+app/Question.php
+app/Room.php
+app/User.php
