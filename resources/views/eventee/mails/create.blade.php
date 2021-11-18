@@ -3,6 +3,7 @@
 @section("styles")
     @include("includes.styles.select")
     @include("includes.styles.datatables")
+    @include("includes.styles.wyswyg");
 @endsection
 
 @section("page_title")

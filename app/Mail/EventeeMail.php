@@ -16,12 +16,13 @@ class EventeeMail extends Mailable
      *
      * @return void
      */
-    public function __construct($event,$subject,$message)
+    public function __construct($event,$subject,$message,$user)
     {
         //
         $this->event = $event;
         $this->subject = $subject;
         $this->message = $message; 
+        $this->user = $user;
     }
 
     /**
@@ -31,10 +32,11 @@ class EventeeMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.eventee')->with([
+        return $this->from('event-admin@eventstub.co', 'Shubh')->markdown('emails.eventee')->with([
             'event'=>$this->event,
             'subject'=>$this->subject,
-            'message'=>$this->message
+            'message'=>$this->message,
+            'user'=>$this->user
 
         ]);
     }
