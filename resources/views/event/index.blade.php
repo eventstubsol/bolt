@@ -16,8 +16,8 @@ $user = Auth::user();
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ getFieldId('title', $event_id,$event_name) }}</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
-    <link href={{ asset('assets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('eassets/css/bootstrap.min.css') }}" type="text/css">
+    <link href={{ asset('eassets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.css') }}">
     <style>
         #photo-capture-2 {
@@ -31,11 +31,11 @@ $user = Auth::user();
         }
 
         .menu-custom .menu li a .menu-icon.courses {
-            background-image: url(/assets/images/menu/final/guide.png);
+            background-image: url(/eassets/images/menu/final/guide.png);
         }
 
         .menu-custom .menu li a:hover .menu-icon.courses {
-            background-image: url(/assets/images/menu/final/guide.png);
+            background-image: url(/eassets/images/menu/final/guide.png);
         }
 
         .full-width-videos {
@@ -403,21 +403,10 @@ $user = Auth::user();
         }
 
     </style>
-    {{-- Notification Modal --}}
-    <!-- Small modal -->
-    <div class="consent-notification hide-on-exterior"  id="notification-smallModal">
-    <h4 id="notification-head"></h4>
-    <p id="notification-body" >We'll send you  notifications about the event, chats and other cool stuff. Sounds good?</p>
-    <div class="flex">
-        <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true">Close</button>
-    </div>
-    </div>
-      
-        
     {{-- App favicon --}}
     <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}">
     <!-- Icons -->
-    <link href={{ asset('assets/css/icons.min.css') }} rel="stylesheet" type="text/css" />
+    <link href={{ asset('eassets/css/icons.min.css') }} rel="stylesheet" type="text/css" />
     <script>
         var ua = window.navigator.userAgent;
         var msie = ua.indexOf("MSIE ");
@@ -479,9 +468,9 @@ $user = Auth::user();
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link href="{{ asset('/dflip/css/dflip.css') }}?cb=16110839025682" rel="stylesheet" type="text/css">
     <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=16110839025682" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=16110839025682" type="text/css">
+    <link rel="stylesheet" href="{{ asset('eassets/css/app.min.css') }}?cb=16110839025682" type="text/css">
     <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=16110839025682">
-    <link href="{{ asset('assets/css/custom.css') }}?v=36475567" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('eassets/css/custom.css') }}?v=36475567" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
@@ -832,8 +821,8 @@ $user = Auth::user();
         window.config = config;
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=16110839025682"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}?cb=16110839025682"></script>
+    <script src="{{ asset('eassets/js/vendor.min.js') }}?cb=16110839025682"></script>
+    <script src="{{ asset('eassets/js/app.min.js') }}?cb=16110839025682"></script>
     <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=16110839025682"></script>
     <script src="{{ asset('event-assets/js/app.js') }}?cb=16110839025682"></script>
     <script src="{{ asset('/js/chat/app.js') }}?cb=16110839025682"></script>
@@ -974,7 +963,7 @@ $user = Auth::user();
     @include("includes.scripts.sweetalert2")
 
     {{-- Select2 init --}}
-    <script src={{ asset('assets/libs/select2/js/select2.min.js') }}></script>
+    <script src={{ asset('eassets/libs/select2/js/select2.min.js') }}></script>
     <script>
         function initializeSelect() {
             $('[data-toggle="select2"]').select2({
@@ -1005,7 +994,7 @@ $user = Auth::user();
             })
         })
     </script>
-    <script src="{{ asset('dflip/js/dflip.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('dflip/js/dflip.js') }}" type="text/javascript"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script> --}}
     <script async src="https://app.popkit.club/pixel/3c26bfdb333b6fecd7284b84b0465334"></script>
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
@@ -1037,11 +1026,6 @@ $user = Auth::user();
             // console.log(data.title);
             // console.log(data.message);
         });
-        function offNotification(){
-           
-            
-            $('#notification-smallModal').removeClass('enable');
-        }
       </script>
 </body>
 
