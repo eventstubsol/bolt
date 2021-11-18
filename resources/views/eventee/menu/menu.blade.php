@@ -208,7 +208,8 @@ $(document).ready(function(){
                 method:"POST",
                 data:{"menu":final},
                 success:function(response){
-                    alert("Changes Made Successfully");
+                    // alert("Changes Made Successfully");
+                    showMessage("Changes Made Successfully",'success');
                     $('#savebtn').hide();
 
                 }

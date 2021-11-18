@@ -165,10 +165,10 @@
             }
             $.get("{{ route('admin.qna.view') }}",{'id':id,'view':viewValue},function(result){
                 if(result.status == 200){
-                    console.log(result.message);
+                    showMessage(result.message,'success');
                 }
                 else{
-                    alert(result.message);
+                    showMessage(result.message,'error');
                 }
             });
         }
@@ -185,10 +185,10 @@
             }
             $.get("{{ route('admin.qna.discussion') }}",{'id':id,'discussion':discuss},function(result){
                 if(result.status == 200){
-                    console.log(result.message);
+                    showMessage(result.message,'success');
                 }
                 else{
-                    alert(result.message);
+                    showMessage(result.message,'error');
                 }
             });
         }
@@ -206,11 +206,11 @@
                 var answer = $('#liveAns').val();
                 $.get("{{ route('admin.qna.answer') }}",{'id':id,'answer':answer},function(result){
                                 if(result.status == 200){
-                                    alert(result.message);
+                                    showMessage(result.message,'success');
                                     location.reload();
                                 }
                                 else{
-                                    alert(result.message);
+                                    showMessage(result.message,'error');
                                 }
                             });
                         }
@@ -261,11 +261,11 @@
                     var best = e.getAttribute('data-best');
                     $.get("{{ route('admin.qna.BestAnswer') }}",{'id':id,'best':best},function(result){
                         if(result.status == 200){
-                            alert(result.message);
+                            showMessage(result.message,'success');
                             location.reload();
                         }
                         else{
-                            alert(result.message);
+                            showMessage(result.message,'error');
                         }
                     });
                     

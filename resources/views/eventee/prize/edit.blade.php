@@ -130,7 +130,8 @@
                 if(high.val() < low.val()){
                     e.preventDefault();
                     high.addClass("is-invalid");
-                    alert("High value can not be lower than low value!")
+                    // alert("High value can not be lower than low value!");
+                    showMessage("High value can not be lower than low value!",'success');
                 }
             });
         })
