@@ -24,15 +24,16 @@
 @section('content')
 @if(session()->has('success-edit'))
     <script>
-        alert('Data Updated Succesfully');
-        
+        // alert('Data Updated Succesfully');
+        showMessage("Data Updated Succesfully",'success');
     </script>
     @php
         Session::forget('success-edit');
     @endphp
 @elseif(session()->has('error-edit'))
 <script>
-    alert('Something Went Wrong');
+    // alert('Something Went Wrong');
+    showMessage("Something Went Wrong",'error');
     
 </script>
 @php
@@ -175,10 +176,12 @@
             if($('#announce').val()){
                 $.get("{{ route('admin.announce.create') }}",{'announce':announce,'send':send_to,'subject':subject},function(result){
                     if(result.status == 200){
-                        alert(result.message);
+                        // alert(result.message);
+                        showMessage(result.message,'success');
                         location.reload();
                     }else{
-                        alert(result.message);
+                        // alert(result.message);
+                        showMessage(result.message,'error');
                     }
                 });
             }
@@ -197,10 +200,11 @@
             var id = $('#id').val();
             $.get("{{ route('admin.announce.delete') }}",{'id':id},function(result){
                 if(result.status == 200){
-                    alert(result.message);
+                    // alert(result.message);
+                    showMessage(result.message,'success');
                     location.reload();
                 }else{
-                    alert(result.message);
+                    showMessage(result.message,'error');
                 }
             });
         }

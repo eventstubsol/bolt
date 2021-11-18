@@ -412,8 +412,7 @@ $user = Auth::user();
         var msie = ua.indexOf("MSIE ");
         if (msie > 0) // If Internet Explorer, return version number
         {
-            alert(
-                "For an immersive experience on our platform please use some modern browser like Chrome, Safari or Firefox.");
+                showMessage("For an immersive experience on our platform please use some modern browser like Chrome, Safari or Firefox.",'error');
         }
     </script>
     <!-- Onesignal -->
