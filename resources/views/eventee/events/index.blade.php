@@ -174,22 +174,23 @@
       }
 
       function deleteEvent(e){
-        var conf = confirm("Do you want to delete this event?");
-            if(conf){
+        confirmDelete("Are you sure you want to DELETE Prize?","Confirm Prize Delete").then(confirmation=>{
+            if(confirmation){
                 var eventId = e.getAttribute('data-id');
                 var data = e.closest('tr');
                 $.post('{{ route("event.delete") }}',{'id':eventId},function(response){
+                    if(response.code == 200){
+                        data.remove();
+                        showMessage(response.message,'success');
+                    }
+                    else{
+                        showMessage(response.message,'error');
+                    }
                     
-                    data.remove();
-                    $('#AlertDelete').show();
-                    setTimeout(
-                        function() 
-                        {
-                            $('#AlertDelete').hide();
-                        }, 
-                    5000);
+                    
                     });
             }
+        });
       }
      $(document).ready(function(){
          $('#event_name').on('input',function(){
