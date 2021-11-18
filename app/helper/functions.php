@@ -1175,3 +1175,27 @@ function UniqueEmail($email,$id){
          return 0;
      }
  } 
+
+function SaveMenu($menu,$position = null){
+        
+        if(isset($menu['children'])){
+            
+            foreach($menu['children'] as $pos =>$child){
+                $mMenu = Menu::findOrFail($child['id']);
+                $mMenu->parent_id = $menu['id'];
+                $mMenu->save();
+               if(isset($child['children'])){
+                 SaveMenu($child,$pos);
+               }
+            }
+        
+        }
+        
+         $mMneu = Menu::findOrFail($menu['id']);
+         $mMneu->position = $position;
+         $mMneu->save();
+       
+        
+    
+        
+}
