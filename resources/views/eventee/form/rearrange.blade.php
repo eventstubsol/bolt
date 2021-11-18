@@ -88,7 +88,8 @@
                 
                 success:function(response){
                     // console.log(response);
-                  alert(response.message);
+                //   alert(response.message);
+                  showMessage(response.message,'success');
                   $('#savebtn').css('display','none');
                 },
                 error:function(response){
