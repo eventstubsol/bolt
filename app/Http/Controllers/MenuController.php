@@ -53,7 +53,17 @@ class MenuController extends Controller
             SaveMenu($menu,($position+1));
              
         }
-
+        
+           
+        
+        // foreach ($request->position as $positions) {
+        //     $position = $positions[1];
+        //     $id = $positions[0];
+        //     // echo $id." position ".$position."<br>";
+        //     DB::update('UPDATE menus set position = ? where id = ? and  event_id = ?', [$position, $id,$request->event_id]);
+        // }
+        
+        // return response()->json(['message' => 'success']);
     }
 
     /**
