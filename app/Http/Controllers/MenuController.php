@@ -16,7 +16,7 @@ class MenuController extends Controller
     public function index()
     {
         //
-        $menus = Menu::where('type', 'nav')->orderby('position', 'asc')->get();
+        $menus = Menu::where('parent_id', '0')->where('type', 'nav')->orderby('position', 'asc')->get();
         return view('menus.menu', compact('menus'));
     }
 
@@ -32,8 +32,6 @@ class MenuController extends Controller
         return response()->json($menu);
     }
 
-    
-
     /**
      * Store a newly created resource in storage.
      *
@@ -42,18 +40,13 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $menus = $request->menu;
-        // return $menus;
-        foreach($menus as $position =>$menu){
-            
-            
-            $newMenu = Menu::findOrFail($menu['id']);
-            $newMenu->parent_id = 0;
-            $newMenu->save();
-            SaveMenu($menu,($position+1));
-             
+        //
+        foreach ($request->position as $positions) {
+            $id = $positions[1];
+            $position = $positions[0];
+            DB::update('UPDATE menus set position = ? where id = ? and  event_id = ?', [$position, $id,$request->event_id]);
         }
-    
+        return response()->json(['message' => 'success']);
     }
 
     /**
@@ -157,7 +150,4 @@ class MenuController extends Controller
             Log::error($e->getMessage());
         }
     }
-
-
-   
 }
