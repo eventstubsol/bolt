@@ -37,8 +37,8 @@ use App\UUID;
  */
 class Content extends Model
 {
-
-    
+    use UUID;
+    public $incrementing = false;
     use SoftDeletes;
 
     protected $guarded = [];

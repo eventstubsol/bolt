@@ -22,7 +22,7 @@ class NotificationController extends Controller
 {
     public function index($id)
     {
-        $notifications = PushNotification::where('event_id',$id)->orderBy("created_at")->get();
+        $notifications = PushNotification::where('id',Auth::id())->orderBy("created_at")->get();
         return view("eventee.notification.index")->with(compact("notifications","id"));
     }
 
