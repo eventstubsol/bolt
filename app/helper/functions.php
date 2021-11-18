@@ -26,6 +26,7 @@ use PhpParser\Node\Stmt\Catch_;
 use App\ContentMaster;
 use App\Menu;
 use App\Treasure;
+use App\UserSubtype;
 
 include_once "clickableAreasConfig.php";
 
@@ -411,19 +412,20 @@ function getLobbyLinks($id)
     $links = Link::where(["page"=>$lobby])->get();
     return $links;
 }
-function getFilters($filter)
+function getFilters($event_id)
 {
-    switch($filter){
-        case "company_size":
-          return  User::select("company_size")->distinct()->get()->toArray();
-          break;
-        case "mytags":
-            return UserTag::select("tag")->where("tag_group","My Tags")->distinct()->get()->toArray();
-            break;
-        default :
-            return UserTag::select("tag")->where("tag_group",$filter)->distinct()->get()->toArray();
-            break;
-    }
+    return UserSubtype::where('event_id',$event_id)->get();
+    // switch($filter){
+    //     case "company_size":
+    //       return  User::select("company_size")->distinct()->get()->toArray();
+    //       break;
+    //     case "mytags":
+    //         return UserTag::select("tag")->where("tag_group","My Tags")->distinct()->get()->toArray();
+    //         break;
+    //     default :
+    //         return UserTag::select("tag")->where("tag_group",$filter)->distinct()->get()->toArray();
+    //         break;
+    // }
 }
 
 function createMenus($event_id){
