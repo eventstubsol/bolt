@@ -189,12 +189,18 @@ function initApp() {
     const doNotRoute = [
         "support"
     ];
-    areas.on("click", function (e) {
+    areas.on("click", async function (e) {
         // loader.show();
         const link = $(this).data("link");
         directAccess = false;
         const flyin = $(e.target).data("flyin");
-        // console.log({e,flyin});
+        const photobooth = $(e.target).data("capture");
+        if(photobooth){
+            let gallery = $("#photo-gallery");
+            let capture = $("#photo-capture");
+            await gallery.attr("src" , $(this).data("gallery"));
+            await capture.attr("src" , $(this).data("capture"));
+        }
 
         if(flyin){
             pages.hide();
@@ -222,6 +228,16 @@ function initApp() {
         }
     });
 
+    $(".videosdk").on("click", function (e) {
+        meeting_id = $(this).data("meeting");
+        if(meeting_id){
+            $("#videosdk-session-content").empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.videoSDK.replace(":id",meeting_id)}"></iframe>`);
+            $("#videosdk-session-content").append(`<div id="video_play_area"></div>`);
+            $("#videosdk_modal").unbind().on("hide.bs.modal", function () {
+                $("#videosdk-session-content").empty();
+            });
+        }
+    });
     $(".subscribe-to-event").on("click", function (e) {
         // console.log("hello")
         e.preventDefault();
@@ -1044,7 +1060,7 @@ function initApp() {
                 recordPageView("infodesk", "Infodesk");
             }
         },
-        'photo-booth': function () {
+        'photo-booth': function (id) {
             if (checkAuth()) {
                 routie("lobby");
             } else {
@@ -1055,6 +1071,12 @@ function initApp() {
                 let galleryBtn = $("#gallery");
                 let capture = $("#photo-capture");
                 let captureBtn = $("#capture");
+                console.log($(this).data("gallery"));
+                console.log(this);
+                console.log($(this));
+                console.log($(this).data("capture"));
+                gallery.attr("src" , $(this).data("gallery"));
+                capture.attr("src" , $(this).data("capture"));
                 capture.hide();
                 gallery.show();
                 galleryBtn.hide();

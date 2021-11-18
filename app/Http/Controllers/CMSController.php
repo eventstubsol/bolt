@@ -50,6 +50,12 @@ class CMSController extends Controller
     }
 
     public function uploadFile(Request $request){
+        $size = $request->file("file")->getSize();
+        // dd($size);
+        if($size > 12600000 ){
+            return ["success" => false,"message"=> "file too big"];
+        }
+
         $path = $request->file('file')->store('/uploads',env("UPLOADS_FILE_DRIVER", "public"));
         // $path =  Storage::disk('s3')->put('/uploads', $request->file('file'));
         return [

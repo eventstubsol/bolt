@@ -14,7 +14,7 @@
     
 <div class="row">
     <div class="col-12">
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-header"> <img width="150" src="https://www.google.com/recaptcha/about/images/reCAPTCHA-enterprise.png" class="img-fluid rounded-circle" alt="">   </div>
             <div class="card-body">
                 <form method="POST" action="{{ route("eventee.integrationsUpdate",['id'=>$id]) }}">
@@ -30,7 +30,7 @@
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
-        </div>
+        </div> --}}
         <div class="card">
             <div class="card-header"> <img width="150" src="https://developers.google.com/analytics/images/terms/logo_lockup_analytics_icon_horizontal_black_2x.png" class="img-fluid rounded-circle" alt="">   </div>
             <div class="card-body">
@@ -44,7 +44,7 @@
                 </form>
             </div>
         </div>
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-header"> <img width="150" src="https://www.pngfind.com/pngs/m/59-590228_capture-it-photobooth-b1-lora-alliance-logo-png.png" class="img-fluid rounded-circle" alt="">   </div>
             <div class="card-body">
                 <form method="POST" action="{{ route("eventee.integrationsUpdate",['id'=>$id]) }}">
@@ -60,7 +60,7 @@
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
-        </div>
+        </div> --}}
         <div class="card">
             <div class="card-header"> <img width="150" src="https://onlinechat.co.in/wp-content/uploads/2021/08/cometchat-logo-768x401-1.jpg" class="img-fluid rounded-circle" alt="">   </div>
             <div class="card-body">

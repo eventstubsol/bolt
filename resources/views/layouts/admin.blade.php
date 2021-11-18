@@ -246,7 +246,7 @@
                     
                         @if(isset($id))
                             <li class=" color-primary">
-                                <a class="visit_event" href="http://{{$curr_event->link}}/event" target="_blank">Visit Event</a>    
+                                <a class="visit_event" href="https://{{$curr_event->link}}/event" target="_blank">Visit Event</a>    
                             </li>
                         @endif
                 </li>
@@ -369,7 +369,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
-                        {{ date("Y") }} - &copy; GEC Media
+                        {{ date("Y") }} - &copy; EventStub
                     </div>
                     <div class="col-md-6">
                         <div class="text-md-right footer-links d-none d-sm-block">
