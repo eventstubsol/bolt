@@ -83,4 +83,63 @@
         </div>
     </div>
 </div>
+
+
 <!-- end Topbar -->
+
+    <script>
+      function clearAll(){
+          $('#count').empty();
+          $('#count').html(0);
+          $('#notificationBody').empty();
+          $('#notificationBody').html('<h6><center>No Notification Available</center></h6>');
+          $.get("{{ route('notification.user.seenAll') }}",{id:"{{ $event_id }}"},function(response){
+            if(response.code == 200){
+                      console.log("Done");
+                  }
+                  else{
+                      console.log("error");
+                  }
+          });
+        //   $.ajax({
+        //       url:"{{ route('notification.user.seenAll') }}",
+        //       method:"GET",
+        //       data:{
+        //           id:"{{ $event_id }}"
+        //       }
+        //       success:function(response){
+                 
+        //       }
+        //   });
+
+      }
+
+      function showNotification(e){
+          var id = e.getAttribute('data-id');
+          var title =  e.getAttribute('data-title');
+          var message = e.getAttribute('data-message');
+          $.ajax({
+              url:"{{ route('notification.user.seen') }}",
+              method:"POST",
+              data:{
+                'id':id
+              },
+              success:function(res){
+                  if(res.code == 200){
+                        let consentNotify = $('.consent-notification');
+                        $('#notification-head').empty();
+                        $('#notification-body').empty();
+                        $('#notification-head').html('Subject:&nbsp;'+title);
+                        $('#notification-body').html('Message:&nbsp;'+message);
+                        consentNotify.removeClass('enable');
+                        $('#notification-smallModal').addClass('enable');
+                  }
+                  else{
+                      alert('Something Went Wrong');
+                  }
+              }
+          });
+      }
+
+    </script>
+
