@@ -207,17 +207,9 @@ $(document).ready(function(){
                 method:"POST",
                 data:{"menu":final},
                 success:function(response){
-<<<<<<< HEAD
-                  alert(response.message);
-                  $('#savebtn').css('display','none');
-                },
-                error:function(response){
-                  console.log(403);
-=======
                     alert("Changes Made Successfully");
                     $('#savebtn').hide();
 
->>>>>>> TestEvent
                 }
             });
         }
