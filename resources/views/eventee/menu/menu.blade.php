@@ -33,7 +33,7 @@
           <div id="buttons-container" class="card-header" style="display:inline-flex">
           </div>
             <div class="card-body">
-                {{-- <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>Menu</th>
@@ -68,7 +68,7 @@
                         </tr>
                       @endforeach
                     </tbody>
-                </table> --}}
+                </table>
                 <div class="custom-dd dd"  style="max-width: 100%"  id="sortable" >
                     <ol class="sort dd-list" id="olsort">
                         @foreach($menus as $i => $menu)
@@ -184,7 +184,7 @@ $(document).ready(function(){
 
         $('#sortable').nestable({
             group: 1,
-            maxDepth:2,
+            maxDepth:1,
             serialize:true,
             
         }).on('change',updateOutput);
