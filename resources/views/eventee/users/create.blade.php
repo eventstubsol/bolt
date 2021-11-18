@@ -53,8 +53,8 @@ Create Users
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="password">Password</label>
-                        <input id="password" required name="password" type="password"
+                        <label for="password">Password (optional)</label>
+                        <input id="password"  name="password" type="password"
                             class="form-control @error('password') is-invalid @enderror" />
                         @error('password')
                         <span class="invalid-feedback" role="alert">
