@@ -57,21 +57,17 @@
                         <span id="event_link">.{{ $baseurl }}</span><br>
                         <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps </strong> Between Subdomain Name, use '-' only if needed</span>
                     </div>
-                    @if($event->end_date >= Carbon\Carbon::today())
-                        <div class="row">
-                            <div class="col">
-                                <label for="name">Start Date</label>
-                                <input type="date" name="start_date" value="{{ $event->start_date }}"  class="form-control" required>
-                            </div>
-                            <div class="col">
-                                <label for="name">End Date</label>
-                                <input type="date" name="end_date" value="{{ $event->end_date }}" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
-                            </div>
-                            
-                        </div><br>
-                   
-                       
-                    @endif
+                    <div class="row">
+                        <div class="col">
+                            <label for="name">Start Date</label>
+                            <input type="date" name="start_date" value="{{ $event->start_date }}" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
+                        </div>
+                        <div class="col">
+                            <label for="name">End Date</label>
+                            <input type="date" name="end_date" value="{{ $event->end_date }}" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
+                        </div>
+                    </div><br>
+                
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
