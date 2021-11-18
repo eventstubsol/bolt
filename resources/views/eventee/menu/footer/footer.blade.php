@@ -33,7 +33,7 @@
           <div id="buttons-container" class="card-header" >
           </div>
             <div class="card-body">
-                {{-- <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>Menu</th>
@@ -77,7 +77,7 @@
                         </tr>
                       @endforeach
                     </tbody>
-                </table> --}}
+                </table> 
 
                 <div class="custom-dd dd"  style="max-width: 100%"  id="sortable" >
                     <ol class="sort dd-list" id="olsort">
