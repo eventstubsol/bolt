@@ -437,4 +437,24 @@ class BoothController extends Controller
    
   }
 
+  public function BulkDelete(Request $req){
+    $ids = $req->ids;
+    $totalcount = 0;
+    for($i = 0 ; $i < count($ids); $i++){
+        $booth = Booth::findOrFail($ids[$i]);
+        $booth->delete();
+        $boothCount = Booth::where('id',$ids[$i])->count();
+        if($boothCount > 0){
+          $totalcount++;
+        }
+
+    }
+    if(($totalcount)>0){
+      return response()->json(['code'=>500,"Message"=>"Something Went Wrong"]);
+    }
+    else{
+      return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+    }
+  }
+
 }

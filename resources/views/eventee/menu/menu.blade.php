@@ -33,7 +33,7 @@
           <div id="buttons-container" class="card-header" style="display:inline-flex">
           </div>
             <div class="card-body">
-                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+                {{-- <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>Menu</th>
@@ -68,8 +68,38 @@
                         </tr>
                       @endforeach
                     </tbody>
-                </table>
-
+                </table> --}}
+                <div class="custom-dd dd"  style="max-width: 100%"  id="sortable" >
+                    <ol class="sort dd-list" id="olsort">
+                        @foreach($menus as $i => $menu)
+                        
+                                <li class="dd-item" data-id="{{ $menu->id }}" data-position="{{ $menu->position }}">
+                                    
+                                    <div class="dd-handle" data-id="{{ $menu->id }}">
+                                       
+                                        {{$menu->name}} 
+                                
+                                    </div>
+                                    @foreach($menu->submenus as $submenu)
+                                    <ol class="dd-list"><li class="dd-item" data-id="{{ $submenu->id }}" data-position="{{ $submenu->position }}">
+                                        <div class="dd-handle" data-id="32">
+                                            {{ $submenu->name }}
+                                        </div>
+                                        </li></ol>
+                                    </li>
+                                    @endforeach
+                            {{-- @else
+                            <li class="dd-item" data-id="{{ $menu->id }}" data-position="{{ $menu->position }}">
+                                <div class="dd-handle" data-id="{{ $menu->id }}">
+                                    {{$menu->name}}
+                                   
+                                </div>
+                            </li>
+                            @endif --}}
+                        @endforeach
+                    </ol>
+                </div>
+                
             </div> <!-- end card body-->
         </div> <!-- end card -->
     </div><!-- end col-->
@@ -77,10 +107,14 @@
 @endsection
 @section("scripts")
 
-
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/nestable2/jquery.nestable.min.js"></script>
+{{-- <script src="https://coderthemes.com/ubold/layouts/assets/js/pages/nestable.init.js"></script> --}}
 
 <script type="text/javascript">
-var position = [];
+
+// var ids = [];
+var position =[];
+var final;
 $(document).ready(function(){
     $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.menu.create",$id) }}">Create New</a>')
     $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success" onclick="SavePositions()" style="display:none">Save</button>')
@@ -135,18 +169,30 @@ $(document).ready(function(){
                 });
         });
 
-        $('.sort').sortable({
-            update:function(event , ui){
-                $(this).children().each(function(index){
-                    if($(this).attr('data-position') != (index + 1)){
-                        $(this).attr('data-position',(index + 1)).addClass('updated');
-                        $('#savebtn').css('display','block');
-                    }
-                
-                });
-                saveNewPoisition();
+        var updateOutput = function (e) {
+            var list = e.length ? e : $(e.target), output = list.data('output');
+            if (window.JSON) {output.val(window.JSON.stringify(list.nestable('serialize')));//, null, 2));
+            } else {
+                output.val('JSON browser support required for this demo.');
             }
-        });
+            // console.log(list.nestable('serialize'));
+            final = list.nestable('serialize');
+            $('#savebtn').css('display','block');
+
+            
+        };
+
+        $('#sortable').nestable({
+            group: 1,
+            maxDepth:2,
+            serialize:true,
+            
+        }).on('change',updateOutput);
+        updateOutput($('#sortable').data('output', $('#sortable')));
+        // $('.dd').on('change', function(el) {
+        //         /* on change event */
+        //     console.log(el);
+        // });
         function saveNewPoisition(){
             
             $('.updated').each(function(){
@@ -155,20 +201,23 @@ $(document).ready(function(){
         }
 
         function SavePositions(){
-            // console.log(position);
+            // console.log(final);
             $.ajax({
-                data: {"position":position,"event_id":"{{ $id }}"},
-                method: 'POST',
-                url: '{{ route('menu.store') }}',
+                url:"{{ route('menu.store') }}",
+                method:"POST",
+                data:{"menu":final},
                 success:function(response){
-                  alert(response.message);
-                  $('#savebtn').css('display','none');
-                },
-                error:function(response){
-                  console.log(403);
+                    alert("Changes Made Successfully");
+                    $('#savebtn').hide();
+
                 }
-               
             });
         }
+
+        // function getvalues(e){
+        //     console.log(e.closest('ol'));
+        // }
+
+        
 </script>
 @endsection
