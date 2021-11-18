@@ -42,8 +42,6 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        
         $menus = $request->menu;
         // return $menus;
         foreach($menus as $position =>$menu){
