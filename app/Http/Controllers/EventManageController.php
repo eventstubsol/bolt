@@ -112,7 +112,12 @@ class EventManageController extends Controller
     public function destroy(Request $req){
         $event = Event::findOrFail($req->id);
         
-        $event->delete();
-        return response()->json(['message'=>"Event Deleted Succesfully"]);
+       if($event->delete()){
+        return response()->json(['code'=>200,'message'=>"Event Deleted Succesfully"]);
+       }
+       else{
+        return response()->json(['code'=>500,'message'=>"Something Went Wrong"]);
+       }
+        
     }
 }

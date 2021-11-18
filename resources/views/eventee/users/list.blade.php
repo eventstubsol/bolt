@@ -20,7 +20,8 @@ Manage Users
 
 @if(Session::get('eventee.user') == 1)
     <script>
-        alert("User Added Successfully");
+        // alert("User Added Successfully");
+        showMessage("User Added Successfully",'success');
     </script>
     @php
         Session::put('eventee.user',2);

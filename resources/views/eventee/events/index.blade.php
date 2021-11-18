@@ -164,13 +164,7 @@
 
         /* Alert the copied text */
         // alert("Link Copied To Clipboard");
-        $('#showAlert').show();
-        setTimeout(
-            function() 
-            {
-                $('#showAlert').hide();
-            }, 
-        5000);
+        showMessage("Link Copied To Clipboard",'success');
 
       }
 
