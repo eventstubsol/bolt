@@ -109,7 +109,9 @@ class UserController extends Controller
                 $user->last_name = $request->last_name;
                 $user->event_id = $id;
                 $user->type = $request->type;
-                $user->password = password_hash($request->password, PASSWORD_DEFAULT);
+                if($request->password){
+                    $user->password = password_hash($request->password, PASSWORD_DEFAULT);
+                }
                 $user->email = $request->email;
                 $user->isCometChatAccountExist = TRUE;
                 $user->subtype = $request->subtype;

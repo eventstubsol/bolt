@@ -37,7 +37,7 @@
           webcamEnabled: false,
           participantCanToggleSelfWebcam: true,
           participantCanToggleSelfMic: true,
-          redirectOnLeave: false,
+          redirectOnLeave: window.location.href,
 
           chatEnabled: true,
           screenShareEnabled: true,

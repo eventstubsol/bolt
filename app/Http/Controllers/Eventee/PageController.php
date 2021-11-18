@@ -110,6 +110,7 @@ class PageController extends Controller
     
     public function update(Request $request, Page $page,$id){
         // dd($request->all());
+        // dd(uniqid());
         $request->validate(["name","url"]);
         $pag =  Page::where('event_id',$id)->first();
         $event_id = $id;
@@ -135,6 +136,7 @@ class PageController extends Controller
             foreach($request->linknames as $id => $linkname){
 
                 $to = "";
+                $url = "";
                 // dd($request->type);
                 switch($request->type[$id]){
                     case "session_room": 
@@ -168,12 +170,20 @@ class PageController extends Controller
                         $to = "lobby";
                     case "faq":
                         $to = "FAQ";
+                    case "photobooth":
+                        $to = $request->capture_link[$id];
+                        $url = $request->gallery_link[$id];
+                        break;
+                    case "videosdk":
+                        $to = uniqid();
+                        break;
                 }
                 $link = Link::create([
                     "page"=>$page->id,
                     "name"=> $linkname,
                     "type"=>$request->type[$id],
                     "to"=> $to,
+                    "url"=> $url,
                     "top"=> $request->top[$id],
                     "left"=> $request->left[$id],
                     "width"=> $request->width[$id],
