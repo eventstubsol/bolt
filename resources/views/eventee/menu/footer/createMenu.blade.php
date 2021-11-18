@@ -128,7 +128,7 @@ Create Menu
                     <!-- Icon Select End -->
 
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <input type="checkbox" id="isChild"  name="isChild" value="1" onclick="checkSel(this)">
                         <label for="message-text" class="col-form-label">Is It a child menu?</label>
                     </div>
@@ -142,7 +142,7 @@ Create Menu
                                 <option value="{{ $footer->id }}">{{ $footer->name }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Save</button>
