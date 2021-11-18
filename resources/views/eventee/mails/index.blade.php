@@ -30,7 +30,7 @@
                         <tr>
                             <th width ="10%">#</th>
                             <th width ="10%">Sent To</th>
-                            <th width ="70%">Message</th>
+                            <th width ="70%">Subject</th>
                             <th width ="10%">Sent On</th>
                         </tr>
                     </thead>
@@ -44,7 +44,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $mail->sent_to }}</td>
-                                    <td>{{ $mail->message }}</td>
+                                    <td>{{ $mail->subject }}</td>
                                     <td>{{ Carbon\Carbon::parse($mail->created_at)->format('d/m/Y') }}</td>
                                 </tr>
                             @endforeach
