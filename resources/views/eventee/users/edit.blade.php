@@ -66,6 +66,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @if(count($subtypes))
                     <div class="form-group mb-3">
                         <label for="type">Subtype of User</label>
                         <select class="form-control" name="subtype">
@@ -74,6 +75,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @endif
                     <div>
 
                     {{-- @if (!$user->email_verified_at)
