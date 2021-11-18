@@ -124,7 +124,7 @@
     </div>
 </li>
 
-{{-- <li>
+<li>
     <a href="#polls" data-toggle="collapse">
         <i data-feather="bar-chart-2"></i>
         <span>Polls</span>
@@ -164,7 +164,7 @@
             </li>
         </ul>
     </div>
-</li> --}}
+</li>
 
 {{-- <li>
     <a href="{{ route("eventee.videoArchive",$id) }}"  class="nav-second-level"> 

@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Question extends Model
 {
+    use UUID;
     use SoftDeletes;
 
     //

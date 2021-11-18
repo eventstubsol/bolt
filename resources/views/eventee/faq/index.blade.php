@@ -57,8 +57,7 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $faq->question }}</td>
-                                    <td><a href="{{ route('eventee.faq.edit',['id'=>$id,'faq_id'=>$faq->id]) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                        <button onclick="deleteFaq(this)" data-id="{{ $faq->id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button></td>
+                                    <td><a href="{{ route('eventee.faq.edit',['id'=>$id,'faq_id'=>$faq->id]) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a></td>
                                 </tr>
                             @endforeach
                         @else
@@ -75,35 +74,5 @@
         </div>
     </div>
 </div>
-
-@endsection
-
-@section('scripts')
-
-    <script>
-        function deleteFaq(e){
-            var id = e.getAttribute('data-id');
-            confirmDelete("Are you sure you want to DELETE FAQ?","Confirm FAQ Delete").then(confirmation=>{
-                        if(confirmation){
-                            $.ajax({
-                                url:"{{ route('eventee.faq.delete') }}",
-                                data: {
-                                    "id":id,
-                                },
-                                method:"POST",
-                                success: function(response){
-                                    if(response.code == 200){
-                                        e.closest("tr").remove();
-                                    }
-                                    else{
-                                        alert("Something Went Wrong");
-                                    }
-                                   
-                                }
-                            })
-                        }
-                    });
-        }
-    </script>
 
 @endsection

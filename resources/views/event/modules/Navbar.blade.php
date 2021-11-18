@@ -239,9 +239,6 @@
                         </form>
                     </div>
                 </div>
-               
-                
-                
                 <div class="mob-menu ml-2 d-none">
                     <a href="void:javascript(0);">
                         <span class="round-icon">
