@@ -70,6 +70,7 @@ Create Users
                             @endforeach
                         </select>
                     </div>
+                    @if(count($subtypes))
                     <div class="form-group mb-3">
                         <label for="type">Subtype of User</label>
                         <select class="form-control" name="subtype">
@@ -78,6 +79,7 @@ Create Users
                             @endforeach
                         </select>
                     </div>
+                    @endif
                     <div>
                         <button class="btn btn-primary" type="submit">Create</button>
                     </div>
