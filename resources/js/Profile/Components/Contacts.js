@@ -414,11 +414,14 @@ class AttendeeList extends Component{
                                     </div> */}
                                      <div className="col-lg-6 mb-2">
                                         <div className="form-group m-0">
+                                        {
+                                            mytags ?
                                             <select className="custom-select" onChange={e => this.handleTagSelect(e,"MY_TAGS")} value={MY_TAGS}>
                                                 <option value="">Filter TAGS</option>
                                                 {  mytags ? mytags.map(tag=>tag.tag ? <option value={tag.tag}>{tag.tag}</option> : null)
                                                 : null }
-                                            </select>
+                                            </select> : ''
+                                        }
                                         </div>
                                     </div> 
                                    {/*   <div className="col-lg-6 mb-2">
