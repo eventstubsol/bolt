@@ -22,7 +22,7 @@ class NotificationController extends Controller
 {
     public function index($id)
     {
-        $notifications = PushNotification::where('id',Auth::id())->orderBy("created_at")->get();
+        $notifications = PushNotification::where('event_id',$id)->orderBy("created_at")->get();
         return view("eventee.notification.index")->with(compact("notifications","id"));
     }
 
@@ -59,7 +59,7 @@ class NotificationController extends Controller
         $notify->event_id = $id;
         $role = implode(", ", $request->post("roles"));
         if($notify->save()){
-            $notification = event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role));
+            $notification = event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL)));
             flash("Notification Sent Succesfully")->success();
             return redirect()->route('eventee.notification',$id);
         }
