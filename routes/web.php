@@ -345,6 +345,9 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('License/update/{id}/{license_id}',"Eventee\LicenseController@update")->name('eventee.license.update');
     
 });
+
+Route::post('notification/seen','UerNotifiicationController@seen')->name('notification.user.seen');
+Route::get('notification/seen/all','UerNotifiicationController@seenAll')->name('notification.user.seenAll');
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 
 Route::get("/event/login", "AttendeeAuthController@show")->name("attendee_login");
