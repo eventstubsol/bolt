@@ -18,6 +18,7 @@
 
 
                     $to = "";
+                    $url = "";
                     switch($link->type)
                     {
                         case "zoom":
@@ -28,8 +29,9 @@
                         case "pdf":
                         case "lobby":
                         case "faq":
-                        case "photo-booth":
+                        case "photobooth":
                             $to = $link->to;
+                            $url = $link->url;
                             break;
                         case "session_room":
                             $to = "sessionroom/".$link->to;
@@ -67,6 +69,12 @@
                         <div title="{{ $link->name  }}" class="positioned chat_group" data-link="{{ $to }}" style="{{ areaStyles($area) }}; background: transparent; cursor:pointer;">    </div>
                     @elseif($link->type === "pdf")
                         <div title="{{ $link->name  }}" class="positioned _df_button" source="{{ assetUrl($to) }}" style="{{ areaStyles($area) }}; background: transparent;cursor:pointer;">    </div>
+                    @elseif($link->type === "photobooth")
+                        <div title="{{ $link->name  }}"  class="photobooth positioned area" data-link="photo-booth" data-capture="{{$link->to}}" data-gallery="{{$link->url}}" style="{{ areaStyles($area) }}">    
+                        </div>
+                    @elseif($link->type === "videosdk")
+                        <div title="{{ $link->name  }}" data-toggle="modal"  data-target="#videosdk_modal" class="videosdk positioned " data-link="videosdk" data-meeting="{{$link->to}}" style="{{ areaStyles($area) }}">    
+                        </div>
                     @else
                         @if($to ==="FAQ")
                             <a class="positioned" data-toggle="modal" data-target="#faqs-modal"
@@ -128,4 +136,21 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
+</div>
+
+
+<div data-backdrop="static"  class="modal fade embed-modal slido-container-modal" id="videosdk_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div class="modal-body">
+                <div class="position-relative">
+                    <div style="padding-bottom: {{ AUDI_IMAGE_ASPECT }}%"></div>
+                    <div id="videosdk-session-content" class="positioned fill" >
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -103,8 +103,8 @@
                                     <div @if($link->type !== "booth") style="display: none;" @endif  class="booth-{{$ids}} booths form-group mb-3 col-md-4">
                                         <label for="to">to(Booth)</label>
                                         <select     class="form-control" name="booths[]">
-                                            @foreach($booths as $booth)
-                                                <option @if($link->to === $booth->id) selected @endif value="{{$booth->id}}">{{$booth->name}}</option>
+                                            @foreach($booths as $booth_n)
+                                                <option @if($link->to === $booth_n->id) selected @endif value="{{$booth_n->id}}">{{$booth_n->name}}</option>
                                             @endforeach
 
                                         </select>
@@ -403,7 +403,7 @@
     let n = links.length;
     // console.log(n);
     $(document).ready(function() {
-        
+        console.log({!! json_encode($booth->links) !!});
      
         
         $("#add-link").on("click", addlink);
@@ -471,6 +471,7 @@
         $(".im-"+index).eq(0).css(areaStylesb(positions));
         console.log(positions)
         console.log(getRotation(positions))
+        console.log({positions,index,name})
         $(".im_name-"+index).eq(0).css(getRotation(positions));
         $(".im_name-"+index).html(`${name}`);
         $(".positioning-"+index).eq(0).css({
@@ -628,8 +629,8 @@
                                     <div style="display: none;" class="booth-${n} booths form-group mb-3 col-md-4">
                                         <label for="to">to(Booth)</label>
                                         <select     class="form-control" name="booths[]">
-                                            @foreach($booths as $booth)
-                                                <option value="{{$booth->id}}">{{$booth->name}}</option>
+                                            @foreach($booths as $booth_n)
+                                                <option value="{{$booth_n->id}}">{{$booth_n->name}}</option>
                                             @endforeach
 
                                         </select>

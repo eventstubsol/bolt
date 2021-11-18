@@ -51,7 +51,7 @@ class AttendeeAuthController extends Controller
     {
         // return $subdomain;
         $event = Event::where("slug",$subdomain)->first();
-            if(api('RECAPTCHA_SECRET_KEY',$event->id) && api('RECAPTCHA_SITE_KEY',$event->id)){
+            if(env('RECAPTCHA_SECRET_KEY') && env('RECAPTCHA_SITE_KEY')){
                 // dd("shubh");
                 $response = Http::asForm()
                 ->post(
@@ -72,7 +72,8 @@ class AttendeeAuthController extends Controller
                     ->with([
                         "notFound" => FALSE,
                         "captchaError" => TRUE,
-                        "login" => $this->loginT
+                        "login" => $this->loginT,
+                        "subdomain"=>$subdomain
                     ]);
             }
         }
@@ -162,10 +163,16 @@ class AttendeeAuthController extends Controller
         $user = User::where('email',$req->email)->where("event_id",$event->id)->first();
         $pass = password_verify($req->password,$user->password);
         if($pass ){
+            // dd($user);
             Auth::login($user);
                 // return $user->type;
+            LoginLog::create(["ip" => $req->ip(), "user_id" => $user->id]);
+           
             if($user->type === "exhibiter"){
                 return redirect(route("exhibiterhome",$subdomain));
+            }
+            if($user->type === "speaker"){
+                return redirect(route("eventee.event",['subdomain'=>$event->slug]));
             }
             // if(view()->exists("dashboard.".$user->type)){
             // }
