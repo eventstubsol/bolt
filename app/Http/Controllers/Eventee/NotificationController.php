@@ -38,10 +38,11 @@ class NotificationController extends Controller
         if ($request->post("url", NULL)) {
             $request->validate(["url" => "url"]);
         }
+        
 
         // $resp = sendGeneralNotification($request->post("title"), $request->post("message"), $request->post("url", NULL), $request->post("roles"));
 
-        
+      
         
         // PushNotification::create([
         //     "title" => $request->post("title"),
@@ -56,8 +57,9 @@ class NotificationController extends Controller
         $notify->message = $request->post("message");
         $notify->roles =implode(", ", $request->post("roles"));
         $notify->event_id = $id;
+        $role = implode(", ", $request->post("roles"));
         if($notify->save()){
-            $notification = event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id));
+            $notification = event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role));
             flash("Notification Sent Succesfully")->success();
             return redirect()->route('eventee.notification',$id);
         }
@@ -65,28 +67,6 @@ class NotificationController extends Controller
             flash("Something Went Wrong")->error();
             return redirect()->back();
         }
-        
-        
-
-        // if ($resp->successful()) {
-        //     
- 
-        //      $notifications = PushNotification::orderBy("created_at")->get();
-        //      return view("eventee.notification.index")->with(compact("notifications","id"));
-        //  } else {
-        //      return $resp->body();
-        //  }
-        $event = Event::findOrFail($id);
-        PushNotification::create([
-            "title" => $request->post("title"),
-            "url" => $request->post("url", NULL),
-            "message" => $request->post("message"),
-            "roles" => implode(", ", $request->post("roles")),
-            "event_id" => $id,
-        ]);
-            event(new NotificationEvent($request->message,$request->title,$event->slug));
-            flash("Notification Sent To User")->success();
-            return redirect()->route('eventee.notification',$id);
     }
 
     public function send(Request $request)
