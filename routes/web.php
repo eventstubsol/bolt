@@ -34,7 +34,8 @@ Route::group(['domain' => $url], function () {
     Route::get('/', function ($subdomain) {
         $event = Event::where("slug",$subdomain)->first();
         if(!$event){
-            return "No Event ".$subdomain;
+            // dd("here");
+            return view('errors.404');
         }
         // dd($subdomain);
         $user = Auth::user();
