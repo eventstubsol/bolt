@@ -690,3 +690,20 @@ Route::get("/clear-leaderboard", function(){
 //    return getSlidoConfig();
 //});
 
+
+
+Route::get("/createmenus",function ()
+{
+    $events = Event::all();
+    // $delfaultMenus =   ["attendees"];
+    foreach($events as  $event){
+        $menuitem = new Menu();
+        $menuitem->name = "attendees";
+        $menuitem->link = "perm";
+        $menuitem->event_id = $event->id;
+        $menuitem->type = "nav";
+        $menuitem->parent_id = 0;
+        $menuitem->position = 10;
+        $menuitem->save();
+    }
+});
