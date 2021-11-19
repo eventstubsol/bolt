@@ -77,7 +77,9 @@
                         @enderror
                        </div>
 
-                        <input class="btn btn-primary" type="submit" value="Create" />
+                        <div>
+                            <button class="btn btn-primary" type="submit">Create</button>
+                        </div>
                 </form>
                 </div>
             </div>

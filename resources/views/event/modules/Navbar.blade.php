@@ -117,6 +117,8 @@
                     <li><a class="area" data-link="leaderboard"><i class="fe-bar-chart"></i>Leaderboard</a></li>
                 @elseif($menu->name == 'personalagenda')
                     <li><a data-toggle="modal" id="agenda" data-target="#personal-schedule-modal"><i class="fe-calendar"></i>Personal Agenda</a></li>
+                @elseif($menu->name == 'attendees')
+                    <li><a class="area" data-link="attendees"><i class="fe-users"></i>Business Connect</a></li>
                 @else
                     <li class="not-booth-menu">   
                         {!! getMenuLink($menu) !!}
