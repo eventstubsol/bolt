@@ -420,7 +420,7 @@ class UserController extends Controller
     {
         $page = (int) $request->get("page", 1);
         $offset = NUMBER_OF_CONTACTS_TO_SHOW * ($page - 1);
-        $userQuery = User::whereNotIn("type", NOT_ATTENDEE_USER_TYPES)->whereNotIn("id", [Auth::user()->id]);
+        $userQuery = User::whereNotIn("type", NOT_ATTENDEE_USER_TYPES)->whereNotIn("id", [Auth::user()->id])->where("event_id",Auth::user()->event_id);
         if ($request->has("search") && strlen($request->get("search")) > 0) {
             $userQuery->where("name", "like", "%" . $request->get("search") . "%");
             $userQuery->orWhere("email", "like", "%" . $request->get("search") . "%");
