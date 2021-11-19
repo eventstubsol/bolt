@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Event;
 use Carbon\Carbon;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
@@ -53,9 +54,16 @@ class LoginController extends Controller
     }
 
     public function logout($subdomain){
+        // return Auth::id();
         if(Auth::check()){
-            Auth::logout();
-            return redirect()->route('attendeeLogin',$subdomain);
+            $user = User::findOrFail(Auth::id());
+            $user->online_status=0;
+            if($user->save()){
+                // return $user;
+                Auth::logout();
+                return redirect(route('attendeeLogin',$subdomain));
+            }
+            
         }        
     }
 }
