@@ -43,7 +43,7 @@
                         </tr>
                     </thead>
                 
-                    <tbody class="sort">
+                    <tbody class="sort" id="sort">
                       @foreach($menus as $menu)
                         <tr id = "{{ $menu->id }}" class="parent">
                             <td>{{$menu->name}}</td>
@@ -121,7 +121,8 @@
 <script type="text/javascript">
 var final;
 $(document).ready(function(){
-    $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.footer.create",$id) }}">Create New</a>')
+    $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.footer.create",$id) }}">Create New</a>');
+    $("#buttons-container").append('<button class="btn btn-success" onclick="setOrder()">Set Order</button>');
     $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success" onclick="SavePositions()" style="display:none">Save</button>')
     //setStatus
     $("body").on("click",".disable",function(e){
@@ -215,9 +216,28 @@ $(document).ready(function(){
                     // alert("Changes Made Successfully");
                     showMessage("Changes Made Successfully",'success');
                     $('#savebtn').hide();
+                    location.reload();
+                    
 
                 }
             });
+        }
+        $(document).ready(function(){
+            $('#sortable').hide();
+            $('#sort').show();
+        });
+        var switchOrder = 0;
+        function setOrder(){
+           if(switchOrder == 0){
+            $('#sortable').show();
+            $('#sort').hide();
+            switchOrder = 1;
+           }
+           else{
+            $('#sortable').hide();
+            $('#sort').show();
+            switchOrder = 0;
+           }
         }
 
 </script>
