@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class UserConnection extends Model
 {
+    use UUID;
     protected $fillable = [ "user_id", "connection_id" ];
 
     public function sender(){
