@@ -113,6 +113,8 @@ class AttendeeAuthController extends Controller
             if ($user->type !== 'attendee' ) {
                 return redirect( route("exhibitorLogin",['subdomain'=>$subdomain,'email'=>$user->email]));
             }
+            $user->online_status = 1;
+            $user->save();
             \DB::table("sessions")->where("user_id", $user->id)->whereNotIn("id", [session()->getId()])->delete();
             Auth::login($user);
             LoginLog::create(["ip" => $request->ip(), "user_id" => $user->id]);
