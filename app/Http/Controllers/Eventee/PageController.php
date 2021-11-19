@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Eventee;
 
+use App\AccessSpecifiers;
 use App\Http\Controllers\Controller;
 
 use App\Booth;
@@ -37,8 +38,17 @@ class PageController extends Controller
             'event_id'=>$id,
             // "bg_type" =>$request->bg_type,
         ]);
-
+     
         $page->save();
+
+        foreach(USER_TYPES as $user_type){
+            AccessSpecifiers::create([
+                "page_id"=>$page->id,
+                "user_type"=>$user_type,
+                "event_id"=>$id
+            ]);
+        }
+
 
         if($request->has("url") && $request->url != null)
         {

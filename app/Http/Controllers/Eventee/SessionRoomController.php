@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Eventee;
 
+use App\AccessSpecifiers;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -36,6 +37,13 @@ class SessionRoomController extends Controller
             ]);
             $room->save();
             // dd($room);
+            foreach(USER_TYPES as $user_type){
+                AccessSpecifiers::create([
+                    "page_id"=>$room->id,
+                    "user_type"=>$user_type,
+                    "event_id"=>$id
+                ]);
+            }
     
     
             //adding background image
