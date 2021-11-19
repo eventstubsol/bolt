@@ -42,7 +42,7 @@
                         </tr>
                     </thead>
                 
-                    <tbody class="sort">
+                    <tbody class="sort" id="sort">
                       @foreach($menus as $menu)
                         <tr data-id = "{{ $menu->id }}" class="parent" data-position ="{{ $menu->position }}">
                             <td>{{$menu->name}}</td>
@@ -70,7 +70,7 @@
                     </tbody>
 
                 </table>
-                <div class="custom-dd dd"  style="max-width: 100%"  id="sortable" >
+                <div class="liSort custom-dd dd"  style="max-width: 100%"  id="sortable"  >
                     <ol class="sort dd-list" id="olsort">
                         @foreach($menus as $i => $menu)
                         
@@ -117,7 +117,8 @@
 var position =[];
 var final;
 $(document).ready(function(){
-    $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.menu.create",$id) }}">Create New</a>')
+    $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.menu.create",$id) }}">Create New</a>');
+    $("#buttons-container").append('<button class="btn btn-success" onclick="setOrder()">Set Order</button>');
     $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success" onclick="SavePositions()" style="display:none">Save</button>')
     //setStatus
     $("body").on("click",".disable",function(e){
@@ -209,8 +210,10 @@ $(document).ready(function(){
                 data:{"menu":final},
                 success:function(response){
                     // alert("Changes Made Successfully");
+                    
                     showMessage("Changes Made Successfully",'success');
                     $('#savebtn').hide();
+                    location.reload();
 
                 }
             });
@@ -219,7 +222,23 @@ $(document).ready(function(){
         // function getvalues(e){
         //     console.log(e.closest('ol'));
         // }
-
+        $(document).ready(function(){
+            $('#sortable').hide();
+            $('#sort').show();
+        });
+        var switchOrder = 0;
+        function setOrder(){
+           if(switchOrder == 0){
+            $('#sortable').show();
+            $('#sort').hide();
+            switchOrder = 1;
+           }
+           else{
+            $('#sortable').hide();
+            $('#sort').show();
+            switchOrder = 0;
+           }
+        }
         
 </script>
 @endsection
