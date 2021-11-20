@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Link extends Model
 {
     use SoftDeletes;
-    use UUID;
+    // use UUID;
     public $incrementing = false;
 
     public function background(){

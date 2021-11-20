@@ -27,6 +27,36 @@ class Page extends Model
         return $this->hasMany("\App\Treasure","owner");
     }
 
+    public function replicateWR(){
+        $newRecord = $this->replicate();
+        $newRecord->name = $this->name . " Copy";
+        $newRecord->push();
+        $this->relations = [];
+        $this->load(["images","links","videoBg"]);
+        $relations = $this->getRelations();
+        foreach ($relations as $rname => $relation) {
+            // dd($relations);
+            if($rname === "videoBg" && isset($relation)){
+                $newRelationship = $relation->replicate();
+                $newRelationship->owner = $newRecord->id;
+                $newRelationship->push();
+            }else{
+                if(isset($relation)){
+                    foreach ($relation as $relationRecord) {
+                        $newRelationship = $relationRecord->replicate();
+                        if($rname === 'links'){
+                            $newRelationship->page = $newRecord->id;
+                        }else{
+                            $newRelationship->owner = $newRecord->id;
+                        }
+                        $newRelationship->push();
+                    } 
+                }
+            }
+        }
+        return $newRecord;
+    }
+
     public function links()
     {
         return $this->hasMany("\App\Link","page");

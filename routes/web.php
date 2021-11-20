@@ -199,6 +199,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('page/event/{page}/{id}/edit',"Eventee\PageController@edit")->name('eventee.pages.edit');
     Route::put('page/{page}/{id}/update',"Eventee\PageController@update")->name('eventee.pages.updates');
     Route::delete('page/event/delete/{page}',"Eventee\PageController@destroy")->name('eventee.pages.destroy');
+    Route::get('duplicate/{object}/{type}',"Eventee\PageController@duplicate")->name('eventee.duplicate');
     Route::post('/page/Bulkdelete',"Eventee\PageController@BulkDelete")->name('eventee.pages.bulkDelete');
     Route::post('/page/DeleteAll',"Eventee\PageController@DeleteAll")->name('eventee.pages.deleteAll');
 
@@ -692,18 +693,18 @@ Route::get("/clear-leaderboard", function(){
 
 
 
-Route::get("/createmenus",function ()
-{
-    $events = Event::all();
-    // $delfaultMenus =   ["attendees"];
-    foreach($events as  $event){
-        $menuitem = new Menu();
-        $menuitem->name = "attendees";
-        $menuitem->link = "perm";
-        $menuitem->event_id = $event->id;
-        $menuitem->type = "nav";
-        $menuitem->parent_id = 0;
-        $menuitem->position = 10;
-        $menuitem->save();
-    }
-});
+// Route::get("/createmenus",function ()
+// {
+//     $events = Event::all();
+//     // $delfaultMenus =   ["attendees"];
+//     foreach($events as  $event){
+//         $menuitem = new Menu();
+//         $menuitem->name = "attendees";
+//         $menuitem->link = "perm";
+//         $menuitem->event_id = $event->id;
+//         $menuitem->type = "nav";
+//         $menuitem->parent_id = 0;
+//         $menuitem->position = 10;
+//         $menuitem->save();
+//     }
+// });
