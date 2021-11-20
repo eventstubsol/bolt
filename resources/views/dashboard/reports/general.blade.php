@@ -64,6 +64,7 @@
     </div>
 </div> --}}
 <div class="row">
+    
 <div class="col-md-6 col-xl-4  mb-3">
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
@@ -108,6 +109,50 @@
         <ul class="list-group" id="list-of-last-users">
         </ul>
     </div> --}}
+    <div class="col-md-6 col-xl-4  mb-3">
+        <div class="widget-rounded-circle card-box h-100">
+            <div class="row">
+                <div class="card-header">Active Lobby Users</div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="lobbyUser">
+                            <td colspan="2"><center>No Data Available</center></td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-4  mb-3">
+        <div class="widget-rounded-circle card-box h-100">
+            <div class="row">
+                <div class="card-header">Active Lounge Users</div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="loungeUser">
+                            <td colspan="2"><center>No Data Available</center></td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    
+    
 </div>
 
 @endsection
@@ -200,26 +245,27 @@
       google.charts.setOnLoadCallback(drawPieChart);
       function drawPieChart(object) {
        
-            if(object.locationObj != null){
+            if(object == undefined || object ===0 ){
                 var data = google.visualization.arrayToDataTable([
                     ['SessionRoom', 'UserCount'],
-                    [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                    ["None",10],
                 ]);
             }
             else{
                 var data = google.visualization.arrayToDataTable([
                     ['SessionRoom', 'UserCount'],
-                    ["None",0],
+                    [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
                 ]);
+                if(object.locationArr.length > 0){
+                    $.each(object.locationArr,function(key,value){
+                        data.addRows([
+                            [value.room_name +' : '+value.room_count,value.room_count],
+                        ]);
+                    });
+                }
             }
             
-            if(object.locationArr.length > 0){
-                $.each(object.locationArr,function(key,value){
-                    data.addRows([
-                        [value.room_name +' : '+value.room_count,value.room_count],
-                    ]);
-                });
-            }
+            
             var options = {
             title: 'Session Room Users'
             };
@@ -234,27 +280,31 @@
         google.charts.setOnLoadCallback(drawPageChart);
 
             function drawPageChart(object) {
-
-                if(object.locationObj != null){
-                var data = google.visualization.arrayToDataTable([
-                    ['Page Name', 'UserCount'],
-                    [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
-                ]);
-            }
-            else{
-                var data = google.visualization.arrayToDataTable([
-                    ['Page Name', 'UserCount'],
-                    ["None",0],
-                ]);
-            }
-            
-            if(object.locationArr.length > 0){
-                $.each(object.locationArr,function(key,value){
-                    data.addRows([
-                        [value.room_name +' : '+value.room_count,value.room_count],
+              
+                // console.log(empTest);
+                if(object == undefined || object ===0 ){
+                    var data = google.visualization.arrayToDataTable([
+                        ['Page_Name', 'UserCount'],
+                        ["None",1],
+                    
                     ]);
-                });
-            }
+                }
+                else{
+                    console.log(object);
+                    var data = google.visualization.arrayToDataTable([
+                        ['Page Name', 'UserCount'],
+                        [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                    ]);
+                    if(object.locationArr.length > 0){
+                    $.each(object.locationArr,function(key,value){
+                        data.addRows([
+                            [value.room_name +' : '+value.room_count,value.room_count],
+                        ]);
+                    });
+                }
+                }
+            
+            
 
                 var options = {
                 title: 'Active Page Users'
@@ -269,26 +319,27 @@
             google.charts.setOnLoadCallback(drawBoothChart);
 
             function drawBoothChart(object) {
-                if(object.locationObj != null){
+                if(object == undefined || object ===0 ){
                     var data = google.visualization.arrayToDataTable([
                         ['Booth Name', 'UserCount'],
-                        [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                        ["None",2],
                     ]);
                 }
                 else{
                     var data = google.visualization.arrayToDataTable([
                         ['Booth Name', 'UserCount'],
-                        ["None",0],
+                        [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
                     ]);
+                    if(object.locationArr.length >  0){
+                        $.each(object.locationArr,function(key,value){
+                            data.addRows([
+                                [value.room_name +' : '+value.room_count,value.room_count],
+                            ]);
+                        });
+                    }
                 }
             
-            if(object.locationArr.length >  0){
-                $.each(object.locationArr,function(key,value){
-                    data.addRows([
-                        [value.room_name +' : '+value.room_count,value.room_count],
-                    ]);
-                });
-            }
+           
 
                 var options = {
                 title: 'Active Booth Users'
@@ -346,7 +397,44 @@
                     
                 }
             });
+
+            //Lobby User
+            $.ajax({
+                url:"{{ route('eventee.lobbyUser') }}",
+                method:"POST",
+                data:{id:"{{ $id }}"},
+                success:function(response){
+                    // console.log(response);
+                    if(response.length > 0){
+                        $('.lobbyUser').empty();
+                        $.each(response,function(key,value){
+                            $('.lobbyUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
+                        });
+                    }
+                   
+                    
+                    
+                }
+            });
         
+            //Lounge User
+            $.ajax({
+                url:"{{ route('eventee.loungeUser') }}",
+                method:"POST",
+                data:{id:"{{ $id }}"},
+                success:function(response){
+                    // console.log(response);
+                    if(response.length > 0){
+                        $('.loungeUser').empty();
+                        $.each(response,function(key,value){
+                            $('.loungeUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
+                        });
+                    }
+                   
+                    
+                    
+                }
+            });
                
                     setInterval(function(){ 
                         //User Chart
@@ -392,6 +480,49 @@
                                 
                             }
                         });
+                        //Lobby User
+                        $.ajax({
+                            url:"{{ route('eventee.lobbyUser') }}",
+                            method:"POST",
+                            data:{id:"{{ $id }}"},
+                            success:function(response){
+                                // console.log(response);
+                                if(response.length > 0){
+                                    $('.lobbyUser').empty();
+                                    $.each(response,function(key,value){
+                                        $('.lobbyUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
+                                    });
+                                }
+                                else{
+                                    $('.lobbyUser').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                                }
+                            
+                                
+                                
+                            }
+                        });
+
+                         //Lounge User
+                            $.ajax({
+                                url:"{{ route('eventee.loungeUser') }}",
+                                method:"POST",
+                                data:{id:"{{ $id }}"},
+                                success:function(response){
+                                    // console.log(response);
+                                    if(response.length > 0){
+                                        $('.loungeUser').empty();
+                                        $.each(response,function(key,value){
+                                            $('.loungeUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
+                                        });
+                                    }
+                                    else{
+                                        $('.loungeUser').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                                    }
+                                
+                                    
+                                    
+                                }
+                            });
                     }, 5000);
                 
             

@@ -102,6 +102,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('SessionRoomChart',"EventManageController@SessionChartJs")->name('eventee.sessionChart');
     Route::post('pageChart',"EventManageController@PageChartJs")->name('eventee.pageChart');
     Route::post('BoothChart',"EventManageController@BoothChartJs")->name('eventee.boothChart');
+    Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
+    Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');

@@ -61,8 +61,7 @@ class LoginController extends Controller
         if(Auth::check()){
             $user = User::findOrFail(Auth::id());
             $user->online_status=0;
-            // $userlocation = UserLocation::where('user_id',Auth::id())->where('deleted_at',null)->first();
-            // $userlocation->delete();
+            $userlocation = UserLocation::where('user_id',Auth::id())->where('current_status',1)->update(['current_status'=>0]);
 
             if($user->save()){
                 // return $user;

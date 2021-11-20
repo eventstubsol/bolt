@@ -144,57 +144,62 @@ class EventManageController extends Controller
             $locationObj = new \stdClass();
             $locationObj->room_name = $location1->type_location;
             $locationObj->room_count = $roomCount;
+            $location2 = DB::SELECT("SELECT DISTINCT(type_location) FROM user_locations where event_id = ? and type = ? and current_status = ? and type_location != ?",[$event->id,'Sessionroom',1,$location1->type_location]);
+        // return $location2;
+            $locationArr = [];
+            $countData = count($location2);
+            if(count($location2) > 0){
+                foreach($location2 as $loaction){
+                    $locObj =new \stdClass();
+                    $counts = UserLocation::where('type_location',$loaction->type_location)->where('current_status',1)->count();
+                    $locObj->room_name = $loaction->type_location;
+                    $locObj->room_count = $counts;
+                    array_push($locationArr,$locObj);
+                }
+            }
+            
+            return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
         }
         else{
-            $locationObj = null;
+            return response()->json(0);
         }
         
-        $location2 = DB::SELECT("SELECT DISTINCT(type_location) FROM user_locations where event_id = ? and type = ? and current_status = ? and type_location != ?",[$event->id,'Sessionroom',1,$location1->type_location]);
-        // return $location2;
-        $locationArr = [];
-        $countData = count($location2);
-        if(count($location2) > 0){
-            foreach($location2 as $loaction){
-                $locObj =new \stdClass();
-                $counts = UserLocation::where('type_location',$loaction->type_location)->where('current_status',1)->count();
-                $locObj->room_name = $loaction->type_location;
-                $locObj->room_count = $counts;
-                array_push($locationArr,$locObj);
-            }
-        }
         
-        return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
     }
 
     public function PageChartJs(Request $req){
         $event = Event::findOrFail($req->id);
         $mainCount = $location1 = UserLocation::where('event_id',$event->id)->where('type',"page")->where('current_status',1)->count();
+        
         if($mainCount > 0){
             $location1 = UserLocation::where('event_id',$event->id)->where('type',"page")->where('current_status',1)->first();
             $roomCount = UserLocation::where('type_location',$location1->type_location)->where('current_status',1)->count();
             $locationObj = new \stdClass();
             $locationObj->room_name = $location1->type_location;
             $locationObj->room_count = $roomCount;
+            $location2 = DB::SELECT("SELECT DISTINCT(type_location) FROM user_locations where event_id = ? and type = ? and current_status = ? and type_location != ?",[$event->id,'page',1,$location1->type_location]);
+            $locationArr = [];
+            $countData = empty($location2);
+            if($countData == 0){
+                foreach($location2 as $loaction){
+                    $locObj =new \stdClass();
+                    $counts = UserLocation::where('type_location',$loaction->type_location)->where('current_status',1)->count();
+                    $locObj->room_name = $loaction->type_location;
+                    $locObj->room_count = $counts;
+                    array_push($locationArr,$locObj);
+                }
+            }
+            return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
         }
         else{
-            $locationObj = null;
+            return response()->json(0);
         }
+        // return empty($locationObj);    
         
-        $location2 = DB::SELECT("SELECT DISTINCT(type_location) FROM user_locations where event_id = ? and type = ? and current_status = ? and type_location != ?",[$event->id,'page',1,$location1->type_location]);
         // return $location2;
-        $locationArr = [];
-        $countData = count($location2);
-        if(count($location2) > 0){
-            foreach($location2 as $loaction){
-                $locObj =new \stdClass();
-                $counts = UserLocation::where('type_location',$loaction->type_location)->where('current_status',1)->count();
-                $locObj->room_name = $loaction->type_location;
-                $locObj->room_count = $counts;
-                array_push($locationArr,$locObj);
-            }
-        }
         
-        return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
+        
+        
     }
 
     public function BoothChartJs(Request $req){
@@ -207,25 +212,53 @@ class EventManageController extends Controller
             $locationObj = new \stdClass();
             $locationObj->room_name = $location1->type_location;
             $locationObj->room_count = $roomCount;
+            $location2 = DB::SELECT("SELECT DISTINCT(type_location) FROM user_locations where event_id = ? and type = ? and current_status = ? and type_location != ?",[$event->id,'Booth',1,$location1->type_location]);
+            // return $location2;
+            $locationArr = [];
+            $countData = count($location2);
+            if(count($location2) > 0){
+                foreach($location2 as $loaction){
+                    $locObj =new \stdClass();
+                    $counts = UserLocation::where('type_location',$loaction->type_location)->where('current_status',1)->count();
+                    $locObj->room_name = $loaction->type_location;
+                    $locObj->room_count = $counts;
+                    array_push($locationArr,$locObj);
+                }
+            }
+            
+            return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
         }
         else{
-            $locationObj = null;
+            return response()->json(0);
         }
         
-        $location2 = DB::SELECT("SELECT DISTINCT(type_location) FROM user_locations where event_id = ? and type = ? and current_status = ? and type_location != ?",[$event->id,'Booth',1,$location1->type_location]);
-        // return $location2;
-        $locationArr = [];
-        $countData = count($location2);
-        if(count($location2) > 0){
-            foreach($location2 as $loaction){
-                $locObj =new \stdClass();
-                $counts = UserLocation::where('type_location',$loaction->type_location)->where('current_status',1)->count();
-                $locObj->room_name = $loaction->type_location;
-                $locObj->room_count = $counts;
-                array_push($locationArr,$locObj);
-            }
-        }
-        
-        return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
+       
     }
+
+    public function LobbyUser(Request $req){
+        $event = Event::findOrFail($req->id);
+        $locations = UserLocation::where('event_id',$event->id)->where('type',"Lobby")->where('current_status',1)->get();
+        $finalArr = [];
+        foreach($locations as $location){
+            $locObj = new \stdClass();
+            $locObj->name = User::findOrFail($location->user_id)->name;
+            $locObj->time = Carbon::parse($location->created_at)->format('d-m-Y'). " At " .Carbon::parse($location->created_at)->format('H:i:s');
+            array_push($finalArr,$locObj);
+        }
+        return response()->json($finalArr);
+    }
+
+    public function LoungeUser(Request $req){
+        $event = Event::findOrFail($req->id);
+        $locations = UserLocation::where('event_id',$event->id)->where('type',"Lounge")->where('current_status',1)->get();
+        $finalArr = [];
+        foreach($locations as $location){
+            $locObj = new \stdClass();
+            $locObj->name = User::findOrFail($location->user_id)->name;
+            $locObj->time = Carbon::parse($location->created_at)->format('d-m-Y'). " At " .Carbon::parse($location->created_at)->format('H:i:s');
+            array_push($finalArr,$locObj);
+        }
+        return response()->json($finalArr);
+    }
+
 }
