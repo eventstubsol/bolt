@@ -9,7 +9,7 @@
 @endsection
 
 @section("content")
-<div class="row">
+{{-- <div class="row">
     <div class="col-md-6 col-xl-4  mb-3">
         <div class="widget-rounded-circle card-box h-100">
             <div class="row">
@@ -62,7 +62,8 @@
             <button class="btn btn-primary mt-3 mx-auto btn-block" id="download-login-logs">Download Logs</button>
         </div> <!-- end widget-rounded-circle-->
     </div>
-</div>
+</div> --}}
+<div class="row">
 <div class="col-md-6 col-xl-4  mb-3">
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
@@ -71,8 +72,34 @@
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
 </div>
-<div class="row">
-    <div class="col-12">
+
+<div class="col-md-6 col-xl-4  mb-3">
+    <div class="widget-rounded-circle card-box h-100">
+        <div class="row">
+            <div class="card-header">Session Room Active Users</div>
+            <div id="piechart2" style="left:0;width: 50rem; height: 20rem;"></div>
+        </div> <!-- end row-->
+    </div> <!-- end widget-rounded-circle-->
+</div>
+
+<div class="col-md-6 col-xl-4  mb-3">
+    <div class="widget-rounded-circle card-box h-100">
+        <div class="row">
+            <div class="card-header">Active Page Users</div>
+            <div id="piechart3" style="left:0;width: 50rem; height: 20rem;"></div>
+        </div> <!-- end row-->
+    </div> <!-- end widget-rounded-circle-->
+</div>
+<div class="col-md-6 col-xl-4  mb-3">
+    <div class="widget-rounded-circle card-box h-100">
+        <div class="row">
+            <div class="card-header">Active Booth Users</div>
+            <div id="piechart4" style="left:0;width: 50rem; height: 20rem;"></div>
+        </div> <!-- end row-->
+    </div> <!-- end widget-rounded-circle-->
+</div>
+
+    {{-- <div class="col-12">
         <div class="page-title-box">
             <h4 class="page-title">List of latest users who logged in (Last 50)</h4>
         </div>
@@ -80,7 +107,7 @@
     <div class="col-12">
         <ul class="list-group" id="list-of-last-users">
         </ul>
-    </div>
+    </div> --}}
 </div>
 
 @endsection
@@ -147,6 +174,7 @@
     </script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+    //User Chart
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
@@ -167,11 +195,115 @@
 
         chart.draw(data, options);
       }
+      //Session Chart
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawPieChart);
+      function drawPieChart(object) {
+       
+            if(object.locationObj != null){
+                var data = google.visualization.arrayToDataTable([
+                    ['SessionRoom', 'UserCount'],
+                    [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                ]);
+            }
+            else{
+                var data = google.visualization.arrayToDataTable([
+                    ['SessionRoom', 'UserCount'],
+                    ["None",0],
+                ]);
+            }
+            
+            if(object.locationArr.length > 0){
+                $.each(object.locationArr,function(key,value){
+                    data.addRows([
+                        [value.room_name +' : '+value.room_count,value.room_count],
+                    ]);
+                });
+            }
+            var options = {
+            title: 'Session Room Users'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+
+            chart.draw(data, options);
+        }
+
+        //Page Chart
+        
+        google.charts.setOnLoadCallback(drawPageChart);
+
+            function drawPageChart(object) {
+
+                if(object.locationObj != null){
+                var data = google.visualization.arrayToDataTable([
+                    ['Page Name', 'UserCount'],
+                    [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                ]);
+            }
+            else{
+                var data = google.visualization.arrayToDataTable([
+                    ['Page Name', 'UserCount'],
+                    ["None",0],
+                ]);
+            }
+            
+            if(object.locationArr.length > 0){
+                $.each(object.locationArr,function(key,value){
+                    data.addRows([
+                        [value.room_name +' : '+value.room_count,value.room_count],
+                    ]);
+                });
+            }
+
+                var options = {
+                title: 'Active Page Users'
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
+
+                chart.draw(data, options);
+            }
+            //Booth Chart
+            
+            google.charts.setOnLoadCallback(drawBoothChart);
+
+            function drawBoothChart(object) {
+                if(object.locationObj != null){
+                    var data = google.visualization.arrayToDataTable([
+                        ['Booth Name', 'UserCount'],
+                        [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                    ]);
+                }
+                else{
+                    var data = google.visualization.arrayToDataTable([
+                        ['Booth Name', 'UserCount'],
+                        ["None",0],
+                    ]);
+                }
+            
+            if(object.locationArr.length >  0){
+                $.each(object.locationArr,function(key,value){
+                    data.addRows([
+                        [value.room_name +' : '+value.room_count,value.room_count],
+                    ]);
+                });
+            }
+
+                var options = {
+                title: 'Active Booth Users'
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('piechart4'));
+
+                chart.draw(data, options);
+            }
     </script>
     <script>
-      
         $(document).ready(function(){
+           
             // console.log("{{ $id }}");
+            //User Chart
             $.ajax({
                 url:"{{ route('eventee.chartJs') }}",
                 method:"POST",
@@ -181,16 +313,83 @@
                     
                 }
             });
+            //Session Chart
+            $.ajax({
+                url:"{{ route('eventee.sessionChart') }}",
+                method:"POST",
+                data:{id:"{{ $id }}"},
+                success:function(response){
+                    // console.log(response);
+                    drawPieChart(response);
+                    
+                }
+            });
+            //Page Chart
+            $.ajax({
+                url:"{{ route('eventee.pageChart') }}",
+                method:"POST",
+                data:{id:"{{ $id }}"},
+                success:function(response){
+                    // console.log(response);
+                    drawPageChart(response);
+                    
+                }
+            });
+            //Booth Chart
+            $.ajax({
+                url:"{{ route('eventee.boothChart') }}",
+                method:"POST",
+                data:{id:"{{ $id }}"},
+                success:function(response){
+                    // console.log(response);
+                    drawBoothChart(response);
+                    
+                }
+            });
         
                
                     setInterval(function(){ 
+                        //User Chart
                         $.ajax({
                             url:"{{ route('eventee.chartJs') }}",
                             method:"POST",
                             data:{id:"{{ $id }}"},
                             success:function(response){
                                 drawChart(response);
-                                console.log(1);
+                                // console.log(1);
+                            }
+                        });
+                        //Session Chart
+                        $.ajax({
+                            url:"{{ route('eventee.sessionChart') }}",
+                            method:"POST",
+                            data:{id:"{{ $id }}"},
+                            success:function(response){
+                                // console.log(response);
+                                drawPieChart(response);
+                                
+                            }
+                        });
+                        //Page Chart
+                        $.ajax({
+                            url:"{{ route('eventee.pageChart') }}",
+                            method:"POST",
+                            data:{id:"{{ $id }}"},
+                            success:function(response){
+                                // console.log(response);
+                                drawPageChart(response);
+                                
+                            }
+                        });
+                        //Booth Chart
+                        $.ajax({
+                            url:"{{ route('eventee.boothChart') }}",
+                            method:"POST",
+                            data:{id:"{{ $id }}"},
+                            success:function(response){
+                                // console.log(response);
+                                drawBoothChart(response);
+                                
                             }
                         });
                     }, 5000);

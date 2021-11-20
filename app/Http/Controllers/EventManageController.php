@@ -7,6 +7,9 @@ use App\User;
 use Carbon\Carbon;
 use App\Event;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\DB;
+use App\UserLocation;
+use stdClass;
 
 class EventManageController extends Controller
 {
@@ -122,7 +125,7 @@ class EventManageController extends Controller
     }
 
     public function ChartJs(Request $req){
-        $event = Event::findOrFail($req->id);        
+        $event = Event::findOrFail($req->id); 
         $isOnline = User::where('event_id',$event->id)->where('online_status' ,1)->count();
         $isOffline = User::where('event_id',$event->id)->where('online_status' ,0)->count();
         $userobj = new \stdClass();
@@ -130,5 +133,99 @@ class EventManageController extends Controller
         $userobj->offline = $isOffline;
         $user = [];
         return response()->json($userobj);
+    }
+
+    public function SessionChartJs(Request $req){
+        $event = Event::findOrFail($req->id);
+        $mainCount = $location1 = UserLocation::where('event_id',$event->id)->where('type',"Sessionroom")->where('current_status',1)->count();
+        if($mainCount > 0){
+            $location1 = UserLocation::where('event_id',$event->id)->where('type',"Sessionroom")->where('current_status',1)->first();
+            $roomCount = UserLocation::where('type_location',$location1->type_location)->where('current_status',1)->count();
+            $locationObj = new \stdClass();
+            $locationObj->room_name = $location1->type_location;
+            $locationObj->room_count = $roomCount;
+        }
+        else{
+            $locationObj = null;
+        }
+        
+        $location2 = DB::SELECT("SELECT DISTINCT(type_location) FROM user_locations where event_id = ? and type = ? and current_status = ? and type_location != ?",[$event->id,'Sessionroom',1,$location1->type_location]);
+        // return $location2;
+        $locationArr = [];
+        $countData = count($location2);
+        if(count($location2) > 0){
+            foreach($location2 as $loaction){
+                $locObj =new \stdClass();
+                $counts = UserLocation::where('type_location',$loaction->type_location)->where('current_status',1)->count();
+                $locObj->room_name = $loaction->type_location;
+                $locObj->room_count = $counts;
+                array_push($locationArr,$locObj);
+            }
+        }
+        
+        return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
+    }
+
+    public function PageChartJs(Request $req){
+        $event = Event::findOrFail($req->id);
+        $mainCount = $location1 = UserLocation::where('event_id',$event->id)->where('type',"page")->where('current_status',1)->count();
+        if($mainCount > 0){
+            $location1 = UserLocation::where('event_id',$event->id)->where('type',"page")->where('current_status',1)->first();
+            $roomCount = UserLocation::where('type_location',$location1->type_location)->where('current_status',1)->count();
+            $locationObj = new \stdClass();
+            $locationObj->room_name = $location1->type_location;
+            $locationObj->room_count = $roomCount;
+        }
+        else{
+            $locationObj = null;
+        }
+        
+        $location2 = DB::SELECT("SELECT DISTINCT(type_location) FROM user_locations where event_id = ? and type = ? and current_status = ? and type_location != ?",[$event->id,'page',1,$location1->type_location]);
+        // return $location2;
+        $locationArr = [];
+        $countData = count($location2);
+        if(count($location2) > 0){
+            foreach($location2 as $loaction){
+                $locObj =new \stdClass();
+                $counts = UserLocation::where('type_location',$loaction->type_location)->where('current_status',1)->count();
+                $locObj->room_name = $loaction->type_location;
+                $locObj->room_count = $counts;
+                array_push($locationArr,$locObj);
+            }
+        }
+        
+        return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
+    }
+
+    public function BoothChartJs(Request $req){
+        $event = Event::findOrFail($req->id);
+        $mainCount = $location1 = UserLocation::where('event_id',$event->id)->where('type',"Booth")->where('current_status',1)->count();
+    
+        if($mainCount > 0){
+            $location1 = UserLocation::where('event_id',$event->id)->where('type',"Booth")->where('current_status',1)->first();
+            $roomCount = UserLocation::where('type_location',$location1->type_location)->where('current_status',1)->count();
+            $locationObj = new \stdClass();
+            $locationObj->room_name = $location1->type_location;
+            $locationObj->room_count = $roomCount;
+        }
+        else{
+            $locationObj = null;
+        }
+        
+        $location2 = DB::SELECT("SELECT DISTINCT(type_location) FROM user_locations where event_id = ? and type = ? and current_status = ? and type_location != ?",[$event->id,'Booth',1,$location1->type_location]);
+        // return $location2;
+        $locationArr = [];
+        $countData = count($location2);
+        if(count($location2) > 0){
+            foreach($location2 as $loaction){
+                $locObj =new \stdClass();
+                $counts = UserLocation::where('type_location',$loaction->type_location)->where('current_status',1)->count();
+                $locObj->room_name = $loaction->type_location;
+                $locObj->room_count = $counts;
+                array_push($locationArr,$locObj);
+            }
+        }
+        
+        return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
     }
 }

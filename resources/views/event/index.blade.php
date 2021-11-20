@@ -512,9 +512,10 @@ $user = Auth::user();
         let lastPage = false;
         let currentPage = false;
 
-        function recordPageView(page_path, page_title = "") {
+        function recordPageView(page_path, page_title = "",type="",typeloc=null) {
+            console.log(type);
             if (page_path === "go_back" && lastPage) {
-                console.log("Going Back")
+                console.log("Going Back");
                 page_path = lastPage.page_path;
                 page_title = lastPage.page_title;
             } else {
@@ -523,6 +524,9 @@ $user = Auth::user();
                     page_path,
                     page_title,
                 };
+                $.post("{{ route('set.Location') }}",{'add':0,"type":type,"typeloc":typeloc},function(response){
+                    console.log(response);
+                });
             }
             gtag('config', GA_MEASUREMENT_ID, {
                 page_path,

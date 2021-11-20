@@ -8,9 +8,12 @@ use App\Event;
 use Carbon\Carbon;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+
+use App\UserLocation;
 class LoginController extends Controller
 {
     //
+
     public function __construct()
     {
         $this->loginT = getLoginVars();
@@ -58,6 +61,9 @@ class LoginController extends Controller
         if(Auth::check()){
             $user = User::findOrFail(Auth::id());
             $user->online_status=0;
+            // $userlocation = UserLocation::where('user_id',Auth::id())->where('deleted_at',null)->first();
+            // $userlocation->delete();
+
             if($user->save()){
                 // return $user;
                 Auth::logout();
