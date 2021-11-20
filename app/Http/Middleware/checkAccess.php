@@ -17,7 +17,7 @@ class checkAccess
     public function handle($request, Closure $next, $role = false)
     {
         $user = Auth::user();
-        if((!$role && $user) || $user->type == "admin" || $user->type == $role || ($user->type === "eventee" && $role === 'exhibiter')){ //Admin has access to all routes, but others have access only to their own routes
+        if((!$role && $user) || Auth::user()->type == "admin" || Auth::user()->type == $role || (Auth::user()->type === "eventee" && $role === 'exhibiter')){ //Admin has access to all routes, but others have access only to their own routes
             return $next($request);
         }
         

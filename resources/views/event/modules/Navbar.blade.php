@@ -248,7 +248,7 @@
                             <i class="fe-log-out mr-1"></i>
                             <span>Logout</span>
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{ route('attendeeLogout',$event_name )}}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </div>
