@@ -46,7 +46,10 @@
                             <td class="text-right" >
                                 <a href="{{ route("eventee.pages.edit", [
                                         "page" => $page->id, "id"=>$id,
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
+                                <a href="{{ route("eventee.duplicate", [
+                                        "object" => $page ,"type"=>"page"
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="duplicate" data-original-title="duplicate"><i class="fe-copy" ></i></a>
                                     <button data-toggle="tooltip" data-placement="top" data-id="{{$page->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
                             </td>
                         </tr>

@@ -13,6 +13,8 @@ use App\sessionRooms;
 use Illuminate\Http\Request;
 use App\Event;
 use App\Treasure;
+use Carbon\Carbon;
+use PDO;
 
 class PageController extends Controller
 {
@@ -86,6 +88,24 @@ class PageController extends Controller
         $page->load(["images","links.flyin","videoBg"]);
         // return $page;
         return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths","id","pag"]));
+    }
+    public function duplicate($object,$type){
+        switch($type){
+            case "page":
+                $new_page = Page::where("id",$object)->first()->replicateWR();
+                return redirect(route("eventee.pages.index",$new_page->event_id));
+                break;
+            case "booth":
+                $new_booth = Booth::where("id",$object)->first()->replicateWR();
+                return redirect(route("eventee.booth",$new_booth->event_id));
+                break;
+            case "session_room":
+                $new_booth = sessionRooms::where("id",$object)->first()->replicateWR();
+                return redirect(route("eventee.sessionrooms.index",$new_booth->event_id));
+                break;
+            }
+            // $object->replicateWR();
+            // dd($object);
     }
 
     public function lobby($id){

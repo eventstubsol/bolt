@@ -21,5 +21,22 @@ class sessionRooms extends Model
         return $this->hasOne("\App\Video", "owner");
     }
 
+    public function replicateWR(){
+        $newRecord = $this->replicate();
+        $newRecord->name = $this->name . " Copy";
+        $newRecord->push();
+        $this->relations = [];
+        $this->load(["background","videoBg"]);
+        $relations = $this->getRelations();
+        foreach ($relations as $rname => $relation) {
+            if(isset($relation)){
+                $newRelationship = $relation->replicate();
+                $newRelationship->owner = $newRecord->id;
+                $newRelationship->push();
+            }
+        }
+        return $newRecord;
+    }
+
 
 }
