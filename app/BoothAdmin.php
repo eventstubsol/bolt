@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BoothAdmin extends Model
 {
     use SoftDeletes;
-    // use UUID;
+    use UUID;
     public $incrementing = false;
     protected $fillable = [ "booth_id", "user_id" ];
 }
