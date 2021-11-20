@@ -7,6 +7,7 @@ use App\LoginLog;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Points;
 use Http;
 use Illuminate\Support\Facades\Log;
@@ -20,11 +21,14 @@ use App\FormField;
 use App\UserData;
 use App\UserSubtype;
 use Aws\Api\Validator;
+use App\UserLocation;
 use Dotenv\Exception\ValidationException;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 class AttendeeAuthController extends Controller
+
 {
+    use SoftDeletes;
 
     public function __construct()
     {
@@ -115,9 +119,10 @@ class AttendeeAuthController extends Controller
             }
             $user->online_status = 1;
             $user->save();
-            \DB::table("sessions")->where("user_id", $user->id)->whereNotIn("id", [session()->getId()])->delete();
+            DB::table("sessions")->where("user_id", $user->id)->whereNotIn("id", [session()->getId()])->delete();
             Auth::login($user);
             LoginLog::create(["ip" => $request->ip(), "user_id" => $user->id]);
+            // UserLocation::create(['user_id'=>$user->id,'event_id'=>$user->event_id,'type'=>"exterior"]);
             $pointsDetails = [
                 "points_to" => $user->id,
                 "points_for" => "login",

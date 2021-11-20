@@ -94,11 +94,14 @@ Route::post('/Register/Eventee',"eventeeController@ConfirmRegister");
 Route::get('Eventee/Login',"eventeeController@Login")->name('Eventee.login');
 Route::post('Eventee/Login',"eventeeController@ConfirmLogin");
 Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
-
+Route::post("/Event/Location","LocationController@setLocation")->name("set.Location");
 
 Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
     Route::post('liveChart',"EventManageController@ChartJs")->name('eventee.chartJs');
+    Route::post('SessionRoomChart',"EventManageController@SessionChartJs")->name('eventee.sessionChart');
+    Route::post('pageChart',"EventManageController@PageChartJs")->name('eventee.pageChart');
+    Route::post('BoothChart',"EventManageController@BoothChartJs")->name('eventee.boothChart');
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
