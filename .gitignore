@@ -12,7 +12,7 @@ npm-debug.log
 yarn-error.log
 
 # app/Booth.php
-app/BoothAdmin.php
+# app/BoothAdmin.php
 app/Content.php
 app/Device.php
 app/EventSession.php
