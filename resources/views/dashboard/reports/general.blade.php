@@ -20,13 +20,13 @@
                 </div>
                 <div class="col-6">
                     <div class="text-right">
-                        <h3 class="text-dark mt-1" id="today-unique-logins"></h3>
                         <p class="text-muted mb-1 text-truncate">Unique Logins Today</p>
                     </div>
                 </div>
             </div> <!-- end row-->
         </div> <!-- end widget-rounded-circle-->
     </div>
+    
     <div class="col-md-6 col-xl-4  mb-3">
         <div class="widget-rounded-circle card-box h-100">
             <div class="row">
@@ -62,6 +62,14 @@
             <button class="btn btn-primary mt-3 mx-auto btn-block" id="download-login-logs">Download Logs</button>
         </div> <!-- end widget-rounded-circle-->
     </div>
+</div>
+<div class="col-md-6 col-xl-4  mb-3">
+    <div class="widget-rounded-circle card-box h-100">
+        <div class="row">
+            <div class="card-header">User Status</div>
+            <div id="piechart" style="left:0;width: 50rem; height: 20rem;"></div>
+        </div> <!-- end row-->
+    </div> <!-- end widget-rounded-circle-->
 </div>
 <div class="row">
     <div class="col-12">
@@ -135,6 +143,61 @@
                     }
                 });
             });
+        });
+    </script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart(obj) {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Online Users: '+obj.online+'',obj.online],
+          ['Offline Users: ' +obj.offline+'',obj.offline]
+         
+        ]);
+        
+        var options = {
+          title: 'Online Users'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <script>
+      
+        $(document).ready(function(){
+            // console.log("{{ $id }}");
+            $.ajax({
+                url:"{{ route('eventee.chartJs') }}",
+                method:"POST",
+                data:{id:"{{ $id }}"},
+                success:function(response){
+                    drawChart(response);
+                    
+                }
+            });
+        
+               
+                    setInterval(function(){ 
+                        $.ajax({
+                            url:"{{ route('eventee.chartJs') }}",
+                            method:"POST",
+                            data:{id:"{{ $id }}"},
+                            success:function(response){
+                                drawChart(response);
+                                console.log(1);
+                            }
+                        });
+                    }, 5000);
+                
+            
+            
+            
         });
     </script>
 @endsection

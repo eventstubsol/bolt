@@ -29,6 +29,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
+
 // $url = '{subdomain}.localhost';
 Route::group(['domain' => $url], function () {
     Route::get('/', function ($subdomain) {
@@ -57,12 +58,13 @@ Route::group(['domain' => $url], function () {
     Route::get("/faq", "HomeController@faqs")->name("faq");
     Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
     Route::get('/exhibitorlogin/{email}',"EventUser\LoginController@exhibitorlogin")->name("exhibitorLogin");
-    Route::get('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
+    
     Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
     Route::post("/event/post/exhibitorlogin", "AttendeeAuthController@exhibitorlogin")->name("exhibiter.login");
     // Route::get("/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
     // Route::post("/event/register", "AttendeeAuthController@saveRegistration")->name("attendee_register.confirm");
     Route::get("/register/{slug}", "AttendeeAuthController@showRegistration")->name("attendee_registe");
+    Route::POST('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
     Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
         Route::get("/booths", "Eventee\BoothController@exhibiterhome")->name("exhibiterhome");
     });
@@ -96,6 +98,7 @@ Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.log
 
 Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
+    Route::post('liveChart',"EventManageController@ChartJs")->name('eventee.chartJs');
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
