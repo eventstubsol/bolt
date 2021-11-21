@@ -14,6 +14,7 @@ use App\Event;
 use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Menu;
+use Browser;
 class eventeeController extends Controller
 {
     //
@@ -61,7 +62,18 @@ class eventeeController extends Controller
 
     public function ConfirmLogin(Request $req){
         try{
+           
             $user = User::where('email',$req->email)->where("event_id",0)->first();
+            $user->online_status = 1;
+            $user->ip_address =  $req->ip();
+            if(Browser::isMobile()){
+               $user->device = "mobile";
+            }
+            if(Browser::isDesktop()){
+                $user->device =  "Desktop";
+            }
+            $user->save();
+
             // dd($user);
             $pass = password_verify($req->password,$user->password);
             if($pass && $user->type == 'eventee'){

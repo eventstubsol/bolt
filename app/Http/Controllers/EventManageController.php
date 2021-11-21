@@ -126,13 +126,13 @@ class EventManageController extends Controller
 
     public function ChartJs(Request $req){
         $event = Event::findOrFail($req->id); 
+        $total = User::where('event_id',$event->id)->count();
         $isOnline = User::where('event_id',$event->id)->where('online_status' ,1)->count();
         $isOffline = User::where('event_id',$event->id)->where('online_status' ,0)->count();
         $userobj = new \stdClass();
         $userobj->online = $isOnline;
         $userobj->offline = $isOffline;
-        $user = [];
-        return response()->json($userobj);
+        return response()->json(['userobj'=>$userobj,'total'=>$total]);
     }
 
     public function SessionChartJs(Request $req){

@@ -17,4 +17,8 @@ class Event extends Model
     public function licese(){
         $this->hasOne(License::class);
     }
+
+    public function user(){
+        $this->belongsTo("\App\User");
+    }
 }

@@ -87,7 +87,7 @@ Route::group(['domain' => $url], function () {
 
 });
 
-
+Route::Post("admin/logout","HomeController@logout")->name('admin.logout');
 Auth::routes();
 Route::get("/Register/Eventee","eventeeController@Regiter")->name('Eventee.register');
 Route::post('/Register/Eventee',"eventeeController@ConfirmRegister");
@@ -104,6 +104,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('BoothChart',"EventManageController@BoothChartJs")->name('eventee.boothChart');
     Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
+    
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
@@ -111,6 +112,11 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Event/edit/{id}','EventManageController@Edit')->name('event.Edit');
     Route::post('Event/update/{id}','EventManageController@update')->name('event.Update');
     Route::post('event/delete',"EventManageController@destroy")->name('event.delete');
+
+
+    //User Wise Report
+    Route::get("User_Report/{id}","Eventee\UserReportController@index")->name('eventee.user.report');
+    Route::post("User_Report/Graph","Eventee\UserReportController@graph")->name('eventee.user.report.graph');
 
     //FAQS Section
     Route::get("faq/{id}", "Eventee\FaqController@index")->name("eventee.faq");
@@ -470,6 +476,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     //Admin Prefixed Routes and also will check if user is admin or not
     Route::prefix("admin")->middleware("checkAccess:admin")->group(function () {
         Route::get('/user/lobby',"UserController@lobby")->name('user.lobby');
+        Route::get("/Dashboard/reports", "AdminReportController@Dashboard")->name("reports.dashboard");
         Route::resources([
             "faq" => "FaqController",
             "room" => "RoomController",
@@ -498,7 +505,12 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::get('/Comet','RecatchaController@Comet')->name('comet.index');
         Route::post('/Comet','RecatchaController@CometSave');
 
-        
+        //Report Section 
+        Route::get("Recent/Events","AdminReportController@RecentEvent")->name('recent.event');
+        Route::get('Least/ActiveAdmin',"AdminReportController@LeastActiveUser")->name('Least.user');
+        Route::get('Recent/ActiveAdmin',"AdminReportController@RecentActiveUser")->name('recent.user');
+        Route::get('Event/Ending',"AdminReportController@EventEnding")->name('event.ending');
+        Route::get('Event/AdminLogs',"AdminReportController@EventLogs")->name('event.logs');
         //Package
         Route::get('/package','PackageController@index')->name('package.index');
         Route::get('/package/create','PackageController@create')->name('package.create');
