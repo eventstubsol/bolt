@@ -157,7 +157,7 @@
 
 @endsection
 
-
+@if(Auth::user()->type == 'eventee')
 @section("scripts")
     <script>
         function fetchData(){
@@ -223,14 +223,24 @@
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart(obj) {
-
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day'],
-          ['Online Users: '+obj.online+'',obj.online],
-          ['Offline Users: ' +obj.offline+'',obj.offline]
-         
-        ]);
+      function drawChart(obj,total) {
+          console.log(obj.offline);
+        if(total == 0){
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Users: ' +0+'',15]
+            
+            ]);
+        }
+        else{
+            var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            ['Online Users: '+obj.online+'',obj.online],
+            ['Offline Users: ' +obj.offline+'',obj.offline]
+            
+            ]);
+        }
+        
         
         var options = {
           title: 'Online Users'
@@ -360,7 +370,7 @@
                 method:"POST",
                 data:{id:"{{ $id }}"},
                 success:function(response){
-                    drawChart(response);
+                    drawChart(response.userobj,response.total);
                     
                 }
             });
@@ -443,7 +453,7 @@
                             method:"POST",
                             data:{id:"{{ $id }}"},
                             success:function(response){
-                                drawChart(response);
+                                drawChart(response.userobj,response.total);
                                 // console.log(1);
                             }
                         });
@@ -531,3 +541,4 @@
         });
     </script>
 @endsection
+@endif
