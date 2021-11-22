@@ -25,7 +25,7 @@
                                     $to = $item->to;
                                     break;
                                 case "booth":
-                                    $to = "sessionroom/".$item->to;
+                                    $to = "booth/".$item->to;
                                     break;
                                 case "session_room":
                                     $to = "sessionroom/".$item->to;
