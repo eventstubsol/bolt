@@ -622,6 +622,8 @@ $user = Auth::user();
             </p>
         </div>
     </div>
+    @include("event.modules.Modals")
+
     @include("event.modules.Navbar")
     @include("event.modules.Menubar")
     @include("event.modules.Sidebar")

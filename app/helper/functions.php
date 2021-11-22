@@ -70,7 +70,15 @@ define('LINK_TYPES', [
     "back",
     "faq",
     "photobooth",
-    "videosdk"
+    "videosdk",
+    "modal"
+]);
+define('MODAL_TYPES', [
+    'page',
+    'session_room',
+    "booth",
+    "vimeo",
+    "pdf",
 ]);
 
 

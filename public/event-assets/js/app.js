@@ -192,6 +192,7 @@ function initApp() {
     areas.on("click", async function (e) {
         // loader.show();
         const link = $(this).data("link");
+        console.log(link);
         directAccess = false;
         const flyin = $(e.target).data("flyin");
         const photobooth = $(e.target).data("capture");
@@ -228,6 +229,10 @@ function initApp() {
         }
     });
 
+    $("._custom_modal").on("click", function (e) {
+        // console.log(e);
+        $($(e.target).data("target")).modal()
+    });
     $(".videosdk").on("click", function (e) {
         meeting_id = $(this).data("meeting");
         if(meeting_id){

@@ -66,7 +66,7 @@
                                 <a href="{{ route("eventee.modal.edit", [
                                         "modal" => $modal->id, "id"=>$id,
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
-                                <button data-toggle="tooltip" data-placement="top" data-id="{{$modal->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
+                                <button data-toggle="tooltip" onclick="deleteModal(this)" data-placement="top" data-id="{{$modal->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
                             </td>
                         </tr>
                       @endforeach
@@ -94,13 +94,14 @@
                             let deleteUrl = '{{route("eventee.modal.destroy", [ "modal" => ":id" ])}}';
                
                             $.ajax({
-                                url:url.replace("_id",id),
+                                url:deleteUrl.replace(":id",id),
                                 data: {
                                     "id":id,
                                 },
-                                method:"POST",
+                                method:"DELETE",
                                 success: function(response){
-                                    if(response.code == 200){
+                                    console.log(response);
+                                    if(response.success){
                                         e.closest("tr").remove();
                                     }
                                     else{

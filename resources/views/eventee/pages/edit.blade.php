@@ -121,6 +121,17 @@ Edit Page
                                         </select>
                                     </div>
 
+                                    {{-- Modal --}}
+                                    <div @if($link->type !== "modal") style="display: none;" @endif  class="modal-{{$ids}} modals form-group mb-3 col-md-4">
+                                        <label for="to">to(modal)</label>
+                                        <select     class="form-control" name="modals[]">
+                                            @foreach($modals as $modal)
+                                                <option @if($link->to === $modal->id) selected @endif value="{{$modal->id}}">{{$modal->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
                                     <div @if($link->type!=="session_room") style="display: none;" @endif class="room-{{$ids}} room form-group mb-3 col-md-4">
                                         <label for="to">to(Session Room)</label>
                                         <select class="form-control" name="rooms[]" >
@@ -584,6 +595,7 @@ Edit Page
         $(".pages-"+index).hide();
         $(".zoom-"+index).hide();
         $(".booth-"+index).hide();
+        $(".modal-"+index).hide();
         $(".vimeo-"+index).hide();
         $(".pdf-"+index).hide();
         $(".chat_user-"+index).hide();
@@ -603,6 +615,9 @@ Edit Page
                 break;
             case "booth":
                 $(".booth-"+index).show();
+                break;
+            case "modal":
+                $(".modal-"+index).show();
                 break;
             case "vimeo":
                 $(".vimeo-"+index).show();
@@ -722,6 +737,15 @@ Edit Page
                                         <select     class="form-control" name="booths[]">
                                             @foreach($booths as $booth)
                                                 <option value="{{$booth->id}}">{{$booth->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                    <div style="display: none;" class="modal-${n} modals form-group mb-3 col-md-4">
+                                        <label for="to">to(modal)</label>
+                                        <select     class="form-control" name="modals[]">
+                                            @foreach($modals as $modal)
+                                                <option value="{{$modal->id}}">{{$modal->name}}</option>
                                             @endforeach
 
                                         </select>

@@ -29,6 +29,7 @@
                         case "pdf":
                         case "lobby":
                         case "faq":
+                        case "modal":
                         case "photobooth":
                             $to = $link->to;
                             $url = $link->url;
@@ -75,6 +76,9 @@
                     @elseif($link->type === "videosdk")
                         <div title="{{ $link->name  }}" data-toggle="modal"  data-target="#videosdk_modal" class="videosdk positioned " data-link="videosdk" data-meeting="{{$link->to}}" style="{{ areaStyles($area) }}">    
                         </div>
+                    @elseif($link->type === "modal")
+                        <a title="{{ $link->name  }}" data-toggle="modal"  data-target="#{{$to}}" class="_custom_modal positioned "  style="{{ areaStyles($area) }}">    
+                        </a>
                     @else
                         @if($to ==="FAQ")
                             <a class="positioned" data-toggle="modal" data-target="#faqs-modal"
