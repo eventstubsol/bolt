@@ -1,10 +1,10 @@
 @extends("layouts.admin")
 
 @section("title")
-Recent Users
+Recently Joined Users
 @endsection
 @section("page_title")
-    Recent Users
+Recently Joined Users
 @endsection
 
 @section("content")
