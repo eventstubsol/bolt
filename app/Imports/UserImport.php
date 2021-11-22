@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Event;
+use App\UserSubtype;
 
 class UserImport implements ToModel,WithHeadingRow
 {
@@ -20,10 +21,10 @@ class UserImport implements ToModel,WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row,)
+    public function model(array $row)
     {
         // dd($row["event_name"]);
-        $eventSlug = str_replace(" ","-",strtolower(trim($row["event_name"])));
+        
         
         // $event = Event::where("name",trim($row["event_name"]))->first();
         
@@ -36,7 +37,8 @@ class UserImport implements ToModel,WithHeadingRow
             "password" =>password_hash($row["password"],PASSWORD_DEFAULT),
             "event_id"=> $this->event_id,
             "type" => $row["type"],
-            "country" => $row["country"]
+            "country" => $row["country"],
+            "subtype"=>$row['sub_type']
         ]);
     }
 }
