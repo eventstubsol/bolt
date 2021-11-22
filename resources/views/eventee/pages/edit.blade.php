@@ -632,12 +632,8 @@ Edit Page
         t++;
         console.log({t});
 
-        // $(".im-section").append(`
-        //     <div class="tim-${t} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" >Treasure Item ${t}</div>      
-        // `);
-        
         $(".im-section").append(`
-        <div class="im-${n} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" ><div class="im_names im_name-${n}" style="height:100%; background:red;" >Link ${n} </div></div>      
+            <div class="tim-${t} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" >Treasure Item ${t}</div>      
         `);
         
 
