@@ -1,10 +1,10 @@
 @extends("layouts.admin")
 
 @section("title")
-Recent Added Event Stats
+Least Active Users
 @endsection
 @section("page_title")
-    Recent Added Event Stats
+Least Active Users
 @endsection
 
 @section("content")
