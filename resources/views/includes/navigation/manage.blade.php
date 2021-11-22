@@ -70,6 +70,19 @@
     </div>
 </li>
 <li>
+    <a href="#userReport" data-toggle="collapse">
+        <i class="fa fa-file" aria-hidden="true"></i>
+        <span> User Report</span>
+    </a>
+    <div class="collapse" id="userReport">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.user.report",['id'=>$id]) }}">Get Report</a>
+            </li>
+        </ul>
+    </div>
+</li>
+<li>
     <a href="#forms" data-toggle="collapse">
         <i data-feather="users"></i>
         <span> Registrations</span>

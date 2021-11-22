@@ -7,6 +7,8 @@ use App\User;
 use App\UserConnection;
 use App\Contact;
 use App\UserTag;
+use App\Event;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +16,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Log;
 use Mail;
+use Carbon\Carbon;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 class UserController extends Controller
@@ -652,4 +655,6 @@ class UserController extends Controller
         $user->devices()->create(["device_id" => $device_id]);
         return ["success" => true];
     }
+
+    
 }

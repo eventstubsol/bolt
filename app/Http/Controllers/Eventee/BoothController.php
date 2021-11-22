@@ -48,66 +48,63 @@ class BoothController extends Controller
   //Create new booth instance
   public function store(Request $request,$id)
   {
-      try{
-        // dd($request->all());
-          $booth = new Booth;
-          if($request->has("name")){
-            $booth->name = $request->get("name");
-            // $booth->bg_type = $request->bg_type;
-          }
-          else{
-              return false;
-          }
-          if($request->has("boothurl") && $request->boothurl != null){
-            $booth->boothurl = $request->get("boothurl");
-          }
-          
-          $booth->event_id = $id;
-          if($request->has("calendly_link")){
-            $booth->calendly_link=$request->calendly_link;
-          }
-          if($request->has("video_url")  && $request->video_url != null){
-            $booth->vidbg_url = $request->video_url;
-          }
-          $booth->save();
-          // if($booth->save()){
-            // Http::withHeaders([
-            //   "apiKey" => env("COMET_CHAT_API_KEY"),
-            //     "appId" => env("COMET_CHAT_APP_ID")
-            //   ])
-            //     ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
-            //       "type" => strtolower(env("COMET_CHAT_GROUP_TYPE")),
-            //       "guid" => $booth->id,
-            //       "name" => $booth->name
-            //     ]);
-          
-              $user_ids = $request->get("userids");
-              foreach ($user_ids as $user_id) {
-                BoothAdmin::create([
-                  "user_id" => $user_id,
-                  "booth_id" => $booth->id,
-                ]);
-              }
-          
-              // create group admin
-              // Http::withHeaders([
-              //   "apiKey" => env("COMET_CHAT_API_KEY"),
-              //   "appId" => env("COMET_CHAT_APP_ID"),
-              //   "Accept-Encoding"=> "deflate, gzip",
-              //   "Content-Encoding"=> "gzip"
-              //   ])
-              //   ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
-                flash("Booth Created Successfully")->success();
-                return redirect()->to(route("eventee.booth",$id)); 
-                // }
-                // create group in comet chat
-                
-              }
-              catch(\Exception $e){
-            dd($e);
-
-          Log::error($e->getMessage());
+      // dd($request->all());
+      $booth = new Booth;
+      if($request->has("name")){
+        $booth->name = $request->get("name");
+        // $booth->bg_type = $request->bg_type;
       }
+      else{
+          return false;
+      }
+      if($request->has("boothurl") && $request->boothurl != null){
+        $booth->boothurl = $request->get("boothurl");
+      }
+      $booth->event_id = $id;
+  
+      if($request->has("calendly_link")){
+        $booth->calendly_link=$request->calendly_link;
+      }
+      else{
+        $booth->calendly_link=null;
+      }
+      if($request->has("video_url")  && $request->video_url != null){
+        $booth->vidbg_url = $request->video_url;
+      }
+     
+      $booth->save();
+      // if($booth->save()){
+        // Http::withHeaders([
+        //   "apiKey" => env("COMET_CHAT_API_KEY"),
+        //     "appId" => env("COMET_CHAT_APP_ID")
+        //   ])
+        //     ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
+        //       "type" => strtolower(env("COMET_CHAT_GROUP_TYPE")),
+        //       "guid" => $booth->id,
+        //       "name" => $booth->name
+        //     ]);
+      
+          $user_ids = $request->get("userids");
+          foreach ($user_ids as $user_id) {
+            BoothAdmin::create([
+              "user_id" => $user_id,
+              "booth_id" => $booth->id,
+            ]);
+          }
+      
+          // create group admin
+          // Http::withHeaders([
+          //   "apiKey" => env("COMET_CHAT_API_KEY"),
+          //   "appId" => env("COMET_CHAT_APP_ID"),
+          //   "Accept-Encoding"=> "deflate, gzip",
+          //   "Content-Encoding"=> "gzip"
+          //   ])
+          //   ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
+            flash("Booth Created Successfully")->success();
+            return redirect()->to(route("eventee.booth",$id)); 
+            // }
+            // create group in comet chat
+            
     
   }
 
