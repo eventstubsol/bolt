@@ -322,8 +322,9 @@ class PageController extends Controller
                     case "faq":
                         $to = "FAQ";
                         break;
-                    case "photo-booth":
-                        $to = "photo-booth";
+                    case "photobooth":
+                        $to = $request->capture_link[$id];
+                        $url = $request->gallery_link[$id];
                         break;
                 }
                 $link = Link::create([
