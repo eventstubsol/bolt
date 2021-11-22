@@ -461,7 +461,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route("recent.user") }}">
+            <a href="{{ route("event.ending") }}">
                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                 <span> Events Expiring Soon </span>
             </a>
