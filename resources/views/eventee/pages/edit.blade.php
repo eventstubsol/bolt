@@ -290,7 +290,7 @@ Edit Page
                     </div>
                     <div class="image-uploader" id="imgBg">
                         <label class="mb-3" for="images">Background Image</label>
-                        <input type="hidden" name="url" class="upload_input" value="{{$page->images?$page->images[0]->url:''}}">
+                        <input type="hidden" name="url" class="upload_input" value="{{isset($page->images[0])?$page->images[0]->url:''}}">
                         <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{$page->images?assetUrl($page->images[0]->url):''}}" />
                     </div>
                     <div class="image-uploader" id="vidBg">

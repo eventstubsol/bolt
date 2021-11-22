@@ -385,6 +385,17 @@ HTML;
                      $menu->name 
                 </a>
 HTML;
+    case("lobby"):
+        return <<<HTML
+                <a data-link="lobby" class="area">
+                    <i style="font-size:24px;" class="$menu->iClass"></i>
+                     $menu->name 
+                </a>
+HTML;
+    case("attendees"):
+        return <<<HTML
+             <a class="area" data-link="attendees"><i class="fe-users"></i>Business Connect</a>
+HTML;
 
         break; 
     default:

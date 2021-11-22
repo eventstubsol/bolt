@@ -240,6 +240,22 @@
     </div>
 </li>
 <li>
+    <a href="#modals" data-toggle="collapse">
+        <i data-feather="grid"></i>
+        <span> Modals </span>
+    </a>
+    <div class="collapse" id="modals">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.modal",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.modal.create",$id) }}">Create</a>
+            </li>
+        </ul>
+    </div>
+</li>
+<li>
     <a href="#lounge" data-toggle="collapse">
         <i data-feather="grid"></i>
         <span> Lounge </span>

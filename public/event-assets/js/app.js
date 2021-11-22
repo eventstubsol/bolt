@@ -98,11 +98,11 @@ function initApp() {
 
     function checkAuth(room = "all") {
         if(room == "all"){
-            if (window.config.userType == "exhibiter" || window.config.userType == "sponsor") {
-                return true;
-            }
-            return false;
+            // if (window.config.userType == "exhibiter" || window.config.userType == "sponsor") {
+            //     return true;
+            // }
         }
+        return false;
     }
 
 
