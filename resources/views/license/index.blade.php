@@ -38,7 +38,9 @@ Manage License
                         </tr>
                     </thead>
                     <tbody>
+                        @if(count($licenses)> 0 )
                         @foreach ($licenses as $key => $license)
+                        
                         <tr>
                             @php
                                 $event = App\Event::where('id',$license->event_id)->first();
@@ -64,6 +66,11 @@ Manage License
                             <a href="{{ route('event.Dashboard',['id'=>encrypt( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
                             </td>
                         </tr>
+                        @else
+                            <tr>
+                                <td colspan="10"><center>No Data Avaukable</center></td>
+                            </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>
