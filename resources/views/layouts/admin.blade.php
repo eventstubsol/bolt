@@ -461,6 +461,7 @@
   //   }
   // })
   function exportToCsv(filename, rows) {
+      console.log(rows);
       if(Array.isArray(rows) && rows.length) {
           let keys = {};
           Object.keys(rows[0]).map(k => keys[k] = k);
