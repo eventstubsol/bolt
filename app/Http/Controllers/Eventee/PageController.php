@@ -199,8 +199,10 @@ class PageController extends Controller
                         break;
                     case "lobby":
                         $to = "lobby";
+                        break;
                     case "faq":
                         $to = "FAQ";
+                        break;
                     case "photobooth":
                         $to = $request->capture_link[$id];
                         $url = $request->gallery_link[$id];
