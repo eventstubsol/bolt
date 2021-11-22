@@ -160,7 +160,7 @@
                             <div class="dropdown-divider"></div>
 
                             <!-- item-->
-                            <a class="dropdown-item notify-item" href="{{ route('logout') }}"
+                            <a class="dropdown-item notify-item" href="{{ route('admin.logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fe-log-out"></i>
                                 <span>Logout</span>
@@ -205,8 +205,9 @@
                     </span>
                 </a>
             </div>
-
+            
             @auth
+            @if(Auth::user()->type == 'eventee')
                 <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
                     <li>
                         <button class="button-menu-mobile waves-effect waves-light">
@@ -253,6 +254,7 @@
                  
 
                 </ul>
+                @endif
             @endauth
             <div class="clearfix"></div>
         </div>
@@ -459,6 +461,7 @@
   //   }
   // })
   function exportToCsv(filename, rows) {
+      console.log(rows);
       if(Array.isArray(rows) && rows.length) {
           let keys = {};
           Object.keys(rows[0]).map(k => keys[k] = k);

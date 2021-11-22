@@ -554,14 +554,14 @@ function initApp() {
             }
             pages.filter("#lobby").show();
             pageChangeActions();
-            recordPageView("lobby", "Lobby");
+            recordPageView("lobby", "Lobby","Lobby");
         },
         'room/:id': function (id) {
             let toShow = pages.filter("#room-" + id);
             if (toShow.length) {
                 pages.hide();
                 toShow.show();
-                recordPageView("room-" + id, "Room / " + (toShow.data("name") || id));
+                recordPageView("room-" + id, "Room / " + (toShow.data("name") || id),'Room',id);
             } else {
                 //alert("The doors will open on friday at 4:00 - 6:00 PM.");
                 $('#information-modal').modal({
@@ -579,6 +579,7 @@ function initApp() {
             setTimeout(() => {
                 updateLounge();
             }, 2000);
+            recordPageView("networking", "networking","Lounge");
         },
         "museum": function () {
             if (checkAuth()) {
@@ -591,7 +592,7 @@ function initApp() {
                     trackEvent({
                         type: "museumVisit",
                     });
-                    recordPageView("Museum", "Museum");
+                    recordPageView("Museum", "Museum","Museum");
                 } else {
                     routie(notFoundRoute);
                 }
@@ -676,7 +677,7 @@ function initApp() {
                         let modalId = $(this).data("modal") + id;
                         let modalEl = $("#" + modalId);
                         if ($(this).data("modal") === "book-a-call-modal-") {
-                            recordEvent("booking_modal_opened", "Booking Modal Opened / " + modalEl.data("name"), "booking_flow");
+                            recordEvent("booking_modal_opened", "Booking Modal Opened / " + modalEl.data("name"), "booking_flow",'Booth',id);
                             trackEvent({
                                 type: "boothBookingModalOpened",
                                 id,
@@ -723,7 +724,7 @@ function initApp() {
                         currentresbtns = resbtns;
                     }
                 }, 100)
-                recordPageView("booth/" + id, "Booth - " + toShow.data("name"));
+                recordPageView("booth/" + id, "Booth - " + toShow.data("name"),"Booth",id);
             } else {
                 routie(notFoundRoute);
             }
@@ -755,6 +756,7 @@ function initApp() {
                 }
                 pageChangeActions();
             }
+            recordPageView("attendees",'attendees','Attendees')
         },
         'report': function () {
             if (checkAuth()) {
@@ -819,7 +821,7 @@ function initApp() {
                     initializedLeaderboard = setInterval(() => showLeaderboard(true), 30000);
                 }
                 pageChangeActions();
-                recordPageView("leaderboard", "Leaderboard");
+                recordPageView("leaderboard", "Leaderboard","Leaderboard");
             }
         },
         'lounge': function () {
@@ -943,7 +945,7 @@ function initApp() {
             recordPageView("#session-list-" + roomgroup, "Session List " + roomgroup);
         },
         'sessionroom/:room': function (room) {
-            console.log(room);
+            // alert(room);
             setRoom = room;
             let video = $('.video-'+room);
             let whitelist_for_all = ["Health_Pavilion_Stage","Sponsor_Stage"]
@@ -990,7 +992,7 @@ function initApp() {
                     console.log("opened")
                     $("#session-content-" + room).empty();
                 });
-                recordPageView("workshop/" + room, room + " Room");
+                recordPageView("workshop/" + room, room + " Room",'Sessionroom',room);
             }
             video.show();
             video.prop("currentTime", 0).get(0).play();
@@ -1018,7 +1020,7 @@ function initApp() {
                 }
                 pageChangeActions(false);
 
-               recordPageView("page/" + page, page + " page");
+               recordPageView("page/" + page, page + " page", "page",page);
             }
             video.show();
             video.prop("currentTime", 0).get(0).play();

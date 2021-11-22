@@ -31,7 +31,7 @@ class HomeController extends Controller
         }
         if(view()->exists("dashboard.".$user->type)){
             if($user->type === 'admin'){
-                return redirect(route('reports.general'));
+                return redirect(route('reports.dashboard'));
             }
             return redirect("/home");
         }
@@ -117,5 +117,21 @@ class HomeController extends Controller
         return [
             "loggedIn" => (bool) Auth::user()
         ];
+    }
+
+    public function logout(){
+        if(Auth::check()){
+            $user = User::findOrFail(Auth::id());
+            $user->online_status = 0;
+            $user->save();
+            if(Auth::user()->type == 'admin'){
+                Auth::logout();
+                return redirect('/login');
+            }
+            elseif(Auth::user()->type == 'eventee'){
+                Auth::logout();
+                return redirect()->route('Eventee.login');
+            }
+        }
     }
 }
