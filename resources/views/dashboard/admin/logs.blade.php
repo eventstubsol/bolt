@@ -1,10 +1,10 @@
 @extends("layouts.admin")
 
 @section("title")
- User Logs
+Event Admin Logs
 @endsection
 @section("page_title")
-    User Logs
+Event Admin Logs
 @endsection
 
 @section("content")
