@@ -37,7 +37,7 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title mb-3">links</h4>
+                                <h4 class="header-title mb-3">Modal Items</h4>
                                 <div class="link-section">
                                    
     
@@ -134,14 +134,18 @@
                                 <div class="row  border border-primary p-2 mt-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
-                                        <input type="text" required  name="linknames[]" class="name-${n} form-control">
+                                        <input type="text" required  name="linknames[]" class="form-control">
+                                    </div>
+                                    <div class="form-group mb-3 col-md-4">
+                                        <label for="linktitles">Button_text</label>
+                                        <input type="text" required  name="button_text[]" class="form-control">
                                     </div>
 
 
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="type">type</label>
                                         <select required class="form-control type" data-index="${n}"  name="type[]" >
-                                            @foreach(LINK_TYPES as $type)
+                                            @foreach(MODAL_TYPES as $type)
                                             <option value="{{$type}}">{{$type}}</option>
                                             @endforeach
                                         </select>

@@ -12,6 +12,7 @@ use App\Page;
 use App\sessionRooms;
 use Illuminate\Http\Request;
 use App\Event;
+use App\Modal;
 use App\Treasure;
 use Carbon\Carbon;
 use PDO;
@@ -76,6 +77,8 @@ class PageController extends Controller
 
     public function edit(Page $page,$id){
         // dd($id);
+       $modals =  Modal::where("event_id",$id)->get();
+
 
 
         $pages = Page::where('event_id',$id)->get();
@@ -88,7 +91,7 @@ class PageController extends Controller
 
         $page->load(["images","links.flyin","videoBg"]);
         // return $page;
-        return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths","id","pag"]));
+        return view("eventee.pages.edit")->with(compact(["modals","page","session_rooms","pages","booths","id","pag"]));
     }
     public function duplicate($object,$type){
         switch($type){
@@ -210,6 +213,9 @@ class PageController extends Controller
                     case "videosdk":
                         $to = uniqid();
                         break;
+                    case "modal":
+                        $to = $request->modals[$id];
+                        break;
                 }
                 $link = Link::create([
                     "page"=>$page->id,
@@ -277,7 +283,9 @@ class PageController extends Controller
         $session_rooms = sessionRooms::where("event_id",$event_id)->get();
         $page->load(["images","links.background"]);
         $id = $event_id;
-        return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths",'id','pag']));
+       $modals =  Modal::where("event_id",$id)->get();
+
+        return view("eventee.pages.edit")->with(compact(["modals","page","session_rooms","pages","booths",'id','pag']));
     }
     public function Lobbyupdate(Request $request,$id){
         // $request->validate(["name","url"]);

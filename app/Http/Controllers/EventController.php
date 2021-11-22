@@ -22,6 +22,7 @@ use App\UserTagLinks;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\FAQ;
+use App\Modal;
 use App\NetworkingTable;
 use App\Page;
 use App\Resource;
@@ -105,13 +106,16 @@ class EventController extends Controller
         foreach ($user->subscriptions as $subscription) {
             $subscriptions[] = $subscription->session_id;
         }
-        // dd($booths);
+        $modals=Modal::where("event_id",$event_id)->get();
+        $modals->load(["items"]);
+        // return ($modals);
         // dd($schedule);
         // $event_id = $id;
         return view("event.index")
             ->with(
                 compact([
                     "booths",
+                    "modals",
                     "FAQs",
                     "pages",
                     "reports",
