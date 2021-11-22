@@ -6,7 +6,10 @@ Recently Joined Users
 @section("page_title")
 Recently Joined Users
 @endsection
+@section('styles')
 
+@include("includes.styles.datatables")
+@endsection
 @section("content")
 <div class="row">
     <div class="col-12">
@@ -14,7 +17,7 @@ Recently Joined Users
             <div class="card-header">Recent Added Events</div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table datatable table-striped dt-responsive nowrap w-100" id="datatable-buttons">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -57,4 +60,8 @@ Recently Joined Users
 </div>
 
 
+@endsection
+
+@section('scripts')
+@include("includes.scripts.datatables")
 @endsection

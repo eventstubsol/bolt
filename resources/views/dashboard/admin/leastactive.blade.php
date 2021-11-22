@@ -7,6 +7,11 @@ Least Active Users
 Least Active Users
 @endsection
 
+@section('styles')
+
+@include("includes.styles.datatables")
+@endsection
+
 @section("content")
 <div class="row">
     <div class="col-12">
@@ -14,7 +19,7 @@ Least Active Users
             <div class="card-header">Recent Added Events</div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table datatable table-striped dt-responsive nowrap w-100" id="datatable-buttons">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -45,7 +50,7 @@ Least Active Users
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5"><center>No Data Available</center></td>
+                                    <td colspan="6"><center>No Data Available</center></td>
                                 </tr>
                             @endif
                         </tbody>
@@ -57,4 +62,8 @@ Least Active Users
 </div>
 
 
+@endsection
+
+@section('scripts')
+@include("includes.scripts.datatables")
 @endsection

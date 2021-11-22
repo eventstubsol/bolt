@@ -6,7 +6,10 @@
 @section("page_title")
     Event Expiry
 @endsection
+@section('styles')
 
+@include("includes.styles.datatables")
+@endsection
 @section("content")
 <div class="row">
     <div class="col-12">
@@ -14,7 +17,7 @@
             <div class="card-header">Events Close To Expiry</div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table datatable table-striped dt-responsive nowrap w-100" id="datatable-buttons">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -53,4 +56,8 @@
 </div>
 
 
+@endsection
+
+@section('scripts')
+@include("includes.scripts.datatables")
 @endsection

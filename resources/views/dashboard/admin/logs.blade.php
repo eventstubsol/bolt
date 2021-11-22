@@ -6,7 +6,10 @@ Event Admin Logs
 @section("page_title")
 Event Admin Logs
 @endsection
+@section('styles')
 
+@include("includes.styles.datatables")
+@endsection
 @section("content")
 <div class="row">
     <div class="col-12">
@@ -14,7 +17,7 @@ Event Admin Logs
             <div class="card-header">Event Admin Logs</div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table datatable table-striped dt-responsive nowrap w-100" id="datatable-buttons">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -43,4 +46,8 @@ Event Admin Logs
 </div>
 
 
+@endsection
+
+@section('scripts')
+@include("includes.scripts.datatables")
 @endsection
