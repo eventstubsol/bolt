@@ -144,8 +144,8 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use SoftDeletes;
-    // use UUID;
-    // public $incrementing = false;
+    use UUID;
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      *
