@@ -36,6 +36,11 @@
                 @elseif($link->type === "booth")
                     <div title="{{$link->name}}" data-flyin="{{ $link->flyin ? assetUrl($link->flyin->url) : '' }}" class="area candidate-booth positioned" style="{{ areaStyles($area) }}" data-link="booth/{{$link->to}}">
                     </div>   
+                @elseif($to ==="FAQ")
+                    <a class="positioned" data-toggle="modal" data-target="#faqs-modal"
+                        title="FAQs"
+                        style="{{ areaStyles($area) }}; background: transparent; cursor:pointer;"
+                    ></a>
                 @else
                     <div title="{{ $link->name  }}" data-flyin="{{ $link->flyin ? assetUrl($link->flyin->url) : '' }}" class="positioned area" data-link="{{ $to }}" style="{{ areaStyles($area) }}">    
                         @if($link->type === "vimeo")
