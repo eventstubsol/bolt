@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ModalItem extends Model
+class Modal extends Model
 {
     use SoftDeletes;
     // use UUID;

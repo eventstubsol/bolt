@@ -114,6 +114,13 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("faq/edit/{id}/{faq_id}", "Eventee\FaqController@edit")->name("eventee.faq.edit");
     Route::post("faq/update/{id}/{faq_id}", "Eventee\FaqController@update")->name("eventee.faq.update");
     Route::post('faq/delete','Eventee\FaqController@delete')->name('eventee.faq.delete');
+    
+    Route::get("modal/{id}", "Eventee\ModalController@index")->name("eventee.modal");
+    Route::get("modal/create/{id}", "Eventee\ModalController@create")->name("eventee.modal.create");
+    Route::POST("modal/save/{id}", "Eventee\ModalController@store")->name("eventee.modal.save");
+    Route::get("modal/edit/{id}/{modal}", "Eventee\ModalController@edit")->name("eventee.modal.edit");
+    Route::post("modal/update/{id}/{modal}", "Eventee\ModalController@update")->name("eventee.modal.update");
+    Route::delete('modal/delete/{modal}','Eventee\ModalController@delete')->name('eventee.modal.destroy');
 
     //Mailables
     Route::get('mail/{id}',"Eventee\MailController@index")->name('eventee.mail');
