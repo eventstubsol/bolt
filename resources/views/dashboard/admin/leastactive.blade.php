@@ -19,6 +19,7 @@ Least Active Users
                             <tr>
                                 <th>#</th>
                                 <th>User Name</th>
+                                <th>Country</th>
                                 <th>User Email</th>
                                 <th>Contact</th>
                                 <th>Last logged in</th>
@@ -30,6 +31,7 @@ Least Active Users
                                    <tr>
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $active->name }}  {{ $active->last_name }}</td>
+                                        <td>{{ $active->country }}</td>
                                         <td>{{ $active->email }}</td>
                                         <td>@if ($active->phone !=null)
                                             {{ $active->phone }}
