@@ -66,12 +66,13 @@ Manage License
                             <a href="{{ route('event.Dashboard',['id'=>encrypt( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
                             </td>
                         </tr>
-                        @else
-                            <tr>
-                                <td colspan="10"><center>No Data Avaukable</center></td>
-                            </tr>
-                        @endif
+                       
                         @endforeach
+                        @else
+                        <tr>
+                            <td colspan="10"><center>No Data Avaukable</center></td>
+                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
