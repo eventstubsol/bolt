@@ -70,8 +70,8 @@ class PageController extends Controller
         }
         // $pages = Page::with(["images", "links.background"])->get();
         // return view("pages.list")->with(compact("pages"));
-        // return redirect()->to(route("eventee.pages.index",['id'=>$id]));
-        return redirect()->to(route("eventee.pages.edit", ["page" => $page->id, "id"=>$id,]));
+        return redirect()->to(route("eventee.pages.index",['id'=>$id]));
+        // return redirect()->to(route("eventee.pages.edit", ["page" => $page->id, "id"=>$id,]));
     }
 
 
