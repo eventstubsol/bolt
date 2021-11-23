@@ -302,6 +302,9 @@ define("MENU_ICONS",[
     "fe-file-text",
     "fe-play-circle",
 ]);
+define("MENU_ICONS_SVG",[
+    "/icons/Agenda.svg"
+]);
 
 
 define("MASTER_ROOMS",[
