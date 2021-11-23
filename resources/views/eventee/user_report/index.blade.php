@@ -44,7 +44,13 @@
                 <div class="row" id="showGraph" style="display: none">
                     <div class="card">
                         <div class="card-header">
-                            <button type="button" onclick="DownloadReport()" class="float-right btn btn-success">Download Report </button>
+                            <form action="{{ route('eventee.excel.report',$id) }}" method="POST">
+                                <input type="hidden" name="user_id" id="user_id">
+                                <input type="hidden" name="event_id" id="event_id">
+                                <input type="hidden" name="start" id="start">
+                                <input type="hidden" name="end" id="end">
+                                <button type="submit" class="float-right btn btn-success">Download Report </button>
+                            </form>
                         </div>
                         <div class="card-body" >
                             <div class="row" id="resultDiv">
@@ -84,7 +90,14 @@
                     $('#showGraph').show();
                     var  report  = response.report;
                     reportStat = report;
-                    console.log(report);
+                    var user_id_inp = $('#user_id');
+                    var event_id = $('#event_id');
+                    var start = $('#start');
+                    var end = $('#end');
+                    user_id_inp.val(user_id);
+                    event_id.val("{{ $id }}");
+                    start.val($('#start_date').val());
+                    end.val($('#end_date').val());
                     $.each(report,function(key,value){
                         $('#resultDiv').append('<table class="table table-striped" id="childApp'+key+'"><thead><tr><th>'+ key + '</th></tr></thead><thead><tr><th>Type</th><th>Location</th><th>Entered At</th><th>Left At</th></tr></thead>');
                         $.each(value,function(secondKey,secondValue){
@@ -109,11 +122,6 @@
             return x.getHours()+ ':' + x.getMinutes();
           }
 
-          function DownloadReport(){
-            //   $.post("{{ route('eventee.excel.report') }}",{'report':reportStat},function(res){
-            //       console.log(res);
-            //   });
-            exportToCsv('UserReport.csv',reportStat);
-          }
+         
     </script>
 @endsection

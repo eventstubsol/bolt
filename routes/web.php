@@ -117,7 +117,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     //User Wise Report
     Route::get("User_Report/{id}","Eventee\UserReportController@index")->name('eventee.user.report');
     Route::post("User_Report/Graph","Eventee\UserReportController@graph")->name('eventee.user.report.graph');
-    Route::post("Excel/Report/Data","Eventee\UserReportController@ExcelReport")->name('eventee.excel.report');
+    Route::post("Excel/Report/Data/{id}","Eventee\UserReportController@ExcelReport")->name('eventee.excel.report');
 
     //FAQS Section
     Route::get("faq/{id}", "Eventee\FaqController@index")->name("eventee.faq");
