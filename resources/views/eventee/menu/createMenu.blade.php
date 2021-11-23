@@ -115,19 +115,19 @@ Create Menu
                     <!-- To Link End -->
 
                     <!-- Icon Select Start  -->
-                    <select name="icon" class="form-control  icon_select  select2" data-toggle="select2">
+                    {{-- <select name="icon" class="form-control  icon_select  select2" data-toggle="select2">
                         <option> Select Icon </option>
                         @foreach(MENU_ICONS as $menuicon)
                             <option id="{{$menuicon}}" data-icon="{{$menuicon}}" value="{{$menuicon}}">
                                 <i class="fe fe-home"></i> {{ str_replace('fe-','',$menuicon) }}
                             </option>
                         @endforeach
-                    </select>
+                    </select> --}}
 
                     <select name="icons" class="form-control  icon_select_2  select2" data-toggle="select2">
                         <option> Select Icon </option>
-                        @foreach(MENU_ICONS_SVG as $menuicon)
-                            <option id="{{$menuicon}}" data-icon="{{$menuicon}}" value="{{$menuicon}}">
+                        @foreach(MENU_ICONS_SVG as $name=> $menuicon)
+                            <option id="{{$menuicon}}" data-name="{{$name}}" data-icon="{{$menuicon}}" value="{{$menuicon}}">
                                 <i class="fe fe-home"></i> {{ str_replace('fe-','',$menuicon) }}
                             </option>
                         @endforeach
@@ -173,9 +173,11 @@ Create Menu
                 return newstate;
         }
         function formatState2(state){
-                if(!state.id)  return state.text;
+                let name = $(state.element).data("name")
+                if(!state.id && !name) )  return state.text;
+                console.log(state);
                 // let iconname = state.id.replace("fe-","");
-                let newstate  =  $(`<span><img src=${state.id} ></span>`);
+                let newstate  =  $(`<span><img src=${state.id} width="30" > ${name}</span>`);
                 return newstate;
         }
 
