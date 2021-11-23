@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Menu;
 use Browser;
+use Carbon\Carbon;
 class eventeeController extends Controller
 {
     //
@@ -92,8 +93,34 @@ class eventeeController extends Controller
     public function Dashboard(Request $req){
         try{
             $req->session()->put('MangeEvent',0);
-            $events = Event::where('user_id',Auth::id())->get();
-            return view('eventee.dashboard',compact('events')); 
+            $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->limit(5)->count();
+           
+            $liveEvent = Event::where('end_date','>=',Carbon::now()->format('Y-m-d'))->where('user_id',Auth::id())->count();
+            $recent = Event::whereBetween('start_date',[Carbon::now()->subDays(5)->format('Y-m-d'),Carbon::now()->format('Y-m-d')])->where('end_date','>=',Carbon::today())->where('user_id',Auth::id())->orderBy('start_date','desc')->limit(5)->get();
+            // $latest_users = User::whereBetween('created_at',[Carbon::now()->subDays(5)->format('Y-m-d H:i:s'),Carbon::now()->format('Y-m-d H:i:s')])->where('type','eventee')->limit(5)->get();
+            $ending_event  =Event::whereBetween('end_date',[Carbon::now()->format('Y-m-d'),Carbon::now()->addDays(5)->format('Y-m-d')])->where('user_id',Auth::id())->limit(5)->get();
+            $eventUser = Event::where('user_id',Auth::id())->get();
+            $totaluser = [];
+            $totaluserLive = [];
+            $alluser = 0;
+            $liveUser = 0;
+            foreach($eventUser as $event){
+                $userCount = User::where('event_id',$event->id);
+                if($userCount->count() > 0){
+                    array_push($totaluser,$userCount->count());
+                }
+                $userCountLive = $userCount->where('online_status',1)->count();
+                if($userCountLive > 0){
+                    array_push($totaluserLive,$userCountLive);
+                }
+            }
+
+            for($i = 0 ; $i < count($totaluser) ; $i++){
+                $alluser += $totaluser[$i];
+            }
+
+           
+            return view('eventee.dashboard',compact('events','liveEvent','alluser','liveUser','recent','ending_event')); 
         }
         catch(\Exception $e){
             Log::error($e->getMessage());
