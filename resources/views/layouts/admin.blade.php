@@ -27,6 +27,9 @@
     <!-- icons -->
     <link rel="stylesheet" href="{{ asset('assets/css/icons.min.css') }}" type="text/css">
     <style>
+        .dataTables_length select{
+            width: 54px !important;
+        }
 
         .right-bar-toggle.chat-bubble{
             position: fixed;
