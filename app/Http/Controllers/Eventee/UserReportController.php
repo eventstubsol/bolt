@@ -8,8 +8,10 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\UserLocation;
-use Excel;
+use App\Exports\FromViewReport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UserReport as ExportsUserReport;
+use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
 
 class UserReportController extends Controller
 {
@@ -72,10 +74,30 @@ class UserReportController extends Controller
         }
     }
 
-    public function ExcelReport(Request $req){
-       $report = $req->report;
-       return new ExportsUserReport($report);
-           
+    public function ExcelReport(Request $req,$id){
+        $user_id = $req->user_id;
+        $start = Carbon::parse($req->start)->format('Y-m-d');
+        // return $start;
+        $end = Carbon::parse($req->end)->format('Y-m-d');
+        $event_id = $req->event_id;
+        $reportData = UserLocation::where('event_id',$event_id)->where('user_id',$user_id)
+        ->whereBetween(DB::raw('date(created_at)'),[$start,$end])
+        ->get();  
+        $final = [];
+        foreach($reportData as $rep){
+            $date = Carbon::parse($rep->created_at)->format('d-m-Y');
+            if(!isset($final[$date])){
+                $final[$date] = [];
+            } 
+            array_push($final[$date],$rep); 
+
+        }
+        // return $final;
+        // return view('downloads.excel')->with([
+        //     'reports' => $final,
+        // ]);
+    
+        return Excel::download(new FromViewReport($final),'UserReport.xlsx');
     }
 
 
