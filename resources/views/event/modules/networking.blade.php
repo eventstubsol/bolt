@@ -110,7 +110,6 @@
 </style>
 <div class="page" id="networking">
    
-    <div>
         <div id="lounge_tables" >
             <div class="lounge_container">
                 @foreach($tables as $i=> $table)
