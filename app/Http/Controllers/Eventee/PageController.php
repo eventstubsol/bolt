@@ -309,6 +309,7 @@ class PageController extends Controller
         if($request->has("linknames")){
             foreach($request->linknames as $id => $linkname){
                 $to = "";
+                $url="";
                 // dd($request->type);
                 switch($request->type[$id]){
                     case "session_room": 
