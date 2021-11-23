@@ -217,6 +217,11 @@
                     <span> Integrations </span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route("eventee.settings",$id) }}">
+                    <span> Default Settings </span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>

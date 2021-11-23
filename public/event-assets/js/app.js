@@ -1143,7 +1143,11 @@ function initApp() {
         }
     });
     if (window.location.hash === "") {
-        routie("exterior");
+        if(window.config.homepage){
+            routie(window.config.homepage);
+        }else{
+            routie("exterior");
+        }
     } else if (window.location.hash.indexOf("#exterior") === -1) {
         pageChangeActions();
     }

@@ -42,7 +42,8 @@ class EventController extends Controller
     public function index($event_name)
     {
 
-        $event_id = Event::where("slug",$event_name)->first()->id;
+        $event = Event::where("slug",$event_name)->first();
+        $event_id = $event->id;
         // dd($event_id);
         // $event_id =  ($id);
         $booths = Booth::where("event_id",$event_id)->orderBy("name")->with([
@@ -131,7 +132,7 @@ class EventController extends Controller
                     "tables",
                     "event_name",
                     "access_specifiers",
-                    
+                    "event"
                 ])
             );
     }
@@ -161,6 +162,42 @@ class EventController extends Controller
         }
         // dd($envs);
         return view("eventee.integrations.list")->with(compact("id","envs"));
+    }
+    public function settings($id)
+    {
+        $event = Event::where("id",$id)->first();
+        $pages = Page::where("event_id",$id)->get();
+        $session_rooms = sessionRooms::where("event_id",$id)->get();
+        return view("eventee.settings.default")->with(compact("id","pages","session_rooms","event"));
+    }
+    public function settingsUpdate(Request $request,$id)
+    {
+        // dd($request->all());
+        $event = Event::where("id",$id)->first();
+        $type = "exterior";
+        $page = "exterior";
+        switch($request->type){
+            case "page":
+                $type="page";
+                $page="page/".$request->pages;
+                break;
+            case "session_room":
+                $type="sessionroom";
+                $page="sessionroom/".$request->rooms;
+                break;
+            case "lobby": 
+                $type="lobby";
+                $page="lobby";
+                break; 
+            case "exterior": 
+                $type="exterior";
+                $page="exterior";
+                break; 
+        }
+        $event->home_page=$page;
+        $event->home_type=$type;
+        $event->save();
+        return redirect(route("eventee.settings",$id));
     }
     public function integrationsUpdate(Request $request,$id)
     {

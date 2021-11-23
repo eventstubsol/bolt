@@ -272,6 +272,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 
     Route::get("/integrations/{id}", "EventController@integrations")->name("eventee.integrations");
     Route::post("/integrations/update/{id}", "EventController@integrationsUpdate")->name("eventee.integrationsUpdate");
+    Route::get("/settings/{id}", "EventController@settings")->name("eventee.settings");
+    Route::post("/settings/update/{id}", "EventController@settingsUpdate")->name("eventee.settingsUpdate");
     
     Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
     Route::post("/options/update/{id}", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");

@@ -81,6 +81,13 @@ define('MODAL_TYPES', [
     "pdf",
 ]);
 
+define('HOME_PAGE_TYPES', [
+    'page',
+    'session_room',
+    'lobby',
+    'exterior'
+]);
+
 
 
 
