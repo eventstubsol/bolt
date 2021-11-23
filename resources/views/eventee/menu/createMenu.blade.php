@@ -124,6 +124,15 @@ Create Menu
                         @endforeach
                     </select>
 
+                    <select name="icons" class="form-control  icon_select_2  select2" data-toggle="select2">
+                        <option> Select Icon </option>
+                        @foreach(MENU_ICONS_SVG as $menuicon)
+                            <option id="{{$menuicon}}" data-icon="{{$menuicon}}" value="{{$menuicon}}">
+                                <i class="fe fe-home"></i> {{ str_replace('fe-','',$menuicon) }}
+                            </option>
+                        @endforeach
+                    </select>
+
 
                     <!-- Icon Select End -->
 
@@ -153,11 +162,20 @@ Create Menu
         $(".icon_select").select2({
         templateResult: formatState
         });
+        $(".icon_select_2").select2({
+        templateResult: formatState2
+        });
 
         function formatState(state){
                 if(!state.id)  return state.text;
                 let iconname = state.id.replace("fe-","");
                 let newstate  =  $(`<span><i class=${state.id}> ${iconname.replace("-text","") } </i></span>`);
+                return newstate;
+        }
+        function formatState2(state){
+                if(!state.id)  return state.text;
+                // let iconname = state.id.replace("fe-","");
+                let newstate  =  $(`<span><img src=${state.id} ></span>`);
                 return newstate;
         }
 

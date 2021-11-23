@@ -141,6 +141,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 
 
 
+	Route::get('icons',"EventController@getIcons")->name('icons');
 	Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
     Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
     Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
