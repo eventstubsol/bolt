@@ -303,7 +303,7 @@ define("MENU_ICONS",[
     "fe-play-circle",
 ]);
 define("MENU_ICONS_SVG",[
-    "/icons/Agenda.svg"
+   "Agenda"=> "/icons/Agenda.svg"
 ]);
 
 
