@@ -779,6 +779,7 @@ $user = Auth::user();
         }
         // console.log( {!! json_encode(getSuggestedTags()) !!} );
         const config = {
+            homepage: "{{ $event->home_page }}",
             baseRoute: "{{ url('/') }}",
             videoSDK: "{{route('videosdk',['meetingId'=>':id'])}}",
             addParticipant: "{{route('addParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
