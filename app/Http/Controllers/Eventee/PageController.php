@@ -342,6 +342,7 @@ class PageController extends Controller
                     "name"=> $linkname,
                     "type"=>$request->type[$id],
                     "to"=> $to,
+                    "url"=>$url,
                     "top"=> $request->top[$id],
                     "left"=> $request->left[$id],
                     "width"=> $request->width[$id],
