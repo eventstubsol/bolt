@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Event;
 use App\UserSubtype;
 
+
 class UserImport implements ToModel,WithHeadingRow
 {
     use Importable;
@@ -23,22 +24,21 @@ class UserImport implements ToModel,WithHeadingRow
     */
     public function model(array $row)
     {
-        // dd($row["event_name"]);
+        $user = User::where('email',$row['email'])->where('event_id',$this->event_id);
+        if($user->count() < 1){
+            return new User([
+                "name"=>$row["name"],
+                "last_name" =>$row["last_name"],
+                "email" =>$row["email"],
+                "phone"=>$row["phone"],
+                "password" =>password_hash($row["password"],PASSWORD_DEFAULT),
+                "event_id"=> $this->event_id,
+                "type" => $row["type"],
+                "country" => $row["country"],
+                "subtype"=>$row['sub_type']
+            ]);
+        }
+    
         
-        
-        // $event = Event::where("name",trim($row["event_name"]))->first();
-        
-        // dd($row);
-        return new User([
-            "name"=>$row["name"],
-            "last_name" =>$row["last_name"],
-            "email" =>$row["email"],
-            "phone"=>$row["phone"],
-            "password" =>password_hash($row["password"],PASSWORD_DEFAULT),
-            "event_id"=> $this->event_id,
-            "type" => $row["type"],
-            "country" => $row["country"],
-            "subtype"=>$row['sub_type']
-        ]);
     }
 }
