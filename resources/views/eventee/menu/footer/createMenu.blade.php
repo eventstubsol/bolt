@@ -115,15 +115,24 @@ Create Menu
                     <!-- To Link End -->
 
                     <!-- Icon Select Start  -->
-                        <select name="icon" class="form-control  icon_select  select2" data-toggle="select2">
+                        {{-- <select name="icon" class="form-control  icon_select  select2" data-toggle="select2">
                             <option> Select Icon </option>
                             @foreach(MENU_ICONS as $menuicon)
                                 <option id="{{$menuicon}}" data-icon="{{$menuicon}}" value="{{$menuicon}}">
                                     <i class="fe fe-home"></i> {{ str_replace('fe-','',$menuicon) }}
                                 </option>
                             @endforeach
-                        </select>
+                        </select> --}}
 
+                        <select name="icon" class="form-control  icon_select_2  select2" data-toggle="select2">
+                            <option> Select Icon </option>
+                            @foreach(MENU_ICONS_SVG as $name=> $menuicon)
+                                <option id="{{$menuicon}}" data-name="{{$name}}" data-icon="{{$menuicon}}" value="{{$menuicon}}">
+                                    <i class="fe fe-home"></i> {{$name}}
+                                </option>
+                            @endforeach
+                        </select>
+    
 
                     <!-- Icon Select End -->
 
@@ -167,8 +176,12 @@ Create Menu
         $(".type").on("change",toggleVisibility);
         // $(".icon_select").html(`<option><i class="fe fe-home"></i> test</option>`)
         
-        $(".icon_select").select2({
-        templateResult: formatState
+        // $(".icon_select").select2({
+        // templateResult: formatState
+        // });
+
+        $(".icon_select_2").select2({
+        templateResult: formatState2
         });
 
         $("#isChild").on("change",(e)=>{
@@ -183,6 +196,14 @@ Create Menu
         function formatState(state){
                 if(!state.id)  return state.text;
                 let newstate  =  $(`<span><i class=${state.id}> ${state.id.replace("fe-","") } </i></span>`);
+                return newstate;
+        }
+        function formatState2(state){
+                let name = $(state.element).data("name")
+                if(!state.id || !name)  return state.text;
+                console.log(state);
+                // let iconname = state.id.replace("fe-","");
+                let newstate  =  $(`<span><img src=${state.id} width="30" > ${name}</span>`);
                 return newstate;
         }
 
