@@ -127,7 +127,7 @@ Create Menu
                     <select name="icon" class="form-control  icon_select_2  select2" data-toggle="select2">
                         <option> Select Icon </option>
                         @foreach(MENU_ICONS_SVG as $name=> $menuicon)
-                            <option id="{{$menuicon}}" data-name="{{$name}}" data-icon="{{$menuicon}}" value="{{$menuicon}}">
+                            <option id="{{asset($menuicon)}}" data-name="{{$name}}" data-icon="{{$menuicon}}" value="{{asset($menuicon)}}">
                                 <i class="fe fe-home"></i> {{$name}}
                             </option>
                         @endforeach
