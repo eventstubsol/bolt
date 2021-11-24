@@ -190,7 +190,7 @@ function initApp() {
         "support"
     ];
     areas.on("click", async function (e) {
-        // loader.show();
+        loader.show();
         const link = $(this).data("link");
         console.log(link);
         directAccess = false;
@@ -209,8 +209,8 @@ function initApp() {
             flyIn.show();
 
             flyIn.attr('src', flyin);
-            // waitForVideosLoad(flyin)
-            //     .then(() => loader.fadeOut());
+            waitForVideosLoad(flyin)
+                .then(() => loader.fadeOut());
             flyIn.prop("currentTime", 0).get(0).play();
             flyIn
                 .off("click")
