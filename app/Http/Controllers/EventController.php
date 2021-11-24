@@ -36,6 +36,8 @@ use Mail;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 use App\sessionRooms;
 use Dotenv\Result\Success;
+use File;
+use Illuminate\Support\Facades\Storage as Storage;
 
 class EventController extends Controller
 {
@@ -151,6 +153,11 @@ class EventController extends Controller
                 "type" => "public"
             ]);
             return true;
+    }
+
+    public function getIcons(){
+        // $files = File::allFiles("./icons/");
+        // dd($files);
     }
 
     public function integrations($id)
