@@ -124,11 +124,11 @@ Create Menu
                         @endforeach
                     </select> --}}
 
-                    <select name="icons" class="form-control  icon_select_2  select2" data-toggle="select2">
+                    <select name="icon" class="form-control  icon_select_2  select2" data-toggle="select2">
                         <option> Select Icon </option>
                         @foreach(MENU_ICONS_SVG as $name=> $menuicon)
                             <option id="{{$menuicon}}" data-name="{{$name}}" data-icon="{{$menuicon}}" value="{{$menuicon}}">
-                                <i class="fe fe-home"></i> {{ str_replace('fe-','',$menuicon) }}
+                                <i class="fe fe-home"></i> {{$name}}
                             </option>
                         @endforeach
                     </select>
@@ -174,7 +174,7 @@ Create Menu
         }
         function formatState2(state){
                 let name = $(state.element).data("name")
-                if(!state.id && !name) )  return state.text;
+                if(!state.id || !name)  return state.text;
                 console.log(state);
                 // let iconname = state.id.replace("fe-","");
                 let newstate  =  $(`<span><img src=${state.id} width="30" > ${name}</span>`);

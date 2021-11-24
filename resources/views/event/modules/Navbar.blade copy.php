@@ -43,7 +43,8 @@
                     @else
                          <li class="custom-dropdown not-booth-menu">
                             <a class="area">
-                            <i class="{{ $menu->iClass }}"></i>
+                                <img src="{{ asset($menu->iClass )}}" width="30" alt="">
+                            <!-- <i class="{{ $menu->iClass }}"></i> -->
                             {{ $menu->name }}
                             </a>
                         <div class="custom-dropdown-menu">
