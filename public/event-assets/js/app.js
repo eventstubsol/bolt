@@ -209,9 +209,10 @@ function initApp() {
             flyIn.show();
 
             flyIn.attr('src', flyin);
-            waitForVideosLoad(flyin)
-                .then(() => loader.fadeOut());
+            // waitForVideosLoad(flyin)
+            //     .then(() => loader.fadeOut());
             flyIn.prop("currentTime", 0).get(0).play();
+            loader.fadeOut()
             flyIn
                 .off("click")
                 .on("ended", function () {
