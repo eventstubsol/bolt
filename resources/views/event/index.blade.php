@@ -476,10 +476,10 @@ $user = Auth::user();
     @include("includes.styles.fileUploader")
     <!-- Custom -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=161108390256844" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=161108390256844" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=161108390256844" type="text/css">
-    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=161108390256844">
+    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=16110839025684" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=16110839025684" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=16110839025684" type="text/css">
+    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=16110839025684">
     <link href="{{ asset('assets/css/custom.css') }}?v=36475567" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
@@ -851,15 +851,15 @@ $user = Auth::user();
         window.config = config;
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=161108390256844"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}?cb=161108390256844"></script>
-    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=161108390256844"></script>
-    <script src="{{ asset('event-assets/js/app.js') }}?cb=161108390256844"></script>
-    <script src="{{ asset('/js/chat/app.js') }}?cb=161108390256844"></script>
-    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=161108390256844"></script> -->
-    <script src="{{ asset('/js/profile/index.js') }}?cb=161108390256844"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=161108390256844"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=161108390256844"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=16110839025684"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}?cb=16110839025684"></script>
+    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=16110839025684"></script>
+    <script src="{{ asset('event-assets/js/app.js') }}?cb=16110839025684"></script>
+    <script src="{{ asset('/js/chat/app.js') }}?cb=16110839025684"></script>
+    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=16110839025684"></script> -->
+    <script src="{{ asset('/js/profile/index.js') }}?cb=16110839025684"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=16110839025684"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=16110839025684"></script>
     @if (isOpenForPublic('polls'))
         @include("event.poll")
     @endif

@@ -204,22 +204,24 @@ function initApp() {
         }
 
         if(flyin){
-            pages.hide();
-            pages.filter("#flyin").show();
-            flyIn.show();
+          flyIn.show();
 
             flyIn.attr('src', flyin);
-            // waitForVideosLoad(flyin)
-            //     .then(() => loader.fadeOut());
-            flyIn.prop("currentTime", 0).get(0).play();
-            loader.fadeOut()
-            flyIn
-                .off("click")
-                .on("ended", function () {
-                    flyIn.fadeOut();
-                    routie(link);
-                    loader.fadeOut();
+            waitForVideosLoad(flyin)
+                .then(() => {
+                    pages.hide();
+                    pages.filter("#flyin").show();        
+                    loader.fadeOut()
+                    flyIn.prop("currentTime", 0).get(0).play();
+                    flyIn
+                        .off("click")
+                        .on("ended", function () {
+                            flyIn.fadeOut();
+                            routie(link);
+                            loader.fadeOut();
+                    });
                 });
+            
             return;
         }
 
