@@ -303,7 +303,39 @@ define("MENU_ICONS",[
     "fe-play-circle",
 ]);
 define("MENU_ICONS_SVG",[
-   "Agenda"=> "/icons/Agenda.svg"
+   "Agenda"=> "/icons/Agenda.svg",
+   "Attendees"=> "/icons/Attendees.svg",
+   "Auditorium"=> "/icons/Auditorium.svg",
+   "Award"=> "/icons/Award.svg",
+   "Badge"=> "/icons/Badge.svg",
+   "Donation"=> "/icons/Donation.svg",
+   "Download"=> "/icons/Download.svg",
+   "Email"=> "/icons/Email.svg",
+   "Expo-Hall"=> "/icons/Expo-Hall.svg",
+   "Feedback"=> "/icons/Feedback.svg",
+   "Games"=> "/icons/Games.svg",
+   "InfoDesk"=> "/icons/InfoDesk.svg",
+   "Leaderboard"=> "/icons/Leaderboard.svg",
+   "Lobby"=> "/icons/Lobby.svg",
+   "Log-OUt"=> "/icons/Log-OUt.svg",
+   "Login"=> "/icons/Login.svg",
+   "Museum"=> "/icons/Museum.svg",
+   "Music-Off"=> "/icons/Music-Off.svg",
+   "Music-on"=> "/icons/Music-on.svg",
+   "Networking-Lounge"=> "/icons/Networking-Lounge.svg",
+   "Notifications"=> "/icons/Notifications.svg",
+   "PDF"=> "/icons/PDF.svg",
+   "Personal-Agenda"=> "/icons/Personal-Agenda.svg",
+   "Photobooth"=> "/icons/Photobooth.svg",
+   "Profile"=> "/icons/Profile.svg",
+   "Q_A"=> "/icons/Q_A.svg",
+   "Reminder"=> "/icons/Reminder.svg",
+   "Shopping-Cart"=> "/icons/Shopping-Cart.svg",
+   "Speed-Dating"=> "/icons/Speed-Dating.svg",
+   "Swagbag-Icons"=> "/icons/Swagbag-Icons.svg",
+   "Upload"=> "/icons/Upload.svg",
+   "Video"=> "/icons/Video.svg",
+   "Workshop"=> "/icons/Workshop.svg"
 ]);
 
 
@@ -333,6 +365,7 @@ function api($var,$event_id,$default = ""){
 
 
 function getMenuLink($menu){
+    $icon = asset($menu->iClass );
     switch(trim($menu->link_type)){
 
                     
@@ -341,7 +374,9 @@ function getMenuLink($menu){
     case("custom_page"):
             return <<<HTML
                     <a  target="_blank" href="$menu->link" >      
-                            <i style="font-size:24px;" class="$menu->iClass"></i>
+                    <img src="$icon" width="26" alt="">
+   
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                              $menu->name 
                     </a>
                 <!-- </li> -->
@@ -351,7 +386,9 @@ HTML;
     case("chat_user"):
         return <<<HTML
                 <a  class="chat_user not-booth-menu" data-link="$menu->link" >    
-                    <i style="font-size:24px;" class="$menu->iClass"></i>
+                <img src="$icon" width="26" alt="">
+   
+                <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                          $menu->name 
                 </a>
 HTML;
@@ -360,31 +397,38 @@ HTML;
     case("chat_group"):
         return <<<HTML
                 <a   class="chat_group not-booth-menu" data-link="$menu->link" > 
-                        <i style="font-size:24px;" class="$menu->iClass"></i>
-                         $menu->name 
+                        <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                        <img src="$icon" width="26" alt="">
+                        $menu->name 
                 </a>
 HTML;
         break;
     case("pdf"):
         return <<<HTML
             <a  style="border:none !important;" class="_df_button" source=" assetUrl($menu->link) " >
-                <i style="font-size:24px;" class="$menu->iClass"></i>
-                 $menu->name 
+                <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                <img src="$icon" width="26" alt="">
+    
+                $menu->name 
             </a>
 HTML;
         break;
     case("booth"):
         return <<<HTML
             <a data-link="booth/$menu->link" class="area">
-                <i style="font-size:24px;" class="$menu->iClass"></i>
-                 $menu->name 
+                <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                <img src="$icon" width="26" alt="">
+    
+                $menu->name 
             </a>
 HTML;
         break;
     case("session_room"):
         return  <<<HTML
             <a data-link="sessionroom/$menu->link" class="area">
-                <i style="font-size:24px;" class="$menu->iClass"></i>
+               <img src="$icon" width="26" alt="">
+ 
+            <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                 $menu->name 
             </a>
 HTML;
@@ -392,20 +436,28 @@ HTML;
     case("page"):
         return <<<HTML
                 <a data-link="page/$menu->link" class="area">
-                    <i style="font-size:24px;" class="$menu->iClass"></i>
+                    <img src="$icon" width="26" alt="">
+                         
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                      $menu->name 
                 </a>
 HTML;
     case("lobby"):
         return <<<HTML
                 <a data-link="lobby" class="area">
-                    <i style="font-size:24px;" class="$menu->iClass"></i>
+                    <img src="$icon" width="26" alt="">
+
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                      $menu->name 
                 </a>
 HTML;
     case("attendees"):
         return <<<HTML
-             <a class="area" data-link="attendees"><i class="fe-users"></i>Business Connect</a>
+             <a class="area" data-link="attendees">
+             <img src="$icon" width="26" alt="">
+                 
+             <!-- <i class="fe-users"></i> -->
+                 Business Connect</a>
 HTML;
 
         break; 
