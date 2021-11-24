@@ -40,6 +40,12 @@ class FaqController extends Controller
         return view('eventee.faq.edit',compact('faq','id'));
     }
 
+    public function delete(Request $req){
+        $faq = FAQ::findOrFail($req->id);
+        $faq->delete();
+        return response()->json(['message'=>"Done"]);
+    }
+
     public function update($id,$faq_id,Request $req){
         $faq = FAQ::findOrFail($faq_id);
         $faq->event_id = $id;
