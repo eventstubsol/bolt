@@ -20,5 +20,5 @@ app/Option.php
 app/Points.php
 app/Question.php
 app/Room.php
-app/User.php
+# app/User.php
 # app/Link.php
