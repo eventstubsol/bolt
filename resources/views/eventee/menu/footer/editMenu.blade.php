@@ -111,7 +111,15 @@ Update Menu
                             <input type="hidden" name="pdf" class="upload_input" @if($menu->link_type==="pdf") value="{{$menu->link}}" @endif">
                             <input type="file"      data-name="boothimages" data-plugins="dropify" data-type="application/pdf"  @if($menu->link_type==="pdf") data-default-file="{{assetUrl($menu->link)}}" @endif }} />                                   
                         </div>
-                        
+                        <div @if($menu->link_type!=="modal") style="display: none;" @endif  class="modals form-group mb-3 col-md-4">
+                            <label for="to">to(modal)</label>
+                            <select     class="form-control" name="modals">
+                                @foreach($modals as $modal)
+                                    <option  @if($menu->link === $modal->id) selected @endif  value="{{$modal->id}}">{{$modal->name}}</option>
+                                @endforeach
+    
+                            </select>
+                        </div>
 
                     <!-- To Link End -->
 
@@ -302,6 +310,8 @@ Update Menu
         $(".chat_user").hide();
         $(".chat_group").hide();
         $(".custom_page").hide();
+        $(".modals").hide();
+
 
         switch(selectbox.val()){
             case "session_room":
@@ -331,6 +341,10 @@ Update Menu
             case "custom_page":
                 $(".custom_page").show();
                 break;
+            case "modal":
+                $(".modals").show();
+                break;
+   
         }
         // console.log(val);
     }

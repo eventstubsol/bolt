@@ -50,7 +50,8 @@ Update Menu
                     <!-- end type -->
 
 
-                    <!-- To Link Start  -->       
+                    <!-- To Link Start  -->     
+
                         <div @if($menu->link_type !== "page") style="display: none;" @endif  class="pages- pages form-group mb-3 col-md-4">
                             <label for="to">to(Page)</label>
                             <select     class="form-control" name="pages">
@@ -76,6 +77,15 @@ Update Menu
                                 @foreach($session_rooms as $room)
                                     <option @if($menu->link === $room->name) selected @endif value="{{$room->name}}">{{$room->name}}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                        <div @if($menu->link_type!=="modal") style="display: none;" @endif  class="modals form-group mb-3 col-md-4">
+                            <label for="to">to(modal)</label>
+                            <select     class="form-control" name="modals">
+                                @foreach($modals as $modal)
+                                    <option  @if($menu->link === $modal->id) selected @endif  value="{{$modal->id}}">{{$modal->name}}</option>
+                                @endforeach
+    
                             </select>
                         </div>
 
@@ -196,6 +206,8 @@ Update Menu
         $(".chat_user").hide();
         $(".chat_group").hide();
         $(".custom_page").hide();
+        $(".modals").hide();
+
 
         switch(selectbox.val()){
             case "session_room":
@@ -225,6 +237,10 @@ Update Menu
             case "custom_page":
                 $(".custom_page").show();
                 break;
+            case "modal":
+                $(".modals").show();
+                break;
+   
         }
         // console.log(val);
     }
