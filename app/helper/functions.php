@@ -464,7 +464,17 @@ HTML;
              <img src="$icon" width="26" alt="">
                  
              <!-- <i class="fe-users"></i> -->
-                 Business Connect</a>
+             $menu->name</a>
+HTML;
+
+        break; 
+    case("modal"):
+        return <<<HTML
+             <a data-toggle="modal" data-target=="#$menu->link">
+             <img src="$icon" width="26" alt="">
+                 
+             <!-- <i class="fe-users"></i> -->
+                 $menu->name</a>
 HTML;
 
         break; 

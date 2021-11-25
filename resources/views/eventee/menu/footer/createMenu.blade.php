@@ -49,7 +49,15 @@ Create Menu
 
 
                     <!-- To Link Start  -->
+                    <div style="display: none;" class="modals form-group mb-3 col-md-4">
+                        <label for="to">to(modal)</label>
+                        <select     class="form-control" name="modals">
+                            @foreach($modals as $modal)
+                                <option value="{{$modal->id}}">{{$modal->name}}</option>
+                            @endforeach
 
+                        </select>
+                    </div>
                         <div class="pages-${n} pages form-group mb-3 col-md-4">
                             <label for="to">to(Page)</label>
                             <select value=" " class="form-control" name="pages">
@@ -224,6 +232,7 @@ Create Menu
         $(".chat_user").hide();
         $(".chat_group").hide();
         $(".custom_page").hide();
+        $(".modals").hide();
 
         switch(selectbox.val()){
             case "session_room":
@@ -253,6 +262,10 @@ Create Menu
             case "custom_page":
                 $(".custom_page").show();
                 break;
+            case "modal":
+                $(".modals").show();
+                break;
+   
         }
         // console.log(val);
     }
