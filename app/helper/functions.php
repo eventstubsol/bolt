@@ -478,6 +478,16 @@ HTML;
 HTML;
 
         break; 
+    case("photobooth"):
+        return <<<HTML
+             <a class="photobooth positioned area"  data-link="photo-booth"  data-capture="{{$link->to}}" data-gallery="{{$link->url}}" >
+             <img src="$icon" width="26" alt="">
+                 
+             <!-- <i class="fe-users"></i> -->
+                 $menu->name</a>
+HTML;
+
+        break; 
     default:
         return <<<HTML
        
