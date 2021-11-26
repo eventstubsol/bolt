@@ -113,8 +113,7 @@ class AttendeeAuthController extends Controller
             //     "login" => $this->loginT
             // ]);
         } else {
-
-            if ($user->type !== 'attendee' ) {
+            if ($user->type !== 'attendee' && $user->type !== 'delegate' ) {
                 return redirect( route("exhibitorLogin",['subdomain'=>$subdomain,'email'=>$user->email]));
             }
             $user->online_status = 1;
