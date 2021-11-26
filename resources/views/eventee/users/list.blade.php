@@ -56,6 +56,7 @@ Manage Users
                             <th>Name</th>
                             <th>Email</th>
                             <th>Type</th>
+                            <th>Subtype</th>
                             
                             <th>Event</th>
                             <th>Created At</th>
@@ -73,6 +74,7 @@ Manage Users
                             <td>{{ $user->name }} {{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->type }}</td>
+                            <td>{{ $user->subtype ?? '' }}</td>
                             
                             <td>{{ $event->name }}</td>
                             <td>{{ $user->created_at }}</td>
