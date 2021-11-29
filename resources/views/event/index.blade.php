@@ -66,9 +66,12 @@ $user = Auth::user();
             .theme-chat.right-bar#chat-container {
                 min-width: 90% !important;
             }
-        }
-        .YouTubePopUp-Content iframe{
-            height: 300px !important;
+            .menu img{
+                display: inline-block;
+            }
+            .YouTubePopUp-Content iframe{
+                height: 300px !important;
+            }
         }
 
         .tab-content .nav-justified .nav-item {
