@@ -120,7 +120,7 @@
                 @elseif($menu->name == 'attendees')
                     <li><a class="area" data-link="attendees"><i class="fe-users"></i>Business Connect</a></li>
                 @else
-                    <li class="not-booth-menu">   
+                    <li >   
                         {!! getMenuLink($menu) !!}
                     </li>
                 @endif
