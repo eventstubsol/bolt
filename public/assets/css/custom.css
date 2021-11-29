@@ -589,7 +589,7 @@ button[disabled] {
 }
 
 .navbar-custom.theme-nav a:hover {
-  color: #00a15f;
+  /* color: #00a15f; */
   background: transparent;
 }
 
