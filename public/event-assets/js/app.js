@@ -209,9 +209,10 @@ function initApp() {
             flyIn.attr('src', flyin);
             pages.hide();
             pages.filter("#flyin").show();        
-            loader.fadeOut()
+            // loader.fadeOut()
             flyIn.prop("currentTime", 0).get(0).play();
             flyIn
+                .on("canplaythrough", () => loader.hide())  
                 .off("click")
                 .on("ended", function () {
                     flyIn.fadeOut();
@@ -792,6 +793,7 @@ function initApp() {
             // $("#cometchat__widget").hide();
             navs.addClass('hidden');
             pages.filter(".initial").show();
+            $("body").click()
             // if (!isMobile()) {
                 exteriorView.prop("currentTime", 0).get(0).play();
                 setTimeout(function () {
