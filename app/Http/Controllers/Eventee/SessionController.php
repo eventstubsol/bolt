@@ -149,9 +149,10 @@ class SessionController extends Controller
         $request->speakers = null;
         $session->load("speakers");
         $room = sessionRooms::where("id", $request->room_id)->first();
-        $session->update($request->all());
+        $session->update($request->except("_token","_method","meetingId"));
+        $session->zoom_webinar_id = $request->zoom_webinar_id;
         $session->room = $room->name;
-        if($request->has("meetingId") && $request->meetingId){
+        if($request->type==="VIDEO_SDK" && $request->has("meetingId") && $request->meetingId){
             $session->zoom_webinar_id = $request->meetingId;
         }
         $session->master_room = $room->master_room;
