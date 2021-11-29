@@ -470,7 +470,7 @@ HTML;
         break; 
     case("modal"):
         return <<<HTML
-             <a data-toggle="modal" data-target="#$menu->link">
+             <a data-toggle="modal" data-target="#$menu->link" class="_custom_modal">
              <img src="$icon" width="26" alt="">
                  
              <!-- <i class="fe-users"></i> -->
