@@ -558,9 +558,9 @@ function initApp() {
     routie({
         'lobby': function () {
             pages.hide();
-            if (isMobile()) {
-                document.querySelector("#lobby_view").src = '';
-            }
+            // if (isMobile()) {
+            //     document.querySelector("#lobby_view").src = '';
+            // }
             pages.filter("#lobby").show();
             pageChangeActions();
             recordPageView("lobby", "Lobby","Lobby");
@@ -792,7 +792,7 @@ function initApp() {
             // $("#cometchat__widget").hide();
             navs.addClass('hidden');
             pages.filter(".initial").show();
-            if (!isMobile()) {
+            // if (!isMobile()) {
                 exteriorView.prop("currentTime", 0).get(0).play();
                 setTimeout(function () {
                     loader.hide();
@@ -809,13 +809,13 @@ function initApp() {
                                 routie("lobby");
                             });
                     });
-            } else {
-                exteriorView
-                    .on("click", function () {
+            // } else {
+            //     exteriorView
+            //         .on("click", function () {
 
-                        routie("lobby");
-                    });
-            }
+            //             routie("lobby");
+            //         });
+            // }
             recordPageView("exterior", "Exterior");
         },
         'leaderboard': function () {
