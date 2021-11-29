@@ -253,8 +253,11 @@
                     @endif
                 
                     @if(isset($id))
+                        @php
+                            $cur_eve = App\Event::findOrFail($id);
+                        @endphp
                         <li class=" color-primary">
-                            <a class="visit_event" href="https://{{$curr_event->link}}/event" target="_blank">Visit Event</a>    
+                            <a class="visit_event" href="https://{{$cur_eve->link}}/event" target="_blank">Visit Event</a>    
                         </li>
                     @endif
                  
