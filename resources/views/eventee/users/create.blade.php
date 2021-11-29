@@ -72,8 +72,9 @@ Create Users
                     </div>
                     @if(count($subtypes))
                     <div class="form-group mb-3">
-                        <label for="type">Subtype of User</label>
+                        <label for="type">Subtype of User (Optional)</label>
                         <select class="form-control" name="subtype">
+                            <option value="">Select Subtype</option>
                             @foreach($subtypes as $type)
                             <option value="{{ $type->name }}">{{ ucfirst($type->name) }}</option>
                             @endforeach
