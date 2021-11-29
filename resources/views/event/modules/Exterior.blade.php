@@ -17,7 +17,7 @@
         return check;
     }
     if(isMobile()){
-        document.querySelector("#exterior_view").src = '';
+        // document.querySelector("#exterior_view").src = '';
         document.querySelector("#mobile_exterior_view").style.height = '100vh';
     }
    
