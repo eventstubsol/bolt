@@ -250,12 +250,12 @@
                             </div>
                     @endif
                     
-                        @if(isset($id))
-                            <li class=" color-primary">
-                                <a class="visit_event" href="https://{{$curr_event->link}}/event" target="_blank">Visit Event</a>    
-                            </li>
-                        @endif
                 </li>
+                @if(isset($id))
+                    <li class=" color-primary">
+                        <a class="visit_event" href="https://{{$curr_event->link}}/event" target="_blank">Visit Event</a>    
+                    </li>
+                @endif
                  
 
                 </ul>
