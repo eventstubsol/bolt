@@ -212,14 +212,16 @@
             </div>
             
             @auth
-            @if(Auth::user()->type == 'eventee')
-                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
-                    <li>
+               <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+              
+                   <li>
                         <button class="button-menu-mobile waves-effect waves-light">
                             <i class="fe-menu"></i>
                         </button>
                     </li>
-                        
+                    {{-- ALL Events --}}
+                    @if(Auth::user()->type == 'eventee')
+                     
                         <li class="dropdown notification-list topbar-dropdown">
                             <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
                             data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -236,8 +238,7 @@
                                         <i class="mdi mdi-chevron-down"></i>
                                 </span>
                             </a>
-                              @if($user->type === 'eventee')
-                  
+                          
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                @php
                                     $events = App\Event::where('user_id',Auth::id())->orderBy('id','desc')->get();
@@ -250,16 +251,16 @@
                             </div>
                         </li>
                     @endif
-                    
-                @if(isset($id))
-                    <li class=" color-primary">
-                        <a class="visit_event" href="https://{{$curr_event->link}}/event" target="_blank">Visit Event</a>    
-                    </li>
-                @endif
+                
+                    @if(isset($id))
+                        <li class=" color-primary">
+                            <a class="visit_event" href="https://{{$curr_event->link}}/event" target="_blank">Visit Event</a>    
+                        </li>
+                    @endif
                  
 
                 </ul>
-                @endif
+               
             @endauth
             <div class="clearfix"></div>
         </div>
