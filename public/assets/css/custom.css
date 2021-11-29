@@ -799,7 +799,7 @@ button[disabled] {
 }
 
 .menu-custom .menu li a:hover {
-  color: #00a15f;
+  /* color: #00a15f; */
 }
 
 .menu-custom .menu li a:hover .menu-icon.live {
