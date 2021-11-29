@@ -2159,7 +2159,7 @@ button.pb-button {
   }
 
   [class*=col-].fluid-col.profile-col {
-    max-width: 85px;
+    max-width: 185px;
   }
 
   [class*=col-].fluid-col.profile-col .profile a.menu-trigger {
