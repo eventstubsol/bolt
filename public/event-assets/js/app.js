@@ -203,7 +203,7 @@ function initApp() {
             await capture.attr("src" , $(this).data("capture"));
         }
 
-        if(flyin){
+        if(flyin && checkDestination(link)){
             flyIn.show();
 
             flyIn.attr('src', flyin);
@@ -1265,6 +1265,26 @@ function showMessage(title, type = "info", options = {}) {
         title,
         ...options
     });
+}
+
+
+function checkDestination(link) {
+    let check = "";
+    if(link.includes("sessioroom")){
+       check =  link.replace("sessionroom/","#sessionroom-")
+    }
+    if(link.includes("booth")){
+       check =  link.replace("booth/","#booth-")
+    }
+    if(link.includes("page")){
+       check =  link.replace("page/","#page-")
+    }
+    if($(check)){
+        return true
+    }else{
+        return false
+    }
+    
 }
 
 function setupGamification() {
