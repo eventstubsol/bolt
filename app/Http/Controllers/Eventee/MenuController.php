@@ -170,7 +170,7 @@ class MenuController extends Controller
                 $to = $request->custom_page;
                 break;
             case "modal":
-                $to = $request->modals[$id];
+                $to = $request->modals;
                 break;
         }
         $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
