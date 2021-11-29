@@ -67,6 +67,9 @@ $user = Auth::user();
                 min-width: 90% !important;
             }
         }
+        .YouTubePopUp-Content iframe{
+            height: 300px !important;
+        }
 
         .tab-content .nav-justified .nav-item {
             min-width: max-content;
