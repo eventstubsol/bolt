@@ -253,7 +253,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="mob-menu ml-2 d-none">
+                <div class="mob-menu ml-2" style="display:none;">
                     <a href="void:javascript(0);">
                         <span class="round-icon">
                             <i class="fa fa-bars"></i>
