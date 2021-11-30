@@ -207,12 +207,14 @@ function initApp() {
             flyIn.show();
 
             flyIn.attr('src', flyin);
-            pages.hide();
-            pages.filter("#flyin").show();        
             // loader.fadeOut()
             flyIn.prop("currentTime", 0).get(0).play();
             flyIn
-                .on("canplaythrough", () => loader.hide())  
+                .on("canplaythrough", () =>{
+                      pages.hide();
+                      pages.filter("#flyin").show();        
+                      loader.hide()
+                     })  
                 .off("click")
                 .on("ended", function () {
                     flyIn.fadeOut();
