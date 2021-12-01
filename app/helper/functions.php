@@ -74,6 +74,27 @@ define('LINK_TYPES', [
     "modal",
     "lounge"
 ]);
+define('MENU_LINK_TYPES', [
+    'page',
+    'session_room',
+    'zoom',
+    "booth",
+    "vimeo",
+    "pdf",
+    "lobby",
+    "back",
+    "faq",
+    "photobooth",
+    "videosdk",
+    "modal",
+    "lounge",
+    "SwagBag",
+    "Leaderboard",
+    "Schedule",
+    "Library",
+    "social_wall"
+]);
+
 define('MODAL_TYPES', [
     'page',
     'session_room',
@@ -450,6 +471,7 @@ HTML;
                      $menu->name 
                 </a>
 HTML;
+break;
     case("lobby"):
         return <<<HTML
                 <a data-link="lobby" class="area">
@@ -459,7 +481,47 @@ HTML;
                      $menu->name 
                 </a>
 HTML;
-    case("attendees"):
+    break;
+    case("SwagBag"):
+        return <<<HTML
+                <a data-toggle="modal" data-target="#swagbag-modal">
+                    <img src="$icon" width="26" alt="">
+
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                     $menu->name 
+                </a>
+HTML;
+    break;
+    case("Leaderboard"):
+        return <<<HTML
+                <a class="area" data-link="leaderboard">
+                    <img src="$icon" width="26" alt="">
+
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                     $menu->name 
+                </a>
+HTML;
+    break;
+    case("Schedule"):
+        return <<<HTML
+                <a  data-toggle="modal" data-target="#schedule-modal">
+                    <img src="$icon" width="26" alt="">
+
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                     $menu->name 
+                </a>
+HTML;
+    case("Library"):
+        return <<<HTML
+                <a  data-toggle="modal" data-target="#resources-modal">
+                    <img src="$icon" width="26" alt="">
+
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                     $menu->name 
+                </a>
+HTML;
+    break;
+    case("social_wall"):
         return <<<HTML
              <a class="area" data-link="attendees">
              <img src="$icon" width="26" alt="">
@@ -485,6 +547,13 @@ HTML;
              <img src="$icon" width="26" alt="">
                  
              <!-- <i class="fe-users"></i> -->
+                 $menu->name</a>
+HTML;
+    break; 
+    case("faq"):
+        return <<<HTML
+             <a class="positioned"  data-toggle="modal" data-target="#faqs-modal" >
+             <img src="$icon" width="26" alt="">            
                  $menu->name</a>
 HTML;
 

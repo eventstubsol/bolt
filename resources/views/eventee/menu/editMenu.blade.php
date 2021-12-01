@@ -42,7 +42,7 @@ Update Menu
                         <div class="form-group mb-3 col-md-4">
                             <label for="type">type</label>
                             <select required class="form-control type" name="type">
-                                @foreach(LINK_TYPES as $type)
+                                @foreach(MENU_LINK_TYPES as $type)
                                 <option @if($menu->link_type === $type) selected @endif  value="{{$type}}">{{$type}}</option>
                                 @endforeach
                             </select>
