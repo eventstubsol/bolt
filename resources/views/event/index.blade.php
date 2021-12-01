@@ -411,11 +411,11 @@ $user = Auth::user();
     </style>
     {{-- Notification Modal --}}
     <!-- Small modal -->
-    <div class="consent-notification hide-on-exterior"  id="notification-smallModal">
+    <div class="consent-notification hide-on-exterior"  id="notification-smallModal" style="display: none">
     <h4 id="notification-head"></h4>
-    <p id="notification-body" >We'll send you  notifications about the event, chats and other cool stuff. Sounds good?</p>
+    <p id="notification-body" ></p>
     <div class="flex">
-        <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true">Close</button>
+        <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true"></button>
     </div>
     </div>
       
