@@ -121,6 +121,21 @@ class MenuController extends Controller
             case "modal":
                 $to = $request->modals;
                 break;
+            case "SwagBag":
+                $to = "SwagBag";
+                break;
+            case "Leaderboard":
+                $to = "Leaderboard";
+                break;
+            case "Schedule":
+                $to = "Schedule";
+                break;
+            case "Library":
+                $to = "Library";
+                break;
+            case "social_wall":
+                $to = "social_wall";
+                break;
         }
         $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
        
@@ -171,6 +186,22 @@ class MenuController extends Controller
                 break;
             case "modal":
                 $to = $request->modals;
+                break;
+            case "SwagBag":
+                $to = "SwagBag";
+                break;
+            case "Leaderboard":
+                $to = "Leaderboard";
+                break;
+            case "Schedule":
+                $to = "Schedule";
+                break;
+            case "Library":
+                $to = "Library";
+                break;
+                
+            case "social_wall":
+                $to = "social_wall";
                 break;
         }
         $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
@@ -270,6 +301,21 @@ class MenuController extends Controller
                case "custom_page":
                    $to = $request->custom_page;
                    break;
+                case "SwagBag":
+                    $to = "SwagBag";
+                    break;
+                case "Leaderboard":
+                    $to = "Leaderboard";
+                    break;
+                case "Schedule":
+                    $to = "Schedule";
+                    break;
+                case "Library":
+                    $to = "Library";
+                    break;
+                case "social_wall":
+                    $to = "social_wall";
+                    break;
            }
            $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
           
@@ -313,6 +359,21 @@ class MenuController extends Controller
                case "custom_page":
                    $to = $request->custom_page;
                    break;
+                case "SwagBag":
+                    $to = "SwagBag";
+                    break;
+                case "Leaderboard":
+                    $to = "Leaderboard";
+                    break;
+                case "Schedule":
+                    $to = "Schedule";
+                    break;
+                case "Library":
+                    $to = "Library";
+                    break;
+                case "social_wall":
+                    $to = "social_wall";
+                    break;
            }
            $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
           
