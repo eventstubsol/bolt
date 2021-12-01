@@ -227,6 +227,8 @@ function initApp() {
             //     });
             
             return;
+        }else{
+            loader.hide();
         }
 
         if (!doNotRoute.includes(link)) {
