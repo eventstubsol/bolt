@@ -31,6 +31,7 @@
                         case "faq":
                         case "modal":
                         case "photobooth":
+                        case "lounge":
                             $to = $link->to;
                             $url = $link->url;
                             break;
@@ -78,6 +79,9 @@
                         </div>
                     @elseif($link->type === "modal")
                         <a title="{{ $link->name  }}" data-toggle="modal"  data-target="#{{$to}}" class="_custom_modal positioned "  style="{{ areaStyles($area) }}">    
+                        </a>
+                    @elseif($link->type === "lounge")
+                        <a title="{{ $link->name  }}" data-link="networking"  class="_custom_modal positioned area"  style="{{ areaStyles($area) }}">    
                         </a>
                     @else
                         @if($to ==="FAQ")

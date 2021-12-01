@@ -216,6 +216,9 @@ class PageController extends Controller
                     case "modal":
                         $to = $request->modals[$id];
                         break;
+                    case "lounge":
+                        $to = "lounge";
+                        break;
                 }
                 $link = Link::create([
                     "page"=>$page->id,
@@ -336,6 +339,9 @@ class PageController extends Controller
                     case "photobooth":
                         $to = $request->capture_link[$id];
                         $url = $request->gallery_link[$id];
+                        break;
+                    case "lounge":
+                        $to = "lounge";
                         break;
                 }
                 $link = Link::create([
