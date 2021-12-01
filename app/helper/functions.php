@@ -62,16 +62,17 @@ define('LINK_TYPES', [
     'zoom',
     "booth",
     "vimeo",
-    "chat_user",
-    "chat_group",
+    // "chat_user",
+    // "chat_group",
     "pdf",
-    "custom_page",
+    // "custom_page",
     "lobby",
     "back",
     "faq",
     "photobooth",
     "videosdk",
-    "modal"
+    "modal",
+    "lounge"
 ]);
 define('MODAL_TYPES', [
     'page',

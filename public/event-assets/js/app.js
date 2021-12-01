@@ -1283,7 +1283,7 @@ function checkDestination(link) {
     if(link.includes("page")){
        check =  link.replace("page/","#page-")
     }
-    if($(check)){
+    if($(check).length){
         return true
     }else{
         return false
