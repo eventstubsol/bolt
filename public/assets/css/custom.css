@@ -610,7 +610,7 @@ button[disabled] {
 .navbar-custom.theme-nav ul.menu li a {
   display: flex;
   padding: 10px;
-  font-size: 14px;
+  font-size: 82%;
   font-weight: 600;
   cursor: pointer;
   justify-content: center;
@@ -758,7 +758,7 @@ button[disabled] {
   flex-direction: column;
   color: #111a34;
   align-items: center;
-  font-size: 14px;
+  font-size: 82%;
   font-weight: 600;
   padding: 8px 10px;
   border: none;
@@ -2119,7 +2119,7 @@ button.pb-button {
   }
 
   .navbar-custom.theme-nav ul.menu li a {
-    font-size: 13px;
+    font-size: 82%;
   }
 }
 
@@ -2192,7 +2192,7 @@ button.pb-button {
 
 @media (max-width: 910px) {
   .navbar-custom.theme-nav ul.menu li a {
-    font-size: 12px;
+    font-size: 82%;
   }
 }
 
@@ -2202,7 +2202,7 @@ button.pb-button {
   }
 
   .navbar-custom.theme-nav ul.menu li a {
-    font-size: 11px;
+    font-size: 82%;
   }
 }
 
