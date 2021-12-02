@@ -756,7 +756,7 @@ class EventController extends Controller
          
             if($session->type === "VIDEO_SDK"){
                 // dd($session);
-                return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id]));
+                return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id,"containerId"=>$type]));
             }
 
             //Direct Zoom Redirect
@@ -778,7 +778,7 @@ class EventController extends Controller
 
             if ($session->type == "VIMEO_VIDEO_SDK" && strlen($session->zoom_webinar_id)) { 
                 if($user->type === USER_TYPE_DELEGATE)
-                    return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id]));
+                    return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id,"containerId"=>$type]));
             }
             if ($session->type == "VIMEO_ZOOM_SDK" && strlen($session->zoom_webinar_id)) { 
                 if($user->type === USER_TYPE_DELEGATE)
@@ -820,10 +820,10 @@ class EventController extends Controller
         return view("event.webinar");
     }
     
-    public function videosdk(Request $request,$meetingId)
+    public function videosdk(Request $request,$meetingId,$containerId)
     {
         // dd($meetingId);
-        return view("event.videosdk")->with(compact(["meetingId"]));
+        return view("event.videosdk")->with(compact(["meetingId","containerId"]));
     }
 
 

@@ -24,6 +24,10 @@ $user = Auth::user();
             width: 100%;
             height: 100%;
         }
+        #videosdk-frame{
+              z-index: 39;
+              position: relative;
+            }
 
         #photo-gallery-2 {
             width: 100%;
@@ -485,11 +489,11 @@ $user = Auth::user();
     @include("includes.styles.fileUploader")
     <!-- Custom -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=21872367624361" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=21872367624361" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=21872367624361" type="text/css">
-    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=21872367624361">
-    <link href="{{ asset('assets/css/custom.css') }}?v=21872367624361" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=218723676243233" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=218723676243233" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=218723676243233" type="text/css">
+    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=218723676243233">
+    <link href="{{ asset('assets/css/custom.css') }}?v=218723676243233" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
@@ -790,7 +794,7 @@ $user = Auth::user();
         const config = {
             homepage: "{{ $event->home_page }}",
             baseRoute: "{{ url('/') }}",
-            videoSDK: "{{route('videosdk',['meetingId'=>':id'])}}",
+            videoSDK: "{{route('videosdk',['meetingId'=>':id','containerId'=>'video_play_area'])}}",
             addParticipant: "{{route('addParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
             removeParicipant: "{{route('removeParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
             updateLounge: "{{route('updateLounge',['subdomain'=>$event_name])}}",
@@ -860,15 +864,15 @@ $user = Auth::user();
         window.config = config;
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=21872367624361"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}?cb=21872367624361"></script>
-    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=21872367624361"></script>
-    <script src="{{ asset('event-assets/js/app.js') }}?cb=21872367624361"></script>
-    <script src="{{ asset('/js/chat/app.js') }}?cb=21872367624361"></script>
-    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=21872367624361"></script> -->
-    <script src="{{ asset('/js/profile/index.js') }}?cb=21872367624361"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=21872367624361"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=21872367624361"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=218723676243233"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}?cb=218723676243233"></script>
+    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=218723676243233"></script>
+    <script src="{{ asset('event-assets/js/app.js') }}?cb=218723676243233"></script>
+    <script src="{{ asset('/js/chat/app.js') }}?cb=218723676243233"></script>
+    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=218723676243233"></script> -->
+    <script src="{{ asset('/js/profile/index.js') }}?cb=218723676243233"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=218723676243233"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=218723676243233"></script>
     @if (isOpenForPublic('polls'))
         @include("event.poll")
     @endif

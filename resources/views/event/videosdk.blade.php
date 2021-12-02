@@ -9,10 +9,7 @@
               width: 100vw;
               height: 100vh;
           }
-          #videosdk-frame{
-              z-index: 39;
-              position: relative;
-            }
+      
       </style>
 </head>
 <body>
@@ -35,7 +32,7 @@
           apiKey: "9dc7ab5b-c227-4f0f-a0fe-8ff279cdaf75",
           meetingId: "{{$meetingId}}",
 
-          containerId: "video_play_area",
+          containerId: "session-content-{{$containerId}}",
           
           micEnabled: false,
           webcamEnabled: false,

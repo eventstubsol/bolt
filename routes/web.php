@@ -640,7 +640,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::get("/event/meet", "EventController@meetEmbed")->name("meetEmbed");
     Route::get("/event/current-session", "EventController@getCurrentSession")->name("currentSession");
     Route::get("/event/webinar", "EventController@webinar")->name("webinar");
-    Route::get("/event/videosdk/{meetingId}", "EventController@videosdk")->name("videosdk");
+    Route::get("/event/videosdk/{meetingId}/{containerId}", "EventController@videosdk")->name("videosdk");
     Route::get("/event/ended", "EventController@webinarEnded")->name("webinarEnded");
     Route::post("/event/{event}/subscribe", "EventSessionsController@subscribe")->name("event.subscribe");
     Route::post("/event/{event}/unsubscribe", "EventSessionsController@unsubscribe")->name("event.unsubscribe");
