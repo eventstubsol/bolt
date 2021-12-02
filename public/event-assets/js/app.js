@@ -796,14 +796,15 @@ function initApp() {
             // $("#cometchat__widget").hide();
             navs.addClass('hidden');
             $("body").click()
+            pages.hide();
+            pages.filter(".initial").show();
             // if (!isMobile()) {
                 exteriorView.prop("currentTime", 0).get(0).play();
                 setTimeout(function () {
                     loader.hide();
                 }, 5000);
                 exteriorView
-                    .on("canplaythrough", () =>{  pages.hide();
-                        pages.filter(".initial").show();
+                    .on("canplaythrough", () =>{ 
                         loader.hide();})
                     .on("click", function () {
                         enteringView.prop("currentTime", 0).get(0).play();
@@ -994,7 +995,7 @@ function initApp() {
                     // if(window.config.auditoriumEmbed.startsWith(""))
                     // console.log(window.config.auditoriumEmbed)
                     $("#session-content-" + room).empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=${room}"></iframe>`);
-                    // $("#session-content-" + room).append(`<div id="video_play_area"></div>`);
+                    $("#session-content-" + room).append(`<div id="video_play_area"></div>`);
                     $(".cc1-chat-win-inpt-wrap input").unbind("mousedown").on("mousedown", function (e) { e.preventDefault(); e.stopImmediatePropagation(); $(e.target).focus() });
                 };
                 let sessionModal = $("#session-modal-" + room);
