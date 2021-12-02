@@ -107,9 +107,9 @@
                     {!! getTreasureItems($page->treasures,$page->name) !!}
             </div>
 
+        </div>
         @endif
     @endforeach
-</div>
 @endforeach
 
 {{-- FAQ MODALS --}}

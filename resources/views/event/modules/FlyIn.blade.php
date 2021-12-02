@@ -1,3 +1,21 @@
+{{-- @foreach($pages as $page)
+    @foreach($access_specifiers as $page_id => $page_access)
+        @if((in_array(Auth::user()->type,$page_access)  &&  (Auth::user()->subtype ?  in_array(Auth::user()->subtype,$page_access) : true )  && ($page_id === $page->id)))
+            <div class="page flyin-video" id="flyin-{{$page->name}}">
+                <div class="position-relative" style="height:100vh;">
+                    
+                    @foreach($page->links as $link)
+                        @if($link->flyin)
+                            <video muted class="full-width-videos page_video flyin-{{ $page->name }}" src="{{assetUrl($link->flyin->url)}}"></video>
+                    @endforeach
+                </div>
+            </div>
+
+        @endif
+    @endforeach
+@endforeach --}}
+
+
 <div class="page flyin" id="flyin">
     <div class="video-containers positioned">
         <video class="full-width-videos" src="" id="flyin_view" autoplay muted></video>
