@@ -1,6 +1,7 @@
 let loader = $(".loader");
 let setRoom = '';
 function initApp() {
+    $(".menu").hide();
 
     //Wait for video load and then hide loader
     loader = $(".loader");
@@ -563,6 +564,7 @@ function initApp() {
     routie({
         'lobby': function () {
             pages.hide();
+            $(".menu").show();
             // if (isMobile()) {
             //     document.querySelector("#lobby_view").src = '';
             // }
