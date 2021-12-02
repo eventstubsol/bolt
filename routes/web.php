@@ -75,7 +75,7 @@ Route::group(['domain' => $url], function () {
         Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
         Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
         
-        Route::post("/leaderboard/{id}", "EventController@leaderboard")->name("leaderboard");
+        
         Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
 
 
@@ -86,7 +86,7 @@ Route::group(['domain' => $url], function () {
 
 
 });
-
+Route::post("/leaderboard", "EventManageController@leaderboard")->name("leaderboard");
 Route::Post("admin/logout","HomeController@logout")->name('admin.logout');
 Auth::routes();
 Route::get("/Register/Eventee","eventeeController@Regiter")->name('Eventee.register');
@@ -138,6 +138,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('mail/{id}',"Eventee\MailController@index")->name('eventee.mail');
     Route::get('mail/create/{id}',"Eventee\MailController@create")->name('eventee.mail.create');
     Route::post('mail/send/{id}',"Eventee\MailController@send")->name('eventee.mail.send');
+    
 
 
 
@@ -189,7 +190,12 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("/subtype/{id}/{subtype}","Eventee\UserController@subTypeedit")->name('eventee.subtype.edit');
     Route::put("/subtype/update/{id}/{subtype}","Eventee\UserController@subTypeupdate")->name('eventee.subtype.update');
     Route::delete("/subtype/delete/{id}","Eventee\UserController@subTypedelete")->name('eventee.subtype.destroy');
-  
+    
+
+    //Booth Report 
+    Route::post("/reports/booths/{id}/export", "EventController@exportBoothLogs")->name("reports.export.boothLogs");
+    Route::get("/reports/booths/{id}/{event_id}", "EventController@boothReports")->name("reports.booth");
+    Route::post("/reports/booths/{id}/", "EventController@boothReportsData")->name("reports.booth.api");
 
 
 
@@ -608,9 +614,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::get("/reports/workshop/{name}/", "EventController@workshopReports")->name("reports.workshop");
         Route::post("/reports/workshop/{name}/", "EventController@workshopReportsData")->name("reports.workshop.api");
 
-        Route::post("/reports/booths/{id}/export", "EventController@exportBoothLogs")->name("reports.export.boothLogs");
-        Route::get("/reports/booths/{id}/", "EventController@boothReports")->name("reports.booth");
-        Route::post("/reports/booths/{id}/", "EventController@boothReportsData")->name("reports.booth.api");
+        
 
     });
 

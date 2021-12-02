@@ -2,6 +2,7 @@
 
 @section("styles")
     @include("includes.styles.datatables")
+    @include("includes.styles.select")
 @endsection
 
 @section("page_title")
@@ -24,7 +25,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="User">Select Attendee</label>
-                    <select id="user" class="form-control select2">
+                    <select id="user" class="form-control  select2" data-toggle="select2">
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }} @if($user->last_name != null){{ $user->last_name }}@endif</option>
                         @endforeach
@@ -69,12 +70,13 @@
 
 
 @section('scripts')
-
+@include("includes.scripts.select")
  <script src='https://www.gstatic.com/charts/loader.js'></script>
  
  <script src="src/table2csv.js"></script>
 
     <script>
+      
         var reportStat = null;
           function Report(){
             var user_id = $('#user').val();
