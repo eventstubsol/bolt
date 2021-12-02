@@ -545,7 +545,7 @@ HTML;
         break; 
     case("photobooth"):
         return <<<HTML
-             <a class="photobooth positioned area"  data-link="photo-booth"  data-capture="{{$link->to}}" data-gallery="{{$link->url}}" >
+             <a class="photobooth area"  data-link="photo-booth"  data-capture="{{$link->to}}" data-gallery="{{$link->url}}" >
              <img src="$icon" width="26" alt="">
                  
              <!-- <i class="fe-users"></i> -->
@@ -554,7 +554,7 @@ HTML;
     break; 
     case("faq"):
         return <<<HTML
-             <a class="positioned"  data-toggle="modal" data-target="#faqs-modal" >
+             <a   data-toggle="modal" data-target="#faqs-modal" >
              <img src="$icon" width="26" alt="">            
                  $menu->name</a>
 HTML;
