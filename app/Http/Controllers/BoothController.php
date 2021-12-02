@@ -310,19 +310,19 @@ class BoothController extends Controller
                   "Name" => $user->name,
                   "Last Name" => $user->last_name,
                   "Job Title" => $user->job_title,
-                  "Phone" => $user->phone,
+                  // "Phone" => $user->phone,
                   "Email" => $user->email,
 
                   "Company Name" => $user->company_name,
-                  "company Website" => $user->company_website_link,
+                  // "company Website" => $user->company_website_link,
 
                   "Country" => $user->country,
-                  "Industry" => $user->industry,
+                  // "Industry" => $user->industry,
 
-                  "Facebook" => $user->facebook_link,
-                  "Twitter" => $user->twitter_link,
-                  "Linkedin" => $user->linkedin_link,
-                  "Website" => $user->website_link,
+                  // "Facebook" => $user->facebook_link,
+                  // "Twitter" => $user->twitter_link,
+                  // "Linkedin" => $user->linkedin_link,
+                  // "Website" => $user->website_link,
               ];
           }
       }
