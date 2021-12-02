@@ -1126,6 +1126,8 @@ class EventController extends Controller
                     "Name" => $loginLog->user->name,
                     "Last Name" => $loginLog->user->last_name,
                     "Visited At" => $loginLog->created_at->format('Y-m-d\TH:i'),
+                    "Company Name" => $loginLog->user->company_name,
+
                 ];
             }
         }
