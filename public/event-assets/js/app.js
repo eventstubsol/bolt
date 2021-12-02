@@ -1,7 +1,6 @@
 let loader = $(".loader");
 let setRoom = '';
 function initApp() {
-    $(".menu").hide();
 
     //Wait for video load and then hide loader
     loader = $(".loader");
@@ -564,7 +563,6 @@ function initApp() {
     routie({
         'lobby': function () {
             pages.hide();
-            $(".menu").show();
             // if (isMobile()) {
             //     document.querySelector("#lobby_view").src = '';
             // }
@@ -795,10 +793,8 @@ function initApp() {
             }
         },
         'exterior': function () {
-            pages.hide();
             // $("#cometchat__widget").hide();
             navs.addClass('hidden');
-            pages.filter(".initial").show();
             $("body").click()
             // if (!isMobile()) {
                 exteriorView.prop("currentTime", 0).get(0).play();
@@ -806,7 +802,9 @@ function initApp() {
                     loader.hide();
                 }, 5000);
                 exteriorView
-                    .on("canplaythrough", () => loader.hide())
+                    .on("canplaythrough", () =>{  pages.hide();
+                        pages.filter(".initial").show();
+                        loader.hide();})
                     .on("click", function () {
                         enteringView.prop("currentTime", 0).get(0).play();
                         exteriorView.fadeOut();
