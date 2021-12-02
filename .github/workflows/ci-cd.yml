@@ -83,4 +83,4 @@ jobs:
            --file-exists-behavior OVERWRITE \
            --s3-location bucket=${{ matrix.s3-bucket }},key=${{ matrix.s3-filename }}.zip,bundleType=zip \
       - name: Directory Permissions
-        run: sudo chmod -R 777 storage/framework/laravel-excel
+        run: sudo chmod -R 777 storage
