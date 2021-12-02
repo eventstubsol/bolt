@@ -119,6 +119,15 @@
                                         </select>
                                     </div>
 
+                                    <div @if($link->type!=="modal") style="display: none;" @endif class="modals-{{$ids}} modals form-group mb-3 col-md-4">
+                                        <label for="to">to(modal)</label>
+                                        <select class="form-control" name="modal[]" >
+                                            @foreach($modals as $modal)
+                                                <option @if($link->to === $modal->id) selected @endif value="{{$modal->id}}">{{$modal->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                     <div @if($link->type!=="zoom") style="display: none;" @endif class="zoom-{{$ids}} zoom form-group mb-3 col-md-4">
                                         <label for="zoom">Zoom/External Link</label>
                                         <input @if($link->type==="zoom") value="{{$link->to}}" @endif type="text"   name="zoom[]" class="form-control">
@@ -533,6 +542,7 @@
         $(".chat_user-"+index).hide();
         $(".chat_group-"+index).hide();
         $(".custom_page-"+index).hide();
+        $(".modal-"+index).hide();
 
         switch(selectbox.val()){
             case "session_room":
@@ -561,6 +571,9 @@
                 break;
             case "custom_page":
                 $(".custom_page-"+index).show();
+                break;
+            case "modal":
+                $(".modals-"+index).show();
                 break;
         }
         // console.log(val);
@@ -642,6 +655,15 @@
                                                 <option selected value=" ">Select Session Room</option>
                                             @foreach($session_rooms as $room)
                                                 <option value="{{$room->name}}">{{$room->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div style="display: none;" class="modals-${n} modals form-group mb-3 col-md-4">
+                                        <label for="to">to(modal)</label>
+                                        <select value=" " class="form-control" name="modal[]" >
+                                                <option selected value=" ">Select Modal </option>
+                                            @foreach($modals as $modal)
+                                                <option value="{{$modal->id}}">{{$modal->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
