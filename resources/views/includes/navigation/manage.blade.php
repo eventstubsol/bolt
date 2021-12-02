@@ -217,6 +217,11 @@
                     <span> Integrations </span>
                 </a>
             </li>
+            {{-- <li>
+                <a href="{{ route("eventee.integrations",$id) }}">
+                    <span> Leaderboard Setting </span>
+                </a>
+            </li> --}}
             <li>
                 <a href="{{ route("eventee.settings",$id) }}">
                     <span> Default Settings </span>
@@ -355,7 +360,7 @@
                 <a href="{{ route("event.Dashboard",['id'=>$id]) }}">General</a>
             </li> --}}
             <li>
-                <a href="{{ route("event.leaderboard",['id'=>$id]) }}">Leaderboard</a>
+                <a href="{{ route("event.leaderboard",$id) }}">Leaderboard</a>
             </li>
             <!-- <li>
                 <a href="{{ route("reports.auditorium") }}">Auditorium</a>
@@ -402,7 +407,7 @@
             @if($booths->count() > 0)
                 @foreach($booths->get() as $booth)
                 <li>
-                    <a href="{{ route("reports.booth", ['id' => $booth->id]) }}">{{ $booth->name }}</a>
+                    <a href="{{ route("reports.booth", ['id' => $booth->id,'event_id'=>$id]) }}">{{ $booth->name }}</a>
                 </li>
                 @endforeach
             @endif
