@@ -43,6 +43,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Directory Permissions
+        run: chmod -R 777 storage/ bootstrap/cache
+
       # Initialize Node.js
       - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -82,5 +85,4 @@ jobs:
            --deployment-group-name ${{ matrix.deploy-group }} \
            --file-exists-behavior OVERWRITE \
            --s3-location bucket=${{ matrix.s3-bucket }},key=${{ matrix.s3-filename }}.zip,bundleType=zip \
-      - name: Directory Permissions
-        run: sudo chmod -R 777 storage bootstrap/cache
+     
