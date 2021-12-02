@@ -316,6 +316,9 @@ class MenuController extends Controller
                 case "social_wall":
                     $to = "social_wall";
                     break;
+                case "modal":
+                    $to = $request->modals;
+                    break;
            }
            $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
           
@@ -373,6 +376,9 @@ class MenuController extends Controller
                     break;
                 case "social_wall":
                     $to = "social_wall";
+                    break;
+                case "modal":
+                    $to = $request->modals;
                     break;
            }
            $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
