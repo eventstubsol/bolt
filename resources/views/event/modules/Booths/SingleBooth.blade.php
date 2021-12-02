@@ -26,6 +26,7 @@
                     case "chat_group":
                     case "pdf":
                     case "lobby":
+                    case "modal":
                         $to = $link->to;
                         break;
                     case "session_room":
@@ -62,6 +63,9 @@
                     <div title="{{ $link->name  }}" class="positioned chat_user" data-link="{{ $to }}" style="{{ areaStyles($area) }}; background: transparent; cursor:pointer;">    </div>
                 @elseif($link->type === "chat_group")
                     <div title="{{ $link->name  }}" class="positioned chat_group" data-link="{{ $to }}" style="{{ areaStyles($area) }}; background: transparent; cursor:pointer;">    </div>
+                @elseif($link->type === "modal")
+                    <a title="{{ $link->name  }}" data-toggle="modal"  data-target="#{{$to}}" class="_custom_modal positioned "  style="{{ areaStyles($area) }}">    
+                    </a>
                 @elseif($link->type === "pdf")
                     <div title="{{ $link->name  }}" class="positioned _df_button" source="{{ assetUrl($to) }}" style="{{ areaStyles($area) }}; background: transparent;cursor:pointer;">    </div>
                 @else

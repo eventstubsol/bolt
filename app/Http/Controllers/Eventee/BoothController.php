@@ -19,6 +19,7 @@ use App\Image;
 use App\Video;
 use App\Page;
 use App\Link;
+use App\Modal;
 use App\sessionRooms;
 
 use App\Resource;
@@ -220,6 +221,7 @@ class BoothController extends Controller
     $pages = Page::where("event_id",$booth->event_id)->get();
 
     $booths = Booth::where("event_id",$booth->event_id)->get();
+    $modals = Modal::where("event_id",$booth->event_id)->get();
 
     $session_rooms = sessionRooms::where("event_id",$booth->event_id)->get();
 
@@ -230,7 +232,7 @@ class BoothController extends Controller
       // dd("test");
       // $id=null;
       // dd(isset($id));
-    return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms","id"));
+    return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms","id","modals"));
   }
 
   public function adminUpdate(Request $request, Booth $booth,$id)
@@ -273,6 +275,9 @@ class BoothController extends Controller
                     break;
                 case "custom_page":
                     $to = $request->custom_page[$id];
+                    break;
+                case "modal":
+                    $to = $request->modal[$id];
                     break;
             }
             // dd(isset($request->rotationtype[$id])?$request->rotationtype[$id]:'');
