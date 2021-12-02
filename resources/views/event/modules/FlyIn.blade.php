@@ -1,5 +1,4 @@
 <div class="page flyin" id="flyin">
-    <div class="filler" style="padding-bottom: {{ EXTERNAL_VIDEO_ASSETS_ASPECT }}%"></div>
     <div class="video-containers positioned">
         <video class="full-width-videos" src="" id="flyin_view" autoplay muted></video>
     </div>
