@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class EventeeMail extends Mailable
+class swagbagMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,13 +16,12 @@ class EventeeMail extends Mailable
      *
      * @return void
      */
-    public function __construct($event,$subject,$message,$user)
+    public function __construct($event,$resources,$user)
     {
         //
-        $this->event = $event; 
-        $this->subject = $subject;
-        $this->message = $message; 
         $this->user = $user;
+        $this->event = $event;
+        $this->resource = $resources;
     }
 
     /**
@@ -32,12 +31,10 @@ class EventeeMail extends Mailable
      */
     public function build()
     {
-        return $this->from('event-admin@eventstub.co', $this->event)->markdown('emails.eventee')->with([
-            'event'=>$this->event,
-            'subject'=>$this->subject,
-            'message'=>$this->message,
-            'user'=>$this->user
-            
+        return $this->from('event-admin@eventstub.co', $this->event->name)->markdown('emails.swagMail')->with([
+            'user'=>$this->user,
+            'resources'=>$this->resource,
+            'event'=>$this->event
         ]);
     }
 }

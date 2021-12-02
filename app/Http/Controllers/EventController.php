@@ -7,10 +7,12 @@ use App\Api;
 use App\Booth;
 use App\BoothInterest;
 use App\Event;
+
 use App\EventSession;
 use App\LoginLog;
 use App\Notification;
 use App\Points;
+use App\Mail\swagbagMail;
 use App\Prize;
 use App\ProvisionalGroup;
 use App\Report;
@@ -32,7 +34,7 @@ use Illuminate\Support\Facades\DB;
 use App\Swagbag;
 use App\Room;
 use Illuminate\Mail\Message;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 use App\sessionRooms;
 use Dotenv\Result\Success;
@@ -699,6 +701,7 @@ class EventController extends Controller
     public function sendSwagsToEmail()
     {
         $user = Auth::user();
+        $event = Event::findOrFail($user->event_id);
         $swags = Swagbag::where("user_id", $user->id)->with([
             "resource.booth",
             "report.resources",
@@ -718,24 +721,8 @@ class EventController extends Controller
                 }
             }
         }
-
-        Mail::send([], [], function (Message $message) use ($user, $resources) {
-            $message
-                ->to($user->email)
-                ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
-                ->replyTo(env('MAIL_TO_ADDRESS'), env('MAIL_TO_NAME'))
-                ->embedData([
-                    'personalizations' => [
-                        [
-                            'dynamic_template_data' => [
-                                'user' => "{$user->name} {$user->last_name}",
-                                'resources'  => $resources,
-                            ],
-                        ],
-                    ],
-                    'template_id' => config("services.sendgrid.templates.swagbag"),
-                ], SendgridTransport::SMTP_API_NAME);
-        });
+        // dd($resources);
+        Mail::to($user->email)->send(new swagbagMail($event,$resources,$user));
 
         return ["success" => TRUE];
     }
@@ -1010,14 +997,17 @@ class EventController extends Controller
         ]));
     }
 
-    public function boothReports(Booth $id){
+    public function boothReports(Booth $id,$event_id, Request $req){
+        $req->session()->put('MangeEvent',1);
         $apiRoute = route("reports.booth.api", ['id' => $id->id]);
         $logsRoute = route("reports.export.boothLogs",['id' => $id->id]);
         $logName = $id->name;
+        $id = $event_id;
         return view("dashboard.reports.auditorium")->with(compact([
             'apiRoute',
             'logsRoute',
             'logName',
+            'id'
         ]));
     }
 
