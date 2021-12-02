@@ -128,7 +128,7 @@
                             </ul>
                             <hr>
                             <p>Be on the lookout for our e-mails as we’ll keep you posted on The {{ $event->name }} updates.</p>
-                            <p>If you want to know more or just want to say hi, drop us a mail at info@globalcioforum.com and our team will get back to you in no time.</p>
+                            <p>If you want to know more or just want to say hi, drop us a mail at hello@eventstub.co and our team will get back to you in no time.</p>
                             <p>Thank you for attending The {{ $event->name }} </p>   
                             <p class="last-body">
                                 Thanks & Regards,<br>
