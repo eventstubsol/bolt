@@ -9,10 +9,10 @@
 <div class="page initial" id="home">
     <div class="filler" style="padding-bottom: {{ EXTERNAL_VIDEO_ASSETS_ASPECT }}%"></div>
     <div class="video-containers positioned">
-        <video class="full-width-videos" src="https://virturo-bucket.s3.us-east-2.amazonaws.com/uploads/jCDEQPgVjQG3ZFmNMqEUmKsMukEtqDPekNXrFPUL.mp4" id="entering_view" autoplay muted></video>
+        <video class="full-width-videos" src="{{ assetUrl(getFieldId('entering_video',$event_id)) }}" id="entering_view" autoplay muted></video>
     </div>
     <div class="video-containers positioned " id="mobile_exterior_view">
-        <video class="full-width-videos" src="https://virturo-bucket.s3.us-east-2.amazonaws.com/uploads/bZOyT5qyv7c6iQiaxfHo2P9pVgQfq0YLJcQV1MfT.mp4" id="exterior_view" autoplay muted loop poster="{{ assetUrl(getFieldId('exterior_view_image',$event_id)) }}"></video>
+        <video class="full-width-videos" src="{{ assetUrl(getFieldId('exterior_view_video',$event_id)) }}" id="exterior_view" autoplay muted loop poster="{{ assetUrl(getFieldId('exterior_view_image',$event_id)) }}"></video>
     </div>
     <div id="skip_intro" style="display: none">
         <button class="btn btn-primary">Skip</button>

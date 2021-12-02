@@ -407,6 +407,9 @@ $user = Auth::user();
         .hidden{
             display: none !important;
         }
+        .custom-dropdown a{
+            cursor: pointer;
+        }
 
     </style>
     {{-- Notification Modal --}}
