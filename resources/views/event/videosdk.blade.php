@@ -35,7 +35,7 @@
           apiKey: "9dc7ab5b-c227-4f0f-a0fe-8ff279cdaf75",
           meetingId: "{{$meetingId}}",
 
-          containerId: "session-content-session_room",
+          containerId: "video_play_area",
           
           micEnabled: false,
           webcamEnabled: false,
