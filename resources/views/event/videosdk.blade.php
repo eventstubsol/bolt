@@ -5,11 +5,15 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <style>
-        #videosdk{
-            width: 100vw;
-            height: 100vh;
-        }
-    </style>
+          #videosdk{
+              width: 100vw;
+              height: 100vh;
+          }
+          #videosdk-frame{
+              z-index: 39;
+              position: relative;
+            }
+      </style>
 </head>
 <body>
     <div id="video"></div>
@@ -31,7 +35,7 @@
           apiKey: "9dc7ab5b-c227-4f0f-a0fe-8ff279cdaf75",
           meetingId: "{{$meetingId}}",
 
-          containerId: "video_play_area",
+          containerId: "session-content-session_room",
           
           micEnabled: false,
           webcamEnabled: false,

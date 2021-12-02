@@ -106,7 +106,7 @@ Create Update
 
 
                     <!-- Vimeo URL -->
-                    <div class="form-group input_feilds VIMEO_SESSION VIMEO_ZOOM_SDK VIMEO_ZOOM_EX">
+                    <div class="form-group input_feilds VIMEO_VIDEO_SDK VIMEO_SESSION VIMEO_ZOOM_SDK VIMEO_ZOOM_EX">
                         <label class="form-label">Vimeo URL</label>
                         <input value="{{$session->vimeo_url ??''}}" name="vimeo_url" type="number" class="form-control" />
                     </div>
@@ -237,7 +237,7 @@ Create Update
         $("#session_type").on("change",(e)=>{
             console.log("hello")
            let value = $("#session_type").val();
-            if(value === "VIDEO_SDK"){
+            if(value === "VIDEO_SDK" || value === "VIMEO_VIDEO_SDK"){
                $("#create_session").attr("disabled", true);
                getMeetingId();
             }   

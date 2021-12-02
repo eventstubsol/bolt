@@ -776,6 +776,10 @@ class EventController extends Controller
                 return redirect(route("webinar", getZoomParameters($session->zoom_webinar_id, $session->zoom_password && strlen($session->zoom_password) ? $session->zoom_password : "")));
             }
 
+            if ($session->type == "VIMEO_VIDEO_SDK" && strlen($session->zoom_webinar_id)) { 
+                if($user->type === USER_TYPE_DELEGATE)
+                    return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id]));
+            }
             if ($session->type == "VIMEO_ZOOM_SDK" && strlen($session->zoom_webinar_id)) { 
                 if($user->type === USER_TYPE_DELEGATE)
                     return redirect(route("webinar", getZoomParameters($session->zoom_webinar_id, $session->zoom_password && strlen($session->zoom_password) ? $session->zoom_password : "")));
