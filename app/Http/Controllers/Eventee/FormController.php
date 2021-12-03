@@ -40,7 +40,10 @@ class FormController extends Controller
     }
     public function store(Request $request,$id){
         // dd($request->all());
-        
+        if(empty($request->name)){
+            flash("Name Field Cannot Be Blank")->error();
+            return redirect()->back();
+        }
         $form = Form::create([
             "name"=>$request->name,
             "event_id"=>$id,

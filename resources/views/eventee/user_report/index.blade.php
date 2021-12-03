@@ -88,6 +88,9 @@
                 if(response.code === 201){
                     showMessage("No Data Available","error");
                 }
+                else if(response.code === 203){
+                    showMessage("Start and End Date Must Be Selected",'error');
+                }
                 else if(response.code === 200){
                     $('#showGraph').show();
                     var  report  = response.report;

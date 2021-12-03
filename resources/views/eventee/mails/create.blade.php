@@ -30,7 +30,7 @@
                 <form action="{{ route('eventee.mail.send',$id) }}" method="POST">
                     <div class="form-group">
                         <label for="sentTo">Send To</label>
-                        <select name="sent_to_type" class="form-control" onchange="setDropdown(this)" required>
+                        <select name="sent_to_type" class="form-control" onchange="setDropdown(this)" >
                             <option value="0">All</option>
                             <option value="1">Specific User Types</option>
                         </select>

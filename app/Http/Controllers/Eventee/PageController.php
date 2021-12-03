@@ -35,6 +35,10 @@ class PageController extends Controller
     public function store(Request $request,$id)
     {
         // dd($request->all());
+        if(empty($request->name)){
+            flash("Name Field Cannot Be Left Blank")->error();
+            return redirect()->back();
+        }
         $name = str_replace(" ","_",$request->name);
         $page = new Page([
             "name" => $name,

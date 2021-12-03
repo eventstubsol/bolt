@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use App\Event;
-use Illuminate\Support\Facades\Http;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Menu;
+// use Illuminate\Support\Facades\Http;
+// use Maatwebsite\Excel\Facades\Excel;
+// use App\Menu;
 use Browser;
 use Carbon\Carbon;
 class eventeeController extends Controller
@@ -63,12 +63,26 @@ class eventeeController extends Controller
 
     public function ConfirmLogin(Request $req){
         try{
-           
+            
+            if(empty($req->password) && empty($req->email)){
+                flash("Both Fields Are Required")->error();
+                return redirect()->back();
+            }
+            elseif(empty($req->email)){
+                flash("Email Field Cannot Be Blank")->error();
+                return redirect()->back();
+            }
+            else if(empty($req->password)){
+                flash("Password Field Cannot Be Blank")->error();
+                return redirect()->back();
+            }
+            
+
             $user = User::where('email',$req->email)->where("event_id",0)->first();
             $user->online_status = 1;
             $user->ip_address =  $req->ip();
             if(Browser::isMobile()){
-               $user->device = "mobile";
+            $user->device = "mobile";
             }
             if(Browser::isDesktop()){
                 $user->device =  "Desktop";
@@ -82,8 +96,11 @@ class eventeeController extends Controller
                 return redirect(route('teacher.dashboard'));
             }
             else{
-                return redirect(url("/"));
+                flash("Please Check Your Email And Password")->error();
+                return redirect()->route('Eventee.login');
             }
+            
+            
         }
         catch(\Exception $e){
             Log::error($e->getMessage());

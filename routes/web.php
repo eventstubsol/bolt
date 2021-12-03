@@ -92,7 +92,7 @@ Auth::routes();
 Route::get("/Register/Eventee","eventeeController@Regiter")->name('Eventee.register');
 Route::post('/Register/Eventee',"eventeeController@ConfirmRegister");
 Route::get('Eventee/Login',"eventeeController@Login")->name('Eventee.login');
-Route::post('Eventee/Login',"eventeeController@ConfirmLogin");
+Route::post('Eventee/Login/Confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
 Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
 Route::post("/Event/Location","LocationController@setLocation")->name("set.Location");
 
@@ -302,6 +302,11 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::put('/Booths/update/{id}/{booth_id}',"Eventee\BoothController@update")->name('eventee.booth.update');
     Route::delete('/Booths/delete/{booth}/{id}',"Eventee\BoothController@destroy")->name('eventee.booth.destroy');
     Route::post('/Booths/Bulkdelete',"Eventee\BoothController@BulkDelete")->name('eventee.booth.bulkDelete');
+
+    //Leaderboard Setting
+    Route::get('/leaderboard/setting/{id}',"Eventee\LeaderboardController@index")->name('eventee.leaderSetting');
+    Route::POST('/leaderboard/setting/store/{id}',"Eventee\LeaderboardController@store")->name('eventee.leaderSetting.store');
+    Route::POST('/leaderboard/setting/update/{id}/{lead_id}',"Eventee\LeaderboardController@update")->name('eventee.leaderSetting.update');
 
     //Room Setup
     Route::get('/Rooms/{id}',"Eventee\RoomController@index")->name('eventee.room');

@@ -468,6 +468,10 @@ class MenuController extends Controller
     public function saveMenu(Request $request,$id){
         //
         // return $request->all();
+        if(empty($request->name)){
+            flash("Name Cannot be left blank")->error();
+            return redirect()->back();
+        }
         $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = '".$request->type."' ");
         $newPosition = 0;
         foreach ($positionArr as $pos) {

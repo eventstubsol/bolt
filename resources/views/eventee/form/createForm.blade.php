@@ -38,7 +38,7 @@
                     {{ csrf_field() }}
                     <div class="form-group mb-3">
                         <label for="name">Name</label>
-                        <input required autofocus type="text"  id="name" value="{{old('question')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
+                        <input  autofocus type="text"  id="name" value="{{old('question')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="name">Slug</label>
-                        {{ $subdomain }}.virturo.io/register/<input required autofocus type="text" id="slug"  value="{{old('slug')}}" name="slug" class="form-control   @error('slug') is-invalid @enderror">
+                        {{ $subdomain }}.virturo.io/register/<input  autofocus type="text" id="slug"  value="{{old('slug')}}" name="slug" class="form-control   @error('slug') is-invalid @enderror">
                         @error('slug')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
