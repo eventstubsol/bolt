@@ -408,8 +408,8 @@ Route::get("schedule-raw", "EventSessionsController@scheduleRaw")->name("schedul
 Route::get("/notifications/send", "NotificationController@send")->name("sendNotifications");
 Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
 
-Route::post("/uploadFile", "CMSController@uploadFile")->name("cms.uploadFile");
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
+    Route::post("/uploadFile", "CMSController@uploadFile")->name("cms.uploadFile");
     Route::get("/home", "HomeController@dashboard");
     // Route::get("/event", "EventController@index")->name("event");
     Route::get("/me", "EventController@profileInfo")->name("event.profile");
