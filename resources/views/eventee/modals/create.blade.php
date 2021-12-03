@@ -2,6 +2,7 @@
 
 
 @section('styles')
+    @include("includes.styles.fileUploader")
     @include("includes.styles.wyswyg")
     @include("includes.styles.datatables")
 @endsection
@@ -61,6 +62,8 @@
 
 
 @section('scripts')
+
+@include("includes.scripts.fileUploader")
 @include("includes.scripts.wyswyg")
 
 <script>
