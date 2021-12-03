@@ -22,6 +22,12 @@ class UserReportController extends Controller
     }
 
     public function graph(Request $req){
+        if(empty($req->start_date)){
+            return response()->json(['code'=>203]);
+        }
+        elseif(empty($req->end_date)){
+            return response()->json(['code'=>203]);
+        }
         $user_id = $req->user_id;
         
         $start_date = Carbon::parse($req->start_date);

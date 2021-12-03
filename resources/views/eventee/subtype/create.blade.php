@@ -22,7 +22,7 @@ Create SubType
                     @csrf
                     <div class="form-group mb-3">
                         <label for="name">Name</label>
-                        <input autofocus required value="{{ old('name') }}" type="text" id="name" name="name"
+                        <input autofocus  value="{{ old('name') }}" type="text" id="name" name="name"
                             class="form-control @error('name') is-invalid @enderror" />
                         @error('name')
                         <span class="invalid-feedback" role="alert">
