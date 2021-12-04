@@ -20,6 +20,14 @@ class FaqController extends Controller
         return view('eventee.faq.create',compact('id'));
     }
     public function store($id,Request $req){
+        if(empty($req->question)){
+            flash("Question Field Cannot Be Blank")->error();
+            return redirect()->back();
+        }
+        elseif(empty($req->answer)){
+            flash("Answer Field Cannot Be Blank")->error();
+            return redirect()->back();
+        }
         $faq = new FAQ;
         $faq->event_id = $id;
         $faq->question = $req->question;

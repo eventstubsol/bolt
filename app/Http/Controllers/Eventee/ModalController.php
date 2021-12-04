@@ -34,6 +34,10 @@ class ModalController extends Controller
     }
     public function store($id,Request $request){
         // dd($req->all());
+        if(empty($request->name)){
+            flash("Name Field Cannot Be Left Blank")->error();
+            return redirect()->back();
+        }
         $event_id = $id;
         $name = $request->name;
         $modal = new Modal([

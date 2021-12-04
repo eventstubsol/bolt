@@ -37,6 +37,10 @@ class MenuDetailController extends Controller
     public function create(Request $request)
     {
         // return $request->all();
+        if(empty($request->name)){
+            flash("Name Cannot be left blank")->error();
+            return redirect()->back();
+        }
         if($request->has('parent_id')){
             $status = $request->parent_id;
             // return $staus;
