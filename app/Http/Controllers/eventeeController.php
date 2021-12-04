@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use App\Event;
 use Illuminate\Support\Facades\Http;
-use Maatwebsite\Excel\Facades\Excel;
+
 use App\Menu;
 class eventeeController extends Controller
 {
