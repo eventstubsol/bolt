@@ -20,9 +20,22 @@
         showMessage(show,'success');
     </script>
 @endif
+
+@if(Session::has('login-failed'))
+    <script>
+        $(document).ready(function(){
+            showMessage("{{ Session::get('login-failed') }}",'error');
+            alert("Please Check Your Login ID And Password");
+            
+        });
+    </script>
+    @php
+        Session::forget('login-failed');
+    @endphp
+@endif
     
 
-<form action="{{ route('Eventee.login') }}" method="post">
+<form action="{{ route('Eventee.login.confirm') }}" method="post">
     @csrf
     <div class="input-group">
         <label for="emailaddress">Email address</label>

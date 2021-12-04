@@ -99,7 +99,9 @@
             }
         }   
     </style>
-
+<script>
+    $('#flash-overlay-modal').modal();
+</script>
 </head>
 
 <body class="auth-fluid-pages pb-0" data-sidebar-size="condensed" data-layout-width="fluid" data-layout-menu-position="fixed" data-sidebar-color="light" data-sidebar-showuser="false" data-topbar-color="dark" style="visibility: visible; opacity: 1;">
@@ -109,7 +111,6 @@
         <div class="auth-fluid-form-box">
             <div class="align-items-center d-flex h-100">
                 <div class="card-body">
-
                     <!-- Logo -->
                     <div class="mb-5 text-center  text-lg-center">
                         <div class="auth-logo">
@@ -125,7 +126,8 @@
 
                         </div>
                     </div>
-
+                  
+                    @include('flash::message')
                     <!-- title-->
                      <h4 class="mt-0 ml-2 mb-3">
                          @yield("form_title")
@@ -184,7 +186,7 @@
     </div>
     <!-- end auth-fluid-->
     @yield('scripts_after')
-
+    
     <script>
         (function () {
             let deviceElem = document.querySelector('.device-orentation');

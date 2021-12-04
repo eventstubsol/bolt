@@ -31,7 +31,7 @@
                     <!-- Session Name -->
                     <div class="form-group mb-3">
                         <label for="name">Title</label>
-                        <input required autofocus type="text"  id="name" value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
+                        <input  autofocus type="text"  id="name" value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -42,7 +42,7 @@
                     <!-- Session Description -->
                     <div class="form-group mb-3">
                         <label for="summernote-basic">Description</label>
-                        <textarea id="summernote-basic"  name="description" class="form-control @error('description') is-invalid @enderror" required>{!! old("description") !!}</textarea>
+                        <textarea id="summernote-basic"  name="description" class="form-control @error('description') is-invalid @enderror" >{!! old("description") !!}</textarea>
                         @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

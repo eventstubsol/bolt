@@ -27,7 +27,7 @@
                     
                     <div class="form-group mb-3">
                         <label for="title">Title</label>
-                        <input autofocus maxlength="255" required value="{{ old('title') }}" type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" />
+                        <input autofocus maxlength="255"  value="{{ old('title') }}" type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" />
                         @error('title')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="message">Message</label>
-                        <textarea id="message" required name="message" class="form-control @error('message') is-invalid @enderror" maxlength="255">{{ old('message') }}</textarea>
+                        <textarea id="message"  name="message" class="form-control @error('message') is-invalid @enderror" maxlength="255">{{ old('message') }}</textarea>
                         @error('message')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
