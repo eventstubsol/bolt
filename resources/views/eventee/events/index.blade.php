@@ -118,7 +118,7 @@
                     @php
                         $baseurl = URL::to('/');
                         if(strpos($baseurl,'https')){
-                                $baseurl =  str_replace('https://','',$baseurl);
+                                $baseurl =  str_replace('https://',' ',$baseurl);
                         }else{
                             $baseurl=  str_replace('http://','',$baseurl);
                         }
