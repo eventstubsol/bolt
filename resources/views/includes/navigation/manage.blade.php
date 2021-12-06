@@ -217,11 +217,11 @@
                     <span> Integrations </span>
                 </a>
             </li>
-            {{-- <li>
-                <a href="{{ route("eventee.integrations",$id) }}">
+            <li>
+                <a href="{{ route("eventee.leaderSetting",$id) }}">
                     <span> Leaderboard Setting </span>
                 </a>
-            </li> --}}
+            </li>
             <li>
                 <a href="{{ route("eventee.settings",$id) }}">
                     <span> Default Settings </span>

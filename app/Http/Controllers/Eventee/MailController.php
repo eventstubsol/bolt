@@ -31,7 +31,14 @@ class MailController extends Controller
     }
 
     public function send(Request $req,$id){
-        
+        if(empty($req->subject)){
+            flash("Subject Field Cannot Be Empty")->error();
+            return redirect()->back();
+        }
+        elseif(empty($req->message)){
+            flash("Message Field Cannot Be Empty")->error();
+            return redirect()->back();
+        }
         $first_type = $req->sent_to_type;
         $subject = $req->subject;
         $message = $req->message;

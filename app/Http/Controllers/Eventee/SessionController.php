@@ -61,6 +61,14 @@ class SessionController extends Controller
     public function store(Request $request,$id)
     {
         // dd($request->all());
+        if(empty($request->name)){
+            flash("Title Field Cannot Be Left Blank")->error();
+            return redirect()->back();
+        }
+        else if(empty($request->description)){
+            flash("Description Field Cannot Be Left Blank")->error();
+            return redirect()->back();
+        }
         $event_id = $id;
         $speakers = $request->speakers;
         $request->speakers = null;

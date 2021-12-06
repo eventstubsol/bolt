@@ -26,6 +26,14 @@ class LoungeController extends Controller
 
     public function store(Request $request,$id)
     {
+        if(empty($request->name)){
+            flash("Name Field Cannot Be Left Blank")->error();
+            return redirect()->back();
+        }
+        else if(empty($request->seats)){
+            flash("Seats Field Cannot Be Left Blank")->error();
+            return redirect()->back();
+        }
         NetworkingTable::create([
             "name"=>$request->name,
             "seats"=>$request->seats,

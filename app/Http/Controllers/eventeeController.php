@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use App\Event;
-use Illuminate\Support\Facades\Http;
-
-use App\Menu;
+// use Illuminate\Support\Facades\Http;
+// use Maatwebsite\Excel\Facades\Excel;
+// use App\Menu;
 use Browser;
 use Carbon\Carbon;
 class eventeeController extends Controller
@@ -35,11 +35,10 @@ class eventeeController extends Controller
             'country' => 'required',
             'industry' => 'required',
         ]);
-        $olduser = User::where("email",$request->email)->where("event_id",null)->first();
-        if($olduser){
-            $id = null;
-            //Report Error on frontend the user already exists
-            return view('eventee.register')->with(compact("id"));
+        $userEmail = User::where('email',$request->email)->where('event_id',null)->count();
+        if($userEmail > 0){
+            flash("User Already Exist")->error();
+            return redirect()->back();
         }
         $user = new User;
         $user->name = $request->name;
@@ -69,12 +68,26 @@ class eventeeController extends Controller
 
     public function ConfirmLogin(Request $req){
         try{
-           
+            
+            if(empty($req->password) && empty($req->email)){
+                flash("Both Fields Are Required")->error();
+                return redirect()->back();
+            }
+            elseif(empty($req->email)){
+                flash("Email Field Cannot Be Blank")->error();
+                return redirect()->back();
+            }
+            else if(empty($req->password)){
+                flash("Password Field Cannot Be Blank")->error();
+                return redirect()->back();
+            }
+            
+
             $user = User::where('email',$req->email)->where("event_id",0)->first();
             $user->online_status = 1;
             $user->ip_address =  $req->ip();
             if(Browser::isMobile()){
-               $user->device = "mobile";
+            $user->device = "mobile";
             }
             if(Browser::isDesktop()){
                 $user->device =  "Desktop";
@@ -88,8 +101,11 @@ class eventeeController extends Controller
                 return redirect(route('teacher.dashboard'));
             }
             else{
-                return redirect(url("/"));
+                flash("Please Check Your Email And Password")->error();
+                return redirect()->route('Eventee.login');
             }
+            
+            
         }
         catch(\Exception $e){
             Log::error($e->getMessage());
