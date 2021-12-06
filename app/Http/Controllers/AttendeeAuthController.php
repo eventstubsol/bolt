@@ -149,11 +149,11 @@ class AttendeeAuthController extends Controller
     }
 
    public function showRegistration($subdomain,$slug){
-        $form = Form::where("slug",$slug)->first();
+        $id = Event::where("slug",$subdomain)->first()->id;
+        $form = Form::where("slug",$slug)->where("event_id",$id)->first();
         if(!$form){
             return view('erros.404');
         }
-        $id = Event::where("slug",$subdomain)->first()->id;
         $subtypes = UserSubtype::where('event_id',$id)->get();
         $form->load("fields.formStruct");
         $email = FALSE;
