@@ -62,9 +62,11 @@ if(Auth::user()){
         
         <button class="theme-btn btn primary-filled mt-3" onclick="onSubmit">Login</button>
     </div>
+    
     <div class="clearfix"></div>
     <div class="clearfix"></div>
 </form>
+<p class="text mt-3">By logging in and using the platform, you hereby accept our <a href="{{ route('privacyPolicy') }}" >Privacy Policy</a>. For more details <a href="{{ route("faq") }}">read the FAQs</a></p>
 @endsection
 
 @section('scripts_after')
