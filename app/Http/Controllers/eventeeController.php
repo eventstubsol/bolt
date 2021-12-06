@@ -35,6 +35,12 @@ class eventeeController extends Controller
             'country' => 'required',
             'industry' => 'required',
         ]);
+        $olduser = User::where("email",$request->email)->where("event_id",null)->first();
+        if($olduser){
+            $id = null;
+            //Report Error on frontend the user already exists
+            return view('eventee.register')->with(compact("id"));
+        }
         $user = new User;
         $user->name = $request->name;
         $user->last_name = $request->last_name;
