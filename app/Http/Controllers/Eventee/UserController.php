@@ -64,6 +64,10 @@ class UserController extends Controller
      */
     public function subTypestore(Request $request, $id)
     {
+        if(empty($request->name)){
+            flash('Name Cannot Be Blank')->error();
+            return redirect()->back();
+        }
         $check = UserSubtype::where('name',$request->name)->where('event_id',$id)->count();
         if($check < 1){
             $usertype = UserSubtype::create([
@@ -92,7 +96,23 @@ class UserController extends Controller
     public function store(Request $request, $id)
     {
        
-
+            if(empty($request->name)){
+                flash("Name Field Cannot Be Blank")->error();
+                return redirect()->back();
+            }
+            elseif(empty($request->last_name)){
+                flash("Last Name Field Cannot Be Blank")->error();
+                return redirect()->back();
+            }
+            elseif(empty($request->email)){
+                flash("Email Field Cannot Be Blank")->error();
+                return redirect()->back();
+            }
+            elseif(empty($request->type)){
+                flash("Type Muse Be Selected")->error();
+                return redirect()->back();
+            }
+            
             // $userData = $request->except("_token");
             // $userData["password"] = Hash::make($userData["password"]);
             // $userData["isCometChatAccountExist"] = TRUE;
@@ -104,12 +124,13 @@ class UserController extends Controller
                     flash("Same Email ID Already Exist For The Current Event")->error();
                     return redirect()->back();
                 }
+                
                 $user = new User;
                 $user->name = $request->name;
                 $user->last_name = $request->last_name;
                 $user->event_id = $id;
                 $user->type = $request->type;
-                if($request->password){
+                if($request->has('password')){
                     $user->password = password_hash($request->password, PASSWORD_DEFAULT);
                 }
                 $user->email = $request->email;

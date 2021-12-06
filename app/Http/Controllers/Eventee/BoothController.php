@@ -50,13 +50,25 @@ class BoothController extends Controller
   public function store(Request $request,$id)
   {
       // dd($request->all());
+      if(empty($request->name)){
+        flash("Name Field cannot be left blank")->error();
+        return redirect()->back();
+      }
+      elseif(empty($request->calendly_link)){
+        flash("Calendly Link Field cannot be left blank")->error();
+        return redirect()->back();
+      }
+      elseif(empty($request->userids)){
+        flash("Please Select A Exibitor First")->error();
+        return redirect()->back();
+      }
       $booth = new Booth;
       if($request->has("name")){
         $booth->name = $request->get("name");
         // $booth->bg_type = $request->bg_type;
       }
       else{
-          return false;
+         return false;
       }
       if($request->has("boothurl") && $request->boothurl != null){
         $booth->boothurl = $request->get("boothurl");

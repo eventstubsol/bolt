@@ -28,6 +28,10 @@ class SessionRoomController extends Controller
         try{
 
             //creating new room
+            if(empty($request->name)){
+                flash("Name Field Cannot Be Left Blank")->error();
+                return redirect()->back();
+            }
             $name = str_replace(" ","_",$request->name);
             $room = new sessionRooms([
                 "name"=>$name,
@@ -53,6 +57,10 @@ class SessionRoomController extends Controller
                     "title" => $request->name,
                     "url" => $request->background,
                 ]);
+            }
+            else{
+                flash("Background Image Cannot Be Left Blank")->error();
+                return redirect()->back();
             }
             if($request->has("video_url")  && $request->video_url != null){
         
