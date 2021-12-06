@@ -35,6 +35,11 @@ class eventeeController extends Controller
             'country' => 'required',
             'industry' => 'required',
         ]);
+        $userEmail = User::where('email',$request->email)->count();
+        if($userEmail > 0){
+            flash("User Already Exist")->error();
+            return redirect()->back();
+        }
         $user = new User;
         $user->name = $request->name;
         $user->last_name = $request->last_name;
