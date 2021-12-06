@@ -56,32 +56,32 @@ class AttendeeAuthController extends Controller
         // return $subdomain;
         $event = Event::where("slug",$subdomain)->first();
        
-        //     if(env('RECAPTCHA_SECRET_KEY') && env('RECAPTCHA_SITE_KEY')){
-        //         // dd("shubh");
-        //         $response = Http::asForm()
-        //         ->post(
-        //             "https://www.google.com/recaptcha/api/siteverify",
-        //             [
-        //                 "secret" => api('RECAPTCHA_SECRET_KEY',$event->id),
-        //                 "response" => $request->post("token")
-        //             ]
-        //         );
+            if(env('RECAPTCHA_SECRET_KEY') && env('RECAPTCHA_SITE_KEY')){
+                // dd("shubh");
+                $response = Http::asForm()
+                ->post(
+                    "https://www.google.com/recaptcha/api/siteverify",
+                    [
+                        "secret" => api('RECAPTCHA_SECRET_KEY',$event->id),
+                        "response" => $request->post("token")
+                    ]
+                );
 
-        //         $Response = json_decode($response->body(), TRUE);
+                $Response = json_decode($response->body(), TRUE);
             
         
             
-        //     if (!$response->successful() || !$Response["success"]) {
-        //         $request->old(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")));
-        //         return view("eventUser.login")
-        //             ->with([
-        //                 "notFound" => FALSE,
-        //                 "captchaError" => TRUE,
-        //                 "login" => $this->loginT,
-        //                 "subdomain"=>$subdomain
-        //             ]);
-        //     }
-        // }
+            if (!$response->successful() || !$Response["success"]) {
+                $request->old(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")));
+                return view("eventUser.login")
+                    ->with([
+                        "notFound" => FALSE,
+                        "captchaError" => TRUE,
+                        "login" => $this->loginT,
+                        "subdomain"=>$subdomain
+                    ]);
+            }
+        }
         $validation =  env("ATTENDEE_LOGIN_FIELD") == "email" ? "required|email" : "required";
         $request->validate([env("ATTENDEE_LOGIN_FIELD") => $validation]);
         //dd($event);
