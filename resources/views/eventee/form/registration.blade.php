@@ -334,15 +334,17 @@
                         @php
                             $options = $subtypes;
                         @endphp
-                        <div class="form-group mb-3 ">
-                            <label for="type">{{ $field->placeholder }}</label>
-                            <select  @if($field->required && count($options)) required @endif  class="form-control"  name="subtype">
-                                <option value="">Select {{$field->placeholder}}</option>
-                                @foreach($options  as $type)
-                                <option value="{{ $type->name }}">{{ ucfirst($type->name) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @if(count($options))
+                            <div class="form-group mb-3 ">
+                                <label for="type">{{ $field->placeholder }}</label>
+                                <select  @if($field->required && count($options)) required @endif  class="form-control"  name="subtype">
+                                    <option value="">Select {{$field->placeholder}}</option>
+                                    @foreach($options  as $type)
+                                    <option value="{{ $type->name }}">{{ ucfirst($type->name) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
 
                     @break
                 @case("select")
