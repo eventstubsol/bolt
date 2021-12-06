@@ -336,7 +336,7 @@
                         @endphp
                         <div class="form-group mb-3 ">
                             <label for="type">{{ $field->placeholder }}</label>
-                            <select  @if($field->required) required @endif  class="form-control"  name="subtype">
+                            <select  @if($field->required && count($options)) required @endif  class="form-control"  name="subtype">
                                 <option value="">Select {{$field->placeholder}}</option>
                                 @foreach($options  as $type)
                                 <option value="{{ $type->name }}">{{ ucfirst($type->name) }}</option>

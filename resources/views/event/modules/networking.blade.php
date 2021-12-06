@@ -132,7 +132,7 @@
                            
                             <ul class="{{ $classes[$i] }}">
                                 @if( $i  + 1 <= $table->seats)
-                                    @if(isset($participants[$i]))
+                                    @if(isset($participants[$i]) && isset($participants[$i]->user))
                                     <li>
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="83pt" height="65pt" viewBox="0 0 119.000000 105.000000" preserveAspectRatio="xMidYMid meet">
                                             <g transform="translate(0.000000,105.000000) scale(0.100000,-0.100000)" fill="#BC6838" stroke="none">
@@ -141,7 +141,8 @@
                                             </g>
                                         </svg>
                                         <img src="{{ $participants[$i]->user->profileImage ? assetUrl($participants[$i]->user->profileImage) : ''}}" width="30" alt="">
-                                        {{$participants[$i]->user->name}}</li>
+                                        {{$participants[$i]->user->name}}
+                                    </li>
                                     @else
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="83pt" height="65pt" viewBox="0 0 119.000000 105.000000" preserveAspectRatio="xMidYMid meet">
                                             <g transform="translate(0.000000,105.000000) scale(0.100000,-0.100000)" fill="#BC6838" stroke="none">
