@@ -25,16 +25,36 @@ class eventeeController extends Controller
     }
 
     public function ConfirmRegister(Request $request){
-        $request->validate([
-            'name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'password' => 'required',
-            'job_title' => 'required',
-            'country' => 'required',
-            'industry' => 'required',
-        ]);
+        
+        if(empty($request->name)){
+            flash("Name Field Cannot Be blank")->error();
+            return redirect()->back();
+        }
+        elseif(empty($request->last_name)){
+            flash("Last Name Field Cannot Be blank")->error();
+            return redirect()->back();
+        }
+        elseif(empty($request->email)){
+            flash("Email Address Field Cannot Be blank")->error();
+            return redirect()->back();
+        }
+        elseif(empty($request->phone)){
+            flash("Phone Number Field Cannot Be blank")->error();
+            return redirect()->back();
+        }
+        elseif(empty($request->password)){
+            flash("Password Field Cannot Be blank")->error();
+            return redirect()->back();
+        }
+        elseif(empty($request->job_title)){
+            flash("Job Title Field Cannot Be blank")->error();
+            return redirect()->back();
+        }
+        elseif(empty($request->industry)){
+            flash("Industry Field  Cannot Be blank")->error();
+            return redirect()->back();
+        }
+        
         $userEmail = User::where('email',$request->email)->where('event_id',null)->count();
         if($userEmail > 0){
             flash("User Already Exist")->error();
