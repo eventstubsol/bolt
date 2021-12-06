@@ -110,7 +110,6 @@
 </style>
 <div class="page" id="networking">
    
-    <div>
         <div id="lounge_tables" >
             <div class="lounge_container">
                 @foreach($tables as $i=> $table)
@@ -133,7 +132,7 @@
                            
                             <ul class="{{ $classes[$i] }}">
                                 @if( $i  + 1 <= $table->seats)
-                                    @if(isset($participants[$i]))
+                                    @if(isset($participants[$i]) && isset($participants[$i]->user))
                                     <li>
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="83pt" height="65pt" viewBox="0 0 119.000000 105.000000" preserveAspectRatio="xMidYMid meet">
                                             <g transform="translate(0.000000,105.000000) scale(0.100000,-0.100000)" fill="#BC6838" stroke="none">
@@ -142,7 +141,8 @@
                                             </g>
                                         </svg>
                                         <img src="{{ $participants[$i]->user->profileImage ? assetUrl($participants[$i]->user->profileImage) : ''}}" width="30" alt="">
-                                        {{$participants[$i]->user->name}}</li>
+                                        {{$participants[$i]->user->name}}
+                                    </li>
                                     @else
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="83pt" height="65pt" viewBox="0 0 119.000000 105.000000" preserveAspectRatio="xMidYMid meet">
                                             <g transform="translate(0.000000,105.000000) scale(0.100000,-0.100000)" fill="#BC6838" stroke="none">
@@ -170,32 +170,34 @@
     
         </div>
     
-    
-    <div data-backdrop="static"  class="modal fade embed-modal slido-container-modal" id="lounge_modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <div class="modal-body">
-                    <div class="position-relative">
-                        <div style="padding-bottom: {{ AUDI_IMAGE_ASPECT }}%"></div>
-                        <div id="lounge-session-content" class="positioned fill" >
-                            
-                        </div>
+   
+</div>
+
+ 
+<div data-backdrop="static"  class="modal fade embed-modal slido-container-modal" id="lounge_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div class="modal-body">
+                <div class="position-relative">
+                    <div style="padding-bottom: {{ AUDI_IMAGE_ASPECT }}%"></div>
+                    <div id="lounge-session-content" class="positioned fill" >
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div data-backdrop="static"  class="modal fade embed-modal slido-container-modal" id="table_full" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <div class="modal-body">
-                    <div class="position-relative">
-                        <div style="padding-bottom: {{ AUDI_IMAGE_ASPECT }}%"></div>
-                        <div id="lounge-session-content" class="positioned fill" >
-                            No Seats Left
-                        </div>
+</div>
+<div data-backdrop="static"  class="modal fade embed-modal slido-container-modal" id="table_full" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div class="modal-body">
+                <div class="position-relative">
+                    <div style="padding-bottom: {{ AUDI_IMAGE_ASPECT }}%"></div>
+                    <div id="lounge-session-content" class="positioned fill" >
+                        No Seats Left
                     </div>
                 </div>
             </div>

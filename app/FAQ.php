@@ -33,13 +33,12 @@ use App\UUID;
 class FAQ extends Model
 {
     use SoftDeletes;
-    use UUID;
-    public $incrementing = false;
     public $table = "faqs";
 
     //For mass assignment whitelisting
     protected $fillable = [
         "question",
+        "event_id",
         "answer",
     ];
 

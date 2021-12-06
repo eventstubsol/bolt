@@ -14,6 +14,8 @@ use App\Event;
 use Illuminate\Support\Facades\Http;
 
 use App\Menu;
+use Browser;
+use Carbon\Carbon;
 class eventeeController extends Controller
 {
     //
@@ -33,6 +35,12 @@ class eventeeController extends Controller
             'country' => 'required',
             'industry' => 'required',
         ]);
+        $olduser = User::where("email",$request->email)->where("event_id",null)->first();
+        if($olduser){
+            $id = null;
+            //Report Error on frontend the user already exists
+            return view('eventee.register')->with(compact("id"));
+        }
         $user = new User;
         $user->name = $request->name;
         $user->last_name = $request->last_name;
@@ -55,19 +63,32 @@ class eventeeController extends Controller
 
     public function Login(){
         $id=null;
+        // dd("test");
         return view('eventee.login')->with(compact("id"));
     }
 
     public function ConfirmLogin(Request $req){
         try{
-            $user = User::where('email',$req->email)->first();
+           
+            $user = User::where('email',$req->email)->where("event_id",0)->first();
+            $user->online_status = 1;
+            $user->ip_address =  $req->ip();
+            if(Browser::isMobile()){
+               $user->device = "mobile";
+            }
+            if(Browser::isDesktop()){
+                $user->device =  "Desktop";
+            }
+            $user->save();
+
+            // dd($user);
             $pass = password_verify($req->password,$user->password);
             if($pass && $user->type == 'eventee'){
                 Auth::login($user);
                 return redirect(route('teacher.dashboard'));
             }
             else{
-                return $user->type;
+                return redirect(url("/"));
             }
         }
         catch(\Exception $e){
@@ -78,8 +99,34 @@ class eventeeController extends Controller
     public function Dashboard(Request $req){
         try{
             $req->session()->put('MangeEvent',0);
-            $events = Event::where('user_id',Auth::id())->get();
-            return view('eventee.dashboard',compact('events')); 
+            $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->limit(5)->count();
+           
+            $liveEvent = Event::where('end_date','>=',Carbon::now()->format('Y-m-d'))->where('user_id',Auth::id())->count();
+            $recent = Event::whereBetween('start_date',[Carbon::now()->subDays(5)->format('Y-m-d'),Carbon::now()->format('Y-m-d')])->where('end_date','>=',Carbon::today())->where('user_id',Auth::id())->orderBy('start_date','desc')->limit(5)->get();
+            // $latest_users = User::whereBetween('created_at',[Carbon::now()->subDays(5)->format('Y-m-d H:i:s'),Carbon::now()->format('Y-m-d H:i:s')])->where('type','eventee')->limit(5)->get();
+            $ending_event  =Event::whereBetween('end_date',[Carbon::now()->format('Y-m-d'),Carbon::now()->addDays(5)->format('Y-m-d')])->where('user_id',Auth::id())->limit(5)->get();
+            $eventUser = Event::where('user_id',Auth::id())->get();
+            $totaluser = [];
+            $totaluserLive = [];
+            $alluser = 0;
+            $liveUser = 0;
+            foreach($eventUser as $event){
+                $userCount = User::where('event_id',$event->id);
+                if($userCount->count() > 0){
+                    array_push($totaluser,$userCount->count());
+                }
+                $userCountLive = $userCount->where('online_status',1)->count();
+                if($userCountLive > 0){
+                    array_push($totaluserLive,$userCountLive);
+                }
+            }
+
+            for($i = 0 ; $i < count($totaluser) ; $i++){
+                $alluser += $totaluser[$i];
+            }
+
+           
+            return view('eventee.dashboard',compact('events','liveEvent','alluser','liveUser','recent','ending_event')); 
         }
         catch(\Exception $e){
             Log::error($e->getMessage());
@@ -93,6 +140,12 @@ class eventeeController extends Controller
     }
 
     public function Save(Request $req){
+        $slug = str_replace(" ","-",strtolower($req->event_slug));
+        $eve = Event::where('slug',$slug)->count();
+        if($eve > 0){
+            flash("An Event With The Same Name Already Exist")->error();
+            return redirect()->back();
+        }
         $baseurl = URL::to('/');
         if(strpos($baseurl,'https')){
            $baseurl =  str_replace('https://','',$baseurl);
@@ -126,14 +179,15 @@ class eventeeController extends Controller
                     "event_id"=>$event->id
                ]);
             }
-            $menusNames = array('Polls','Q&A','Announcements');
-            $manuPos = array(1,2,3);
-            $menuLink = array('#poll-modal','#qna-modal','#announcement-modal');
-            $menuClass = array('fas fa-poll','fa fa-question-circle','fa fa-bullhorn');
+            //Creating Menus
+            // $menusNames = array('Polls','Q&A','Announcements');
+            // $manuPos = array(1,2,3);
+            // $menuLink = array('#poll-modal','#qna-modal','#announcement-modal');
+            // $menuClass = array('fas fa-poll','fa fa-question-circle','fa fa-bullhorn');
             
-            for($i = 0; $i<count($menusNames); $i++){
-                Menu::create(['name'=>$menusNames[$i],'position'=>$manuPos[$i],'link'=>$menuLink[$i],'iClass'=>$menuClass[$i],'event_id'=>$event->id,'type'=>'footer','parent_id'=>0]);
-            }
+            // for($i = 0; $i<count($menusNames); $i++){
+            //     Menu::create(['name'=>$menusNames[$i],'position'=>$manuPos[$i],'link'=>$menuLink[$i],'iClass'=>$menuClass[$i],'event_id'=>$event->id,'type'=>'footer','parent_id'=>0]);
+            // }
             flash("Event Saved Successfully")->success();
             Event::where('id',$event->id)->update(['link'=> $event->slug.'.'.str_replace('https://','',$baseurl).'']);
             return redirect()->back();

@@ -400,22 +400,19 @@
 </li> --}}
 
 <li class="menu-title">Administration</li>
+
         <ul class="nav-second-level" style="list-style: none">
             <li>
-                <a href="#users" data-toggle="collapse">
+                <a href="{{ route('reports.dashboard') }}">
+                    <i class="fa fa-tachometer" aria-hidden="true"></i>
+                    <span> Dashboard </span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route("user.index") }}" >
                     <i class="fa fa-users" aria-hidden="true"></i>
                     <span> Users </span>
                 </a>
-                <div class="collapse" id="users">
-                    <ul class="nav-second-level" style="list-style: none">
-                        <li>
-                            <a href="{{ route("user.index") }}">Manage</a>
-                        </li>
-                        {{-- <li>
-                            <a href="{{ route("user.lobby") }}">Lobby</a>
-                        </li> --}}
-                    </ul>
-                </div>
             </li>
             <li>
                 <a href="#package" data-toggle="collapse">
@@ -427,22 +424,54 @@
                         <li>
                             <a href="{{ route("package.index") }}">Manage</a>
                         </li>
+                        <li>
+                            <a href="{{ route("package.create") }}">Create</a>
+                        </li>
                         
                     </ul>
                 </div>
             </li>
             <li>
-                <a href="#license" data-toggle="collapse">
+                <a href="{{ route("license.index") }}">
                     <i class="fas fa-id-badge"></i>
                     <span> License </span>
                 </a>
-                <div class="collapse" id="license">
-                    <ul class="nav-second-level" style="list-style: none">
-                        <li>
-                            <a href="{{ route("license.index") }}">Manage</a>
-                        </li>
-                    </ul>
-                </div>
             </li>
         </ul>
+
+
+    <li class="menu-title">Reports</li>
+    <ul class="nav-second-level" style="list-style: none">
+        <li>
+            <a href="{{ route("recent.event") }}">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <span> Recent Events </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route("Least.user") }}">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span> Least Active Users </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route("recent.user") }}">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <span> Recently Joined Users </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route("event.ending") }}">
+                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                <span> Events Expiring Soon </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route("event.logs") }}">
+                <i class="fa fa-cogs" aria-hidden="true"></i>
+                <span> Event Admin Logs </span>
+            </a>
+        </li>
+    </ul>
+
     

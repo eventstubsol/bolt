@@ -294,10 +294,10 @@ class BoothController extends Controller
     return redirect()->to(route("exhibiter.update", ["booth" => $booth->id]));
   }
 
-  public function boothEnquiries(Booth $booth){
+  public function boothEnquiries(Booth $booth,$id){
       $booth->load("interests.user");
 //      return $booth;
-      return view("exhibitor.enquiries")->with(compact("booth"));
+      return view("exhibitor.enquiries")->with(compact(["booth","id"]));
   }
 
   public function boothEnquiriesRaw(Booth $booth){
@@ -310,19 +310,19 @@ class BoothController extends Controller
                   "Name" => $user->name,
                   "Last Name" => $user->last_name,
                   "Job Title" => $user->job_title,
-                  "Phone" => $user->phone,
+                  // "Phone" => $user->phone,
                   "Email" => $user->email,
 
                   "Company Name" => $user->company_name,
-                  "company Website" => $user->company_website_link,
+                  // "company Website" => $user->company_website_link,
 
                   "Country" => $user->country,
-                  "Industry" => $user->industry,
+                  // "Industry" => $user->industry,
 
-                  "Facebook" => $user->facebook_link,
-                  "Twitter" => $user->twitter_link,
-                  "Linkedin" => $user->linkedin_link,
-                  "Website" => $user->website_link,
+                  // "Facebook" => $user->facebook_link,
+                  // "Twitter" => $user->twitter_link,
+                  // "Linkedin" => $user->linkedin_link,
+                  // "Website" => $user->website_link,
               ];
           }
       }

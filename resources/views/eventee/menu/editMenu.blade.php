@@ -42,7 +42,7 @@ Update Menu
                         <div class="form-group mb-3 col-md-4">
                             <label for="type">type</label>
                             <select required class="form-control type" name="type">
-                                @foreach(LINK_TYPES as $type)
+                                @foreach(MENU_LINK_TYPES as $type)
                                 <option @if($menu->link_type === $type) selected @endif  value="{{$type}}">{{$type}}</option>
                                 @endforeach
                             </select>
@@ -50,7 +50,8 @@ Update Menu
                     <!-- end type -->
 
 
-                    <!-- To Link Start  -->       
+                    <!-- To Link Start  -->     
+
                         <div @if($menu->link_type !== "page") style="display: none;" @endif  class="pages- pages form-group mb-3 col-md-4">
                             <label for="to">to(Page)</label>
                             <select     class="form-control" name="pages">
@@ -76,6 +77,15 @@ Update Menu
                                 @foreach($session_rooms as $room)
                                     <option @if($menu->link === $room->name) selected @endif value="{{$room->name}}">{{$room->name}}</option>
                                 @endforeach
+                            </select>
+                        </div>
+                        <div @if($menu->link_type!=="modal") style="display: none;" @endif  class="modals form-group mb-3 col-md-4">
+                            <label for="to">to(modal)</label>
+                            <select     class="form-control" name="modals">
+                                @foreach($modals as $modal)
+                                    <option  @if($menu->link === $modal->id) selected @endif  value="{{$modal->id}}">{{$modal->name}}</option>
+                                @endforeach
+    
                             </select>
                         </div>
 
@@ -116,15 +126,24 @@ Update Menu
                     <!-- To Link End -->
 
                     <!-- Icon Select Start  -->
-                    <select name="icon" class="form-control icon_select  select2" data-toggle="select2">
+                    {{-- <select name="icon" class="form-control icon_select  select2" data-toggle="select2">
                         <option> Select Icon </option>
                         @foreach(MENU_ICONS as $menuicon)
                             <option @if($menu->iClass === $menuicon) selected @endif id="{{$menuicon}}" data-icon="{{$menuicon}}" value="{{$menuicon}}">
                                 <i class="fe fe-home"></i> {{ str_replace('fe-','',$menuicon) }}
                             </option>
                         @endforeach
-                    </select>
+                    </select> --}}
 
+
+                    <select name="icon" class="form-control  icon_select_2  select2" data-toggle="select2">
+                        <option> Select Icon </option>
+                        @foreach(MENU_ICONS_SVG as $name=> $menuicon)
+                            <option id="{{$menuicon}}" data-name="{{$name}}" data-icon="{{$menuicon}}" value="{{asset($menuicon)}}">
+                                <i class="fe fe-home"></i> {{$name}}
+                            </option>
+                        @endforeach
+                    </select>
 
                     <!-- Icon Select End -->
 
@@ -151,13 +170,22 @@ Update Menu
         $(".type").on("change",toggleVisibility);
         // $(".icon_select").html(`<option><i class="fe fe-home"></i> test</option>`)
         
-        $(".icon_select").select2({
-        templateResult: formatState
+        $(".icon_select_2").select2({
+            templateResult: formatState2
         });
 
-        function formatState(state){
-                if(!state.id)  return state.text;
-                let newstate  =  $(`<span><i class=${state.id}> ${state.id.replace("fe-","") } </i></span>`);
+        // function formatState(state){
+        //         if(!state.id)  return state.text;
+        //         let newstate  =  $(`<span><i class=${state.id}> ${state.id.replace("fe-","") } </i></span>`);
+        //         return newstate;
+        // }
+
+        function formatState2(state){
+                let name = $(state.element).data("name")
+                if(!state.id || !name)  return state.text;
+                console.log(state);
+                // let iconname = state.id.replace("fe-","");
+                let newstate  =  $(`<span><img src=${state.id} width="30" > ${name}</span>`);
                 return newstate;
         }
 
@@ -178,6 +206,8 @@ Update Menu
         $(".chat_user").hide();
         $(".chat_group").hide();
         $(".custom_page").hide();
+        $(".modals").hide();
+
 
         switch(selectbox.val()){
             case "session_room":
@@ -207,6 +237,10 @@ Update Menu
             case "custom_page":
                 $(".custom_page").show();
                 break;
+            case "modal":
+                $(".modals").show();
+                break;
+   
         }
         // console.log(val);
     }

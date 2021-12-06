@@ -6,9 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Event;
 use Carbon\Carbon;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+
+use App\UserLocation;
 class LoginController extends Controller
 {
     //
+
     public function __construct()
     {
         $this->loginT = getLoginVars();
@@ -31,8 +36,39 @@ class LoginController extends Controller
         }
         
     }
+    public function exhibitorLogin($sudomain,$email){
 
-    public function confirmLogin(Request $req,$id){
+        // return  ($email);
+        $event = Event::where("slug",$sudomain)->first();
+        if($event->end_date < Carbon::today()){
+            return view('errors.custom');
+        }
+        else{
+            return view("auth.exhibiter")->with([
+                "email" => $email,
+                "login" => $this->loginT,
+                "notFound" => FALSE,
+                "captchaError" => FALSE,
+                "id"=>$event->id,
+                "subdomain"=>$event->slug
+            ]);
+        }
         
+    }
+
+    public function logout($subdomain){
+        // return Auth::id();
+        if(Auth::check()){
+            $user = User::findOrFail(Auth::id());
+            $user->online_status=0;
+            $userlocation = UserLocation::where('user_id',Auth::id())->where('current_status',1)->update(['current_status'=>0]);
+
+            if($user->save()){
+                // return $user;
+                Auth::logout();
+                return redirect(route('attendeeLogin',$subdomain));
+            }
+            
+        }        
     }
 }

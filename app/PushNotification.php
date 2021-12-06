@@ -13,5 +13,5 @@ class PushNotification extends Model
     use SoftDeletes;
     
     public $table = "push_notification";
-    protected $fillable = ["title","url","message","roles"];
+    protected $fillable = ["title","url","message","roles","event_id"];
 }

@@ -40,7 +40,9 @@ class UserController extends Controller
      */
     public function create($id)
     {
-        return view("eventee.users.create", compact('id'));
+        $subtypes = UserSubtype::where('event_id',$id)->get();
+
+        return view("eventee.users.create", compact('id',"subtypes"));
     }
     
     public function subTypesList($id)
@@ -95,8 +97,8 @@ class UserController extends Controller
             // $userData["password"] = Hash::make($userData["password"]);
             // $userData["isCometChatAccountExist"] = TRUE;
             
-            $userCount = User::where('event_id', ($id))->count();
-            if ($userCount < 5) {
+            // $userCount = User::where('event_id', ($id))->count();
+            // if ($userCount < 5) {
                 $userEmail = User::where('email','like','%'.$request->email.'%')->where('event_id',$id)->count();
                 if($userEmail > 0){
                     flash("Same Email ID Already Exist For The Current Event")->error();
@@ -107,9 +109,12 @@ class UserController extends Controller
                 $user->last_name = $request->last_name;
                 $user->event_id = $id;
                 $user->type = $request->type;
-                $user->password = password_hash($request->password, PASSWORD_DEFAULT);
+                if($request->password){
+                    $user->password = password_hash($request->password, PASSWORD_DEFAULT);
+                }
                 $user->email = $request->email;
                 $user->isCometChatAccountExist = TRUE;
+                $user->subtype = $request->subtype;
 
 
                 // $user->sendEmailVerificationNotification();
@@ -133,12 +138,12 @@ class UserController extends Controller
                     flash("Something went wrong")->error();
                     return redirect()->back();
                 }
-            } else{
-                $url = route('eventee.license',$id);
-                $message = "Cant Add More Users ,Please Contact Admin To Add More User and upgrade your account.<br />". "<a href='".$url."'>Send Message To Admin For Licence Upgrade</a>";
-                flash($message)->info();
-                return redirect()->back();
-            }
+            // } else{
+                // $url = route('eventee.license',$id);
+                // $message = "Cant Add More Users ,Please Contact Admin To Add More User and upgrade your account.<br />". "<a href='".$url."'>Send Message To Admin For Licence Upgrade</a>";
+                // flash($message)->info();
+                // return redirect()->back();
+            // }
        
     }
 
@@ -205,8 +210,10 @@ class UserController extends Controller
     public function edit(Request $request, $id, $user_id)
     {
         $user = User::findOrFail($user_id);
+        $subtypes = UserSubtype::where('event_id',$id)->get();
+
         // return $user;
-        return view("eventee.users.edit", compact("id", "user_id", "user"));
+        return view("eventee.users.edit", compact("id", "user_id", "user","subtypes"));
     }
     
     public function subTypeedit(Request $request, $id, UserSubtype $subtype)
@@ -231,8 +238,7 @@ class UserController extends Controller
     }
     public function update(Request $request, $id, $user_id)
     {
-        
-
+        // dd($request->all());
         $user = User::findOrFail($user_id);
         $cometChat = isset($userData["enable_chat"]) ? 'enable' : null;
         $cometChat =  isset($userData["disable_chat"]) ? 'disable' : $cometChat;
@@ -287,8 +293,18 @@ class UserController extends Controller
         }
 
         $user->name = $request->name;
+        $user->last_name = $request->last_name;
         $user->email = $request->email;
+        $user->type = $request->type;
+        if($request->subtype != 0){
+            $user->subtype = $request->subtype;
+        }
+        
+        if($request->passsword){
+            $user->password = Hash::make($request->pasword);
+        }
         $user->save();
+        // dd($user);
 
         return redirect()->route('eventee.user', $id);
     }
@@ -738,5 +754,32 @@ class UserController extends Controller
             return redirect()->back();
         }
         
+    }
+    public function BulkDelete(Request $req){
+        $ids = $req->ids;
+        $totalcount = 0;
+        for($i = 0 ; $i < count($ids); $i++){
+            $user = User::findOrFail($ids[$i]);
+            $user->delete();
+            $userCount = User::where('id',$ids[$i])->count();
+            if($userCount > 0){
+                $totalcount++;
+            }
+
+        }
+        if(($totalcount)>0){
+        return response()->json(['code'=>500,"Message"=>"Something Went Wrong"]);
+        }
+        else{
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+        }
+    }
+
+    public function DeleteAll(Request $req){
+        $users = User::where('event_id',$req->id)->get();
+        foreach($users as $user){
+            $user->delete();
+        }
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
     }
 }

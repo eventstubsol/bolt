@@ -176,7 +176,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'company_website_link',
         'isCometChatAccountExist',
 		'event_id',
-        'subtype'
+        'subtype',
+        'ip_address',
+        'device'
     ];
 
     /**
@@ -229,6 +231,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function event_session()
     {
         return $this->hasMany("\App\SessionModerator");
+    }
+    public function event()
+    {
+        return $this->hasMany("\App\Event",'user_id');
     }
 
     public function tags()

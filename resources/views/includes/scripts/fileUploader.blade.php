@@ -1,4 +1,4 @@
-<script src="{{ asset("assets/libs/dropify/js/dropify.min.js") }}"></script>
+<script id="dropify_script"  async=false defer=false src="{{ asset("assets/libs/dropify/js/dropify.min.js") }}"></script>
 <script>
     let Upload = function (file, fileInput) {
         this.file = file;
@@ -59,6 +59,7 @@
                 if(data.success && data.path){
                     callback(data.path);
                 }else{
+                    showMessage("File Size Should not be greater than 12 MB", "error");
                     callback(false);
                 }
                 // your callback here
@@ -87,6 +88,7 @@
                 fileInput.closest(".image-uploader").append(`<div class="progress progress-sm upload mb-2"><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
                 if(!fileInput.data("initdropify")){ //Only initialize if not already done so
                     fileInput.data("initdropify", true);
+                    console.log(fileInput);
                     let dropifyInput = fileInput.dropify({
                         messages: {
                             'default': 'Drag and drop a file here or click',
@@ -123,5 +125,10 @@
             })
         }
     }
-    $(document).ready(initializeFileUploads);
+    $(document).ready(
+        $("#dropify_script").on("load",()=>{
+
+            initializeFileUploads();
+        })
+        );
 </script>

@@ -7,6 +7,8 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use App\Event;
+use App\UserSubtype;
+
 
 class UserImport implements ToModel,WithHeadingRow
 {
@@ -20,23 +22,23 @@ class UserImport implements ToModel,WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row,)
+    public function model(array $row)
     {
-        // dd($row["event_name"]);
-        $eventSlug = str_replace(" ","-",strtolower(trim($row["event_name"])));
+        $user = User::where('email',$row['email'])->where('event_id',$this->event_id);
+        if($user->count() < 1){
+            return new User([
+                "name"=>$row["name"],
+                "last_name" =>$row["last_name"],
+                "email" =>$row["email"],
+                "phone"=>$row["phone"],
+                "password" =>password_hash($row["password"],PASSWORD_DEFAULT),
+                "event_id"=> $this->event_id,
+                "type" => $row["type"],
+                "country" => $row["country"],
+                "subtype"=>$row['sub_type']
+            ]);
+        }
+    
         
-        // $event = Event::where("name",trim($row["event_name"]))->first();
-        
-        // dd($row);
-        return new User([
-            "name"=>$row["name"],
-            "last_name" =>$row["last_name"],
-            "email" =>$row["email"],
-            "phone"=>$row["phone"],
-            "password" =>password_hash($row["password"],PASSWORD_DEFAULT),
-            "event_id"=> $this->event_id,
-            "type" => $row["type"],
-            "country" => $row["country"]
-        ]);
     }
 }

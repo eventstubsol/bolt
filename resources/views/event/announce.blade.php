@@ -30,12 +30,11 @@ $announcements = App\Announcement::where('user_id', 'all')
                         <thead>
                             <tr>
                                 <th>Subject</th>
-                                <th>Announcement</th>
                                 <th>Created On</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <td colspan="3">
+                            <td colspan="2">
                                 <center>No Announcement Available For You</center>
                             </td>
                         </tbody>
@@ -45,7 +44,6 @@ $announcements = App\Announcement::where('user_id', 'all')
                         <thead>
                             <tr>
                                 <th>Subject</th>
-                                <th>Announcement</th>
                                 <th>Created On</th>
                             </tr>
                         </thead>
@@ -58,12 +56,11 @@ $announcements = App\Announcement::where('user_id', 'all')
                                 @endphp
                                 @if ($seenStat < 1)
                                     <tr>
-                                        <td>{{ $announcement->subject }}</td>
                                         <td onclick="showAnnouce(this)" style="cursor: pointer"
-                                            data-subject="{{ $announcement->subject }}" data-modal="public"
-                                            data-announce="{{ $announcement->annoucement }}"
-                                            data-id="{{ $announcement->id }}">
-                                            {{ \Illuminate\Support\Str::limit($announcement->annoucement, 20) }}</td>
+                                        data-subject="{{ $announcement->subject }}" data-modal="public"
+                                        data-announce="{{ $announcement->annoucement }}"
+                                        data-id="{{ $announcement->id }}">{{ $announcement->subject }}</td>
+                                        
                                         <td>{{ \Carbon\Carbon::parse($announcement->created_at)->format('d-m-Y') }}
                                         </td>
                                     </tr>
@@ -108,12 +105,12 @@ $per_announcements = App\Announcement::where('user_id', Auth::id())
                         <thead>
                             <tr>
                                 <th>Subject</th>
-                                <th>Announcement</th>
+                                
                                 <th>Created On</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <td colspan="3">
+                            <td colspan="2">
                                 <center>No Announcement Available For You</center>
                             </td>
                         </tbody>
@@ -124,7 +121,7 @@ $per_announcements = App\Announcement::where('user_id', Auth::id())
                         <thead>
                             <tr>
                                 <th>Subject</th>
-                                <th>Announcement</th>
+                                
                                 <th>Created On</th>
                             </tr>
                         </thead>
@@ -137,12 +134,11 @@ $per_announcements = App\Announcement::where('user_id', Auth::id())
                                 @endphp
                                 @if ($seenStat < 1)
                                     <tr>
-                                        <td>{{ $announcement->subject }}</td>
-                                        <td onclick="showAnnouce(this)" style="cursor: pointer"
-                                            data-subject="{{ $announcement->subject }}"
-                                            data-announce="{{ $announcement->annoucement }}" data-modal="private"
-                                            data-id="{{ $announcement->id }}">
-                                            @php echo \Illuminate\Support\Str::limit($announcement->annoucement, 20) @endphp</td>
+                                        <td  onclick="showAnnouce(this)" style="cursor: pointer"
+                                        data-subject="{{ $announcement->subject }}"
+                                        data-announce="{{ $announcement->annoucement }}" data-modal="private"
+                                        data-id="{{ $announcement->id }}">{{ $announcement->subject }}</td>
+                                        
                                         <td>{{ \Carbon\Carbon::parse($announcement->created_at)->format('d-m-Y') }}
                                         </td>
                                     </tr>

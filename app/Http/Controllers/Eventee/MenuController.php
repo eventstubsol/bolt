@@ -6,6 +6,7 @@ use App\Booth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Menu;
+use App\Modal;
 use App\Page;
 use App\sessionRooms;
 use Error;
@@ -23,6 +24,9 @@ class MenuController extends Controller
     {
         //
         $menus = Menu::where('parent_id', '0')->where('type', 'nav')->where('event_id',$id)->orderby('position', 'asc')->get();
+        $menus->load('submenus'); 
+        // return($menus);
+        // return $menus;
         return view('eventee.menu.menu', compact('menus','id'));
     }
 
@@ -39,22 +43,27 @@ class MenuController extends Controller
     public function createNav(Request $request,$id)
     {
         $event_id = $id;
+        $modals =  Modal::where("event_id",$id)->get();
+
+
         $pages = Page::where("event_id",$event_id)->get();
 
         $booths = Booth::where("event_id",$event_id)->get();
 
         $session_rooms = sessionRooms::where("event_id",$event_id)->get();
-        return view("eventee.menu.createMenu")->with(compact(["id","pages","booths","session_rooms"]));
+        return view("eventee.menu.createMenu")->with(compact(["id","pages","booths","session_rooms","modals"]));
     }
     public function createFooter(Request $request,$id)
     {
         $event_id = $id;
+         $modals =  Modal::where("event_id",$id)->get();
+
         $pages = Page::where("event_id",$event_id)->get();
 
         $booths = Booth::where("event_id",$event_id)->get();
 
         $session_rooms = sessionRooms::where("event_id",$event_id)->get();
-        return view("eventee.menu.footer.createMenu")->with(compact(["id","pages","booths","session_rooms"]));
+        return view("eventee.menu.footer.createMenu")->with(compact(["id","pages","booths","session_rooms","modals"]));
     }
 
     /**
@@ -109,6 +118,24 @@ class MenuController extends Controller
             case "custom_page":
                 $to = $request->custom_page;
                 break;
+            case "modal":
+                $to = $request->modals;
+                break;
+            case "SwagBag":
+                $to = "SwagBag";
+                break;
+            case "Leaderboard":
+                $to = "Leaderboard";
+                break;
+            case "Schedule":
+                $to = "Schedule";
+                break;
+            case "Library":
+                $to = "Library";
+                break;
+            case "social_wall":
+                $to = "social_wall";
+                break;
         }
         $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
        
@@ -157,6 +184,25 @@ class MenuController extends Controller
             case "custom_page":
                 $to = $request->custom_page;
                 break;
+            case "modal":
+                $to = $request->modals;
+                break;
+            case "SwagBag":
+                $to = "SwagBag";
+                break;
+            case "Leaderboard":
+                $to = "Leaderboard";
+                break;
+            case "Schedule":
+                $to = "Schedule";
+                break;
+            case "Library":
+                $to = "Library";
+                break;
+                
+            case "social_wall":
+                $to = "social_wall";
+                break;
         }
         $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
         $menu = new Menu;
@@ -201,23 +247,27 @@ class MenuController extends Controller
     {
         // dd($menu);
         $event_id = $id;
+        $modals =  Modal::where("event_id",$id)->get();
+
         $pages = Page::where("event_id",$event_id)->get();
 
         $booths = Booth::where("event_id",$event_id)->get();
 
         $session_rooms = sessionRooms::where("event_id",$event_id)->get();
-        return view("eventee.menu.footer.editMenu")->with(compact(["id","pages","booths","session_rooms","menu"]));
+        return view("eventee.menu.editMenu")->with(compact(["id","pages","booths","session_rooms","menu","modals"]));
     }
     public function editFooter(Menu $menu,$id)
     {
         // dd($menu);
         $event_id = $id;
+        $modals =  Modal::where("event_id",$id)->get();
+
         $pages = Page::where("event_id",$event_id)->get();
 
         $booths = Booth::where("event_id",$event_id)->get();
 
         $session_rooms = sessionRooms::where("event_id",$event_id)->get();
-        return view("eventee.menu.footer.editMenu")->with(compact(["id","pages","booths","session_rooms","menu"]));
+        return view("eventee.menu.footer.editMenu")->with(compact(["id","pages","booths","session_rooms","menu","modals"]));
     }
     public function updateNav(Request $request,Menu $menu,$id)
     {
@@ -251,6 +301,24 @@ class MenuController extends Controller
                case "custom_page":
                    $to = $request->custom_page;
                    break;
+                case "SwagBag":
+                    $to = "SwagBag";
+                    break;
+                case "Leaderboard":
+                    $to = "Leaderboard";
+                    break;
+                case "Schedule":
+                    $to = "Schedule";
+                    break;
+                case "Library":
+                    $to = "Library";
+                    break;
+                case "social_wall":
+                    $to = "social_wall";
+                    break;
+                case "modal":
+                    $to = $request->modals;
+                    break;
            }
            $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
           
@@ -294,6 +362,24 @@ class MenuController extends Controller
                case "custom_page":
                    $to = $request->custom_page;
                    break;
+                case "SwagBag":
+                    $to = "SwagBag";
+                    break;
+                case "Leaderboard":
+                    $to = "Leaderboard";
+                    break;
+                case "Schedule":
+                    $to = "Schedule";
+                    break;
+                case "Library":
+                    $to = "Library";
+                    break;
+                case "social_wall":
+                    $to = "social_wall";
+                    break;
+                case "modal":
+                    $to = $request->modals;
+                    break;
            }
            $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
           

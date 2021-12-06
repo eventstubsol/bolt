@@ -148,6 +148,13 @@ $event_id = $id;
                                         <input type="hidden" name="pdf[]" class="upload_input" @if($link->type==="pdf") value="{{$link->to}}" @endif">
                                         <input type="file"      data-name="boothimages" data-plugins="dropify" data-type="application/pdf"  @if($link->type==="pdf") data-default-file="{{assetUrl($link->to)}}" @endif }} />                                   
                                     </div>
+                                     {{-- Photobooth  --}}
+                                     <div @if($link->type!=="photobooth") style="display: none;" @endif class="image-uploader ph-{{$ids}} ph form-group mb-3 col-md-4">
+                                        <label for="phb">Photobooth Capture Link</label>
+                                        <input @if($link->type==="photobooth") value="{{$link->to}}" @endif type="text"   name="capture_link[]" class="form-control">
+                                        <label for="phb">Photobooth Gallery Link</label>
+                                        <input @if($link->type==="photobooth") value="{{$link->url}}" @endif type="text"   name="gallery_link[]" class="form-control">
+                                    </div>
                                     
 
                                    
@@ -461,6 +468,7 @@ $event_id = $id;
         $(".chat_user-"+index).hide();
         $(".chat_group-"+index).hide();
         $(".custom_page-"+index).hide();
+        $(".ph-"+index).hide();
 
         switch(selectbox.val()){
             case "session_room":
@@ -489,6 +497,9 @@ $event_id = $id;
                 break;
             case "custom_page":
                 $(".custom_page-"+index).show();
+                break;
+            case "photobooth":
+                $(".ph-"+index).show();
                 break;
         }
         // console.log(val);
@@ -634,6 +645,12 @@ $event_id = $id;
                                     <div  style="display: none;"  class="custom_page-${n} custom_page form-group mb-3 col-md-4">
                                         <label for="custom_page">Custom Page route</label>
                                         <input type="text"   name="custom_page[]" class="form-control">
+                                    </div>
+                                    <div  style="display: none;" class="image-uploader ph-${n} ph form-group mb-3 col-md-4">
+                                        <label for="phb">Photobooth Capture Link</label>
+                                        <input  type="text"   name="capture_link[]" class="form-control">
+                                        <label for="phb">Photobooth Gallery Link</label>
+                                        <input  type="text"   name="gallery_link[]" class="form-control">
                                     </div>
 
 

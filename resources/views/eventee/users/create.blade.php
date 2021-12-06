@@ -53,8 +53,8 @@ Create Users
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="password">Password</label>
-                        <input id="password" required name="password" type="password"
+                        <label for="password">Password (optional)</label>
+                        <input id="password"  name="password" type="password"
                             class="form-control @error('password') is-invalid @enderror" />
                         @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -70,6 +70,17 @@ Create Users
                             @endforeach
                         </select>
                     </div>
+                    @if(count($subtypes))
+                    <div class="form-group mb-3">
+                        <label for="type">Subtype of User (Optional)</label>
+                        <select class="form-control" name="subtype">
+                            <option value="">Select Subtype</option>
+                            @foreach($subtypes as $type)
+                            <option value="{{ $type->name }}">{{ ucfirst($type->name) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
                     <div>
                         <button class="btn btn-primary" type="submit">Create</button>
                     </div>

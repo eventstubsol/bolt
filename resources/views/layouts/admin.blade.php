@@ -17,12 +17,19 @@
     <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}?v=1234" type="text/css">
     <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
-   
-
+    <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/libs/nestable2/jquery.nestable.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+    {{-- <link href="../assets/libs/nestable2/jquery.nestable.min.css" rel="stylesheet">
+    <link href="../assets/css/config/default/bootstrap.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet">
+    <link href="../assets/css/config/default/app.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet">
+    <link href="../assets/css/config/default/bootstrap-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" disabled="disabled"> --}}
 
     <!-- icons -->
     <link rel="stylesheet" href="{{ asset('assets/css/icons.min.css') }}" type="text/css">
     <style>
+        .dataTables_length select{
+            width: 54px !important;
+        }
 
         .right-bar-toggle.chat-bubble{
             position: fixed;
@@ -82,11 +89,25 @@
             align-items: center;
             justify-content: center;
         }
+        .visit_event:hover{
+            color: white;
+        }
+        .visit_event{
+            padding: 22px;
+            display: block;
+            color: white;
+        }
     </style>
 
     @yield("styles_after")
     <script src="//code.jquery.com/jquery.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Nestable/2012-10-15/jquery.nestable.min.js" integrity="sha512-a3kqAaSAbp2ymx5/Kt3+GL+lnJ8lFrh2ax/norvlahyx59Ru/1dOwN1s9pbWEz1fRHbOd/gba80hkXxKPNe6fg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+{{-- <script src="https://coderthemes.com/ubold/layouts/assets/libs/nestable2/jquery.nestable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-nestable@0.8.0/jquery.nestable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-nestable@0.8.0/jquery.nestable.js"></script>
+<script src="https://www.jqueryscript.net/demo/Mobile-Compatible-jQuery-Drag-Drop-Plugin-Nestable/jquery.nestable.js"></script> --}}
 
 <script>
     $('#flash-overlay-modal').modal();
@@ -101,7 +122,9 @@
 <div id="wrapper">
    
     
-
+    @php
+        $user  = Auth::user();
+    @endphp
     <!-- Topbar Start -->
     <div class="navbar-custom">
         <div class="container-fluid">
@@ -110,8 +133,8 @@
                     <li class="dropdown notification-list topbar-dropdown">
                         <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
                            data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                             @if(isset(Auth::user()->profileImage))
-                                <img src="{{assetUrl(Auth::user()->profileImage)}}" class="avatar-sm round-icon">
+                             @if(isset($user->profileImage))
+                                <img src="{{assetUrl($user->profileImage)}}" class="avatar-sm round-icon">
                             @else
                                 <span class="round-icon">
                                     <i class="fa fa-user"></i>
@@ -119,7 +142,7 @@
                             @endif
                            
                             <span class="pro-user-name ml-1">
-                                {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
+                                {{ $user->name }} <i class="mdi mdi-chevron-down"></i>
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -129,23 +152,20 @@
                             </div>
 
                             <!-- item-->
-                             <a href="/event#profile" class="dropdown-item notify-item">
-                            <i class="fe-user"></i> <span>My Account</span>
-                        </a>
-                             <a href="/event" class="dropdown-item notify-item">
-                                <i class="fa fa-eye"></i> <span>Visit Event</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            @if($user->type === 'eventee')
+                                <a href="{{ route('event.index')}} " class="dropdown-item notify-item">
+                                    <i class="fe-user"></i> <span>My Events</span>
+                                </a>
+                            @endif
+                            {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="fe-settings"></i>
                                 <span>Settings</span>
-                            </a>
+                            </a> --}}
 
                             <div class="dropdown-divider"></div>
 
                             <!-- item-->
-                            <a class="dropdown-item notify-item" href="{{ route('logout') }}"
+                            <a class="dropdown-item notify-item" href="{{ route('admin.logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fe-log-out"></i>
                                 <span>Logout</span>
@@ -190,28 +210,60 @@
                     </span>
                 </a>
             </div>
-
+            
             @auth
-                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
-                    <li>
+               <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+              
+                   <li>
                         <button class="button-menu-mobile waves-effect waves-light">
                             <i class="fe-menu"></i>
                         </button>
                     </li>
+                    {{-- ALL Events --}}
+                    @if(Auth::user()->type == 'eventee')
+                     
+                        <li class="dropdown notification-list topbar-dropdown">
+                            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
+                            data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                               
+                                <span class="pro-user-name ml-1" style="font-size: 18px; font-weight: bold;">
+                                    @if(isset($id))
+                                        @php
+                                            $curr_event = App\Event::findOrFail($id);
+                                        @endphp
+                                        {{strtoupper($curr_event->name)}}
+                                    @else
+                                        All Events
+                                    @endif
+                                        <i class="mdi mdi-chevron-down"></i>
+                                </span>
+                            </a>
+                          
+                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                               @php
+                                    $events = App\Event::where('user_id',Auth::id())->orderBy('id','desc')->get();
+                               @endphp
 
-                    <li>
-                        <!-- Mobile menu toggle (Horizontal Layout)-->
-                        <a class="navbar-toggle nav-link" data-toggle="collapse" data-target="#topnav-menu-content">
-                            <div class="lines">
-                                <span></span>
-                                <span></span>
-                                <span></span>
+                                    @foreach ($events as $event)
+                                            <a class="@if(isset($id) &&($event->id==$id)) text-blue @endif  dropdown-item" href="{{ route('event.Dashboard',['id'=>( $event->id )]) }}" class="btn btn-warning">{{$event->name}}</a>
+                                    @endforeach
+                                <!-- item-->
                             </div>
-                        </a>
-                        <!-- End mobile menu toggle-->
-                    </li>
+                        </li>
+                    @endif
+                
+                    @if(isset($id))
+                        @php
+                            $cur_eve = App\Event::findOrFail($id);
+                        @endphp
+                        <li class=" color-primary">
+                            <a class="visit_event" href="https://{{$cur_eve->link}}/event" target="_blank">Visit Event</a>    
+                        </li>
+                    @endif
+                 
 
                 </ul>
+               
             @endauth
             <div class="clearfix"></div>
         </div>
@@ -251,8 +303,10 @@
                 <div id="sidebar-menu">
                     <ul id="side-menu">
                         @yield('navigation')
-                       
-                                @if( isset($id) && $id !=null)
+                        
+                                @if(Auth::user()->type == "exhibiter")
+                                     @include("includes.navigation.exhibitor")
+                                @elseif( isset($id) && $id !=null)
                                         @include("includes.navigation.manage")
                                 @elseif(Auth::user()->type == "admin")
                                     @include("includes.navigation.admin")
@@ -261,9 +315,6 @@
                                     @include("includes.navigation.moderator")
                                 
 
-                                @elseif(Auth::user()->type == "exhibiter")
-                                    @include("includes.navigation.exhibitor")
-                               
 
                                 @elseif(Auth::user()->type == "teller")
                                     @include("includes.navigation.teller")
@@ -329,7 +380,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
-                        {{ date("Y") }} - &copy; GEC Media
+                        {{ date("Y") }} - &copy; EventStub
                     </div>
                     <div class="col-md-6">
                         <div class="text-md-right footer-links d-none d-sm-block">
@@ -419,6 +470,7 @@
   //   }
   // })
   function exportToCsv(filename, rows) {
+      console.log(rows);
       if(Array.isArray(rows) && rows.length) {
           let keys = {};
           Object.keys(rows[0]).map(k => keys[k] = k);

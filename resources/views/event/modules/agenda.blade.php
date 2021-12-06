@@ -8,8 +8,7 @@
             $lastDate = false;
             $i = 0;
             $dates = []; 
-            foreach ($schedule as $master_room => $rooms){
-                foreach($rooms as $room => $scheduleForRoom){
+                foreach($schedule as $room => $scheduleForRoom){
                     foreach ($scheduleForRoom as $id => $event){
                         if($lastDate != $event['start_date']['m']){
                             $lastDate = $event['start_date']['m'];
@@ -17,12 +16,11 @@
                         if(  in_array($id,  $subscriptions))
                         {
                             $event['id'] = $id;
-                            $dates[$lastDate][$master_room][$room][] = $event;
+                            $dates[$lastDate][$room][] = $event;
                         }
 
                     }
                 }
-            }
         @endphp
 
         <!-- Create Pills for Dates -->
@@ -43,7 +41,7 @@
         <!-- Tabs Content Start -->
         <div class="tab-content">
             <!-- Loop for Each Date  -->
-            @foreach($dates as $date => $master_rooms)
+            @foreach($dates as $date => $rooms)
                 @php
                     $i++;
                 @endphp
@@ -55,27 +53,12 @@
 
                         <!-- Pills for Master Room -->
                         <ul class="nav nav-pills navtab-bg nav-justified" style="margin: 0px -5px;">
-                            @foreach($master_rooms as $master_room => $rooms)
+                            @foreach($rooms as $room => $events)
                                 @php
                                    $j++;
-                                   $msroom = $master_room;
-                                   switch($master_room){
-                                        case "auditorium": 
-                                            $msroom = "Events";
-                                            break;
-                                        case "workshop_1":
-                                            $msroom = "Plenary";
-                                            break;
-                                        case "worskshop_2":
-                                            $msroom = "Workshop";
-                                            break;
-                                        case "general": 
-                                            $msroom = "Expo";
-                                            break;
-                                   }
                                 @endphp
                                     <li class="nav-item">
-                                        <a href="#agn-{{ $i }}-{{ $j }}" data-toggle="tab" aria-expanded="{{ $j === 1 ? 'true' : 'false' }}" class="nav-link @if($j === 1) active @endif">{{ $msroom }}</a>
+                                        <a href="#agn-{{ $i }}-{{ $j }}" data-toggle="tab" aria-expanded="{{ $j === 1 ? 'true' : 'false' }}" class="nav-link @if($j === 1) active @endif">{{ $room }}</a>
                                     </li>
                             @endforeach
                         </ul>
@@ -86,15 +69,9 @@
                         <!-- Master Room Tab content -->
                         <div class="tab-content">
 
-                             <!-- Loop foreach master room Tab -->
-                            @foreach($master_rooms as $master_room => $rooms)
-                                @php
-                                    $k=0;
-                                    $j++;
-                                @endphp
                             
 
-                                <!-- Tabs for each master Room -->
+                                <!-- Tabs for each  Room -->
                              
                                     @php
                                         $k=0;
@@ -102,12 +79,14 @@
                                     <!-- Room Tab Content -->
                                     <!-- <div class="tab-content"> -->
                                       <!-- Loop foreach Room   -->
-                                      <div class=" tab-pane {{ $j === 1 ? "active show" : "" }}" id="agn-{{ $i }}-{{ $j }}">
                                         @foreach($rooms as $room => $events)
                                             @php
                                                 $k++;
+                                                $j++;
                                                 $l = 0;
                                             @endphp
+                                            <div class=" tab-pane {{ $j === 1 ? "active show" : "" }}" id="agn-{{ $i }}-{{ $j }}">
+                                 
                                             <!-- Tabs for each room -->
                                                 <!-- Print each event in agnedule -->
                                                 @foreach($events as $id => $event)
@@ -115,7 +94,7 @@
                                                         $id = $event['id'];
                                                         $l++;
                                                     @endphp
-                                                    <ul class="list-unstyled timeline-sm"> 
+                                                    <ul style="padding-left:110px !important;" class="list-unstyled timeline-sm"> 
                                                         <li class="timeline-sm-item">
                                                             <span class="timeline-sm-date">
                                                                 {{ $event['start_date']['dts'] }} - <br> {{ $event['start_date']['dte'] }}
@@ -168,12 +147,12 @@
                                                                     </a>
                                                                 @endif
                                                                 @if($event['status'] !== -1)
-                                                                    <a href="javascript: void(0);" data-id="{{ $id }}" class="btn subscribe-to-event btn-sm btn-link text-muted font-14 {{ in_array($id, $subscriptions) ? "hidden" : "" }}">
+                                                                    {{-- <a href="javascript: void(0);" data-id="{{ $id }}" class="btn subscribe-to-event btn-sm btn-link text-muted font-14 {{ in_array($id, $subscriptions) ? "hidden" : "" }}">
                                                                         <!-- <i class="mdi mdi-bell-ring mr-1"></i>  -->
                                                                         + Add to Personal Agenda
-                                                                    </a>
+                                                                    </a> --}}
                                                                     @if($event['type'] !== 'PRIVATE_SESSION')
-                                                                        <a href="javascript: void(0);" data-id="{{ $id }}" class="btn btn-danger unsubscribe-agenda btn-sm btn-link text-muted font-14  {{ in_array($id, $subscriptions) ? "" : "hidden" }}">
+                                                                        <a href="javascript: void(0);" data-id="{{ $id }}" class="btn btn-danger p-{{$id}} unsubscribe-agenda btn-sm btn-link text-muted font-14   {{ in_array($id, $subscriptions) ? "" : "hidden" }}">
                                                                             <!-- <i class="mdi mdi-bell-off mr-1"></i> -->
                                                                                 - Remove from Personal Agenda
                                                                         </a>
@@ -182,15 +161,13 @@
                                                             </div>
                                                         </li>
                                                     </ul>
+                                                    
                                                 @endforeach
                                           
-                                                
-                                                @endforeach
-                                                <!-- </div> -->
                                             </div>
-                                  
-                                <!-- </div> -->
-                            @endforeach
+                                                
+                                                <!-- </div> -->
+                                        @endforeach
 
                         </div>
                 </div>  

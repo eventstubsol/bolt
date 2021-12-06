@@ -6,6 +6,9 @@
       form{
         display: inline !important;
       }
+      #savebtn{
+          margin-left:1.5rem;
+      }
       </style>
 @endsection
 
@@ -27,10 +30,10 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-          <div id="buttons-container" class="card-header" >
+          <div id="buttons-container" class="card-header" style="display:inline-flex">
           </div>
             <div class="card-body">
-                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+               <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>Menu</th>
@@ -39,9 +42,9 @@
                         </tr>
                     </thead>
                 
-                    <tbody class="sort">
+                    <tbody class="sort" id="sort">
                       @foreach($menus as $menu)
-                        <tr id = "{{ $menu->id }}" class="parent">
+                        <tr data-id = "{{ $menu->id }}" class="parent" data-position ="{{ $menu->position }}">
                             <td>{{$menu->name}}</td>
                             <td>{{ $menu->status ? 'Active' : 'Disabled' }}</td>
                          <td class="text-right" >
@@ -65,8 +68,39 @@
                         </tr>
                       @endforeach
                     </tbody>
-                </table>
 
+                </table>
+                <div class="liSort custom-dd dd"  style="max-width: 100%"  id="sortable"  >
+                    <ol class="sort dd-list" id="olsort">
+                        @foreach($menus as $i => $menu)
+                        
+                                <li class="dd-item" data-id="{{ $menu->id }}" data-position="{{ $menu->position }}">
+                                    
+                                    <div class="dd-handle" data-id="{{ $menu->id }}">
+                                       
+                                        {{$menu->name}} 
+                                
+                                    </div>
+                                    @foreach($menu->submenus as $submenu)
+                                    <ol class="dd-list"><li class="dd-item" data-id="{{ $submenu->id }}" data-position="{{ $submenu->position }}">
+                                        <div class="dd-handle" data-id="32">
+                                            {{ $submenu->name }}
+                                        </div>
+                                        </li></ol>
+                                    </li>
+                                    @endforeach
+                            {{-- @else
+                            <li class="dd-item" data-id="{{ $menu->id }}" data-position="{{ $menu->position }}">
+                                <div class="dd-handle" data-id="{{ $menu->id }}">
+                                    {{$menu->name}}
+                                   
+                                </div>
+                            </li>
+                            @endif --}}
+                        @endforeach
+                    </ol>
+                </div>
+                
             </div> <!-- end card body-->
         </div> <!-- end card -->
     </div><!-- end col-->
@@ -74,12 +108,18 @@
 @endsection
 @section("scripts")
 
-
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/nestable2/jquery.nestable.min.js"></script>
+{{-- <script src="https://coderthemes.com/ubold/layouts/assets/js/pages/nestable.init.js"></script> --}}
 
 <script type="text/javascript">
 
+// var ids = [];
+var position =[];
+var final;
 $(document).ready(function(){
-    $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.menu.create",$id) }}">Create New</a>')
+    $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.menu.create",$id) }}">Create New</a>');
+    $("#buttons-container").append('<button class="btn btn-success" onclick="setOrder()">Set Order</button>');
+    $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success" onclick="SavePositions()" style="display:none">Save</button>')
     //setStatus
     $("body").on("click",".disable",function(e){
                     t = $(this);
@@ -130,5 +170,75 @@ $(document).ready(function(){
                     });
                 });
         });
+
+        var updateOutput = function (e) {
+            var list = e.length ? e : $(e.target), output = list.data('output');
+            if (window.JSON) {output.val(window.JSON.stringify(list.nestable('serialize')));//, null, 2));
+            } else {
+                output.val('JSON browser support required for this demo.');
+            }
+            // console.log(list.nestable('serialize'));
+            final = list.nestable('serialize');
+            $('#savebtn').css('display','block');
+
+            
+        };
+
+        $('#sortable').nestable({
+            group: 1,
+            maxDepth:1,
+            serialize:true,
+            
+        }).on('change',updateOutput);
+        updateOutput($('#sortable').data('output', $('#sortable')));
+        // $('.dd').on('change', function(el) {
+        //         /* on change event */
+        //     console.log(el);
+        // });
+        function saveNewPoisition(){
+            
+            $('.updated').each(function(){
+                position.push([$(this).attr('data-id'), $(this).attr('data-position')]);
+            });
+        }
+
+        function SavePositions(){
+            // console.log(final);
+            $.ajax({
+                url:"{{ route('menu.store') }}",
+                method:"POST",
+                data:{"menu":final},
+                success:function(response){
+                    // alert("Changes Made Successfully");
+                    
+                    showMessage("Changes Made Successfully",'success');
+                    $('#savebtn').hide();
+                    location.reload();
+
+                }
+            });
+        }
+
+        // function getvalues(e){
+        //     console.log(e.closest('ol'));
+        // }
+        $(document).ready(function(){
+            $('#sortable').hide();
+            $('#sort').show();
+        });
+        var switchOrder = 0;
+        function setOrder(){
+           if(switchOrder == 0){
+            $('#sortable').show();
+            $('#sort').hide();
+            switchOrder = 1;
+           }
+           else{
+            $('#sortable').hide();
+            $('#sort').show();
+            switchOrder = 0;
+           }
+        }
+        
 </script>
 @endsection

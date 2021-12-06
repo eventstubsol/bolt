@@ -1,5 +1,7 @@
 <?php
 //All functions defined in this file will be accessible all through the project including View
+
+use App\Api;
 use App\Content;
 use App\Poll;
 use App\User;
@@ -24,6 +26,7 @@ use PhpParser\Node\Stmt\Catch_;
 use App\ContentMaster;
 use App\Menu;
 use App\Treasure;
+use App\UserSubtype;
 
 include_once "clickableAreasConfig.php";
 
@@ -59,10 +62,52 @@ define('LINK_TYPES', [
     'zoom',
     "booth",
     "vimeo",
-    "chat_user",
-    "chat_group",
+    // "chat_user",
+    // "chat_group",
     "pdf",
-    "custom_page"
+    // "custom_page",
+    "lobby",
+    "back",
+    "faq",
+    "photobooth",
+    "videosdk",
+    "modal",
+    "lounge"
+]);
+define('MENU_LINK_TYPES', [
+    'page',
+    'session_room',
+    'zoom',
+    "booth",
+    "vimeo",
+    "pdf",
+    "lobby",
+    "back",
+    "faq",
+    "photobooth",
+    "videosdk",
+    "modal",
+    "lounge",
+    "SwagBag",
+    "Leaderboard",
+    "Schedule",
+    "Library",
+    "social_wall"
+]);
+
+define('MODAL_TYPES', [
+    'page',
+    'session_room',
+    "booth",
+    "vimeo",
+    "pdf",
+]);
+
+define('HOME_PAGE_TYPES', [
+    'page',
+    'session_room',
+    'lobby',
+    'exterior'
 ]);
 
 
@@ -261,6 +306,7 @@ define('ZOOM_EXTERNAL', "ZOOM_EXTERNAL");
 define('VIMEO_SESSION', "VIMEO_SESSION");
 define('VIMEO_ZOOM_EX', "VIMEO_ZOOM_EX");
 define('VIMEO_ZOOM_SDK', "VIMEO_ZOOM_SDK");
+define('VIMEO_VIDEO_SDK', "VIMEO_VIDEO_SDK");
 define('VIDEO_SDK', "VIDEO_SDK");
 
 define("EVENT_SESSION_TYPES", [
@@ -269,13 +315,58 @@ define("EVENT_SESSION_TYPES", [
     VIMEO_SESSION,
     VIMEO_ZOOM_EX,
     VIMEO_ZOOM_SDK,
-    VIDEO_SDK
+    VIDEO_SDK,
+    VIMEO_VIDEO_SDK
 ]);
 
+
+//f=> Feather Icon 
+//tt => Two Tone
+//md => Material Design
 define("MENU_ICONS",[
     "fe-home",
-    "fe-file",
-    
+   "fe-bar-chart",
+   "fe-briefcase",
+    "fe-calendar",
+    "fe-radio",
+    "fe-clock",
+    "fe-file-text",
+    "fe-play-circle",
+]);
+define("MENU_ICONS_SVG",[
+   "Agenda"=> "icons/Agenda.svg",
+   "Attendees"=> "icons/Attendees.svg",
+   "Auditorium"=> "icons/Auditorium.svg",
+   "Award"=> "icons/Award.svg",
+   "Badge"=> "icons/Badge.svg",
+   "Donation"=> "icons/Donation.svg",
+   "Download"=> "icons/Download.svg",
+   "Email"=> "icons/Email.svg",
+   "Expo-Hall"=> "icons/Expo-Hall.svg",
+   "Feedback"=> "icons/Feedback.svg",
+   "Games"=> "icons/Games.svg",
+   "InfoDesk"=> "icons/InfoDesk.svg",
+   "Leaderboard"=> "icons/Leaderboard.svg",
+   "Lobby"=> "icons/Lobby.svg",
+   "Log-OUt"=> "icons/Log-OUt.svg",
+   "Login"=> "icons/Login.svg",
+   "Museum"=> "icons/Museum.svg",
+   "Music-Off"=> "icons/Music-Off.svg",
+   "Music-on"=> "icons/Music-on.svg",
+   "Networking-Lounge"=> "icons/Networking-Lounge.svg",
+   "Notifications"=> "icons/Notifications.svg",
+   "PDF"=> "icons/PDF.svg",
+   "Personal-Agenda"=> "icons/Personal-Agenda.svg",
+   "Photobooth"=> "icons/Photobooth.svg",
+   "Profile"=> "icons/Profile.svg",
+   "Q_A"=> "icons/Q_A.svg",
+   "Reminder"=> "icons/Reminder.svg",
+   "Shopping-Cart"=> "icons/Shopping-Cart.svg",
+   "Speed-Dating"=> "icons/Speed-Dating.svg",
+   "Swagbag-Icons"=> "icons/Swagbag-Icons.svg",
+   "Upload"=> "icons/Upload.svg",
+   "Video"=> "icons/Video.svg",
+   "Workshop"=> "icons/Workshop.svg"
 ]);
 
 
@@ -294,9 +385,18 @@ define("CREATOR_TELLER_LINKS", [
 
 define("BY_LAWS_TELLER_ID", "280fd217-8106-46fc-a36b-c5c38b1a3823");
 
+function api($var,$event_id,$default = ""){
+    $api = Api::where("variable",$var)->where("event_id",$event_id)->first();
+    if($api){
+        return $api->key;
+    }else{
+        return $default;
+    }
+}
 
 
 function getMenuLink($menu){
+    $icon = asset($menu->iClass );
     switch(trim($menu->link_type)){
 
                     
@@ -305,7 +405,9 @@ function getMenuLink($menu){
     case("custom_page"):
             return <<<HTML
                     <a  target="_blank" href="$menu->link" >      
-                            <i style="font-size:24px;" class="$menu->iClass"></i>
+                    <img src="$icon" width="26" alt="">
+   
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                              $menu->name 
                     </a>
                 <!-- </li> -->
@@ -315,7 +417,9 @@ HTML;
     case("chat_user"):
         return <<<HTML
                 <a  class="chat_user not-booth-menu" data-link="$menu->link" >    
-                    <i style="font-size:24px;" class="$menu->iClass"></i>
+                <img src="$icon" width="26" alt="">
+   
+                <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                          $menu->name 
                 </a>
 HTML;
@@ -324,31 +428,38 @@ HTML;
     case("chat_group"):
         return <<<HTML
                 <a   class="chat_group not-booth-menu" data-link="$menu->link" > 
-                        <i style="font-size:24px;" class="$menu->iClass"></i>
-                         $menu->name 
+                        <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                        <img src="$icon" width="26" alt="">
+                        $menu->name 
                 </a>
 HTML;
         break;
     case("pdf"):
         return <<<HTML
             <a  style="border:none !important;" class="_df_button" source=" assetUrl($menu->link) " >
-                <i style="font-size:24px;" class="$menu->iClass"></i>
-                 $menu->name 
+                <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                <img src="$icon" width="26" alt="">
+    
+                $menu->name 
             </a>
 HTML;
         break;
     case("booth"):
         return <<<HTML
             <a data-link="booth/$menu->link" class="area">
-                <i style="font-size:24px;" class="$menu->iClass"></i>
-                 $menu->name 
+                <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                <img src="$icon" width="26" alt="">
+    
+                $menu->name 
             </a>
 HTML;
         break;
     case("session_room"):
         return  <<<HTML
             <a data-link="sessionroom/$menu->link" class="area">
-                <i style="font-size:24px;" class="$menu->iClass"></i>
+               <img src="$icon" width="26" alt="">
+ 
+            <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                 $menu->name 
             </a>
 HTML;
@@ -356,9 +467,96 @@ HTML;
     case("page"):
         return <<<HTML
                 <a data-link="page/$menu->link" class="area">
-                    <i style="font-size:24px;" class="$menu->iClass"></i>
+                    <img src="$icon" width="26" alt="">
+                         
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                      $menu->name 
                 </a>
+HTML;
+break;
+    case("lobby"):
+        return <<<HTML
+                <a data-link="lobby" class="area">
+                    <img src="$icon" width="26" alt="">
+
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                     $menu->name 
+                </a>
+HTML;
+    break;
+    case("SwagBag"):
+        return <<<HTML
+                <a data-toggle="modal" data-target="#swagbag-modal">
+                    <img src="$icon" width="26" alt="">
+
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                     $menu->name 
+                </a>
+HTML;
+    break;
+    case("Leaderboard"):
+        return <<<HTML
+                <a class="area" data-link="leaderboard">
+                    <img src="$icon" width="26" alt="">
+
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                     $menu->name 
+                </a>
+HTML;
+    break;
+    case("Schedule"):
+        return <<<HTML
+                <a  data-toggle="modal" data-target="#schedule-modal">
+                    <img src="$icon" width="26" alt="">
+
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                     $menu->name 
+                </a>
+HTML;
+    case("Library"):
+        return <<<HTML
+                <a  data-toggle="modal" data-target="#resources-modal">
+                    <img src="$icon" width="26" alt="">
+
+                    <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                     $menu->name 
+                </a>
+HTML;
+    break;
+    case("social_wall"):
+        return <<<HTML
+             <a class="area" data-link="attendees">
+             <img src="$icon" width="26" alt="">
+                 
+             <!-- <i class="fe-users"></i> -->
+             $menu->name</a>
+HTML;
+
+        break; 
+    case("modal"):
+        return <<<HTML
+             <a data-toggle="modal" data-target="#$menu->link" class="_custom_modal">
+             <img src="$icon" width="26" alt="">
+                 
+             <!-- <i class="fe-users"></i> -->
+                 $menu->name</a>
+HTML;
+
+        break; 
+    case("photobooth"):
+        return <<<HTML
+             <a class="photobooth area"  data-link="photo-booth"  data-capture="{{$link->to}}" data-gallery="{{$link->url}}" >
+             <img src="$icon" width="26" alt="">
+                 
+             <!-- <i class="fe-users"></i> -->
+                 $menu->name</a>
+HTML;
+    break; 
+    case("faq"):
+        return <<<HTML
+             <a   data-toggle="modal" data-target="#faqs-modal" >
+             <img src="$icon" width="26" alt="">            
+                 $menu->name</a>
 HTML;
 
         break; 
@@ -387,23 +585,24 @@ function getLobbyLinks($id)
     $links = Link::where(["page"=>$lobby])->get();
     return $links;
 }
-function getFilters($filter)
+function getFilters($event_id)
 {
-    switch($filter){
-        case "company_size":
-          return  User::select("company_size")->distinct()->get()->toArray();
-          break;
-        case "mytags":
-            return UserTag::select("tag")->where("tag_group","My Tags")->distinct()->get()->toArray();
-            break;
-        default :
-            return UserTag::select("tag")->where("tag_group",$filter)->distinct()->get()->toArray();
-            break;
-    }
+    return UserSubtype::where('event_id',$event_id)->get();
+    // switch($filter){
+    //     case "company_size":
+    //       return  User::select("company_size")->distinct()->get()->toArray();
+    //       break;
+    //     case "mytags":
+    //         return UserTag::select("tag")->where("tag_group","My Tags")->distinct()->get()->toArray();
+    //         break;
+    //     default :
+    //         return UserTag::select("tag")->where("tag_group",$filter)->distinct()->get()->toArray();
+    //         break;
+    // }
 }
 
 function createMenus($event_id){
-    $delfaultMenus =   ["lobby","library","schedule","swagbag","leaderboard","personalagenda","lounge"];
+    $delfaultMenus =   ["lobby","library","schedule","swagbag","leaderboard","personalagenda","lounge","attendees"];
     foreach($delfaultMenus as $id=> $menu){
         // dd($menu);
         $menuitem = new Menu();
@@ -467,14 +666,11 @@ function getField($name,$default = "")
 function getFieldId($name,$id=null, $default = "")
 {
     $content = Content::where("name", $name)->where('event_id',$id);
-    if($content->count()>0){
-        return $content->first()->value;
+    if($content->count()>0 &&  $content->first()->value){
+         return $content->first()->value;
     }
     else{
-        $content = Content::where("name", $name)->first();
-        $content ? $content->value : $default;  
-        
-       
+       return $default;    
     }
    
 }
@@ -520,7 +716,7 @@ function areaStyles($area)
 
 function assetUrl($url = "")
 {
-    return "https://congress2021web.fra1.digitaloceanspaces.com/" . $url;
+    return env("UPLOADS_FILE_DRIVER") === "spaces" ? ( env("DO_PUBLIC_URL") . $url ):( env("AWS_URL") . $url);
 }
 
 function storageUrl($url = "")
@@ -564,7 +760,7 @@ function getLobbyItems($event_id)
     $treasures = Treasure::where(["owner"=>"lobby_".$event_id])->get();
     foreach ($treasures as $index => $treasure) {
         $toReturn .= "
-        <div class='scavenger-item positioned' data-page='lobby' data-index='$index' style='" . areaStyles([$treasure->top,$treasure->left,$treasure->width,$treasure->height]) . "' data-name='treasure_hunt_item' title='treasure_hunt_item' >
+        <div class='scavenger-item positioned' data-page='lobby' data-index='$index' style='" . areaStyles([$treasure->top,$treasure->left,$treasure->width,$treasure->height]) . "' data-name='treasure_hunt_item_$index' title='treasure_hunt_item_$index' >
             <img async class='fill positioned' src='" . assetUrl($treasure->url) . "' style='object-fit:contain;' alt='' />
         </div>
         ";
@@ -740,8 +936,7 @@ function getVideoOptions($meetingid){
         "meetingId"=>$meetingid,
 
         "containerId"=>"video",
-        "redirectOnLeave"=>"https://www.videosdk.live/",
-
+      
         "micEnabled"=>false,
         "webcamEnabled"=>false,
         "participantCanToggleSelfWebcam"=>true,
@@ -855,8 +1050,8 @@ function isSessionActive(EventSession $session){
     return $session->start_time && $session->start_time->isPast() && $session->end_time && !$session->end_time->add(5, "mins")->isPast();
 }
 
-function getCurrentSession($where){
-    $sessions = EventSession::where("room", $where)->get();
+function getCurrentSession($where,$event_id){
+    $sessions = EventSession::where("room", $where)->where("event_id",$event_id)->get();
     foreach ($sessions as $session){
         if(isSessionActive($session)){
            return $session;
@@ -1034,11 +1229,8 @@ function getSchedule($event_id){
     $schedule = [];
     $eventsLineup = EventSession::where("event_id",$event_id)->orderBy("start_time")->with("speakers.speaker")->get()->load(["parentroom","resources"]);
     foreach ($eventsLineup as $event){
-        if(!isset($schedule[$event->master_room])){
-            $schedule[$event->master_room] = [];
-        }
-        if(!isset($schedule[$event->master_room][$event->room])){
-            $schedule[$event->master_room][$event->room] = [];
+        if(!isset($schedule[$event->room])){
+            $schedule[$event->room] = [];
         }
         $now = Carbon::now();
         $status = 0; //Not Started
@@ -1050,14 +1242,13 @@ function getSchedule($event_id){
             $status = 3; //Starting soon
         }
         if($event->start_time && $event->end_time){
-            $schedule[$event->master_room][$event->room][$event->id] = [
+            $schedule[$event->room][$event->id] = [
                 "start_time" => $event->start_time->utc()->toString(),
                 "start_date" => [
                     "m" => $event->start_time->format("l, M dS"),
                     "dts" => $event->start_time->format("h:i A"),
                     "dte" => $event->end_time->format("h:i A"),
                 ],
-                "master_room" => $event->master_room,
                 "end_time" => $event->end_time->toString(),
                 "status" => $status,
                 "name" => $event->name,
@@ -1160,3 +1351,27 @@ function UniqueEmail($email,$id){
          return 0;
      }
  } 
+
+function SaveMenu($menu,$position = null){
+        
+        if(isset($menu['children'])){
+            
+            foreach($menu['children'] as $pos =>$child){
+                $mMenu = Menu::findOrFail($child['id']);
+                $mMenu->parent_id = $menu['id'];
+                $mMenu->save();
+               if(isset($child['children'])){
+                 SaveMenu($child,$pos);
+               }
+            }
+        
+        }
+        
+         $mMneu = Menu::findOrFail($menu['id']);
+         $mMneu->position = $position;
+         $mMneu->save();
+       
+        
+    
+        
+}

@@ -40,7 +40,7 @@ Create Menu
                         <div class="form-group mb-3 col-md-4">
                             <label for="type">type</label>
                             <select required class="form-control type" name="type">
-                                @foreach(LINK_TYPES as $type)
+                                @foreach(MENU_LINK_TYPES as $type)
                                 <option value="{{$type}}">{{$type}}</option>
                                 @endforeach
                             </select>
@@ -49,7 +49,15 @@ Create Menu
 
 
                     <!-- To Link Start  -->
+                    <div style="display: none;" class="modals form-group mb-3 col-md-4">
+                        <label for="to">to(modal)</label>
+                        <select     class="form-control" name="modals">
+                            @foreach($modals as $modal)
+                                <option value="{{$modal->id}}">{{$modal->name}}</option>
+                            @endforeach
 
+                        </select>
+                    </div>
                         <div class="pages-${n} pages form-group mb-3 col-md-4">
                             <label for="to">to(Page)</label>
                             <select value=" " class="form-control" name="pages">
@@ -115,20 +123,29 @@ Create Menu
                     <!-- To Link End -->
 
                     <!-- Icon Select Start  -->
-                        <select name="icon" class="form-control  icon_select  select2" data-toggle="select2">
+                        {{-- <select name="icon" class="form-control  icon_select  select2" data-toggle="select2">
                             <option> Select Icon </option>
                             @foreach(MENU_ICONS as $menuicon)
                                 <option id="{{$menuicon}}" data-icon="{{$menuicon}}" value="{{$menuicon}}">
                                     <i class="fe fe-home"></i> {{ str_replace('fe-','',$menuicon) }}
                                 </option>
                             @endforeach
-                        </select>
+                        </select> --}}
 
+                        <select name="icon" class="form-control  icon_select_2  select2" data-toggle="select2">
+                            <option> Select Icon </option>
+                            @foreach(MENU_ICONS_SVG as $name=> $menuicon)
+                                <option id="{{$menuicon}}" data-name="{{$name}}" data-icon="{{$menuicon}}" value="{{asset($menuicon)}}">
+                                    <i class="fe fe-home"></i> {{$name}}
+                                </option>
+                            @endforeach
+                        </select>
+    
 
                     <!-- Icon Select End -->
 
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <input type="checkbox" id="isChild"  name="isChild" value="1" onclick="checkSel(this)">
                         <label for="message-text" class="col-form-label">Is It a child menu?</label>
                     </div>
@@ -142,7 +159,7 @@ Create Menu
                                 <option value="{{ $footer->id }}">{{ $footer->name }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Save</button>
@@ -167,8 +184,12 @@ Create Menu
         $(".type").on("change",toggleVisibility);
         // $(".icon_select").html(`<option><i class="fe fe-home"></i> test</option>`)
         
-        $(".icon_select").select2({
-        templateResult: formatState
+        // $(".icon_select").select2({
+        // templateResult: formatState
+        // });
+
+        $(".icon_select_2").select2({
+        templateResult: formatState2
         });
 
         $("#isChild").on("change",(e)=>{
@@ -183,6 +204,14 @@ Create Menu
         function formatState(state){
                 if(!state.id)  return state.text;
                 let newstate  =  $(`<span><i class=${state.id}> ${state.id.replace("fe-","") } </i></span>`);
+                return newstate;
+        }
+        function formatState2(state){
+                let name = $(state.element).data("name")
+                if(!state.id || !name)  return state.text;
+                console.log(state);
+                // let iconname = state.id.replace("fe-","");
+                let newstate  =  $(`<span><img src=${state.id} width="30" > ${name}</span>`);
                 return newstate;
         }
 
@@ -203,6 +232,7 @@ Create Menu
         $(".chat_user").hide();
         $(".chat_group").hide();
         $(".custom_page").hide();
+        $(".modals").hide();
 
         switch(selectbox.val()){
             case "session_room":
@@ -232,6 +262,10 @@ Create Menu
             case "custom_page":
                 $(".custom_page").show();
                 break;
+            case "modal":
+                $(".modals").show();
+                break;
+   
         }
         // console.log(val);
     }

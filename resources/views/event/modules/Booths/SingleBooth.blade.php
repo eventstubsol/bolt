@@ -25,6 +25,8 @@
                     case "chat_user":
                     case "chat_group":
                     case "pdf":
+                    case "lobby":
+                    case "modal":
                         $to = $link->to;
                         break;
                     case "session_room":
@@ -43,7 +45,7 @@
                             <div style="@if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif" class="carousel slide h-100" data-ride="carousel" data-interval="3000" data-pause="false">
                                 <div class="carousel-inner h-100" >
                                     @foreach($link->background as $id => $bgimage)
-                                <div class="carousel-item h-100 @if($id==0) active @endif">
+                                        <div class="carousel-item h-100 @if($id==0) active @endif">
                                             <img async class="d-block img-fluid h-100 w-100" style="object-fit:cover;" src="{{assetUrl($bgimage->url)}}" alt="First slide">
                                         </div>
                                     @endforeach
@@ -61,6 +63,9 @@
                     <div title="{{ $link->name  }}" class="positioned chat_user" data-link="{{ $to }}" style="{{ areaStyles($area) }}; background: transparent; cursor:pointer;">    </div>
                 @elseif($link->type === "chat_group")
                     <div title="{{ $link->name  }}" class="positioned chat_group" data-link="{{ $to }}" style="{{ areaStyles($area) }}; background: transparent; cursor:pointer;">    </div>
+                @elseif($link->type === "modal")
+                    <a title="{{ $link->name  }}" data-toggle="modal"  data-target="#{{$to}}" class="_custom_modal positioned "  style="{{ areaStyles($area) }}">    
+                    </a>
                 @elseif($link->type === "pdf")
                     <div title="{{ $link->name  }}" class="positioned _df_button" source="{{ assetUrl($to) }}" style="{{ areaStyles($area) }}; background: transparent;cursor:pointer;">    </div>
                 @else
@@ -70,7 +75,7 @@
                             style="{{ areaStyles($area) }}; background: transparent; cursor:pointer;"
                         ></a>
                     @else
-                        <div title="{{ $link->name  }}" class="positioned area" data-link="{{ $to }}" style="{{ areaStyles($area) }}">    
+                        <div title="{{ $link->name  }}" class="positioned @if($link->type != "vimeo") area @endif" data-link="{{ $to }}" style="{{ areaStyles($area) }}">    
                             @if($link->type === "vimeo")
                             <a class="video-play positioned fill" href="{{ $link->to }}">
                                 <div class="d-flex  positioned h-100 w-100">

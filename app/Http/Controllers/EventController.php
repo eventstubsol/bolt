@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\AccessSpecifiers;
+use App\Api;
 use App\Booth;
 use App\BoothInterest;
 use App\Event;
+
 use App\EventSession;
 use App\LoginLog;
 use App\Notification;
 use App\Points;
+use App\Mail\swagbagMail;
 use App\Prize;
 use App\ProvisionalGroup;
 use App\Report;
@@ -20,6 +24,7 @@ use App\UserTagLinks;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\FAQ;
+use App\Modal;
 use App\NetworkingTable;
 use App\Page;
 use App\Resource;
@@ -29,17 +34,20 @@ use Illuminate\Support\Facades\DB;
 use App\Swagbag;
 use App\Room;
 use Illuminate\Mail\Message;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 use App\sessionRooms;
 use Dotenv\Result\Success;
+use File;
+use Illuminate\Support\Facades\Storage as Storage;
 
 class EventController extends Controller
 {
     public function index($event_name)
     {
 
-        $event_id = Event::where("slug",$event_name)->first()->id;
+        $event = Event::where("slug",$event_name)->first();
+        $event_id = $event->id;
         // dd($event_id);
         // $event_id =  ($id);
         $booths = Booth::where("event_id",$event_id)->orderBy("name")->with([
@@ -61,7 +69,7 @@ class EventController extends Controller
         $boothrooms = Room::where("event_id",$event_id)->orderBy("position")->get()->load("booths");
 
         $reports = Report::all()->load(["resources", "video"]);
-        $FAQs = FAQ::all();
+        $FAQs = FAQ::where("event_id",$event_id)->get();
         //        $provisionals = ProvisionalGroup::with(["resource", "video"])->get();
         $prizes = Prize::where("event_id",$event_id)->with("images")->orderBy("criteria_low")->get();
         $schedule = getSchedule($event_id);
@@ -82,22 +90,37 @@ class EventController extends Controller
 
             // }
         }
+
+        $access_specifiers = AccessSpecifiers::where("event_id",$event_id)->get()->groupBy("page_id");
+       
+        foreach($access_specifiers as $id=> $access ){
+            $arr = [];
+            foreach($access as $accessTo){
+                array_push($arr,$accessTo->user_type);
+            }
+            $access_specifiers[$id] = $arr;
+        }
+
+
         // dd($sessionroomids);
         $sessions = EventSession::where("event_id",$event_id)->get()->load(["parentroom"]);
         
-        
         $user->load("subscriptions");
+        // dd($user);
         $subscriptions = [];
         foreach ($user->subscriptions as $subscription) {
             $subscriptions[] = $subscription->session_id;
         }
-        // dd($booths);
+        $modals=Modal::where("event_id",$event_id)->get();
+        $modals->load(["items"]);
+        // return ($modals);
         // dd($schedule);
         // $event_id = $id;
         return view("event.index")
             ->with(
                 compact([
                     "booths",
+                    "modals",
                     "FAQs",
                     "pages",
                     "reports",
@@ -111,7 +134,9 @@ class EventController extends Controller
                     "sessionroomnames",
                     "event_id",
                     "tables",
-                    "event_name"
+                    "event_name",
+                    "access_specifiers",
+                    "event"
                 ])
             );
     }
@@ -130,6 +155,73 @@ class EventController extends Controller
                 "type" => "public"
             ]);
             return true;
+    }
+
+    public function getIcons(){
+        // $files = File::allFiles("./icons/");
+        // dd($files);
+    }
+
+    public function integrations($id)
+    {
+        $apis = Api::where("event_id",$id)->get();
+        $envs = [];
+        foreach($apis as $api){
+            $envs[$api->variable] = $api->key;
+        }
+        // dd($envs);
+        return view("eventee.integrations.list")->with(compact("id","envs"));
+    }
+    public function settings($id)
+    {
+        $event = Event::where("id",$id)->first();
+        $pages = Page::where("event_id",$id)->get();
+        $session_rooms = sessionRooms::where("event_id",$id)->get();
+        return view("eventee.settings.default")->with(compact("id","pages","session_rooms","event"));
+    }
+    public function settingsUpdate(Request $request,$id)
+    {
+        // dd($request->all());
+        $event = Event::where("id",$id)->first();
+        $type = "exterior";
+        $page = "exterior";
+        switch($request->type){
+            case "page":
+                $type="page";
+                $page="page/".$request->pages;
+                break;
+            case "session_room":
+                $type="sessionroom";
+                $page="sessionroom/".$request->rooms;
+                break;
+            case "lobby": 
+                $type="lobby";
+                $page="lobby";
+                break; 
+            case "exterior": 
+                $type="exterior";
+                $page="exterior";
+                break; 
+        }
+        $event->home_page=$page;
+        $event->home_type=$type;
+        $event->save();
+        return redirect(route("eventee.settings",$id));
+    }
+    public function integrationsUpdate(Request $request,$id)
+    {
+        // if($request->RECAPTCHA_SITE_KEY || $request->RECAPTCHA_SECRET_KEY){
+            foreach($request->except("_token") as $var => $key){
+                Api::updateOrCreate([
+                            "variable"=> $var,
+                            "event_id"=>$id
+                        ],[
+                                "key"=>$key
+                            ]
+                        );
+            }
+            return redirect(route("eventee.integrations",$id));
+        // dd($request->except("_token"));
     }
 
     public function addToBag(Request $request)
@@ -211,7 +303,7 @@ class EventController extends Controller
         return view("dashboard.reports.leader");
     }
 
-    public function leaderboard($id)
+    public function leaderboard($subdomain,$id)
     {
         // return $id;
         return User::orderBy("points", "desc")
@@ -609,6 +701,7 @@ class EventController extends Controller
     public function sendSwagsToEmail()
     {
         $user = Auth::user();
+        $event = Event::findOrFail($user->event_id);
         $swags = Swagbag::where("user_id", $user->id)->with([
             "resource.booth",
             "report.resources",
@@ -628,24 +721,8 @@ class EventController extends Controller
                 }
             }
         }
-
-        Mail::send([], [], function (Message $message) use ($user, $resources) {
-            $message
-                ->to($user->email)
-                ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
-                ->replyTo(env('MAIL_TO_ADDRESS'), env('MAIL_TO_NAME'))
-                ->embedData([
-                    'personalizations' => [
-                        [
-                            'dynamic_template_data' => [
-                                'user' => "{$user->name} {$user->last_name}",
-                                'resources'  => $resources,
-                            ],
-                        ],
-                    ],
-                    'template_id' => config("services.sendgrid.templates.swagbag"),
-                ], SendgridTransport::SMTP_API_NAME);
-        });
+        // dd($resources);
+        Mail::to($user->email)->send(new swagbagMail($event,$resources,$user));
 
         return ["success" => TRUE];
     }
@@ -665,6 +742,7 @@ class EventController extends Controller
             $videoId = $request->get("id", false);
             //room name
             $type = $request->get("type", EVENT_ROOM_AUDI);
+            $event_id = $request->get("event_id");
             
             //Fetch Current Session
             $session = $this->getCurrentRunningSession($type);
@@ -678,7 +756,7 @@ class EventController extends Controller
          
             if($session->type === "VIDEO_SDK"){
                 // dd($session);
-                return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id]));
+                return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id,"containerId"=>$type]));
             }
 
             //Direct Zoom Redirect
@@ -698,6 +776,10 @@ class EventController extends Controller
                 return redirect(route("webinar", getZoomParameters($session->zoom_webinar_id, $session->zoom_password && strlen($session->zoom_password) ? $session->zoom_password : "")));
             }
 
+            if ($session->type == "VIMEO_VIDEO_SDK" && strlen($session->zoom_webinar_id)) { 
+                if($user->type === USER_TYPE_DELEGATE)
+                    return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id,"containerId"=>$type]));
+            }
             if ($session->type == "VIMEO_ZOOM_SDK" && strlen($session->zoom_webinar_id)) { 
                 if($user->type === USER_TYPE_DELEGATE)
                     return redirect(route("webinar", getZoomParameters($session->zoom_webinar_id, $session->zoom_password && strlen($session->zoom_password) ? $session->zoom_password : "")));
@@ -738,10 +820,10 @@ class EventController extends Controller
         return view("event.webinar");
     }
     
-    public function videosdk(Request $request,$meetingId)
+    public function videosdk(Request $request,$meetingId,$containerId)
     {
         // dd($meetingId);
-        return view("event.videosdk")->with(compact(["meetingId"]));
+        return view("event.videosdk")->with(compact(["meetingId","containerId"]));
     }
 
 
@@ -761,26 +843,10 @@ class EventController extends Controller
 
     private function getCurrentRunningSession($room)
     {
-        if ($room === "caucus") {
-            $user = Auth::user();
-            $room = strtolower($user->region_name);
-            if (in_array($room, REGIONS)) {
-                $session = getCurrentSession($room);
-                if ($session && $session->id) {
-                    return $session;
-                }
-            }
-            if (isset(REGIONS_NAMES_TO_VALUE[$room])) {
-                $session = getCurrentSession(REGIONS_NAMES_TO_VALUE[$room]);
-                if ($session && $session->id) {
-                    return $session;
-                }
-            }
-        } else {
-            $session = getCurrentSession(strtoupper($room));
-            if ($session && $session->id) {
-                return $session;
-            }
+        $user = Auth::user();
+        $session = getCurrentSession(strtoupper($room),$user->event_id);
+        if ($session && $session->id) {
+            return $session;
         }
         return false;
     }
@@ -935,14 +1001,17 @@ class EventController extends Controller
         ]));
     }
 
-    public function boothReports(Booth $id){
+    public function boothReports(Booth $id,$event_id, Request $req){
+        $req->session()->put('MangeEvent',1);
         $apiRoute = route("reports.booth.api", ['id' => $id->id]);
         $logsRoute = route("reports.export.boothLogs",['id' => $id->id]);
         $logName = $id->name;
+        $id = $event_id;
         return view("dashboard.reports.auditorium")->with(compact([
             'apiRoute',
             'logsRoute',
             'logName',
+            'id'
         ]));
     }
 
@@ -1057,6 +1126,8 @@ class EventController extends Controller
                     "Name" => $loginLog->user->name,
                     "Last Name" => $loginLog->user->last_name,
                     "Visited At" => $loginLog->created_at->format('Y-m-d\TH:i'),
+                    "Company Name" => $loginLog->user->company_name,
+
                 ];
             }
         }

@@ -35,7 +35,14 @@
             line-height: 2em;
         }
         .auth-fluid{
-            background: url("{{assetUrl(getFieldId('login_background',$id))}}") !important;
+            @if(isset($id))
+                background: url("{{assetUrl(getFieldId('login_background',$id))}}") ;
+            @else
+                background: url("{{assetUrl(getField('login_background'))}}"); 
+
+            @endif
+            background-size: cover;
+            background-repeat: no-repeat;
         }
         body.auth .login-container .login-header .logo {
             display: block;
@@ -107,8 +114,12 @@
                     <div class="mb-5 text-center  text-lg-center">
                         <div class="auth-logo">
                             <a href="index.html" class="logo text-center">
-                                <span class="logo-lg">
+                                <span class="logo ">
+                                    @if(isset($id))
                                     <img src="{{assetUrl(getFieldId('logo',$id,"uploads/xmbGmR1olTbfKNwonBymeJv0mJV9emC2EK9bjCdF.png"))}}" alt="" height="82">
+                                    @else   
+                                    <img src="{{assetUrl(getField('logo',"uploads/xmbGmR1olTbfKNwonBymeJv0mJV9emC2EK9bjCdF.png"))}}" alt="" height="82">
+                                    @endif
                                 </span>
                             </a>
 

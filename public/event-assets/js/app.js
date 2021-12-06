@@ -98,11 +98,11 @@ function initApp() {
 
     function checkAuth(room = "all") {
         if(room == "all"){
-            if (window.config.userType == "exhibiter" || window.config.userType == "sponsor") {
-                return true;
-            }
-            return false;
+            // if (window.config.userType == "exhibiter" || window.config.userType == "sponsor") {
+            //     return true;
+            // }
         }
+        return false;
     }
 
 
@@ -137,6 +137,7 @@ function initApp() {
                     console.log("Hello World")
                     e.preventDefault();
                     let t = $(this);
+                    console.log(t);
                     t.prop("disabled", true);
                     if (t.data("id")) {
                         $.ajax({
@@ -147,6 +148,11 @@ function initApp() {
                             },
                             success: function () {
                                 // t.parent().find("a").prop("disabled", false).hide().filter(".subscribe-to-event").show();
+                                $(".sa-"+t.data("id")).show();
+                                $(".sr-"+t.data("id")).hide();
+                                t.hide().filter(".subscribe-to-event").show();
+                                t.parent().find("a").filter(".subscribe-to-event").show();
+                         
                                 t.parent().parent().hide();
                                 showMessage("Unsubscribed to session. ", "success");
                             },
@@ -183,30 +189,46 @@ function initApp() {
     const doNotRoute = [
         "support"
     ];
-    areas.on("click", function (e) {
-        // loader.show();
+    areas.on("click", async function (e) {
+        loader.show();
         const link = $(this).data("link");
+        console.log(link);
         directAccess = false;
         const flyin = $(e.target).data("flyin");
-        // console.log({e,flyin});
+        const photobooth = $(e.target).data("capture");
+        if(photobooth){
+            let gallery = $("#photo-gallery");
+            let capture = $("#photo-capture");
+            await gallery.attr("src" , $(this).data("gallery"));
+            await capture.attr("src" , $(this).data("capture"));
+        }
 
-        if(flyin){
-            pages.hide();
-            pages.filter("#flyin").show();
+        if(flyin && checkDestination(link)){
             flyIn.show();
 
             flyIn.attr('src', flyin);
-            // waitForVideosLoad(flyin)
-            //     .then(() => loader.fadeOut());
+            // loader.fadeOut()
             flyIn.prop("currentTime", 0).get(0).play();
             flyIn
+                .on("canplaythrough", () =>{
+                      pages.hide();
+                      pages.filter("#flyin").show();        
+                      loader.hide()
+                     })  
                 .off("click")
                 .on("ended", function () {
                     flyIn.fadeOut();
                     routie(link);
-                    loader.fadeOut();
-                });
+                    // loader.fadeOut();
+            });
+            // waitForVideosLoad(flyin)
+            //     .then(() => {
+                
+            //     });
+            
             return;
+        }else{
+            loader.hide();
         }
 
         if (!doNotRoute.includes(link)) {
@@ -216,10 +238,27 @@ function initApp() {
         }
     });
 
+    $("._custom_modal").on("click", function (e) {
+        // console.log(e);
+        $($(e.target).data("target")).modal()
+    });
+    $(".videosdk").on("click", function (e) {
+        meeting_id = $(this).data("meeting");
+        if(meeting_id){
+            $("#videosdk-session-content").empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.videoSDK.replace(":id",meeting_id)}"></iframe>`);
+            $("#videosdk-session-content").append(`<div id="video_play_area"></div>`);
+            $("#videosdk_modal").unbind().on("hide.bs.modal", function () {
+                $("#videosdk-session-content").empty();
+            });
+        }
+    });
     $(".subscribe-to-event").on("click", function (e) {
         // console.log("hello")
         e.preventDefault();
         let t = $(this);
+
+        console.log( t);
+        console.log( t.data("id"));
         t.prop("disabled", true);
         if (t.data("id")) {
             $.ajax({
@@ -230,7 +269,10 @@ function initApp() {
                 },
                 success: function () {
                     showMessage("Subscribed to session. You will now get a priority notification few minutes prior to session.", "success");
-                    t.parent().find("a").prop("disabled", false).hide().filter(".unsubscribe-event").show();
+                    t.hide();
+                    $(".sa-"+t.data("id")).hide();
+                    $(".sr-"+t.data("id")).show();
+                    t.parent().find("a").filter(".unsubscribe-event").show();
                 },
                 error: function () {
                     showMessage("Error occurred while subscribing to session. Please try again later or refresh page.", "error");
@@ -239,9 +281,11 @@ function initApp() {
         }
     });
     $(".unsubscribe-event").on("click", function (e) {
-        console.log("Hello World")
         e.preventDefault();
         let t = $(this);
+        console.log(t.data("id"));
+        
+        console.log("Hello World")
         t.prop("disabled", true);
         if (t.data("id")) {
             $.ajax({
@@ -251,7 +295,8 @@ function initApp() {
                     _token: window.config.token,
                 },
                 success: function () {
-                    t.parent().find("a").prop("disabled", false).hide().filter(".subscribe-to-event").show();
+                    t.hide().filter(".subscribe-to-event").show();
+                    t.parent().find("a").filter(".subscribe-to-event").show();
                 },
                 error: function () {
                     showMessage("Error occurred while disabling session notification. Please try again later or refresh page.", "error");
@@ -518,19 +563,19 @@ function initApp() {
     routie({
         'lobby': function () {
             pages.hide();
-            if (isMobile()) {
-                document.querySelector("#lobby_view").src = '';
-            }
+            // if (isMobile()) {
+            //     document.querySelector("#lobby_view").src = '';
+            // }
             pages.filter("#lobby").show();
             pageChangeActions();
-            recordPageView("lobby", "Lobby");
+            recordPageView("lobby", "Lobby","Lobby");
         },
         'room/:id': function (id) {
             let toShow = pages.filter("#room-" + id);
             if (toShow.length) {
                 pages.hide();
                 toShow.show();
-                recordPageView("room-" + id, "Room / " + (toShow.data("name") || id));
+                recordPageView("room-" + id, "Room / " + (toShow.data("name") || id),'Room',id);
             } else {
                 //alert("The doors will open on friday at 4:00 - 6:00 PM.");
                 $('#information-modal').modal({
@@ -548,6 +593,7 @@ function initApp() {
             setTimeout(() => {
                 updateLounge();
             }, 2000);
+            recordPageView("networking", "networking","Lounge");
         },
         "museum": function () {
             if (checkAuth()) {
@@ -560,7 +606,7 @@ function initApp() {
                     trackEvent({
                         type: "museumVisit",
                     });
-                    recordPageView("Museum", "Museum");
+                    recordPageView("Museum", "Museum","Museum");
                 } else {
                     routie(notFoundRoute);
                 }
@@ -645,7 +691,7 @@ function initApp() {
                         let modalId = $(this).data("modal") + id;
                         let modalEl = $("#" + modalId);
                         if ($(this).data("modal") === "book-a-call-modal-") {
-                            recordEvent("booking_modal_opened", "Booking Modal Opened / " + modalEl.data("name"), "booking_flow");
+                            recordEvent("booking_modal_opened", "Booking Modal Opened / " + modalEl.data("name"), "booking_flow",'Booth',id);
                             trackEvent({
                                 type: "boothBookingModalOpened",
                                 id,
@@ -692,7 +738,7 @@ function initApp() {
                         currentresbtns = resbtns;
                     }
                 }, 100)
-                recordPageView("booth/" + id, "Booth - " + toShow.data("name"));
+                recordPageView("booth/" + id, "Booth - " + toShow.data("name"),"Booth",id);
             } else {
                 routie(notFoundRoute);
             }
@@ -724,6 +770,7 @@ function initApp() {
                 }
                 pageChangeActions();
             }
+            recordPageView("attendees",'attendees','Attendees')
         },
         'report': function () {
             if (checkAuth()) {
@@ -746,17 +793,19 @@ function initApp() {
             }
         },
         'exterior': function () {
-            pages.hide();
             // $("#cometchat__widget").hide();
             navs.addClass('hidden');
+            $("body").click()
+            pages.hide();
             pages.filter(".initial").show();
-            if (!isMobile()) {
+            // if (!isMobile()) {
                 exteriorView.prop("currentTime", 0).get(0).play();
                 setTimeout(function () {
                     loader.hide();
                 }, 5000);
                 exteriorView
-                    .on("canplaythrough", () => loader.hide())
+                    .on("canplaythrough", () =>{ 
+                        loader.hide();})
                     .on("click", function () {
                         enteringView.prop("currentTime", 0).get(0).play();
                         exteriorView.fadeOut();
@@ -767,13 +816,13 @@ function initApp() {
                                 routie("lobby");
                             });
                     });
-            } else {
-                exteriorView
-                    .on("click", function () {
+            // } else {
+            //     exteriorView
+            //         .on("click", function () {
 
-                        routie("lobby");
-                    });
-            }
+            //             routie("lobby");
+            //         });
+            // }
             recordPageView("exterior", "Exterior");
         },
         'leaderboard': function () {
@@ -788,7 +837,7 @@ function initApp() {
                     initializedLeaderboard = setInterval(() => showLeaderboard(true), 30000);
                 }
                 pageChangeActions();
-                recordPageView("leaderboard", "Leaderboard");
+                recordPageView("leaderboard", "Leaderboard","Leaderboard");
             }
         },
         'lounge': function () {
@@ -912,13 +961,16 @@ function initApp() {
             recordPageView("#session-list-" + roomgroup, "Session List " + roomgroup);
         },
         'sessionroom/:room': function (room) {
-            console.log(room);
+            // alert(room);
             setRoom = room;
             let video = $('.video-'+room);
             let whitelist_for_all = ["Health_Pavilion_Stage","Sponsor_Stage"]
             if ((!whitelist_for_all.includes(room)) && checkAuth() && room != "Sponsor_Stage") {
                 routie("lobby");
             } else {
+                if($("#sessionroom-" + room).length===0){
+                    routie("lobby");
+                }
                 pages.hide().filter("#sessionroom-" + room).show();
                 if(room==="Program-Workshop-2"||room==="Program-Workshop-1"){
                     trackEvent({
@@ -943,7 +995,7 @@ function initApp() {
                     // if(window.config.auditoriumEmbed.startsWith(""))
                     // console.log(window.config.auditoriumEmbed)
                     $("#session-content-" + room).empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=${room}"></iframe>`);
-                    $("#session-content-" + room).append(`<div id="video_play_area"></div>`);
+                    // $("#session-content-" + room).append(`<div id="video_play_area"></div>`);
                     $(".cc1-chat-win-inpt-wrap input").unbind("mousedown").on("mousedown", function (e) { e.preventDefault(); e.stopImmediatePropagation(); $(e.target).focus() });
                 };
                 let sessionModal = $("#session-modal-" + room);
@@ -956,7 +1008,7 @@ function initApp() {
                     console.log("opened")
                     $("#session-content-" + room).empty();
                 });
-                recordPageView("workshop/" + room, room + " Room");
+                recordPageView("workshop/" + room, room + " Room",'Sessionroom',room);
             }
             video.show();
             video.prop("currentTime", 0).get(0).play();
@@ -972,6 +1024,9 @@ function initApp() {
             if ((!whitelist_for_all.includes(page)) && checkAuth()) {
                 routie("lobby");
             } else {
+                if($("#page-" + page).length===0){
+                    routie("lobby");
+                }
                 pages.hide().filter("#page-" + page).show();
                 if(page==="Program-Workshop-2"||page==="Program-Workshop-1"){
                     trackEvent({
@@ -981,7 +1036,7 @@ function initApp() {
                 }
                 pageChangeActions(false);
 
-               recordPageView("page/" + page, page + " page");
+               recordPageView("page/" + page, page + " page", "page",page);
             }
             video.show();
             video.prop("currentTime", 0).get(0).play();
@@ -1023,7 +1078,7 @@ function initApp() {
                 recordPageView("infodesk", "Infodesk");
             }
         },
-        'photo-booth': function () {
+        'photo-booth': function (id) {
             if (checkAuth()) {
                 routie("lobby");
             } else {
@@ -1034,6 +1089,12 @@ function initApp() {
                 let galleryBtn = $("#gallery");
                 let capture = $("#photo-capture");
                 let captureBtn = $("#capture");
+                console.log($(this).data("gallery"));
+                console.log(this);
+                console.log($(this));
+                console.log($(this).data("capture"));
+                gallery.attr("src" , $(this).data("gallery"));
+                capture.attr("src" , $(this).data("capture"));
                 capture.hide();
                 gallery.show();
                 galleryBtn.hide();
@@ -1093,7 +1154,11 @@ function initApp() {
         }
     });
     if (window.location.hash === "") {
-        routie("exterior");
+        if(window.config.homepage){
+            routie(window.config.homepage);
+        }else{
+            routie("exterior");
+        }
     } else if (window.location.hash.indexOf("#exterior") === -1) {
         pageChangeActions();
     }
@@ -1205,6 +1270,26 @@ function showMessage(title, type = "info", options = {}) {
         title,
         ...options
     });
+}
+
+
+function checkDestination(link) {
+    let check = "";
+    if(link.includes("sessionroom")){
+       check =  link.replace("sessionroom/","#sessionroom-")
+    }
+    if(link.includes("booth")){
+       check =  link.replace("booth/","#booth-")
+    }
+    if(link.includes("page")){
+       check =  link.replace("page/","#page-")
+    }
+    if($(check).length){
+        return true
+    }else{
+        return false
+    }
+    
 }
 
 function setupGamification() {
