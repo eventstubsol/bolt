@@ -5,11 +5,12 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <style>
-        #videosdk{
-            width: 100vw;
-            height: 100vh;
-        }
-    </style>
+          #videosdk{
+              width: 100vw;
+              height: 100vh;
+          }
+      
+      </style>
 </head>
 <body>
     <div id="video"></div>
@@ -31,13 +32,13 @@
           apiKey: "9dc7ab5b-c227-4f0f-a0fe-8ff279cdaf75",
           meetingId: "{{$meetingId}}",
 
-          containerId: "video_play_area",
-          redirectOnLeave: "https://www.videosdk.live/",
-
+          containerId: "{{$containerId === 'video_play_area' ? 'video_play_area' : 'session-content-'.$containerId}}",
+          
           micEnabled: false,
           webcamEnabled: false,
           participantCanToggleSelfWebcam: true,
           participantCanToggleSelfMic: true,
+          redirectOnLeave: window.location.href,
 
           chatEnabled: true,
           screenShareEnabled: true,

@@ -5,7 +5,7 @@
 @endsection
 
 @section("page_title")
-    Crete Form
+    Create Form
 @endsection
 
 @section("title")

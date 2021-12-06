@@ -7,6 +7,7 @@ use App\LoginLog;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Points;
 use Http;
 use Illuminate\Support\Facades\Log;
@@ -20,11 +21,14 @@ use App\FormField;
 use App\UserData;
 use App\UserSubtype;
 use Aws\Api\Validator;
+use App\UserLocation;
 use Dotenv\Exception\ValidationException;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 class AttendeeAuthController extends Controller
+
 {
+    use SoftDeletes;
 
     public function __construct()
     {
@@ -51,38 +55,43 @@ class AttendeeAuthController extends Controller
     {
         // return $subdomain;
         $event = Event::where("slug",$subdomain)->first();
-        //     $response = Http::asForm()
-        //     ->post(
-        //         "https://www.google.com/recaptcha/api/siteverify",
-        //         [
-        //             "secret" => env("RECAPTCHA_SECRET_KEY"),
-        //             "response" => $request->post("token")
-        //         ]
-        //     );
-
-        //     $Response = json_decode($response->body(), TRUE);
-        
        
+        //     if(env('RECAPTCHA_SECRET_KEY') && env('RECAPTCHA_SITE_KEY')){
+        //         // dd("shubh");
+        //         $response = Http::asForm()
+        //         ->post(
+        //             "https://www.google.com/recaptcha/api/siteverify",
+        //             [
+        //                 "secret" => api('RECAPTCHA_SECRET_KEY',$event->id),
+        //                 "response" => $request->post("token")
+        //             ]
+        //         );
+
+        //         $Response = json_decode($response->body(), TRUE);
+            
         
-        // if (!$response->successful() || !$Response["success"]) {
-        //     $request->old(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")));
-        //     return view("auth.attendee_login")
-        //         ->with([
-        //             "notFound" => FALSE,
-        //             "captchaError" => TRUE,
-        //             "login" => $this->loginT
-        //         ]);
+            
+        //     if (!$response->successful() || !$Response["success"]) {
+        //         $request->old(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")));
+        //         return view("eventUser.login")
+        //             ->with([
+        //                 "notFound" => FALSE,
+        //                 "captchaError" => TRUE,
+        //                 "login" => $this->loginT,
+        //                 "subdomain"=>$subdomain
+        //             ]);
+        //     }
         // }
-        // $validation =  env("ATTENDEE_LOGIN_FIELD") == "email" ? "required|email" : "required";
-        // $request->validate([env("ATTENDEE_LOGIN_FIELD") => $validation]);
+        $validation =  env("ATTENDEE_LOGIN_FIELD") == "email" ? "required|email" : "required";
+        $request->validate([env("ATTENDEE_LOGIN_FIELD") => $validation]);
         //dd($event);
 
         $user = User::with('tags.looking_users')->where("email", $request->post("email"))
         ->where('event_id',$event->id)
             //            ->whereIn("type", USER_TYPES_TO_LOGIN_WITH_MEMBERSHIP_ID)
-            ->whereNotIn("type", ["admin", "teller", "moderator", "exhibiter", "cms_manager"])
+            ->whereNotIn("type", ["admin","eventee", "cms_manager"])
             ->first();
-        
+        // dd($user);
         if (!$user) {
 
             // dd("not found");
@@ -104,17 +113,15 @@ class AttendeeAuthController extends Controller
             //     "login" => $this->loginT
             // ]);
         } else {
-
-            // if ($user->type == 'attendee' && env("APP_ENV") != "local") {
-            //     return view("auth.attendee_login")->with([
-            //         "notFound" => TRUE,
-            //         "captchaError" => FALSE,
-            //         "login" => $this->loginT
-            //     ]);
-            // }
-            \DB::table("sessions")->where("user_id", $user->id)->whereNotIn("id", [session()->getId()])->delete();
+            if ($user->type !== 'attendee' && $user->type !== 'delegate' ) {
+                return redirect( route("exhibitorLogin",['subdomain'=>$subdomain,'email'=>$user->email]));
+            }
+            $user->online_status = 1;
+            $user->save();
+            DB::table("sessions")->where("user_id", $user->id)->whereNotIn("id", [session()->getId()])->delete();
             Auth::login($user);
             LoginLog::create(["ip" => $request->ip(), "user_id" => $user->id]);
+            // UserLocation::create(['user_id'=>$user->id,'event_id'=>$user->event_id,'type'=>"exterior"]);
             $pointsDetails = [
                 "points_to" => $user->id,
                 "points_for" => "login",
@@ -142,17 +149,58 @@ class AttendeeAuthController extends Controller
     }
 
    public function showRegistration($subdomain,$slug){
-        $form = Form::where("slug",$slug)->first();
-        if(!$form){
-            return "form not found";
-        }
         $id = Event::where("slug",$subdomain)->first()->id;
+        $form = Form::where("slug",$slug)->where("event_id",$id)->first();
+        if(!$form){
+            return view('erros.404');
+        }
         $subtypes = UserSubtype::where('event_id',$id)->get();
         $form->load("fields.formStruct");
         $email = FALSE;
         // $form = (object) ($form ->toArray());
         // return $form;
         return view("eventee.form.registration")->with(compact("id","subdomain","form","email","subtypes"));
+   }
+
+   public function exhibitorlogin($subdomain,Request $req)
+   {
+    try{
+        $event = Event::where("slug",$subdomain)->first();
+        $user = User::where('email',$req->email)->where("event_id",$event->id)->first();
+        $pass = password_verify($req->password,$user->password);
+        if($pass ){
+            // dd($user);
+            Auth::login($user);
+                // return $user->type;
+            LoginLog::create(["ip" => $req->ip(), "user_id" => $user->id]);
+           
+            if($user->type === "exhibiter"){
+                return redirect(route("exhibiterhome",$subdomain));
+            }
+            if($user->type === "speaker"){
+                return redirect(route("eventee.event",['subdomain'=>$event->slug]));
+            }
+            // if(view()->exists("dashboard.".$user->type)){
+            // }
+            // return redirect(route('home'));
+        }
+        else{
+            return "Invalid Credentials".$user->id." ";
+
+            return view("auth.exhibiter")->with([
+                "email" => $req->email,
+                "login" => $this->loginT,
+                "notFound" => TRUE,
+                "captchaError" => FALSE,
+                "id"=>$event->id,
+                "subdomain"=>$event->slug
+            ]);
+            
+        }
+    }
+    catch(\Exception $e){
+        Log::error($e->getMessage());
+    }
    }
    public function showRegistrationForm($subdomain)
     {
@@ -207,7 +255,7 @@ class AttendeeAuthController extends Controller
         }
         $user = new User($request->all());
         $user->save();
-        $userdatas = $request->except("name","email","phone","country","job_title","event_id","_token","type","subtype");
+        $userdatas = $request->except("name","email","phone","country","job_title","event_id","_token","type","subtype","profileImage");
         foreach($userdatas as $feild => $userdata){
             $userData = new UserData;
             $userData->user_id = $user->id;

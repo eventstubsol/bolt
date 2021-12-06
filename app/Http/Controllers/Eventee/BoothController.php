@@ -7,17 +7,19 @@ use Illuminate\Http\Request;
 use App\BoothInterest;
 use App\Booth;
 
+
 use App\Room;
 use Illuminate\Support\Facades\Log;
 use App\User;
 
 use App\BoothAdmin;
-
+use App\Event;
 use App\Image;
 
 use App\Video;
 use App\Page;
 use App\Link;
+use App\Modal;
 use App\sessionRooms;
 
 use App\Resource;
@@ -47,66 +49,63 @@ class BoothController extends Controller
   //Create new booth instance
   public function store(Request $request,$id)
   {
-      try{
-        // dd($request->all());
-          $booth = new Booth;
-          if($request->has("name")){
-            $booth->name = $request->get("name");
-            // $booth->bg_type = $request->bg_type;
-          }
-          else{
-              return false;
-          }
-          if($request->has("boothurl") && $request->boothurl != null){
-            $booth->boothurl = $request->get("boothurl");
-          }
-          
-          $booth->event_id = $id;
-          if($request->has("calendly_link")){
-            $booth->calendly_link=$request->calendly_link;
-          }
-          if($request->has("video_url")  && $request->video_url != null){
-            $booth->vidbg_url = $request->video_url;
-          }
-          $booth->save();
-          // if($booth->save()){
-            Http::withHeaders([
-              "apiKey" => env("COMET_CHAT_API_KEY"),
-                "appId" => env("COMET_CHAT_APP_ID")
-              ])
-                ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
-                  "type" => strtolower(env("COMET_CHAT_GROUP_TYPE")),
-                  "guid" => $booth->id,
-                  "name" => $booth->name
-                ]);
-          
-              $user_ids = $request->get("userids");
-              foreach ($user_ids as $user_id) {
-                BoothAdmin::create([
-                  "user_id" => $user_id,
-                  "booth_id" => $booth->id,
-                ]);
-              }
-          
-              // create group admin
-              Http::withHeaders([
-                "apiKey" => env("COMET_CHAT_API_KEY"),
-                "appId" => env("COMET_CHAT_APP_ID"),
-                "Accept-Encoding"=> "deflate, gzip",
-                "Content-Encoding"=> "gzip"
-                ])
-                ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
-                flash("Booth Created Successfully")->success();
-                return redirect()->to(route("eventee.booth",$id)); 
-                // }
-                // create group in comet chat
-                
-              }
-              catch(\Exception $e){
-            dd($e);
-
-          Log::error($e->getMessage());
+      // dd($request->all());
+      $booth = new Booth;
+      if($request->has("name")){
+        $booth->name = $request->get("name");
+        // $booth->bg_type = $request->bg_type;
       }
+      else{
+          return false;
+      }
+      if($request->has("boothurl") && $request->boothurl != null){
+        $booth->boothurl = $request->get("boothurl");
+      }
+      $booth->event_id = $id;
+  
+      if($request->has("calendly_link")){
+        $booth->calendly_link=$request->calendly_link;
+      }
+      else{
+        $booth->calendly_link=null;
+      }
+      if($request->has("video_url")  && $request->video_url != null){
+        $booth->vidbg_url = $request->video_url;
+      }
+     
+      $booth->save();
+      // if($booth->save()){
+        // Http::withHeaders([
+        //   "apiKey" => env("COMET_CHAT_API_KEY"),
+        //     "appId" => env("COMET_CHAT_APP_ID")
+        //   ])
+        //     ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
+        //       "type" => strtolower(env("COMET_CHAT_GROUP_TYPE")),
+        //       "guid" => $booth->id,
+        //       "name" => $booth->name
+        //     ]);
+      
+          $user_ids = $request->get("userids");
+          foreach ($user_ids as $user_id) {
+            BoothAdmin::create([
+              "user_id" => $user_id,
+              "booth_id" => $booth->id,
+            ]);
+          }
+      
+          // create group admin
+          // Http::withHeaders([
+          //   "apiKey" => env("COMET_CHAT_API_KEY"),
+          //   "appId" => env("COMET_CHAT_APP_ID"),
+          //   "Accept-Encoding"=> "deflate, gzip",
+          //   "Content-Encoding"=> "gzip"
+          //   ])
+          //   ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
+            flash("Booth Created Successfully")->success();
+            return redirect()->to(route("eventee.booth",$id)); 
+            // }
+            // create group in comet chat
+            
     
   }
 
@@ -197,23 +196,32 @@ class BoothController extends Controller
   //Delete booth
   public function destroy(Booth $booth,$id)
   {
-    Http::withHeaders([
-      "apiKey" => env("COMET_CHAT_API_KEY"),
-      "appId" => env("COMET_CHAT_APP_ID"),
-      "Accept-Encoding"=> "deflate, gzip",
-      "Content-Encoding"=> "gzip"
-    ])
-      ->delete(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id);
+    // dd($booth);
+    // Http::withHeaders([
+    //   "apiKey" => env("COMET_CHAT_API_KEY"),
+    //   "appId" => env("COMET_CHAT_APP_ID"),
+    //   "Accept-Encoding"=> "deflate, gzip",
+    //   "Content-Encoding"=> "gzip"
+    // ])
+    //   ->delete(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id);
 
     $booth->delete();
-    return redirect()->to(route("booth.index",$id));
+    return true;
   }
 
+  public function exhibiterhome($subdomain){
+    // dd($subdomain);
+    $id = Event::where("slug",$subdomain)->first()->id;
+    return view("dashboard.exhibiter")->with(compact("id"));
+
+  }
   public function adminEdit(Request $req, Booth $booth,$id)
   {
+  
     $pages = Page::where("event_id",$booth->event_id)->get();
 
     $booths = Booth::where("event_id",$booth->event_id)->get();
+    $modals = Modal::where("event_id",$booth->event_id)->get();
 
     $session_rooms = sessionRooms::where("event_id",$booth->event_id)->get();
 
@@ -224,7 +232,7 @@ class BoothController extends Controller
       // dd("test");
       // $id=null;
       // dd(isset($id));
-    return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms","id"));
+    return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms","id","modals"));
   }
 
   public function adminUpdate(Request $request, Booth $booth,$id)
@@ -267,6 +275,9 @@ class BoothController extends Controller
                     break;
                 case "custom_page":
                     $to = $request->custom_page[$id];
+                    break;
+                case "modal":
+                    $to = $request->modal[$id];
                     break;
             }
             // dd(isset($request->rotationtype[$id])?$request->rotationtype[$id]:'');
@@ -341,14 +352,14 @@ class BoothController extends Controller
     if ($requesturls) {
       foreach ($requesturls as $id => $requrl) {
         if (!in_array($requrl, $oldResourceurls)) {
-          if (!empty(trim($requrl))) {
+          if (!empty(trim($requrl)) && !empty(trim($request->resourcetitles[$id]))) {
             Resource::create([
               "booth_id" => $booth->id,
               "url" => $requrl,
               "title" => $request->resourcetitles[$id],
             ]);
           }
-        } elseif (!in_array($requrl, $deletedResources)) {
+        } elseif (!in_array($requrl, $deletedResources)  && !empty(trim($request->resourcetitles[$id]))) {
           $resource = Resource::where("url", $requrl)->update(["title" => $request->resourcetitles[$id]]);
         }
       }
@@ -409,6 +420,43 @@ class BoothController extends Controller
   public function unpublish(Booth $booth){
       $booth->unpublish();
       return ['success' => true];
+  }
+
+  public function deleteVideo(Request $req){
+    try{
+      $id = $req->id;
+      $video = Video::findOrFail($id);
+      if($video->delete()){
+        return response()->json(["code"=>200,"message"=>"Video Deleted"]);
+      }
+      else{
+        return response()->json(["code"=>500,"message"=>"Something Went Wrong"]);
+      }
+    }
+    catch(\Exception $e){
+      Log::error($e->getMessage());
+    }
+   
+  }
+
+  public function BulkDelete(Request $req){
+    $ids = $req->ids;
+    $totalcount = 0;
+    for($i = 0 ; $i < count($ids); $i++){
+        $booth = Booth::findOrFail($ids[$i]);
+        $booth->delete();
+        $boothCount = Booth::where('id',$ids[$i])->count();
+        if($boothCount > 0){
+          $totalcount++;
+        }
+
+    }
+    if(($totalcount)>0){
+      return response()->json(['code'=>500,"Message"=>"Something Went Wrong"]);
+    }
+    else{
+      return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+    }
   }
 
 }

@@ -22,6 +22,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                <div id="buttons-container"></div>
                 <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
@@ -62,7 +63,7 @@
                     t = $(this);
                     let deleteUrl = '{{route("eventee.lounge.destroy", [ "table" => ":id", "id" => $id ])}}';
                     let id = t.data("id");
-                    confirmDelete("Are you sure you want to DELETE session?","Confirm session Delete").then(confirmation=>{
+                    confirmDelete("Are you sure you want to DELETE table?","Confirm table Delete").then(confirmation=>{
                         if(confirmation){
                             $.ajax({
                                 url:deleteUrl.replace(":id", id),

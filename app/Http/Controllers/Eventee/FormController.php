@@ -61,7 +61,7 @@ class FormController extends Controller
         //Create Structures for custom fields 
         if(isset($request->label)&&count($request->label)){
             foreach($request->label as $i => $label){
-                if(isset($request->type[$i]) || ($request->type[$i] === "select" && isset($request->options[$i])) ){
+                if(isset($label)&& $label!=null && isset($request->type[$i]) || ($request->type[$i] === "select" && isset($request->options[$i])) ){
                     
                     $struct =  FormStruct::create([
                         "label"=>$label,

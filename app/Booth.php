@@ -67,6 +67,10 @@ class Booth extends Model
         return $this->hasManyThrough("\App\User", "\App\BoothAdmin", "booth_id", "id", "id", "user_id");
     }
 
+    public function boothAdmins(){
+        return $this->hasMany("\App\BoothAdmin","booth_id");
+    }
+
     public function room(){
         return $this->belongsTo("\App\Room");
     }
@@ -90,6 +94,40 @@ class Booth extends Model
 
     public function interests(){
         return $this->hasMany("\App\BoothInterest");
+    }
+    public function replicateWR(){
+        $newRecord = $this->replicate();
+        $newRecord->id = Booth::withTrashed()->count()+1;
+        $newRecord->name = $this->name . " Copy";
+        $newRecord->push();
+        $this->relations = [];
+        $this->load(["images","links","videos","resources","boothAdmins"]);
+        $relations = $this->getRelations();
+        // dd($relations); 
+        foreach ($relations as $rname => $relation) {
+            if($rname === "videoBg" && isset($relation)){
+                $newRelationship = $relation->replicate();
+                $newRelationship->owner = $newRecord->id;
+                $newRelationship->push();
+            }else{
+                foreach ($relation as $relationRecord) {
+                    $newRelationship = $relationRecord->replicate();
+
+                    if($rname === 'links'){
+                        $newRelationship->page = $newRecord->id;
+                    }else if($rname === "boothAdmins"){
+                        $newRelationship->booth_id = $newRecord->id;
+                    }else{
+                        $newRelationship->owner = $newRecord->id;
+                    }
+                    if(isset($newRelationship->laravel_through_key)){
+                        unset($newRelationship->laravel_through_key);
+                    }
+                    $newRelationship->push();
+                } 
+            }
+        }
+        return $newRecord;
     }
 
     public function scopeOnlyPublished($query){

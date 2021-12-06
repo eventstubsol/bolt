@@ -103,8 +103,8 @@
                                     <div @if($link->type !== "booth") style="display: none;" @endif  class="booth-{{$ids}} booths form-group mb-3 col-md-4">
                                         <label for="to">to(Booth)</label>
                                         <select     class="form-control" name="booths[]">
-                                            @foreach($booths as $booth)
-                                                <option @if($link->to === $booth->id) selected @endif value="{{$booth->id}}">{{$booth->name}}</option>
+                                            @foreach($booths as $booth_n)
+                                                <option @if($link->to === $booth_n->id) selected @endif value="{{$booth_n->id}}">{{$booth_n->name}}</option>
                                             @endforeach
 
                                         </select>
@@ -115,6 +115,15 @@
                                         <select class="form-control" name="rooms[]" >
                                             @foreach($session_rooms as $room)
                                                 <option @if($link->to === $room->name) selected @endif value="{{$room->name}}">{{$room->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div @if($link->type!=="modal") style="display: none;" @endif class="modals-{{$ids}} modals form-group mb-3 col-md-4">
+                                        <label for="to">to(modal)</label>
+                                        <select class="form-control" name="modal[]" >
+                                            @foreach($modals as $modal)
+                                                <option @if($link->to === $modal->id) selected @endif value="{{$modal->id}}">{{$modal->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -269,11 +278,11 @@
                                 @if($boothvideo->title != "brandvideo")
                                 <div class="form-group mb-3 col-12">
                                     <label for="boothvideos">URL</label>
-                                    <input type="url" id="boothvideos" name="boothvideos[]" class="form-control mb-2"
+                                    <input type="url"  name="boothvideos[]" class="form-control mb-2"
                                            value="{{ $boothvideo->url }}"
                                     >
                                     <label for="videotitles">Title</label>
-                                    <input type="text" id="videotitles" name="videotitles[]" class="form-control mb-2"
+                                    <input type="text"  name="videotitles[]" class="form-control mb-2"
                                            value="{{ $boothvideo->title }}"
                                     >
                                     <button class="btn btn-danger mb-2 remove-video">Remove</button>
@@ -340,7 +349,7 @@
             </div>
           `);
             initializeFileUploads();
-            bindRemoveButton();
+            bindRemoveButtons();
         }
      
         function addresource(e) {
@@ -358,7 +367,7 @@
                   </div>
                 </div>
           `);
-            bindRemoveButton();
+            bindRemoveButtons();
             initializeFileUploads();
         }
 
@@ -381,7 +390,7 @@
             })
         }
 
-        function bindRemoveButton(){
+        function bindRemoveButtons(){
             $(".remove-video").unbind().on("click",removevideo);
             $(".remove-resource").unbind().on("click",removeresource);
         }
@@ -393,7 +402,7 @@
             $('.carousel').carousel({
                 interval: 100
             });
-            bindRemoveButton();
+            bindRemoveButtons();
         })
     </script>
     
@@ -403,11 +412,11 @@
     let n = links.length;
     // console.log(n);
     $(document).ready(function() {
-        
+        console.log({!! json_encode($booth->links) !!});
      
         
         $("#add-link").on("click", addlink);
-        // $(".add-image").on("click", addImage);
+        $(".add-image").on("click", addImage);
 
         $(".type").on("change",toggleVisibility);
         $(".pos").on("input",changePosition);
@@ -471,6 +480,7 @@
         $(".im-"+index).eq(0).css(areaStylesb(positions));
         console.log(positions)
         console.log(getRotation(positions))
+        console.log({positions,index,name})
         $(".im_name-"+index).eq(0).css(getRotation(positions));
         $(".im_name-"+index).html(`${name}`);
         $(".positioning-"+index).eq(0).css({
@@ -532,6 +542,7 @@
         $(".chat_user-"+index).hide();
         $(".chat_group-"+index).hide();
         $(".custom_page-"+index).hide();
+        $(".modal-"+index).hide();
 
         switch(selectbox.val()){
             case "session_room":
@@ -560,6 +571,9 @@
                 break;
             case "custom_page":
                 $(".custom_page-"+index).show();
+                break;
+            case "modal":
+                $(".modals-"+index).show();
                 break;
         }
         // console.log(val);
@@ -628,8 +642,8 @@
                                     <div style="display: none;" class="booth-${n} booths form-group mb-3 col-md-4">
                                         <label for="to">to(Booth)</label>
                                         <select     class="form-control" name="booths[]">
-                                            @foreach($booths as $booth)
-                                                <option value="{{$booth->id}}">{{$booth->name}}</option>
+                                            @foreach($booths as $booth_n)
+                                                <option value="{{$booth_n->id}}">{{$booth_n->name}}</option>
                                             @endforeach
 
                                         </select>
@@ -641,6 +655,15 @@
                                                 <option selected value=" ">Select Session Room</option>
                                             @foreach($session_rooms as $room)
                                                 <option value="{{$room->name}}">{{$room->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div style="display: none;" class="modals-${n} modals form-group mb-3 col-md-4">
+                                        <label for="to">to(modal)</label>
+                                        <select value=" " class="form-control" name="modal[]" >
+                                                <option selected value=" ">Select Modal </option>
+                                            @foreach($modals as $modal)
+                                                <option value="{{$modal->id}}">{{$modal->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

@@ -1,11 +1,7 @@
 @extends("layouts.admin")
 @section('styles')
     @include("includes.styles.datatables")
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+   
 @endsection
 
 @section('page_title')
@@ -25,102 +21,189 @@
 @endsection
 
 @section('content')
-<div style="display: flex;flex-direction:row">
-    <div class="col-md-6 col-xl-4  mb-3">
-        <div class="widget-rounded-circle card-box h-100">
-            <div class="row">
-                <div class="col-6">
-                    <div class="avatar-lg rounded-circle bg-soft-info border-info border">
-                        <i class="fe-bar-chart-line- font-22 avatar-title text-info"></i>
+<div class="row">
+    {{-- Event Count --}}
+    <div class="col-md-6 col-xl-3">
+        <div class="widget-rounded-circle card" >
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="fa fa-calendar font-22 avatar-title text-primary" style="margin-left: 35%;margin-top: 31%;width: 15%;height: 10%;"></i>
+                        </div>
                     </div>
-                </div>
-                @php
-                    $eventcount = App\EventSession::where('user_id',Auth::id())->where('created_at','like','%'.date('Y-m-d').'%')->count();
-                @endphp
-                <div class="col-6">
-                    <div class="text-right">
-                        <h3 class="text-dark mt-1" id="today-unique-logins">{{ $eventcount }}</h3>
-                        <p class="text-muted mb-1 text-truncate">Events Oraganized By You</p>
+                    <div class="col-6">
+                        <div class="text-end">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $events }}</span></h3>
+                            <p class="text-muted mb-1 text-truncate">Total Events</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-6">
-                    <div class="text-left">
-                        <h3 class="text-dark mt-1" id="today-unique-logins"></h3>
-                        <p class="text-muted mb-1 text-truncate">Events Today</p>
-                    </div>
-                </div>
-            </div> <!-- end row-->
-        </div> <!-- end widget-rounded-circle-->
+                </div> <!-- end row-->
+            </div>
+        </div>
     </div>
+    {{-- Total Live Events --}}
+    <div class="col-md-6 col-xl-3">
+        <div class="widget-rounded-circle card" >
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="fas fa-stream font-22 avatar-title text-primary" style="margin-left: 35%;margin-top: 31%;width: 15%;height: 10%;"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-end">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $liveEvent }}</span></h3>
+                            <p class="text-muted mb-1 text-truncate">Total Live Events</p>
+                        </div>
+                    </div>
+                </div> <!-- end row-->
+            </div>
+        </div>
+    </div>
+    {{-- Total Eventees --}}
+    <div class="col-md-6 col-xl-3">
+        <div class="widget-rounded-circle card" >
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="fa fa-users font-22 avatar-title text-primary" style="margin-left: 35%;margin-top: 31%;width: 15%;height: 10%;"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-end">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $alluser }}</span></h3>
+                            <p class="text-muted mb-1 text-truncate">Total Event Users</p>
+                        </div>
+                    </div>
+                </div> <!-- end row-->
+            </div>
+        </div>
+    </div>
+    
 
-    <div class="col-md-6 col-xl-4  mb-3">
-        <div class="widget-rounded-circle card-box h-100">
-            <div class="row">
-                <div class="col-6">
-                    <div class="avatar-lg rounded-circle bg-soft-info border-info border">
-                        <i class="fe-bar-chart-line- font-22 avatar-title text-info"></i>
+    {{-- Total Live Events --}}
+    <div class="col-md-6 col-xl-3">
+        <div class="widget-rounded-circle card" >
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                            <i class="fa fa-clock-o font-22 avatar-title text-primary" style="margin-left: 35%;margin-top: 31%;width: 15%;height: 10%;"></i>
+                        </div>
                     </div>
-                </div>
-                <div class="col-6">
-                    <div class="text-right">
-                        <h3 class="text-dark mt-1" id="login_last_1h">0</h3>
-                        <p class="text-muted mb-1 text-truncate">Logins in last 60 mins</p>
+                    <div class="col-6">
+                        <div class="text-end">
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $liveUser }}</span></h3>
+                            <p class="text-muted mb-1 text-truncate">Total Online Attendees</p>
+                        </div>
                     </div>
-                </div>
-            </div> <!-- end row-->
-        </div> <!-- end widget-rounded-circle-->
+                </div> <!-- end row-->
+            </div>
+        </div>
     </div>
-    <div class="col-md-6 col-xl-4  mb-3">
-        <div class="widget-rounded-circle card-box  h-100">
-            <div class="row ">
-                <div class="col-6">
-                    <div class="avatar-lg rounded-circle bg-soft-info border-info border">
-                        <i class="fe-bar-chart-line- font-22 avatar-title text-info"></i>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="text-right">
-                        <h3 class="text-dark mt-1" id="login_total">{{ App\EventSession::where('user_id',Auth::id())->count() }}</h3>
-                        <p class="text-muted mb-1 text-truncate">Total Events</p>
-                    </div>
-                </div>
-            </div> <!-- end row-->
-            
-        </div> <!-- end widget-rounded-circle-->
-    </div>
+   
+    
 </div>
-@php
-    $eventee = App\Event::where('user_id',Auth::id())->orderBy('created_at','desc')->limit(5)->get();
-@endphp
-<div class="card" style="width: 22rem;margin-left:1rem">
-    <div class="card-body">
-        <h5 class="card-title">Events</h5>
-        @if(count(App\Event::where('user_id',Auth::id())->get()) > 0)
-            <table class="table table-hover">
-                <tr>
-                    <th>Event</th>
-                    <th>Status</th>
-                </tr>
-                @foreach($eventee as $event)
-                <tr>
-                   
-                        <td><a href="{{ route('event.Dashboard',['id'=>( $event->id )]) }}" style="text-decoration: none">{{ $event->name }}</a></td>
-                        <td>
-                            @if ($event->end_date < Carbon\Carbon::today())
-                                <span style="color: red">○ &nbsp;Expired</span>
-                            @else
-                                <span style="color: green">○ &nbsp;Active</span>
-                            @endif
-                        </td>
-                   
-                </tr>
-                @endforeach
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-body">
                 
-            </table>
-        @else
-         <h5>No data available</h5>
-        @endif
-    </div>
-</div>
 
+                <h4 class="header-title mb-3">Last 5 Recent Events</h4>
+                
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover table-nowrap table-centered m-0">
+                        <center>
+                        <thead class="table-light">
+                            <tr>
+                                
+                                <th width="60%">Event Name</th>
+                                <th width="20%">Total User</th>
+                                <th width="20%">Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(count($recent) > 0)
+                                @foreach ($recent as $event)
+                                    @php
+                                        $users = App\User::where('event_id',$event->id)->count();
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $event->name }}</td>
+                                        <td>{{ $users }}</td>
+                                        <td><a href="{{ route('event.Dashboard',['id'=>( $event->id )]) }}" class="btn btn-warning">Manage</a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                    <tr>
+                                        <td colspan="3"><center>No Data Available</center></td>
+                                    </tr>
+                            @endif
+                            
+
+                        </tbody>
+                    </center>
+                    </table>
+                    <div class="dropdown float-right">
+                        <a style="margin-top: 14%;" href="{{ route('event.index') }}" class="btn btn-success" data-bs-toggle="dropdown" aria-expanded="false">
+                            View More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end col -->
+
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-body">
+                
+
+                <h4 class="header-title mb-3">Top 5 Events Expiring Soon</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless table-nowrap table-hover table-centered m-0">
+                        <center>
+                        <thead class="table-light">
+                            <tr>
+                                <th width="60%">Event Name</th>
+                                <th width="20%">Total User</th>
+                                <th width="20%">Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(count($ending_event) > 0)
+                                @foreach($ending_event as $event)
+                                @php
+                                        $users = App\User::where('event_id',$event->id)->count();
+                                @endphp
+                                <tr>
+                                    <td>{{ $event->name }}</td>
+                                    <td>{{ $users }}</td>
+                                    <td><a href="{{ route('event.Dashboard',['id'=>( $event->id )]) }}" class="btn btn-warning">Manage</a></td>
+                                </tr>
+                                @endforeach
+                            @else
+                                    <tr>
+                                        <td colspan="2"><center>No Data Available</center></td>
+                                    </tr>
+                            @endif
+
+                        </tbody>
+                    </center>
+                    </table>
+                    <div class="dropdown float-right">
+                        <a style="margin-top: 14%;" href="{{ route('event.index') }}" class="btn btn-success" data-bs-toggle="dropdown" aria-expanded="false">
+                            View More
+                        </a>
+                    </div>
+                </div> <!-- end .table-responsive-->
+            </div>
+        </div> <!-- end card-->
+    </div> <!-- end col -->
+</div>
 @endsection

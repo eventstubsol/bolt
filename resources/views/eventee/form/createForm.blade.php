@@ -202,8 +202,20 @@
                 $("#slug").val(formname.replaceAll(" ","_"));
             });
         });
+        function bindDelete(){
+            $("body").on("click",".delete",function(e){
+                confirmDelete("Are you sure you want to DELETE Form?","Confirm Form Delete").then(confirmation=>{
+                    if(confirmation){
+                        $(this).closest("tr").remove();
+                        $(".tooltip").removeClass("show");
+                    }
+                });
+            });
+        }
         function initSelect(){
-            $(".selectize-close-btn").selectize({plugins:["remove_button"],persist:!1,create:!0,render:{item:function(e,a){return'<div>"'+a(e.text)+'"</div>'}},onDelete:function(e){return confirm(1<e.length?"Are you sure you want to remove these "+e.length+" items?":'Are you sure you want to remove "'+e[0]+'"?')}})
+            // console.log(".selectize-close-btn"+(n!==""?'-'+n:''));
+            $(".select_new").selectize({plugins:["remove_button"],persist:!1,create:!0,render:{item:function(e,a){return'<div>"'+a(e.text)+'"</div>'}},onDelete:function(e){return confirm(1<e.length?"Are you sure you want to remove these "+e.length+" items?":'Are you sure you want to remove "'+e[0]+'"?')}})
+            $(".select_new").removeClass("select_new");
         }    
         function changeType(e){
            let n =  $(this).data("index");
@@ -225,7 +237,7 @@
 
             tr =  `<tr class="test">
                     <td>
-                        <input type="text" placeholder="Label" name="label[]" class="form-control"   >
+                        <input type="text" required placeholder="Label" name="label[]" class="form-control"   >
                     </td> 
                     <td>
                         <select data-index="${n}" class="form-control formtype"  name="type[]">
@@ -237,16 +249,16 @@
                     <td >
                         <input placeholder="Placeholder Text..."  type="text" name="placeholder[]" class="form-control ph-${n}"   >
                         
-                        <input  placeholder="Enter Options" type="text" name="options[]" class=" selectize-close-btn select-${n}" value="">
+                        <input  placeholder="Enter Options" type="text" name="options[]" class="select_new selectize-close-btn select-${n}" value="">
                     </td>
                     <td>
                         <div class="form-check form-switch">
-                            <input type="checkbox" value="${n}" name="enabled[]" checked  class="form-check-input" id="customSwitch1">
+                            <input type="checkbox" value="${n}" name="enabled[]" checked  class="form-check-input" >
                         </div>  
                     </td>
                     <td>
                         <div class="form-check form-switch">
-                            <input checked value="${n}"   name="required[]" type="checkbox" class="form-check-input" id="customSwitch1">
+                            <input checked value="${n}"   name="required[]" type="checkbox" class="form-check-input" >
                         </div>
                     </td>
                     <td>
@@ -257,6 +269,7 @@
             $(".formtype").on("change",changeType);
             initSelect();
             $(".select-"+n).css('visibility', 'hidden');
+            bindDelete();
 
 
         });

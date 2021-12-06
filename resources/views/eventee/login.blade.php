@@ -17,7 +17,7 @@
 @if(Session::has('eventee-register'))
     <script>
         var show = "{{ Session::get('eventee-register') }}";
-        alert(show);
+        showMessage(show,'success');
     </script>
 @endif
     

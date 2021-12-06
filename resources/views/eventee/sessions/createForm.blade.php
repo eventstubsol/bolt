@@ -213,7 +213,7 @@
 
         $("#session_type").on("change",()=>{
            let value = $("#session_type").val();
-            if(value === "VIDEO_SDK"){
+            if(value === "VIDEO_SDK" || value==="VIMEO_VIDEO_SDK"){
                $("#create_session").attr("disabled", true);
                getMeetingId();
             }   

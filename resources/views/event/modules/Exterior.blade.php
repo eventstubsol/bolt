@@ -1,3 +1,11 @@
+<style>
+    #skip_intro{
+        position: absolute;
+        z-index: 9;
+        top: 2%;
+        right: 2%;
+    }
+</style>
 <div class="page initial" id="home">
     <div class="filler" style="padding-bottom: {{ EXTERNAL_VIDEO_ASSETS_ASPECT }}%"></div>
     <div class="video-containers positioned">
@@ -6,8 +14,21 @@
     <div class="video-containers positioned " id="mobile_exterior_view">
         <video class="full-width-videos" src="{{ assetUrl(getFieldId('exterior_view_video',$event_id)) }}" id="exterior_view" autoplay muted loop poster="{{ assetUrl(getFieldId('exterior_view_image',$event_id)) }}"></video>
     </div>
+    <div id="skip_intro" style="display: none">
+        <button class="btn btn-primary">Skip</button>
+    </div>
 </div>
 <script>
+    $(document).ready(()=>{
+        if(localStorage.getItem("exterior")){
+            $("#skip_intro").show();
+        }else{
+            localStorage.setItem("exterior",true);
+        }
+        $("#skip_intro").on("click",()=>{
+            routie("lobby");
+        })
+    });
     function isMobile() {
         let check = false;
         (function(a){
@@ -17,7 +38,7 @@
         return check;
     }
     if(isMobile()){
-        document.querySelector("#exterior_view").src = '';
+        // document.querySelector("#exterior_view").src = '';
         document.querySelector("#mobile_exterior_view").style.height = '100vh';
     }
    

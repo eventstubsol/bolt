@@ -165,9 +165,9 @@ class LoungeController extends Controller
 
 
 
-    public function destroy(NetworkingTable $table)
+    public function destroy($id,NetworkingTable $table)
     {
-        dd($table);
+        // dd($table);
         $table->delete();
         return true;
     }

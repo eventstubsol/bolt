@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Eventee;
 
+use App\AccessSpecifiers;
 use App\Http\Controllers\Controller;
 
 use App\Booth;
@@ -11,7 +12,10 @@ use App\Page;
 use App\sessionRooms;
 use Illuminate\Http\Request;
 use App\Event;
+use App\Modal;
 use App\Treasure;
+use Carbon\Carbon;
+use PDO;
 
 class PageController extends Controller
 {
@@ -37,8 +41,17 @@ class PageController extends Controller
             'event_id'=>$id,
             // "bg_type" =>$request->bg_type,
         ]);
-
+     
         $page->save();
+
+        foreach(USER_TYPES as $user_type){
+            AccessSpecifiers::create([
+                "page_id"=>$page->id,
+                "user_type"=>$user_type,
+                "event_id"=>$id
+            ]);
+        }
+
 
         if($request->has("url") && $request->url != null)
         {
@@ -55,27 +68,48 @@ class PageController extends Controller
                 "title"=>$page->name
             ]);
         }
-        // $pages = Page::with(["images", "links"])->get();
+        // $pages = Page::with(["images", "links.background"])->get();
         // return view("pages.list")->with(compact("pages"));
         return redirect()->to(route("eventee.pages.index",['id'=>$id]));
+        // return redirect()->to(route("eventee.pages.edit", ["page" => $page->id, "id"=>$id,]));
     }
 
 
     public function edit(Page $page,$id){
         // dd($id);
+       $modals =  Modal::where("event_id",$id)->get();
+
 
 
         $pages = Page::where('event_id',$id)->get();
 
-        $booths = Booth::all();
+        $booths = Booth::where('event_id',$id)->get();
 
-        $session_rooms = sessionRooms::all();
+        $session_rooms = sessionRooms::where('event_id',$id)->get();
 
         $pag =  Page::where('event_id',$id)->first();
 
         $page->load(["images","links.flyin","videoBg"]);
         // return $page;
-        return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths","id","pag"]));
+        return view("eventee.pages.edit")->with(compact(["modals","page","session_rooms","pages","booths","id","pag"]));
+    }
+    public function duplicate($object,$type){
+        switch($type){
+            case "page":
+                $new_page = Page::where("id",$object)->first()->replicateWR();
+                return redirect(route("eventee.pages.index",$new_page->event_id));
+                break;
+            case "booth":
+                $new_booth = Booth::where("id",$object)->first()->replicateWR();
+                return redirect(route("eventee.booth",$new_booth->event_id));
+                break;
+            case "session_room":
+                $new_booth = sessionRooms::where("id",$object)->first()->replicateWR();
+                return redirect(route("eventee.sessionrooms.index",$new_booth->event_id));
+                break;
+            }
+            // $object->replicateWR();
+            // dd($object);
     }
 
     public function lobby($id){
@@ -92,7 +126,7 @@ class PageController extends Controller
         $session_rooms = sessionRooms::where("event_id",$ids)->get();
         $page_name = "lobby_".$ids;
 
-        $links = Link::where(["page"=>$page_name])->get();
+        $links = Link::where(["page"=>$page_name])->get()->load("background");
         $treasures = Treasure::where(["owner"=>$page_name])->get();
         $page = (object) [
             "id"=>$id,
@@ -110,6 +144,7 @@ class PageController extends Controller
     
     public function update(Request $request, Page $page,$id){
         // dd($request->all());
+        // dd(uniqid());
         $request->validate(["name","url"]);
         $pag =  Page::where('event_id',$id)->first();
         $event_id = $id;
@@ -135,6 +170,7 @@ class PageController extends Controller
             foreach($request->linknames as $id => $linkname){
 
                 $to = "";
+                $url = "";
                 // dd($request->type);
                 switch($request->type[$id]){
                     case "session_room": 
@@ -164,17 +200,55 @@ class PageController extends Controller
                     case "custom_page":
                         $to = $request->custom_page[$id];
                         break;
+                    case "lobby":
+                        $to = "lobby";
+                        break;
+                    case "faq":
+                        $to = "FAQ";
+                        break;
+                    case "photobooth":
+                        $to = $request->capture_link[$id];
+                        $url = $request->gallery_link[$id];
+                        break;
+                    case "videosdk":
+                        $to = uniqid();
+                        break;
+                    case "modal":
+                        $to = $request->modals[$id];
+                        break;
+                    case "lounge":
+                        $to = "lounge";
+                        break;
                 }
                 $link = Link::create([
                     "page"=>$page->id,
                     "name"=> $linkname,
                     "type"=>$request->type[$id],
                     "to"=> $to,
+                    "url"=> $url,
                     "top"=> $request->top[$id],
                     "left"=> $request->left[$id],
                     "width"=> $request->width[$id],
                     "height"=> $request->height[$id],
+                    "perspective"=>isset($request->perspective[$id])?$request->perspective[$id]:'',
+                    "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
+                    "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
+               
                 ]);
+                if($request->has("bgimages") && isset($request->bgimages[$id]) ){
+                    if(count($request->bgimages[$id])>0 ){
+                      foreach($request->bgimages[$id] as $bgimage){
+                        if($bgimage){ //check if not null
+                          $link->background()->create([
+                            "owner"=>$link->id,
+                            "url" => $bgimage,
+                            "title" => "link"
+                          ]);
+                        }
+        
+                      }
+                    }
+                }
                 if($request->has("flyin") && isset($request->flyin[$id])){
                     $link->flyin()->create([
                         "url"=>$request->flyin[$id],
@@ -210,9 +284,11 @@ class PageController extends Controller
         $booths = Booth::where("event_id",$event_id)->get();
 
         $session_rooms = sessionRooms::where("event_id",$event_id)->get();
-        $page->load(["images","links"]);
+        $page->load(["images","links.background"]);
         $id = $event_id;
-        return view("eventee.pages.edit")->with(compact(["page","session_rooms","pages","booths",'id','pag']));
+       $modals =  Modal::where("event_id",$id)->get();
+
+        return view("eventee.pages.edit")->with(compact(["modals","page","session_rooms","pages","booths",'id','pag']));
     }
     public function Lobbyupdate(Request $request,$id){
         // $request->validate(["name","url"]);
@@ -236,6 +312,7 @@ class PageController extends Controller
         if($request->has("linknames")){
             foreach($request->linknames as $id => $linkname){
                 $to = "";
+                $url="";
                 // dd($request->type);
                 switch($request->type[$id]){
                     case "session_room": 
@@ -256,17 +333,46 @@ class PageController extends Controller
                     case "custom_page":
                         $to = $request->custom_page[$id];
                         break;
+                    case "faq":
+                        $to = "FAQ";
+                        break;
+                    case "photobooth":
+                        $to = $request->capture_link[$id];
+                        $url = $request->gallery_link[$id];
+                        break;
+                    case "lounge":
+                        $to = "lounge";
+                        break;
                 }
                 $link = Link::create([
                     "page"=>"lobby_". ($event_id),
                     "name"=> $linkname,
                     "type"=>$request->type[$id],
                     "to"=> $to,
+                    "url"=>$url,
                     "top"=> $request->top[$id],
                     "left"=> $request->left[$id],
                     "width"=> $request->width[$id],
                     "height"=> $request->height[$id],
+                    "perspective"=>isset($request->perspective[$id])?$request->perspective[$id]:'',
+                    "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
+                    "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
+               
                 ]);
+                if($request->has("bgimages") && isset($request->bgimages[$id]) ){
+                    if(count($request->bgimages[$id])>0 ){
+                      foreach($request->bgimages[$id] as $bgimage){
+                        if($bgimage){ //check if not null
+                          $link->background()->create([
+                            "owner"=>$link->id,
+                            "url" => $bgimage,
+                            "title" => "link"
+                          ]);
+                        }
+        
+                      }
+                    }
+                }
 
                 if($request->has("flyin") && isset($request->flyin[$id])){
                     $link->flyin()->create([
@@ -289,5 +395,33 @@ class PageController extends Controller
         // dd($page);
         $page->delete();
         return ["success"=>true];
+    }
+
+    public function BulkDelete(Request $req){
+        $ids = $req->ids;
+        $totalcount = 0;
+        for($i = 0 ; $i < count($ids); $i++){
+            $page = Page::findOrFail($ids[$i]);
+            $page->delete();
+            $pageCount = Page::where('id',$ids[$i])->count();
+            if($pageCount > 0){
+                $totalcount++;
+            }
+
+        }
+        if(($totalcount)>0){
+        return response()->json(['code'=>500,"Message"=>"Something Went Wrong"]);
+        }
+        else{
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+        }
+    }
+
+    public function DeleteAll(Request $req){
+        $pages = Page::where('event_id',$req->id)->get();
+        foreach($pages as $page){
+            $page->delete();
+        }
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
     }
 }

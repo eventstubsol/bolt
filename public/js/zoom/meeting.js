@@ -47,38 +47,75 @@
       leaveUrl: meetingConfig.leaveUrl,
       webEndpoint: meetingConfig.webEndpoint,
       isSupportAV: true,
+      debug:true,
       disableInvite: true, //optional
       meetingInfo: [
         'topic',
         'host',
+        'mn',
+        'pwd',
+        'telPwd',
+        'invite',
+        'participant',
+        'dc',
+        'enctype',
+        'report'
       ],
       success: function () {
         ZoomMtg.i18n.load(meetingConfig.lang);
- 
-        ZoomMtg.join({
-          meetingNumber: meetingConfig.meetingNumber,
-          userName: meetingConfig.userName,
-          signature: signature,
-          apiKey: meetingConfig.apiKey,
-          userEmail: meetingConfig.userEmail,
-          passWord: meetingConfig.passWord,
-          success: function (res) {
-            ZoomMtg.getAttendeeslist({});
-            // ZoomMtg.getCurrentUser({
-            //   success: function (res) {
-            //     setTimeout(function(){
-            //       let el = document.querySelector('[aria-label="Raise Hand"');
-            //       if(el && !window.isDelegate){
-            //         el.style.display = "none";
-            //       }
-            //     }, 2000);
-            //   },
-            // });
-          },
-          error: function (res) {
-            console.log(res);
-          },
-        });
+        console.log("zoom loaded");
+        console.log(meetingConfig);
+        // ZoomMtg.join({
+        //   meetingNumber: meetingConfig.meetingNumber,
+        //   userName: meetingConfig.userName,
+        //   signature: signature,
+        //   apiKey: meetingConfig.apiKey,
+        //   userEmail: meetingConfig.userEmail,
+        //   passWord: meetingConfig.passWord,
+        //   success: function (res) {
+        //     console.log("zoom respose",res);
+        //     ZoomMtg.getAttendeeslist({});
+        //     // ZoomMtg.getCurrentUser({
+        //     //   success: function (res) {
+        //     //     setTimeout(function(){
+        //     //       let el = document.querySelector('[aria-label="Raise Hand"');
+        //     //       if(el && !window.isDelegate){
+        //     //         el.style.display = "none";
+        //     //       }
+        //     //     }, 2000);
+        //     //   },
+        //     // });
+        //   },
+        //   error: function (res) {
+        //     console.log(res);
+        //   },
+        // });
+      },
+      error: function (res) {
+        console.log(res);
+      },
+    });
+
+    ZoomMtg.join({
+      meetingNumber: meetingConfig.meetingNumber,
+      userName: meetingConfig.userName,
+      signature: signature,
+      apiKey: meetingConfig.apiKey,
+      userEmail: meetingConfig.userEmail,
+      passWord: meetingConfig.passWord,
+      success: function (res) {
+        console.log("zoom respose",res);
+        ZoomMtg.getAttendeeslist({});
+        // ZoomMtg.getCurrentUser({
+        //   success: function (res) {
+        //     setTimeout(function(){
+        //       let el = document.querySelector('[aria-label="Raise Hand"');
+        //       if(el && !window.isDelegate){
+        //         el.style.display = "none";
+        //       }
+        //     }, 2000);
+        //   },
+        // });
       },
       error: function (res) {
         console.log(res);

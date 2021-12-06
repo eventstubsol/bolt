@@ -12,18 +12,29 @@ Edit Page
 @section("styles")
 @include("includes.styles.fileUploader")
 
+<style>
+    .positioned .dropify-wrapper {
+        height: 100%;
+    }
+</style>
 
 <style>
-   .image_links{
-        border-radius: 5%;  
-        color: white;
-        font-size: 161%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #0d613978 !important;
-        border: 5px solid;
-    }
+.image_links{
+    border-radius: 5%;  
+    color: white;
+    font-size: 161%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0d613978 !important;
+    border: 5px solid;
+}
+.im_names{
+    background: #ffffff78 !important;
+    height: 100%;
+    width: 100%;
+
+}
 </style>
 @endsection
 
@@ -48,10 +59,12 @@ Edit Page
                             <img data-test="{{$page->videoBg}}" src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
                         @endif
                         @foreach($page->links as $ids => $link)
-                            <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
+                            <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$ids}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
+           
+                            {{-- <div data-index="{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;  perspective:{{$link->perspective}}px;" >{{$link->name}}</div> --}}
                         @endforeach
                         @foreach($page->treasures as $ids => $link)
-                            <div class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
+                            <div data-index="{{$ids}}" class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
                         @endforeach
                 </div>
 
@@ -69,8 +82,8 @@ Edit Page
                         <div class="card-body">
                             <h4 class="header-title mb-3">links</h4>
                             <div class="link-section">
-                            @foreach($page->links as $ids => $link) 
-                                <div class="row">
+                                @foreach($page->links as $ids => $link) 
+                                <div class="row  border border-primary p-2 mt-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
                                         <input type="text" value="{{$link->name}}" required  name="linknames[]" class="name-{{$ids}} form-control">
@@ -103,6 +116,17 @@ Edit Page
                                         <select     class="form-control" name="booths[]">
                                             @foreach($booths as $booth)
                                                 <option @if($link->to === $booth->id) selected @endif value="{{$booth->id}}">{{$booth->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
+                                    {{-- Modal --}}
+                                    <div @if($link->type !== "modal") style="display: none;" @endif  class="modal-{{$ids}} modals form-group mb-3 col-md-4">
+                                        <label for="to">to(modal)</label>
+                                        <select     class="form-control" name="modals[]">
+                                            @foreach($modals as $modal)
+                                                <option @if($link->to === $modal->id) selected @endif value="{{$modal->id}}">{{$modal->name}}</option>
                                             @endforeach
 
                                         </select>
@@ -149,10 +173,32 @@ Edit Page
                                         <input type="hidden" name="pdf[]" class="upload_input" @if($link->type==="pdf") value="{{$link->to}}" @endif">
                                         <input type="file"      data-name="boothimages" data-plugins="dropify" data-type="application/pdf"  @if($link->type==="pdf") data-default-file="{{assetUrl($link->to)}}" @endif }} />                                   
                                     </div>
+
+                                    {{-- Photobooth  --}}
+                                    <div @if($link->type!=="photobooth") style="display: none;" @endif class="image-uploader ph-{{$ids}} ph form-group mb-3 col-md-4">
+                                        <label for="phb">Photobooth Capture Link</label>
+                                        <input @if($link->type==="photobooth") value="{{$link->to}}" @endif type="text"   name="capture_link[]" class="form-control">
+                                        <label for="phb">Photobooth Gallery Link</label>
+                                        <input @if($link->type==="photobooth") value="{{$link->url}}" @endif type="text"   name="gallery_link[]" class="form-control">
+                                    </div>
+
+
+                                    <div class="background_images_{{$ids}} row col-md-12">
+                                        @if(isset($link->background[0]))
+                                            @foreach($link->background as $bgimages)
+                                                <div class="form-group image-uploader mb-3 col-md-4">
+                                                    <label for="bgimages">Background</label>       
+                                                    <input type="hidden" name="bgimages[{{$ids}}][]" class="upload_input"  value="{{$bgimages->url}}"  >
+                                                    <input type="file" data-name="bgimages[{{$ids}}][]" data-plugins="dropify" data-type="image"  data-default-file="{{assetUrl($bgimages->url)}}" />                                   
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                   
                                     
 
                                    
-                                    <div  class="row positioning-{{$ids}} col-md-12" >
+                                    <div  class="row col-md-12 positioning-{{$ids}}" >
                                     
                                     <div  class="form-group mb-3 col-md-3">
                                         <label for="top">top</label>
@@ -173,11 +219,29 @@ Edit Page
                                         <label for="pos">height</label>
                                         <input value="{{$link->height}}" type="number" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
                                     </div>
-
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Perspective Type</label>
+                                        <select name="rotationtype[]" data-index="{{$ids}}" class="pers pos pos-{{$ids}} form-control" id="">
+                                            <option value="">None</option>
+                                            <option @if($link->rotationtype=="X") selected @endif value="X">X</option>
+                                            <option @if($link->rotationtype=="Y") selected @endif value="Y">Y</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div @if(!($link->rotationtype)) style="display:none" @endif  class="pr-{{$ids}} form-group mb-3 col-md-3">
+                                            <label for="pos">Perspective</label>
+                                            <input value="{{$link->perspective}}" type="number" step="any"  name="perspective[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
+                                    <div @if(!($link->rotationtype)) style="display:none" @endif  class="rt-{{$ids}} form-group mb-3 col-md-3">
+                                        <label for="pos">Rotation</label>
+                                        <input value="{{$link->rotation}}" type="number" step="any"  name="rotation[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                    </div>
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
 
                                     </div>
-                                    
+
+                                     <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
+    
                                     <div class="flyin  col-md-12">
                                         
                                             <div @if(!$link->flyin) style="display:none" @endif class="image-uploader flyin-{{$ids}}">
@@ -185,19 +249,20 @@ Edit Page
                                                 <input type="hidden" name="flyin[]" class="upload_input" value={{$link->flyin ? $link->flyin->url : ''}} >
                                                 <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video" data-default-file="{{$link->flyin ? assetUrl($link->flyin->url) : ''}}"  />
                                             </div>
+                                            
+                                        </div>
                                         
-                                           <button class="btn btn-primary addflyin" data-index="{{$ids}}">Add Fly In Video</button>
-                                    </div>
-
-
-
-
-
-
-
-
-
-
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    <button class="btn btn-primary mt-2 mb-4 mr-2  add-image"  data-index="{{$ids}}" >Add Background Image</button>
+                                    <button class="btn btn-primary mt-2 mb-4 mr-3 addflyin" data-index="{{$ids}}">Add Fly In Video</button>
                                     <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
                                 </div>
                               @endforeach
@@ -234,42 +299,17 @@ Edit Page
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="name">Content Type</label>
-                        <select name="bg_type" id="bg_type" class="form-control">
-                            @if($pag->bg_type == 'image')
-                            <option value="none">None</option>
-                            <option value="image" selected>Image</option>
-                            <option value="video">Video</option>
-                            @else
-                            <option value="none">None</option>
-                            <option value="image">Image</option>
-                            <option value="video" selected>Video</option>
-                            @endif
-                        </select>
-                    </div>
                     <div class="image-uploader" id="imgBg">
                         <label class="mb-3" for="images">Background Image</label>
-                        <input type="hidden" name="url" class="upload_input" value="{{$page->images?$page->images[0]->url:''}}">
-                        <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{$page->images?assetUrl($page->images[0]->url):''}}" />
+                        <input type="hidden" name="url" class="upload_input" value="{{isset($page->images[0])?$page->images[0]->url:''}}">
+                        <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{isset($page->images[0])?assetUrl($page->images[0]->url):''}}" />
                     </div>
                     <div class="image-uploader" id="vidBg">
                         <label class="mb-3" for="images">Background Video (Optional)</label>
                         <input type="hidden" name="video_url" class="upload_input" value="{{$page->videoBg?$page->videoBg->url:''}}">
                         <input type="file" data-name="video_url" data-plugins="dropify" data-type="video" data-default-file="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" />
                     </div>
-                    
-                    {{-- <div class="image-uploader" id="imgBg" style="display: none">
-                        <label class="mb-3" for="images">Background Image</label>
-                        <input type="hidden" name="url" class="upload_input" >
-                        <input type="file" data-name="url" data-plugins="dropify" data-type="image"  />
-                    </div>
-                    <div class="image-uploader" id="vidBg" style="display: none">
-                        <label class="mb-3" for="images">Background Video</label>
-                        <input type="hidden" name="video_url" class="upload_input" >
-                        <input type="file" data-name="video_url" data-plugins="dropify" data-type="video"  />
-                    </div> --}}
-
+                   
 
                     <!-- Treasure Hunt Items Start -->
                         <div id="treasures">
@@ -344,6 +384,8 @@ Edit Page
         
         $("#add-link").on("click", addlink);
         $("#add-treasure").on("click", addTreasure);
+        // $(".add-image").on("click", addImage);
+
 
         $(".type").on("change",toggleVisibility);
         $(".pos").on("input",changePosition);
@@ -355,8 +397,10 @@ Edit Page
         $(".donet").on("click",resetPositiont)
 
         $(".addflyin").on("click",addFlyIn);
+        $(".image_links").on("click",changePosition)
         
-
+        $(".pers").on("change",togglePerspective);
+    
         bindRemoveButton();
 
     });
@@ -372,6 +416,23 @@ Edit Page
         initializeFileUploads();
 
     }
+    function addImage(e){
+        e.preventDefault();
+        let target = $(e.target);
+        const index = target.data("index");
+        console.log(index);
+        
+        $(".background_images_"+index).append(
+            `<div class="form-group image-uploader mb-3 col-md-4">
+                <label for="bgimages">Background</label>       
+                <input type="hidden" name="bgimages[${index}][]" class="upload_input">
+                <input type="file" data-name="bgimages[${index}][]" data-plugins="dropify" data-type="image"   />                                   
+            </div>`);
+            initializeFileUploads();
+
+
+    }
+
 
     function resetPosition(e){
         e.preventDefault();
@@ -386,6 +447,8 @@ Edit Page
             width: "100%",
         });
         resetflag =true;
+        document.getElementsByClassName("positioning-"+index)[0].scrollIntoView(false);
+
     }
     
     function resetPositiont(e){
@@ -402,10 +465,13 @@ Edit Page
             width: "100%",
         });
         resetflag =true;
+        
+        document.getElementsByClassName(".tpositioning-"+index)[0].scrollIntoView(false);
     }
 
     
     function changePosition(e){
+        
         
         let target = $(e.target);
         
@@ -420,7 +486,9 @@ Edit Page
         let name = $(".name-"+index).val();
         console.log($(".im-"+index));
         $(".im-"+index).eq(0).css(areaStylesb(positions));
-        $(".im-"+index).html(`${name}`);
+        // $(".im-"+index).html(`${name}`);
+        $(".im_name-"+index).eq(0).css(getRotation(positions));
+        $(".im_name-"+index).html(`${name}`);
         $(".positioning-"+index).eq(0).css({
             position: "fixed",
             bottom: "20px",
@@ -433,6 +501,23 @@ Edit Page
         console.log($(".positioning-"+index));
         console.log(index);
     }
+    function getRotation(area){
+        if(area[4]=="X"){
+            return {
+                transform: `rotatex(${area[6]}deg)`
+            }
+        }else if(area[4]=="Y"){
+            return {
+                transform: `rotatey(${area[6]}deg)`
+            }
+        }else{
+            return {
+                transform: `rotatey(0deg)`
+            }
+
+        }
+    }
+
 
     
     function changePositiont(e){
@@ -473,8 +558,28 @@ Edit Page
              top: area[0]+'%',
              left: area[1]+'%',
              width: area[2]+'%',
-             height: area[3]+'%'
+             height: area[3]+'%',
+             perspective: area[5]+'px'
         }
+    }
+    function togglePerspective(e){
+        
+        // console.log(e.target.value);
+        // console.log(e.data)
+        const selectbox = $(e.target);
+        const index = selectbox.data('index');
+
+        
+        $(".pr-"+index).hide();
+        $(".rt-"+index).hide();
+        
+        switch(selectbox.val()){
+            case "X":
+            case "Y":
+                $(".pr-"+index).show();
+                $(".rt-"+index).show();
+        }
+        // console.log(val);
     }
 
 
@@ -490,11 +595,13 @@ Edit Page
         $(".pages-"+index).hide();
         $(".zoom-"+index).hide();
         $(".booth-"+index).hide();
+        $(".modal-"+index).hide();
         $(".vimeo-"+index).hide();
         $(".pdf-"+index).hide();
         $(".chat_user-"+index).hide();
         $(".chat_group-"+index).hide();
         $(".custom_page-"+index).hide();
+        $(".ph-"+index).hide();
 
         switch(selectbox.val()){
             case "session_room":
@@ -508,6 +615,9 @@ Edit Page
                 break;
             case "booth":
                 $(".booth-"+index).show();
+                break;
+            case "modal":
+                $(".modal-"+index).show();
                 break;
             case "vimeo":
                 $(".vimeo-"+index).show();
@@ -523,6 +633,9 @@ Edit Page
                 break;
             case "custom_page":
                 $(".custom_page-"+index).show();
+                break;
+            case "photobooth":
+                $(".ph-"+index).show();
                 break;
         }
         // console.log(val);
@@ -540,7 +653,7 @@ Edit Page
         
 
         $("#treasures").append(`
-                                <div class="row">
+                                <div class="row ">
                                     <div class="image-uploader col-md-12">
                                         <input type="hidden" name="treasures[]" class="upload_input" >
                                         <input type="file" data-name="treasures[]" data-plugins="dropify" data-type="image"/>
@@ -590,7 +703,7 @@ Edit Page
         
 
         $(".link-section").append(`
-                                <div class="row">
+                                <div class="row  border border-primary p-2 mt-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
                                         <input type="text" required  name="linknames[]" class="name-${n} form-control">
@@ -628,6 +741,15 @@ Edit Page
 
                                         </select>
                                     </div>
+                                    <div style="display: none;" class="modal-${n} modals form-group mb-3 col-md-4">
+                                        <label for="to">to(modal)</label>
+                                        <select     class="form-control" name="modals[]">
+                                            @foreach($modals as $modal)
+                                                <option value="{{$modal->id}}">{{$modal->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
 
                                     <div style="display: none;" class="room-${n} room form-group mb-3 col-md-4">
                                         <label for="to">to(Session Room)</label>
@@ -656,6 +778,13 @@ Edit Page
                                         <input type="file"    data-name="pdfs" data-plugins="dropify" data-type="application/pdf" />                                   
                                         </div>
                                     </div>
+
+                                    <div  style="display: none;" class="image-uploader ph-${n} ph form-group mb-3 col-md-4">
+                                        <label for="phb">Photobooth Capture Link</label>
+                                        <input  type="text"   name="capture_link[]" class="form-control">
+                                        <label for="phb">Photobooth Gallery Link</label>
+                                        <input  type="text"   name="gallery_link[]" class="form-control">
+                                    </div>
                                     <div  style="display: none;"  class="chat_user-${n} chat_user form-group mb-3 col-md-4">
                                         <label for="chat_user">Chat User ID</label>
                                         <input type="text"   name="chatuser[]" class="form-control">
@@ -669,7 +798,8 @@ Edit Page
                                         <label for="custom_page">Custom Page route</label>
                                         <input type="text"   name="custom_page[]" class="form-control">
                                     </div>
-
+                                    <div class="background_images_${n} row col-md-12">
+                                    </div>
 
                                     <div  class="row positioning-${n}" >
                                     
@@ -692,6 +822,22 @@ Edit Page
                                         <label for="pos">height</label>
                                         <input type="number" required  name="height[]" data-index="${n}" class="pos pos-${n} form-control">
                                     </div>
+                                    <div  class="form-group mb-3 col-md-3">
+                                        <label for="pos">Perspective Type</label>
+                                        <select name="rotationtype[]" data-index="${n}" class="pers pos pos-${n} form-control">
+                                            <option value="">None</option>
+                                            <option value="X">X</option>
+                                            <option value="Y">Y</option>
+                                        </select>
+                                    </div>
+                                    <div style="display: none;"   class="pr-${n} form-group mb-3 col-md-3">
+                                        <label for="pos">Perspective</label>
+                                        <input  type="number" step="any"   name="perspective[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
+                                    <div  style="display: none;"  class="rt-${n} form-group mb-3 col-md-3">
+                                        <label for="pos">Rotation</label>
+                                        <input  type="number" step="any"   name="rotation[]" data-index="${n}" class="pos pos-${n} form-control">
+                                    </div>
 
                                     <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
 
@@ -703,7 +849,6 @@ Edit Page
                                                 <input type="hidden" name="flyin[]" class="upload_input" >
                                                 <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video"  />
                                             </div>
-                                            <button class="btn btn-primary addflyin" data-index="${n}">Add Fly In Video</button>
                                         </div>
                                    
 
@@ -715,9 +860,9 @@ Edit Page
 
 
 
-
-
-                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                        <button class="btn btn-primary mt-2 mb-4 mr-2  add-image"  data-index="${n}"  >Add Background Image</button>
+                                        <button class="btn btn-primary  mt-2 mb-4 addflyin" data-index="${n}">Add Fly In Video</button>
+                                    <button class="btn btn-danger mt-2 mb-4 ml-2 remove-link">Remove</button>
                                 </div>`);
         bindRemoveButton();
         
@@ -737,6 +882,10 @@ Edit Page
         $(".donet").hide();
         $(".donet").on("click",resetPositiont)
         $(".addflyin").on("click",addFlyIn);
+        $(".image_links").on("click",changePosition)
+        $(".add-image").unbind("click").on("click", addImage);
+        $(".pers").on("change",togglePerspective);
+        
     }
 
     function removelink(e) {
