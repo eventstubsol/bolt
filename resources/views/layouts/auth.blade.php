@@ -142,7 +142,7 @@
                                 <!-- form -->
                                 <div class="form">
                                     @yield('form')
-                                    <p class="text mt-3">By logging in and using the platform, you hereby accept our <a href="{{ route('privacyPolicy') }}" >Privacy Policy</a>. For more details <a href="{{ route("faq") }}">read the FAQs</a></p>
+                                    {{-- <p class="text mt-3">By logging in and using the platform, you hereby accept our <a href="{{ route('privacyPolicy') }}" >Privacy Policy</a>. For more details <a href="{{ route("faq") }}">read the FAQs</a></p> --}}
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
