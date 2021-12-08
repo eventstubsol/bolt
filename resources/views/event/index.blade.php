@@ -902,7 +902,7 @@ $user = Auth::user();
         $(document).ready(function() {
             setInterval(function() {
                 $.ajax({
-                    url: "{{ route('confirmLogin') }}",
+                    url: "{{ route('confirmLogin',['subdomain'=>$event_name]) }}",
                     success: function(response) {
                         if (response && !response.loggedIn) {
                             window.location.reload();
