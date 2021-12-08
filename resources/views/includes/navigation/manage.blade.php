@@ -368,7 +368,7 @@
             @php
                 $session_rooms = getRoomsEventee(($id));
             @endphp
-            @if(count($session_rooms) != 0)
+            @if(is_array($session_rooms))
                 @foreach($session_rooms as $sessionroom)
                         <li>
                             <a href="{{ route("event.workshop", ['name' => $sessionroom->name,'id'=>$id]) }}">{{ $sessionroom->name }}</a>
