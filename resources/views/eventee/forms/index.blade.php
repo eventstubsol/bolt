@@ -39,7 +39,7 @@
                             @foreach($forms as $key => $form)
                             <tr>
                                 <td >{{ $key+1 }}</td>
-                                <td >   https://virturo.io/register/{{ $form->slug }}</td>
+                                <td >   https://eventstub.co/register/{{ $form->slug }}</td>
                                 <td >{{ $form->name }}</td>
                                 @php
                                     $fieldCount = App\FormField::where('form_id',$form->id)->count()
