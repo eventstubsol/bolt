@@ -700,7 +700,7 @@ Route::get("/clear-leaderboard", function(){
 // });
 
 
-$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
+$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
 
 // $url = '{subdomain}.localhost';
 Route::group(['domain' => $url], function () {
