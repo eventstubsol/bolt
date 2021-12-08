@@ -54,10 +54,6 @@ class BoothController extends Controller
         flash("Name Field cannot be left blank")->error();
         return redirect()->back();
       }
-      elseif(empty($request->calendly_link)){
-        flash("Calendly Link Field cannot be left blank")->error();
-        return redirect()->back();
-      }
       elseif(empty($request->userids)){
         flash("Please Select A Exibitor First")->error();
         return redirect()->back();
