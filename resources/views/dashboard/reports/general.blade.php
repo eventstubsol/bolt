@@ -86,18 +86,23 @@
 <div class="col-md-6 col-xl-4  mb-3">
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
-            <div class="card-header">Session Room Active Users</div>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>User Name</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody class="sesroomUSer">
-                    <td colspan="2"><center>No Data Available</center></td>
-                </tbody>
-            </table>
+            
+            <div class="card">
+                <div class="card-header">Session Room Active Users</div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sesroomUSer">
+                            <td colspan="2"><center>No Data Available</center></td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
 </div>
@@ -110,6 +115,30 @@
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
 </div>
+
+<div class="col-md-6 col-xl-4  mb-3">
+    <div class="widget-rounded-circle card-box h-100">
+        <div class="row">
+            
+            <div class="card">
+                <div class="card-header">Active Page Users</div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="pageUSer">
+                            <td colspan="2"><center>No Data Available</center></td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> <!-- end row-->
+    </div> <!-- end widget-rounded-circle-->
+</div>
 <div class="col-md-6 col-xl-4  mb-3">
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
@@ -118,7 +147,30 @@
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
 </div>
-
+<div class="col-md-6 col-xl-4  mb-3">
+    <div class="widget-rounded-circle card-box h-100">
+        <div class="row">
+            <div class="card">
+                <div class="card-header">Active Booth Users</div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="botthUSer">
+                            <td colspan="2"><center>No Data Available</center></td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            
+        </div> <!-- end row-->
+    </div> <!-- end widget-rounded-circle-->
+</div>
     {{-- <div class="col-12">
         <div class="page-title-box">
             <h4 class="page-title">List of latest users who logged in (Last 50)</h4>
@@ -131,20 +183,24 @@
     <div class="col-md-6 col-xl-4  mb-3">
         <div class="widget-rounded-circle card-box h-100">
             <div class="row">
-                <div class="card-header">Active Lobby Users</div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>User Name</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody class="lobbyUser">
-                            <td colspan="2"><center>No Data Available</center></td>
-                        </tbody>
-                    </table>
+                
+                <div class="card">
+                    <div class="card-header">Active Lobby Users</div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody class="lobbyUser">
+                                <td colspan="2"><center>No Data Available</center></td>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                
             </div>
            
         </div>
@@ -152,19 +208,21 @@
     <div class="col-md-6 col-xl-4  mb-3">
         <div class="widget-rounded-circle card-box h-100">
             <div class="row">
-                <div class="card-header">Active Lounge Users</div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>User Name</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody class="loungeUser">
-                            <td colspan="2"><center>No Data Available</center></td>
-                        </tbody>
-                    </table>
+                <div class="card">
+                    <div class="card-header">Active Lounge Users</div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody class="loungeUser">
+                                <td colspan="2"><center>No Data Available</center></td>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
            
@@ -401,9 +459,16 @@
                 success:function(response){
                     // console.log(response);
                     $('.sesroomUSer').empty();
-                    $.each(response,function(key,value){
+                    if(response.length > 0)
+                    {   
+                        $.each(response,function(key,value){
                             $('.sesroomUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
                         });
+                    }
+                    else{
+                        $('.sesroomUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                    }
+                    
                     drawPieChart(response);
                     
                 }
@@ -415,6 +480,15 @@
                 data:{id:"{{ $id }}"},
                 success:function(response){
                     // console.log(response);
+                    if(response.length > 0)
+                    {   
+                        $.each(response,function(key,value){
+                            $('.pageUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
+                        });
+                    }
+                    else{
+                        $('.pageUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                    }
                     drawPageChart(response);
                     
                 }
@@ -426,6 +500,15 @@
                 data:{id:"{{ $id }}"},
                 success:function(response){
                     // console.log(response);
+                    if(response.length > 0)
+                    {   
+                        $.each(response,function(key,value){
+                            $('.botthUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
+                        });
+                    }
+                    else{
+                        $('.botthUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                    }
                     drawBoothChart(response);
                     
                 }
@@ -487,6 +570,15 @@
                             data:{id:"{{ $id }}"},
                             success:function(response){
                                 // console.log(response);
+                                if(response.length > 0){
+                                    $.each(response,function(key,value){
+                                        $('.sesroomUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
+                                    });
+                                }
+                                else{
+                                    $('.sesroomUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                                }
+                                
                                 drawPieChart(response);
                                 
                             }
@@ -498,6 +590,15 @@
                             data:{id:"{{ $id }}"},
                             success:function(response){
                                 // console.log(response);
+                                if(response.length > 0)
+                                {   
+                                    $.each(response,function(key,value){
+                                        $('.pageUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
+                                    });
+                                }
+                                else{
+                                    $('.pageUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                                }
                                 drawPageChart(response);
                                 
                             }
@@ -509,6 +610,15 @@
                             data:{id:"{{ $id }}"},
                             success:function(response){
                                 // console.log(response);
+                                if(response.length > 0)
+                                {   
+                                    $.each(response,function(key,value){
+                                        $('.botthUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
+                                    });
+                                }
+                                else{
+                                    $('.botthUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                                }
                                 drawBoothChart(response);
                                 
                             }
