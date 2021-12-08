@@ -184,9 +184,9 @@ class eventeeController extends Controller
         }
         $baseurl = URL::to('/');
         if(strpos($baseurl,'https')){
-           $baseurl =  str_replace('https://','',$baseurl);
+           $baseurl =  str_replace('https://app.','',$baseurl);
         }else{
-          $baseurl=  str_replace('http://','',$baseurl);
+          $baseurl=  str_replace('http://app.','',$baseurl);
         }
         // $response = Http::withHeaders([
         //     'key' => '53530868315e72004e53efaff6ecbfb728e308f2',
@@ -225,7 +225,7 @@ class eventeeController extends Controller
             //     Menu::create(['name'=>$menusNames[$i],'position'=>$manuPos[$i],'link'=>$menuLink[$i],'iClass'=>$menuClass[$i],'event_id'=>$event->id,'type'=>'footer','parent_id'=>0]);
             // }
             flash("Event Saved Successfully")->success();
-            Event::where('id',$event->id)->update(['link'=> $event->slug.'.'.str_replace('https://','',$baseurl).'']);
+            Event::where('id',$event->id)->update(['link'=> $event->slug.'.'.str_replace('https://app.','',$baseurl).'']);
             return redirect()->back();
         }
         else{
