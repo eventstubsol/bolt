@@ -86,6 +86,25 @@
 <div class="col-md-6 col-xl-4  mb-3">
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
+            <div class="card-header">Session Room Active Users</div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody class="sesroomUSer">
+                    <td colspan="2"><center>No Data Available</center></td>
+                </tbody>
+            </table>
+        </div> <!-- end row-->
+    </div> <!-- end widget-rounded-circle-->
+</div>
+
+<div class="col-md-6 col-xl-4  mb-3">
+    <div class="widget-rounded-circle card-box h-100">
+        <div class="row">
             <div class="card-header">Active Page Users</div>
             <div id="piechart3" style="left:0;width: 50rem; height: 20rem;"></div>
         </div> <!-- end row-->
@@ -381,6 +400,10 @@
                 data:{id:"{{ $id }}"},
                 success:function(response){
                     // console.log(response);
+                    $('.sesroomUSer').empty();
+                    $.each(response,function(key,value){
+                            $('.sesroomUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
+                        });
                     drawPieChart(response);
                     
                 }
