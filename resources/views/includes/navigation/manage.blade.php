@@ -362,31 +362,17 @@
             <li>
                 <a href="{{ route("event.leaderboard",$id) }}">Leaderboard</a>
             </li>
-            <!-- <li>
+            <li>
                 <a href="{{ route("reports.auditorium") }}">Auditorium</a>
-            </li> -->
+            </li> 
             @php
                 $session_rooms = getRoomsEventee(($id));
             @endphp
-            @if($session_rooms != 0)
-                @foreach($session_rooms as $master_room => $rooms)
-                    @if($master_room != "private" )
-                    <li>
-                        <a href="#{{$master_room}}" data-toggle="collapse">{{ ucfirst( str_replace("_"," ", $master_room ) )  }}</a>
-                
-                        <div class="collapse" id="{{$master_room}}">
-                            <ul class="nav-sesond-level">
-                                @foreach($rooms as $room)
-                                    <li>
-                                        <a href="{{ route("event.workshop", ['name' => $room,'id'=>$id]) }}">{{ $room }}</a>
-                                    </li>
-                                @endforeach
-                            
-                            </ul>
-                        </div>
-                    </li>
-                    @endif
-                
+            @if(is_array($session_rooms))
+                @foreach($session_rooms as $sessionroom)
+                        <li>
+                            <a href="{{ route("event.workshop", ['name' => $sessionroom->name,'id'=>$id]) }}">{{ $sessionroom->name }}</a>
+                        </li>
                 @endforeach
             @endif
         </ul>
