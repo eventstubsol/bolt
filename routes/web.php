@@ -361,7 +361,6 @@ Route::get("schedule", "EventSessionsController@schedule")->name("schedule");
 Route::get("schedule-raw", "EventSessionsController@scheduleRaw")->name("scheduleRaw");
 // Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
 Route::get("/notifications/send", "NotificationController@send")->name("sendNotifications");
-Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
 
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
     Route::post("/uploadFile", "CMSController@uploadFile")->name("cms.uploadFile");
@@ -700,7 +699,7 @@ Route::get("/clear-leaderboard", function(){
 // });
 
 
-$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
+$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.event';
 
 // $url = '{subdomain}.localhost';
 Route::group(['domain' => $url], function () {
@@ -727,6 +726,8 @@ Route::group(['domain' => $url], function () {
         // return "This will respond to requests for 'admin.localhost/'";
     });
     
+    Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
+
     Route::get("/faq", "HomeController@faqs")->name("faq");
     Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
     Route::get('/exhibitorlogin/{email}',"EventUser\LoginController@exhibitorlogin")->name("exhibitorLogin");
