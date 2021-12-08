@@ -639,9 +639,6 @@
                                 else{
                                     $('.lobbyUser').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
                                 }
-                            
-                                
-                                
                             }
                         });
 
