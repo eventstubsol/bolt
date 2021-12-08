@@ -118,9 +118,9 @@
                     @php
                         $baseurl = URL::to('/');
                         if(strpos($baseurl,'https')){
-                                $baseurl =  str_replace('https://',' ',$baseurl);
+                                $baseurl =  str_replace('https://app.',' ',$baseurl);
                         }else{
-                            $baseurl=  str_replace('http://','',$baseurl);
+                            $baseurl=  str_replace('http://app.','',$baseurl);
                         }
                     @endphp
                     <span id="event_link">.{{ $baseurl }}</span><br>
