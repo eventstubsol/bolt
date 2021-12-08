@@ -28,64 +28,14 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 // });
 
 
-$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
-
-// $url = '{subdomain}.localhost';
-Route::group(['domain' => $url], function () {
-    Route::get('/', function ($subdomain) {
-        $eveCount = Event::where("slug",$subdomain)->count();
-        $event = Event::where("slug",$subdomain)->first();
-        if($eveCount < 1){
-            // dd("here");
-            return view('errors.404');
-        }
-        // dd($subdomain);
-        $user = Auth::user();
-        if(!$user){
-            return redirect(route('attendeeLogin',$subdomain));
-        }
-        if($user->type === "exhibiter"){
-            return redirect(route("exhibiterhome",$subdomain));
-        }
-        // if($user->type)
-        // dd($subdomain);
-        return redirect(route('eventee.event',$subdomain));
-        // Route::get("/", "HomeController@index")->name("home");
-
-        // return "This will respond to requests for 'admin.localhost/'";
-    });
-    
-    Route::get("/faq", "HomeController@faqs")->name("faq");
-    Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
-    Route::get('/exhibitorlogin/{email}',"EventUser\LoginController@exhibitorlogin")->name("exhibitorLogin");
-    
-    Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
-    Route::post("/event/post/exhibitorlogin", "AttendeeAuthController@exhibitorlogin")->name("exhibiter.login");
-    // Route::get("/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
-    // Route::post("/event/register", "AttendeeAuthController@saveRegistration")->name("attendee_register.confirm");
-    Route::get("/register/{slug}", "AttendeeAuthController@showRegistration")->name("attendee_registe");
-    Route::POST('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
-    Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
-        Route::get("/booths", "Eventee\BoothController@exhibiterhome")->name("exhibiterhome");
-    });
-    Route::post("/event/register", "AttendeeAuthController@confirmReg")->name("attendee_register.confirmReg");
-    Route::middleware(["auth"])->group(function ($subdomain) {
-        Route::get("/event", "EventController@index")->name("eventee.event");
-        Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
-        Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
-        Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
-        
-        
-        Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
 
 
-    });
+$appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
 
+Route::group(['domain' => $appurl], function () {
 
 
-
-});
 Route::post("/leaderboard", "EventManageController@leaderboard")->name("leaderboard");
 Route::Post("admin/logout","HomeController@logout")->name('admin.logout');
 Auth::routes();
@@ -722,7 +672,7 @@ Route::get("/clear-leaderboard", function(){
     // \App\User::where("email", "dev@fitsmea.com")->first()->markEmailAsVerified();
     // return \App\User::all();
 });
-
+});
 //Route::get("setup-slido-fields", function(){
 //    $i = 0;
 //    foreach (EVENT_ROOMS as $ROOM){
@@ -748,3 +698,63 @@ Route::get("/clear-leaderboard", function(){
 //         $menuitem->save();
 //     }
 // });
+
+
+$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
+
+// $url = '{subdomain}.localhost';
+Route::group(['domain' => $url], function () {
+    Route::get('/', function ($subdomain) {
+        $eveCount = Event::where("slug",$subdomain)->count();
+        $event = Event::where("slug",$subdomain)->first();
+        if($eveCount < 1){
+            // dd("here");
+            return view('errors.404');
+        }
+        // dd($subdomain);
+        $user = Auth::user();
+        if(!$user){
+            return redirect(route('attendeeLogin',$subdomain));
+        }
+        if($user->type === "exhibiter"){
+            return redirect(route("exhibiterhome",$subdomain));
+        }
+        // if($user->type)
+        // dd($subdomain);
+        return redirect(route('eventee.event',$subdomain));
+        // Route::get("/", "HomeController@index")->name("home");
+
+        // return "This will respond to requests for 'admin.localhost/'";
+    });
+    
+    Route::get("/faq", "HomeController@faqs")->name("faq");
+    Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
+    Route::get('/exhibitorlogin/{email}',"EventUser\LoginController@exhibitorlogin")->name("exhibitorLogin");
+    
+    Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
+    Route::post("/event/post/exhibitorlogin", "AttendeeAuthController@exhibitorlogin")->name("exhibiter.login");
+    // Route::get("/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
+    // Route::post("/event/register", "AttendeeAuthController@saveRegistration")->name("attendee_register.confirm");
+    Route::get("/register/{slug}", "AttendeeAuthController@showRegistration")->name("attendee_registe");
+    Route::POST('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
+    Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
+        Route::get("/booths", "Eventee\BoothController@exhibiterhome")->name("exhibiterhome");
+    });
+    Route::post("/event/register", "AttendeeAuthController@confirmReg")->name("attendee_register.confirmReg");
+    Route::middleware(["auth"])->group(function ($subdomain) {
+        Route::get("/event", "EventController@index")->name("eventee.event");
+        Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
+        Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
+        Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
+        
+        
+        Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
+
+
+    });
+
+
+
+
+
+});
