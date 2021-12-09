@@ -1,6 +1,8 @@
 @php
 $leaderboard =App\Leaderboard::where('event_id',$event_id)->first();
-$images = App\Image::where('owner',$leaderboard->id)->get();
+if(isset($leaderboard)){
+    $images = App\Image::where('owner',$leaderboard->id)->get();
+}
 @endphp
 <div class="page has-padding padding-large menu-filled" id="leaderboard">
     <div class="container-fluid">
@@ -40,7 +42,8 @@ $images = App\Image::where('owner',$leaderboard->id)->get();
                 <div class="carousel slide h-100" id="prizes" data-ride="carousel">
 
                     <div class="carousel-inner h-100">
-                        @foreach($images  as $id=>$image)
+                       @if(isset($images))
+                            @foreach($images  as $id=>$image)
                             <div class="carousel-item h-100 @if($id===0)active @endif">
                                 
                                     <img async class="d-block img-fluid h-100 w-100" style="object-fit:cover;" src="{{assetUrl($image->url)}}"
@@ -50,9 +53,10 @@ $images = App\Image::where('owner',$leaderboard->id)->get();
                     {{--                                                <h5 class="text-white">{{$prize->title}}</h5>--}}
                     {{--                                                <p>{!! $prize->description !!}</p>--}}
                                     </div>
-                                   
+                                    
                             </div>
                             @endforeach
+                        @endif
                             {{-- <a class="carousel-control-prev" href="#prizes" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
