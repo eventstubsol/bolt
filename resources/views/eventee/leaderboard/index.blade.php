@@ -28,11 +28,17 @@ $fields = getAllFields($id);
                     <label for="color">Select Color</label>
                     <input type="color" class="form-control form-control-color" name="color">
                 </div>
-                <button type="button" class="addSection btn btn-primary">Add Images</button>
+                
                 
                 <div id="formToAppend">
-
+                    <div class="card-title"><h4>Leaderboard Images</h4></div>
                 </div>
+                <div class="pointsAppend">
+                    <div class="card-title"><h4>Leaderboard Points</h4></div>
+                </div>
+
+                <button type="button" class="addSection btn btn-primary">Add Images</button>
+                <button type="button" class="addPoints btn btn-primary">Add Points</button>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         @else
@@ -42,17 +48,36 @@ $fields = getAllFields($id);
                     <label for="color">Select Color</label>
                     <input type="color" class="form-control form-control-color" name="color" value="{{ $leaderSettings->color }}">
                 </div>
-                @foreach (App\Image::where('owner',$leaderSettings->id)->get() as $key =>$image)
-                    <div class="form-group">
-                        <div class="image-uploader" id="imgBg" >
-                            <label class="mb-3" for="images">Leaderboard Image {{ $key+1 }}</label>
-                            <input type="hidden" name="leaderboardUrl[]" class="upload_input"  value="{{ $image->url }}" >
-                            <input type="file" data-name="leadimages" data-plugins="dropify" data-type="image" data-default-file={{  assetUrl($image->url) }} />
-                        </div>
-                    </div>
-                @endforeach
-                <button type="button" class="addSection btn btn-primary">Add Images</button>
                 
+                <div id="form-append">
+                    <div class="card-title"><h4>Leaderboard Images</h4></div>
+                    @if(App\Image::where('owner',$leaderSettings->id)->count() > 0)
+                        @foreach (App\Image::where('owner',$leaderSettings->id)->get() as $key =>$image)
+                            <div class="form-group">
+                                <div class="image-uploader" id="imgBg" >
+                                    <label class="mb-3" for="images">Leaderboard Image {{ $key+1 }}</label>
+                                    <input type="hidden" name="leaderboardUrl[]" class="upload_input"  value="{{ $image->url }}" >
+                                    <input type="file" data-name="leadimages" data-plugins="dropify" data-type="image" data-default-file={{  assetUrl($image->url) }} />
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                
+                <div id="point-append">
+                    <div class="card-title"><h4>Leaderboard Points</h4></div>
+                    @if(App\LeadPoint::where('owner',$leaderSettings->id)->count() > 0)
+                    @foreach (App\LeadPoint::where('owner',$leaderSettings->id)->get() as $key =>$loadpoint)
+                        <div class="form-group">
+                            <label for="points">Point {{ $key + 1  }}</label>
+                            <input type="text" name="points[]" class="form-control" value="{{ $loadpoint->point }}">
+                        </div>
+
+                    @endforeach
+                @endif
+                </div>
+                <button type="button" class="addSection2 btn btn-primary">Add Images</button>
+                <button type="button" class="addPoints2 btn btn-primary">Add Points</button>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         @endif
@@ -68,7 +93,17 @@ $fields = getAllFields($id);
     $(document).ready(function(){
         $('.addSection').on('click',function(){
             var appendable = '<div class="form-group"><div class="image-uploader" id="imgBg" ><label class="mb-3" for="images">Leaderboard Image </label><input type="hidden" name="leaderboardUrl[]" class="upload_input"  ><input type="file" data-name="leadimages" data-plugins="dropify" data-type="image" /></div></div>';
-            $('#formToAppend').append(appendable)
+            $('#formToAppend').append(appendable);
+            initializeFileUploads();
+        });
+        $('.addSection2').on('click',function(){
+            var appendable = '<div class="form-group"><div class="image-uploader" id="imgBg" ><label class="mb-3" for="images">Leaderboard Image </label><input type="hidden" name="leaderboardUrl[]" class="upload_input"  ><input type="file" data-name="leadimages" data-plugins="dropify" data-type="image" /></div></div>';
+            $('#form-append').append(appendable);
+            initializeFileUploads();
+        });
+        $('.addPoints2').on('click',function(){
+            var appendable = '<div class="form-group"><label for="points">Point</label><input type="text" name="points[]" class="form-control"></div>';
+            $('#point-append').append(appendable);
         });
     });
 </script>

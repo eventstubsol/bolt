@@ -7,6 +7,7 @@
                         <h2>Point System</h2>
                     </div>
                     <div class="wrap-content">
+                        
                         <ul>
                             <li>Event Login</li>
                             <li> Viewing an On-demand Video</li>
