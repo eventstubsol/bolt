@@ -13,6 +13,9 @@ use App\UserConnection;
 use App\sessionRooms;
 use App\Contact;
 use App\Link;
+use App\Leaderboard;
+use App\LeadPoint;
+use App\Image;
 use App\UserTag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -615,6 +618,21 @@ function createMenus($event_id){
         $menuitem->save();
     }
     return true;
+}
+
+
+function createLeaderboard($event_id){
+    $leaderboard = new Leaderboard;
+    $leaderboard->color = #64D709;
+    $leaderboard->event_id = $event_id;
+    if($leaderboard->save()){
+        $defaultpoints = ['Event Login','Viewing an On-demand Video','Viewing a document in the library','Viewing a live streaming','Visiting a booth'];
+        for($i = 0 ; $i < count($defaultpoints) ; $i++){
+            LeadPoint::create(['owner'=>$leaderboard->id,'points'=>$defaultpoints[$i]]);
+        }
+        return True;
+    }
+   return False;
 }
 
 function getRooms(){
