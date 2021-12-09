@@ -28,64 +28,14 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 // });
 
 
-$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.virturo.io';
-
-// $url = '{subdomain}.localhost';
-Route::group(['domain' => $url], function () {
-    Route::get('/', function ($subdomain) {
-        $eveCount = Event::where("slug",$subdomain)->count();
-        $event = Event::where("slug",$subdomain)->first();
-        if($eveCount < 1){
-            // dd("here");
-            return view('errors.404');
-        }
-        // dd($subdomain);
-        $user = Auth::user();
-        if(!$user){
-            return redirect(route('attendeeLogin',$subdomain));
-        }
-        if($user->type === "exhibiter"){
-            return redirect(route("exhibiterhome",$subdomain));
-        }
-        // if($user->type)
-        // dd($subdomain);
-        return redirect(route('eventee.event',$subdomain));
-        // Route::get("/", "HomeController@index")->name("home");
-
-        // return "This will respond to requests for 'admin.localhost/'";
-    });
-    
-    Route::get("/faq", "HomeController@faqs")->name("faq");
-    Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
-    Route::get('/exhibitorlogin/{email}',"EventUser\LoginController@exhibitorlogin")->name("exhibitorLogin");
-    
-    Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
-    Route::post("/event/post/exhibitorlogin", "AttendeeAuthController@exhibitorlogin")->name("exhibiter.login");
-    // Route::get("/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
-    // Route::post("/event/register", "AttendeeAuthController@saveRegistration")->name("attendee_register.confirm");
-    Route::get("/register/{slug}", "AttendeeAuthController@showRegistration")->name("attendee_registe");
-    Route::POST('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
-    Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
-        Route::get("/booths", "Eventee\BoothController@exhibiterhome")->name("exhibiterhome");
-    });
-    Route::post("/event/register", "AttendeeAuthController@confirmReg")->name("attendee_register.confirmReg");
-    Route::middleware(["auth"])->group(function ($subdomain) {
-        Route::get("/event", "EventController@index")->name("eventee.event");
-        Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
-        Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
-        Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
-        
-        
-        Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
 
 
-    });
+$appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
 
+Route::group(['domain' => $appurl], function () {
 
 
-
-});
 Route::post("/leaderboard", "EventManageController@leaderboard")->name("leaderboard");
 Route::Post("admin/logout","HomeController@logout")->name('admin.logout');
 Auth::routes();
@@ -398,44 +348,16 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     
 });
 
-Route::post('notification/seen','UerNotifiicationController@seen')->name('notification.user.seen');
-Route::get('notification/seen/all','UerNotifiicationController@seenAll')->name('notification.user.seenAll');
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 
 Route::get("/event/login", "AttendeeAuthController@show")->name("attendee_login");
-Route::get("/event/session-notifications", "EventController@sendSessionNotifications");
-
 Route::get("privacy-policy", "HomeController@privacyPolicy")->name("privacyPolicy");
 Route::get("faq", "HomeController@faqs")->name("faq");
-Route::get("schedule", "EventSessionsController@schedule")->name("schedule");
-Route::get("schedule-raw", "EventSessionsController@scheduleRaw")->name("scheduleRaw");
-// Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
-Route::get("/notifications/send", "NotificationController@send")->name("sendNotifications");
-Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
 
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
     Route::post("/uploadFile", "CMSController@uploadFile")->name("cms.uploadFile");
     Route::get("/home", "HomeController@dashboard");
     // Route::get("/event", "EventController@index")->name("event");
-    Route::get("/me", "EventController@profileInfo")->name("event.profile");
-    Route::get('/testS','testController@index');
-
-    // Route::get("/event/{id}", "EventController@index")->name("eventee.event");
-
-
-    Route::post("/contacts/suggested", "UserController@suggestedContacts")->name("suggestedContacts");
-    Route::post("/contacts/attendees", "UserController@allEventAttendees")->name("attendeesURL");
-    Route::get("/contacts/attendees", "UserController@allEventAttendees")->name("attendeesURL");
-    Route::post("/contacts/connection/request", "UserController@sendConnectionRequest")->name("sendConnectionRequest");
-    Route::post("/contacts/connection/update", "UserController@updateConnectionRequest")->name("updateConnectionRequest");
-    Route::post("/contacts/add", "UserController@addToContacts")->name("addToContacts");
-    Route::post("/contacts/remove", "UserController@removeContact")->name("removeContact");
-    Route::post("/contacts/saved", "UserController@mySavedContacts")->name("savedContacts");
-    Route::post("/contacts/requests", "UserController@myConnectionRequests")->name("myConnectionRequests");
-    Route::post("/contacts/export", "UserController@exportContacts")->name("exportContacts");
-    Route::post("/contacts/mail", "UserController@sendContactsOnMail")->name("sendContactsOnMail");
-    Route::post("/user/details", "UserController@fetchUserDetails")->name("fetchUserDetails");
-    Route::post("/user/register-device", "UserController@registerDevice")->name("registerDevice");
     
     /**
      * POLL ROUTE START
@@ -640,37 +562,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::post("/field/{field}/delete", "CMSController@deleteField")->name("cmsField.delete");
     });
 
-    Route::post("/event/track", "EventController@trackEvent")->name("trackEvent");
-    Route::get("/event/auditorium", "EventController@auditoriumEmbed")->name("auditoriumEmbed");
-    Route::get("/event/meet", "EventController@meetEmbed")->name("meetEmbed");
-    Route::get("/event/current-session", "EventController@getCurrentSession")->name("currentSession");
-    Route::get("/event/webinar", "EventController@webinar")->name("webinar");
-    Route::get("/event/videosdk/{meetingId}/{containerId}", "EventController@videosdk")->name("videosdk");
-    Route::get("/event/ended", "EventController@webinarEnded")->name("webinarEnded");
-    Route::post("/event/{event}/subscribe", "EventSessionsController@subscribe")->name("event.subscribe");
-    Route::post("/event/{event}/unsubscribe", "EventSessionsController@unsubscribe")->name("event.unsubscribe");
-
-    // Route::post("/leaderboard", "EventController@leaderboard")->name("leaderboard");
-    Route::get("/add-to-bag", "EventController@addToBag")->name("addToBag");
-    Route::get("/delete-from-bag", "EventController@deleteFromBag")->name("deleteFromBag");
-    Route::get("/get-swag-bag", "EventController@getSwagBag")->name("getSwagBag");
-    //Add Profile Image
-    Route::post("/save-profile-image", "EventController@saveprofile")->name("saveprofile");
-    Route::post("/saveprofile", "EventController@updateProfile")->name("updateProfile");
-    Route::post("/savetags", "EventController@saveTags")->name("savetags");
-    Route::post("/saveLookingfor", "EventController@saveLookingfor")->name("saveLookingfor");
-    Route::middleware(["checkAccess:exhibiter"])->group(function () {
-        Route::get("/changepassword", "UserController@changePassword")->name("changePassword");
-        Route::post("/updatepassword", "UserController@updatePassword")->name("updatePassword");
-    });
-    Route::get("/send-swags-to-email", "EventController@sendSwagsToEmail")->name("sendSwagsToEmail");
-    Route::get("/booth/{booth}", "EventController@getBoothDetails")->name("boothDetails");
-    Route::post("/booth/{booth}/show-interest", "EventController@showInterestInBooth")->name("showInterestInBooth");
-    Route::get("/delegates-list", "EventController@getDelegatesList")->name("delegateList");
-    Route::post("/updates/check", "EventController@contentTicker")->name("contentTicker");
-    Route::get("/updates/check", "EventController@contentTicker")->name("contentTicker");
-
-
+  
 });
 
 Route::get("/usercreate",function ()
@@ -722,7 +614,7 @@ Route::get("/clear-leaderboard", function(){
     // \App\User::where("email", "dev@fitsmea.com")->first()->markEmailAsVerified();
     // return \App\User::all();
 });
-
+});
 //Route::get("setup-slido-fields", function(){
 //    $i = 0;
 //    foreach (EVENT_ROOMS as $ROOM){
@@ -748,3 +640,142 @@ Route::get("/clear-leaderboard", function(){
 //         $menuitem->save();
 //     }
 // });
+
+
+$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
+
+// $url = '{subdomain}.localhost';
+Route::group(['domain' => $url], function () {
+    Route::get('/', function ($subdomain) {
+        $eveCount = Event::where("slug",$subdomain)->count();
+        $event = Event::where("slug",$subdomain)->first();
+        if($eveCount < 1){
+            // dd("here");
+            return view('errors.404');
+        }
+        // dd($subdomain);
+        $user = Auth::user();
+        if(!$user){
+            return redirect(route('attendeeLogin',$subdomain));
+        }
+        if($user->type === "exhibiter"){
+            return redirect(route("exhibiterhome",$subdomain));
+        }
+        // if($user->type)
+        // dd($subdomain);
+        return redirect(route('eventee.event',$subdomain));
+        // Route::get("/", "HomeController@index")->name("home");
+
+        // return "This will respond to requests for 'admin.localhost/'";
+    });
+    
+    Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
+
+    Route::get("/faq", "HomeController@faqs")->name("faq");
+    Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
+    Route::get('/exhibitorlogin/{email}',"EventUser\LoginController@exhibitorlogin")->name("exhibitorLogin");
+    
+    Route::post("/event/post/login", "AttendeeAuthController@login")->name("event.user.confirmLogin");
+    Route::post("/event/post/exhibitorlogin", "AttendeeAuthController@exhibitorlogin")->name("exhibiter.login");
+    // Route::get("/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
+    // Route::post("/event/register", "AttendeeAuthController@saveRegistration")->name("attendee_register.confirm");
+    Route::get("/register/{slug}", "AttendeeAuthController@showRegistration")->name("attendee_registe");
+    Route::POST('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
+    Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
+        Route::get("/booths", "Eventee\BoothController@exhibiterhome")->name("exhibiterhome");
+    });
+    Route::post("/event/register", "AttendeeAuthController@confirmReg")->name("attendee_register.confirmReg");
+    Route::middleware(["auth"])->group(function ($subdomain) {
+        Route::get("/event", "EventController@index")->name("eventee.event");
+        Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
+        Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
+        Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
+        
+        
+        Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
+
+
+    });
+
+
+
+
+
+});
+
+
+Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
+    Route::post('notification/seen','UerNotifiicationController@seen')->name('notification.user.seen');
+    Route::get('notification/seen/all','UerNotifiicationController@seenAll')->name('notification.user.seenAll');
+    
+    
+    Route::get("/event/session-notifications", "EventController@sendSessionNotifications");
+    
+    Route::get("schedule", "EventSessionsController@schedule")->name("schedule");
+    Route::get("schedule-raw", "EventSessionsController@scheduleRaw")->name("scheduleRaw");
+    // Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
+    Route::get("/notifications/send", "NotificationController@send")->name("sendNotifications");
+    Route::get("/me", "EventController@profileInfo")->name("event.profile");
+    Route::get('/testS','testController@index');
+
+    // Route::get("/event/{id}", "EventController@index")->name("eventee.event");
+
+
+    Route::post("/contacts/suggested", "UserController@suggestedContacts")->name("suggestedContacts");
+    Route::post("/contacts/attendees", "UserController@allEventAttendees")->name("attendeesURL");
+    Route::get("/contacts/attendees", "UserController@allEventAttendees")->name("attendeesURL");
+    Route::post("/contacts/connection/request", "UserController@sendConnectionRequest")->name("sendConnectionRequest");
+    Route::post("/contacts/connection/update", "UserController@updateConnectionRequest")->name("updateConnectionRequest");
+    Route::post("/contacts/add", "UserController@addToContacts")->name("addToContacts");
+    Route::post("/contacts/remove", "UserController@removeContact")->name("removeContact");
+    Route::post("/contacts/saved", "UserController@mySavedContacts")->name("savedContacts");
+    Route::post("/contacts/requests", "UserController@myConnectionRequests")->name("myConnectionRequests");
+    Route::post("/contacts/export", "UserController@exportContacts")->name("exportContacts");
+    Route::post("/contacts/mail", "UserController@sendContactsOnMail")->name("sendContactsOnMail");
+    Route::post("/user/details", "UserController@fetchUserDetails")->name("fetchUserDetails");
+    Route::post("/user/register-device", "UserController@registerDevice")->name("registerDevice");
+  
+    Route::post("/event/track", "EventController@trackEvent")->name("trackEvent");
+    Route::get("/event/auditorium", "EventController@auditoriumEmbed")->name("auditoriumEmbed");
+    Route::get("/event/meet", "EventController@meetEmbed")->name("meetEmbed");
+    Route::get("/event/current-session", "EventController@getCurrentSession")->name("currentSession");
+    Route::get("/event/webinar", "EventController@webinar")->name("webinar");
+    Route::get("/event/videosdk/{meetingId}/{containerId}", "EventController@videosdk")->name("videosdk");
+    Route::get("/event/ended", "EventController@webinarEnded")->name("webinarEnded");
+    Route::post("/event/{event}/subscribe", "EventSessionsController@subscribe")->name("event.subscribe");
+    Route::post("/event/{event}/unsubscribe", "EventSessionsController@unsubscribe")->name("event.unsubscribe");
+
+    // Route::post("/leaderboard", "EventController@leaderboard")->name("leaderboard");
+    Route::get("/add-to-bag", "EventController@addToBag")->name("addToBag");
+    Route::get("/delete-from-bag", "EventController@deleteFromBag")->name("deleteFromBag");
+    Route::get("/get-swag-bag", "EventController@getSwagBag")->name("getSwagBag");
+    //Add Profile Image
+    Route::post("/save-profile-image", "EventController@saveprofile")->name("saveprofile");
+    Route::post("/saveprofile", "EventController@updateProfile")->name("updateProfile");
+    Route::post("/savetags", "EventController@saveTags")->name("savetags");
+    Route::post("/saveLookingfor", "EventController@saveLookingfor")->name("saveLookingfor");
+    Route::middleware(["checkAccess:exhibiter"])->group(function () {
+        Route::get("/changepassword", "UserController@changePassword")->name("changePassword");
+        Route::post("/updatepassword", "UserController@updatePassword")->name("updatePassword");
+    });
+    Route::get("/send-swags-to-email", "EventController@sendSwagsToEmail")->name("sendSwagsToEmail");
+    Route::get("/booth/{booth}", "EventController@getBoothDetails")->name("boothDetails");
+    Route::post("/booth/{booth}/show-interest", "EventController@showInterestInBooth")->name("showInterestInBooth");
+    Route::get("/delegates-list", "EventController@getDelegatesList")->name("delegateList");
+    Route::post("/updates/check", "EventController@contentTicker")->name("contentTicker");
+    Route::get("/updates/check", "EventController@contentTicker")->name("contentTicker");
+
+
+
+});
+
+Route::get("/updateevents",function(){
+    $events = Event::all();
+    foreach($events as $event){
+        $link = $event->link;
+        $link = str_replace("app.eventstub","eventstub",$link);
+        $link = str_replace("virturo.io","eventstub.co",$link);
+        $event->link = $link;
+        $event->save();
+    }
+});

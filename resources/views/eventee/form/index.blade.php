@@ -40,7 +40,7 @@
                             <tr>
                                 <td >{{ $key+1 }}</td>
                                 <td >{{ $form->name }}</td>
-                                <td >   {{ $subdomain }}.virturo.io/register/{{ $form->slug }}</td>
+                                <td >   {{ $subdomain }}.eventstub.co/register/{{ $form->slug }}</td>
                                 @php
                                     $fieldCount = App\FormField::where('form_id',$form->id)->count()
                                 @endphp

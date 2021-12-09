@@ -113,7 +113,7 @@ class HomeController extends Controller
         return view("event.tos");
     }
 
-    public function confirmLogin(){
+    public function confirmLogin($subdomain=''){
         return [
             "loggedIn" => (bool) Auth::user()
         ];
