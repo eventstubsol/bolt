@@ -39,7 +39,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 use App\sessionRooms;
 use Dotenv\Result\Success;
 use App\Image;
-use App\leaderboard;
+use App\Leaderboard;
 use File;
 use Illuminate\Support\Facades\Storage as Storage;
 
@@ -49,7 +49,7 @@ class EventController extends Controller
     {
         $event = Event::where("slug",$event_name)->first();
         $event_id = $event->id;
-        $leaderboard =leaderboard::where('event_id',$event_id)->first();
+        $leaderboard =Leaderboard::where('event_id',$event_id)->first();
         // dd(Image::where('owner',$leaderboard->id)->get()); 
         // dd($event_id);
         // $event_id =  ($id);

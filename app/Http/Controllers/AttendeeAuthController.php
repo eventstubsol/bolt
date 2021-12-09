@@ -71,7 +71,7 @@ class AttendeeAuthController extends Controller
                     $Response = json_decode($response->body(), TRUE);
                 
             
-                
+        
                     if (!$response->successful() || !$Response["success"]) {
                         $request->old(env("ATTENDEE_LOGIN_FIELD"), $request->post(env("ATTENDEE_LOGIN_FIELD")));
                         return view("eventUser.login")
