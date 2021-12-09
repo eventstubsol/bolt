@@ -174,7 +174,7 @@
       }
 
       function deleteEvent(e){
-        confirmDelete("Are you sure you want to DELETE Prize?","Confirm Prize Delete").then(confirmation=>{
+        confirmDelete("Are you sure you want to DELETE Event?","Confirm Event Delete").then(confirmation=>{
             if(confirmation){
                 var eventId = e.getAttribute('data-id');
                 var data = e.closest('tr');
