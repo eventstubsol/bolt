@@ -114,6 +114,9 @@ class HomeController extends Controller
     }
 
     public function confirmLogin($subdomain=''){
+        $user = User::findOrFail(Auth::id());
+        $user->online_status = true;
+        $user->save();
         return [
             "loggedIn" => (bool) Auth::user()
         ];

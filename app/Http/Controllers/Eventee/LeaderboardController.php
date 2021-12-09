@@ -53,7 +53,7 @@ class LeaderboardController extends Controller
             $pointCount = LeadPoint::where('owner',$leaderBoard->id)->delete();
             for($i = 0; $i < count($img) ;$i++){
                if($i == 0 ){
-                Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i],'active'=>1]);
+                Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i]]);
                }
                else{
                 Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i]]);

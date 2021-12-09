@@ -124,8 +124,20 @@ class EventManageController extends Controller
         
     }
 
+    public function updateUsers($event_id){
+        $users = User::where('event_id',$event_id)->get();
+        foreach($users as $user){
+            if($user->online_status == 1 && $user->updated_at < Carbon::now()->subMinutes(1)->toDateTimeString()){
+                $user->online_status = 0;
+                $user->save();
+            }
+        }
+    }
+
     public function ChartJs(Request $req){
+
         $event = Event::findOrFail($req->id); 
+        $this->updateUsers($event->id);
         $total = User::where('event_id',$event->id)->count();
         $isOnline = User::where('event_id',$event->id)->where('online_status' ,1)->count();
         $isOffline = User::where('event_id',$event->id)->where('online_status' ,0)->count();
