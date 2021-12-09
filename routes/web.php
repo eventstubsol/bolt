@@ -768,3 +768,14 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
 
 });
+
+Route::get("/updateevents",function(){
+    $events = Event::all();
+    foreach($events as $event){
+        $link = $event->link;
+        $link = str_replace("app.eventstub","eventstub",$link);
+        $link = str_replace("virturo.io","eventstub.co",$link);
+        $event->link = $link;
+        $event->save();
+    }
+});
