@@ -628,7 +628,7 @@ function createLeaderboard($event_id){
     if($leaderboard->save()){
         $defaultpoints = ['Event Login','Viewing an On-demand Video','Viewing a document in the library','Viewing a live streaming','Visiting a booth'];
         for($i = 0 ; $i < count($defaultpoints) ; $i++){
-            LeadPoint::create(['owner'=>$leaderboard->id,'points'=>$defaultpoints[$i]]);
+            LeadPoint::create(['owner'=>$leaderboard->id,'point'=>$defaultpoints[$i]]);
         }
         return True;
     }

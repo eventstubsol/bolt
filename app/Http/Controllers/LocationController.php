@@ -14,7 +14,7 @@ class LocationController extends Controller
     public function setLocation(Request $req){
         $type = $req->type;
         $typeloc = $req->typeloc;
-    
+        // return($type);
         switch($type){
             case 'Lobby':
                 UserLocation::where('user_id',Auth::id())->update(['current_status'=>0]);

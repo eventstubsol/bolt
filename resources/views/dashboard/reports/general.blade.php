@@ -94,7 +94,7 @@
                         <thead>
                             <tr>
                                 <th>User Name</th>
-                                <th>Time</th>
+                                <th>Total User</th>
                             </tr>
                         </thead>
                         <tbody class="sesroomUSer">
@@ -127,7 +127,7 @@
                         <thead>
                             <tr>
                                 <th>User Name</th>
-                                <th>Time</th>
+                                <th>Total User</th>
                             </tr>
                         </thead>
                         <tbody class="pageUSer">
@@ -157,7 +157,7 @@
                         <thead>
                             <tr>
                                 <th>User Name</th>
-                                <th>Time</th>
+                                <th>Total User</th>
                             </tr>
                         </thead>
                         <tbody class="botthUSer">
@@ -457,12 +457,13 @@
                 method:"POST",
                 data:{id:"{{ $id }}"},
                 success:function(response){
-                    // console.log(response);
+                    // console.log(response.locations);
                     $('.sesroomUSer').empty();
-                    if(response.length > 0)
+                    if(response.locations.length > 0)
                     {   
-                        $.each(response,function(key,value){
-                            $('.sesroomUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
+                        $.each(response.locations,function(key,value){
+                            console.log(value.room_name);
+                            $('.sesroomUSer').append('<tr><td>'+ value.room_name  +'</td><td>'+ value.room_count +'</td></tr>');
                         });
                     }
                     else{
@@ -480,9 +481,9 @@
                 data:{id:"{{ $id }}"},
                 success:function(response){
                     // console.log(response);
-                    if(response.length > 0)
+                    if(response.locations.length > 0)
                     {   
-                        $.each(response,function(key,value){
+                        $.each(response.locations,function(key,value){
                             $('.pageUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
                         });
                     }
@@ -500,9 +501,10 @@
                 data:{id:"{{ $id }}"},
                 success:function(response){
                     // console.log(response);
-                    if(response.length > 0)
+                    if(response.locations.length > 0)
                     {   
-                        $.each(response,function(key,value){
+                        
+                        $.each(response.locations,function(key,value){
                             $('.botthUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
                         });
                     }
@@ -570,8 +572,11 @@
                             data:{id:"{{ $id }}"},
                             success:function(response){
                                 // console.log(response);
-                                if(response.length > 0){
-                                    $.each(response,function(key,value){
+                                
+                                if(response.locations.length > 0)
+                    {   
+                                    $('.sesroomUSer').empty();
+                                    $.each(response.locations,function(key,value){
                                         $('.sesroomUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
                                     });
                                 }
@@ -590,9 +595,11 @@
                             data:{id:"{{ $id }}"},
                             success:function(response){
                                 // console.log(response);
-                                if(response.length > 0)
-                                {   
-                                    $.each(response,function(key,value){
+                               
+                                if(response.locations.length > 0)
+                    {   
+                                    $('.pageUSer').empty();
+                                    $.each(response.locations,function(key,value){
                                         $('.pageUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
                                     });
                                 }
@@ -610,9 +617,11 @@
                             data:{id:"{{ $id }}"},
                             success:function(response){
                                 // console.log(response);
-                                if(response.length > 0)
-                                {   
-                                    $.each(response,function(key,value){
+                               
+                                if(response.locations.length > 0)
+                    {   
+                                    $('.botthUSer').empty();
+                                    $.each(response.locations,function(key,value){
                                         $('.botthUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
                                     });
                                 }

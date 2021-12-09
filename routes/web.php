@@ -44,7 +44,7 @@ Route::post('/Register/Eventee',"eventeeController@ConfirmRegister");
 Route::get('Eventee/Login',"eventeeController@Login")->name('Eventee.login');
 Route::post('Eventee/Login/Confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
 Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
-Route::post("/Event/Location","LocationController@setLocation")->name("set.Location");
+
 
 Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
@@ -707,7 +707,7 @@ Route::group(['domain' => $url], function () {
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
     Route::post('notification/seen','UerNotifiicationController@seen')->name('notification.user.seen');
     Route::get('notification/seen/all','UerNotifiicationController@seenAll')->name('notification.user.seenAll');
-    
+    Route::post("/Event/Location","LocationController@setLocation")->name("set.Location");
     
     Route::get("/event/session-notifications", "EventController@sendSessionNotifications");
     

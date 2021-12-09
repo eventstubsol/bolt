@@ -149,8 +149,18 @@ class EventManageController extends Controller
 
     public function SessionChartJs(Request $req){
         $event = Event::findOrFail($req->id);
-        $mainCount = $location1 = UserLocation::where('event_id',$event->id)->where('type',"Sessionroom")->where('current_status',1)->count();
+
+        $mainCount = UserLocation::where('event_id',$event->id)->where('type',"Sessionroom")->where('current_status',1)->count();
         if($mainCount > 0){
+            $locations = UserLocation::where('event_id',$event->id)->where('type',"Sessionroom")->where('current_status',1)->get();
+            $locArr = [];
+            foreach($locations as $location){
+                $counts = UserLocation::where('type_location',$location->type_location)->where('current_status',1)->count();
+                $locobj = new \stdClass();
+                $locobj->room_name = $location->type_location;
+                $locobj->room_count = $counts;
+                array_push($locArr,$locobj);
+            }
             $location1 = UserLocation::where('event_id',$event->id)->where('type',"Sessionroom")->where('current_status',1)->first();
             $roomCount = UserLocation::where('type_location',$location1->type_location)->where('current_status',1)->count();
             $locationObj = new \stdClass();
@@ -170,7 +180,7 @@ class EventManageController extends Controller
                 }
             }
             
-            return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
+            return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData,'locations'=>$locArr]);
         }
         else{
             return response()->json(0);
@@ -184,6 +194,15 @@ class EventManageController extends Controller
         $mainCount = $location1 = UserLocation::where('event_id',$event->id)->where('type',"page")->where('current_status',1)->count();
         
         if($mainCount > 0){
+            $locations = UserLocation::where('event_id',$event->id)->where('type',"page")->where('current_status',1)->get();
+            $locArr = [];
+            foreach($locations as $location){
+                $counts = UserLocation::where('type_location',$location->type_location)->where('current_status',1)->count();
+                $locobj = new \stdClass();
+                $locobj->room_name = $location->type_location;
+                $locobj->room_count = $counts;
+                array_push($locArr,$locobj);
+            }
             $location1 = UserLocation::where('event_id',$event->id)->where('type',"page")->where('current_status',1)->first();
             $roomCount = UserLocation::where('type_location',$location1->type_location)->where('current_status',1)->count();
             $locationObj = new \stdClass();
@@ -201,7 +220,7 @@ class EventManageController extends Controller
                     array_push($locationArr,$locObj);
                 }
             }
-            return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
+            return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData,'locations'=>$locArr]);
         }
         else{
             return response()->json(0);
@@ -219,6 +238,15 @@ class EventManageController extends Controller
         $mainCount = $location1 = UserLocation::where('event_id',$event->id)->where('type',"Booth")->where('current_status',1)->count();
     
         if($mainCount > 0){
+            $locations = UserLocation::where('event_id',$event->id)->where('type',"Booth")->where('current_status',1)->get();
+            $locArr = [];
+            foreach($locations as $location){
+                $counts = UserLocation::where('type_location',$location->type_location)->where('current_status',1)->count();
+                $locobj = new \stdClass();
+                $locobj->room_name = $location->type_location;
+                $locobj->room_count = $counts;
+                array_push($locArr,$locobj);
+            }
             $location1 = UserLocation::where('event_id',$event->id)->where('type',"Booth")->where('current_status',1)->first();
             $roomCount = UserLocation::where('type_location',$location1->type_location)->where('current_status',1)->count();
             $locationObj = new \stdClass();
@@ -238,7 +266,7 @@ class EventManageController extends Controller
                 }
             }
             
-            return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData]);
+            return response()->json(['locationObj'=>$locationObj,'locationArr'=>$locationArr,'countData'=>$countData,'locations'=>$locArr]);
         }
         else{
             return response()->json(0);
