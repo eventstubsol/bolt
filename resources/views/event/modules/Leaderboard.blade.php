@@ -1,22 +1,37 @@
+@php
+$leaderboard =App\Leaderboard::where('event_id',$event_id)->first();
+$images = App\Image::where('owner',$leaderboard->id)->get();
+@endphp
 <div class="page has-padding padding-large menu-filled" id="leaderboard">
     <div class="container-fluid">
         <div class="wrapper">
-            <div class="points">
+            <div class="points" style="background:{{ $leaderboard->color }}">
                 <div class="d-block mb-4">
                     <div class="wrap-title">
                         <h2>Point System</h2>
                     </div>
                     <div class="wrap-content">
                         
-                        <ul>
+                        {{-- <ul>
                             <li>Event Login</li>
                             <li> Viewing an On-demand Video</li>
                             <li> Viewing a document in the library</li>
                             <li> Viewing a live streaming</li>
                             <li> Visiting a booth</li>
-                        </ul>
+                        </ul> --}}
+                       
+                        @foreach(App\Leadpoint::where('owner',$leaderboard->id)->get() as $point)
+                            <ul>
+                                <li>{{ $point->point }}</li>
+                                <li>{{ $point->point }}</li>
+                                
+                            </ul>
+                            
+                        @endforeach
+
                     </div>
                 </div>
+
                 <div class="d-block">
                 <div class="wrap-title">
                     <h2>Prizes - To be announced at a later date</h2>
@@ -25,33 +40,33 @@
                 <div class="carousel slide h-100" id="prizes" data-ride="carousel">
 
                     <div class="carousel-inner h-100">
-                        @foreach($prizes as $id=>$prize)
-                            <div class="carousel-item h-100 @if($id==0) active @endif">
-                                @foreach($prize->images as $image)
+                        @foreach($images  as $id=>$image)
+                            <div class="carousel-item h-100 @if($id===0)active @endif">
+                                
                                     <img async class="d-block img-fluid h-100 w-100" style="object-fit:cover;" src="{{assetUrl($image->url)}}"
                                     alt="First slide"/>
-                                    @break
-                                @endforeach
+                                    {{-- @break --}}
                                     <div class="carousel-caption d-none d-md-block corouselcap">
                     {{--                                                <h5 class="text-white">{{$prize->title}}</h5>--}}
                     {{--                                                <p>{!! $prize->description !!}</p>--}}
                                     </div>
+                                   
                             </div>
-                        @endforeach
-                            <a class="carousel-control-prev" href="#prizes" role="button" data-slide="prev">
+                            @endforeach
+                            {{-- <a class="carousel-control-prev" href="#prizes" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
                             </a>
                             <a class="carousel-control-next" href="#prizes" role="button" data-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
-                            </a>
+                            </a> --}}
                     </div>
                     </div>
                     <div class="wrap-content">
                            <div class="row">
                             <div class="col-md-12 pt-3">
-                               <img style="background: white;" async class="img-fluid mb-2" src="event-assets/images/SG-Logo-PNG.png" alt="NBA-CLS">
+                               <img async class="img-fluid mb-2" src="{{ assetUrl(getFieldId('logo',$event_id)) }}" alt="{{ $event_name }}">
                             </div>
                         </div>
                     </div>

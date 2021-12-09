@@ -205,7 +205,7 @@ class eventeeController extends Controller
         if($event->save()){
             
             createMenus($event->id);
-
+            createLeaderboard($event->id);
             $contents = ContentMaster::all();
             foreach($contents as $content){
                 Content::create([
