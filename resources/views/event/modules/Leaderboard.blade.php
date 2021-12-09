@@ -7,7 +7,7 @@ if(isset($leaderboard)){
 <div class="page has-padding padding-large menu-filled" id="leaderboard">
     <div class="container-fluid">
         <div class="wrapper">
-            <div class="points" style="background:{{ $leaderboard->color }}">
+            <div class="points" style="background:@if(isset($leaderboard)){{ $leaderboard->color }}@endif">
                 <div class="d-block mb-4">
                     <div class="wrap-title">
                         <h2>Point System</h2>
@@ -21,7 +21,7 @@ if(isset($leaderboard)){
                             <li> Viewing a live streaming</li>
                             <li> Visiting a booth</li>
                         </ul> --}}
-                       
+                       @if(isset($leaderboard))
                         @foreach(App\Leadpoint::where('owner',$leaderboard->id)->get() as $point)
                             <ul>
                                 <li>{{ $point->point }}</li>
@@ -30,7 +30,15 @@ if(isset($leaderboard)){
                             </ul>
                             
                         @endforeach
-
+                       @else
+                        <ul>
+                            <li>Event Login</li>
+                            <li> Viewing an On-demand Video</li>
+                            <li> Viewing a document in the library</li>
+                            <li> Viewing a live streaming</li>
+                            <li> Visiting a booth</li>
+                        </ul>
+                        @endif
                     </div>
                 </div>
 
