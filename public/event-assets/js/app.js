@@ -12,18 +12,17 @@ function initApp() {
     let currentresbtns = null;
     let active_session_list = null;
     let loungeInterval = false;
-    pages.hide();
-    pages.filter(".initial").show();
+        
 
 
     //Wait for all three main video loads before removing loader
-    if (isMobile()) {
-        loader.fadeOut();
-    }
-    else {
-        waitForVideosLoad(exteriorView, enteringView)
-            .then(() => loader.fadeOut());
-    }
+    // if (isMobile()) {
+    //     loader.fadeOut();
+    // }
+    // else {
+    //     waitForVideosLoad(exteriorView, enteringView)
+    //         .then(() => loader.fadeOut());
+    // }
     function isMobile() {
         let check = false;
         (function (a) {
@@ -373,10 +372,12 @@ function initApp() {
     });
 
     pages.hide();
+    pages.filter(".initial").show();
+
     $("#audi-content").empty();
     const notFoundRoute = "lobby";
     //Routing setup
-    navs.removeClass('hidden');
+    navs.addClass('hidden');
     let contentTicker = false;
     let initializedLeaderboard = false;
 
