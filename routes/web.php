@@ -33,6 +33,9 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 $appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
 
+
+// to get request domain  dd(\Request::getHost());
+
 Route::group(['domain' => $appurl], function () {
 
 
@@ -767,15 +770,4 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
 
 
-});
-
-Route::get("/updateevents",function(){
-    $events = Event::all();
-    foreach($events as $event){
-        $link = $event->link;
-        $link = str_replace("app.eventstub","eventstub",$link);
-        $link = str_replace("virturo.io","eventstub.co",$link);
-        $event->link = $link;
-        $event->save();
-    }
 });
