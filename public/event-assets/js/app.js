@@ -12,6 +12,9 @@ function initApp() {
     let currentresbtns = null;
     let active_session_list = null;
     let loungeInterval = false;
+    pages.hide();
+    pages.filter(".initial").show();
+
 
     //Wait for all three main video loads before removing loader
     if (isMobile()) {
