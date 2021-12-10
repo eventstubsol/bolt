@@ -32,7 +32,6 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 $appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
-
 Route::group(['domain' => $appurl], function () {
 
 
@@ -219,6 +218,11 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('/footer/store/{id}','Eventee\MenuController@saveFooter')->name('eventee.footer.store');
     Route::get('/footer/edit/{menu}/{id}','Eventee\MenuController@editFooter')->name('eventee.footer.edit');
     Route::put('/footer/update/{menu}/{id}','Eventee\MenuController@updateFooter')->name('eventee.footer.update');
+
+    //Schedule Notification
+    Route::get('schedule/notification/{id}','Eventee\ScheduleController@index')->name('eventee.schedule');
+    Route::get('schedule/notification/create/{id}','Eventee\ScheduleController@create')->name('eventee.schedule.create');
+    Route::post('schedule/notification/store/{id}','Eventee\ScheduleController@store')->name('eventee.schedule.store');
 
     
     //Post Video

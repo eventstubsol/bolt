@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PushNotification extends Model
 {
-    use UUID;
+    // use UUID;
     use SoftDeletes;
     
     public $table = "push_notification";
