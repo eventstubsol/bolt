@@ -223,6 +223,11 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('/footer/edit/{menu}/{id}','Eventee\MenuController@editFooter')->name('eventee.footer.edit');
     Route::put('/footer/update/{menu}/{id}','Eventee\MenuController@updateFooter')->name('eventee.footer.update');
 
+    //Schedule Notification
+    Route::get('schedule/notification/{id}','Eventee\ScheduleController@index')->name('eventee.schedule');
+    Route::get('schedule/notification/create/{id}','Eventee\ScheduleController@create')->name('eventee.schedule.create');
+    Route::post('schedule/notification/store/{id}','Eventee\ScheduleController@store')->name('eventee.schedule.store');
+
     
     //Post Video
     Route::get("/session/video-archive/{id}", "Eventee\VideoController@pastSessionVideosArchive")->name("eventee.videoArchive");

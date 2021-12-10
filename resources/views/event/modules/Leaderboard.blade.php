@@ -30,14 +30,6 @@ if(isset($leaderboard)){
                             </ul>
                             
                         @endforeach
-                       @else
-                        <ul>
-                            <li>Event Login</li>
-                            <li> Viewing an On-demand Video</li>
-                            <li> Viewing a document in the library</li>
-                            <li> Viewing a live streaming</li>
-                            <li> Visiting a booth</li>
-                        </ul>
                         @endif
                     </div>
                 </div>
@@ -75,13 +67,13 @@ if(isset($leaderboard)){
                             </a> --}}
                     </div>
                     </div>
-                    <div class="wrap-content">
+                    {{-- <div class="wrap-content">
                            <div class="row">
                             <div class="col-md-12 pt-3">
                                <img async class="img-fluid mb-2" src="{{ assetUrl(getFieldId('logo',$event_id)) }}" alt="{{ $event_name }}">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="scores">
@@ -96,5 +88,5 @@ if(isset($leaderboard)){
             </div>
         </div>
 
-    </div>Testing ranjeet
+    </div>      
 </div>

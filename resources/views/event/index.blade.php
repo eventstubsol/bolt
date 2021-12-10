@@ -418,11 +418,11 @@ $user = Auth::user();
     </style>
     {{-- Notification Modal --}}
     <!-- Small modal -->
-    <div class="consent-notification hide-on-exterior"  id="notification-smallModal" style="display: none">
+    <div class="consent-notification hide-on-exterior"  id="notification-smallModal">
     <h4 id="notification-head"></h4>
     <p id="notification-body" ></p>
     <div class="flex">
-        <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true"></button>
+        <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true">Close</button>
     </div>
     </div>
       
@@ -581,7 +581,7 @@ $user = Auth::user();
 </head>
 
 <body class="custom-theme">
-    <div class="consent-notification hide-on-exterior"  id="notification-smallModal">
+    <div class="consent-notification hide-on-exterior" >
 
         <h4 id="notification-head"></h4>
     
@@ -752,6 +752,9 @@ $user = Auth::user();
     <script defer src="https://widget-js.cometchat.io/v2/cometchatwidget.js"></script>
 
     <script>
+        // $(document).ready(function(){
+        //     $('#notification-smallModal').addClass('enable');
+        // });
         (function() {
             let deviceElem = document.querySelector('.device-orentation');
             let deviceElemClose = document.querySelector('.device-orentation .close');
@@ -1048,7 +1051,7 @@ $user = Auth::user();
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
     
-        var pusher = new Pusher('123b7f594f1f360676a6', {
+        var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
           cluster: 'ap2'
         });
         
