@@ -75,13 +75,13 @@ if(isset($leaderboard)){
                             </a> --}}
                     </div>
                     </div>
-                    <div class="wrap-content">
+                    {{-- <div class="wrap-content">
                            <div class="row">
                             <div class="col-md-12 pt-3">
                                <img async class="img-fluid mb-2" src="{{ assetUrl(getFieldId('logo',$event_id)) }}" alt="{{ $event_name }}">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="scores">
@@ -96,5 +96,5 @@ if(isset($leaderboard)){
             </div>
         </div>
 
-    </div>Testing ranjeet
+    </div>      
 </div>
