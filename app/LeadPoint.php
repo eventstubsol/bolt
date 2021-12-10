@@ -13,4 +13,6 @@ class LeadPoint extends Model
     protected $table = 'lead_point';
     
 
+
+    
 }
