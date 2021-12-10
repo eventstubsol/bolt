@@ -30,14 +30,6 @@ if(isset($leaderboard)){
                             </ul>
                             
                         @endforeach
-                       @else
-                        <ul>
-                            <li>Event Login</li>
-                            <li> Viewing an On-demand Video</li>
-                            <li> Viewing a document in the library</li>
-                            <li> Viewing a live streaming</li>
-                            <li> Visiting a booth</li>
-                        </ul>
                         @endif
                     </div>
                 </div>
