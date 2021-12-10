@@ -21,6 +21,7 @@ Hello there!
 $email = "";
 if(Auth::user()){
     $email = Auth::user()->email;
+    $event_id = Auth::user()->event_id;
 }
 @endphp
 
@@ -66,7 +67,26 @@ if(Auth::user()){
     <div class="clearfix"></div>
     <div class="clearfix"></div>
 </form>
-<p class="text mt-3">By logging in and using the platform, you hereby accept our <a href="{{ route('privacyPolicy') }}" >Privacy Policy</a>. For more details <a href="{{ route("faq") }}">read the FAQs</a></p>
+<p class="text mt-3">By logging in and using the platform, you hereby accept our <a data-toggle="modal" data-target="#privacyPolicy" >Privacy Policy</a>. For more details <a href="{{ route("faq") }}">read the FAQs</a></p>
+<div id="privacyPolicy" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <embed src="{{ assetUrl(getFieldId('privacypolicy',$event_id,"uploads/xmbGmR1olTbfKNwonBymeJv0mJV9emC2EK9bjCdF.png"))  }}" frameborder="0" width="100%" height="400px">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts_after')
