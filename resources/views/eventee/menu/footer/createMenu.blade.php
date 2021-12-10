@@ -31,7 +31,7 @@ Create Menu
 
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">Name:</label>
-                            <input type="text" class="form-control" id="recipient-name" name="name">
+                            <input type="text" required class="form-control" id="recipient-name" name="name">
                         </div>
                     <!-- End Name  -->
 
@@ -39,7 +39,7 @@ Create Menu
                     
                         <div class="form-group mb-3 col-md-4">
                             <label for="type">type</label>
-                            <select required class="form-control type" name="type">
+                            <select required class="form-control type" name="type" required>
                                 @foreach(MENU_LINK_TYPES as $type)
                                 <option value="{{$type}}">{{$type}}</option>
                                 @endforeach

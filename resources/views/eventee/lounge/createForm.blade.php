@@ -45,10 +45,10 @@
                     <div class="form-group mb-3">
                         
                         <label>Number of Seats</label>
-                        <input type="number" name="seats" class="form-control ">
+                        <input required type="number" name="seats" class="form-control ">
                     </div>
 
-                    <input type="text" name="meetingId" class="form-control " id="meetingId" style="display:none"  >
+                    <input type="text" name="meetingId" class="form-control "  id="meetingId" style="display:none"  >
  
 
 
