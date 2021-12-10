@@ -2206,7 +2206,7 @@ button.pb-button {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 868px) {
   .navbar-custom.theme-nav .logo-box {
     width: 120px !important;
   }
