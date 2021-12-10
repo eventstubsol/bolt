@@ -649,24 +649,8 @@ function getRooms(){
 }
 
 function getRoomsEventee($id){
-    $sessionrooms = sessionRooms::where('event_id','Like',$id)->get();
-    if(count($sessionrooms) > 0){
-        // $sessionrooms = $sessionrooms->groupBy("master_room");
-        // $sessionroomnames = [];
-        // foreach($sessionrooms as $master_room=>$rooms){
-        //         $roomnames = [];
-        //         foreach($rooms as $room ){
-        //             array_push($roomnames,$room->name);
-        //         }
-        //         $sessionroomnames[$master_room] = $roomnames;
-        // }
-        return $sessionrooms;
-    }
-    else
-    {
-        return 0;
-    }
-    
+    $sessionrooms = sessionRooms::where('event_id',$id)->get();
+    return $sessionrooms;  
 }
 function getAllFields($id = null)
 {

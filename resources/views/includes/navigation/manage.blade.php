@@ -362,19 +362,14 @@
             <li>
                 <a href="{{ route("event.leaderboard",$id) }}">Leaderboard</a>
             </li>
-            <li>
-                <a href="{{ route("reports.auditorium") }}">Auditorium</a>
-            </li> 
             @php
                 $session_rooms = getRoomsEventee(($id));
             @endphp
-            @if(is_array($session_rooms))
                 @foreach($session_rooms as $sessionroom)
                         <li>
                             <a href="{{ route("event.workshop", ['name' => $sessionroom->name,'id'=>$id]) }}">{{ $sessionroom->name }}</a>
                         </li>
                 @endforeach
-            @endif
         </ul>
     </div>
 </li>
