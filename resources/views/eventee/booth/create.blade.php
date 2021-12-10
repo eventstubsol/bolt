@@ -31,7 +31,7 @@
 
                     <div class="form-group mb-3">
                         <label for="boothname">Booth Name</label>
-                        <input autofocus type="text" value="{{old('name')}}" id="boothname" name="name" class="form-control  @error('name') is-invalid @enderror" >
+                        <input autofocus required type="text" value="{{old('name')}}" id="boothname" name="name" class="form-control  @error('name') is-invalid @enderror" >
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -65,8 +65,8 @@
 
                     <div class="mb-3">
                           <label for="user">Select Exhibitor</label>
-                          <select class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user" name="userids[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
-                              @foreach($users as $user)
+                          <select required class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user" name="userids[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
+                              @foreach($users as $user) 
                                 <option value={{$user->id}}>{{$user->name}} ({{$user->email}}) </option>
                               @endforeach
                           </select>

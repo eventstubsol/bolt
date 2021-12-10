@@ -27,7 +27,7 @@
                     {{ csrf_field() }}
                     <div class="form-group mb-3">
                         <label for="name">Name</label>
-                        <input  autofocus type="text"  id="name" value="{{old('question')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
+                        <input  autofocus type="text"  id="name" value="{{old('question')}}" name="name" required class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

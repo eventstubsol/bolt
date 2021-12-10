@@ -149,16 +149,15 @@ class EventManageController extends Controller
 
     public function SessionChartJs(Request $req){
         $event = Event::findOrFail($req->id);
-
+        
         $mainCount = UserLocation::where('event_id',$event->id)->where('type',"Sessionroom")->where('current_status',1)->count();
         if($mainCount > 0){
-            $locations = UserLocation::where('event_id',$event->id)->where('type',"Sessionroom")->where('current_status',1)->get();
+            $locations = DB::SELECT("SELECT DISTINCT(type_location),type,count(type_location) as user_count FROM `user_locations` where type = 'Sessionroom' and current_status = 1 and event_id='".$event->id."' group by type_location");
             $locArr = [];
             foreach($locations as $location){
-                $counts = UserLocation::where('type_location',$location->type_location)->where('current_status',1)->count();
                 $locobj = new \stdClass();
                 $locobj->room_name = $location->type_location;
-                $locobj->room_count = $counts;
+                $locobj->room_count = $location->user_count;
                 array_push($locArr,$locobj);
             }
             $location1 = UserLocation::where('event_id',$event->id)->where('type',"Sessionroom")->where('current_status',1)->first();
@@ -194,13 +193,13 @@ class EventManageController extends Controller
         $mainCount = $location1 = UserLocation::where('event_id',$event->id)->where('type',"page")->where('current_status',1)->count();
         
         if($mainCount > 0){
-            $locations = UserLocation::where('event_id',$event->id)->where('type',"page")->where('current_status',1)->get();
+            $locations = DB::SELECT("SELECT DISTINCT(type_location),type,count(type_location) as user_count FROM `user_locations` where type = 'page' and current_status = 1 and event_id='".$event->id."' group by type_location");
             $locArr = [];
             foreach($locations as $location){
                 $counts = UserLocation::where('type_location',$location->type_location)->where('current_status',1)->count();
                 $locobj = new \stdClass();
                 $locobj->room_name = $location->type_location;
-                $locobj->room_count = $counts;
+                $locobj->room_count = $location->user_count;
                 array_push($locArr,$locobj);
             }
             $location1 = UserLocation::where('event_id',$event->id)->where('type',"page")->where('current_status',1)->first();
@@ -238,13 +237,13 @@ class EventManageController extends Controller
         $mainCount = $location1 = UserLocation::where('event_id',$event->id)->where('type',"Booth")->where('current_status',1)->count();
     
         if($mainCount > 0){
-            $locations = UserLocation::where('event_id',$event->id)->where('type',"Booth")->where('current_status',1)->get();
+            $locations = DB::SELECT("SELECT DISTINCT(type_location),type,count(type_location) as user_count FROM `user_locations` where type = 'Booth' and current_status = 1 and event_id='".$event->id."' group by type_location");
             $locArr = [];
             foreach($locations as $location){
-                $counts = UserLocation::where('type_location',$location->type_location)->where('current_status',1)->count();
+              
                 $locobj = new \stdClass();
                 $locobj->room_name = $location->type_location;
-                $locobj->room_count = $counts;
+                $locobj->room_count = $location->user_count;
                 array_push($locArr,$locobj);
             }
             $location1 = UserLocation::where('event_id',$event->id)->where('type',"Booth")->where('current_status',1)->first();

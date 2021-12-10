@@ -46,7 +46,7 @@
 
             <div class="form-group">
                 <label for="phone" >Phone Number</label>
-                <input id="phone" type="tel" class="field form-control " name="phone" value="{{ old('phone') }}" autocomplete="tel" placeholder="Phone Number">
+                <input id="phone" type="tel" class="field form-control " name="phone" value="{{ old('phone') }}" required autocomplete="tel" placeholder="Phone Number">
             </div>
             <div class="form-group">
                 <label for="password" >Password</label>
@@ -314,23 +314,7 @@
                 </select>
             </div>
 
-            <div class=" form-group">
-                <label for="industry">Industry</label>
-                <select id="industry" class="form-control" name="industry">
-                    <option value="">Choose industry</option>
-                    <option value="Government" >Government</option>
-                    <option value="BFSI" >BFSI</option>
-                    <option value="Oil & Gas" >Oil & Gas</option>
-                    <option value="Retail" >Retail</option>
-                    <option value="Transport & Logistics" >Transport & Logistics</option>
-                    <option value="Education" >Education</option>
-                    <option value="Healthcare" >Healthcare</option>
-                    <option value="Aviation" >Aviation</option>
-                    <option value="FMCG" >FMCG</option>
-                    <option value="Power and Utilities" >Power and Utilities</option>
-                    <option value="Other" >Other</option>
-                </select>
-            </div>
+            
         </div>
 
         <div class="input-group form-group">

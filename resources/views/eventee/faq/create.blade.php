@@ -44,11 +44,11 @@
                     <form action="{{ route('eventee.faq.save',$id) }}" method="POST">
                         <div class="form-group">
                             <label for="Question">Question</label>
-                            <input type="text" name="question" class="form-control">
+                            <input type="text" name="question" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="answer">Answer</label>
-                            <textarea  name="answer" id="summernote-basic" class="form-control" cols="500" rows="1000"></textarea>
+                            <textarea  name="answer" required id="summernote-basic" class="form-control" cols="500" rows="1000"></textarea>
                         </div>
                         <div class="form-group">
                             <span style="float: right"><button type="submit" class="btn btn-success">Save</button></span>

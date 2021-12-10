@@ -32,6 +32,9 @@
                         <label for="sentTo">Send To</label>
                         <select name="sent_to_type" class="form-control" onchange="setDropdown(this)" >
                             <option value="0">All</option>
+                            <option value="2">All Exibitor</option>
+                            <option value="3">All Delegate</option>
+                            <option value="4">All Attendee</option>
                             <option value="1">Specific User Types</option>
                         </select>
                     </div>
@@ -84,11 +87,11 @@
 
                     <div class="form-group">
                         <label for="subject">Subject</label>
-                        <input type="text" class="form-control" name="subject">
+                        <input type="text" class="form-control" name="subject" required>
                     </div>
                     <div class="form-group">
                         <label for="subject">Message</label>
-                        <textarea name="message" id="summernote-basic" class="form-control" cols="500" rows="1000"></textarea>
+                        <textarea name="message" id="summernote-basic" class="form-control" cols="500" rows="1000" required></textarea>
                     </div>
                     <button type="submit" style="float: right" class="btn btn-toolbar">Send</button>
                 </form>
