@@ -48,7 +48,7 @@
         function Verify(){
             var settings = {
                 // "crossDomain": true,
-                "url": "http://{{$domain}}/verifydomain",
+                "url": "https://{{$domain}}/verifydomain",
                 "method": "GET",
                 "headers": {
                     "Access-Control-Allow-Origin":"*"
