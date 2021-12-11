@@ -19,8 +19,8 @@ class addSubdomain
      */
     public function handle($request, Closure $next)
     {
-        // dd($request->subdomain);
-        // if($request->subdomain){
+        // dd($request->path());
+        // if($request->path()==="event"){
         //     return $next($request);
         // }
         
