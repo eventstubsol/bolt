@@ -32,8 +32,6 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 $appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
-
-
 // to get request domain  dd(\Request::getHost());
 
 Route::group(['domain' => $appurl], function () {
@@ -651,10 +649,25 @@ Route::get("/clear-leaderboard", function(){
 
 
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
+$options = ['domain' => $url];
+$arr = [];
+$domains = Event::whereNotNull("domain")->get("domain")->toArray();
+foreach($domains as $domain){
+    array_push($arr,$domain['domain']);
+}
+// dd($arr);
+$currDomain = \Request::getHost();
 
+if(in_array($currDomain,$arr)){
+    $url = $currDomain;
+    $options = ['domain' => $url,'middleware'=>'addSubdomain'];
+    // dd($currDomain);
+}
+// dd($url);
 // $url = '{subdomain}.localhost';
-Route::group(['domain' => $url], function () {
+Route::group($options, function () {
     Route::get('/', function ($subdomain) {
+        // dd($subdomain);
         $eveCount = Event::where("slug",$subdomain)->count();
         $event = Event::where("slug",$subdomain)->first();
         if($eveCount < 1){
