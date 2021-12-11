@@ -405,7 +405,7 @@ function whitelistDomain($domain){
 function addSSL($domain)
 {
     
-    $process = new Process(['sudo -S sh /home/eventdev/addssl.sh',$domain]);
+    $process = new Process(['/home/eventdev/addssl.sh',$domain]);
     $process->run();
 
     // executes after the command finishes

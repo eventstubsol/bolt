@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h3 class="card-title">{{$domain}}</h3>
-                <div class="float-right"><button class="btn btn-success" onclick="Verify()">Verify</button></div>
+                <div class="float-right"><a href="http://{{$domain}}/verifydomain" target="_blank" class="btn btn-success" onclick="Verify()">Verify</a></div>
             </div>
             <div class="card-body">
                 <h3>Please add the Followig DNS Record to Your Domain and Click Verify</h3>
@@ -47,25 +47,6 @@
 
 @section("scripts")
     <script>
-        function Verify(){
-            var settings = {
-                // "crossDomain": true,
-                "url": "https://{{$domain}}/verifydomain",
-                "method": "GET",
-                "headers": {
-                    "Access-Control-Allow-Origin":"*"
-                }
-            }
-            console.log("{{$domain}}");
-            $.ajax(settings).done(function (response) {
-                console.log(response);
-                if( response.verification == "domainVerified"){
-                    showMessage("domain Verified Successfully",'success');
-                }
-            });
-        }
-        $(document).ready(function(){
-            
-        });
+     
         </script>
     @endsection
