@@ -393,7 +393,7 @@ define("BY_LAWS_TELLER_ID", "280fd217-8106-46fc-a36b-c5c38b1a3823");
 
 function whitelistDomain($domain){
  
-    $process = new Process(['/home/eventdev/domain_update.sh',$domain],);
+    $process = new Process(['/home/eventdev/domain_update.sh',$domain]);
     $process->run();
 
     // executes after the command finishes
@@ -405,7 +405,7 @@ function whitelistDomain($domain){
 function addSSL($domain)
 {
     
-    $process = new Process(['certbot ','--apache','-d '.$domain,' --agree-tos --redirect -n'],);
+    $process = new Process(['/home/eventdev/addssl.sh',$domain]);
     $process->run();
 
     // executes after the command finishes
