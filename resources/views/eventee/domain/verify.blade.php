@@ -27,6 +27,7 @@
                             <th>Record Type</th>
                             <th>Record Name</th>
                             <th>Record Value</th>
+                            <th>Record Proxy</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +35,7 @@
                             <td>A</td>
                             <td>{{$domain}}</td>
                             <td>52.15.157.185</td>
+                            <td>DNS Only/Direct </td>
                         </tr>
                     </tbody>
                 </table>
