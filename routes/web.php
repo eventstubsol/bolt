@@ -33,6 +33,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 $appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
 // to get request domain  dd(\Request::getHost());
+Route::get("/verifydomain", "EventManageController@verifyDomain")->name("verify");
 
 Route::group(['domain' => $appurl], function () {
 
@@ -56,6 +57,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
     
+    Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
+    Route::get('/adddns','eventeeController@verifyDomain')->name('verifyDomain');
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
@@ -684,7 +687,7 @@ Route::group($options, function () {
         }
         // if($user->type)
         // dd($subdomain);
-        return redirect(route('eventee.event',$subdomain));
+        return redirect(route('eventee.event'));
         // Route::get("/", "HomeController@index")->name("home");
 
         // return "This will respond to requests for 'admin.localhost/'";

@@ -30,6 +30,9 @@ use App\ContentMaster;
 use App\Menu;
 use App\Treasure;
 use App\UserSubtype;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
 
 include_once "clickableAreasConfig.php";
 
@@ -387,6 +390,30 @@ define("CREATOR_TELLER_LINKS", [
 ]);
 
 define("BY_LAWS_TELLER_ID", "280fd217-8106-46fc-a36b-c5c38b1a3823");
+
+function whitelistDomain($domain){
+ 
+    $process = new Process(['/home/eventdev/domain_update.sh',$domain],);
+    $process->run();
+
+    // executes after the command finishes
+    if (!$process->isSuccessful()) {
+        throw new ProcessFailedException($process);
+    }
+}
+
+function addSSL($domain)
+{
+    
+    $process = new Process(['certbot ','--apache','-d '.$domain,' --agree-tos --redirect -n'],);
+    $process->run();
+
+    // executes after the command finishes
+    if (!$process->isSuccessful()) {
+        throw new ProcessFailedException($process);
+    }
+    
+}
 
 function api($var,$event_id,$default = ""){
     $api = Api::where("variable",$var)->where("event_id",$event_id)->first();
