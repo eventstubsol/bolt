@@ -90,7 +90,7 @@ class EventManageController extends Controller
     public function verifyDomain(){
         $currDomain = \Request::getHost();
         $event = Event::where('domain',$currDomain)->first();
-        if($event && $event->domainverified){
+        if($event && !$event->domainverified){
             $event->domainverified = true;
             $event->save(); 
             if(env("APP_ENV")!=='staging'){
