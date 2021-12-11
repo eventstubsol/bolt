@@ -57,6 +57,11 @@
                         <span id="event_link">.{{ $baseurl }}</span><br>
                         <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps </strong> Between Subdomain Name, use '-' only if needed</span>
                     </div>
+                    <div class="form-group">
+                        <label for="name">Custom Domain (Optional)</label><br>
+                        <input type="text" id="domain" name="domain" class="slugInp" >
+                        <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps and do not use http:// or https://.  </strong> </span>
+                    </div>
                     @if($event->end_date >= Carbon\Carbon::today())
                         <div class="row">
                             <div class="col">
