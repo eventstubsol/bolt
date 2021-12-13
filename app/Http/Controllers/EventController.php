@@ -186,6 +186,12 @@ class EventController extends Controller
     {
         // dd($request->all());
         $event = Event::where("id",$id)->first();
+        if($request->tos){
+            $event->privacypolicy = $request->tos;
+            $event->save();
+            return redirect(route("eventee.settings",$id));
+        }
+     
         $type = "exterior";
         $page = "exterior";
         switch($request->type){

@@ -360,7 +360,6 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 
 Route::get("/event/login", "AttendeeAuthController@show")->name("attendee_login");
-Route::get("privacy-policy", "HomeController@privacyPolicy")->name("privacyPolicy");
 Route::get("faq", "HomeController@faqs")->name("faq");
 
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
@@ -701,6 +700,8 @@ Route::group($options, function () use ($options) {
     Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
 
     Route::get("/faq", "HomeController@faqs")->name("faq");
+    Route::get("privacy-policy", "HomeController@privacyPolicy")->name("privacyPolicy");
+
     Route::get('/login',"EventUser\LoginController@login")->name("attendeeLogin");
     Route::get('/exhibitorlogin/{email}',"EventUser\LoginController@exhibitorlogin")->name("exhibitorLogin");
     

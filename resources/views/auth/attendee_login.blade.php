@@ -67,7 +67,7 @@ if(Auth::user()){
     <div class="clearfix"></div>
     <div class="clearfix"></div>
 </form>
-<p class="text mt-3">By logging in and using the platform, you hereby accept our <a data-toggle="modal" data-target="#privacyPolicy" >Privacy Policy</a>. For more details <a href="{{ route("faq") }}">read the FAQs</a></p>
+<p class="text mt-3">By logging in and using the platform, you hereby accept our  <a href="{{ route('privacyPolicy') }}" >Privacy Policy</a> {{--  <a data-toggle="modal" data-target="#privacyPolicy" >Privacy Policy</a>--}}. For more details <a href="{{ route("faq") }}">read the FAQs</a></p>
 <div id="privacyPolicy" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <!-- Modal content-->
