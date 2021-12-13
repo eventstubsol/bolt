@@ -687,7 +687,7 @@ Route::group($options, function () {
         }
         // if($user->type)
         // dd($subdomain);
-        return redirect(route('eventee.event'));
+        return redirect(route('eventee.event',$subdomain));
         // Route::get("/", "HomeController@index")->name("home");
 
         // return "This will respond to requests for 'admin.localhost/'";
