@@ -831,6 +831,7 @@ Route::get('/schedule-run', function() {
                 }
                 
             }
+            echo "New Messages Sent Successfully";
        }
        else{
            return 0;
