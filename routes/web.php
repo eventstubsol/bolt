@@ -792,7 +792,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
 
 });
-<<<<<<< HEAD
+
 
 Route::get("/updateevents",function(){
     $events = Event::all();
@@ -810,5 +810,4 @@ Route::get('/schedule-run', function() {
     Artisan::call('schedule:run');
     return "schedule:run is ran";
 });
-=======
->>>>>>> 82ccaf9298507596ef1415ce740cfc7196723b04
+
