@@ -145,8 +145,8 @@ class AttendeeAuthController extends Controller
             $user->touch();
             // dd("test");
 
-            return redirect(route("eventee.event",['subdomain'=>$event->slug]));
-            // return redirect("/event");
+            // return redirect(route("eventee.event",['subdomain'=>$event->slug]));
+            return redirect("/");
         }
     }
 
