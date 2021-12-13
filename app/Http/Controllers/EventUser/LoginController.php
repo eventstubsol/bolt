@@ -63,7 +63,6 @@ class LoginController extends Controller
             $user->online_status=0;
             $location = UserLocation::where('user_id',Auth::id())->where('current_status',1)->first();
             $location->current_status = 0;
-            $location->save();
             if($user->save() && $location->save()){
                 // return $user;
                 Auth::logout();
