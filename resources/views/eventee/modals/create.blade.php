@@ -28,7 +28,7 @@
                         
                         <div class="form-group mb-3">
                             <label for="name">Modal Name</label>
-                            <input  autofocus type="text" name="name" class="form-control   @error('name') is-invalid @enderror">
+                            <input  autofocus type="text" name="name" required class="form-control  @error('name') is-invalid @enderror">
                             @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

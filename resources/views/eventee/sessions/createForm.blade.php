@@ -31,7 +31,7 @@
                     <!-- Session Name -->
                     <div class="form-group mb-3">
                         <label for="name">Title</label>
-                        <input  autofocus type="text"  id="name" value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
+                        <input  autofocus type="text"  id="name" required value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -42,7 +42,7 @@
                     <!-- Session Description -->
                     <div class="form-group mb-3">
                         <label for="summernote-basic">Description</label>
-                        <textarea id="summernote-basic"  name="description" class="form-control @error('description') is-invalid @enderror" >{!! old("description") !!}</textarea>
+                        <textarea id="summernote-basic" required name="description" class="form-control @error('description') is-invalid @enderror" >{!! old("description") !!}</textarea>
                         @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -128,7 +128,7 @@
                     <!-- Speakers -->
                     <div class="mb-3">
                         <label for="user">Select Speaker</label>
-                        <select class="form-control select2-multiple @error('userids') is-invalid @enderror" id="speakers" name="speakers[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ...">
+                        <select required class="form-control select2-multiple @error('userids') is-invalid @enderror" id="speakers" name="speakers[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ...">
                             @foreach($speakers as $user)
                             <option value={{$user->id}}>{{$user->name}} ({{$user->email}}) </option>
                             @endforeach

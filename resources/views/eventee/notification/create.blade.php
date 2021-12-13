@@ -5,6 +5,7 @@
 @endsection
 
 @section("styles")
+@include("includes.styles.select")
     @include("includes.styles.datatables")
 @endsection
 
@@ -27,7 +28,7 @@
                     
                     <div class="form-group mb-3">
                         <label for="title">Title</label>
-                        <input autofocus maxlength="255"  value="{{ old('title') }}" type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" />
+                        <input autofocus maxlength="255"  value="{{ old('title') }}" type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" required/>
                         @error('title')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -36,7 +37,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="message">Message</label>
-                        <textarea id="message"  name="message" class="form-control @error('message') is-invalid @enderror" maxlength="255">{{ old('message') }}</textarea>
+                        <textarea id="message" required name="message" class="form-control @error('message') is-invalid @enderror" maxlength="255">{{ old('message') }}</textarea>
                         @error('message')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -54,8 +55,8 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="user-type">Select Roles</label>
-                        <select id="user-type" name="roles[]" multiple="" class="form-control @error('message') is-invalid @enderror">
-                            <option selected>All</option>
+                        <select id="user-type" name="roles[]" required multiple="" class="form-control select2-multiple @error('message') is-invalid @enderror" data-toggle="select2" multiple="multiple" data-placeholder="Choose ...">
+                            <option >All</option>
                             <option>Attendee</option>
                             <option>Delegates</option>
 {{--                            <option>Active Users</option>--}}
@@ -76,4 +77,9 @@
         </div>
     </div>
 </div>
+@endsection
+
+
+@section('scripts')
+@include("includes.scripts.select")
 @endsection

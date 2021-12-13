@@ -462,7 +462,6 @@
                     if(response.locations.length > 0)
                     {   
                         $.each(response.locations,function(key,value){
-                            console.log(value.room_name);
                             $('.sesroomUSer').append('<tr><td>'+ value.room_name  +'</td><td>'+ value.room_count +'</td></tr>');
                         });
                     }
@@ -503,12 +502,13 @@
                     // console.log(response);
                     if(response.locations.length > 0)
                     {   
-                        
+                        $('.botthUSer').empty();
                         $.each(response.locations,function(key,value){
                             $('.botthUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
                         });
                     }
                     else{
+                        $('.botthUSer').empty();
                         $('.botthUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
                     }
                     drawBoothChart(response);
@@ -581,6 +581,7 @@
                                     });
                                 }
                                 else{
+                                    $('.sesroomUSer').empty();
                                     $('.sesroomUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
                                 }
                                 
@@ -604,6 +605,7 @@
                                     });
                                 }
                                 else{
+                                    $('.pageUSer').empty();
                                     $('.pageUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
                                 }
                                 drawPageChart(response);
@@ -626,6 +628,7 @@
                                     });
                                 }
                                 else{
+                                    $('.botthUSer').empty();
                                     $('.botthUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
                                 }
                                 drawBoothChart(response);
@@ -646,6 +649,7 @@
                                     });
                                 }
                                 else{
+                                    $('.lobbyUser').empty();
                                     $('.lobbyUser').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
                                 }
                             }
@@ -665,6 +669,7 @@
                                         });
                                     }
                                     else{
+                                        $('.loungeUser').empty();
                                         $('.loungeUser').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
                                     }
                                 

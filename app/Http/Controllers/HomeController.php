@@ -7,6 +7,7 @@ use App\Event;
 use App\Page;
 use App\sessionRooms;
 use App\User;
+use App\UserLocation;
 use App\UserSubtype;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

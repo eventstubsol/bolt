@@ -32,6 +32,8 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 $appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
+// to get request domain  dd(\Request::getHost());
+Route::get("/verifydomain", "EventManageController@verifyDomain")->name("verify");
 
 Route::group(['domain' => $appurl], function () {
 
@@ -55,6 +57,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
     
+    Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
+    Route::get('/adddns','eventeeController@verifyDomain')->name('verifyDomain');
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
@@ -219,6 +223,11 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('/footer/store/{id}','Eventee\MenuController@saveFooter')->name('eventee.footer.store');
     Route::get('/footer/edit/{menu}/{id}','Eventee\MenuController@editFooter')->name('eventee.footer.edit');
     Route::put('/footer/update/{menu}/{id}','Eventee\MenuController@updateFooter')->name('eventee.footer.update');
+
+    //Schedule Notification
+    Route::get('schedule/notification/{id}','Eventee\ScheduleController@index')->name('eventee.schedule');
+    Route::get('schedule/notification/create/{id}','Eventee\ScheduleController@create')->name('eventee.schedule.create');
+    Route::post('schedule/notification/store/{id}','Eventee\ScheduleController@store')->name('eventee.schedule.store');
 
     
     //Post Video
@@ -643,10 +652,25 @@ Route::get("/clear-leaderboard", function(){
 
 
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
+$options = ['domain' => $url];
+$arr = [];
+$domains = Event::whereNotNull("domain")->get("domain")->toArray();
+foreach($domains as $domain){
+    array_push($arr,$domain['domain']);
+}
+// dd($arr);
+$currDomain = \Request::getHost();
 
+if(in_array($currDomain,$arr)){
+    $url = $currDomain;
+    $options = ['domain' => $url,'middleware'=>'addSubdomain'];
+    // dd($currDomain);
+}
+// dd($url);
 // $url = '{subdomain}.localhost';
-Route::group(['domain' => $url], function () {
+Route::group($options, function () {
     Route::get('/', function ($subdomain) {
+        // dd($subdomain);
         $eveCount = Event::where("slug",$subdomain)->count();
         $event = Event::where("slug",$subdomain)->first();
         if($eveCount < 1){
@@ -663,7 +687,7 @@ Route::group(['domain' => $url], function () {
         }
         // if($user->type)
         // dd($subdomain);
-        return redirect(route('eventee.event',$subdomain));
+        return redirect(route('eventee.event'));
         // Route::get("/", "HomeController@index")->name("home");
 
         // return "This will respond to requests for 'admin.localhost/'";
@@ -768,6 +792,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
 
 });
+<<<<<<< HEAD
 
 Route::get("/updateevents",function(){
     $events = Event::all();
@@ -785,3 +810,5 @@ Route::get('/schedule-run', function() {
     Artisan::call('schedule:run');
     return "schedule:run is ran";
 });
+=======
+>>>>>>> 82ccaf9298507596ef1415ce740cfc7196723b04

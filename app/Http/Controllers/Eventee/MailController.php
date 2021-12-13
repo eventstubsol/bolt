@@ -107,5 +107,59 @@ class MailController extends Controller
                 
              }
         }
+        elseif($first_type == 2){
+            $users = User::where('event_id',$id)->where('type','exhibiter')->get();
+
+            foreach($users as $user){
+                // return view("emails.eventee")->with(['event'=>$event->name,'subject'=>$subject,'message'=>$message,'user'=>$user]);
+                // return new EventeeMail($event->name,$subject,$message);
+               Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+            }
+            $mail = new Mails;
+            $mail->event_id = $id;
+            $mail->sender_id = Auth::id();
+            $mail->sent_to = 'All Exibiter';
+            $mail->subject = $subject;
+            $mail->message = $message;
+            $mail->save();
+            flash("Mail Sent To ALL")->success();
+            return redirect()->route('eventee.mail',$id);
+        }
+        elseif($first_type == 3){
+            $users = User::where('event_id',$id)->where('type','delegate')->get();
+
+            foreach($users as $user){
+                // return view("emails.eventee")->with(['event'=>$event->name,'subject'=>$subject,'message'=>$message,'user'=>$user]);
+                // return new EventeeMail($event->name,$subject,$message);
+               Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+            }
+            $mail = new Mails;
+            $mail->event_id = $id;
+            $mail->sender_id = Auth::id();
+            $mail->sent_to = 'All Delegate';
+            $mail->subject = $subject;
+            $mail->message = $message;
+            $mail->save();
+            flash("Mail Sent To ALL")->success();
+            return redirect()->route('eventee.mail',$id);
+        }
+        elseif($first_type == 4){
+            $users = User::where('event_id',$id)->where('type','attendee')->get();
+
+            foreach($users as $user){
+                // return view("emails.eventee")->with(['event'=>$event->name,'subject'=>$subject,'message'=>$message,'user'=>$user]);
+                // return new EventeeMail($event->name,$subject,$message);
+               Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+            }
+            $mail = new Mails;
+            $mail->event_id = $id;
+            $mail->sender_id = Auth::id();
+            $mail->sent_to = 'All Attendee';
+            $mail->subject = $subject;
+            $mail->message = $message;
+            $mail->save();
+            flash("Mail Sent To ALL")->success();
+            return redirect()->route('eventee.mail',$id);
+        }
     }
 }
