@@ -3,20 +3,22 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Carbon\Carbon;
 use App\ScheduleNotification;
 use App\Events\NotificationEvent;
 use App\Event;
 use App\PushNotification;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
-class sendNotification extends Command
+
+class sendNote extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'send:notification';
+    protected $signature = 'send:note';
 
     /**
      * The console command description.
@@ -42,12 +44,13 @@ class sendNotification extends Command
      */
     public function handle()
     {
-        $schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now()->format('H:i'),Carbon::now()->subMinutes(20)->format('H:i')])
+        $schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now()->subMinutes(20)->format('H:i'),Carbon::now()->format('H:i')])
         ->where('sending_date',Carbon::now()->format('Y-m-d'))
         ->where('status',0)
-        ->get();    
+        ->get();
+        print_r($schedules);
        if(count($schedules) > 0){
-           print_r($schedules);
+          
             foreach($schedules as $schedule){
                 $event = Event::findOrFail($schedule->event_id);
                 $notify = new PushNotification;
@@ -61,10 +64,13 @@ class sendNotification extends Command
                     $schedule->status = 1;
                     $schedule->save();
                 }
-                
+                Log::channel('custom')->info(Carbon::now());
+                echo 1;
             }
        }
        else{
+        Log::channel('custom')->error("Something went wrong");
+        Log::channel('custom')->info(print_r($schedules));
            return 0;
        }
     }
