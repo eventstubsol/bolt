@@ -833,6 +833,7 @@ Route::get('/schedule-run', function() {
                 if($notify->save()){
                     event(new NotificationEvent($schedule->message,$schedule->title,$event->slug,$notify->id,$schedule->role,$schedule->url));
                     $schedule->status = 1;
+                    $schedule->sent_on = Carbon::now()->format('Y-m-d H:i:s');
                     $schedule->save();
                 }
                 
