@@ -28,6 +28,7 @@ class addSubdomain
         $event = Event::where('domain',$currDomain)->first();
         // dd($event);
         if($event){
+            $request->request->add(['isCustom' => true]); 
             $request->route()->setParameter('subdomain',$event->slug);
             return $next($request);
         }else{

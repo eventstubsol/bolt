@@ -668,9 +668,10 @@ if(in_array($currDomain,$arr)){
 }
 // dd($url);
 // $url = '{subdomain}.localhost';
-Route::group($options, function () {
-    Route::get('/', function ($subdomain) {
-        // dd($subdomain);
+Route::group($options, function () use ($options) {
+    Route::get('/', function (Request $request,$subdomain) use ($options) {
+        if(isset($request->isCustom)){
+        }
         $eveCount = Event::where("slug",$subdomain)->count();
         $event = Event::where("slug",$subdomain)->first();
         if($eveCount < 1){
@@ -687,7 +688,11 @@ Route::group($options, function () {
         }
         // if($user->type)
         // dd($subdomain);
-        return redirect(route('eventee.event',$subdomain));
+        if(isset($options["middleware"])){
+            return redirect(route('eventee.event'));
+        }else{
+            return redirect(route('eventee.event',$subdomain));
+        }
         // Route::get("/", "HomeController@index")->name("home");
 
         // return "This will respond to requests for 'admin.localhost/'";
