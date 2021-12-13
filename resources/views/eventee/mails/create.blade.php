@@ -120,7 +120,7 @@
             else if(option == 3){
                 $('#userTypes').hide();
             }
-            else if(option == 2){
+            else if(option == 4){
                 $('#userTypes').hide();
             }
             else{
