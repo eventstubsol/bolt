@@ -418,11 +418,11 @@ $user = Auth::user();
     </style>
     {{-- Notification Modal --}}
     <!-- Small modal -->
-    <div class="consent-notification hide-on-exterior"  id="notification-smallModal" style="display: none">
+    <div class="consent-notification hide-on-exterior"  id="notification-smallModal">
     <h4 id="notification-head"></h4>
     <p id="notification-body" ></p>
     <div class="flex">
-        <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true"></button>
+        <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true">Close</button>
     </div>
     </div>
       
@@ -489,11 +489,11 @@ $user = Auth::user();
     @include("includes.styles.fileUploader")
     <!-- Custom -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=2187236762431" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=2187236762431" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=2187236762431" type="text/css">
-    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=2187236762431">
-    <link href="{{ asset('assets/css/custom.css') }}?v=2187236762431" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=218723676278" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=218723676278" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=218723676278" type="text/css">
+    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=218723676278">
+    <link href="{{ asset('assets/css/custom.css') }}?v=218723676278" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
@@ -581,7 +581,7 @@ $user = Auth::user();
 </head>
 
 <body class="custom-theme">
-    <div class="consent-notification hide-on-exterior"  id="notification-smallModal">
+    <div class="consent-notification hide-on-exterior" >
 
         <h4 id="notification-head"></h4>
     
@@ -752,6 +752,9 @@ $user = Auth::user();
     <script defer src="https://widget-js.cometchat.io/v2/cometchatwidget.js"></script>
 
     <script>
+        // $(document).ready(function(){
+        //     $('#notification-smallModal').addClass('enable');
+        // });
         (function() {
             let deviceElem = document.querySelector('.device-orentation');
             let deviceElemClose = document.querySelector('.device-orentation .close');
@@ -864,15 +867,15 @@ $user = Auth::user();
         window.config = config;
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=2187236762431"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}?cb=2187236762431"></script>
-    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=2187236762431"></script>
-    <script src="{{ asset('event-assets/js/app.js') }}?cb=2187236762431"></script>
-    <script src="{{ asset('/js/chat/app.js') }}?cb=2187236762431"></script>
-    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=2187236762431"></script> -->
-    <script src="{{ asset('/js/profile/index.js') }}?cb=2187236762431"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=2187236762431"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=2187236762431"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=218723676278"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}?cb=218723676278"></script>
+    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=218723676278"></script>
+    <script src="{{ asset('event-assets/js/app.js') }}?cb=218723676278"></script>
+    <script src="{{ asset('/js/chat/app.js') }}?cb=218723676278"></script>
+    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=218723676278"></script> -->
+    <script src="{{ asset('/js/profile/index.js') }}?cb=218723676278"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=218723676278"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=218723676278"></script>
     @if (isOpenForPublic('polls'))
         @include("event.poll")
     @endif
@@ -1048,7 +1051,7 @@ $user = Auth::user();
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
     
-        var pusher = new Pusher('123b7f594f1f360676a6', {
+        var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
           cluster: 'ap2'
         });
         

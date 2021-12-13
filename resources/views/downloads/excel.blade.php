@@ -19,7 +19,7 @@
             @foreach ($report as $mainReport)
             <tr>
                 <td>{{ $mainReport->type }}</td>
-                <td>{{ $mainReport->type_location }}</td>
+                <td>@if( $mainReport->type_location != null){{ $mainReport->type_location }}@else {{ $mainReport->type }} @endif</td>
                 <td>{{ Carbon\Carbon::parse($mainReport->created_at)->format('H:i:s') }}</td>
                 <td>{{ Carbon\Carbon::parse($mainReport->updated_at)->format('H:i:s') }}</td>
             </tr>

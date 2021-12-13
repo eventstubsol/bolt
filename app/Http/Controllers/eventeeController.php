@@ -16,6 +16,8 @@ use App\Event;
 // use App\Menu;
 use Browser;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+
 class eventeeController extends Controller
 {
     //
@@ -138,7 +140,7 @@ class eventeeController extends Controller
             $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->limit(5)->count();
            
             $liveEvent = Event::where('end_date','>=',Carbon::now()->format('Y-m-d'))->where('user_id',Auth::id())->count();
-            $recent = Event::whereBetween('start_date',[Carbon::now()->subDays(5)->format('Y-m-d'),Carbon::now()->format('Y-m-d')])->where('end_date','>=',Carbon::today())->where('user_id',Auth::id())->orderBy('start_date','desc')->limit(5)->get();
+            $recent = Event::where('user_id',Auth::id())->orderBy('start_date','desc')->limit(5)->get();
             // $latest_users = User::whereBetween('created_at',[Carbon::now()->subDays(5)->format('Y-m-d H:i:s'),Carbon::now()->format('Y-m-d H:i:s')])->where('type','eventee')->limit(5)->get();
             $ending_event  =Event::whereBetween('end_date',[Carbon::now()->format('Y-m-d'),Carbon::now()->addDays(5)->format('Y-m-d')])->where('user_id',Auth::id())->limit(5)->get();
             $eventUser = Event::where('user_id',Auth::id())->get();
@@ -175,6 +177,19 @@ class eventeeController extends Controller
         return view('eventee.events.index',compact('events'));
     }
 
+    public function confirmDomain(Request $req){
+        // $domain = $req->domain;
+        // $domain = 'localhost:8000';  
+        // $response = Http::get('http://217f-103-104-94-243.ngrok.io/verifydomain');
+        return [true];
+        // $r =  Http::get('http://'.$domain.'/verifydomain');
+        // dd("564");
+    }
+    public function verifyDomain(Request $req){
+        $domain = $req->domain;
+        // Event::where('domain',$domain)
+        return view("eventee.domain.verify")->with(compact("domain"));
+    }
     public function Save(Request $req){
         $slug = str_replace(" ","-",strtolower($req->event_slug));
         $eve = Event::where('slug',$slug)->count();
@@ -202,6 +217,18 @@ class eventeeController extends Controller
         $event->user_id = Auth::id();
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
+        if($req->domain){
+            $domain = $req->domain;
+            if(strpos($domain,'https')){
+                $domain =  str_replace('https://','',$domain);
+             }else{
+               $domain=  str_replace('http://','',$domain);
+             }
+            $event->domain = $domain;
+            if(env("APP_ENV")!=='staging'){
+                whitelistDomain($domain);
+            }
+        }
         if($event->save()){
             
             createMenus($event->id);
@@ -226,7 +253,12 @@ class eventeeController extends Controller
             // }
             flash("Event Saved Successfully")->success();
             Event::where('id',$event->id)->update(['link'=> $event->slug.'.'.str_replace('https://app.','',$baseurl).'']);
-            return redirect()->back();
+            if(isset($domain)){
+                return redirect(route("verifyDomain",['domain'=>$domain]));
+            }else{
+                return redirect()->back();
+            }
+        
         }
         else{
             flash("Something Went Wrong")->error();
