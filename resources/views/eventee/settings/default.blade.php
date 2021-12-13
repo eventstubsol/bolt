@@ -10,6 +10,10 @@
  Default Settings
 @endsection
 
+@section("styles")
+    @include("includes.styles.wyswyg")
+@endsection    
+
 @section("content")
     
 <div class="row">
@@ -66,31 +70,27 @@
 
                     <button type="submit"  class="btn btn-primary">Save</button>
                 </form>
+
             </div>
         </div>
-        {{-- <div class="card">
-            <div class="card-header"> <img width="150" src="https://www.pngfind.com/pngs/m/59-590228_capture-it-photobooth-b1-lora-alliance-logo-png.png" class="img-fluid rounded-circle" alt="">   </div>
+        <div class="card">
+            <div class="card-header">  Privacy Policy    </div>
             <div class="card-body">
-                <form method="POST" action="{{ route("eventee.integrationsUpdate",['id'=>$id]) }}">
-                    {{ csrf_field() }}
-                    <div class="form-group mb-3">
-                        <label for="name">Photobooth Gallery </label>
-                        <input  autofocus type="text"  value="{{ $envs['photo_booth_gallery'] ?? '' }}" name="photo_booth_gallery" class="form-control">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="name">Photobooth Capture </label>
-                        <input  autofocus type="text" value="{{ $envs['photo_booth_capture'] ?? '' }}"  name="photo_booth_capture" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                <form method="POST" action="{{ route("eventee.settingsUpdate",['id'=>$id]) }}">
+                    <label for="summernote-basic">Privacy Policy</label>
+                    <textarea id="summernote-basic" name="tos">{{$event->privacypolicy}}</textarea>
+                    <button type="submit"  class="btn btn-primary">Save</button>
                 </form>
             </div>
-        </div> --}}
-    
+        </div>
     </div>
 </div>
 @endsection
 
 @section("scripts")
+    @include("includes.scripts.wyswyg")
+
+
     <script>
         $(document).ready(function(){
 

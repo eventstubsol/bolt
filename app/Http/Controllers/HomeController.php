@@ -110,8 +110,9 @@ class HomeController extends Controller
         return view("event.faq")->with(compact("FAQs"));
     }
 
-    public function privacyPolicy(){
-        return view("event.tos");
+    public function privacyPolicy($subdomain=''){
+        $tos = Event::where("slug",$subdomain)->first()->privacypolicy;
+        return view("event.tos")->with(compact("tos"));
     }
 
     public function confirmLogin($subdomain=''){
