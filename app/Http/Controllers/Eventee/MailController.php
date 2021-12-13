@@ -113,7 +113,7 @@ class MailController extends Controller
             foreach($users as $user){
                 // return view("emails.eventee")->with(['event'=>$event->name,'subject'=>$subject,'message'=>$message,'user'=>$user]);
                 // return new EventeeMail($event->name,$subject,$message);
-               Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+               Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
             }
             $mail = new Mails;
             $mail->event_id = $id;
@@ -149,7 +149,7 @@ class MailController extends Controller
             foreach($users as $user){
                 // return view("emails.eventee")->with(['event'=>$event->name,'subject'=>$subject,'message'=>$message,'user'=>$user]);
                 // return new EventeeMail($event->name,$subject,$message);
-               Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+               Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
             }
             $mail = new Mails;
             $mail->event_id = $id;
