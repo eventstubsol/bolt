@@ -42,7 +42,7 @@
         <img class="main_image_c" src="{{ assetUrl(getFieldId('logo', $event->id)) }}" width="600" alt="">
             <div class="body_container_c" >
             <span class="mail_heading_c">Dear {{$user->name}},</span>
-            @php echo  $message @endphp
+            {!!  PHP_EOL.$message   !!}
             <span class="mail_signoff_c">Thanks & Regards</span>
             <span class="mail_signoff_c">MLK 2022</span>
             </div>

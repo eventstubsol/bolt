@@ -52,10 +52,6 @@ class eventeeController extends Controller
             flash("Job Title Field Cannot Be blank")->error();
             return redirect()->back();
         }
-        elseif(empty($request->industry)){
-            flash("Industry Field  Cannot Be blank")->error();
-            return redirect()->back();
-        }
         
         $userEmail = User::where('email',$request->email)->where('event_id',null)->count();
         if($userEmail > 0){
@@ -71,7 +67,6 @@ class eventeeController extends Controller
         $user->job_title = $request->job_title;
         $user->type = 'eventee';
         $user->country = $request->country;
-        $user->industry = $request->industry;
         if($user->save()){
             $request->Session()->put('eventee-register', 'Registration Successful');
             return redirect()->route('Eventee.login');
