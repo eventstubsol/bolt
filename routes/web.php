@@ -32,9 +32,8 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 $appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
-
-
 // to get request domain  dd(\Request::getHost());
+Route::get("/verifydomain", "EventManageController@verifyDomain")->name("verify");
 
 Route::group(['domain' => $appurl], function () {
 
@@ -58,6 +57,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
     
+    Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
+    Route::get('/adddns','eventeeController@verifyDomain')->name('verifyDomain');
     Route::get('Events','eventeeController@Event')->name('event.index');
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
@@ -651,10 +652,25 @@ Route::get("/clear-leaderboard", function(){
 
 
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
+$options = ['domain' => $url];
+$arr = [];
+$domains = Event::whereNotNull("domain")->get("domain")->toArray();
+foreach($domains as $domain){
+    array_push($arr,$domain['domain']);
+}
+// dd($arr);
+$currDomain = \Request::getHost();
 
+if(in_array($currDomain,$arr)){
+    $url = $currDomain;
+    $options = ['domain' => $url,'middleware'=>'addSubdomain'];
+    // dd($currDomain);
+}
+// dd($url);
 // $url = '{subdomain}.localhost';
-Route::group(['domain' => $url], function () {
+Route::group($options, function () {
     Route::get('/', function ($subdomain) {
+        // dd($subdomain);
         $eveCount = Event::where("slug",$subdomain)->count();
         $event = Event::where("slug",$subdomain)->first();
         if($eveCount < 1){
@@ -671,7 +687,7 @@ Route::group(['domain' => $url], function () {
         }
         // if($user->type)
         // dd($subdomain);
-        return redirect(route('eventee.event',$subdomain));
+        return redirect(route('eventee.event'));
         // Route::get("/", "HomeController@index")->name("home");
 
         // return "This will respond to requests for 'admin.localhost/'";
