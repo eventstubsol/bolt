@@ -49,7 +49,7 @@ class MailController extends Controller
             foreach($users as $user){
                 // return view("emails.eventee")->with(['event'=>$event->name,'subject'=>$subject,'message'=>$message,'user'=>$user]);
                 // return new EventeeMail($event->name,$subject,$message);
-               Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+               Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
             }
             $mail = new Mails;
             $mail->event_id = $id;
@@ -66,7 +66,7 @@ class MailController extends Controller
                 $users = $req->sent_to_type_exibitor;
                 for($i = 0; $i < count($users); $i++){
                     $user = User::findOrFail($users[$i]);
-                    Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+                    Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
                 }
                 flash("Mail Sent To Exibitors")->success();
                 return redirect()->route('eventee.mail',$id);
@@ -75,7 +75,7 @@ class MailController extends Controller
                 $users = $req->sent_to_type_delegate;
                 for($i = 0; $i < count($users); $i++){
                     $user = User::findOrFail($users[$i]);
-                    Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+                    Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
                 }
                 flash("Mail Sent To Delegates")->success();
                 return redirect()->route('eventee.mail',$id);
@@ -84,7 +84,7 @@ class MailController extends Controller
                 $users = $req->sent_to_type_attendee;
                 for($i = 0; $i < count($users); $i++){
                     $user = User::findOrFail($users[$i]);
-                    Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+                    Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
                 }
                 flash("Mail Sent To Attendees")->success();
                 return redirect()->route('eventee.mail',$id);
@@ -96,7 +96,7 @@ class MailController extends Controller
                     $users = User::where('subtype',$subtypes)->where('event_id',$id)->get();
                     if(count($users)>0){
                         foreach($users as $user){
-                            Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+                            Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
                         }
                     }
                     
@@ -113,7 +113,7 @@ class MailController extends Controller
             foreach($users as $user){
                 // return view("emails.eventee")->with(['event'=>$event->name,'subject'=>$subject,'message'=>$message,'user'=>$user]);
                 // return new EventeeMail($event->name,$subject,$message);
-               Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+               Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
             }
             $mail = new Mails;
             $mail->event_id = $id;
@@ -149,7 +149,7 @@ class MailController extends Controller
             foreach($users as $user){
                 // return view("emails.eventee")->with(['event'=>$event->name,'subject'=>$subject,'message'=>$message,'user'=>$user]);
                 // return new EventeeMail($event->name,$subject,$message);
-               Mail::to($user->email)->send(new EventeeMail($event->name,$subject,$message,$user));
+               Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
             }
             $mail = new Mails;
             $mail->event_id = $id;
