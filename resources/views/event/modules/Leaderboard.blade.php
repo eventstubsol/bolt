@@ -87,5 +87,7 @@ if(isset($leaderboard)){
             </div>
         </div>
 
+
     </div>      
+
 </div>
