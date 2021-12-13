@@ -838,10 +838,10 @@ Route::get('/schedule-run', function() {
                 }
                 
             }
-            echo "New Messages Sent Successfully";
+            echo 1;
        }
        else{
-           return 0;
+           echo 0;
        }
 });
 
