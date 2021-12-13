@@ -87,6 +87,20 @@ class EventManageController extends Controller
         $event = Event::findOrFail( ($id));
         return view('eventee.events.edit',compact('id','event'));
     }
+    public function verifyDomain(){
+        $currDomain = \Request::getHost();
+        $event = Event::where('domain',$currDomain)->first();
+        if($event && !$event->domainverified){
+            $event->domainverified = true;
+            $event->save(); 
+            if(env("APP_ENV")!=='staging'){
+                addSSL($currDomain);
+            }
+            return view("eventee.domain.verified");
+        }
+        return ["success"=>false];
+        // dd($event);
+    }
 
     public function update($id,Request $req){
         $baseurl = URL::to('/');
@@ -102,6 +116,15 @@ class EventManageController extends Controller
         $event->link = $slug.'.'.str_replace('https://','',$baseurl).'';
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
+        if($req->domain){
+            $domain = $req->domain;
+            if(strpos($domain,'https')){
+                $domain =  str_replace('https://','',$domain);
+             }else{
+               $domain=  str_replace('http://','',$domain);
+             }
+            $event->domain = $domain;
+        }
         if($event->save()){
             flash("Event Updated Succesfully")->success();
             return redirect()->route('event.index',$id);
