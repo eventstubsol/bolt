@@ -22,7 +22,7 @@ class ScheduleController extends Controller
         $title = $request->post("title");
         $message = $request->post("message");
         $url = $request->post("url", NULL);
-        $role = implode(", ", $request->post("roles"));
+        $role = $request->post("roles");
         $sending_date = $request->sending_date;
         $sending_time = $request->sending_at;
         $schedule = new ScheduleNotification;
