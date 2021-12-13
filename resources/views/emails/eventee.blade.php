@@ -39,7 +39,7 @@
 <body>
    <div style="flex-direction: column; align-items: center;" class="outer_container_c">
         <div class="inner_container_c">
-        <img class="main_image_c" src="{{ assetUrl(getFieldId('logo',{{ $event->id }})) }}" width="600" alt="">
+        <img class="main_image_c" src="{{ assetUrl(getFieldId('logo', $event->id)) }}" width="600" alt="">
             <div class="body_container_c" >
             <span class="mail_heading_c">Dear {{$user->name}},</span>
             {!!  $message !!}
