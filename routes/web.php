@@ -779,3 +779,9 @@ Route::get("/updateevents",function(){
         $event->save();
     }
 });
+
+
+Route::get('/schedule-run', function() {
+    Artisan::call('schedule:run');
+    return "schedule:run is ran";
+});
