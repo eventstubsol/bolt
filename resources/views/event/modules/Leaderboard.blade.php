@@ -25,7 +25,6 @@ if(isset($leaderboard)){
                         @foreach(App\Leadpoint::where('owner',$leaderboard->id)->get() as $point)
                             <ul>
                                 <li>{{ $point->point }}</li>
-                                <li>{{ $point->point }}</li>
                                 
                             </ul>
                             

@@ -114,6 +114,15 @@
             if(option == 0){
                 $('#userTypes').hide();
             }
+            else if(option == 2){
+                $('#userTypes').hide();
+            }
+            else if(option == 3){
+                $('#userTypes').hide();
+            }
+            else if(option == 2){
+                $('#userTypes').hide();
+            }
             else{
                 $('#userTypes').show(); 
             }
