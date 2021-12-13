@@ -804,10 +804,36 @@ Route::get("/updateevents",function(){
         $event->save();
     }
 });
-
+use App\ScheduleNotification;
+use App\Events\NotificationEvent;
+use App\PushNotification;
 
 Route::get('/schedule-run', function() {
-    Artisan::call('schedule:run');
-    return "schedule:run is ran";
+    $schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now()->subMinutes(15)->format('H:i'),Carbon::now()->format('H:i')])
+        ->where('sending_date',Carbon::now()->format('Y-m-d'))
+        ->where('status',0)
+        ->get();    
+        // print_r(Carbon::now()->subMinutes(15)->format('H:i'));
+       if(count($schedules) > 0){
+           print_r($schedules);
+            foreach($schedules as $schedule){
+                $event = Event::findOrFail($schedule->event_id);
+                $notify = new PushNotification;
+                $notify->title = $schedule->title;
+                $notify->url = $schedule->url;
+                $notify->message = $schedule->message;
+                $notify->roles =$schedule->role;
+                $notify->event_id = $event->id;
+                if($notify->save()){
+                    event(new NotificationEvent($schedule->message,$schedule->title,$event->slug,$notify->id,$schedule->role,$schedule->url));
+                    $schedule->status = 1;
+                    $schedule->save();
+                }
+                
+            }
+       }
+       else{
+           return 0;
+       }
 });
 

@@ -42,11 +42,12 @@ class sendNotification extends Command
      */
     public function handle()
     {
-        $schedules = ScheduleNotification::where('sending_time',Carbon::now()->format('H:i'))
+        $schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now()->format('H:i'),Carbon::now()->subMinutes(20)->format('H:i')])
         ->where('sending_date',Carbon::now()->format('Y-m-d'))
         ->where('status',0)
         ->get();    
        if(count($schedules) > 0){
+           print_r($schedules);
             foreach($schedules as $schedule){
                 $event = Event::findOrFail($schedule->event_id);
                 $notify = new PushNotification;
