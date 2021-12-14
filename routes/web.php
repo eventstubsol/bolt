@@ -814,7 +814,7 @@ use App\ScheduleNotification;
 use App\Events\NotificationEvent;
 use App\PushNotification;
 
-Route::get('/schedule-run', function() {
+Route::get('/schedule-run-now', function() {
     $schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now()->subMinutes(15)->format('H:i'),Carbon::now()->format('H:i')])
         ->where('sending_date',Carbon::now()->format('Y-m-d'))
         ->where('status',0)
