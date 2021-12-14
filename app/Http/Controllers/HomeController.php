@@ -116,7 +116,7 @@ class HomeController extends Controller
     }
 
     public function confirmLogin($subdomain=''){
-        \Artisan::call('send:note');
+        // \Artisan::call('send:note');
         $user = User::findOrFail(Auth::id());
         $user->online_status = true;
         $user->save();
