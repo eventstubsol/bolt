@@ -257,7 +257,7 @@
                             $cur_eve = App\Event::findOrFail($id);
                         @endphp
                         <li class=" color-primary">
-                            <a class="visit_event" href="https://{{$cur_eve->link}}/event" target="_blank">Visit Event</a>    
+                            <a class="visit_event" href="@if($cur_eve->domain) https://{{$cur_eve->domain}}/ @else https://{{$cur_eve->link}}/event @endif" target="_blank">Visit Event</a>    
                         </li>
                     @endif
                  
