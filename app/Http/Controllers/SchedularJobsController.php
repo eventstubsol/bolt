@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use App\Event;
 use App\ScheduleNotification;
 use App\Events\NotificationEvent;
 use App\PushNotification;
