@@ -64,28 +64,55 @@ class MailController extends Controller
         elseif($first_type == 1){
              if($req->sent_to_type_specific == 0){
                 $users = $req->sent_to_type_exibitor;
+                $names = [];
                 for($i = 0; $i < count($users); $i++){
                     $user = User::findOrFail($users[$i]);
+                    array_push($names,$user->name);
                     Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
                 }
+                $mail = new Mails;
+                $mail->event_id = $id;
+                $mail->sender_id = Auth::id();
+                $mail->sent_to = implode(',',$names);
+                $mail->subject = $subject;
+                $mail->message = $message;
+                $mail->save();
                 flash("Mail Sent To Exibitors")->success();
                 return redirect()->route('eventee.mail',$id);
              }
              elseif($req->sent_to_type_specific == 1){
                 $users = $req->sent_to_type_delegate;
+                $names = [];
                 for($i = 0; $i < count($users); $i++){
                     $user = User::findOrFail($users[$i]);
+                    array_push($names,$user->name);
                     Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
                 }
+                $mail = new Mails;
+                $mail->event_id = $id;
+                $mail->sender_id = Auth::id();
+                $mail->sent_to = implode(',',$names);
+                $mail->subject = $subject;
+                $mail->message = $message;
+                $mail->save();
                 flash("Mail Sent To Delegates")->success();
                 return redirect()->route('eventee.mail',$id);
              }
              elseif($req->sent_to_type_specific == 2) {
                 $users = $req->sent_to_type_attendee;
+                $names = [];
                 for($i = 0; $i < count($users); $i++){
                     $user = User::findOrFail($users[$i]);
+                    array_push($names,$user->name);
                     Mail::to($user->email)->send(new EventeeMail($event,$subject,$message,$user));
                 }
+                $mail = new Mails;
+                $mail->event_id = $id;
+                $mail->sender_id = Auth::id();
+                $mail->sent_to = implode(',',$names);
+                $mail->subject = $subject;
+                $mail->message = $message;
+                $mail->save();
                 flash("Mail Sent To Attendees")->success();
                 return redirect()->route('eventee.mail',$id);
                 
