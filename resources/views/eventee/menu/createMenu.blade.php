@@ -136,14 +136,23 @@ Create Menu
                         @endforeach
                     </select> --}}
 
-                    <select name="icon" class="form-control  icon_select_2  select2" data-toggle="select2">
+                    <select name="icon" id="icon_select" class="form-control  icon_select_2  select2" data-toggle="select2">
                         <option> Select Icon </option>
+                        <option value="custom"> Custom Icon </option>
                         @foreach(MENU_ICONS_SVG as $name=> $menuicon)
                             <option id="{{asset($menuicon)}}" data-name="{{$name}}" data-icon="{{$menuicon}}" value="{{asset($menuicon)}}">
                                 <i class="fe fe-home"></i> {{$name}}
                             </option>
                         @endforeach
+
                     </select>
+                    
+                    <div class="image-uploader" id="custom" style="display: none">
+                        <label> Custom Icon </label>
+                        <input type="hidden" name="c_icon" class="upload_input">
+                        <input type="file" data-name="c_icon" data-plugins="dropify" data-type="image" />
+                    </div>
+                    
 
 
                     <!-- Icon Select End -->
@@ -194,6 +203,15 @@ Create Menu
         }
 
     });
+    $("#icon_select").on("change",(e)=>{
+        console.log(e.target.value);
+        if(e.target.value==="custom"){
+            $("#custom").show();
+        }else{
+            $("#custom").hide();
+        }
+        // console.log(e.target);
+    })
     function toggleVisibility(e){
         
         console.log(e.target.value);
