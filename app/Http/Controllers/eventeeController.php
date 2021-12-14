@@ -100,7 +100,7 @@ class eventeeController extends Controller
             }
             
 
-            $user = User::where('email',$req->email)->where("event_id",null)->orWhere("event_id",0)->first();
+            $user = User::where('email',$req->email)->where("type","eventee")->first();
             $user->online_status = 1;
             $user->ip_address =  $req->ip();
             if(Browser::isMobile()){

@@ -147,7 +147,11 @@ class MenuController extends Controller
         $menu->parent_id = 0;
         $menu->position = $positionArr[0]->position ? $positionArr[0]->position : 0 ;
         $menu->link_type = $request->type;
-        $menu->iClass = $request->icon;
+        if($request->icon === 'custom'){
+            $menu->iClass = $request->c_icon;
+        }else{
+            $menu->iClass = $request->icon;
+        }
         $menu->save();
         // dd($menu);
         return redirect(route("eventee.menu",$id));
