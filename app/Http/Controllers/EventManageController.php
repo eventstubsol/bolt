@@ -90,6 +90,9 @@ class EventManageController extends Controller
     public function verifyDomain(){
         $currDomain = \Request::getHost();
         $event = Event::where('domain',$currDomain)->first();
+        if($event->domainverified){
+            return view("eventee.domain.verified");
+        }
         if($event && !$event->domainverified){
             $event->domainverified = true;
             $event->save(); 
@@ -124,10 +127,17 @@ class EventManageController extends Controller
                $domain=  str_replace('http://','',$domain);
              }
             $event->domain = $domain;
+            if(env("APP_ENV")!=='staging'){
+                whitelistDomain($domain);
+            }
         }
         if($event->save()){
             flash("Event Updated Succesfully")->success();
-            return redirect()->route('event.index',$id);
+            if(isset($domain)){
+                return redirect(route("verifyDomain",['domain'=>$domain]));
+            }else{
+                return redirect()->route('event.index',$id);
+            }
         }
         else{
             flash("Something Went Wrong")->error();
