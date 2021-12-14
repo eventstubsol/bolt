@@ -793,7 +793,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::post("/booth/{booth}/show-interest", "EventController@showInterestInBooth")->name("showInterestInBooth");
     Route::get("/delegates-list", "EventController@getDelegatesList")->name("delegateList");
     Route::post("/updates/check", "EventController@contentTicker")->name("contentTicker");
-    Route::get("/updates/check", "EventController@contentTicker")->name("contentTicker");
+    
 
 
 
@@ -810,12 +810,17 @@ Route::get("/updateevents",function(){
         $event->save();
     }
 });
-use App\ScheduleNotification;
-use App\Events\NotificationEvent;
-use App\PushNotification;
 
-Route::get('/schedule-run', function() {
-    $schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now()->subMinutes(15)->format('H:i'),Carbon::now()->format('H:i')])
+Route::get("/runSchedularJobs", "SchedularJobsController@runJobs")->name("runJobs");
+
+
+//use App\ScheduleNotification;
+//use App\Events\NotificationEvent;
+//use App\PushNotification;
+
+//Route::get('/schedule-run-now', function() {
+ //echo 0;
+    /*$schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now()->subMinutes(15)->format('H:i'),Carbon::now()->format('H:i')])
         ->where('sending_date',Carbon::now()->format('Y-m-d'))
         ->where('status',0)
         ->get();    
@@ -842,6 +847,6 @@ Route::get('/schedule-run', function() {
        }
        else{
            echo 0;
-       }
-});
+       }*/
+//});
 

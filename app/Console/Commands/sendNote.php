@@ -48,7 +48,7 @@ class sendNote extends Command
         ->where('sending_date',Carbon::now()->format('Y-m-d'))
         ->where('status',0)
         ->get();
-        print_r($schedules);
+        // print_r($schedules);
        if(count($schedules) > 0){
           
             foreach($schedules as $schedule){
