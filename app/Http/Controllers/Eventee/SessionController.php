@@ -14,10 +14,13 @@ use App\sessionRooms;
 use App\EventSession;
 use App\Vote;
 use App\VoteOption;
+use Carbon\Carbon;
+use App\Event;
 use App\ArchiveVideos;
 use App\Resource;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Auth;
+use App\ScheduleNotification;
 
 
 class SessionController extends Controller
@@ -70,6 +73,7 @@ class SessionController extends Controller
             return redirect()->back();
         }
         $event_id = $id;
+        $event = Event::findOrFail($event_id);
         $speakers = $request->speakers;
         $request->speakers = null;
         $room = sessionRooms::where("id", $request->room_id)->first();
@@ -80,7 +84,7 @@ class SessionController extends Controller
         }
         $session->room = $room->name;
         $session->master_room = $room->master_room;
-        $session->event_id = $id;
+        $session->event_id = $event_id;
         $session->save();
 
         //Old Resoiu
@@ -89,6 +93,27 @@ class SessionController extends Controller
             $resource->swagbag()->delete();
             $resource->delete();
         }
+        //schedule notification
+        $time = Carbon::parse($request->start_time)->subMinutes(10)->format('H:i');
+        $date = Carbon::parse($request->start_time)->format('Y-m-d');
+        $schedule = new ScheduleNotification;
+        $schedule->event_id = $id;
+        $schedule->title = $room->name;
+        $schedule->message = $room->name. " Session is starting in 10 minutes";
+        if(env('APP_ENV') == 'staging'){
+            $schedule->url = $event->slug.'.'.'localhost'.'/'.'event#sessionroom/'.$room->name;
+           
+        }
+        elseif($event->url != null){
+            $schedule->url =  $event->slug.'.'.$event->url.'/event#sessionroom/'.$room->name;
+        }
+        else{
+            $schedule->url =  $event->slug.'.'.'eventstub.co/event#sessionroom/'.$room->name;
+        }
+        $schedule->role = 'Attendee';
+        $schedule->sending_date = $date;
+        $schedule->sending_time = $time;
+        $schedule->save();
 
         //updating resources
         $requesturls = $request->resources; //Recieved from form
