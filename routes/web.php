@@ -687,11 +687,11 @@ Route::group($options, function () use ($options) {
         }
         // if($user->type)
         // dd($subdomain);
-        if(isset($options["middleware"])){
-            return redirect(route('eventee.event'));
-        }else{
+        // if(isset($options["middleware"])){
+        //     return redirect(route('eventee.event'));
+        // }else{
             return redirect(route('eventee.event',$subdomain));
-        }
+        // }
         // Route::get("/", "HomeController@index")->name("home");
 
         // return "This will respond to requests for 'admin.localhost/'";
