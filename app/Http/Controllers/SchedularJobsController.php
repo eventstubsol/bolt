@@ -11,7 +11,7 @@ use App\PushNotification;
 
 class SchedularJobsController extends Controller
 {
-  public function runJobs()
+  public function index()
   {
     return null;
   }
