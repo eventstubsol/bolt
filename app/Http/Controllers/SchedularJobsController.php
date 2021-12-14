@@ -4,7 +4,9 @@ use http\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use App\Event;
 use App\ScheduleNotification;
 use App\Events\NotificationEvent;
 use App\PushNotification;
@@ -42,9 +44,11 @@ class SchedularJobsController extends Controller
                 }
                 
             }
+            Log::channel('custom')->info(Carbon::now());
             echo 1;
        }
        else{
+           Log::channel('custom')->error("No data available");
            echo 0;
        }
   }
