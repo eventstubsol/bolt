@@ -53,7 +53,7 @@ class eventeeController extends Controller
             return redirect()->back();
         }
         
-        $userEmail = User::where('email',$request->email)->where('event_id',null)->count();
+        $userEmail = User::where('email',$request->email)->where('event_id',null)->orWhere("event_id",0)->count();
         if($userEmail > 0){
             flash("User Already Exist")->error();
             return redirect()->back();
@@ -100,7 +100,7 @@ class eventeeController extends Controller
             }
             
 
-            $user = User::where('email',$req->email)->where("event_id",0)->first();
+            $user = User::where('email',$req->email)->where("event_id",null)->orWhere("event_id",0)->first();
             $user->online_status = 1;
             $user->ip_address =  $req->ip();
             if(Browser::isMobile()){
