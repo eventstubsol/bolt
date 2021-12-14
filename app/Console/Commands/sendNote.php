@@ -70,8 +70,7 @@ class sendNote extends Command
        }
        else{
         Log::channel('custom')->error("Something went wrong");
-        Log::channel('custom')->info(print_r($schedules));
-           return 0;
+        echo 0;
        }
     }
 }
