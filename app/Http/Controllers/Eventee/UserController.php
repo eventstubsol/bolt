@@ -317,7 +317,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->type = $request->type;
-        if($request->subtype != 0){
+        if($request->has('subtype')){
             $user->subtype = $request->subtype;
         }
         

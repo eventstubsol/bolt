@@ -451,6 +451,10 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
             "recaptcha"=>"RecatchaController",
             //            "provisional" => "ProvisionalController",
         ]);
+        // DBManage
+        Route::get('delete/Notifications','DBManageController@NotificationDelete')->name('delete.notification.all');
+        Route::get('delete/Schedule/Notifications','DBManageController@ScheduleNotificationDelete')->name('delete.schedulenotification.all');
+        Route::get('delete/Mails/Notifications','DBManageController@MailsnDelete')->name('delete.mails.all');
         //Menu And Api
         Route::get('delete/submenu','MenuController@subMenu')->name('delete.submenu');
         Route::get('delete/savePosition','MenuController@SavePosition')->name('delete.savePosition');
@@ -468,6 +472,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::get('Recent/ActiveAdmin',"AdminReportController@RecentActiveUser")->name('recent.user');
         Route::get('Event/Ending',"AdminReportController@EventEnding")->name('event.ending');
         Route::get('Event/AdminLogs',"AdminReportController@EventLogs")->name('event.logs');
+        Route::get('Event/Delete/Notification',"AdminReportController@DeleteData")->name('notification.logs.delete');
         //Package
         Route::get('/package','PackageController@index')->name('package.index');
         Route::get('/package/create','PackageController@create')->name('package.create');
