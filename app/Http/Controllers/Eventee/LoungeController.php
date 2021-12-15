@@ -180,4 +180,31 @@ class LoungeController extends Controller
         return true;
     }
 
+    public function BulkDelete(Request $req){
+        $ids = $req->ids;
+        $totalcount = 0;
+        for($i = 0 ; $i < count($ids); $i++){
+            $page = NetworkingTable::findOrFail($ids[$i]);
+            $page->delete();
+            $pageCount = NetworkingTable::where('id',$ids[$i])->count();
+            if($pageCount > 0){
+                $totalcount++;
+            }
+
+        }
+        if(($totalcount)>0){
+        return response()->json(['code'=>500,"Message"=>"Something Went Wrong"]);
+        }
+        else{
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+        }
+    }
+    public function DeleteAll(Request $req){
+        $tables = NetworkingTable::where('event_id',$req->id)->get();
+        foreach($tables as $table){
+            $table->delete();
+        }
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+    }
+
 }
