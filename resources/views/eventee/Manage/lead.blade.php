@@ -9,8 +9,10 @@
     <div class="card">
         <div class="card-header">
             Leaderboard
+            <a style="float:right" class="btn btn-primary" href="{{ route('excel.download',$id) }}">Download Report</a>
         </div>
-        <div class="card-body">
+        <div class="card-body"> 
+            
             <ol id="list-of-people" class="list-group"></ol>
         </div>
     </div>

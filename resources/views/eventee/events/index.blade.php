@@ -48,7 +48,7 @@
                 <center>  Event Deleted Successfully </center>
             </div>
             <div class="card-body">
-                <table class="table table-hover table-striped">
+                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -156,6 +156,7 @@
 @endsection
 
 @section('scripts')
+@include("includes.scripts.datatables")
   <script>
       function CreateEvent(){
           $('#createModal').modal('toggle');
