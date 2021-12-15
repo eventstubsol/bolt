@@ -68,9 +68,13 @@ $fields = getAllFields($id);
                     <div class="card-title"><h4>Leaderboard Points</h4></div>
                     @if(App\LeadPoint::where('owner',$leaderSettings->id)->count() > 0)
                     @foreach (App\LeadPoint::where('owner',$leaderSettings->id)->get() as $key =>$loadpoint)
-                        <div class="form-group">
+                        <div class="form-group point-group">
                             <label for="points">Point {{ $key + 1  }}</label>
+                            <div class="input-group-append">
                             <input type="text" name="points[]" class="form-control" value="{{ $loadpoint->point }}">
+                            
+                               <button type="button" data-id="{{ $loadpoint->id }}" onclick="DeletePoint(this)" class="btn btn-danger">-</button>
+                            </div>
                         </div>
 
                     @endforeach
@@ -106,5 +110,26 @@ $fields = getAllFields($id);
             $('#point-append').append(appendable);
         });
     });
+</script>
+<script>
+    function DeletePoint(e){
+       
+        var id = e.getAttribute('data-id');
+        var data = e.closest('.point-group');
+        confirmDelete("Are you sure you want to DELETE Point?","Confirm Point Delete").then(confirmation=>{
+                if(confirmation){
+                    $.post('{{ route("eventee.leaderboard.points.delete") }}',{'id':id},function(response){
+                        if(response.code ==200){
+                            showMessage(response.message,'success');
+                            data.remove();
+                        }
+                        else{
+                            showMessage(response.message,'error');
+                        }
+                        
+                    });
+                }
+            });
+    }
 </script>
 @endsection
