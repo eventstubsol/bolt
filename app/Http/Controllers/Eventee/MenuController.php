@@ -219,7 +219,11 @@ class MenuController extends Controller
             $menu->parent_id = $request->parent_id ;
         }
         $menu->link_type = $request->type;
-        $menu->iClass = $request->icon;
+        if($request->icon === 'custom'){
+            $menu->iClass =  env("AWS_URL") . $request->c_icon;
+        }else{
+            $menu->iClass = $request->icon;
+        }
         $menu->save();
         // dd($menu);
         return redirect(route("eventee.menu.footer",$id));
