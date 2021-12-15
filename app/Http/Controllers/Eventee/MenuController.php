@@ -148,7 +148,7 @@ class MenuController extends Controller
         $menu->position = $positionArr[0]->position ? $positionArr[0]->position : 0 ;
         $menu->link_type = $request->type;
         if($request->icon === 'custom'){
-            $menu->iClass = assetUrl($request->c_icon);
+            $menu->iClass =  env("AWS_URL") . $request->c_icon;
         }else{
             $menu->iClass = $request->icon;
         }
