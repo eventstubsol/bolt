@@ -35,6 +35,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 
 include_once "clickableAreasConfig.php";
+include_once "chat/index.php";
 
 
 define("USER_TYPE_DELEGATE", "delegate");
