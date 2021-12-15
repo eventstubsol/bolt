@@ -500,7 +500,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::post('admin/Annoucement/Update','AdminAnnounce@Update')->name('admin.announce.update');
         Route::get('admin/Annoucement/Delete','AdminAnnounce@Delete')->name('admin.announce.delete');
         // Route::get('details/create','menuDetailsController@index')->('details.create');
-
+        //Event List
+        Route::get('event/list','AdminEventController@eventList')->name('admin.event.list');
         /**
          * CHAT USER START
          */

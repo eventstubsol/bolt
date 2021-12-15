@@ -461,6 +461,12 @@
             </a>
         </li>
         <li>
+            <a href="{{ route("admin.event.list") }}">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <span>Events </span>
+            </a>
+        </li>
+        <li>
             <a href="{{ route("event.ending") }}">
                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                 <span> Events Expiring Soon </span>
