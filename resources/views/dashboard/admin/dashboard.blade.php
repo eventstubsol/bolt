@@ -116,9 +116,9 @@
                         <tbody>
                             @if(count($recent) > 0)
                                 @foreach ($recent as $eventCount)
-                                {{-- @php
+                                @php
                                     $user = App\User::findOrFail($eventCount->user_id);
-                                @endphp --}}
+                                @endphp
                                     <tr>
                                       
                                         <td>{{ $eventCount->name }}</td>
@@ -225,7 +225,7 @@
                                       
                                         <td>{{ $user->name }} @if($user->last_name != null) {{ $user->last_name }}@endif</td>
                                         <td>{{ $user->email }}</td>
-                                        <td>{{ Carbon\Carbon::parse($eventCount->created_at)->format('d-m-Y') }}</td>
+                                        <td>{{ Carbon\Carbon::parse($user->created_at)->format('d-m-Y') }}</td>
                                     </tr>
                                 @endforeach
                             @else
