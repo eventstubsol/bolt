@@ -87,6 +87,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get("modal/edit/{id}/{modal}", "Eventee\ModalController@edit")->name("eventee.modal.edit");
     Route::put("modal/update/{id}/{modal}", "Eventee\ModalController@update")->name("eventee.modal.update");
     Route::delete('modal/delete/{modal}','Eventee\ModalController@delete')->name('eventee.modal.destroy');
+    Route::post('/modal/Bulkdelete',"Eventee\ModalController@BulkDelete")->name('eventee.modal.bulkDelete');
+    Route::post('/modal/DeleteAll',"Eventee\ModalController@DeleteAll")->name('eventee.modal.deleteAll');
 
     //Mailables
     Route::get('mail/{id}',"Eventee\MailController@index")->name('eventee.mail');
@@ -196,6 +198,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('lounge/event/{table}/{id}/edit',"Eventee\LoungeController@edit")->name('eventee.lounge.edit');
     Route::put('lounge/{table}/{id}/update',"Eventee\LoungeController@update")->name('eventee.lounge.update');
     Route::delete('lounge/delete/{id}/{table}',"Eventee\LoungeController@destroy")->name('eventee.lounge.destroy');
+    Route::post('/lounge/Bulkdelete',"Eventee\LoungeController@BulkDelete")->name('eventee.lounge.bulkDelete');
+    Route::post('/lounge/DeleteAll',"Eventee\LoungeController@DeleteAll")->name('eventee.lounge.deleteAll');
    
     //Background Change
     Route::get('background/{id}','Eventee\BackgroundController@index')->name('eventee.background');
@@ -266,7 +270,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('/leaderboard/setting/{id}',"Eventee\LeaderboardController@index")->name('eventee.leaderSetting');
     Route::POST('/leaderboard/setting/store/{id}',"Eventee\LeaderboardController@store")->name('eventee.leaderSetting.store');
     Route::POST('/leaderboard/setting/update/{id}/{lead_id}',"Eventee\LeaderboardController@update")->name('eventee.leaderSetting.update');
-
+    Route::POST('/leaderboard/points/delete',"Eventee\LeaderboardController@DeletePoint")->name('eventee.leaderboard.points.delete');
     //Room Setup
     Route::get('/Rooms/{id}',"Eventee\RoomController@index")->name('eventee.room');
     Route::get('/Rooms/create/{id}',"Eventee\RoomController@create")->name('eventee.room.create');

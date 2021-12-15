@@ -68,4 +68,15 @@ class LeaderboardController extends Controller
         }
 
     }
+
+    public function DeletePoint(Request $req){
+        $leadpoint = LeadPoint::findOrFail($req->id);
+        if($leadpoint->delete()){
+            return response()->json(['code'=>200,"message"=>"Point Have Been Deleted"]);
+        }
+        else{
+            return response()->json(['code'=>500,"message"=>"Oops!Something Went Wrong"]);
+        }
+        
+    }
 }
