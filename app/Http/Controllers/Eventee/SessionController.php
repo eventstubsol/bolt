@@ -101,14 +101,14 @@ class SessionController extends Controller
         $schedule->title = $room->name;
         $schedule->message = $room->name. " Session is starting in 10 minutes";
         if(env('APP_ENV') == 'staging'){
-            $schedule->url = $event->slug.'.'.'localhost'.'/'.'event#sessionroom/'.$room->name;
+            $schedule->url = 'http://'.$event->slug.'.'.'localhost'.'/'.'event#sessionroom/'.$room->name;
            
         }
         elseif($event->url != null){
-            $schedule->url =  $event->slug.'.'.$event->url.'/event#sessionroom/'.$room->name;
+            $schedule->url =  'https://'.$event->slug.'.'.$event->url.'/event#sessionroom/'.$room->name; 
         }
         else{
-            $schedule->url =  $event->slug.'.'.'eventstub.co/event#sessionroom/'.$room->name;
+            $schedule->url =  'https://'.$event->slug.'.'.'eventstub.co/event#sessionroom/'.$room->name;
         }
         $schedule->role = 'Attendee';
         $schedule->sending_date = $date;
