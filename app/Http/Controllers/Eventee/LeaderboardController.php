@@ -26,9 +26,12 @@ class LeaderboardController extends Controller
         $leaderBoard->color = $color;
         $leaderBoard->event_id = $id;
         if($leaderBoard->save()){
-            for($i = 0; $i < count($img) ;$i++){
-                Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i]]);
+            if($img !== null){
+                for($i = 0; $i < count($img) ;$i++){
+                    Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i]]);
+                }
             }
+            
             for($j = 0; $j < count($points) ; $j++){
                 LeadPoint::create(['owner'=>$leaderBoard->id,'point'=>$points[$j]]);
             }
@@ -54,18 +57,20 @@ class LeaderboardController extends Controller
             $images = Image::where('owner',$leaderBoard->id)->delete();
            
             $pointCount = LeadPoint::where('owner',$leaderBoard->id)->delete();
-            for($i = 0; $i < count($img) ;$i++){
-               if($i == 0 ){
-                Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i]]);
-               }
-               else{
-                Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i]]);
-               }
-                
+            if($img !== null){
+                for($i = 0; $i < count($img) ;$i++){
+                    Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i]]);  
+                 }
             }
-            for($j = 0; $j < count($points) ; $j++){
-                LeadPoint::create(['owner'=>$leaderBoard->id,'point'=>$points[$j]]);
+            if($points !== null){
+                for($j = 0; $j < count($points) ; $j++){
+                    if(!empty($points[$j])){
+                        LeadPoint::create(['owner'=>$leaderBoard->id,'point'=>$points[$j]]);
+                    }
+                    
+                }
             }
+            
             flash("Data Updated Successfully")->success();
             return redirect()->route('eventee.leaderSetting',$id);
         }
