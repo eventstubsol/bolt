@@ -52,6 +52,7 @@
                         <tr>
                             <th>#</th>
                             <th>Event Name</th>
+                            <th>User</th>
                             <th>Url</th>
                             <th>Start Date</th>
                             <th>End Date</th>
@@ -65,6 +66,15 @@
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $event->name }}</td>
+                                @php
+                                    $user = App\User::where('id',$event->user_id);
+                                @endphp
+                                
+                                @if($user->count() > 0)
+                                <td>{{ $user->first()->name }}</td>
+                                @else
+                                <td>{{ 'No User' }}</td>
+                                @endif
                                 <td id="copyTarget" style="cursor: pointer" data-id="{{ $event->link }}" ondblclick="openPage(this)" onclick="copyclip(this)" data-des="{{ $event->link }}">{{ Str::limit($event->link,50) }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->end_date)->format('d-m-Y') }}</td>
