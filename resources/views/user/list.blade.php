@@ -63,6 +63,7 @@ Manage Users
                                         "user" => $user->id
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title=""
                                     data-original-title="Edit"><i class="fe-edit-2"></i></a>
+                                <button onclick="deleteUser(this)" data-id="{{ $user->id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                
 
                             </td>
@@ -123,5 +124,23 @@ Manage Users
                 
             });
         });
+</script>
+<script>
+    function deleteUser(e){
+            // var conf = confirm("Do you want to delete this user?");
+            var userId = e.getAttribute('data-id');
+            // alert(userId);
+            var data = e.closest('tr');
+            confirmDelete("Are you sure you want to DELETE User?","Confirm User Delete").then(confirmation=>{
+                if(confirmation){
+                    
+                    var data = e.closest('tr');
+                    $.post('{{ route("eventee.user.delete") }}',{'id':userId},function(response){
+                        data.remove();
+                        
+                    });
+                }
+            });
+        }
 </script>
 @endsection

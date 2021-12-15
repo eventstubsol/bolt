@@ -73,7 +73,7 @@ $fields = getAllFields($id);
                             <div class="input-group-append">
                             <input type="text" name="points[]" class="form-control" value="{{ $loadpoint->point }}">
                             
-                               <button type="button" data-id="{{ $loadpoint->id }}" onclick="DeletePoint(this)" class="btn btn-danger">-</button>
+                               <button type="button" data-id="{{ $loadpoint->id }}" onclick="DeletePoint(this)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </div>
                         </div>
 
