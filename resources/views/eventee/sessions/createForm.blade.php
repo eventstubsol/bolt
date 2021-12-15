@@ -128,7 +128,7 @@
                     <!-- Speakers -->
                     <div class="mb-3">
                         <label for="user">Select Speaker</label>
-                        <select required class="form-control select2-multiple @error('userids') is-invalid @enderror" id="speakers" name="speakers[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ...">
+                        <select class="form-control select2-multiple @error('userids') is-invalid @enderror" id="speakers" name="speakers[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ...">
                             @foreach($speakers as $user)
                             <option value={{$user->id}}>{{$user->name}} ({{$user->email}}) </option>
                             @endforeach
