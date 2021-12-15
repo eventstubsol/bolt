@@ -247,7 +247,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     
     Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
     Route::post("/options/update/{id}", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");
-
+    //report leaderboard 
+    Route::get('/leaderboard/download/{id}','Eventee\LeaderboardController@FileExcel')->name('excel.download');
 
     //Prize
     Route::get('/Prize/{id}',"Eventee\PrizeController@index")->name('eventee.prize.list');
@@ -548,6 +549,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::post("/reports/audi-logs/export", "EventController@exportAuditoriumLogs")->name("reports.export.audiLogs");
         Route::get("/reports/leaderboard/", "EventController@leaderboardView")->name("reports.leaderboard");
         Route::get("/createGroup", "EventController@createGroup")->name("createGroup");
+        
 
         Route::post("/reports/workshop/{name}/export", "EventController@exportWorkshopLogs")->name("reports.export.workshopLogs");
         Route::get("/reports/workshop/{name}/", "EventController@workshopReports")->name("reports.workshop");

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Leaderboard;
 use App\LeadPoint;
 use App\Image;
+use App\Exports\LeaderboardExport;
+use Maatwebsite\Excel\Excel;
+
 class LeaderboardController extends Controller
 {
     //
@@ -78,5 +81,9 @@ class LeaderboardController extends Controller
             return response()->json(['code'=>500,"message"=>"Oops!Something Went Wrong"]);
         }
         
+    }
+    public function FileExcel($id,Excel $excel){
+        
+        return $excel->download(new LeaderboardExport($id),'leaderboardList.xlsx');
     }
 }

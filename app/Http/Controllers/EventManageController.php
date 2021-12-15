@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
 use App\UserLocation;
 use stdClass;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LeaderboardExport;
 
 class EventManageController extends Controller
 {
@@ -333,4 +335,5 @@ class EventManageController extends Controller
         return response()->json($finalArr);
     }
 
+    
 }
