@@ -51,7 +51,7 @@ class FaqController extends Controller
     public function delete(Request $req){
         $faq = FAQ::findOrFail($req->id);
         $faq->delete();
-        return response()->json(['message'=>"Done"]);
+        return response()->json(['code'=>200,'message'=>"Done"]);
     }
 
     public function update($id,$faq_id,Request $req){
