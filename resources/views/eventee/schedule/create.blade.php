@@ -27,7 +27,9 @@ Create Schedule Notification
                     @csrf
                     
                     <div class="form-group mb-3">
-                        <label for="title">Title</label>
+                        <label for="title">Title
+                            <span style="color:red">*</span>
+                        </label>
                         <input autofocus  maxlength="255"  value="{{ old('title') }}" type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" required/>
                         @error('title')
                         <span class="invalid-feedback" role="alert">
@@ -36,7 +38,9 @@ Create Schedule Notification
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="message">Message</label>
+                        <label for="message">Message
+                            <span style="color:red">*</span>
+                        </label>
                         <textarea id="message" required name="message" class="form-control @error('message') is-invalid @enderror" maxlength="255">{{ old('message') }}</textarea>
                         @error('message')
                         <span class="invalid-feedback" role="alert">
@@ -54,7 +58,9 @@ Create Schedule Notification
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="user-type">Select Roles</label>
+                        <label for="user-type">Select Roles
+                            <span style="color:red">*</span>
+                        </label>
                         <select id="user-type" name="roles" required class="form-control  @error('message') is-invalid @enderror" >
                             <option >All</option>
                             <option>Attendee</option>
@@ -69,7 +75,9 @@ Create Schedule Notification
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="title">Sending On</label>
+                        <label for="title">Sending On
+                            <span style="color:red">*</span>
+                        </label>
                         <input autofocus required  value="{{ old('sending_date') }}" type="date" id="sending_date" name="sending_date" class="form-control @error('sending_date') is-invalid @enderror" required/>
                         @error('sending_date')
                         <span class="invalid-feedback" role="alert">
@@ -78,7 +86,9 @@ Create Schedule Notification
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="title">Sending At</label>
+                        <label for="title">Sending At
+                            <span style="color:red">*</span>
+                        </label>
                         <input autofocus required  value="{{ old('sending_at') }}" type="time" id="sending_at" name="sending_at" class="form-control @error('sending_date') is-invalid @enderror" required/>
                         @error('sending_date')
                         <span class="invalid-feedback" role="alert">

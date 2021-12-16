@@ -23,7 +23,9 @@
                     @method("PUT")
 
                     <div class="form-group mb-3">
-                        <label for="name">Name</label>
+                        <label for="name">Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input autofocus required value="{{ $subtype->name }}" type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" />
                         @error('name')
                         <span class="invalid-feedback" role="alert">

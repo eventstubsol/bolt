@@ -18,7 +18,9 @@
         @csrf
         <div class="move form-group row input-group">
             <div class="form-group">
-                <label for="name">First Name</label>
+                <label for="name">First Name
+                    <span style="color:red">*</span>
+                </label>
                 <input id="name" type="text" class="field form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="first-name" placeholder="First Name" autofocus>
                 @error('name')
                 <span class="invalid-feedback" role="alert">
@@ -28,13 +30,17 @@
             </div>
             {{-- &nbsp; --}}
             <div class=" form-group">
-                <label for="last_name">Last Name</label>
+                <label for="last_name">Last Name
+                    <span style="color:red">*</span>
+                </label>
                 <input id="last_name" type="text" class="field form-control" name="last_name" value="{{ old('last_name') }}" required autocomplete="family-name" placeholder="Last Name">
             </div>
         </div>
         <div class="move2  form-group row input-group">
             <div class="form-group">
-                <label for="email" >Corporate E-Mail Address</label>
+                <label for="email" >Corporate E-Mail Address
+                    <span style="color:red">*</span>
+                </label>
                 <input id="email" type="email" class="field form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Address" >
 
                 @error('email')
@@ -45,25 +51,33 @@
             </div>
 
             <div class="form-group">
-                <label for="phone" >Phone Number</label>
+                <label for="phone" >Phone Number
+                    <span style="color:red">*</span>
+                </label>
                 <input id="phone" type="tel" class="field form-control " name="phone" value="{{ old('phone') }}" required autocomplete="tel" placeholder="Phone Number">
             </div>
             <div class="form-group">
-                <label for="password" >Password</label>
+                <label for="password" >Password
+                    <span style="color:red">*</span>
+                </label>
                 <input id="password" type="password" class="field form-control " name="password" value="{{ old('password') }}" placeholder="Password">
             </div>
         </div>
 
         <div class="move3 form-group row input-group">
             <div class="form-group">
-                <label for="job_title" >Job Title</label>
+                <label for="job_title" >Job Title
+                    <span style="color:red">*</span>
+                </label>
                 <input id="job_title" type="text" class="field form-control " style="width:100%" name="job_title" value="{{ old('job_title') }}" placeholder="Job Title">
             </div>
         </div>
 
         <div class="move4 form-group row input-group">
             <div class="form-group">
-                <label for="country" >Country</label>
+                <label for="country" >Country
+                    <span style="color:red">*</span>
+                </label>
                 <select id="country" class="form-control" name="country">
                     <option value="Afganistan">Afghanistan</option>
                     <option value="Albania">Albania</option>

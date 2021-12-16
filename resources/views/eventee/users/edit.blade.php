@@ -22,7 +22,9 @@
                     @csrf
                     
                     <div class="form-group mb-3">
-                        <label for="name">Name</label>
+                        <label for="name">Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input autofocus required value="{{ $user->name }}" type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" />
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -31,7 +33,9 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="name">Last Name</label>
+                        <label for="name">Last Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input autofocus required value="{{ $user->last_name}}" type="text" id="last_name" name="last_name"
                             class="form-control @error('last_name') is-invalid @enderror" />
                         @error('last_name')
@@ -41,7 +45,9 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="email">Email</label>
+                        <label for="email">Email
+                            <span style="color:red">*</span>
+                        </label>
                         <input id="email" required value="{{ $user->email }}" type="email" name="email" class="form-control @error('email') is-invalid @enderror" />
                         @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -59,7 +65,9 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="type">Type of User</label>
+                        <label for="type">Type of User
+                            <span style="color:red">*</span>
+                        </label>
                         <select class="form-control" id="user-type" name="type">
                             @foreach(USER_TYPES as $type)
                             <option @if($user->type === $type) selected @endif value="{{ $type }}">{{ ucfirst($type) }}</option>
