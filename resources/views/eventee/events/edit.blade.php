@@ -40,11 +40,14 @@
                 <form action="{{ route('event.Update',$id) }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="name">Event Name</label>
+                        <label for="name">Event Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input type="text" id="event_name" name="name" value="{{ $event->name }}" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="name">Event Link</label><br>
+                        <label for="name">Event Link
+                            <span style="color:red">*</span></label><br>
                         <input type="text" id="event_slug" name="event_slug" class="slugInp" value="{{ $event->slug }}" required>
                         @php
                             $baseurl = URL::to('/');
@@ -65,11 +68,15 @@
                     @if($event->end_date >= Carbon\Carbon::today())
                         <div class="row">
                             <div class="col">
-                                <label for="name">Start Date</label>
+                                <label for="name">Start Date
+                                    <span style="color:red">*</span>
+                                </label>
                                 <input type="date" name="start_date" value="{{ $event->start_date }}"  class="form-control" required>
                             </div>
                             <div class="col">
-                                <label for="name">End Date</label>
+                                <label for="name">End Date
+                                    <span style="color:red">*</span>
+                                </label>
                                 <input type="date" name="end_date" value="{{ $event->end_date }}" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
                             </div>
                             

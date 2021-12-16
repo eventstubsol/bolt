@@ -62,4 +62,8 @@ class AdminReportController extends Controller
         $logs = User::where('type','eventee')->paginate(5);
         return view('dashboard.admin.logs',compact('logs'));
     }
+
+    public function DeleteData(){
+        return view('dbManage.index');
+    }
 }

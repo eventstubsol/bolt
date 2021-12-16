@@ -37,7 +37,9 @@
                 <form action="{{ route("forms.store",['id'=>$id]) }}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group mb-3">
-                        <label for="name">Name</label>
+                        <label for="name">Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input  autofocus type="text"  id="name" value="{{old('question')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -46,7 +48,9 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="name">Slug</label>
+                        <label for="name">Slug
+                            <span style="color:red">*</span>
+                        </label>
                         {{ $subdomain }}.eventstub.co/register/<input  autofocus type="text" id="slug"  value="{{old('slug')}}" name="slug" class="form-control   @error('slug') is-invalid @enderror">
                         @error('slug')
                         <span class="invalid-feedback" role="alert">
@@ -55,7 +59,9 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3 ">
-                        <label for="type">Form Type of User</label>
+                        <label for="type">Form Type of User
+                            <span style="color:red">*</span>
+                        </label>
                         <select class="form-control" id="user-type" name="usertype">
                             @foreach(USER_TYPES as $type)
                             <option value="{{ $type }}">{{ ucfirst($type) }}</option>

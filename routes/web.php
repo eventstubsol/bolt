@@ -248,7 +248,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     
     Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
     Route::post("/options/update/{id}", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");
-
+    //report leaderboard 
+    Route::get('/leaderboard/download/{id}','Eventee\LeaderboardController@FileExcel')->name('excel.download');
 
     //Prize
     Route::get('/Prize/{id}',"Eventee\PrizeController@index")->name('eventee.prize.list');
@@ -451,6 +452,10 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
             "recaptcha"=>"RecatchaController",
             //            "provisional" => "ProvisionalController",
         ]);
+        // DBManage
+        Route::get('delete/Notifications','DBManageController@NotificationDelete')->name('delete.notification.all');
+        Route::get('delete/Schedule/Notifications','DBManageController@ScheduleNotificationDelete')->name('delete.schedulenotification.all');
+        Route::get('delete/Mails/Notifications','DBManageController@MailsnDelete')->name('delete.mails.all');
         //Menu And Api
         Route::get('delete/submenu','MenuController@subMenu')->name('delete.submenu');
         Route::get('delete/savePosition','MenuController@SavePosition')->name('delete.savePosition');
@@ -468,6 +473,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::get('Recent/ActiveAdmin',"AdminReportController@RecentActiveUser")->name('recent.user');
         Route::get('Event/Ending',"AdminReportController@EventEnding")->name('event.ending');
         Route::get('Event/AdminLogs',"AdminReportController@EventLogs")->name('event.logs');
+        Route::get('Event/Delete/Notification',"AdminReportController@DeleteData")->name('notification.logs.delete');
         //Package
         Route::get('/package','PackageController@index')->name('package.index');
         Route::get('/package/create','PackageController@create')->name('package.create');
@@ -495,7 +501,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::post('admin/Annoucement/Update','AdminAnnounce@Update')->name('admin.announce.update');
         Route::get('admin/Annoucement/Delete','AdminAnnounce@Delete')->name('admin.announce.delete');
         // Route::get('details/create','menuDetailsController@index')->('details.create');
-
+        //Event List
+        Route::get('event/list','AdminEventController@eventList')->name('admin.event.list');
         /**
          * CHAT USER START
          */
@@ -549,6 +556,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::post("/reports/audi-logs/export", "EventController@exportAuditoriumLogs")->name("reports.export.audiLogs");
         Route::get("/reports/leaderboard/", "EventController@leaderboardView")->name("reports.leaderboard");
         Route::get("/createGroup", "EventController@createGroup")->name("createGroup");
+        
 
         Route::post("/reports/workshop/{name}/export", "EventController@exportWorkshopLogs")->name("reports.export.workshopLogs");
         Route::get("/reports/workshop/{name}/", "EventController@workshopReports")->name("reports.workshop");

@@ -30,7 +30,9 @@ Create Menu
                     <!-- Name -->
 
                         <div class="form-group">
-                            <label for="recipient-name" class="col-form-label">Name:</label>
+                            <label for="recipient-name" class="col-form-label">Name:
+                                <span style="color:red">*</span>
+                            </label>
                             <input type="text" required class="form-control" id="recipient-name" name="name">
                         </div>
                     <!-- End Name  -->
@@ -38,7 +40,9 @@ Create Menu
                     <!-- Type of Link -->
                     
                         <div class="form-group mb-3 col-md-4">
-                            <label for="type">type</label>
+                            <label for="type">type
+                                <span style="color:red">*</span>
+                            </label>
                             <select required class="form-control type" name="type" required>
                                 @foreach(MENU_LINK_TYPES as $type)
                                 <option value="{{$type}}">{{$type}}</option>
@@ -50,7 +54,9 @@ Create Menu
 
                     <!-- To Link Start  -->
                     <div style="display: none;" class="modals form-group mb-3 col-md-4">
-                        <label for="to">to(modal)</label>
+                        <label for="to">to(modal)
+                            <span style="color:red">*</span>
+                        </label>
                         <select     class="form-control" name="modals">
                             @foreach($modals as $modal)
                                 <option value="{{$modal->id}}">{{$modal->name}}</option>
@@ -59,7 +65,9 @@ Create Menu
                         </select>
                     </div>
                         <div class="pages-${n} pages form-group mb-3 col-md-4">
-                            <label for="to">to(Page)</label>
+                            <label for="to">to(Page)
+                                <span style="color:red">*</span>
+                            </label>
                             <select value=" " class="form-control" name="pages">
                                 <option selected value=" ">Select Page to Redirect to</option>
                                 @foreach($pages as $page_to)
@@ -70,7 +78,9 @@ Create Menu
                         </div>
 
                         <div style="display: none;" class=" booth form-group mb-3 col-md-4">
-                            <label for="to">to(Booth)</label>
+                            <label for="to">to(Booth)
+                                <span style="color:red">*</span>
+                            </label>
                             <select class="form-control" name="booths">
                                 @foreach($booths as $booth)
                                 <option value="{{$booth->id}}">{{$booth->name}}</option>
@@ -80,7 +90,9 @@ Create Menu
                         </div>
 
                         <div style="display: none;" class="room form-group mb-3 col-md-4">
-                            <label for="to">to(Session Room)</label>
+                            <label for="to">to(Session Room)
+                                <span style="color:red">*</span>
+                            </label>
                             <select value=" " class="form-control" name="rooms">
                                 <option selected value=" ">Select Session Room</option>
                                 @foreach($session_rooms as $room)
@@ -90,33 +102,44 @@ Create Menu
                         </div>
 
                         <div style="display: none;" class=" zoom form-group mb-3 col-md-4">
-                            <label for="zoom">Zoom/External Link</label>
+                            <label for="zoom">Zoom/External Link
+                                <span style="color:red">*</span>
+                            </label>
                             <input type="text" name="zoom" class="form-control">
                         </div>
 
                         <div style="display: none;" class="vimeo form-group mb-3 col-md-4">
-                            <label for="vimeo">Vimeo Url</label>
+                            <label for="vimeo">Vimeo Url
+                                <span style="color:red">*</span>
+                            </label>
                             <input type="text" name="vimeo" class="form-control">
                         </div>
 
                         <div style="display: none;" class="  pdf  mb-3 col-md-4">
                             <div class="image-uploader">
-                                <label for="pdf">PDF </label>
+                                <label for="pdf">PDF
+                                    <span style="color:red">*</span> </label>
                                 <input type="hidden" name="pdf" class="upload_input">
                                 <input type="file" data-name="pdfs" data-plugins="dropify" data-type="application/pdf" />
                             </div>
                         </div>
                         <div style="display: none;" class=" chat_user form-group mb-3 col-md-4">
-                            <label for="chat_user">Chat User ID</label>
+                            <label for="chat_user">Chat User ID
+                                <span style="color:red">*</span>
+                            </label>
                             <input type="text" name="chatuser" class="form-control">
                         </div>
                         <div style="display: none;" class=" chat_group form-group mb-3 col-md-4">
-                            <label for="chat_group">Chat Group ID</label>
+                            <label for="chat_group">Chat Group ID
+                                <span style="color:red">*</span>
+                            </label>
                             <input type="text" name="chatgroup" class="form-control">
                         </div>
 
                         <div style="display: none;" class=" custom_page form-group mb-3 col-md-4">
-                            <label for="custom_page">Custom Page route</label>
+                            <label for="custom_page">Custom Page route
+                                <span style="color:red">*</span>
+                            </label>
                             <input type="text" name="custom_page" class="form-control">
                         </div>
 
