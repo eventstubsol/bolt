@@ -29,7 +29,9 @@
                         {{ csrf_field() }}
                         @method("PUT")
                         <div class="form-group mb-3">
-                            <label for="name">Modal Name</label>
+                            <label for="name">Modal Name
+                                <span style="color:red">*</span>
+                            </label>
                             <input required value="{{$modal->name}}" autofocus type="text" name="name" class="form-control   @error('name') is-invalid @enderror">
                             @error('name')
                             <span class="invalid-feedback" role="alert">
@@ -40,7 +42,9 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="header-title mb-3">Modal Items</h4>
+                                <h4 class="header-title mb-3">Modal Items
+                                    <span style="color:red">*</span>
+                                </h4>
                                 <div class="link-section">
                                     @foreach ($modal->items as $n => $item)
                                     <div class="row  border border-primary p-2 mt-2">

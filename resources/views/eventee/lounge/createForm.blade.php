@@ -30,7 +30,9 @@
                     {{ csrf_field() }}
                     <!-- Session Name -->
                     <div class="form-group mb-3">
-                        <label for="name">Title</label>
+                        <label for="name">Title
+                            <span style="color:red">*</span>
+                        </label>
                         <input required autofocus type="text"  id="name" value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -44,7 +46,9 @@
 
                     <div class="form-group mb-3">
                         
-                        <label>Number of Seats</label>
+                        <label>Number of Seats
+                            <span style="color:red">*</span>
+                        </label>
                         <input required type="number" name="seats" class="form-control ">
                     </div>
 

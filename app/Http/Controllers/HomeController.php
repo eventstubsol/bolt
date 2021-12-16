@@ -106,8 +106,8 @@ class HomeController extends Controller
     public function faqs($subdomain){
         // dd($subdomain);
         $event_id = Event::where("slug",$subdomain)->first()->id;
-        $FAQs = \App\FAQ::where("event_id",$event_id);
-        return view("event.faq")->with(compact("FAQs"));
+        $FAQs = \App\FAQ::where("event_id",$event_id)->get();
+        return view("event.faq")->with(compact("FAQs","event_id"));
     }
 
     public function privacyPolicy($subdomain=''){

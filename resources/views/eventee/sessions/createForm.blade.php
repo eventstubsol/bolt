@@ -30,7 +30,9 @@
                     {{ csrf_field() }}
                     <!-- Session Name -->
                     <div class="form-group mb-3">
-                        <label for="name">Title</label>
+                        <label for="name">Title
+                            <span style="color:red">*</span>
+                        </label>
                         <input  autofocus type="text"  id="name" required value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -41,7 +43,9 @@
 
                     <!-- Session Description -->
                     <div class="form-group mb-3">
-                        <label for="summernote-basic">Description</label>
+                        <label for="summernote-basic">Description
+                            <span style="color:red">*</span>
+                        </label>
                         <textarea id="summernote-basic" required name="description" class="form-control @error('description') is-invalid @enderror" >{!! old("description") !!}</textarea>
                         @error('description')
                         <span class="invalid-feedback" role="alert">
@@ -52,7 +56,9 @@
 
                     <!-- Session Type -->
                     <div class="form-group mb-3">
-                        <label for="example-select-1">Type</label>
+                        <label for="example-select-1">Type
+                            <span style="color:red">*</span>
+                        </label>
                         <select name="type" class="form-control @error('type') is-invalid @enderror" id="session_type" required>
                             @foreach(EVENT_SESSION_TYPES as $type)
                               <option value={{$type}} onselect="{{$selected_type = $type}}" >{{ str_replace('_'," ",$type)}}</option>
@@ -69,7 +75,9 @@
 
                     <!-- Session Rooms -->
                     <div class="form-group mb-3">
-                        <label for="example-select">Room</label>
+                        <label for="example-select">Room
+                            <span style="color:red">*</span>
+                        </label>
                         <select name="room_id"  class="form-control @error('room_id') is-invalid @enderror" id="example-select" required>
                             <option value="">Select Room</option>
                             @foreach($rooms as $room)
@@ -87,14 +95,18 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label">Start Time</label>
-                            <input  name="start_time" type="datetime-local" class="form-control"/>
+                                <label class="form-label">Start Time
+                                    <span style="color:red">*</span>
+                                </label>
+                            <input  name="start_time" type="datetime-local" class="form-control" required/>
                         </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-label">End Time</label>
-                                <input  name="end_time" type="datetime-local" class="form-control"/>
+                                <label class="form-label">End Time
+                                    <span style="color:red">*</span>
+                                </label>
+                                <input  name="end_time" type="datetime-local" class="form-control" required/>
                             </div>
                         </div>
                     </div>

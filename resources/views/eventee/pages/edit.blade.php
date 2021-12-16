@@ -85,7 +85,9 @@ Edit Page
                                 @foreach($page->links as $ids => $link) 
                                 <div class="row  border border-primary p-2 mt-2">
                                     <div class="form-group mb-3 col-md-4">
-                                        <label for="linktitles">Name</label>
+                                        <label for="linktitles">Name
+                                            <span style="color:red">*</span>
+                                        </label>
                                         <input type="text" value="{{$link->name}}" required  name="linknames[]" class="name-{{$ids}} form-control">
                                     </div>
 
@@ -291,7 +293,9 @@ Edit Page
 
 
                     <div class="form-group mb-3">
-                        <label for="name">Name</label>
+                        <label for="name">Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input required autofocus type="text" value="{{$page->name}}" value="{{old('question')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -300,7 +304,9 @@ Edit Page
                         @enderror
                     </div>
                     <div class="image-uploader" id="imgBg">
-                        <label class="mb-3" for="images">Background Image</label>
+                        <label class="mb-3" for="images">Background Image
+                            <span style="color:red">*</span>
+                        </label>
                         <input type="hidden" name="url" class="upload_input" value="{{isset($page->images[0])?$page->images[0]->url:''}}">
                         <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{isset($page->images[0])?assetUrl($page->images[0]->url):''}}" />
                     </div>

@@ -24,7 +24,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="form-group">
-                    <label for="User">Select Attendee</label>
+                    <label for="User">Select Attendee<span style="color:red">*</span></label>
                     <select id="user" class="form-control  select2" data-toggle="select2">
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }} @if($user->last_name != null){{ $user->last_name }}@endif</option>
@@ -32,11 +32,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="Start_date">Start Date</label>
+                    <label for="Start_date">Start Date<span style="color:red">*</span></label>
                     <input type="date" id="start_date" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="End_date">End Date</label>
+                    <label for="End_date">End Date
+                        <span style="color:red">*</span></label>
                     <input type="date" id="end_date" class="form-control">
                 </div>
                

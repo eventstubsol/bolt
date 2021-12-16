@@ -359,7 +359,11 @@ class BoothController extends Controller
     }
     if ($requesturls) {
       foreach ($requesturls as $id => $requrl) {
-        if (!in_array($requrl, $oldResourceurls)) {
+        if(empty(trim($request->resourcetitles[$id]))){
+          flash("Title Field Must Be Field")->error();
+          return redirect()->back();
+        }
+        elseif (!in_array($requrl, $oldResourceurls)) {
           if (!empty(trim($requrl)) && !empty(trim($request->resourcetitles[$id]))) {
             Resource::create([
               "booth_id" => $booth->id,
@@ -370,6 +374,7 @@ class BoothController extends Controller
         } elseif (!in_array($requrl, $deletedResources)  && !empty(trim($request->resourcetitles[$id]))) {
           $resource = Resource::where("url", $requrl)->update(["title" => $request->resourcetitles[$id]]);
         }
+      
       }
     }
     //booth description update
