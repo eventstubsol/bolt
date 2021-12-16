@@ -103,8 +103,8 @@
             
             width: 100%;
             height: 100vh;
-            z-index: -1;
-            object-fit: fill;
+            z-index: 1;
+            object-fit: cover;
             
             object-position: 55% 0;
         }
