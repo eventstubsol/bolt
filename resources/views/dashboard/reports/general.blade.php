@@ -301,7 +301,7 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart(obj,total) {
-          console.log(obj.offline);
+        //   console.log(obj.offline);
         if(total == 0){
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
@@ -311,9 +311,9 @@
         }
         else{
             var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Online Users: '+obj.online+'',obj.online],
-            ['Offline Users: ' +obj.offline+'',obj.offline]
+                ['Task', 'Hours per Day'],
+                ['Online Users: '+obj.online+'',obj.online],
+                ['Offline Users: ' +obj.offline+'',obj.offline]
             
             ]);
         }
@@ -442,7 +442,7 @@
            
             // console.log("{{ $id }}");
             //User Chart
-            const lobbyCall = () => $.ajax({
+            const onlineCall = () => $.ajax({
                 url:"{{ route('eventee.chartJs') }}",
                 method:"POST",
                 data:{id:"{{ $id }}"},
@@ -549,7 +549,7 @@
                         });
                     }
                    
-                    setTimeout(function(){ lobbyCall(); }, 3000);
+                    setTimeout(function(){ onlineCall(); }, 3000);
                     
                 }
             });
