@@ -1,5 +1,6 @@
 <?php
 
+use App\CometChat;
 use App\Event;
 use App\User;
 use Carbon\Carbon;
