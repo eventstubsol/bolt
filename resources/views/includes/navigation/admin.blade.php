@@ -461,6 +461,12 @@
             </a>
         </li>
         <li>
+            <a href="{{ route("admin.event.list") }}">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                <span>Events </span>
+            </a>
+        </li>
+        <li>
             <a href="{{ route("event.ending") }}">
                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                 <span> Events Expiring Soon </span>
@@ -470,6 +476,12 @@
             <a href="{{ route("event.logs") }}">
                 <i class="fa fa-cogs" aria-hidden="true"></i>
                 <span> Event Admin Logs </span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route("notification.logs.delete") }}">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                <span> Delete Database Logs </span>
             </a>
         </li>
     </ul>

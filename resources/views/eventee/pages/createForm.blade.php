@@ -26,7 +26,9 @@
                 <form action="{{ route("eventee.pages.store",['id'=>$id]) }}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group mb-3">
-                        <label for="name">Name</label>
+                        <label for="name">Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input  autofocus type="text"  id="name" value="{{old('question')}}" name="name" required class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -35,7 +37,9 @@
                         @enderror
                     </div>
                     <div class="image-uploader" id="imgBg" >
-                      <label class="mb-3" for="images">Background Image</label>
+                      <label class="mb-3" for="images">Background Image
+                        <span style="color:red">*</span>
+                      </label>
                       <input type="hidden" name="url" class="upload_input" >
                       <input type="file" data-name="url" data-plugins="dropify" data-type="image"  />
                     </div>

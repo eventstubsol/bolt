@@ -79,7 +79,9 @@
                    </div>
 
                     <div class="form-group mb-3">
-                        <label for="name">Name</label>
+                        <label for="name">Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input required autofocus type="text"  id="name" value="{{$sessionroom->name}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -88,6 +90,9 @@
                         @enderror
                     </div>
                         <div class="image-uploader mb-3">
+                            <label class="mb-3" for="images">Background Image
+                                <span style="color:red">*</span>
+                            </label>
                             <input type="hidden" class="upload_input" name="background"  value="{{$sessionroom->background->url??''}}">
                             <input accept="images/*"
                                 type="file"

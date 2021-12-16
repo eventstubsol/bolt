@@ -22,6 +22,9 @@
     @yield('scripts_before')
     
     <style>
+        body{
+            overflow: hidden;
+        }
         .bg-image{
             position: fixed;
             width: 100vw;
@@ -35,12 +38,7 @@
             line-height: 2em;
         }
         .auth-fluid{
-            @if(isset($id))
-                background: url("{{assetUrl(getFieldId('login_background',$id))}}") ;
-            @else
-                background: url("{{assetUrl(getField('login_background'))}}"); 
-
-            @endif
+           
             background-size: cover;
             background-repeat: no-repeat;
         }
@@ -86,10 +84,29 @@
             visibility: hidden;
         }
         .auth-fluid{
-            flex-direction: row-reverse;
+            /* flex-direction: row-reverse; */
+            display: flex;
         }
         .auth-fluid .auth-fluid-form-box {
-            max-width: 50vw;
+            max-width: 50%;
+            float: right;
+            position: relative;
+        }
+        .auth-fluid .auth-fluid-image {
+            max-width: 55%;
+            float:right;
+            position: relative;
+            
+        }
+        .auth-fluid .auth-fluid-image img{
+            /* position: fixed; */
+            
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+            object-fit: cover;
+            
+            object-position: 55% 0;
         }
         @media (max-width: 991.98px){
             
@@ -108,6 +125,15 @@
 
     <div class="auth-fluid">
         <!--Auth fluid left content -->
+        <div class="auth-fluid-image">
+            @if(isset($id))
+                <img src="{{assetUrl(getFieldId('login_background',$id))}}" alt="No Image">
+            @else
+                <img src="{{assetUrl(getField('login_background'))}}"  alt="No Image">
+                
+
+            @endif
+        </div>
         <div class="auth-fluid-form-box">
             <div class="align-items-center d-flex h-100">
                 <div class="card-body">

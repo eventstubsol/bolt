@@ -30,7 +30,9 @@
                     {{ csrf_field() }}
 
                     <div class="form-group mb-3">
-                        <label for="boothname">Booth Name</label>
+                        <label for="boothname">Booth Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input autofocus required type="text" value="{{old('name')}}" id="boothname" name="name" class="form-control  @error('name') is-invalid @enderror" >
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -40,7 +42,9 @@
                     </div>
                     <!-- Booth Background Image Uploader -->
                     <div class="image-uploader" id="imgBg" >
-                        <label class="mb-3" for="images">Booth Image</label>
+                        <label class="mb-3" for="images">Booth Image
+                            <span style="color:red">*</span>
+                        </label>
                         <input type="hidden" name="boothurl" class="upload_input"  >
                         <input type="file" data-name="boothimages" data-plugins="dropify" data-type="image" />
                      </div>
@@ -51,7 +55,9 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="calendly_link">Calendly Link</label>
+                        <label for="calendly_link">Calendly Link
+                            <span style="color:red">*</span>
+                        </label>
                         <input type="url" name="calendly_link" class="form-control @error('calendly_link') is-invalid @enderror" id="calendly_link" />
                         @error('room_id')
                         <span class="invalid-feedback" role="alert">
@@ -64,7 +70,9 @@
                     
 
                     <div class="mb-3">
-                          <label for="user">Select Exhibitor</label>
+                          <label for="user">Select Exhibitor
+                            <span style="color:red">*</span>
+                          </label>
                           <select required class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user" name="userids[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
                               @foreach($users as $user) 
                                 <option value={{$user->id}}>{{$user->name}} ({{$user->email}}) </option>

@@ -29,7 +29,7 @@
             <div class="card-body">
                 <form action="{{ route('eventee.mail.send',$id) }}" method="POST">
                     <div class="form-group">
-                        <label for="sentTo">Send To</label>
+                        <label for="sentTo">Send To <span style="color:red">*</span></label>
                         <select name="sent_to_type" class="form-control" onchange="setDropdown(this)" >
                             <option value="0">All</option>
                             <option value="2">All Exibitor</option>
@@ -39,7 +39,7 @@
                         </select>
                     </div>
                     <div class="form-group" id="userTypes" style="display: none;">
-                        <label for="sentTo">Specific Types</label>
+                        <label for="sentTo">Specific Types <span style="color:red">*</span></label>
                         <select name="sent_to_type_specific" class="form-control" onchange="setSecondDropdown(this)">
                             <option value="-1">None</option>
                             <option value="0">Exibitor</option>
@@ -49,7 +49,7 @@
                         </select>
                     </div>
                     <div class="form-group " id="attendee" style="display: none;">
-                        <label for="sentTo">Attendee</label>
+                        <label for="sentTo">Attendee<span style="color:red">*</span></label>
                         <select name="sent_to_type_attendee[]" class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
                             <option value="0" disabled>None</option>
                             @foreach($usersAttendee as $user)
@@ -58,7 +58,7 @@
                         </select>
                     </div>
                     <div class="form-group" id="exibitor" style="display: none;">
-                        <label for="sentTo">Exibitor</label>
+                        <label for="sentTo">Exibitor<span style="color:red">*</span></label>
                         <select name="sent_to_type_exibitor[]" class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user2"  data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
                             <option value="0" disabled>None</option>
                             @foreach($usersExibitor as $user)
@@ -67,7 +67,7 @@
                         </select>
                     </div>
                     <div class="form-group" id="delegate" style="display: none;">
-                        <label for="sentTo">Delegate</label>
+                        <label for="sentTo">Delegate<span style="color:red">*</span></label>
                         <select name="sent_to_type_delegate[]" class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user3"  data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
                             <option value="0" disabled>None</option>
                             @foreach($usersDelegate as $user)
@@ -76,7 +76,7 @@
                         </select>
                     </div>
                     <div class="form-group" id="subtype" style="display: none;">
-                        <label for="sentTo">Sub Type</label>
+                        <label for="sentTo">Sub Type<span style="color:red">*</span></label>
                         <select name="sent_to_type_subtype[]" class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user4"  data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
                             <option value="0" disabled>None</option>
                             @foreach($subtypes as $subtype)
@@ -86,11 +86,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="subject">Subject</label>
+                        <label for="subject">Subject<span style="color:red">*</span></label>
                         <input type="text" class="form-control" name="subject" required>
                     </div>
                     <div class="form-group">
-                        <label for="subject">Message</label>
+                        <label for="subject">Message<span style="color:red">*</span></label>
                         <textarea name="message" id="summernote-basic" class="form-control" cols="500" rows="1000" required></textarea>
                     </div>
                     <button type="submit" style="float: right" class="btn btn-toolbar">Send</button>

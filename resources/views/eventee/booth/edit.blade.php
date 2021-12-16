@@ -32,7 +32,9 @@
               {{ csrf_field() }}
                     @method("PUT")
                     <div class="form-group mb-3">
-                        <label for="boothname">Booth Name</label>
+                        <label for="boothname">Booth Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input autofocus type="text"  id="boothname" name="name" value="{{ $booth->name }}" class="form-control  @error('name') is-invalid @enderror" required>
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -44,7 +46,9 @@
 
 
                       <div class="form-group mb-3">
-                        <label for="calendly_link">Calendly Link</label>
+                        <label for="calendly_link">Calendly Link
+                            <span style="color:red">*</span>
+                        </label>
                         <input type="url" name="calendly_link" class="form-control @error('calendly_link') is-invalid @enderror" value="{{ $booth->calendly_link }}" id="calendly_link" />
                         @error('room_id')
                         <span class="invalid-feedback" role="alert">
@@ -73,7 +77,9 @@
                         @enderror
                        </div>
                     <div class="image-uploader">vidbg_url
-                        <label class="mb-3" for="images">Booth Image</label>
+                        <label class="mb-3" for="images">Booth Image
+                            <span style="color:red">*</span>
+                        </label>
                         <input type="hidden" name="boothurl" class="upload_input" value="{{isset($booth->boothurl)?$booth->boothurl:""}}">
                         <input type="file" data-name="boothimages" data-plugins="dropify" data-type="image" data-default-file={{isset($booth->boothurl)?assetUrl($booth->boothurl):""}} />
                     </div>

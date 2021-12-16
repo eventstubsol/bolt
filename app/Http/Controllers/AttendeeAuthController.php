@@ -187,16 +187,17 @@ class AttendeeAuthController extends Controller
             // return redirect(route('home'));
         }
         else{
-            return "Invalid Credentials".$user->id." ";
-
-            return view("auth.exhibiter")->with([
-                "email" => $req->email,
-                "login" => $this->loginT,
-                "notFound" => TRUE,
-                "captchaError" => FALSE,
-                "id"=>$event->id,
-                "subdomain"=>$event->slug
-            ]);
+            // return "Invalid Credentials".$user->id." ";
+            flash("Invalid Credentials : ".$user->email)->error();
+            return redirect()->back();
+            // return view("auth.exhibiter")->with([
+            //     "email" => $req->email,
+            //     "login" => $this->loginT,
+            //     "notFound" => TRUE,
+            //     "captchaError" => FALSE,
+            //     "id"=>$event->id,
+            //     "subdomain"=>$event->slug
+            // ]);
             
         }
     }

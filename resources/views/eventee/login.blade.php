@@ -38,7 +38,9 @@
 <form action="{{ route('Eventee.login.confirm') }}" method="post">
     @csrf
     <div class="input-group">
-        <label for="emailaddress">Email address</label>
+        <label for="emailaddress">Email address
+            <span style="color:red">*</span>
+        </label>
         <br>
         <div class="input-group input-group-merge mb-3">
             <input value="{{ old('email') }}" class="field form-control @error('email') is-invalid @enderror" type="email" id="emailaddress" name="email" placeholder="Enter your email" />
@@ -49,7 +51,9 @@
     </div>
 
     <div class="input-group">
-        <label for="password">Password</label>
+        <label for="password">Password
+            <span style="color:red">*</span>
+        </label>
         <div class="input-group input-group-merge">
             <input type="password" name="password" id="password" class="field form-control @error('password') is-invalid @enderror" placeholder="Enter your password" />
             <div class="input-group-append" data-password="false">

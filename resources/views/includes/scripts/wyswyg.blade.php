@@ -13,9 +13,9 @@ $('#summernote-basic').summernote({
             var editor = $(e.editor);
             editor.find('.custom-control-description').addClass('custom-control-label').parent().removeAttr('for');
         }
-        onImageUpload: function(files, editor, welEditable) {
-            sendFile(files[0], editor, welEditable);
-        }
+        // onImageUpload: function(files, editor, welEditable) {
+        //     sendFile(files[0], editor, welEditable);
+        // }
     },
     toolbar: [['style', ['style']],['font', ['bold', 'underline', 'clear']],['fontname', ['fontname']],['color', ['color']],['para', ['ul', 'ol', 'paragraph']],['table', ['table']],['insert', ['link', 'picture', 'video']],['view', ['fullscreen', 'codeview', 'help']],],
 });

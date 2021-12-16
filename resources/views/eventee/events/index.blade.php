@@ -48,7 +48,7 @@
                 <center>  Event Deleted Successfully </center>
             </div>
             <div class="card-body">
-                <table class="table table-hover table-striped">
+                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -108,12 +108,15 @@
         <form action="{{ route('event.Save') }}" method="POST">
             <div class="modal-body " id="eventData">
                 <div class="form-group">
-                    <label for="name">Event Name</label>
+                    <label for="name">Event Name
+                        <span style="color:red">*</span>
+                    </label>
                     <input type="text" id="event_name" name="name" class="form-control" required>
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="name">Event Link</label><br>
+                    <label for="name">Event Link
+                        <span style="color:red">*</span></label><br>
                     <input type="text" id="event_slug" name="event_slug" class="slugInp" required>
                     @php
                         $baseurl = URL::to('/');
@@ -133,11 +136,15 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label for="name">Start Date</label>
+                        <label for="name">Start Date
+                            <span style="color:red">*</span>
+                        </label>
                         <input type="date" name="start_date" class="form-control" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" required>
                     </div>
                     <div class="col">
-                        <label for="name">End Date</label>
+                        <label for="name">End Date
+                            <span style="color:red">*</span>
+                        </label>
                         <input type="date" name="end_date" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
                     </div>
                 </div><br>
@@ -156,6 +163,7 @@
 @endsection
 
 @section('scripts')
+@include("includes.scripts.datatables")
   <script>
       function CreateEvent(){
           $('#createModal').modal('toggle');

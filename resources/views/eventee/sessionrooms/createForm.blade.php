@@ -25,7 +25,9 @@
                 <form action="{{ route("eventee.sessionrooms.store",['id'=>$id]) }}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group mb-3">
-                        <label for="name">Name</label>
+                        <label for="name">Name
+                            <span style="color:red">*</span>
+                        </label>
                         <input required autofocus type="text"  id="name" value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -57,7 +59,9 @@
                         </select>
                     </div>  --}}
                     <div class="image-uploader mb-3 " id="imgBg">
-                        <label class="mb-3" for="images">Background Image</label>
+                        <label class="mb-3" for="images">Background Image
+                            <span style="color:red">*</span>
+                        </label>
                         <input type="hidden" class="upload_input" name="background">
                         <input accept="images/*"
                             type="file"
