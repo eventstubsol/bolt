@@ -360,7 +360,7 @@ class BoothController extends Controller
     if ($requesturls) {
       foreach ($requesturls as $id => $requrl) {
         if(empty(trim($request->resourcetitles[$id]))){
-          flash("Please Fill The Title Of Resource")->error();
+          flash("Please Fill The Title Of Resources")->error();
           return redirect()->back();
         }
         elseif (!in_array($requrl, $oldResourceurls)) {
