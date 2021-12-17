@@ -335,5 +335,19 @@ class EventManageController extends Controller
         return response()->json($finalArr);
     }
 
+    public function EventAvailable(Request $req){
+        $event_name = $req->event_name;
+        if(strlen($event_name)< 5){
+            return response()->json(['code'=>203,'message'=>"Event Name Must Be Greater Than 3 Characters"]);
+        }
+        $event = Event::where('name',$event_name)->count();
+        if($event > 0){
+            return response()->json(['code'=>202,'message'=>"Event Already Exists"]);
+        }
+        else{
+            return response()->json(['code'=>200,'message'=>"Event Name Is Available"]);
+        }
+    }
+
     
 }
