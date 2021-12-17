@@ -2,6 +2,7 @@
     $notifications = App\PushNotification::where('event_id',$event_id)->get();
     $finalnotes = [];
     $noteCount = 0;
+    $event = App\Event::findOrFail($event_id);
     foreach ($notifications as $note) {
         $seens = App\SeenNotification::where('notification_id',$note->id)->where('user_id',Auth::id())->count();
         if($seens < 1){
@@ -84,6 +85,14 @@
     .notification-list .notify-item .notify-details{
         color: black !important;
     }
+    .menu-col .menu a:hover{
+        background: {{ $event->secondary_color }};
+        
+    }
+    .menu-col .menu{
+        background:{{ $event->primary_color }};
+    }
+    
 </style> 
 <script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
 <script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>

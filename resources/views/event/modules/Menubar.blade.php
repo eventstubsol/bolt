@@ -18,8 +18,16 @@
 </style>
 @php
     $footers = App\Menu::where('type','footer')->where('event_id',$event_id)->where('status','1')->where('parent_id','0')->orderBy('position','asc')->get()->load(["submenus"]);
-
+    $event = App\Event::findORFail($event_id);
 @endphp
+<style>
+    .row .menu{
+        background:{{ $event->primary_color }};
+    }
+    .row .menu a:hover{
+        background: {{ $event->secondary_color }};
+    }
+</style>
 <div class="menu-custom navs hidden theme-nav">
     <div class="container-fluid row">
         <ul class="menu">
