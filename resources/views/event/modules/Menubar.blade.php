@@ -21,11 +21,14 @@
     $event = App\Event::findORFail($event_id);
 @endphp
 <style>
-    .row .menu{
+    /* .row .menu{
         background:{{ $event->primary_color }};
-    }
-    .row .menu a:hover{
+    } */
+    /* .row .menu a:hover{
         background: {{ $event->secondary_color }};
+    } */
+    .row .menu a:hover {
+        color: {{ $event->secondary_color }};
     }
 </style>
 <div class="menu-custom navs hidden theme-nav">

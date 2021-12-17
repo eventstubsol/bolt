@@ -85,13 +85,13 @@
     .notification-list .notify-item .notify-details{
         color: black !important;
     }
-    .menu-col .menu a:hover{
-        background: {{ $event->secondary_color }};
+    .menu-col .menu a:hover {
+        color: {{ $event->secondary_color }};
         
     }
-    .menu-col .menu{
+    /* .menu-col .menu{
         background:{{ $event->primary_color }};
-    }
+    } */
     
 </style> 
 <script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
