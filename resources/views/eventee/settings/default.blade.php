@@ -74,6 +74,24 @@
             </div>
         </div>
         <div class="card">
+            <div class="card-header">
+                <div class="card-title">Default Colors</div>
+            </div>  
+            <div class="card-body">
+               <form action="{{ route('eventee.settingscolorUpdate',$id) }}" method="POST">
+                    <div class="form-group mb-3 col-md-4">
+                        <label for="primary Color">Primary Color</label>
+                        <input type="color" name="primary_color" class="form-control" value="{{ $event->primary_color }}">
+                    </div>
+                    <div class="form-group mb-3 col-md-4">
+                        <label for="primary Color">Secondary Color</label>
+                        <input type="color" name="secondary_color" class="form-control" value="{{ $event->secondary_color }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+               </form>
+            </div>
+        </div>
+        <div class="card">
             <div class="card-header">  Privacy Policy    </div>
             <div class="card-body">
                 <form method="POST" action="{{ route("eventee.settingsUpdate",['id'=>$id]) }}">
