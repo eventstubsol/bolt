@@ -701,7 +701,7 @@ $user = Auth::user();
     @include("event.toast")
 
     @include("event.modules.Profile")
-    @if({{ isset('$chat_app') }})
+    @if(isset($chat_app))
         @include("event.modules.chat")
     @endif
     @include("event.modules.networking")
