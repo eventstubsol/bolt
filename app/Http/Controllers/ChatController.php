@@ -23,6 +23,18 @@ class ChatController extends Controller
     public function SaveChatSettings(Request $request ,$id){
         $event  =  Event::where("id",$id)->first();
         $chat_app = CometChat::where("event_id",$event->id)->first();
+        if($request->docked_layout_icon_close){
+            $cicon = $request->docked_layout_icon_close;
+            if(substr( $cicon, 0, 7 ) === "uploads"){
+                $request->docked_layout_icon_close = env("AWS_URL").$cicon;
+            }
+        }
+        if($request->docked_layout_icon_open){
+            $oicon = $request->docked_layout_icon_open;
+            if(substr( $oicon, 0, 7 ) === "uploads"){
+                $request->docked_layout_icon_open = env("AWS_URL").$oicon;
+            }
+        }
         if($request->enable_video_calling==='true'){
             $request->enable_video_calling =true;
         }else{
