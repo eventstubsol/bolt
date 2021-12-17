@@ -575,13 +575,16 @@ HTML;
 
         break; 
     case("photobooth"):
-        return <<<HTML
-             <a class="photobooth area"  data-link="photo-booth"  data-capture="{{$menu->to}}" data-gallery="{{$menu->url}}" >
+        if(isset($link)){
+            return <<<HTML
+             <a class="photobooth area"  data-link="photo-booth"  data-capture="{{$link->to}}" data-gallery="{{$link->url}}" >
              <img src="$icon" width="26" alt="">
                  
              <!-- <i class="fe-users"></i> -->
                  $menu->name</a>
             HTML;
+        }
+        
     break; 
     case("faq"):
         return <<<HTML
@@ -695,6 +698,7 @@ function getField($name,$default = "")
 }
 function getFieldId($name,$id=null, $default = "")
 {
+    $default = Content::where("name", $name)->where('event_id',null)->first()->value;
     $content = Content::where("name", $name)->where('event_id',$id);
     if($content->count()>0 &&  $content->first()->value){
          return $content->first()->value;
@@ -746,7 +750,7 @@ function areaStyles($area)
 
 function assetUrl($url = "")
 {
-    return "https://virturo-bucket.s3.us-east-2.amazonaws.com/".$url;
+    return env("UPLOADS_FILE_DRIVER") === "spaces" ? ( env("DO_PUBLIC_URL") . $url ):( env("AWS_URL") . $url);
 }
 
 function storageUrl($url = "")
