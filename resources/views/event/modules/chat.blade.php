@@ -18,11 +18,12 @@
 </div>
 
 <script>
+    console.log("{{$chat_app->appid}}");
     window.addEventListener('DOMContentLoaded', (event) => {
         CometChatWidget.init({
-            "appID": "{{api('COMET_CHAT_APP_ID',$event_id)}}",
-            "appRegion": "{{api('COMET_CHAT_REGION',$event_id)}}",
-            "authKey": "{{api('COMET_CHAT_AUTH_KEY',$event_id)}}"
+            "appID": "{{$chat_app->appid}}",
+            "appRegion": "eu",
+            "authKey": "{{$chat_app->authKey}}"
         }).then(response => {
             console.log("Initialization completed successfully");
             console.log('{{$user->id}}');
@@ -31,7 +32,7 @@
                 "uid": "{{ $user->id }}"
             }).then(response => {
                 CometChatWidget.launch({
-                    "widgetID": "{{api('COMET_WIDGET_ID',$event_id)}}",
+                    "widgetID": "{{$chat_app->widgetId}}",
                     "target": "#chat_div",
                     "docked": "true",
                     "alignment": "right", //left or right

@@ -225,7 +225,7 @@ class eventeeController extends Controller
             }
         }
         if($event->save()){
-            // createApp($event);
+            createApp($event);
             
             createMenus($event->id);
             createLeaderboard($event->id);

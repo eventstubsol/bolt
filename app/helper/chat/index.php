@@ -132,15 +132,15 @@ function createWidget($chat_app){
 }
 function updateWidget($chat_app,$settings){
     //Enable Widget  widget
-    $response = chatPostRequest("/apps/".$chat_app->appid."/extensions",EXTENSIONS);
+    // $response = chatPostRequest("/apps/".$chat_app->appid."/extensions",EXTENSIONS);
     $body = [
         "settings"=>[
             "name"=>"Widget",
             "version"=>"2",
             "style"=>[
-                "docked_layout_icon_background"=>$settings->color,
-                "docked_layout_icon_close"=>$settings->closeIcon,
-                "docked_layout_icon_open"=>$settings->openIcon
+                "docked_layout_icon_background"=>$settings->docked_layout_icon_background,
+                "docked_layout_icon_close"=>$settings->docked_layout_icon_close,
+                "docked_layout_icon_open"=>$settings->docked_layout_icon_open
             ],
             "sidebar"=>[
                     "chats"=>"true",
@@ -170,8 +170,8 @@ function updateWidget($chat_app,$settings){
                 "enable_sound_for_calls"=> true,
                 "enable_sound_for_messages"=> true,
                 "enable_threaded_replies"=> true,
-                "enable_video_calling"=> $settings->videocall,
-                "enable_voice_calling"=> $settings->audiocall,
+                "enable_video_calling"=> $settings->enable_video_calling,
+                "enable_voice_calling"=> $settings->enable_voice_calling,
                 "hide_deleted_messages"=> true,
                 "hide_join_leave_notifications"=> true,
                 "join_or_leave_groups"=> true,
@@ -192,13 +192,13 @@ function updateWidget($chat_app,$settings){
             "widgetId"=>$chat_app->widgetId
         ]
     ];
-    // dd($chat_app->appid);
     $response = chatPutRequest("/apps/".$chat_app->appid."/extensions/widget/v2/settings", $body);
+    // dd($response->body());
     // $response->
     // $widgetId = json_decode($response->body())->data->body->data->widgetId;
     // $chat_app->widgetId =  $widgetId;
-    // $chat_app->settings =  json_encode($body);
-    // $chat_app->save();
+    $chat_app->settings =  json_encode($body);
+    $chat_app->save();
     return ["success"=>true];
     // /dd();
 }
@@ -219,16 +219,18 @@ function createGroup($chat_app,$group){
             ]);
 }
 function createUser($chat_app,$user){
-     Http::withHeaders(
+    $url = "https://api-eu.cometchat.io";
+    $response = Http::withHeaders(
         [
             "apiKey" => $chat_app->apiKey,
             "appId" => $chat_app->appid,
             "Accept-Encoding" => "deflate, gzip",
             "Content-Encoding" => "gzip"
-        ])->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
+        ])->post($url . '/v2.0/users', [
             'uid' => $user->id,
             'name' => $user->name
         ]);
+        // dd($response->body());
 }
 function chatPostRequest($route,$body){
     $api = env("COMET_CHAT_API_URL");

@@ -68,6 +68,9 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('Event/update/{id}','EventManageController@update')->name('event.Update');
     Route::post('event/delete',"EventManageController@destroy")->name('event.delete');
 
+    Route::get('settings/chat/{id}','ChatController@ChatSettings')->name('settings.chat');
+    Route::post('settings/savechat/{id}','ChatController@SaveChatSettings')->name('settings.savechat');
+
 
     //User Wise Report
     Route::get("User_Report/{id}","Eventee\UserReportController@index")->name('eventee.user.report');
@@ -95,6 +98,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('mail/{id}',"Eventee\MailController@index")->name('eventee.mail');
     Route::get('mail/create/{id}',"Eventee\MailController@create")->name('eventee.mail.create');
     Route::post('mail/send/{id}',"Eventee\MailController@send")->name('eventee.mail.send');
+    Route::get("/chat-user/sync/{id}", "UserController@syncUserChat")->name("sync-users");
     
 
 
@@ -506,7 +510,6 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         /**
          * CHAT USER START
          */
-        Route::get("/chat-user/sync", "UserController@syncUserChat")->name("sync-users");
         Route::get("/lobby", "PageController@lobby")->name("lobby");
         Route::put("/lobbyupdate","PageController@Lobbyupdate")->name("lobbyupdate");
         Route::get("/chat-group/sync", "UserController@syncGroupChat")->name("sync-groups");
