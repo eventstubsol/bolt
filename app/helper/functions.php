@@ -581,7 +581,7 @@ HTML;
                  
              <!-- <i class="fe-users"></i> -->
                  $menu->name</a>
-HTML;
+            HTML;
     break; 
     case("faq"):
         return <<<HTML

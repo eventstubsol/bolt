@@ -30,7 +30,9 @@
         .dataTables_length select{
             width: 54px !important;
         }
-
+        .modal-content .checkbox{
+            display: none !important; 
+        }
         .right-bar-toggle.chat-bubble{
             position: fixed;
             top: 85vh;

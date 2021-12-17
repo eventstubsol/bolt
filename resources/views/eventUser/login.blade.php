@@ -20,11 +20,25 @@ Hello there!
 
 @section('form')
 @php
+$event = App\Event::findOrFail($id);
+
 $email = "";
 if(Auth::user()){
     $email = Auth::user()->email;
 }
 @endphp
+@section('styles')
+<style>
+    #form .login-btn{
+        background: {{ $event->primary_color }}
+    }
+    #form .login-btn:hover{
+        background-color: {{ $event->secondary_color }}
+    }
+</style>
+
+@endsection
+
 <form id="form" action="{{ route('event.user.confirmLogin', ['subdomain' => $subdomain]) }}" method="post">
     @csrf
     <div class="">
@@ -50,7 +64,7 @@ if(Auth::user()){
 
     <div class="input-group input-footer">
         
-        <button class="theme-btn btn primary-filled" onclick="onSubmit">Login</button>
+        <button class="login-btn theme-btn btn primary-filled" onclick="onSubmit">Login</button>
     </div>
     <p class="text mt-3">By logging in and using the platform, you hereby accept our  <a href="{{ route('privacyPolicy',['subdomain'=>$subdomain]) }}" >Privacy Policy</a> {{--  <a data-toggle="modal" data-target="#privacyPolicy" >Privacy Policy</a>--}}. For more details <a href="{{ route("faq",['subdomain'=>$subdomain]) }}">read the FAQs</a></p>
 

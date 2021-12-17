@@ -91,9 +91,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer">
-                <p class="float-right">{{ $events->links() }}</p>
-            </div>
+           
         </div>
     </div>
 </div>
