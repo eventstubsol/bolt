@@ -557,7 +557,7 @@ $user = Auth::user();
         }
 
         function createGroup(room) {
-            let id = {{ $id }};
+            let id = {{ $event->id }};
             $.ajax({
                 url: "{{ route('createGroup') }}",
                 data: {
