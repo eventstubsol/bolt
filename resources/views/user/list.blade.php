@@ -114,7 +114,7 @@ Manage Users
                 $("#sync-account").text("Syncing")
 
                 while (true) {
-                    let body = await(await fetch("{{ route('sync-users') }}", {credentials: "include"})).json();
+                    let body = await(await fetch, {credentials: "include"})).json();
                     if(body.success) {
                         location.reload(true)
                     } else {
