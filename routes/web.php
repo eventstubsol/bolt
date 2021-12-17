@@ -726,7 +726,7 @@ Route::group($options, function () use ($options) {
     // Route::get("/register", "AttendeeAuthController@showRegistrationForm")->name("attendee_register");
     // Route::post("/event/register", "AttendeeAuthController@saveRegistration")->name("attendee_register.confirm");
     Route::get("/register/{slug}", "AttendeeAuthController@showRegistration")->name("attendee_registe");
-    Route::POST('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
+    Route::get('/eventUser/logout','EventUser\LoginController@logout')->name('attendeeLogout');
     Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
         Route::get("/booths", "Eventee\BoothController@exhibiterhome")->name("exhibiterhome");
     });
@@ -765,7 +765,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::get('/testS','testController@index');
 
     // Route::get("/event/{id}", "EventController@index")->name("eventee.event");
-
+    //Event Availability
+    Route::get('event/available',"EventManageController@EventAvailable")->name('event.available');
 
     Route::post("/contacts/suggested", "UserController@suggestedContacts")->name("suggestedContacts");
     Route::post("/contacts/attendees", "UserController@allEventAttendees")->name("attendeesURL");
