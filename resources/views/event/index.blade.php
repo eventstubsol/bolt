@@ -19,7 +19,16 @@ $user = Auth::user();
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
     <link href={{ asset('assets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.css') }}">
-    <style>
+    <style>  
+        .loader span,
+        .loader:after {
+        background: #233c77 !important;
+        }
+
+        .loader:before {
+        border-color: #233c77 !important;
+        }
+
         #photo-capture-2 {
             width: 100%;
             height: 100%;
