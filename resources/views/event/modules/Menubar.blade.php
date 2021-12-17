@@ -30,6 +30,9 @@
     .row .menu a:hover {
         color: {{ $event->secondary_color }};
     }
+    .row .menu .ToggleData:hover {
+        color: {{ $event->secondary_color }};
+    }
 </style>
 <div class="menu-custom navs hidden theme-nav">
     <div class="container-fluid row">
@@ -46,7 +49,7 @@
                             
                                 @elseif($footer->name == 'Announcements')
                             
-                                <li class="not-booth-menu"><a href="javascript:void(0);" data-toggle="modal" data-target="#announcement-modal"><i class="{{ $footer->iClass }}"></i>Annoucements</a></li>
+                                <li class="not-booth-menu"><a href="javascript:void(0);" class="ToggleData" data-toggle="modal" data-target="#announcement-modal"><i class="ToggleData" class="{{ $footer->iClass }}"></i>Annoucements</a></li>
 
                                @else
                                <li class="custom-dropdown not-booth-menu"> 
