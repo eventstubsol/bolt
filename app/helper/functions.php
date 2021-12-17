@@ -749,7 +749,7 @@ function areaStyles($area)
 
 function assetUrl($url = "")
 {
-    return env("UPLOADS_FILE_DRIVER") === "spaces" ? ( env("DO_PUBLIC_URL") . $url ):( env("AWS_URL") . $url);
+    return "https://virturo-bucket.s3.us-east-2.amazonaws.com/".$url;
 }
 
 function storageUrl($url = "")
