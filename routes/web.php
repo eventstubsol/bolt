@@ -559,7 +559,6 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         Route::post("/reports/auditorium", "EventController@auditoriumReportsData")->name("reports.auditorium.api");
         Route::post("/reports/audi-logs/export", "EventController@exportAuditoriumLogs")->name("reports.export.audiLogs");
         Route::get("/reports/leaderboard/", "EventController@leaderboardView")->name("reports.leaderboard");
-        Route::get("/createGroup", "EventController@createRoomGroup")->name("createGroup");
         
 
         Route::post("/reports/workshop/{name}/export", "EventController@exportWorkshopLogs")->name("reports.export.workshopLogs");
@@ -811,6 +810,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::post("/booth/{booth}/show-interest", "EventController@showInterestInBooth")->name("showInterestInBooth");
     Route::get("/delegates-list", "EventController@getDelegatesList")->name("delegateList");
     Route::post("/updates/check", "EventController@contentTicker")->name("contentTicker");
+    Route::get("/createGroup", "EventController@createRoomGroup")->name("createGroup");
     
 
 
