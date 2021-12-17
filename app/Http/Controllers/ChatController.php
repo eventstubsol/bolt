@@ -13,6 +13,7 @@ class ChatController extends Controller
        $chat_app = CometChat::where("event_id",$event->id)->first();
        if(!$chat_app){
             createApp($event);
+            $chat_app = CometChat::where("event_id",$event->id)->first();
        }
        $settings = ((object)json_decode($chat_app->settings))->settings;
 
