@@ -40,16 +40,6 @@ class ChatController extends Controller
         }else{
             $oicon = "https://widget-js.cometchat.io/v2/resources/chat_bubble.svg";
         }
-        if($request->enable_video_calling==='true'){
-            $request->enable_video_calling =true;
-        }else{
-            $request->enable_video_calling =false;
-        }
-        if($request->enable_voice_calling==='true'){
-            $request->enable_voice_calling =true;
-        }else{
-            $request->enable_voice_calling =false;
-        }
         $newsettings = (object)[
             "enable_video_calling"=>$request->enable_video_calling,
             "enable_voice_calling"=>$request->enable_voice_calling,
