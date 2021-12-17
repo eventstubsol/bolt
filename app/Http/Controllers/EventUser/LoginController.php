@@ -65,9 +65,13 @@ class LoginController extends Controller
             if(Auth::user()->type =='attendee'){
                 $user = User::findOrFail(Auth::id());
                 $user->online_status=0;
-                $location = UserLocation::where('user_id',Auth::id())->where('current_status',1)->first();
-                $location->current_status = 0;
-                if($user->save() && $location->save()){
+                if(UserLocation::where('user_id',Auth::id())->where('current_status',1)->count() > 0){
+                    $location = UserLocation::where('user_id',Auth::id())->where('current_status',1)->first();
+                    $location->current_status = 0;
+                    $location->save();
+                }
+                
+                if($user->save()){
                     // return $user;
                     Auth::logout();
                     return redirect(route('attendeeLogin',$subdomain));
