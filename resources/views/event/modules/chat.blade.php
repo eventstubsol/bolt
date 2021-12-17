@@ -18,7 +18,6 @@
 </div>
 
 <script>
-    console.log("{{$chat_app->appid}}");
     window.addEventListener('DOMContentLoaded', (event) => {
         CometChatWidget.init({
             "appID": "{{$chat_app->appid}}",
