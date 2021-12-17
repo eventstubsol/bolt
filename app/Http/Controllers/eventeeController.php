@@ -168,7 +168,7 @@ class eventeeController extends Controller
 
     public function Event(Request $req){
         $req->session()->put('MangeEvent',0);
-        $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->paginate(5);
+        $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->get();
         return view('eventee.events.index',compact('events'));
     }
 
