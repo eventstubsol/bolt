@@ -21,11 +21,17 @@
     $event = App\Event::findORFail($event_id);
 @endphp
 <style>
-    .row .menu{
+    /* .row .menu{
         background:{{ $event->primary_color }};
-    }
-    .row .menu a:hover{
+    } */
+    /* .row .menu a:hover{
         background: {{ $event->secondary_color }};
+    } */
+    .row .menu a:hover {
+        color: {{ $event->secondary_color }};
+    }
+    .row .menu .ToggleData:hover {
+        color: {{ $event->secondary_color }};
     }
 </style>
 <div class="menu-custom navs hidden theme-nav">
@@ -43,7 +49,7 @@
                             
                                 @elseif($footer->name == 'Announcements')
                             
-                                <li class="not-booth-menu"><a href="javascript:void(0);" data-toggle="modal" data-target="#announcement-modal"><i class="{{ $footer->iClass }}"></i>Annoucements</a></li>
+                                <li class="not-booth-menu"><a href="javascript:void(0);" class="ToggleData" data-toggle="modal" data-target="#announcement-modal"><i class="ToggleData" class="{{ $footer->iClass }}"></i>Annoucements</a></li>
 
                                @else
                                <li class="custom-dropdown not-booth-menu"> 

@@ -29,9 +29,9 @@ if(Auth::user()){
 @endphp
 @section('styles')
 <style>
-    #form .login-btn{
+    /* #form .login-btn{
         background: {{ $event->primary_color }}
-    }
+    } */
     #form .login-btn:hover{
         background-color: {{ $event->secondary_color }}
     }
