@@ -206,13 +206,14 @@ function deleteChatApp($chat_app){
     chatDeleteRequest("/apps/".$chat_app->appid);
 }
 function createGroup($chat_app,$group){
+    $url = "https://api-eu.cometchat.io";
     Http::withHeaders([
             "apiKey" => $chat_app->apiKey,
             "appId" => $chat_app->appid,
             "Accept-Encoding" => "deflate, gzip",
             "Content-Encoding" => "gzip"
           ])
-            ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
+            ->post($url . "/v2.0/groups", [
               "type" => strtolower(env("COMET_CHAT_GROUP_TYPE")),
               "guid" => $group->id,
               "name" => $group->name
