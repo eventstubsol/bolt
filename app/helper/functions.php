@@ -698,7 +698,7 @@ function getField($name,$default = "")
 }
 function getFieldId($name,$id=null, $default = "")
 {
-    if(Content::where("name", $name)->where('event_id',null)->first()->value){
+    if(Content::where("name", $name)->where('event_id',null)->count()>0){
         $default = Content::where("name", $name)->where('event_id',null)->first()->value;
     }
    
