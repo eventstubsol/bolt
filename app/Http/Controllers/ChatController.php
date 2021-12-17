@@ -22,7 +22,17 @@ class ChatController extends Controller
     }
     public function SaveChatSettings(Request $request ,$id){
         $event  =  Event::where("id",$id)->first();
-        $chat_app = CometChat::where("event_id",$event->id)->first(); 
+        $chat_app = CometChat::where("event_id",$event->id)->first();
+        if($request->enable_video_calling==='true'){
+            $request->enable_video_calling =true;
+        }else{
+            $request->enable_video_calling =false;
+        }
+        if($request->enable_voice_calling==='true'){
+            $request->enable_voice_calling =true;
+        }else{
+            $request->enable_voice_calling =false;
+        }
         $newsettings = (object)$request->all();
         updateWidget($chat_app,$newsettings);
         return redirect(route("settings.chat",$id));
