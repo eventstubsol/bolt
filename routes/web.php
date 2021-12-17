@@ -99,6 +99,7 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::get('mail/create/{id}',"Eventee\MailController@create")->name('eventee.mail.create');
     Route::post('mail/send/{id}',"Eventee\MailController@send")->name('eventee.mail.send');
     Route::get("/chat-user/sync/{id}", "UserController@syncUserChat")->name("sync-users");
+    Route::get("/chat-group/sync/{id}", "UserController@syncGroupChat")->name("sync-groups");
     
 
 
@@ -513,7 +514,6 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
          */
         Route::get("/lobby", "PageController@lobby")->name("lobby");
         Route::put("/lobbyupdate","PageController@Lobbyupdate")->name("lobbyupdate");
-        Route::get("/chat-group/sync", "UserController@syncGroupChat")->name("sync-groups");
         /**
          * CHAT USER END
          */
