@@ -147,19 +147,28 @@ class EventController extends Controller
             );
     }
 
-    public function createGroup(Request $request)
+    public function createRoomGroup(Request $request)
     {
+
         $room = $request->get("room");
-        Http::withHeaders([
-            "apiKey" => env("COMET_CHAT_API_KEY"),
-            "appId" => env("COMET_CHAT_APP_ID"),
-            "accept" => "application/json"
-        ])
-            ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
-                "guid" => $room,
-                "name" =>  str_replace("Inc","Inc.",ucfirst(str_replace("_"," ",$room))) ,
-                "type" => "public"
-            ]);
+        $id = $request->get("id");
+        $group = (object)[
+            "id"=>$room,
+            "name"=>$room
+        ];
+        $chat_app = CometChat::where("event_id",$id)->first();
+
+        createGroup($chat_app,$group);
+        // Http::withHeaders([
+        //     "apiKey" => env("COMET_CHAT_API_KEY"),
+        //     "appId" => env("COMET_CHAT_APP_ID"),
+        //     "accept" => "application/json"
+        // ])
+        //     ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
+        //         "guid" => $room,
+        //         "name" =>  str_replace("Inc","Inc.",ucfirst(str_replace("_"," ",$room))) ,
+        //         "type" => "public"
+        //     ]);
             return true;
     }
 

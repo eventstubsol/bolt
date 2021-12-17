@@ -557,10 +557,12 @@ $user = Auth::user();
         }
 
         function createGroup(room) {
+            let id = {{ $id }};
             $.ajax({
                 url: "{{ route('createGroup') }}",
                 data: {
-                    room
+                    room,
+                    id
                 },
                 success: function(response) {
                     if (response) {
