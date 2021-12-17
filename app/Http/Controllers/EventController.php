@@ -1145,4 +1145,18 @@ class EventController extends Controller
         }
         return $ids;
     }
+
+    public function settingsColorUpdate($id,Request $req){
+        $event = Event::findOrFail($id);
+        $event->primary_color = $req->primary_color;
+        $event->secondary_color = $req->secondary_color;
+        if($event->save()){
+            flash("Color Save Successfully")->success();
+            return redirect()->back();
+        }
+        else{
+            flash("Couldnot Save The Color Try Again")->error();
+            return redirect()->back();
+        }
+    }
 }
