@@ -165,15 +165,23 @@
                             <div class="dropdown-divider"></div>
 
                             <!-- item-->
-                            <a class="dropdown-item notify-item" href="{{ route('admin.logout') }}"
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            @if(Auth::user()->type == 'exhibiter')
+                                <a class="dropdown-item notify-item" href="{{ route('attendeeLogout',$event_name) }}">
                                 <i class="fe-log-out"></i>
-                                <span>Logout</span>
-                            </a>
+                                    <span>Logout</span>
+                                </a>
+                            @else
+                                <a class="dropdown-item notify-item" href="{{ route('admin.logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fe-log-out"></i>
+                                    <span>Logout</span>
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            @endif
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
+                            
 
                         </div>
                     </li>
