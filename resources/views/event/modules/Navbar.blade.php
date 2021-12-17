@@ -85,13 +85,16 @@
     .notification-list .notify-item .notify-details{
         color: black !important;
     }
-    .menu-col .menu a:hover{
-        background: {{ $event->secondary_color }};
+    .menu-col .menu a:hover {
+        color: {{ $event->secondary_color }};
         
     }
-    .menu-col .menu{
-        background:{{ $event->primary_color }};
+    .menu-col .menu .modalToggle:hover{
+        color: {{ $event->secondary_color }};
     }
+    /* .menu-col .menu{
+        background:{{ $event->primary_color }};
+    } */
     
 </style> 
 <script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
@@ -117,15 +120,15 @@
                 @elseif($menu->name === 'lobby')      
                     <li><a data-link="lobby" class="area"><i class="fe-home"></i>Lobby</a></li>
                 @elseif($menu->name === 'library')
-                    <li><a data-toggle="modal" data-target="#resources-modal"><i class="fe-folder"></i>Library</a></li>
+                    <li><a class="modalToggle" data-toggle="modal" data-target="#resources-modal"><i class="fe-folder"></i>Library</a></li>
                 @elseif($menu->name == 'schedule')
-                    <li><a data-toggle="modal" data-target="#schedule-modal"><i class="fe-calendar"></i>Schedule</a></li>
+                    <li><a class="modalToggle" data-toggle="modal" data-target="#schedule-modal"><i class="fe-calendar"></i>Schedule</a></li>
                 @elseif($menu->name == 'swagbag')
-                    <li><a data-toggle="modal" data-target="#swagbag-modal"><i class="fe-shopping-bag"></i>SwagBag</a></li>
+                    <li><a class="modalToggle" data-toggle="modal" data-target="#swagbag-modal"><i class="fe-shopping-bag"></i>SwagBag</a></li>
                 @elseif($menu->name == 'leaderboard')
                     <li><a class="area" data-link="leaderboard"><i class="fe-bar-chart"></i>Leaderboard</a></li>
                 @elseif($menu->name == 'personalagenda')
-                    <li><a data-toggle="modal" id="agenda" data-target="#personal-schedule-modal"><i class="fe-calendar"></i>Personal Agenda</a></li>
+                    <li><a class="modalToggle" data-toggle="modal" id="agenda" data-target="#personal-schedule-modal"><i class="fe-calendar"></i>Personal Agenda</a></li>
                 @elseif($menu->name == 'attendees')
                     <li><a class="area" data-link="attendees"><i class="fe-users"></i>Business Connect</a></li>
                 @else
