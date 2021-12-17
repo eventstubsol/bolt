@@ -41,6 +41,7 @@
                      </div>
                     <div class="form-group mb-3">
                         <label for="type">Video Calling</label>
+                        {{$settings->main->enable_video_calling}}
                         <select class="form-control"  name="enable_video_calling" required>
                             <option @if($settings->main->enable_video_calling==="true"||$settings->main->enable_voice_calling===true) selected=true @endif  value=true>Enabled</option>
                             <option @if(!$settings->main->enable_video_calling==="false"||$settings->main->enable_voice_calling===false) selected=true @endif value=false>Disabled</option>
@@ -48,6 +49,8 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="type">Voice Calling</label>
+                        {{$settings->main->enable_voice_calling}}
+
                         <select class="form-control"  name="enable_voice_calling" required>
                             <option @if($settings->main->enable_voice_calling==="true"||$settings->main->enable_voice_calling===true) selected=true @endif  value=true>Enabled</option>
                             <option @if($settings->main->enable_voice_calling==="false"||$settings->main->enable_voice_calling===false) selected=true @endif value=false>Disabled</option>
