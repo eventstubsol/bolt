@@ -6,6 +6,7 @@ use App\AccessSpecifiers;
 use App\Api;
 use App\Booth;
 use App\BoothInterest;
+use App\CometChat;
 use App\Event;
 
 use App\EventSession;
@@ -50,6 +51,7 @@ class EventController extends Controller
         $event = Event::where("slug",$event_name)->first();
         $event_id = $event->id;
         $leaderboard =Leaderboard::where('event_id',$event_id)->first();
+        $chat_app = CometChat::where("event_id",$event->id)->first();
         // dd(Image::where('owner',$leaderboard->id)->get()); 
         // dd($event_id);
         // $event_id =  ($id);
@@ -123,6 +125,7 @@ class EventController extends Controller
             ->with(
                 compact([
                     "booths",
+                    "chat_app",
                     "modals",
                     "FAQs",
                     "pages",
