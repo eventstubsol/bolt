@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Booth;
+use App\CometChat;
 use App\User;
 use App\UserConnection;
 use App\Contact;
@@ -54,7 +55,7 @@ class UserController extends Controller
 
         $userData = $request->except("_token");
         $userData["password"] = Hash::make($userData["password"]);
-        $userData["isCometChatAccountExist"] = TRUE;
+        // $userData["isCometChatAccountExist"] = TRUE;
 
         $user = User::create($userData);
         // $user->sendEmailVerificationNotification();
@@ -287,34 +288,26 @@ class UserController extends Controller
         }
     }
 
-    public function syncUserChat()
+    public function syncUserChat($id)
     {
-        $users = User::where("isCometChatAccountExist", FALSE)
+        // return $id;
+        $users = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)
             ->limit(rand(10, 25))
             ->get(["id", "name"]);
+        $chat_app = CometChat::where("event_id",$id)->first();
 
         if (count($users) == 0) {
             return ["success" => TRUE];
         }
 
-        $users->each(function ($user) {
-            Http::withHeaders([
-                "apiKey" => env("COMET_CHAT_API_KEY"),
-                "appId" => env("COMET_CHAT_APP_ID"),
-                "accept" => "application/json",
-                "Accept-Encoding"=> "deflate, gzip",
-                "Content-Encoding"=> "gzip"
-            ])
-                ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/users", [
-                    "uid" => $user->id,
-                    "name" => $user->name
-                ]);
+        $users->each(function ($user) use($chat_app) {
+            createUser($chat_app,$user);
             $user->isCometChatAccountExist = TRUE;
             $user->save();
         });
 
-        $left = User::where("isCometChatAccountExist", FALSE)->count();
-        $total = User::all()->count();
+        $left = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)->count();
+        $total = User::where("event_id",$id)->count();
 
         return ["success" => FALSE, "left" => $left, "total" => $total];
     }
