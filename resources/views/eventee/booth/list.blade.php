@@ -98,7 +98,7 @@
         });
          var deleteArr = [];
         $(document).ready(function(){
-            // $("#buttons-container").append('<button class="btn btn-primary" id="sync-account">Sync with Chat</button>');
+            $("#buttons-container").append('<button class="btn btn-primary" id="sync-account">Sync with Chat</button>');
             $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.booth.create",$id) }}">Create New</a>');
             $("#buttons-container").append('<button type="button" onclick="AddCheckBox(this)" class="addbox btn btn-info" >Bulk Delete</button>');
             $("#buttons-container").append('<button class="deleteBulk btn btn-danger float-right" onclick="BulkDelete()" style="display: none">Delete</button>');
@@ -130,7 +130,7 @@
                 $(this).text("Syncing")
 
                 $.ajax({
-                    url: '{{ route("sync-groups") }}',
+                    url: '{{ route("sync-groups",$id) }}',
                     data: {
                         "_token": "{{ csrf_token() }}"
                     },
