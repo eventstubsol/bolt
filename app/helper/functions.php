@@ -575,13 +575,16 @@ HTML;
 
         break; 
     case("photobooth"):
-        return <<<HTML
+        if(isset($link)){
+            return <<<HTML
              <a class="photobooth area"  data-link="photo-booth"  data-capture="{{$link->to}}" data-gallery="{{$link->url}}" >
              <img src="$icon" width="26" alt="">
                  
              <!-- <i class="fe-users"></i> -->
                  $menu->name</a>
-HTML;
+            HTML;
+        }
+        
     break; 
     case("faq"):
         return <<<HTML
