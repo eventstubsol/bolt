@@ -57,20 +57,33 @@ class LoginController extends Controller
     }
 
     public function logout($subdomain){
-        // return Auth::id();
-        if(Auth::check()){
-            $user = User::findOrFail(Auth::id());
-            $user->online_status=0;
-            $location = UserLocation::where('user_id',Auth::id())->where('current_status',1)->first();
-            $location->current_status = 0;
-            if($user->save() && $location->save()){
-                // return $user;
-                Auth::logout();
-                return redirect(route('attendeeLogin',$subdomain));
-            }
-            else{
-                return redirect()->back();
-            }
+        // return Auth::user()->type;
+        // return $subdomain;
+        // return Auth::check();
+        if(Auth::check() == 1){
+            // return $subdomain;
+            if(Auth::user()->type =='attendee'){
+                $user = User::findOrFail(Auth::id());
+                $user->online_status=0;
+                $location = UserLocation::where('user_id',Auth::id())->where('current_status',1)->first();
+                $location->current_status = 0;
+                if($user->save() && $location->save()){
+                    // return $user;
+                    Auth::logout();
+                    return redirect(route('attendeeLogin',$subdomain));
+                }
+        }
+        elseif(Auth::user()->type =='exhibiter'){
+            // return 1;
+            // return Auth::user();
+            Auth::logout(); 
+            return redirect(route('attendeeLogin',$subdomain));
+        }
+
+        else{
+            // return Auth::user()->type;
+            return redirect()->back();
+        }
             
         }        
     }

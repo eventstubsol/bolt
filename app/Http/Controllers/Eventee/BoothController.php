@@ -220,7 +220,8 @@ class BoothController extends Controller
   public function exhibiterhome($subdomain){
     // dd($subdomain);
     $id = Event::where("slug",$subdomain)->first()->id;
-    return view("dashboard.exhibiter")->with(compact("id"));
+    $event_name = Event::where("slug",$subdomain)->first()->slug;
+    return view("dashboard.exhibiter")->with(compact("id","event_name"));
 
   }
   public function adminEdit(Request $req, Booth $booth,$id)

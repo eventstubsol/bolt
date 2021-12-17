@@ -110,8 +110,11 @@
                 <div class="form-group">
                     <label for="name">Event Name
                         <span style="color:red">*</span>
+
                     </label>
                     <input type="text" id="event_name" name="name" class="form-control" required>
+                    <span class="successShow " role="alert" style="display: none;color:green;"></span>
+                    <span class="errorShow " role="alert" style="display: none;color:red;"></span>
                 </div>
                 <br>
                 <div class="form-group">
@@ -207,7 +210,29 @@
       }
      $(document).ready(function(){
          $('#event_name').on('input',function(){
+            
             let event_name = $(this).val();
+            $.get("{{ route('event.available') }}",{'event_name':event_name},function(res){
+                if(res.code == 203){
+                    $('.successShow').hide();
+                    $('.errorShow').show();
+                    $('.errorShow').empty();
+                    $('.errorShow').html(res.message);
+                }
+                else if(res.code == 202){
+                    $('.successShow').hide();
+                    $('.errorShow').show();
+                    $('.errorShow').empty();
+                    $('.errorShow').html(res.message);
+                   
+                }
+                else if(res.code == 200){
+                    $('.errorShow').hide();
+                    $('.successShow').show();
+                    $('.successShow').empty();
+                    $('.successShow').html(res.message);
+                }
+            });
             let slug = event_name.toLowerCase().replaceAll(" ","-");
         
             $('#event_slug').val(slug);
