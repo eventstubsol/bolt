@@ -301,7 +301,7 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart(obj,total) {
-        //   console.log(obj.offline);
+          console.log(obj.online);
         if(total == 0){
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
@@ -310,12 +310,28 @@
             ]);
         }
         else{
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Online Users: '+obj.online+'',obj.online],
-                ['Offline Users: ' +obj.offline+'',obj.offline]
-            
-            ]);
+            if(obj.online != 0 && obj.offine != 0){
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    ['Online Users: '+obj.online+'',obj.online],
+                    ['Offline Users: ' +obj.offline+'',obj.offline]
+                
+                ]);
+            }
+            else if(obj.online != 0 && obj.offine == 0){
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    ['Online Users: '+obj.online+'',obj.online],
+                
+                ]);
+            }
+            else{
+                var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    ['Offline Users: ' +obj.offline+'',obj.offline]
+                
+                ]);
+            }
         }
         
         
@@ -460,7 +476,7 @@
                 success:function(response){
                     // console.log(response.locations);
                     $('.sesroomUSer').empty();
-                    if(response.locations.length > 0)
+                    if(response.locations !=  null)
                     {   
                         $.each(response.locations,function(key,value){
                             $('.sesroomUSer').append('<tr><td>'+ value.room_name  +'</td><td>'+ value.room_count +'</td></tr>');
@@ -480,8 +496,8 @@
                 method:"POST",
                 data:{id:"{{ $id }}"},
                 success:function(response){
-                    // console.log(response);
-                    if(response.locations.length > 0)
+                    console.log(response);
+                    if(response.locations !=  null)
                     {   
                         $.each(response.locations,function(key,value){
                             $('.pageUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
@@ -501,7 +517,7 @@
                 data:{id:"{{ $id }}"},
                 success:function(response){
                     // console.log(response);
-                    if(response.locations.length > 0)
+                    if(response.locations!=  null)
                     {   
                         $('.botthUSer').empty();
                         $.each(response.locations,function(key,value){
