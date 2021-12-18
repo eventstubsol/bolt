@@ -409,6 +409,8 @@ function addSSL($domain)
     $process = new Process(['/home/eventdev/addssl.sh',$domain]);
     $process->run();
 
+    // dd($process->getOutput());
+
     // executes after the command finishes
     if (!$process->isSuccessful()) {
         throw new ProcessFailedException($process);
