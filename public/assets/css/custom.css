@@ -16,15 +16,6 @@ button[disabled] {
   cursor: not-allowed;
 }
 
-.loader span,
-.loader:after {
-  background: #edafaf !important;
-}
-
-.loader:before {
-  border-color: #00a15f !important;
-}
-
 .embed-modal .close {
   top: 0;
   right: 0;

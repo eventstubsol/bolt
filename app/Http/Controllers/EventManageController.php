@@ -96,9 +96,9 @@ class EventManageController extends Controller
             return view("eventee.domain.verified");
         }
         if($event && !$event->domainverified){
-            $event->domainverified = true;
-            $event->save(); 
             if(env("APP_ENV")!=='staging'){
+                $event->domainverified = true;
+                $event->save(); 
                 addSSL($currDomain);
             }
             return view("eventee.domain.verified");
