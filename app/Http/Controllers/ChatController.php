@@ -23,17 +23,30 @@ class ChatController extends Controller
     public function SaveChatSettings(Request $request ,$id){
         $event  =  Event::where("id",$id)->first();
         $chat_app = CometChat::where("event_id",$event->id)->first();
-        if($request->enable_video_calling==='true'){
-            $request->enable_video_calling =true;
+        $cicon = isset($request->docked_layout_icon_close) ? $request->docked_layout_icon_close :'';
+        if(isset($request->docked_layout_icon_close)){
+            if(substr( $cicon, 0, 7 ) === "uploads"){
+                $cicon = env("AWS_URL").$cicon;
+            }
         }else{
-            $request->enable_video_calling =false;
+            $cicon = "https://widget-js.cometchat.io/v2/resources/chat_close.svg";
         }
-        if($request->enable_voice_calling==='true'){
-            $request->enable_voice_calling =true;
+        $oicon = isset($request->docked_layout_icon_open) ? $request->docked_layout_icon_open :'';
+        if(isset($request->docked_layout_icon_open)){
+            $oicon = $request->docked_layout_icon_open;
+            if(substr( $oicon, 0, 7 ) === "uploads"){
+                $oicon = env("AWS_URL").$oicon;
+            }
         }else{
-            $request->enable_voice_calling =false;
+            $oicon = "https://widget-js.cometchat.io/v2/resources/chat_bubble.svg";
         }
-        $newsettings = (object)$request->all();
+        $newsettings = (object)[
+            "enable_video_calling"=>$request->enable_video_calling,
+            "enable_voice_calling"=>$request->enable_voice_calling,
+            "docked_layout_icon_background"=>$request->docked_layout_icon_background,
+            "docked_layout_icon_close"=>$cicon,
+            "docked_layout_icon_open"=>$oicon,
+        ];
         updateWidget($chat_app,$newsettings);
         return redirect(route("settings.chat",$id));
         // $settings = ((object)json_decode($chat_app->settings))->settings;

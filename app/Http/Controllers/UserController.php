@@ -312,23 +312,25 @@ class UserController extends Controller
         return ["success" => FALSE, "left" => $left, "total" => $total];
     }
 
-    public function syncGroupChat()
+    public function syncGroupChat($id)
     {
-        $booths = Booth::all(["id", "name"]);
+        $booths = Booth::where("event_id",$id)->get(["id", "name"]);
+        $chat_app = CometChat::where("event_id",$id)->first();
 
-        $booths->each(function ($booth) {
-            Http::withHeaders([
-                "apiKey" => env("COMET_CHAT_API_KEY"),
-                "appId" => env("COMET_CHAT_APP_ID"),
-                "accept" => "application/json",
-                "Accept-Encoding"=> "deflate, gzip",
-                "Content-Encoding"=> "gzip"
-            ])
-                ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
-                    "guid" => $booth->id,
-                    "name" => $booth->name,
-                    "type" => "public"
-                ]);
+        $booths->each(function ($booth) use($chat_app) {
+            createGroup($chat_app,$booth);
+            // Http::withHeaders([
+            //     "apiKey" => env("COMET_CHAT_API_KEY"),
+            //     "appId" => env("COMET_CHAT_APP_ID"),
+            //     "accept" => "application/json",
+            //     "Accept-Encoding"=> "deflate, gzip",
+            //     "Content-Encoding"=> "gzip"
+            // ])
+            //     ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
+            //         "guid" => $booth->id,
+            //         "name" => $booth->name,
+            //         "type" => "public"
+            //     ]);
         });
         return ["success" => TRUE];
     }
