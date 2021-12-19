@@ -37,7 +37,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('event.Update',$id) }}" method="POST">
+                <form action="{{ route('event.Update',$event_id) }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="name">Event Name

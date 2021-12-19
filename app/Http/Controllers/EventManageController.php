@@ -85,9 +85,9 @@ class EventManageController extends Controller
         ];
     }
 
-    public function edit($id){
-        $event = Event::findOrFail( ($id));
-        return view('eventee.events.edit',compact('id','event'));
+    public function edit($event_id){
+        $event = Event::findOrFail( ($event_id));
+        return view('eventee.events.edit',compact('event_id','event'));
     }
     public function verifyDomain(){
         $currDomain = \Request::getHost();
@@ -107,14 +107,14 @@ class EventManageController extends Controller
         // dd($event);
     }
 
-    public function update($id,Request $req){
+    public function update($event_id,Request $req){
         $baseurl = URL::to('/');
         if(strpos($baseurl,'https')){
            $baseurl =  str_replace('https://','',$baseurl);
         }else{
           $baseurl=  str_replace('http://','',$baseurl);
         }
-        $event = Event::findOrFail( ($id));
+        $event = Event::findOrFail( ($event_id));
         $event->name = trim($req->name);
         $slug =str_replace(" ","-",strtolower($req->event_slug));
         $event->slug = str_replace(" ","-",strtolower($req->event_slug));
@@ -138,12 +138,12 @@ class EventManageController extends Controller
             if(isset($domain)){
                 return redirect(route("verifyDomain",['domain'=>$domain]));
             }else{
-                return redirect()->route('event.index',$id);
+                return redirect()->route('event.index',$event_id);
             }
         }
         else{
             flash("Something Went Wrong")->error();
-            return redirect()->route('event.index',$id);
+            return redirect()->route('event.index',$event_id);
         }
     }
 
