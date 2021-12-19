@@ -91,31 +91,37 @@ class eventeeController extends Controller
                 return redirect()->back();
             }
             elseif(empty($req->email)){
-                flash("Email Field Cannot Be Blank")->error();
+                flash("Please Fill Email Field")->error();
                 return redirect()->back();
             }
             else if(empty($req->password)){
-                flash("Password Field Cannot Be Blank")->error();
+                flash("Please Fill Password Field")->error();
                 return redirect()->back();
             }
             
 
             $user = User::where('email',$req->email)->where("type","eventee")->first();
-            $user->online_status = 1;
-            $user->ip_address =  $req->ip();
-            if(Browser::isMobile()){
-            $user->device = "mobile";
-            }
-            if(Browser::isDesktop()){
-                $user->device =  "Desktop";
-            }
-            $user->save();
-
-            // dd($user);
-            $pass = password_verify($req->password,$user->password);
-            if($pass && $user->type == 'eventee'){
-                Auth::login($user);
-                return redirect(route('teacher.dashboard'));
+            if($user){
+                $user->online_status = 1;
+                $user->ip_address =  $req->ip();
+                if(Browser::isMobile()){
+                $user->device = "mobile";
+                }
+                if(Browser::isDesktop()){
+                    $user->device =  "Desktop";
+                }
+                $user->save();
+                
+                // dd($user);
+                $pass = password_verify($req->password,$user->password);
+                if($pass && $user->type == 'eventee'){
+                    Auth::login($user);
+                    return redirect(route('teacher.dashboard'));
+                }
+                else{
+                    flash("Please Check Your Email And Password")->error();
+                    return redirect()->route('Eventee.login');
+                }
             }
             else{
                 flash("Please Check Your Email And Password")->error();
