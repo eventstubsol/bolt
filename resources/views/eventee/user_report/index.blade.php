@@ -107,8 +107,13 @@
                     $.each(report,function(key,value){
                         $('#resultDiv').append('<table class="table table-striped" id="childApp'+key+'"><thead><tr><th>'+ key + '</th></tr></thead><thead><tr><th>Type</th><th>Location</th><th>Entered At</th><th>Left At</th></tr></thead>');
                         $.each(value,function(secondKey,secondValue){
-                          
-                            $('#childApp'+key+'').append('<tbody><tr><td>'+secondValue.type+'</td><td>'+secondValue.type_location+'</td><td>'+SetTime(secondValue.created_at)+'</td><td>'+SetTime(secondValue.updated_at)+'</td></tr></tbody>');
+                            if(secondValue.type_location != null){
+                                $('#childApp'+key+'').append('<tbody><tr><td>'+secondValue.type+'</td><td>'+secondValue.type_location+'</td><td>'+SetTime(secondValue.created_at)+'</td><td>'+SetTime(secondValue.updated_at)+'</td></tr></tbody>');
+                            }
+                            else{
+                                $('#childApp'+key+'').append('<tbody><tr><td>'+secondValue.type+'</td><td>'+secondValue.type+'</td><td>'+SetTime(secondValue.created_at)+'</td><td>'+SetTime(secondValue.updated_at)+'</td></tr></tbody>');
+                            }
+                           
                         });
                     });
                     // $('#showGraph').show();

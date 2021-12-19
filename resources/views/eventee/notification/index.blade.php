@@ -26,8 +26,7 @@
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Message</th>
-                            <th>URL</th>
+                            
                             <th>Roles</th>
                             <th>Created At</th>
                         </tr>
@@ -36,8 +35,6 @@
                     @foreach($notifications as $notification)
                         <tr>
                             <td>{{ $notification->title }}</td>
-                            <td>{{ $notification->message }}</td>
-                            <td>{{ $notification->url ?? 'N/A' }}</td>
                             <td>{{ $notification->roles }}</td>
                             <td>{{ $notification->created_at }}</td>
                         </tr>

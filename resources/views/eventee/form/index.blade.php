@@ -40,7 +40,7 @@
                             <tr>
                                 <td >{{ $key+1 }}</td>
                                 <td >{{ $form->name }}</td>
-                                <td >   {{ $subdomain }}.eventstub.co/register/{{ $form->slug }}</td>
+                                <td id="copyTarget" style="cursor: pointer" data-id="{{ $subdomain }}.eventstub.co/register/{{ $form->slug }}" onclick="copyclip(this)" data-des="{{ $subdomain }}.eventstub.co/register/{{ $form->slug }}">   {{ $subdomain }}.eventstub.co/register/{{ $form->slug }}</td>
                                 @php
                                     $fieldCount = App\FormField::where('form_id',$form->id)->count()
                                 @endphp
@@ -101,4 +101,17 @@
 
 </script>
 <script src="{{ asset('assets/js/form.js') }}"></script>
+<script>
+    function copyclip(e){
+
+var link = e.getAttribute('data-des');
+/* Copy the text inside the text field */
+navigator.clipboard.writeText(link);
+
+/* Alert the copied text */
+// alert("Link Copied To Clipboard");
+showMessage("Link Copied To Clipboard",'success');
+
+}
+</script>
 @endsection

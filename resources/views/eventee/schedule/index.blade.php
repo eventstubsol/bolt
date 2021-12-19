@@ -26,28 +26,24 @@ Manage Scheduled Notifications
                     <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Message</th>
-                            <th>URL</th>
                             <th>Roles</th>
                             <th>Date OF Sending</th>
                             <th>Time OF Sending</th>
                             <th>Status</th>
-                            <th>Created On</th>
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($notifications as $notification)
-                        <tr>
-                            <td>{{ $notification->title }}</td>
-                            <td>{{ $notification->message }}</td>
-                            <td>{{ $notification->url ?? 'N/A' }}</td>
-                            <td>{{ $notification->role }}</td>
-                            <td>{{ Carbon\Carbon::parse($notification->sending_date)->format('d-m-Y') }}</td>
-                            <td>{{ Carbon\Carbon::parse($notification->sending_time)->format('H:i') }}</td>
-                            <td>{{$notification->status ==0 ? 'Not Sent':'Sent' }}</td>
-                            <td>{{ Carbon\Carbon::parse($notification->created_at)->format('d-m-Y') }}</td>
-                        </tr>
-                    @endforeach
+                        @if(count($notifications) > 0)
+                            @foreach($notifications as $notification)
+                                <tr>
+                                    <td>{{ $notification->title }}</td>
+                                    <td>{{ $notification->role }}</td>
+                                    <td>{{ Carbon\Carbon::parse($notification->sending_date)->format('d-m-Y') }}</td>
+                                    <td>{{ Carbon\Carbon::parse($notification->sending_time)->format('H:i') }}</td>
+                                    <td>{{$notification->status ==0 ? 'Not Sent':'Sent' }}</td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
 
