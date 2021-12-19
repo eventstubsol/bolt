@@ -16,16 +16,20 @@
 @section('form')
 <form action="{{ route('login') }}" method="post">
     @csrf
-    <div class="input-group">
-        <label for="emailaddress">Email address</label>
+    <div class="form-group">
+        <label for="emailaddress">Email address 
+            <span style="color: red"> * </span>
+        </label>
         <input value="{{ old('email') }}" class="field form-control @error('email') is-invalid @enderror" type="email" id="emailaddress" name="email" placeholder="Enter your email" />
         @error('email')
         <span class="invalid-feedback" role="alert">{{ $message }}</span>
         @enderror
     </div>
 
-    <div class="input-group">
-        <label for="password">Password</label>
+    <div class="form-group">
+        <label for="password">Password
+            <span style="color: red"> * </span>
+        </label>
         <div class="input-group input-group-merge">
             <input type="password" name="password" id="password" class="field form-control @error('password') is-invalid @enderror" placeholder="Enter your password" />
             <div class="input-group-append" data-password="false">
@@ -39,7 +43,7 @@
         </div>
     </div>
 
-    <div class="input-group input-footer">
+    <div class="form-group input-footer">
         <p class="text">Login directly with Email?<a href="{{ route('attendee_login') }}"> Click here</a></p>
         <button class="theme-btn btn primary-filled" type="submit">Login</button>
     </div>
