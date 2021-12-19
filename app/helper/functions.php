@@ -1414,3 +1414,19 @@ function SaveMenu($menu,$position = null){
     
         
 }
+
+function EventAttendee($event_id){
+    $user = new User;
+    $user->name = 'Attendee';
+    $user->last_name = 'User';
+    $user->email = 'attendee@eventstub.co';
+    $user->type = 'attendee';
+    $user->event_id = $event_id;
+    if($user->save()){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+
+}

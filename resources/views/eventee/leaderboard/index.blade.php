@@ -10,6 +10,7 @@ Leaderboard Settings
 
 @section("styles")
 @include("includes.styles.fileUploader")
+<link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.css">
 @endsection
 
 @section("content")
@@ -46,7 +47,7 @@ $fields = getAllFields($id);
                 @csrf
                 <div class="form-group">
                     <label for="color">Select Color</label>
-                    <input type="color" class="form-control form-control-color" name="color" value="{{ $leaderSettings->color }}">
+                    <input type="text" class="form-control" id="colorpicker-default"  name="color" value="{{ $leaderSettings->color }}">
                 </div>
                 
                 <div id="form-append">
@@ -63,7 +64,9 @@ $fields = getAllFields($id);
                         @endforeach
                     @endif
                 </div>
-                
+                <div class="image-button">
+                    <button type="button" class="addSection2 btn btn-primary">Add Images</button>
+                </div>
                 <div id="point-append">
                     <div class="card-title"><h4>Leaderboard Points</h4></div>
                     @if(App\LeadPoint::where('owner',$leaderSettings->id)->count() > 0)
@@ -80,7 +83,7 @@ $fields = getAllFields($id);
                     @endforeach
                 @endif
                 </div>
-                <button type="button" class="addSection2 btn btn-primary">Add Images</button>
+                
                 <button type="button" class="addPoints2 btn btn-primary">Add Points</button>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
@@ -92,7 +95,13 @@ $fields = getAllFields($id);
 
 @section("scripts")
 @include("includes.scripts.fileUploader")
-
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
+<script >
+    $(document).ready(function(){
+        $("#colorpicker-default").spectrum();
+    })
+</script>
 <script>
     $(document).ready(function(){
         $('.addSection').on('click',function(){

@@ -100,7 +100,21 @@
             color: white;
         }
     </style>
-
+    @if(isset($id))
+        @php
+            $primary_color = App\Event::findOrFail($id)->primary_color;
+            $secondary_color = App\Event::findOrFail($id)->secondary_color;
+        @endphp
+        <style>
+            .navbar-custom{
+                background: {{ $primary_color }};
+               
+            }
+            .navbar-custom a{
+                color: {{ $secondary_color }} !important;
+            }
+        </style>
+    @endif
     @yield("styles_after")
     <script src="//code.jquery.com/jquery.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>

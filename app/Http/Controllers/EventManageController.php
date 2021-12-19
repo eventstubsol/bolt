@@ -121,7 +121,7 @@ class EventManageController extends Controller
         $event->link = $slug.'.'.str_replace('https://','',$baseurl).'';
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
-        if($req->domain){
+        if($req->domain && env('APP_ENV') != 'stagging'){
             $domain = $req->domain;
             if(strpos($domain,'https')){
                 $domain =  str_replace('https://','',$domain);

@@ -12,6 +12,7 @@
 
 @section("styles")
     @include("includes.styles.wyswyg")
+    <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.css">
 @endsection    
 
 @section("content")
@@ -81,11 +82,11 @@
                <form action="{{ route('eventee.settingscolorUpdate',$id) }}" method="POST">
                     <div class="form-group mb-3 col-md-4">
                         <label for="primary Color">Primary Color</label>
-                        <input type="color" name="primary_color" class="form-control" value="{{ $event->primary_color }}">
+                        <input type="text" name="primary_color" class="form-control colorpicker-default" value="{{ $event->primary_color }}">
                     </div>
                     <div class="form-group mb-3 col-md-4">
                         <label for="primary Color">Secondary Color</label>
-                        <input type="color" name="secondary_color" class="form-control" value="{{ $event->secondary_color }}">
+                        <input type="text" name="secondary_color" class="form-control colorpicker-default" value="{{ $event->secondary_color }}">
                     </div>
                     <button type="submit" class="btn btn-primary">Save</button>
                </form>
@@ -107,7 +108,13 @@
 
 @section("scripts")
     @include("includes.scripts.wyswyg")
-
+    <script src="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+    <script src="https://coderthemes.com/ubold/layouts/assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
+    <script >
+        $(document).ready(function(){
+            $(".colorpicker-default").spectrum();
+        })
+    </script>
 
     <script>
         $(document).ready(function(){

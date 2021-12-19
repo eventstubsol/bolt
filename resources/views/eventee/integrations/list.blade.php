@@ -61,7 +61,7 @@
                 </form>
             </div>
         </div> --}}
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-header"> <img width="150" src="https://onlinechat.co.in/wp-content/uploads/2021/08/cometchat-logo-768x401-1.jpg" class="img-fluid rounded-circle" alt="">   </div>
             <div class="card-body">
                 <form method="POST" action="{{ route("eventee.integrationsUpdate",['id'=>$id]) }}">
@@ -89,7 +89,7 @@
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 @endsection
