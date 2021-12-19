@@ -47,7 +47,7 @@
 
                       <div class="form-group mb-3">
                         <label for="calendly_link">Calendly Link
-                            <span style="color:red">*</span>
+                            {{-- <span style="color:red">*</span> --}}
                         </label>
                         <input type="url" name="calendly_link" class="form-control @error('calendly_link') is-invalid @enderror" value="{{ $booth->calendly_link }}" id="calendly_link" />
                         @error('room_id')
@@ -76,7 +76,7 @@
                         </span>
                         @enderror
                        </div>
-                    <div class="image-uploader">vidbg_url
+                    <div class="image-uploader">
                         <label class="mb-3" for="images">Booth Image
                             <span style="color:red">*</span>
                         </label>

@@ -62,7 +62,7 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Custom Domain (Optional)</label><br>
-                        <input type="text" id="domain" name="domain" class="slugInp" >
+                        <input type="text" id="domain" value="{{ isset($event->domain) ? $event->domain : '' }}" name="domain" class="slugInp" >
                         <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps and do not use http:// or https://.  </strong> </span>
                     </div>
                     @if($event->end_date >= Carbon\Carbon::today())
