@@ -1,4 +1,5 @@
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+{{-- <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="javascript/common.js" type="text/javascript"></script>
 
 <script src={{ asset("../assets/libs/summernote-bs4.min.js"  )}} ></script>
