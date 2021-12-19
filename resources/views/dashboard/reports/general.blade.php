@@ -301,7 +301,7 @@
       google.charts.setOnLoadCallback(drawChart);
 
       function drawChart(obj,total) {
-          console.log(obj.online);
+        //   console.log(obj.online);
         if(total == 0){
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
@@ -336,7 +336,8 @@
         
         
         var options = {
-          title: 'Online Users'
+          title: 'Online Users',
+          sliceVisibilityThreshold:0
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -393,7 +394,7 @@
                     ]);
                 }
                 else{
-                    console.log(object);
+                    // console.log(object);
                     var data = google.visualization.arrayToDataTable([
                         ['Page Name', 'UserCount'],
                         [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
@@ -496,7 +497,7 @@
                 method:"POST",
                 data:{id:"{{ $id }}"},
                 success:function(response){
-                    console.log(response);
+                    // console.log(response);
                     if(response.locations !=  null)
                     {   
                         $.each(response.locations,function(key,value){
