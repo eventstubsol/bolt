@@ -42,14 +42,14 @@ Route::group(['domain' => $appurl], function () {
 Route::post("/leaderboard", "EventManageController@leaderboard")->name("leaderboard");
 Route::Post("admin/logout","HomeController@logout")->name('admin.logout');
 Auth::routes();
-Route::get("/Register/Eventee","eventeeController@Regiter")->name('Eventee.register');
-Route::post('/Register/Eventee',"eventeeController@ConfirmRegister");
-Route::get('Eventee/Login',"eventeeController@Login")->name('Eventee.login');
-Route::post('Eventee/Login/Confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
+Route::get("/Register/EventAdmin","eventeeController@Regiter")->name('Eventee.register');
+Route::post('/Register/EventAdmin',"eventeeController@ConfirmRegister");
+Route::get('EventAdmin/Login',"eventeeController@Login")->name('Eventee.login');
+Route::post('EventAdmin/Login/Confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
 Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
 
 
-Route::prefix("Eventee")->middleware("eventee")->group(function(){
+Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
     Route::post('liveChart',"EventManageController@ChartJs")->name('eventee.chartJs');
     Route::post('SessionRoomChart',"EventManageController@SessionChartJs")->name('eventee.sessionChart');

@@ -56,7 +56,7 @@
 
                     <div class="form-group mb-3">
                         <label for="calendly_link">Calendly Link
-                            <span style="color:red">*</span>
+                            {{-- <span style="color:red">*</span> --}}
                         </label>
                         <input type="url" name="calendly_link" class="form-control @error('calendly_link') is-invalid @enderror" id="calendly_link" />
                         @error('room_id')
