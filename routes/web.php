@@ -64,8 +64,8 @@ Route::prefix("Eventee")->middleware("eventee")->group(function(){
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
-    Route::get('Event/edit/{id}','EventManageController@Edit')->name('event.Edit');
-    Route::post('Event/update/{id}','EventManageController@update')->name('event.Update');
+    Route::get('Event/edit/{event_id}','EventManageController@Edit')->name('event.Edit');
+    Route::post('Event/update/{event_id}','EventManageController@update')->name('event.Update');
     Route::post('event/delete',"EventManageController@destroy")->name('event.delete');
 
     Route::get('settings/chat/{id}','ChatController@ChatSettings')->name('settings.chat');
