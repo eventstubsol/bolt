@@ -28,12 +28,16 @@ class LeaderboardController extends Controller
         if($leaderBoard->save()){
             if($img !== null){
                 for($i = 0; $i < count($img) ;$i++){
-                    Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i]]);
+                    if($img[$i] != null){
+                        Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i]]);
+                    }
                 }
             }
             
             for($j = 0; $j < count($points) ; $j++){
-                LeadPoint::create(['owner'=>$leaderBoard->id,'point'=>$points[$j]]);
+                if($points[$i] != null){
+                    LeadPoint::create(['owner'=>$leaderBoard->id,'point'=>$points[$j]]);
+                }
             }
             flash("Data Uploaded Successfully")->success();
             return redirect()->route('eventee.leaderSetting',$id);
