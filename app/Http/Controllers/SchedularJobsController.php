@@ -27,7 +27,7 @@ class SchedularJobsController extends Controller
         ->get();    
         // print_r(Carbon::now()->subMinutes(15)->format('H:i'));
        if(count($schedules) > 0){
-           print_r($schedules);
+          //  print_r($schedules);
             foreach($schedules as $schedule){
                 $event = Event::findOrFail($schedule->event_id);
                 $notify = new PushNotification;
