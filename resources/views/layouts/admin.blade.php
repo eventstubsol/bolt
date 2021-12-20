@@ -12,9 +12,11 @@
     @yield('styles')
 
     <!-- App css -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-dark.min.css') }}" type="text/css">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css"> --}}
 	<link rel="stylesheet" href="{{ asset('assets/css/form.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}" type="text/css">
+    {{-- <link rel="stylesheet"  href="{{ asset('assets/css/app.min.css') }}" type="text/css"> --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/app-dark.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}?v=1234" type="text/css">
     <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/libs/nestable2/jquery.nestable.min.css">
@@ -458,7 +460,7 @@
 
 
 <!-- App js -->
-<script src="{{ asset('assets/js/app.min.js') }}"></script>
+<script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset("/js/chat/app.js") }}"></script>
 
