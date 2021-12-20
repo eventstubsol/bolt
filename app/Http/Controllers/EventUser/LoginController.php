@@ -60,7 +60,7 @@ class LoginController extends Controller
         // return Auth::user()->type;
         // return $subdomain;
         // return Auth::check();
-        if(Auth::user()->type =='exhibiter'){
+        if( Auth::user() !== null ? Auth::user()->type =='exhibiter' : true){
             Auth::logout(); 
             return redirect(route('attendeeLogin',$subdomain));
         }else{
