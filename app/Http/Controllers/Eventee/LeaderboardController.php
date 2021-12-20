@@ -35,7 +35,7 @@ class LeaderboardController extends Controller
             }
             
             for($j = 0; $j < count($points) ; $j++){
-                if($points[$i] != null){
+                if($points[$j] != null){
                     LeadPoint::create(['owner'=>$leaderBoard->id,'point'=>$points[$j]]);
                 }
             }
