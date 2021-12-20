@@ -120,7 +120,7 @@ $fields = getAllFields($id);
         });
         $('.addPoints').on('click',function(){
             var appendable = '<div class="form-group"><label for="points">Point</label><input type="text" name="points[]" class="form-control"></div>';
-            $('#pointsAppend').append(appendable);
+             $('#pointsAppend').append(appendable);
         });
     });
 </script>
