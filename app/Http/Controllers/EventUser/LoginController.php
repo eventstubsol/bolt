@@ -63,7 +63,6 @@ class LoginController extends Controller
         if(Auth::user()->type =='exhibiter'){
             Auth::logout(); 
             return redirect(route('attendeeLogin',$subdomain));
-       
         }else{
             if(Auth::user()->type =='attendee'){
                 $user = User::findOrFail(Auth::id());
@@ -79,21 +78,9 @@ class LoginController extends Controller
                     Auth::logout();
                     return redirect(route('attendeeLogin',$subdomain));
                 }
-        }
-    //     if(Auth::check() == 1){
-    //         // return $subdomain;
-         
-    //     }
-    //     elseif(Auth::user()->type =='exhibiter'){
-    //         // return 1;
-    //         // return Auth::user();
-    //    }
-
-    //     else{
-    //         // return Auth::user()->type;
-    //         return redirect()->back();
-    //     }
-            
-        }        
+            }
+        }  
+        Auth::logout();
+        return redirect(route('attendeeLogin',$subdomain));      
     }
 }
