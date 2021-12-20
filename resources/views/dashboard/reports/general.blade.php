@@ -93,7 +93,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>User Name</th>
+                                <th>Room Name</th>
                                 <th>Total User</th>
                             </tr>
                         </thead>
@@ -126,7 +126,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>User Name</th>
+                                <th>Page Name</th>
                                 <th>Total User</th>
                             </tr>
                         </thead>
@@ -156,7 +156,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>User Name</th>
+                                <th>Booth Name</th>
                                 <th>Total User</th>
                             </tr>
                         </thead>
@@ -565,6 +565,9 @@
                         $.each(response,function(key,value){
                             $('.loungeUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
                         });
+                    }
+                    else{
+                        $('.loungeUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
                     }
                    
                     setTimeout(function(){ onlineCall(); }, 3000);

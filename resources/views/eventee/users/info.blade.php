@@ -25,8 +25,11 @@ Manage Users
             </div>
             <div class="card-body">
                 <ul class="list-group">
+                    <li class="list-group-item">Name:<b> {{ $user->name }} {{ $user->last_name }} </b></li>
+                    <li class="list-group-item">Email:<b> {{ $user->email }}</b></li>
+                    <li class="list-group-item">Role:<b> {{ $user->type }}</b></li>
                     @foreach ( $user_data as $data)
-                     <li class="list-group-item"><b>{{ ($data->user_field) }}</b>: &nbsp;{{ ($data->field_value) }}</li>
+                     <li class="list-group-item">{{ ($data->user_field) }}: &nbsp;<b>{{ ($data->field_value) }}</b></li>
                     @endforeach
                    
                 </ul>
