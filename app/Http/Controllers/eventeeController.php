@@ -16,6 +16,7 @@ use App\Event;
 // use App\Menu;
 use Browser;
 use Carbon\Carbon;
+use App\Http\Requests\registerEventeeRequest;
 use Illuminate\Support\Facades\Http;
 
 class eventeeController extends Controller
@@ -26,32 +27,32 @@ class eventeeController extends Controller
         return view('eventee.register')->with(compact("id"));
     }
 
-    public function ConfirmRegister(Request $request){
+    public function ConfirmRegister(registerEventeeRequest $request){
         
-        if(empty($request->name)){
-            flash("Name Field Cannot Be blank")->error();
-            return redirect()->back();
-        }
-        elseif(empty($request->last_name)){
-            flash("Last Name Field Cannot Be blank")->error();
-            return redirect()->back();
-        }
-        elseif(empty($request->email)){
-            flash("Email Address Field Cannot Be blank")->error();
-            return redirect()->back();
-        }
-        elseif(empty($request->phone)){
-            flash("Phone Number Field Cannot Be blank")->error();
-            return redirect()->back();
-        }
-        elseif(empty($request->password)){
-            flash("Password Field Cannot Be blank")->error();
-            return redirect()->back();
-        }
-        elseif(empty($request->job_title)){
-            flash("Job Title Field Cannot Be blank")->error();
-            return redirect()->back();
-        }
+        // if(empty($request->name)){
+        //     flash("Name Field Cannot Be blank")->error();
+        //     return redirect()->back();
+        // }
+        // elseif(empty($request->last_name)){
+        //     flash("Last Name Field Cannot Be blank")->error();
+        //     return redirect()->back();
+        // }
+        // elseif(empty($request->email)){
+        //     flash("Email Address Field Cannot Be blank")->error();
+        //     return redirect()->back();
+        // }
+        // elseif(empty($request->phone)){
+        //     flash("Phone Number Field Cannot Be blank")->error();
+        //     return redirect()->back();
+        // }
+        // elseif(empty($request->password)){
+        //     flash("Password Field Cannot Be blank")->error();
+        //     return redirect()->back();
+        // }
+        // elseif(empty($request->job_title)){
+        //     flash("Job Title Field Cannot Be blank")->error();
+        //     return redirect()->back();
+        // }
         
         $userEmail = User::where('email',$request->email)->where('event_id',null)->count();
         if($userEmail > 0){
