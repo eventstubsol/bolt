@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\rules\dataCheck;
 
 class SessionFormRequest extends FormRequest
 {
@@ -28,8 +29,8 @@ class SessionFormRequest extends FormRequest
             'description' => 'required|max:1000',
             'type' => 'required',
             'room_id' => 'required',
-            'start_time' => 'required|after_or_equal:today',
-            'end_time' => 'required|after:start_time'
+            'start_time' => ['required','after_or_equal:today'],
+            'end_time' => ['required',new dataCheck(\Request()->start_time)]
 
         ];
     }
