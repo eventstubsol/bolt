@@ -21,7 +21,7 @@
                 <label for="name">First Name
                     <span style="color:red">*</span>
                 </label>
-                <input id="name" type="text" class="field form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="first-name" placeholder="First Name" autofocus>
+                <input id="name" type="text" class="field form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"   autocomplete="first-name" placeholder="First Name" autofocus>
                 @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -33,7 +33,12 @@
                 <label for="last_name">Last Name
                     <span style="color:red">*</span>
                 </label>
-                <input id="last_name" type="text" class="field form-control" name="last_name" value="{{ old('last_name') }}" required autocomplete="family-name" placeholder="Last Name">
+                <input id="last_name" type="text" class="field form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}"   autocomplete="family-name" placeholder="Last Name">
+                @error('last_name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
             </div>
         </div>
         <div class="move2  form-group row input-group">
@@ -41,7 +46,7 @@
                 <label for="email" >Corporate E-Mail Address
                     <span style="color:red">*</span>
                 </label>
-                <input id="email" type="email" class="field form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Address" >
+                <input id="email" type="email" class="field form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"   autocomplete="email" placeholder="Email Address" >
 
                 @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -54,13 +59,23 @@
                 <label for="phone" >Phone Number
                     <span style="color:red">*</span>
                 </label>
-                <input id="phone" type="tel" class="field form-control " name="phone" value="{{ old('phone') }}" required autocomplete="tel" placeholder="Phone Number">
+                <input id="phone" type="tel" class="field form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}"   autocomplete="tel" placeholder="Phone Number">
+                @error('phone')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="password" >Password
                     <span style="color:red">*</span>
                 </label>
-                <input id="password" type="password" class="field form-control " name="password" value="{{ old('password') }}" placeholder="Password">
+                <input id="password" type="password" class="field form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" placeholder="Password">
+                @error('password')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
             </div>
         </div>
 
@@ -69,7 +84,12 @@
                 <label for="job_title" >Job Title
                     <span style="color:red">*</span>
                 </label>
-                <input id="job_title" type="text" class="field form-control " style="width:100%" name="job_title" value="{{ old('job_title') }}" placeholder="Job Title">
+                <input id="job_title" type="text" class="field form-control @error('job_title') is-invalid @enderror" style="width:100%" name="job_title" value="{{ old('job_title') }}" placeholder="Job Title">
+                @error('job_title')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
             </div>
         </div>
 
