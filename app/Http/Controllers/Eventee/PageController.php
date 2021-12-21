@@ -15,6 +15,7 @@ use App\Event;
 use App\Modal;
 use App\Treasure;
 use Carbon\Carbon;
+use App\Http\Requests\PageFormRequest;
 use PDO;
 
 class PageController extends Controller
@@ -32,13 +33,13 @@ class PageController extends Controller
         return view("eventee.pages.createForm")->with(compact('id'));
     }
 
-    public function store(Request $request,$id)
+    public function store(PageFormRequest $request,$id)
     {
         // dd($request->all());
-        if(empty($request->name)){
-            flash("Name Field Cannot Be Left Blank")->error();
-            return redirect()->back();
-        }
+        // if(empty($request->name)){
+        //     flash("Name Field Cannot Be Left Blank")->error();
+        //     return redirect()->back();
+        // }
         $name = str_replace(" ","_",$request->name);
         $page = new Page([
             "name" => $name,

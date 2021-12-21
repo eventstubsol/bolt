@@ -43,12 +43,18 @@
                         <label for="name">Event Name
                             <span style="color:red">*</span>
                         </label>
-                        <input type="text" id="event_name" name="name" value="{{ $event->name }}" class="form-control" required>
+                        <input type="text" id="event_name" name="name" value="{{ $event->name }}" class="form-control @error('name') is-invalid @enderror">
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="name">Event Link
                             <span style="color:red">*</span></label><br>
-                        <input type="text" id="event_slug" name="event_slug" class="slugInp" value="{{ $event->slug }}" required>
+                        <input type="text" id="event_slug" name="slug" class="slugInp @error('slug') is-invalid @enderror" value="{{ $event->slug }}" required>
+                        @error('slug')
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
                         @php
                             $baseurl = URL::to('/');
                             if(strpos($baseurl,'https')){
@@ -71,13 +77,19 @@
                                 <label for="name">Start Date
                                     <span style="color:red">*</span>
                                 </label>
-                                <input type="date" name="start_date" value="{{ $event->start_date }}"  class="form-control" required>
+                                <input type="date" name="start_date" value="{{ $event->start_date }}"  class="form-control @error('start_date') is-invalid @enderror" required>
+                                @error('start_date')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col">
                                 <label for="name">End Date
                                     <span style="color:red">*</span>
                                 </label>
-                                <input type="date" name="end_date" value="{{ $event->end_date }}" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
+                                <input type="date" name="end_date" value="{{ $event->end_date }}" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control @error('end_date') is-invalid @enderror" required>
+                                @error('end_date')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                @enderror
                             </div>
                             
                         </div><br>

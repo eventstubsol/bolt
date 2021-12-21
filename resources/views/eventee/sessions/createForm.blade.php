@@ -33,7 +33,7 @@
                         <label for="name">Title
                             <span style="color:red">*</span>
                         </label>
-                        <input  autofocus type="text"  id="name" required value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
+                        <input  autofocus type="text"  id="name"  value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -46,7 +46,7 @@
                         <label for="summernote-basic">Description
                             <span style="color:red">*</span>
                         </label>
-                        <textarea id="summernote-basic" required name="description" class="form-control @error('description') is-invalid @enderror" >{!! old("description") !!}</textarea>
+                        <textarea id="summernote-basic" name="description" class="form-control @error('description') is-invalid @enderror" >{!! old("description") !!}</textarea>
                         @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -59,7 +59,7 @@
                         <label for="example-select-1">Type
                             <span style="color:red">*</span>
                         </label>
-                        <select name="type" class="form-control @error('type') is-invalid @enderror" id="session_type" required>
+                        <select name="type" class="form-control @error('type') is-invalid @enderror" id="session_type" >
                             @foreach(EVENT_SESSION_TYPES as $type)
                               <option value={{$type}} onselect="{{$selected_type = $type}}" >{{ str_replace('_'," ",$type)}}</option>
                              @endforeach
@@ -78,7 +78,7 @@
                         <label for="example-select">Room
                             <span style="color:red">*</span>
                         </label>
-                        <select name="room_id"  class="form-control @error('room_id') is-invalid @enderror" id="example-select" required>
+                        <select name="room_id"  class="form-control @error('room_id') is-invalid @enderror" id="example-select" >
                             <option value="">Select Room</option>
                             @foreach($rooms as $room)
                               <option value={{$room->id}}>{{$room->name}}</option>
@@ -98,7 +98,12 @@
                                 <label class="form-label">Start Time
                                     <span style="color:red">*</span>
                                 </label>
-                            <input  name="start_time" type="datetime-local" class="form-control" required/>
+                            <input  name="start_time" type="datetime-local" class="form-control @error('start_time') is-invalid @enderror" value="{{ old('start_time') }}"/>
+                            @error('start_time')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                         </div>
                         <div class="col-md-6">
@@ -106,7 +111,12 @@
                                 <label class="form-label">End Time
                                     <span style="color:red">*</span>
                                 </label>
-                                <input  name="end_time" type="datetime-local" class="form-control" required/>
+                                <input  name="end_time" type="datetime-local" class="form-control @error('end_time') is-invalid @enderror" value="{{ old('end_time') }}"/>
+                                @error('end_time')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                     </div>

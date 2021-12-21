@@ -30,7 +30,7 @@ Create Schedule Notification
                         <label for="title">Title
                             <span style="color:red">*</span>
                         </label>
-                        <input autofocus  maxlength="255"  value="{{ old('title') }}" type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" required/>
+                        <input autofocus  maxlength="255"  value="{{ old('title') }}" type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror"    />
                         @error('title')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -41,7 +41,7 @@ Create Schedule Notification
                         <label for="message">Message
                             <span style="color:red">*</span>
                         </label>
-                        <textarea id="message" required name="message" class="form-control @error('message') is-invalid @enderror" maxlength="255">{{ old('message') }}</textarea>
+                        <textarea id="message"     name="message" class="form-control @error('message') is-invalid @enderror" maxlength="255">{{ old('message') }}</textarea>
                         @error('message')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -61,7 +61,7 @@ Create Schedule Notification
                         <label for="user-type">Select Roles
                             <span style="color:red">*</span>
                         </label>
-                        <select id="user-type" name="roles" required class="form-control  @error('message') is-invalid @enderror" >
+                        <select id="user-type" name="roles"     class="form-control  @error('message') is-invalid @enderror" >
                             <option >All</option>
                             <option>Attendee</option>
                             <option>Delegates</option>
@@ -78,7 +78,7 @@ Create Schedule Notification
                         <label for="title">Sending On
                             <span style="color:red">*</span>
                         </label>
-                        <input autofocus required  value="{{ old('sending_date') }}" type="date" id="sending_date" name="sending_date" class="form-control @error('sending_date') is-invalid @enderror" required/>
+                        <input autofocus      value="{{ old('sending_date') }}" type="date" id="sending_date" name="sending_date" class="form-control @error('sending_date') is-invalid @enderror"    />
                         @error('sending_date')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -89,7 +89,7 @@ Create Schedule Notification
                         <label for="title">Sending At
                             <span style="color:red">*</span>
                         </label>
-                        <input autofocus required  value="{{ old('sending_at') }}" type="time" id="sending_at" name="sending_at" class="form-control @error('sending_date') is-invalid @enderror" required/>
+                        <input autofocus      value="{{ old('sending_at') }}" type="time" id="sending_at" name="sending_at" class="form-control @error('sending_date') is-invalid @enderror"    />
                         @error('sending_date')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

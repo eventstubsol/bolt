@@ -128,30 +128,15 @@
     <div class="collapse" id="notification">
         <ul class="nav-second-level">
             <li>
-                <a href="{{ route("eventee.notification",$id) }}">Manage</a>
+                <a href="{{ route("eventee.notification",$id) }}">Instantly Send Notification</a>
             </li>
             <li>
-                <a href="{{ route("eventee.notification.create",$id) }}">Create</a>
+                <a href="{{ route("eventee.schedule",$id) }}">Schedule A Notification</a>
             </li>
         </ul>
     </div>
 </li>
-<li>
-    <a href="#schedule-notification" data-toggle="collapse" >
-        <i class="fa fa-calendar" aria-hidden="true"></i>
-        <span>Schedule Notifications</span>
-    </a>
-    <div class="collapse" id="schedule-notification">
-        <ul class="nav-second-level">
-            <li>
-                <a href="{{ route("eventee.schedule",$id) }}">Manage</a>
-            </li>
-            <li>
-                <a href="{{ route("eventee.schedule.create",$id) }}">Create</a>
-            </li>
-        </ul>
-    </div>
-</li>
+
 {{-- <li>
     <a href="#polls" data-toggle="collapse">
         <i data-feather="bar-chart-2"></i>

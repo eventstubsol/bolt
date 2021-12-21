@@ -11,6 +11,7 @@ use App\Modal;
 use App\ModalItem;
 use App\Page;
 use App\sessionRooms;
+use App\Http\Requests\ModalFormRequest;
 
 class ModalController extends Controller
 {
@@ -32,12 +33,12 @@ class ModalController extends Controller
         return view("eventee.modals.create")->with(compact(["session_rooms","pages","booths","id"]));
    
     }
-    public function store($id,Request $request){
+    public function store($id,ModalFormRequest $request){
         // dd($req->all());
-        if(empty($request->name)){
-            flash("Name Field Cannot Be Left Blank")->error();
-            return redirect()->back();
-        }
+        // if(empty($request->name)){
+        //     flash("Name Field Cannot Be Left Blank")->error();
+        //     return redirect()->back();
+        // }
         $event_id = $id;
         $name = $request->name;
         $modal = new Modal([

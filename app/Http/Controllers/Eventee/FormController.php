@@ -9,7 +9,7 @@ use App\FormStruct;
 use App\Form;
 use App\FormField;
 use Illuminate\Support\Facades\Log;
-
+use App\Http\Requests\FormControlRequest;
 
 class FormController extends Controller
 {
@@ -38,12 +38,12 @@ class FormController extends Controller
             // dd($structsDefault);
         return view("eventee.form.editForm")->with(compact("id","structsDefault","form"));
     }
-    public function store(Request $request,$id){
+    public function store(FormControlRequest $request,$id){
         // dd($request->all());
-        if(empty($request->name)){
-            flash("Name Field Cannot Be Blank")->error();
-            return redirect()->back();
-        }
+        // if(empty($request->name)){
+        //     flash("Name Field Cannot Be Blank")->error();
+        //     return redirect()->back();
+        // }
         $form = Form::create([
             "name"=>$request->name,
             "event_id"=>$id,

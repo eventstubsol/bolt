@@ -20,6 +20,8 @@ use App\UserData;
 use App\UserSubtype;
 use App\Imports\UserImport;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
+use App\Http\Requests\UserFormRequest;
+use App\Http\Requests\SubTypeFormRequest;
 use stdClass;
 
 class UserController extends Controller
@@ -62,12 +64,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function subTypestore(Request $request, $id)
+    public function subTypestore(SubTypeFormRequest $request, $id)
     {
-        if(empty($request->name)){
-            flash('Name Cannot Be Blank')->error();
-            return redirect()->back();
-        }
+        // if(empty($request->name)){
+        //     flash('Name Cannot Be Blank')->error();
+        //     return redirect()->back();
+        // }
         $check = UserSubtype::where('name',$request->name)->where('event_id',$id)->count();
         if($check < 1){
             $usertype = UserSubtype::create([
@@ -93,25 +95,25 @@ class UserController extends Controller
 
 
 
-    public function store(Request $request, $id)
+    public function store(UserFormRequest $request, $id)
     {
        
-            if(empty($request->name)){
-                flash("Name Field Cannot Be Blank")->error();
-                return redirect()->back();
-            }
-            elseif(empty($request->last_name)){
-                flash("Last Name Field Cannot Be Blank")->error();
-                return redirect()->back();
-            }
-            elseif(empty($request->email)){
-                flash("Email Field Cannot Be Blank")->error();
-                return redirect()->back();
-            }
-            elseif(empty($request->type)){
-                flash("Type Muse Be Selected")->error();
-                return redirect()->back();
-            }
+            // if(empty($request->name)){
+            //     flash("Name Field Cannot Be Blank")->error();
+            //     return redirect()->back();
+            // }
+            // elseif(empty($request->last_name)){
+            //     flash("Last Name Field Cannot Be Blank")->error();
+            //     return redirect()->back();
+            // }
+            // elseif(empty($request->email)){
+            //     flash("Email Field Cannot Be Blank")->error();
+            //     return redirect()->back();
+            // }
+            // elseif(empty($request->type)){
+            //     flash("Type Muse Be Selected")->error();
+            //     return redirect()->back();
+            // }
             
             // $userData = $request->except("_token");
             // $userData["password"] = Hash::make($userData["password"]);

@@ -10,6 +10,7 @@ use App\Modal;
 use App\Page;
 use App\sessionRooms;
 use Error;
+use App\Http\Requests\MenuFormRequest;
 use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
@@ -86,7 +87,7 @@ class MenuController extends Controller
             dd($err);
         }
     }
-    public function saveNav(Request $request,$id)
+    public function saveNav(MenuFormRequest $request,$id)
     {
         // dd($request->all());
         $to = '';
@@ -156,7 +157,7 @@ class MenuController extends Controller
         // dd($menu);
         return redirect(route("eventee.menu",$id));
     }
-    public function saveFooter(Request $request,$id)
+    public function saveFooter(MenuFormRequest $request,$id)
     {
         // dd($request->all());
         $to = '';

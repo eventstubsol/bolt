@@ -29,7 +29,7 @@
                         <label for="name">Name
                             <span style="color:red">*</span>
                         </label>
-                        <input  autofocus type="text"  id="name" value="{{old('question')}}" name="name" required class="form-control   @error('name') is-invalid @enderror">
+                        <input  autofocus type="text"  id="name" value="{{old('question')}}" name="name"   class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

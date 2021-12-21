@@ -21,7 +21,7 @@ use App\Page;
 use App\Link;
 use App\Modal;
 use App\sessionRooms;
-
+use App\Http\Requests\BoothFormRequest;
 use App\Resource;
 use Illuminate\Support\Facades\Http;
 
@@ -47,7 +47,7 @@ class BoothController extends Controller
   }
 
   //Create new booth instance
-  public function store(Request $request,$id)
+  public function store(BoothFormRequest $request,$id)
   {
       // dd($request->all());
       if(empty($request->name)){

@@ -46,13 +46,19 @@
                             <label for="Question">Question
                                 <span style="color:red">*</span>
                             </label>
-                            <input type="text" name="question" class="form-control" required>
+                            <input type="text" name="question" class="form-control @error('question') is-invalid @enderror" value="{{ old('question') }}">
+                            @error('question')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="answer">Answer
                                 <span style="color:red">*</span>
                             </label>
-                            <textarea  name="answer"  id="summernote-basic" class="form-control" cols="500" rows="1000" required></textarea>
+                            <textarea  name="answer"  id="summernote-basic" class="form-control @error('answer') is-invalid @enderror" cols="500" rows="1000" >{{ old('answer') }}</textarea>
+                            @error('answer')
+                                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <span style="float: right"><button type="submit" class="btn btn-success">Save</button></span>
