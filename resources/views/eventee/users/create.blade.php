@@ -27,7 +27,7 @@ Create Users
                             <span style="color:red">*</span>
                         </label>
                         <input autofocus  value="{{ old('name') }}" type="text" id="name" name="name"
-                            class="form-control @error('name') is-invalid @enderror" required />
+                            class="form-control @error('name') is-invalid @enderror"     />
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -39,7 +39,7 @@ Create Users
                             <span style="color:red">*</span>
                         </label>
                         <input autofocus  value="{{ old('last_name') }}" type="text" id="last_name" name="last_name"
-                            class="form-control @error('last_name') is-invalid @enderror" required/>
+                            class="form-control @error('last_name') is-invalid @enderror"    />
                         @error('last_name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -51,7 +51,7 @@ Create Users
                             <span style="color:red">*</span>
                         </label>
                         <input id="email"  value="{{ old('email') }}" type="email" name="email"
-                            class="form-control @error('email') is-invalid @enderror" required/>
+                            class="form-control @error('email') is-invalid @enderror"    />
                         @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -72,7 +72,7 @@ Create Users
                         <label for="type">Type of User
                             <span style="color:red">*</span>
                         </label>
-                        <select class="form-control" id="user-type" name="type" required>
+                        <select class="form-control" id="user-type" name="type"    >
                             @foreach(USER_TYPES as $type)
                             <option value="{{ $type }}">{{ ucfirst($type) }}</option>
                             @endforeach

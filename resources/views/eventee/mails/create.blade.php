@@ -28,6 +28,7 @@
             </div>
             <div class="card-body">
                 <form action="{{ route('eventee.mail.send',$id) }}" method="POST">
+                    @csrf
                     <div class="form-group">
                         <label for="sentTo">Send To <span style="color:red">*</span></label>
                         <select name="sent_to_type" class="form-control" onchange="setDropdown(this)" >
@@ -87,11 +88,17 @@
 
                     <div class="form-group">
                         <label for="subject">Subject<span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="subject" required>
+                        <input type="text" class="form-control @error('subject') is-invalid @enderror" name="subject"  value="{{ old('subject') }}">
+                        @error('subject')
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="subject">Message<span style="color:red">*</span></label>
-                        <textarea name="message" id="summernote-basic" class="form-control" cols="500" rows="1000" required></textarea>
+                        <textarea name="message" id="summernote-basic" class="form-control  @error('message') is-invalid @enderror" cols="500" rows="1000" >{{ old('message') }}</textarea>
+                        @error('message')
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
                     </div>
                     <button type="submit" style="float: right" class="btn btn-toolbar">Send</button>
                 </form>

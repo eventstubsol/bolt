@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\FAQ;
 use App\Event;
+use App\Http\Requests\FaqFormRequest;
 
 
 class FaqController extends Controller
@@ -19,15 +20,15 @@ class FaqController extends Controller
     public function create($id){
         return view('eventee.faq.create',compact('id'));
     }
-    public function store($id,Request $req){
-        if(empty($req->question)){
-            flash("Question Field Cannot Be Blank")->error();
-            return redirect()->back();
-        }
-        elseif(empty($req->answer)){
-            flash("Answer Field Cannot Be Blank")->error();
-            return redirect()->back();
-        }
+    public function store($id,FaqFormRequest $req){
+        // if(empty($req->question)){
+        //     flash("Question Field Cannot Be Blank")->error();
+        //     return redirect()->back();
+        // }
+        // elseif(empty($req->answer)){
+        //     flash("Answer Field Cannot Be Blank")->error();
+        //     return redirect()->back();
+        // }
         $faq = new FAQ;
         $faq->event_id = $id;
         $faq->question = $req->question;

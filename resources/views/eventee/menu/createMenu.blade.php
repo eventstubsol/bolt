@@ -33,8 +33,10 @@ Create Menu
                             <label for="recipient-name" class="col-form-label">Name:
                                 <span style="color:red">*</span>
                             </label>
-                            <input type="text" required class="form-control" id="recipient-name" name="name">
-                            
+                            <input type="text"  class="form-control  @error('name') is-invalid @enderror" id="recipient-name" name="name">
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                            @enderror
                         </div>
                     <!-- End Name  -->
 
@@ -44,11 +46,14 @@ Create Menu
                             <label for="type">type
                                 <span style="color:red">*</span>
                             </label>
-                            <select required class="form-control type" name="type" required>
+                            <select  class="form-control type @error('type') is-invalid @enderror" name="type" >
                                 @foreach(MENU_LINK_TYPES as $type)
                                 <option value="{{$type}}">{{$type}}</option>
                                 @endforeach
                             </select>
+                            @error('type')
+                                <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                            @enderror
                         </div>
                     <!-- end type -->
                     

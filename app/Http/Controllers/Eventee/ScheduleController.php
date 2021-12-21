@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Eventee;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\ScheduleNotification;
+use App\Http\Requests\ScheduleFormRequest;
 
 class ScheduleController extends Controller
 {
@@ -18,7 +19,7 @@ class ScheduleController extends Controller
         return view('eventee.schedule.create',compact('id'));
     }
 
-    public function store(Request $request,$id){
+    public function store(ScheduleFormRequest $request,$id){
         $title = $request->post("title");
         $message = $request->post("message");
         $url = $request->post("url", NULL);

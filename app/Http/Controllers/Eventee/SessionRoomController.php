@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\sessionRooms;
 use App\Image;
+use App\Http\Requests\RoomFormRequest;
 use Illuminate\Support\Facades\Log;
 
 class SessionRoomController extends Controller
@@ -24,14 +25,14 @@ class SessionRoomController extends Controller
         return view("eventee.sessionrooms.createForm")->with(compact('id'));
     }
 
-    public function store(Request $request,$id){
+    public function store(RoomFormRequest $request,$id){
         try{
 
             //creating new room
-            if(empty($request->name)){
-                flash("Name Field Cannot Be Left Blank")->error();
-                return redirect()->back();
-            }
+            // if(empty($request->name)){
+            //     flash("Name Field Cannot Be Left Blank")->error();
+            //     return redirect()->back();
+            // }
             $name = str_replace(" ","_",$request->name);
             $room = new sessionRooms([
                 "name"=>$name,

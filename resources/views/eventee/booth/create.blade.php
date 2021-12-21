@@ -33,7 +33,7 @@
                         <label for="boothname">Booth Name
                             <span style="color:red">*</span>
                         </label>
-                        <input autofocus required type="text" value="{{old('name')}}" id="boothname" name="name" class="form-control  @error('name') is-invalid @enderror" >
+                        <input autofocus   type="text" value="{{old('name')}}" id="boothname" name="name" class="form-control  @error('name') is-invalid @enderror" >
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -47,15 +47,21 @@
                         </label>
                         <input type="hidden" name="boothurl" class="upload_input"  >
                         <input type="file" data-name="boothimages" data-plugins="dropify" data-type="image" />
+                        @error('boothurl')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                      </div>
                      <div class="image-uploader" id="vidBg">
                         <label class="mb-3" for="images">Booth Video (Optional)</label>
                         <input type="hidden" name="video_url" class="upload_input" >
                         <input type="file" data-name="video_url" data-plugins="dropify" data-type="video"  />
+                        
                     </div>
 
                     <div class="form-group mb-3">
-                        <label for="calendly_link">Calendly Link
+                        <label for="calendly_link">Calendly Link (Optional)
                             {{-- <span style="color:red">*</span> --}}
                         </label>
                         <input type="url" name="calendly_link" class="form-control @error('calendly_link') is-invalid @enderror" id="calendly_link" />
@@ -73,7 +79,7 @@
                           <label for="user">Select Exhibitor
                             <span style="color:red">*</span>
                           </label>
-                          <select required class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user" name="userids[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
+                          <select   class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user" name="userids[]" data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
                               @foreach($users as $user) 
                                 <option value={{$user->id}}>{{$user->name}} ({{$user->email}}) </option>
                               @endforeach

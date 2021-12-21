@@ -33,7 +33,7 @@
                         <label for="name">Title
                             <span style="color:red">*</span>
                         </label>
-                        <input required autofocus type="text"  id="name" value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
+                        <input  autofocus type="text"  id="name" value="{{old('name')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -49,7 +49,12 @@
                         <label>Number of Seats
                             <span style="color:red">*</span>
                         </label>
-                        <input required type="number" name="seats" class="form-control ">
+                        <input type="text" name="seats" class="form-control @error('seats') is-invalid @enderror" value="{{old('seats')}}">
+                        @error('seats')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
 
                     <input type="text" name="meetingId" class="form-control "  id="meetingId" style="display:none"  >

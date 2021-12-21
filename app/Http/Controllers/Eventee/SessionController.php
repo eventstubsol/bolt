@@ -21,6 +21,7 @@ use App\Resource;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Auth;
 use App\ScheduleNotification;
+use App\Http\Requests\SessionFormRequest;
 
 
 class SessionController extends Controller
@@ -61,7 +62,7 @@ class SessionController extends Controller
             );
     }
 
-    public function store(Request $request,$id)
+    public function store(SessionFormRequest $request,$id)
     {
         // dd($request->all());
         if(empty($request->name)){

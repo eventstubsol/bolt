@@ -17,6 +17,8 @@ use App\Event;
 use Browser;
 use Carbon\Carbon;
 use App\Http\Requests\registerEventeeRequest;
+use App\Http\Requests\LoginValidationRequest;
+
 use Illuminate\Support\Facades\Http;
 
 class eventeeController extends Controller
@@ -84,21 +86,21 @@ class eventeeController extends Controller
         return view('eventee.login')->with(compact("id"));
     }
 
-    public function ConfirmLogin(Request $req){
+    public function ConfirmLogin(LoginValidationRequest $req){
         try{
             
-            if(empty($req->password) && empty($req->email)){
-                flash("Both Fields Are Required")->error();
-                return redirect()->back();
-            }
-            elseif(empty($req->email)){
-                flash("Please Fill Email Field")->error();
-                return redirect()->back();
-            }
-            else if(empty($req->password)){
-                flash("Please Fill Password Field")->error();
-                return redirect()->back();
-            }
+            // if(empty($req->password) && empty($req->email)){
+            //     flash("Both Fields Are Required")->error();
+            //     return redirect()->back();
+            // }
+            // elseif(empty($req->email)){
+            //     flash("Please Fill Email Field")->error();
+            //     return redirect()->back();
+            // }
+            // else if(empty($req->password)){
+            //     flash("Please Fill Password Field")->error();
+            //     return redirect()->back();
+            // }
             
 
             $user = User::where('email',$req->email)->where("type","eventee")->first();

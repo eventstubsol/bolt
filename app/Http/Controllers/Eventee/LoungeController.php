@@ -10,6 +10,7 @@ use App\Participant;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoungeFormRequest;
 
 
 class LoungeController extends Controller
@@ -24,16 +25,16 @@ class LoungeController extends Controller
         return view("eventee.lounge.createForm")->with(compact(["id"]));
     }
 
-    public function store(Request $request,$id)
+    public function store(LoungeFormRequest $request,$id)
     {
-        if(empty($request->name)){
-            flash("Name Field Cannot Be Left Blank")->error();
-            return redirect()->back();
-        }
-        else if(empty($request->seats)){
-            flash("Seats Field Cannot Be Left Blank")->error();
-            return redirect()->back();
-        }
+        // if(empty($request->name)){
+        //     flash("Name Field Cannot Be Left Blank")->error();
+        //     return redirect()->back();
+        // }
+        // else if(empty($request->seats)){
+        //     flash("Seats Field Cannot Be Left Blank")->error();
+        //     return redirect()->back();
+        // }
         NetworkingTable::create([
             "name"=>$request->name,
             "seats"=>$request->seats,
