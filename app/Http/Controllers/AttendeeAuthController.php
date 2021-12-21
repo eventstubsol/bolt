@@ -97,13 +97,15 @@ class AttendeeAuthController extends Controller
         if (!$user) {
 
             // dd("not found");
-            return view("eventUser.login")->with([
-                "login" => $this->loginT,
-                "notFound" => TRUE,
-                "captchaError" => FALSE,
-                "id"=>$event->id,
-                "subdomain"=>$event->slug
-            ]);
+            flash("invalid credentials")->error();
+            return redirect()->back();
+            // return view("eventUser.login")->with([
+            //     "login" => $this->loginT,
+            //     "notFound" => TRUE,
+            //     "captchaError" => FALSE,
+            //     "id"=>$event->id,
+            //     "subdomain"=>$event->slug
+            // ]);
             // return redirect(route("attendeeLogin",$subdomain))->with([
             //         "notFound" => TRUE,
             //         "captchaError" => FALSE,
