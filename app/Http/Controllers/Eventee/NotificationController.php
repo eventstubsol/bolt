@@ -10,6 +10,9 @@ use App\User;
 use App\Events\NotificationEvent;
 use App\Event;
 use App\PushNotification;
+use App\sessionRooms;
+use App\Page;
+use App\Booth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Http;
@@ -28,7 +31,10 @@ class NotificationController extends Controller
 
     public function create($id)
     {
-        return view("eventee.notification.create",compact("id"));
+        $pages = Page::where('event_id',$id)->get();
+        $rooms = sessionRooms::where('event_id',$id)->get();
+        $booths = Booth::where('event_id',$id)->get();
+        return view("eventee.notification.create",compact("id",'pages','booths','rooms'));
     }
 
     public function store(Request $request,$id)
@@ -57,9 +63,19 @@ class NotificationController extends Controller
         $notify->message = $request->post("message");
         $notify->roles =implode(", ", $request->post("roles"));
         $notify->event_id = $id;
+        $notify->location = $request->location;
+        if($request->location !== 'lobby'){
+            $notify->location_type = $request->locations_type;
+        }
         $role = implode(", ", $request->post("roles"));
+        if($request->location !== 'lobby'){
+            event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location,$request->location_type));
+        }
+        else{
+            event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location));
+        }
         if($notify->save()){
-            $notification = event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL)));
+            
             flash("Notification Sent Succesfully")->success();
             return redirect()->route('eventee.notification',$id);
         }

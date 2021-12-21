@@ -36,7 +36,7 @@ Create Update
                         <label for="name">Title
                             <span style="color:red">*</span>
                         </label>
-                        <input required autofocus type="text" id="name" value="{{$session->name}}" name="name" class="form-control   @error('name') is-invalid @enderror">
+                        <input autofocus type="text" id="name" value="{{$session->name}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -103,7 +103,12 @@ Create Update
                                 <label class="form-label">Start Time
                                     <span style="color:red">*</span>
                                 </label>
-                                <input value="{{$session->start_times}}" name="start_time" id="start_time" type="datetime-local" class="form-control" required />
+                                <input value="{{$session->start_times}}" name="start_time" id="start_time" type="datetime-local" class="form-control @error('start_time') is-invalid @enderror" required />
+                                @error('start_time')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -111,7 +116,12 @@ Create Update
                                 <label class="form-label">End Time
                                     <span style="color:red">*</span>
                                 </label>
-                                <input value="{{$session->end_times}}" name="end_time" type="datetime-local" class="form-control" required/>
+                                <input value="{{$session->end_times}}" name="end_time" type="datetime-local" class="form-control  @error('end_time') is-invalid @enderror" required/>
+                                @error('end_time')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                     </div>

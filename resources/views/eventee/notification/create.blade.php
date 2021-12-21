@@ -58,6 +58,55 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
+                        <label for="user-type">Select Location
+                            <span style="color:red">*</span>
+                        </label>
+                        <select id="user-location" name="locations" required class="form-control " onchange="checkLocation(this)">
+                            <option value="lobby">Lobby</option>
+                            <option value="session_room">Session Room</option>
+                            <option value="page">Page</option>
+                            <option value="booth">Booth</option>
+{{--                            <option>Active Users</option>--}}
+{{--                            <option>Inactive Users</option>--}}
+                        </select>
+                    </div>
+                    <div class="form-group mb-3" id="sessionRoom" style="display: none">
+                        <label for="user-type">Select Room
+                            <span style="color:red">*</span>
+                        </label>
+                        <select id="user-location" name="locations_type" required class="form-control ">
+                           @foreach ($rooms as $room)
+                                <option value="{{ $room->id }}">{{ __($room->name) }}</option>
+                           @endforeach
+{{--                            <option>Active Users</option>--}}
+{{--                            <option>Inactive Users</option>--}}
+                        </select>
+                    </div>
+                    <div class="form-group mb-3" id="page" style="display: none">
+                        <label for="user-type">Select Page
+                            <span style="color:red">*</span>
+                        </label>
+                        <select id="user-location" name="locations_type" required class="form-control ">
+                           @foreach ($pages as $page)
+                                <option value="{{ $page->id }}">{{ __($page->name) }}</option>
+                           @endforeach
+{{--                            <option>Active Users</option>--}}
+{{--                            <option>Inactive Users</option>--}}
+                        </select>
+                    </div>
+                    <div class="form-group mb-3" id="booth" style="display: none">
+                        <label for="user-type">Select Booth
+                            <span style="color:red">*</span>
+                        </label>
+                        <select id="user-location" name="locations_type" required class="form-control ">
+                           @foreach ($booths as $booth)
+                                <option value="{{ $booth->id }}">{{ __($booth->name) }}</option>
+                           @endforeach
+{{--                            <option>Active Users</option>--}}
+{{--                            <option>Inactive Users</option>--}}
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
                         <label for="user-type">Select Roles
                             <span style="color:red">*</span>
                         </label>
@@ -88,4 +137,32 @@
 
 @section('scripts')
 @include("includes.scripts.select")
+<script>
+    function checkLocation(e){
+        var location = e.value;
+        switch(location){
+            case 'lobby':
+                $('#sessionRoom').hide();
+                $('#page').hide();
+                $('#booth').hide();
+                break;
+            case 'session_room':
+                $('#sessionRoom').show();
+                $('#page').hide();
+                $('#booth').hide();
+                break;
+            case 'page':
+                $('#sessionRoom').hide();
+                $('#page').show();
+                $('#booth').hide();
+                break;
+            case 'booth':
+                $('#sessionRoom').hide();
+                $('#page').hide();
+                $('#booth').show();
+                break;
+        }
+    }
+</script>
+
 @endsection

@@ -20,12 +20,14 @@ class NotificationEvent implements ShouldBroadcast
     public $notify_id;
     public $role;
     public $url;
+    public $location;
+    public $location_type;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message,$title,$slug,$notify_id,$role,$url)
+    public function __construct($message,$title,$slug,$notify_id,$role,$url,$location,$location_type=null)
     {
         //
         $this->title = $title;
@@ -34,6 +36,8 @@ class NotificationEvent implements ShouldBroadcast
         $this->notify_id = $notify_id;
         $this->role = $role;
         $this->url = $url;
+        $this->location = $location;
+        $this->location_type = $location_type;
     }
 
     /**
@@ -47,13 +51,17 @@ class NotificationEvent implements ShouldBroadcast
     }
 
     public function broadcastWith () {
-        return [
-            'title' => $this->title,
-            'message' => $this->message,
-            'notify_id' => $this->notify_id,
-            'role' =>$this->role,
-            'url' => $this->url,
-        ];
+        if($this->location !== 'lobby'){
+            return [
+                'title' => $this->title,
+                'message' => $this->message,
+                'notify_id' => $this->notify_id,
+                'role' =>$this->role,
+                'url' => $this->url,
+                'location' => $this->location,
+                'location' => $this->location_type
+            ];
+        }
     }
 
 

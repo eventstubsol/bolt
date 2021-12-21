@@ -176,7 +176,7 @@ class SessionController extends Controller
     }
 
 
-    public function update(Request $request, EventSession $session,$id)
+    public function update(SessionFormRequest $request, EventSession $session,$id)
     {
         $event_id = $id;
         $speakers = $request->speakers;

@@ -57,7 +57,9 @@
             success: function (data) {
                 that.unlockForm(that);
                 if(data.success && data.path){
+                    showMessage("File Uploaded Successfully", "success");
                     callback(data.path);
+                    
                 }else{
                     showMessage("File Size Should not be greater than 12 MB", "error");
                     callback(false);
