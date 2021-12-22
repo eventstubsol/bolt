@@ -98,8 +98,8 @@ class SessionController extends Controller
         $room = sessionRooms::where("id", $request->room_id)->first();
         // $request->room = $room->name;
         // $data = $request->except('meetingId',"_token");
-        $start =  (new Carbon($request->start_time,"Asia/Kolkata"))->setTimezone(new CarbonTimeZone("UTC"))->toString();
-        $end =  (new Carbon($request->end_time,"Asia/Kolkata"))->setTimezone(new CarbonTimeZone("UTC"))->toString();
+        $start =  (new Carbon($request->start_time,$event->timezone))->setTimezone(new CarbonTimeZone("UTC"))->toString();
+        $end =  (new Carbon($request->end_time,$event->timezone))->setTimezone(new CarbonTimeZone("UTC"))->toString();
         // $data["start_time"] = $start;
         // $data["end_time"] = $end;
         // dd($start);
