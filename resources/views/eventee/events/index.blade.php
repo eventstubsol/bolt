@@ -140,13 +140,13 @@
                         <label for="name">Start Date
                             <span style="color:red">*</span>
                         </label>
-                        <input type="date" name="start_date" class="form-control" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" required>
+                        <input type="datetime-local" name="start_date" class="form-control" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" required>
                     </div>
                     <div class="col">
                         <label for="name">End Date
                             <span style="color:red">*</span>
                         </label>
-                        <input type="date" name="end_date" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
+                        <input type="datetime-local" name="end_date" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
                     </div>
                 </div><br>
                     <div class="form-group mb-3">
