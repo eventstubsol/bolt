@@ -16,6 +16,8 @@ $user = Auth::user();
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ getFieldId('title', $event_id,$event_name) }}</title>
+     {{-- App favicon --}}
+     <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}?v=3">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
     <link href={{ asset('assets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.css') }}">
@@ -436,9 +438,7 @@ $user = Auth::user();
     </div>
       
         
-    {{-- App favicon --}}
-    <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}">
-    <!-- Icons -->
+     <!-- Icons -->
     <link href={{ asset('assets/css/icons.min.css') }} rel="stylesheet" type="text/css" />
     <script>
         var ua = window.navigator.userAgent;
