@@ -527,7 +527,7 @@ Route::get("/usercreate",function ()
 });
 
 Route::get("/refresh-online-users-status", function(){
-    $loginLastTime = Carbon::now()->subtract(ONLINE_KEEPING_TIME, "seconds");
+    $loginLastTime = Carbon::now("UTC")->subtract(ONLINE_KEEPING_TIME, "seconds");
     $a = \App\User::where("updated_at", ">=", $loginLastTime)->count();
     $minToShowOnline = 2500;
     $q = \App\User::where("updated_at", "<=", $loginLastTime);

@@ -44,8 +44,8 @@ class sendNote extends Command
      */
     public function handle()
     {
-        $schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now()->subMinutes(20)->format('H:i'),Carbon::now()->format('H:i')])
-        ->where('sending_date',Carbon::now()->format('Y-m-d'))
+        $schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now("UTC")->subMinutes(20)->format('H:i'),Carbon::now("UTC")->format('H:i')])
+        ->where('sending_date',Carbon::now("UTC")->format('Y-m-d'))
         ->where('status',0)
         ->get();
         // print_r($schedules);
@@ -64,7 +64,7 @@ class sendNote extends Command
                     $schedule->status = 1;
                     $schedule->save();
                 }
-                Log::channel('custom')->info(Carbon::now());
+                Log::channel('custom')->info(Carbon::now("UTC"));
                 echo 1;
             }
        }

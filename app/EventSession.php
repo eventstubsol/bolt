@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\UUID;
+use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -72,13 +74,24 @@ class EventSession extends Model
         'zoom_password',
         'past_video',
         "room_id",
-        "zoom_url"
+        "zoom_url",
+        "event_id"
     ];
 
     protected $dates = ["start_time", "end_time"];
 
     public $incrementing = false;
 
+    public function getStartTimeAttribute($value){
+        $tz = Event::findorfail($this->event_id)->timezone;
+        $time = (new Carbon($value,"UTC"))->setTimezone(new CarbonTimeZone($tz));
+        return $time;
+    }
+    public function getEndTimeAttribute($value){
+        $tz = Event::findorfail($this->event_id)->timezone;
+        $time = (new Carbon($value,"UTC"))->setTimezone(new CarbonTimeZone($tz));
+        return $time;
+    }
     public function parentroom(){
         return $this->belongsTo("\App\sessionRooms","room_id");
     }

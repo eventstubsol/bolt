@@ -60,7 +60,7 @@ class UserTag extends Model
 
     public function looking_users(){
         return $this->belongsToMany('\App\User', 'user_tag_looking_links', 'tag_id')
-                ->where("users.updated_at", ">=", Carbon::now()->subtract(ONLINE_KEEPING_TIME, "seconds"))
+                ->where("users.updated_at", ">=", Carbon::now("UTC")->subtract(ONLINE_KEEPING_TIME, "seconds"))
                 ->select([ "user_id" ]);
     }
 }
