@@ -44,11 +44,21 @@ class NotificationController extends Controller
         if ($request->post("url", NULL)) {
             $request->validate(["url" => "url"]);
         }
-        
 
         // $resp = sendGeneralNotification($request->post("title"), $request->post("message"), $request->post("url", NULL), $request->post("roles"));
-
-      
+        
+        if($request->has("sessionRoom")){
+          $location_type = $request->sessionRoom;
+        }
+        else if($request->has("pages")){
+            $location_type = $request->pages;
+        }
+        else if($request->has("booths")){
+            $location_type = $request->booths;
+        }
+        else{
+            $location_type = null;
+        }
         
         // PushNotification::create([
         //     "title" => $request->post("title"),
@@ -64,15 +74,24 @@ class NotificationController extends Controller
         $notify->roles =implode(", ", $request->post("roles"));
         $notify->event_id = $id;
         $notify->location = $request->location;
-        if($request->location !== 'lobby'){
-            $notify->location_type = $request->locations_type;
+        if($request->location != 'lobby'){
+           if($request->has("sessionRoom")){
+                $notify->location_type = $request->sessionRoom;
+           }
+           elseif($request->has("pages")){
+                $notify->location_type = $request->pages;
+            }
+            elseif($request->has("booths")){
+                $notify->location_type = $request->booths;
+            }
         }
         $role = implode(", ", $request->post("roles"));
-        if($request->location !== 'lobby'){
-            event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location,$request->location_type));
+        if($request->location != 'lobby'){
+                event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location,$location_type));
+          
         }
         else{
-            event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location));
+            event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location,$location_type));
         }
         if($notify->save()){
             

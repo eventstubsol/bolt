@@ -87,6 +87,16 @@ class EventManageController extends Controller
 
     public function edit($event_id){
         $event = Event::findOrFail( ($event_id));
+        try {
+            $st = $event->start_date ? Carbon::parse($event->start_date)->format('Y-m-d\TH:i') : "";
+            unset($event->start_date);
+            $event->start_dates = $st;
+            $et = $event->end_date ? Carbon::parse($event->end_date)->format('Y-m-d\TH:i') : "";
+            unset($event->end_date);
+            $event->end_dates = $et;
+        } catch (\Exception $e) {
+            //Do Nothing for now
+        }
         return view('eventee.events.edit',compact('event_id','event'));
     }
     public function verifyDomain(){

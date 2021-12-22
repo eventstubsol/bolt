@@ -27,7 +27,7 @@ class NotificationEvent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($message,$title,$slug,$notify_id,$role,$url,$location,$location_type=null)
+    public function __construct($message,$title,$slug,$notify_id,$role,$url,$location,$location_type)
     {
         //
         $this->title = $title;
@@ -59,7 +59,17 @@ class NotificationEvent implements ShouldBroadcast
                 'role' =>$this->role,
                 'url' => $this->url,
                 'location' => $this->location,
-                'location' => $this->location_type
+                'location_type' => $this->location_type
+            ];
+        }
+        else{
+            return [
+                'title' => $this->title,
+                'message' => $this->message,
+                'notify_id' => $this->notify_id,
+                'role' =>$this->role,
+                'url' => $this->url,
+                'location' => $this->location,
             ];
         }
     }
