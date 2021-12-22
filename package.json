@@ -48,6 +48,7 @@
         "react-dnd-html5-backend": "^3.0.2",
         "react-tag-input": "^6.4.3",
         "react-toastify": "^6.0.8",
+        "util": "^0.12.4",
         "webpack": "^4.44.1"
     }
 }
