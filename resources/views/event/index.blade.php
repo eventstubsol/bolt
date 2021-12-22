@@ -376,6 +376,12 @@ $user = Auth::user();
             color: #525252;
             background: none !important;
         }
+        #skip_flyin{
+            position: absolute;
+            z-index: 9;
+            top: 10%;
+            right: 2%;
+        }
 
         #chat-toggle {
             display: none !important;
@@ -592,6 +598,9 @@ $user = Auth::user();
 </head>
 
 <body class="custom-theme">
+    <div id="skip_flyin" style="display:none">
+        <button class="btn btn-primary">Skip</button>
+    </div>
     <div class="consent-notification hide-on-exterior" >
 
         <h4 id="notification-head"></h4>
