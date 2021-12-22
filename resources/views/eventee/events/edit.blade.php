@@ -71,13 +71,13 @@
                         <input type="text" id="domain" value="{{ isset($event->domain) ? $event->domain : '' }}" name="domain" class="slugInp" >
                         <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps and do not use http:// or https://.  </strong> </span>
                     </div>
-                    @if($event->end_date >= Carbon\Carbon::today())
+                    @if($event->end_dates >= Carbon\Carbon::today())
                         <div class="row">
                             <div class="col">
                                 <label for="name">Start Date
                                     <span style="color:red">*</span>
                                 </label>
-                                <input type="datetime-local" name="start_date" value="{{ $event->start_date }}"  class="form-control @error('start_date') is-invalid @enderror" required>
+                                <input type="datetime-local" name="start_date" value="{{ $event->start_dates }}"  class="form-control @error('start_date') is-invalid @enderror" required>
                                 @error('start_date')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -86,7 +86,7 @@
                                 <label for="name">End Date
                                     <span style="color:red">*</span>
                                 </label>
-                                <input type="datetime-local" name="end_date" value="{{ $event->end_date }}" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control @error('end_date') is-invalid @enderror" required>
+                                <input type="datetime-local" name="end_date" value="{{ $event->end_dates }}" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control @error('end_date') is-invalid @enderror" required>
                                 @error('end_date')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
