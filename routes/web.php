@@ -602,7 +602,7 @@ Route::get("/usercreate",function ()
 });
 
 Route::get("/refresh-online-users-status", function(){
-    $loginLastTime = Carbon::now()->subtract(ONLINE_KEEPING_TIME, "seconds");
+    $loginLastTime = Carbon::now("UTC")->subtract(ONLINE_KEEPING_TIME, "seconds");
     $a = \App\User::where("updated_at", ">=", $loginLastTime)->count();
     $minToShowOnline = 2500;
     $q = \App\User::where("updated_at", "<=", $loginLastTime);
@@ -838,11 +838,11 @@ Route::get("/runSchedularJobs", "SchedularJobsController@runJobs")->name("runJob
 
 //Route::get('/schedule-run-now', function() {
  //echo 0;
-    /*$schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now()->subMinutes(15)->format('H:i'),Carbon::now()->format('H:i')])
-        ->where('sending_date',Carbon::now()->format('Y-m-d'))
+    /*$schedules = ScheduleNotification::whereBetween('sending_time',[Carbon::now("UTC")->subMinutes(15)->format('H:i'),Carbon::now("UTC")->format('H:i')])
+        ->where('sending_date',Carbon::now("UTC")->format('Y-m-d'))
         ->where('status',0)
         ->get();    
-        // print_r(Carbon::now()->subMinutes(15)->format('H:i'));
+        // print_r(Carbon::now("UTC")->subMinutes(15)->format('H:i'));
        if(count($schedules) > 0){
            print_r($schedules);
             foreach($schedules as $schedule){
@@ -856,7 +856,7 @@ Route::get("/runSchedularJobs", "SchedularJobsController@runJobs")->name("runJob
                 if($notify->save()){
                     event(new NotificationEvent($schedule->message,$schedule->title,$event->slug,$notify->id,$schedule->role,$schedule->url));
                     $schedule->status = 1;
-                    $schedule->sent_on = Carbon::now()->format('Y-m-d H:i:s');
+                    $schedule->sent_on = Carbon::now("UTC")->format('Y-m-d H:i:s');
                     $schedule->save();
                 }
                 

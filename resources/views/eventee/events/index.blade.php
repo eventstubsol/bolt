@@ -149,6 +149,17 @@
                         <input type="datetime-local" name="end_date" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
                     </div>
                 </div><br>
+                    <div class="form-group mb-3">
+                        <label for="timezone">Timezone
+                            <span style="color:red">*</span>
+                        </label>
+                        <select class="form-control" name="timezone"    >
+                            <option  value="UTC">UTC</option>
+                            @foreach(TIMEZONES as $tz=>$timezone)
+                            <option  value="{{ $tz }}">{{ ucfirst($tz) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 
             </div>
             <div class="modal-footer">

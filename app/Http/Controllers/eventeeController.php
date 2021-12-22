@@ -143,10 +143,10 @@ class eventeeController extends Controller
             $req->session()->put('MangeEvent',0);
             $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->limit(5)->count();
            
-            $liveEvent = Event::where('end_date','>=',Carbon::now()->format('Y-m-d'))->where('user_id',Auth::id())->count();
+            $liveEvent = Event::where('end_date','>=',Carbon::now("UTC")->format('Y-m-d'))->where('user_id',Auth::id())->count();
             $recent = Event::where('user_id',Auth::id())->orderBy('start_date','desc')->limit(5)->get();
-            // $latest_users = User::whereBetween('created_at',[Carbon::now()->subDays(5)->format('Y-m-d H:i:s'),Carbon::now()->format('Y-m-d H:i:s')])->where('type','eventee')->limit(5)->get();
-            $ending_event  =Event::whereBetween('end_date',[Carbon::now()->format('Y-m-d'),Carbon::now()->addDays(5)->format('Y-m-d')])->where('user_id',Auth::id())->limit(5)->get();
+            // $latest_users = User::whereBetween('created_at',[Carbon::now("UTC")->subDays(5)->format('Y-m-d H:i:s'),Carbon::now("UTC")->format('Y-m-d H:i:s')])->where('type','eventee')->limit(5)->get();
+            $ending_event  =Event::whereBetween('end_date',[Carbon::now("UTC")->format('Y-m-d'),Carbon::now("UTC")->addDays(5)->format('Y-m-d')])->where('user_id',Auth::id())->limit(5)->get();
             $eventUser = Event::where('user_id',Auth::id())->get();
             $totaluser = [];
             $totaluserLive = [];
@@ -195,6 +195,7 @@ class eventeeController extends Controller
         return view("eventee.domain.verify")->with(compact("domain"));
     }
     public function Save(Request $req){
+        // dd($req->timezone);
         $slug = str_replace(" ","-",strtolower($req->event_slug));
         $eve = Event::where('slug',$slug)->count();
         if($eve > 0){
@@ -221,6 +222,7 @@ class eventeeController extends Controller
         $event->user_id = Auth::id();
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
+        $event->timezone = $req->timezone;
         if($req->domain){
             $domain = $req->domain;
             if(strpos($domain,'https')){

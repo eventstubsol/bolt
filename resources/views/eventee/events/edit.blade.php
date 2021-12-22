@@ -96,6 +96,17 @@
                    
                        
                     @endif
+                    <div class="form-group mb-3">
+                        <label for="timezone">Timezone
+                            <span style="color:red">*</span>
+                        </label>
+                        <select class="form-control" name="timezone"    >
+                            <option  value="UTC">UTC</option>
+                            @foreach(TIMEZONES as $tz=>$timezone)
+                            <option @if($event->timezone===$tz) selected="true" @endif value="{{ $tz }}">{{ ucfirst($tz) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
