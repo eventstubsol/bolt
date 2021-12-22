@@ -225,6 +225,8 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::delete('/menu/delete/{menu}/{id}','Eventee\MenuDetailController@destroy')->name('eventee.menu.delete');
     Route::get('/menu/edit/{menu}/{id}','Eventee\MenuController@editNav')->name('eventee.menu.edit');
     Route::put('/menu/update/{menu}/{id}','Eventee\MenuController@updateNav')->name('eventee.menu.update');
+    Route::post('/sessionroom/Bulkdisable',"Eventee\MenuController@BulkDisable")->name('eventee.menu.bulkdisable');
+    Route::post('/sessionroom/DisableAll',"Eventee\MenuController@DisableAll")->name('eventee.menu.disableAll');
     
     //Footter
     

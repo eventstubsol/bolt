@@ -572,7 +572,7 @@ function initApp() {
             // }
             pages.filter("#lobby").show();
             pageChangeActions();
-            recordPageView("lobby", "Lobby","Lobby");
+            recordPageView("lobby", "lobby","lobby");
         },
         'room/:id': function (id) {
             let toShow = pages.filter("#room-" + id);
@@ -597,7 +597,7 @@ function initApp() {
             setTimeout(() => {
                 updateLounge();
             }, 2000);
-            recordPageView("networking", "networking","Lounge");
+            recordPageView("networking", "networking","lounge");
         },
         "museum": function () {
             if (checkAuth()) {

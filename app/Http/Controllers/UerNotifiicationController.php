@@ -29,11 +29,7 @@ class UerNotifiicationController extends Controller
         $event_id = $req->id;
         $notes = PushNotification::where('event_id',$event_id)->get();
         foreach($notes as $note){
-            $seen = new SeenNotification;
-            $seen->notification_id = $note->id;
-            $seen->user_id = Auth::id();
-            $seen->seen = 1;
-            $seen->save();
+            SeenNotification::updateOrCreate(['notification_id'=>$note->id,'user_id'=>Auth::id()],['notification_id'=>$note->id,'user_id'=>Auth::id(),'seen'=>1]);
         }
         return response()->json(['code'=>200]);
     }
