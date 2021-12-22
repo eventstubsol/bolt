@@ -71,7 +71,7 @@ class EventManageController extends Controller
 
     public function workshopReportsData($name){
         $eventName = $name."_visit";
-        $loginIdList = \App\Points::where("points_for", $eventName)->orderBy("created_at", "DESC")->where("created_at", ">=", Carbon::now()->startOf("day"))->distinct("points_to")->get(["points_to", "created_at"]);
+        $loginIdList = \App\Points::where("points_for", $eventName)->orderBy("created_at", "DESC")->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("points_to")->get(["points_to", "created_at"]);
         $ids = [];
         foreach ($loginIdList as $loginLog){
             $ids[] = $loginLog->points_to;
@@ -79,8 +79,8 @@ class EventManageController extends Controller
         $lastLoginList = \App\User::whereIn("id",$ids)->limit(50)->get(["name", "email"]);
         return [
             'login_total' => \App\Points::where("points_for", $eventName)->distinct("points_to")->count(),
-            'login_last_1h' => \App\Points::where("points_for", $eventName)->where("created_at", ">=", Carbon::now()->subtract("hour", 1))->distinct("points_to")->count(),
-            'unique_login_count' => \App\Points::where("points_for", $eventName)->where("created_at", ">=", Carbon::now()->startOf("day"))->distinct("points_to")->count(),
+            'login_last_1h' => \App\Points::where("points_for", $eventName)->where("created_at", ">=", Carbon::now("UTC")->subtract("hour", 1))->distinct("points_to")->count(),
+            'unique_login_count' => \App\Points::where("points_for", $eventName)->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("points_to")->count(),
             'last_login_list' => $lastLoginList,
         ];
     }
@@ -121,6 +121,7 @@ class EventManageController extends Controller
         $event->link = $slug.'.'.str_replace('https://','',$baseurl).'';
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
+        $event->timezone = $req->timezone;
         if($req->domain && env('APP_ENV') != 'stagging'){
             $domain = $req->domain;
             if(strpos($domain,'https')){
@@ -162,7 +163,7 @@ class EventManageController extends Controller
     public function updateUsers($event_id){
         $users = User::where('event_id',$event_id)->get();
         foreach($users as $user){
-            if($user->online_status == 1 && $user->updated_at < Carbon::now()->subMinutes(1)->toDateTimeString()){
+            if($user->online_status == 1 && $user->updated_at < Carbon::now("UTC")->subMinutes(1)->toDateTimeString()){
                 $user->online_status = 0;
                 $user->save();
             }

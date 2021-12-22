@@ -22,7 +22,9 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Auth;
 use App\ScheduleNotification;
 use App\Http\Requests\SessionFormRequest;
-
+use Carbon\CarbonTimeZone;
+use DateTime;
+use DateTimeZone;
 
 class SessionController extends Controller
 {
@@ -61,10 +63,26 @@ class SessionController extends Controller
                 ])
             );
     }
+    public function convertTimeToUTCzone($str, $userTimezone, $format = 'Y-m-d H:i:s'){
+        $new_str = new DateTime($str, new DateTimeZone(  $userTimezone  ) );
+        $new_str->setTimeZone(new DateTimeZone('UTC'));
+        return $new_str->format( $format);
+    }
+    function convertTimeToUSERzone($str, $userTimezone, $format = 'Y-m-d H:i:s'){
+        if(empty($str)){
+            return '';
+        }
+            
+        $new_str = new DateTime($str, new DateTimeZone('UTC') );
+        $new_str->setTimeZone(new DateTimeZone( $userTimezone ));
+        return $new_str->format( $format);
+    }
 
     public function store(SessionFormRequest $request,$id)
     {
+        // $test =  $this->convertTimeToUTCzone($request->start_time,'IST');
         // dd($request->all());
+        // $test = Carbon::parse($request->start_time)->setTimezone('Europe/Paris');
         if(empty($request->name)){
             flash("Title Field Cannot Be Left Blank")->error();
             return redirect()->back();
@@ -79,14 +97,37 @@ class SessionController extends Controller
         $request->speakers = null;
         $room = sessionRooms::where("id", $request->room_id)->first();
         // $request->room = $room->name;
-        $session = EventSession::create($request->except('meetingId',"_token"));
+        // $data = $request->except('meetingId',"_token");
+        $start =  (new Carbon($request->start_time,"Asia/Kolkata"))->setTimezone(new CarbonTimeZone("UTC"))->toString();
+        $end =  (new Carbon($request->end_time,"Asia/Kolkata"))->setTimezone(new CarbonTimeZone("UTC"))->toString();
+        // $data["start_time"] = $start;
+        // $data["end_time"] = $end;
+        // dd($start);
+        // dd($event_id);
+        $session = EventSession::create([
+            "name"=>$request->name,
+            "description"=>$request->description,
+            "files"=>$request->files,
+            "type"=>$request->type,
+            "room_id"=>$request->room_id,
+            "vimeo_url"=>$request->vimeo_url,
+            "zoom_webinar_id"=>$request->zoom_webinar_id,
+            "zoom_password"=>$request->zoom_password,
+            "past_video"=>$request->past_video,
+            "zoom_url"=>$request->zoom_url,
+            "start_time"=>$start,
+            "end_time"=>$end,
+            "event_id"=>$event_id,
+            "room"=>$room->name,
+        ]);
         if($request->has("meetingId") && $request->meetingId){
             $session->zoom_webinar_id = $request->meetingId;
+            $session->save();
+
         }
-        $session->room = $room->name;
-        $session->master_room = $room->master_room;
-        $session->event_id = $event_id;
-        $session->save();
+        // $session->room = $room->name;
+        // $session->master_room = $room->master_room;
+        // $session->event_id = $event_id;
 
         //Old Resoiu
         $oldResources = Resource::where("booth_id", $session->id)->get();
@@ -94,6 +135,7 @@ class SessionController extends Controller
             $resource->swagbag()->delete();
             $resource->delete();
         }
+       
         //schedule notification
         $time = Carbon::parse($request->start_time)->subMinutes(10)->format('H:i');
         $date = Carbon::parse($request->start_time)->format('Y-m-d');

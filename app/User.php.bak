@@ -322,7 +322,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isOnline()
     {
-        return $this->updated_at->isAfter(\Carbon\Carbon::now()->subtract(ONLINE_KEEPING_TIME, "seconds"));
+        return $this->updated_at->isAfter(\Carbon\Carbon::now("UTC")->subtract(ONLINE_KEEPING_TIME, "seconds"));
     }
 
     public function subscriptions()
