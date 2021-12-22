@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\rules\dataCheck;
+use App\Rules\dataCheck;
 
 class SessionFormRequest extends FormRequest
 {
