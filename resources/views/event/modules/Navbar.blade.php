@@ -187,8 +187,8 @@
         </div> --}}
         <div style="display:flex; align-items:center" class="col-5 col-md-2 fluid-col profile-col">
            <div class="dropdown notification-list topbar-dropdown">
-               <a class="nav-link dropdown-toggle waves-effect waves-light" id="dropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                   <i class="fe-bell noti-icon"></i>
+               <a onclick="clearNoteAll()" class="nav-link dropdown-toggle waves-effect waves-light" id="dropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                   <i class="fe-bell noti-icon" ></i>
                    <span id="count" class="badge count bg-danger rounded-circle noti-icon-badge">{{ $noteCount }}</span>
                </a>
                <div class="dropdown-menu dropdown-menu-start dropdown-lg" data-popper-placement="bottom-start" aria-labelledby="dropdownMenuLink">
@@ -340,5 +340,33 @@
           });
       }
 
+    </script>
+
+    <script>
+        function clearNoteAll(){
+            $.get("{{ route('notification.user.seenAll') }}",{id:"{{ $event_id }}"},function(response){
+                if(response.code == 200){
+                    console.log("Done");
+                }
+                else{
+                    console.log("error");
+                }
+            });
+        }
+        var spanCount = 0;
+        $(document).ready(function(){
+            $('#dropdownMenuLink').on('click',function(){
+                if(spamCount == 0){
+                    spanCount = 1;
+                }
+                else{
+                    spanCount = 0;
+                    $('#count').empty();
+                    $('#count').html(0);
+                    $('#notificationBody').empty();
+                    $('#notificationBody').html('<h6><center>No Notification Available</center></h6>');
+                }
+            });
+        });
     </script>
 
