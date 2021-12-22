@@ -207,7 +207,11 @@ function initApp() {
 
         if(flyin && checkDestination(link)){
             flyIn.show();
-
+            $("#skip_flyin").show();
+            $("#skip_flyin").unbind().on("click",()=>{
+                routie(link);
+                $("#skip_flyin").hide();
+            })
             flyIn.attr('src', flyin);
             // loader.fadeOut()
             flyIn.prop("currentTime", 0).get(0).play();
@@ -478,6 +482,7 @@ function initApp() {
     function pageChangeActions(changeChat = true) {
         // $("#cometchat__widget").show();
         // clearInterval(loungeInterval);
+        $("#skip_flyin").hide();
 
         currentresbtns = null;
         if (changeChat)
