@@ -736,7 +736,14 @@ function getLobbyLinks($id)
 }
 function getFilters($event_id)
 {
-    return UserSubtype::where('event_id',$event_id)->get();
+    $ftags = [];
+    $tags = UserSubtype::select("name")->where('event_id',$event_id)->distinct()->get()->toArray();
+    foreach($tags as $tag){
+        array_push($ftags,$tag["name"]);
+    }
+    return $ftags;
+
+    // return UserSubtype::select("name")->where('event_id',$event_id)->get()->distinct()->toArray();
     // switch($filter){
     //     case "company_size":
     //       return  User::select("company_size")->distinct()->get()->toArray();

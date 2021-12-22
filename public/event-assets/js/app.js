@@ -211,6 +211,7 @@ function initApp() {
             $("#skip_flyin").unbind().on("click",()=>{
                 routie(link);
                 $("#skip_flyin").hide();
+                flyIn.hide();
             })
             flyIn.attr('src', flyin);
             // loader.fadeOut()

@@ -504,11 +504,11 @@ $user = Auth::user();
     @include("includes.styles.fileUploader")
     <!-- Custom -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=218723676279" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=218723676279" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=218723676279" type="text/css">
-    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=218723676279">
-    <link href="{{ asset('assets/css/custom.css') }}?v=218723676279" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=2187236762767" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=2187236762767" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=2187236762767" type="text/css">
+    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=2187236762767">
+    <link href="{{ asset('assets/css/custom.css') }}?v=2187236762767" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
@@ -888,15 +888,15 @@ $user = Auth::user();
         window.config = config;
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=218723676279"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}?cb=218723676279"></script>
-    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=218723676279"></script>
-    <script src="{{ asset('event-assets/js/app.js') }}?cb=218723676279"></script>
-    <script src="{{ asset('/js/chat/app.js') }}?cb=218723676279"></script>
-    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=218723676279"></script> -->
-    <script src="{{ asset('/js/profile/index.js') }}?cb=218723676279"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=218723676279"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=218723676279"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('event-assets/js/app.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('/js/chat/app.js') }}?cb=2187236762767"></script>
+    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=2187236762767"></script> -->
+    <script src="{{ asset('/js/profile/index.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=2187236762767"></script>
     @if (isOpenForPublic('polls'))
         @include("event.poll")
     @endif
