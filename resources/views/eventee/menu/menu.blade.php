@@ -35,7 +35,8 @@
             <div class="card-body">
                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
                     <thead>
-                        <tr>
+                        <tr class="head">
+                            <th class="checks" style="display: none"><input type="checkbox" class="checkall"></th>
                             <th>Menu</th>
                             <th>Status</th>
                             <th class="text-right mr-2">Actions</th>
@@ -44,7 +45,8 @@
                 
                     <tbody class="sort" id="sort">
                       @foreach($menus as $menu)
-                        <tr data-id = "{{ $menu->id }}" class="parent" data-position ="{{ $menu->position }}">
+                        <tr class="checkedbox" data-id="{{ $menu->id }}">
+                            <td width="5%" class="incheck" style="display: none" ><input type="checkbox"  onclick="checkedValue(this)"  class="inchecked"></td>
                             <td>{{$menu->name}}</td>
                             <td>{{ $menu->status ? 'Active' : 'Disabled' }}</td>
                          <td class="text-right" >
@@ -116,10 +118,22 @@
 // var ids = [];
 var position =[];
 var final;
+var incheck = $('.incheck');
+var checks = $('.checks');
 $(document).ready(function(){
+    checks.hide();
+    incheck.hide();
+});
+var appendcheck = 0;
+var deleteArr = [];
+var deltype = 0;
+$(document).ready(function(){
+    
     $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.menu.create",$id) }}">Create New</a>');
     $("#buttons-container").append('<button class="btn btn-success" onclick="setOrder()">Set Order</button>');
-    $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success" onclick="SavePositions()" style="display:none">Save</button>')
+    $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success" onclick="SavePositions()" style="display:none">Save</button>');
+    $("#buttons-container").append('<button type="button" onclick="AddCheckBox(this)" class="addbox btn btn-info" >Bulk Disable</button>');
+    $("#buttons-container").append('<button class="deleteBulk btn btn-danger float-right" onclick="BulkDelete()" style="display: none">Disable</button>');
     //setStatus
     $("body").on("click",".disable",function(e){
                     t = $(this);
@@ -239,6 +253,96 @@ $(document).ready(function(){
             switchOrder = 0;
            }
         }
+
+        function AddCheckBox(e){
+            var button = $('.addbox');
+            
+            if(appendcheck == 0){
+                // $('.head').append('<th class="thead">#</th>');
+                // $('.checkedbox').append(appended);
+                checks.show();
+                incheck.show();
+                $('.deleteBulk').show();
+                appendcheck = 1;
+                button.text("Cancel");
+                button.addClass('btn-danger');
+                button.removeClass('btn-info');
+            }
+            else{
+                checks.hide();
+                incheck.hide();
+                
+                $('.deleteBulk').hide();
+                appendcheck = 0;
+                button.text("Bulk Delete");
+                button.removeClass('btn-danger');
+                button.addClass('btn-info');
+            }
+        }
+
+        function checkedValue(e){
+            var data_id = e.closest('tr').getAttribute('data-id');
+            // console.log(data_id);
+            if(deleteArr.indexOf(data_id) == -1){
+                deleteArr.push(data_id);
+                deltype = 1;
+            }
+            else{
+               
+                for(var i = 0 ; i < deleteArr.length; i++){
+                   if(deleteArr[i] == data_id){
+                       deleteArr.splice(i,1);
+                   }
+               }
+            }
+            // console.log(deleteArr);
+        }
+        function BulkDelete(){
+            if(deltype == 1){
+                if(deleteArr.length < 1){
+                    alert("Please Select The CheckBoxe First");
+                }
+                else{
+                
+                    $.post("{{ route('eventee.menu.bulkdisable')}}",{'ids': deleteArr},function(response){
+                        if(response.code == 200){
+                            showMessage(response.message,'success');
+                            setTimeout(function(){ location.reload(); }, 2000);
+                        }
+                        else{
+                            // $('#errorAlert').show()
+                            // $('#successAlert').hide()
+                            showMessage(response.message,'error');
+                        }
+                    });
+                }
+            }
+            else if(deltype == 2){
+               $.post("{{ route('eventee.menu.disableAll') }}",{'id': "{{ $id }}" },function(response){
+                    if(response.code == 200){
+                            // $('#successAlert').show()
+                            // $('#errorAlert').hide();
+                            showMessage(response.message,'success');
+                            setTimeout(function(){ location.reload(); }, 2000);
+                    }
+                    else{
+                        // $('#errorAlert').show()
+                        // $('#successAlert').hide()
+                        showMessage(response.message,'error');
+                    }
+               });
+            }
+            else{
+                alert("Please Select The CheckBoxe First");
+            }
+        }
+
+        $(document).ready(function(){
+            $('.checkall').on('click',function(){
+                $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+                deltype = 2; 
+            });
+        });
         
 </script>
 @endsection
