@@ -547,4 +547,34 @@ class MenuController extends Controller
         }
         
     }
+
+    public function BulkDisable(Request $req){
+        $ids = $req->ids;
+        $totalcount = 0;
+        try{
+            for($i = 0 ; $i < count($ids); $i++){
+                $menu = Menu::findOrFail($ids[$i]);
+                $menu->status = 0;
+                $menu->save();
+                $menuCount = Menu::where('id',$ids[$i])->where('status',0)->count();
+                if($menuCount > 0){
+                    $totalcount++;
+                }
+    
+            }
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage());
+        }
+        return response()->json(['code'=>200,"Message"=>"Disabled Successfully"]);
+    }
+
+    public function DisableAll(Request $req){
+        $menus = Menu::where('event_id',$req->id)->get();
+        foreach($menus as $menu){
+            $menu->status = 0;
+            $menu->save();
+        }
+        return response()->json(['code'=>200,"Message"=>"Disabled SuccessFully"]);
+    }
 }

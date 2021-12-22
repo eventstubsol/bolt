@@ -476,14 +476,16 @@
                 data:{id:"{{ $id }}"},
                 success:function(response){
                     // console.log(response.locations);
-                    $('.sesroomUSer').empty();
+                    
                     if(response.locations !=  null)
                     {   
+                        $('.sesroomUSer').empty();
                         $.each(response.locations,function(key,value){
                             $('.sesroomUSer').append('<tr><td>'+ value.room_name  +'</td><td>'+ value.room_count +'</td></tr>');
                         });
                     }
                     else{
+                        $('.sesroomUSer').empty();
                         $('.sesroomUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
                     }
                     
