@@ -16,6 +16,8 @@ $user = Auth::user();
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ getFieldId('title', $event_id,$event_name) }}</title>
+     {{-- App favicon --}}
+     <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}?v=3">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
     <link href={{ asset('assets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.css') }}">
@@ -374,6 +376,12 @@ $user = Auth::user();
             color: #525252;
             background: none !important;
         }
+        #skip_flyin{
+            position: absolute;
+            z-index: 9;
+            top: 10%;
+            right: 2%;
+        }
 
         #chat-toggle {
             display: none !important;
@@ -436,9 +444,7 @@ $user = Auth::user();
     </div>
       
         
-    {{-- App favicon --}}
-    <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}">
-    <!-- Icons -->
+     <!-- Icons -->
     <link href={{ asset('assets/css/icons.min.css') }} rel="stylesheet" type="text/css" />
     <script>
         var ua = window.navigator.userAgent;
@@ -498,11 +504,11 @@ $user = Auth::user();
     @include("includes.styles.fileUploader")
     <!-- Custom -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=218723676278" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=218723676278" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=218723676278" type="text/css">
-    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=218723676278">
-    <link href="{{ asset('assets/css/custom.css') }}?v=218723676278" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=2187236762767" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=2187236762767" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=2187236762767" type="text/css">
+    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=2187236762767">
+    <link href="{{ asset('assets/css/custom.css') }}?v=2187236762767" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
@@ -592,6 +598,9 @@ $user = Auth::user();
 </head>
 
 <body class="custom-theme">
+    <div id="skip_flyin" style="display:none">
+        <button class="btn btn-primary">Skip</button>
+    </div>
     <div class="consent-notification hide-on-exterior" >
 
         <h4 id="notification-head"></h4>
@@ -879,15 +888,15 @@ $user = Auth::user();
         window.config = config;
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=218723676278"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}?cb=218723676278"></script>
-    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=218723676278"></script>
-    <script src="{{ asset('event-assets/js/app.js') }}?cb=218723676278"></script>
-    <script src="{{ asset('/js/chat/app.js') }}?cb=218723676278"></script>
-    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=218723676278"></script> -->
-    <script src="{{ asset('/js/profile/index.js') }}?cb=218723676278"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=218723676278"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=218723676278"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('event-assets/js/app.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('/js/chat/app.js') }}?cb=2187236762767"></script>
+    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=2187236762767"></script> -->
+    <script src="{{ asset('/js/profile/index.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=2187236762767"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=2187236762767"></script>
     @if (isOpenForPublic('polls'))
         @include("event.poll")
     @endif
