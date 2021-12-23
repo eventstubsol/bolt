@@ -140,13 +140,15 @@
                         <label for="name">Start Date
                             <span style="color:red">*</span>
                         </label>
-                        <input type="datetime-local" name="start_date" class="form-control" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" required>
+                        <input type="datetime-local" name="start_date" id="event_start" class="form-control" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" required>
                     </div>
                     <div class="col">
                         <label for="name">End Date
                             <span style="color:red">*</span>
                         </label>
-                        <input type="datetime-local" name="end_date" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" required>
+                        <input type="datetime-local" name="end_date" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" id="event_end"required>
+                        <span id="erroshowEndDate"  style="color:red;display:none">Event end date cannot be before the start date</span>
+                        <span id="erroshowEnd"  style="color:red;display:none">Event Start Time and End Time Cannot Be The Same</span>
                     </div>
                 </div><br>
                     <div class="form-group mb-3">
@@ -245,6 +247,28 @@
             let slug = event_name.toLowerCase().replaceAll(" ","-");
         
             $('#event_slug').val(slug);
+         });
+
+         $('#event_end').on('input',function(){
+             let start_date =new Date($('#event_start').val());
+             let end_date = new Date($(this).val());
+             let dateDiff = new Date(start_date - end_date);
+             console.log(start_date);
+             
+            if(start_date.getHours() >= end_date.getHours()){
+                $(this).addClass('is-invalid');
+                $('#erroshowEnd').show();
+            }
+            else if(dateDiff > 0){
+                $(this).addClass('is-invalid');
+                $('#erroshowEndDate').show();
+             }
+             else{
+                 
+                $(this).removeClass('is-invalid');
+                $('#erroshowEndDate').hide();
+                $('#erroshowEnd').hide();
+             }
          });
      });
   </script>
