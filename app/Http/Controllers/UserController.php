@@ -291,9 +291,7 @@ class UserController extends Controller
     public function syncUserChat($id)
     {
         // return $id;
-        $users = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)
-            ->limit(rand(10, 25))
-            ->get(["id", "name"]);
+        $users = User::where("event_id",$id)->get(["id", "name"]);
         $chat_app = CometChat::where("event_id",$id)->first();
 
         if (count($users) == 0) {
@@ -302,14 +300,14 @@ class UserController extends Controller
 
         $users->each(function ($user) use($chat_app) {
             createUser($chat_app,$user);
-            $user->isCometChatAccountExist = TRUE;
-            $user->save();
+            // $user->isCometChatAccountExist = TRUE;
+            // $user->save();
         });
 
-        $left = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)->count();
-        $total = User::where("event_id",$id)->count();
+        // $left = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)->count();
+        // $total = User::where("event_id",$id)->count();
 
-        return ["success" => FALSE, "left" => $left, "total" => $total];
+        return ["success" => FALSE];
     }
 
     public function syncGroupChat($id)
