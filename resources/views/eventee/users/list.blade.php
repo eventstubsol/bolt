@@ -151,7 +151,7 @@ Manage Users
                         showMessage("Chats Succesfully Synced", "success");
                         // location.reload(true)
                     } else {
-                        showMessage("Chats Sync Failed", "error");
+                        showMessage("Chats Sync Failed. Please Configure Chat Settings First.", "error");
                         // $("#sync-account").text("Syncing " + body.left + " / " + body.total)
                     }
                 // }

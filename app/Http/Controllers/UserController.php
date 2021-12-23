@@ -293,6 +293,9 @@ class UserController extends Controller
         // return $id;
         $users = User::where("event_id",$id)->get(["id", "name"]);
         $chat_app = CometChat::where("event_id",$id)->first();
+        if(!$chat_app){
+            return ["success" => FALSE];
+        }
 
         if (count($users) == 0) {
             return ["success" => TRUE];
