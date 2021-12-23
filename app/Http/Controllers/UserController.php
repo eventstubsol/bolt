@@ -172,43 +172,43 @@ class UserController extends Controller
         $cometChat = isset($userData["enable_chat"]) ? 'enable' : null;
         $cometChat =  isset($userData["disable_chat"]) ? 'disable' : $cometChat;
 
-        switch ($cometChat) {
-            case 'enable':
-                // attempt creating account
-                $response = Http::withHeaders([
-                    'appId' => env('COMET_CHAT_APP_ID'),
-                    'apiKey' => env('COMET_CHAT_API_KEY'),
-                    "Accept-Encoding"=> "deflate, gzip",
-                    "Content-Encoding"=> "gzip"
-                ])
-                    ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
-                        'uid' => $user->id,
-                        'name' => $user->name
-                    ]);
+        // switch ($cometChat) {
+        //     case 'enable':
+        //         // attempt creating account
+        //         $response = Http::withHeaders([
+        //             'appId' => env('COMET_CHAT_APP_ID'),
+        //             'apiKey' => env('COMET_CHAT_API_KEY'),
+        //             "Accept-Encoding"=> "deflate, gzip",
+        //             "Content-Encoding"=> "gzip"
+        //         ])
+        //             ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
+        //                 'uid' => $user->id,
+        //                 'name' => $user->name
+        //             ]);
 
-                // account created, reactivate it
-                if ($response->clientError()) {
-                    Http::withHeaders([
-                        'appId' => env('COMET_CHAT_APP_ID'),
-                        'apiKey' => env('COMET_CHAT_API_KEY'),
-                        "Accept-Encoding"=> "deflate, gzip",
-                        "Content-Encoding"=> "gzip"
-                    ])
-                        ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users',  ['uidsToActivate' => [$user->id]]);
-                    $user->isCometChatAccountExist = TRUE;
-                }
-                break;
-            case 'disable':
-                Http::withHeaders([
-                    'appId' => env('COMET_CHAT_APP_ID'),
-                    'apiKey' => env('COMET_CHAT_API_KEY'),
-                    "Accept-Encoding"=> "deflate, gzip",
-                    "Content-Encoding"=> "gzip"
-                ])
-                    ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => FALSE]);
-                $user->isCometChatAccountExist = FALSE;
-                break;
-        }
+        //         // account created, reactivate it
+        //         if ($response->clientError()) {
+        //             Http::withHeaders([
+        //                 'appId' => env('COMET_CHAT_APP_ID'),
+        //                 'apiKey' => env('COMET_CHAT_API_KEY'),
+        //                 "Accept-Encoding"=> "deflate, gzip",
+        //                 "Content-Encoding"=> "gzip"
+        //             ])
+        //                 ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users',  ['uidsToActivate' => [$user->id]]);
+        //             $user->isCometChatAccountExist = TRUE;
+        //         }
+        //         break;
+        //     case 'disable':
+        //         Http::withHeaders([
+        //             'appId' => env('COMET_CHAT_APP_ID'),
+        //             'apiKey' => env('COMET_CHAT_API_KEY'),
+        //             "Accept-Encoding"=> "deflate, gzip",
+        //             "Content-Encoding"=> "gzip"
+        //         ])
+        //             ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => FALSE]);
+        //         $user->isCometChatAccountExist = FALSE;
+        //         break;
+        // }
 
         // update name in comet chat as well
         if ($user->name != $userData["name"] && $user->isCometChatAccountExist) {
