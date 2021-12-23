@@ -77,6 +77,11 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post("User_Report/Graph","Eventee\UserReportController@graph")->name('eventee.user.report.graph');
     Route::post("Excel/Report/Data/{id}","Eventee\UserReportController@ExcelReport")->name('eventee.excel.report');
 
+    //Room Wise Report
+    Route::get("Room_Report/{id}","Eventee\UserReportController@RoomReport")->name('eventee.room.report');
+    Route::post("Room_wise_report","Eventee\UserReportController@RoomReportGet")->name('eventee.room.report.get');
+    Route::post("Excel/Report/Room/Data/{id}","Eventee\UserReportController@ExcelRoomReport")->name('eventee.excel.room.report');
+
     //FAQS Section
     Route::get("faq/{id}", "Eventee\FaqController@index")->name("eventee.faq");
     Route::get("faq/create/{id}", "Eventee\FaqController@create")->name("eventee.faq.create");

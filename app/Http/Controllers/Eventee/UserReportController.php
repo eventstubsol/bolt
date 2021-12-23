@@ -12,6 +12,10 @@ use App\Exports\FromViewReport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UserReport as ExportsUserReport;
 use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
+use App\Exports\RoomReport;
+use App\sessionRooms;
+use App\Page;
+use App\Booth;
 
 class UserReportController extends Controller
 {
@@ -106,5 +110,101 @@ class UserReportController extends Controller
         return Excel::download(new FromViewReport($final),'UserReport.xlsx');
     }
 
+    public function RoomReport($id){
+        $pages = Page::where('event_id',$id)->get();
+        $rooms = sessionRooms::where('event_id',$id)->get();
+        $booths = Booth::where('event_id',$id)->get();
+        return view('eventee.user_report.locReport',compact('id','booths','pages','rooms'));
+    }
 
+    public function RoomReportGet(Request $req){
+        $location = $req->location;
+        $locationType = $req->locationType;
+        $event_id = $req->event_id;
+        $start_date = $req->start_date;
+        $end_date = $req->end_date;
+        $final = [];
+        if($location == 'lobby'){
+            $reportData = UserLocation::where('user_locations.event_id',$event_id)->where('user_locations.type',$location)
+            ->whereBetween(DB::raw('date(user_locations.created_at)'),[$start_date,$end_date])
+            ->join('users','users.id', '=','user_locations.user_id')
+            ->select(DB::RAW("user_locations.created_at,users.name,users.email,user_locations.updated_at,user_locations.type,user_locations.type_location"))
+            ->get(); 
+            foreach($reportData as $rep){
+                $date = Carbon::parse($rep->created_at)->format('d-m-Y');
+                if(!isset($final[$date])){
+                    $final[$date] = [];
+                } 
+                array_push($final[$date],$rep); 
+    
+            }
+        }
+        else{
+            $reportData = UserLocation::where('user_locations.event_id',$event_id)->where('user_locations.type_location',$locationType)
+            ->whereBetween(DB::raw('date(user_locations.created_at)'),[$start_date,$end_date])
+            ->join('users','users.id', '=','user_locations.user_id')
+            ->select(DB::RAW("user_locations.created_at,users.name,users.email,user_locations.updated_at,user_locations.type,user_locations.type_location"))
+            ->get(); 
+            foreach($reportData as $rep){
+                $date = Carbon::parse($rep->created_at)->format('d-m-Y');
+                if(!isset($final[$date])){
+                    $final[$date] = [];
+                } 
+                array_push($final[$date],$rep); 
+    
+            }
+        }
+        if(count($final)> 0){
+            return response()->json(['code'=>200,'report'=>$final]);
+        }
+        else{
+            return response()->json(['code'=>201,'message'=>"No Data Available"]);
+        }
+    }
+
+    public function ExcelRoomReport(Request $req,$id){
+        $location = $req->location;
+        $locationType = $req->locationType;
+        $start_date = Carbon::parse($req->start)->format('Y-m-d');
+        // return $start;
+        $end_date = Carbon::parse($req->end)->format('Y-m-d');
+        $event_id = $req->event_id;
+        $final = [];
+        if($location == 'lobby'){
+            $reportData = UserLocation::where('user_locations.event_id',$event_id)->where('user_locations.type',$location)
+            ->whereBetween(DB::raw('date(user_locations.created_at)'),[$start_date,$end_date])
+            ->join('users','users.id', '=','user_locations.user_id')
+            ->select(DB::RAW("user_locations.created_at,users.name,users.email,user_locations.updated_at,user_locations.type,user_locations.type_location"))
+            ->get(); 
+            foreach($reportData as $rep){
+                $date = Carbon::parse($rep->created_at)->format('d-m-Y');
+                if(!isset($final[$date])){
+                    $final[$date] = [];
+                } 
+                array_push($final[$date],$rep); 
+    
+            }
+        }
+        else{
+            $reportData = UserLocation::where('user_locations.event_id',$event_id)->where('user_locations.type_location',$locationType)
+            ->whereBetween(DB::raw('date(user_locations.created_at)'),[$start_date,$end_date])
+            ->join('users','users.id', '=','user_locations.user_id')
+            ->select(DB::RAW("user_locations.created_at,users.name,users.email,user_locations.updated_at,user_locations.type,user_locations.type_location"))
+            ->get(); 
+            foreach($reportData as $rep){
+                $date = Carbon::parse($rep->created_at)->format('d-m-Y');
+                if(!isset($final[$date])){
+                    $final[$date] = [];
+                } 
+                array_push($final[$date],$rep); 
+    
+            }
+        }
+        if($location == 'lobby'){
+            return Excel::download(new RoomReport($final,$location,$locationType),'LobbyReport'.$start_date.' to '.$end_date.'.xlsx');
+        }
+        else{
+            return Excel::download(new RoomReport($final,$location,$locationType),$locationType.$start_date.' to '.$end_date.'.xlsx');
+        }
+    }
 }
