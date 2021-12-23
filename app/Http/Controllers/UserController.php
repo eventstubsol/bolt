@@ -306,8 +306,7 @@ class UserController extends Controller
 
         // $left = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)->count();
         // $total = User::where("event_id",$id)->count();
-
-        return ["success" => FALSE];
+        return ["success" => TRUE];
     }
 
     public function syncGroupChat($id)
