@@ -430,6 +430,7 @@ class UserController extends Controller
             $ids = [];
              foreach($request->get("tags") as $tagname){
                 if($tagname){
+                    $userQuery->orWhere("subtype", "like", "%" . $tagname . "%");
                     $tag = UserTag::where("tag","like" , $tagname)->with("user_id")->first();
                     if(isset($tag->user_id))
                     {
