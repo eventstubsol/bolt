@@ -422,6 +422,7 @@ class UserController extends Controller
         if ($request->has("search") && strlen($request->get("search")) > 0) {
             $userQuery->where("name", "like", "%" . $request->get("search") . "%");
             $userQuery->orWhere("email", "like", "%" . $request->get("search") . "%");
+            $userQuery->orWhere("subtype", "like", "%" . $request->get("search") . "%");
             $userQuery->orWhere("company_name", "like", "%" . $request->get("search") . "%");
             //            $userQuery->orWhere("job_title", "like", "%" . $request->get("search") . "%");
         }
