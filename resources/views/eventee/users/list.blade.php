@@ -145,14 +145,16 @@ Manage Users
                 $("#sync-account").addClass("disabled");
                 $("#sync-account").text("Syncing")
 
-                while (true) {
+                // while (true) {
                     let body = await(await fetch("{{ route('sync-users',['id'=>$id]) }}", {credentials: "include"})).json();
                     if(body.success) {
-                        location.reload(true)
+                        showMessage("Chats Succesfully Synced", "success");
+                        // location.reload(true)
                     } else {
-                        $("#sync-account").text("Syncing " + body.left + " / " + body.total)
+                        showMessage("Chats Sync Failed. Please Configure Chat Settings First.", "error");
+                        // $("#sync-account").text("Syncing " + body.left + " / " + body.total)
                     }
-                }
+                // }
                 
             });
         });

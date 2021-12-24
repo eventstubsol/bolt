@@ -196,6 +196,14 @@ class eventeeController extends Controller
     }
     public function Save(Request $req){
         // dd($req->timezone);
+        if(Carbon::parse($req->start_date)->format('Y-m-d') > Carbon::parse($req->end_date)->format('Y-m-d')){
+            flash("Event end date cannot be before the start date")->error();
+            return redirect()->back();
+        }
+        else if(Carbon::parse($req->start_date)->format('H:i:s') > Carbon::parse($req->end_date)->format('H:i:s')){
+            flash("Event Start Time and End Time Cannot Be The Same")->error();
+            return redirect()->back();
+        }
         $slug = str_replace(" ","-",strtolower($req->event_slug));
         $eve = Event::where('slug',$slug)->count();
         if($eve > 0){

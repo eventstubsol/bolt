@@ -69,19 +69,7 @@
         </ul>
     </div>
 </li>
-<li>
-    <a href="#userReport" data-toggle="collapse">
-        <i class="fa fa-file" aria-hidden="true"></i>
-        <span> User Report</span>
-    </a>
-    <div class="collapse" id="userReport">
-        <ul class="nav-second-level">
-            <li>
-                <a href="{{ route("eventee.user.report",['id'=>$id]) }}">Get Report</a>
-            </li>
-        </ul>
-    </div>
-</li>
+
 <li>
     <a href="#forms" data-toggle="collapse">
         <i data-feather="users"></i>
@@ -357,46 +345,15 @@
 <li>
     <a href="#report" data-toggle="collapse">
         <i class="mdi mdi-file-multiple"></i>
-        <span> Reports <span class="badge  badge-success" >NEW</span> </span>
+        <span> Reports </span>
     </a>
     <div class="collapse" id="report">
         <ul class="nav-second-level">
             {{-- <li>
                 <a href="{{ route("event.Dashboard",['id'=>$id]) }}">General</a>
             </li> --}}
-            <li>
-                <a href="{{ route("event.leaderboard",$id) }}">Leaderboard</a>
-            </li>
-            @php
-                $session_rooms = getRoomsEventee(($id));
-            @endphp
-                @foreach($session_rooms as $sessionroom)
-                        <li>
-                            <a href="{{ route("event.workshop", ['name' => $sessionroom->name,'id'=>$id]) }}">{{ $sessionroom->name }}</a>
-                        </li>
-                @endforeach
-        </ul>
-    </div>
-</li>
-
-<li>
-
-    <a href="#booth-reports" data-toggle="collapse">
-        <i class="mdi mdi-file-multiple"></i>
-        <span>Booth Reports <span class="badge  badge-success" >NEW</span> </span>
-    </a>
-    @php
-        $booths = \App\Booth::where('event_id',$id);
-    @endphp
-    <div class="collapse" id="booth-reports">
-        <ul class="nav-second-level">
-            @if($booths->count() > 0)
-                @foreach($booths->get() as $booth)
-                <li>
-                    <a href="{{ route("reports.booth", ['id' => $booth->id,'event_id'=>$id]) }}">{{ $booth->name }}</a>
-                </li>
-                @endforeach
-            @endif
+            <li><a href="{{ route('eventee.room.report',$id) }}">Room Wise Report</a></li>
+            <li><a href="{{ route("eventee.user.report",['id'=>$id]) }}">User Wise Report</a></li>
         </ul>
     </div>
 </li>

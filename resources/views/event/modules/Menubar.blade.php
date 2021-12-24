@@ -30,7 +30,10 @@
     .row .menu a:hover {
         color: {{ $event->secondary_color }};
     }
-    .row .menu .ToggleData:hover {
+    /* .row .menu .ToggleData:hover {
+        color: {{ $event->secondary_color }};
+    } */
+    .menu-custom .menu li a:hover{
         color: {{ $event->secondary_color }};
     }
 </style>

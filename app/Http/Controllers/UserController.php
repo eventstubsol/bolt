@@ -172,43 +172,43 @@ class UserController extends Controller
         $cometChat = isset($userData["enable_chat"]) ? 'enable' : null;
         $cometChat =  isset($userData["disable_chat"]) ? 'disable' : $cometChat;
 
-        switch ($cometChat) {
-            case 'enable':
-                // attempt creating account
-                $response = Http::withHeaders([
-                    'appId' => env('COMET_CHAT_APP_ID'),
-                    'apiKey' => env('COMET_CHAT_API_KEY'),
-                    "Accept-Encoding"=> "deflate, gzip",
-                    "Content-Encoding"=> "gzip"
-                ])
-                    ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
-                        'uid' => $user->id,
-                        'name' => $user->name
-                    ]);
+        // switch ($cometChat) {
+        //     case 'enable':
+        //         // attempt creating account
+        //         $response = Http::withHeaders([
+        //             'appId' => env('COMET_CHAT_APP_ID'),
+        //             'apiKey' => env('COMET_CHAT_API_KEY'),
+        //             "Accept-Encoding"=> "deflate, gzip",
+        //             "Content-Encoding"=> "gzip"
+        //         ])
+        //             ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
+        //                 'uid' => $user->id,
+        //                 'name' => $user->name
+        //             ]);
 
-                // account created, reactivate it
-                if ($response->clientError()) {
-                    Http::withHeaders([
-                        'appId' => env('COMET_CHAT_APP_ID'),
-                        'apiKey' => env('COMET_CHAT_API_KEY'),
-                        "Accept-Encoding"=> "deflate, gzip",
-                        "Content-Encoding"=> "gzip"
-                    ])
-                        ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users',  ['uidsToActivate' => [$user->id]]);
-                    $user->isCometChatAccountExist = TRUE;
-                }
-                break;
-            case 'disable':
-                Http::withHeaders([
-                    'appId' => env('COMET_CHAT_APP_ID'),
-                    'apiKey' => env('COMET_CHAT_API_KEY'),
-                    "Accept-Encoding"=> "deflate, gzip",
-                    "Content-Encoding"=> "gzip"
-                ])
-                    ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => FALSE]);
-                $user->isCometChatAccountExist = FALSE;
-                break;
-        }
+        //         // account created, reactivate it
+        //         if ($response->clientError()) {
+        //             Http::withHeaders([
+        //                 'appId' => env('COMET_CHAT_APP_ID'),
+        //                 'apiKey' => env('COMET_CHAT_API_KEY'),
+        //                 "Accept-Encoding"=> "deflate, gzip",
+        //                 "Content-Encoding"=> "gzip"
+        //             ])
+        //                 ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users',  ['uidsToActivate' => [$user->id]]);
+        //             $user->isCometChatAccountExist = TRUE;
+        //         }
+        //         break;
+        //     case 'disable':
+        //         Http::withHeaders([
+        //             'appId' => env('COMET_CHAT_APP_ID'),
+        //             'apiKey' => env('COMET_CHAT_API_KEY'),
+        //             "Accept-Encoding"=> "deflate, gzip",
+        //             "Content-Encoding"=> "gzip"
+        //         ])
+        //             ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => FALSE]);
+        //         $user->isCometChatAccountExist = FALSE;
+        //         break;
+        // }
 
         // update name in comet chat as well
         if ($user->name != $userData["name"] && $user->isCometChatAccountExist) {
@@ -291,10 +291,11 @@ class UserController extends Controller
     public function syncUserChat($id)
     {
         // return $id;
-        $users = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)
-            ->limit(rand(10, 25))
-            ->get(["id", "name"]);
+        $users = User::where("event_id",$id)->get(["id", "name"]);
         $chat_app = CometChat::where("event_id",$id)->first();
+        if(!$chat_app){
+            return ["success" => FALSE];
+        }
 
         if (count($users) == 0) {
             return ["success" => TRUE];
@@ -302,14 +303,13 @@ class UserController extends Controller
 
         $users->each(function ($user) use($chat_app) {
             createUser($chat_app,$user);
-            $user->isCometChatAccountExist = TRUE;
-            $user->save();
+            // $user->isCometChatAccountExist = TRUE;
+            // $user->save();
         });
 
-        $left = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)->count();
-        $total = User::where("event_id",$id)->count();
-
-        return ["success" => FALSE, "left" => $left, "total" => $total];
+        // $left = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)->count();
+        // $total = User::where("event_id",$id)->count();
+        return ["success" => TRUE];
     }
 
     public function syncGroupChat($id)
@@ -422,6 +422,7 @@ class UserController extends Controller
         if ($request->has("search") && strlen($request->get("search")) > 0) {
             $userQuery->where("name", "like", "%" . $request->get("search") . "%");
             $userQuery->orWhere("email", "like", "%" . $request->get("search") . "%");
+            $userQuery->orWhere("subtype", "like", "%" . $request->get("search") . "%");
             $userQuery->orWhere("company_name", "like", "%" . $request->get("search") . "%");
             //            $userQuery->orWhere("job_title", "like", "%" . $request->get("search") . "%");
         }
@@ -429,6 +430,7 @@ class UserController extends Controller
             $ids = [];
              foreach($request->get("tags") as $tagname){
                 if($tagname){
+                    $userQuery->orWhere("subtype", "like", "%" . $tagname . "%");
                     $tag = UserTag::where("tag","like" , $tagname)->with("user_id")->first();
                     if(isset($tag->user_id))
                     {
