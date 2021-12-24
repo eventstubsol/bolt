@@ -38,7 +38,7 @@ class AdminAnnounce extends Controller
         $announce->annoucement = $req->anncounce;
         $announce->user_id = $req->user_id;
         if($announce->save()){
-            session(['success-edit' => 'Updated Successfully']);
+            session(['success-edit' => 'Updated Successfully.']);
             return redirect()->route('admin.announce');
 
         }
