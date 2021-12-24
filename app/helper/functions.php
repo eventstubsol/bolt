@@ -537,7 +537,7 @@ function addNewSSL($domain)
     $process = new Process(['/home/eventdev/addnewssl.sh',$domain]);
     $process->run();
 
-    // dd($process->getOutput());
+    dd($process->getOutput());
 
     // executes after the command finishes
     if (!$process->isSuccessful()) {
