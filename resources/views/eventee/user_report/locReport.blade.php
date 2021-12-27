@@ -122,7 +122,7 @@
         // submitted = 0;
         if(submitted == 1){
             submitted = 0;
-            $('#user-location').prop('selectedIndex',0);
+            // $('#user-location').prop('selectedIndex',0);
             $('#start_date_report').val(" ");
             $('#end_date_report').val(" ");
             $('#showGraph').hide();
@@ -147,6 +147,11 @@
                 $('#sessionRoom').hide();
                 $('#page').hide();
                 $('#booth').show();
+                break;
+            case 'none':
+                $('#sessionRoom').hide();
+                $('#page').hide();
+                $('#booth').hide();
                 break;
         }
     }
