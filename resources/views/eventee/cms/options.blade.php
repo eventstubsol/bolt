@@ -76,7 +76,7 @@ $fields = getAllFields($id);
                     @endif
                     @endforeach
                     <div class="text-right"><button class="btn btn-primary w-25 mb-3">Save</button></div>
-                    <div class="text-right"><button class="btn btn-primary w-25 mb-3 action_items">Save</button></div>
+                    <div class="text-right"><button class="btn btn-primary mb-3 action_items">Save</button></div>
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->
