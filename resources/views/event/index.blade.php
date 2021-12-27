@@ -85,7 +85,7 @@ $user = Auth::user();
                 display: inline-block;
             }
             .YouTubePopUp-Content iframe{
-                height: 300px !important;
+                height: 243px!important;
             }
         }
 
@@ -1066,8 +1066,13 @@ $user = Auth::user();
     <script async src="https://app.popkit.club/pixel/3c26bfdb333b6fecd7284b84b0465334"></script>
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script>
-        var slug = "{{ $event_name }}";
-        var fullLocation = " ";
+      
+      </script>
+      <script>
+          $(document).ready(function(){
+            var slug = "{{ $event_name }}";
+        let fullLocation = window.location.hash;
+        console.log(fullLocation);
     
         
         // Enable pusher logging - don't include this in production
@@ -1080,16 +1085,18 @@ $user = Auth::user();
         var channel = pusher.subscribe(slug);
         channel.bind('notification-sent', function(data) {
             console.log({data});
-            fullLocation = data.location;
+            // fullLocation = data.location;
             let hashlocation =fullLocation.split("/")[0];
             let location = hashlocation.split('#')[1];
             let location_type = fullLocation.split("/")[1];
+            // let location_type = data.location_type;
             console.log(location_type);
             let consentNotify = $('.consent-notification');
             $('#notification-head').empty();
             $('#notification-body').empty();
             if(data.role == 'Attendee' || data.role == 'All'){
                if(data.location == location  && location === 'lobby'){
+                   console.log("lobby");
                     $('#notification-head').html('Subject:&nbsp;'+data.title);
                     $('#notification-body').html('Message:&nbsp;'+data.message);
                     consentNotify.removeClass('enable');
@@ -1108,6 +1115,8 @@ $user = Auth::user();
                     // console.log(data.message);
                }
                else if(data.location != 'lobby' && data.location_type == location_type){
+                console.log("others");
+
                 $('#notification-head').html('Subject:&nbsp;'+data.title);
                     $('#notification-body').html('Message:&nbsp;'+data.message);
                     consentNotify.removeClass('enable');
@@ -1133,10 +1142,6 @@ $user = Auth::user();
             
             $('#notification-smallModal').removeClass('enable');
         }
-      </script>
-      <script>
-          $(document).ready(function(){
-              fullLocation = window.location.hash;
               
           });
       </script>

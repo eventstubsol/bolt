@@ -70,13 +70,9 @@ class LeaderboardController extends Controller
             }
             if($points !== null){
                 for($j = 0; $j < count($points) ; $j++){
-                    $pointCount = LeadPoint::where('id',$points)->update([
+                    LeadPoint::where('id',$points[$j])->update([
                         "status"=>1
-                    ]);
-                    // if(!empty($points[$j])){
-                    //     LeadPoint::create(['owner'=>$leaderBoard->id,'point'=>$points[$j]]);
-                    // }
-                    
+                    ]);       
                 }
             }
             
