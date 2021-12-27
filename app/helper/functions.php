@@ -1473,7 +1473,7 @@ function getSchedule($event_id){
 //         }
 //     }
 //     return $schedule;
-// }
+//// }
 
 function getRoomRoute($room){
     $roomRouteMap = [
