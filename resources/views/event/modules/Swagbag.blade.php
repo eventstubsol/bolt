@@ -11,7 +11,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <div class="doc-lists swagbag-list" id="swagbag-items-list" data-simplebar data-simplebar-auto-hide="false">
+                <div class="doc-lists swagbag-list " id="swagbag-items-list" data-simplebar data-simplebar-auto-hide="false">
+                    
+                    <input type="checkbox" style="position: absolute; top: 27px; left: 5px; z-index:9999;" class='theme-checkbox m-2' id='allswags' >
+                    {{-- <label></label> --}}
                     <div class="doc-item header row justify-content-between align-items-center">
                         <div class="d-inline-flex align-items-center flex-grow-1">
                             <div class="doc-title mb-0 flex-grow-1">
