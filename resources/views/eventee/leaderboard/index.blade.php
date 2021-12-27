@@ -94,7 +94,7 @@ $fields = getAllFields($id);
                 @endif
                 </div>
                 
-                <button type="button" class="addPoints2 btn btn-primary">Add Points</button>
+                {{-- <button type="button" class="addPoints2 btn btn-primary">Add Points</button> --}}
                 <button type="submit" class="btn btn-primary">Save</button>
                 <button type="submit" class="btn btn-primary action_items">Save</button>
             </form>
