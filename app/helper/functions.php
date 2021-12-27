@@ -531,6 +531,22 @@ function addSSL($domain)
     
 }
 
+function addNewSSL($domain)
+{
+    
+    $process = new Process(['/home/eventdev/addnewssl.sh',$domain]);
+    $process->run();
+
+    dd($process->getOutput());
+
+    // executes after the command finishes
+    if (!$process->isSuccessful()) {
+        throw new ProcessFailedException($process);
+    }
+    
+}
+
+
 function api($var,$event_id,$default = ""){
     $api = Api::where("variable",$var)->where("event_id",$event_id)->first();
     if($api){
@@ -1457,7 +1473,7 @@ function getSchedule($event_id){
 //         }
 //     }
 //     return $schedule;
-// }
+//// }
 
 function getRoomRoute($room){
     $roomRouteMap = [
