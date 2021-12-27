@@ -60,7 +60,9 @@ class LeaderboardController extends Controller
         if($leaderBoard->save()){
             $images = Image::where('owner',$leaderBoard->id)->delete();
            
-            $pointCount = LeadPoint::where('owner',$leaderBoard->id)->delete();
+            $pointCount = LeadPoint::where('owner',$leaderBoard->id)->update([
+                "status"=>0
+            ]);
             if($img !== null){
                 for($i = 0; $i < count($img) ;$i++){
                     Image::create(['owner'=>$leaderBoard->id,'title'=>"lead_setting",'url'=>$img[$i]]);  
@@ -68,9 +70,12 @@ class LeaderboardController extends Controller
             }
             if($points !== null){
                 for($j = 0; $j < count($points) ; $j++){
-                    if(!empty($points[$j])){
-                        LeadPoint::create(['owner'=>$leaderBoard->id,'point'=>$points[$j]]);
-                    }
+                    $pointCount = LeadPoint::where('id',$points)->update([
+                        "status"=>1
+                    ]);
+                    // if(!empty($points[$j])){
+                    //     LeadPoint::create(['owner'=>$leaderBoard->id,'point'=>$points[$j]]);
+                    // }
                     
                 }
             }

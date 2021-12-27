@@ -101,6 +101,18 @@
             display: block;
             color: white;
         }
+        .action_items{
+            position: fixed;
+            top: 2%;
+            right: 14%;
+            z-index: 9999;
+        }
+        .action_item_2{
+            position: fixed;
+            top: 2%;
+            right: 20%;
+            z-index: 9999;
+        }
     </style>
     @if(isset($id))
         @php

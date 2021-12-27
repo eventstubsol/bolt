@@ -158,7 +158,7 @@
                         <select class="form-control" name="timezone"    >
                             <option  value="UTC">UTC</option>
                             @foreach(TIMEZONES as $tz=>$timezone)
-                            <option  value="{{ $tz }}">{{ ucfirst($tz) }}</option>
+                            <option  value="{{ $tz }}">{{ ucfirst($tz) }} - {{ ucfirst($timezone) }}</option>
                             @endforeach
                         </select>
                     </div>

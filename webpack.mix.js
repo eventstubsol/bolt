@@ -18,5 +18,5 @@ mix.react('resources/js/sessionModerator/index.js', 'public/js/session-poll-app'
 mix.react('resources/js/Profile/index.js', 'public/js/profile');
 
 //Sass
-mix.sass('resources/sass/custom.scss', 'public/assets/css/custom.css');
-mix.sass('resources/sass/auth.scss', 'public/assets/css/auth.css');
+// mix.sass('resources/sass/custom.scss', 'public/assets/css/custom.css');
+// mix.sass('resources/sass/auth.scss', 'public/assets/css/auth.css');
