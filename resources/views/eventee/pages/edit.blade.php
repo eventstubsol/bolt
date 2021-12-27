@@ -274,6 +274,7 @@ Edit Page
                             <br><br>
                             <div>
                                 <button class="btn btn-primary">Save</button>
+                                <button class="btn btn-primary action_items">Save</button>
                                 <button class="btn btn-primary" id="add-link">Add links</button>
 
                             </div>
