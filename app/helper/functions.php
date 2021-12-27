@@ -546,7 +546,6 @@ function addNewSSL($domain)
     
 }
 
-
 function api($var,$event_id,$default = ""){
     $api = Api::where("variable",$var)->where("event_id",$event_id)->first();
     if($api){

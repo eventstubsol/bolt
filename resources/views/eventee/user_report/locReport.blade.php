@@ -116,8 +116,17 @@
 
 @section('scripts')
 <script>
+    let submitted = 0;
     function checkLocation(e){
         var location = e.value;
+        // submitted = 0;
+        if(submitted == 1){
+            submitted = 0;
+            $('#user-location').prop('selectedIndex',0);
+            $('#start_date_report').val(" ");
+            $('#end_date_report').val(" ");
+            $('#showGraph').hide();
+        }
         switch(location){
             case 'lobby':
                 $('#sessionRoom').hide();
@@ -145,7 +154,9 @@
 
 <script>
     $(document).ready(function(){
+
         $('#GetReport').on('click',function(){
+            submitted = 1;
             let location = $('#user-location').val();
             let locationType = null;
             let start_date = $('#start_date_report').val();

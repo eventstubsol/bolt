@@ -11,6 +11,15 @@ Leaderboard Settings
 @section("styles")
 @include("includes.styles.fileUploader")
 <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.css">
+
+    
+<link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet">
+<link href="{{asset('/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet">
+<link href="https://coderthemes.com/ubold/layouts/assets/css/config/default/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="https://coderthemes.com/ubold/layouts/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+<link href="https://coderthemes.com/ubold/layouts/assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+<link href="https://coderthemes.com/ubold/layouts/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+
 @endsection
 
 @section("content")
@@ -73,10 +82,11 @@ $fields = getAllFields($id);
                     @foreach (App\LeadPoint::where('owner',$leaderSettings->id)->get() as $key =>$loadpoint)
                         <div class="form-group point-group">
                             <label for="points">Point {{ $key + 1  }}</label>
-                            <div class="input-group-append">
-                            <input type="text" name="points[]" class="form-control" value="{{ $loadpoint->point }}">
-                            
-                               <button type="button" data-id="{{ $loadpoint->id }}" onclick="DeletePoint(this)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            <div class="input-group-append form-check form-switch ml-4">
+                            {{-- <input type="text" name="points[]" class="form-control" value="{{ $loadpoint->point }}"> --}}
+                            <input type="checkbox" name="points[]" @if($loadpoint->status) checked @endif class="form-check-input" value="{{ $loadpoint->id }}" >
+                             {{$loadpoint->point}} 
+                               {{-- <button type="button" data-id="{{ $loadpoint->id }}" onclick="DeletePoint(this)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button> --}}
                             </div>
                         </div>
 
@@ -86,6 +96,7 @@ $fields = getAllFields($id);
                 
                 <button type="button" class="addPoints2 btn btn-primary">Add Points</button>
                 <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary action_items">Save</button>
             </form>
         @endif
     </div>
@@ -95,6 +106,12 @@ $fields = getAllFields($id);
 
 @section("scripts")
 @include("includes.scripts.fileUploader")
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/js/vendor.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/multiselect/js/jquery.multi-select.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/select2/js/select2.min.js"></script>
+
 <script src="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
 <script src="https://coderthemes.com/ubold/layouts/assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
 <script >
