@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
     
+    @if(isset($id))
     <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$id)) }}?v=3">
+    @endif
     <!-- App css -->
     <link href="{{asset("assets/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet">
     <link href="{{asset("assets/css/app.min.css")}}" rel="stylesheet" type="text/css" id="app-default-stylesheet">
