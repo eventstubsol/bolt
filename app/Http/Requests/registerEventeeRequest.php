@@ -27,7 +27,7 @@ class registerEventeeRequest extends FormRequest
             'name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|regex:/(01)[0-9]{9}/',
+            'phone' => 'required',
             'password' => 'required|min:6',
             'job_title' => 'required',
             'country' => 'required',
