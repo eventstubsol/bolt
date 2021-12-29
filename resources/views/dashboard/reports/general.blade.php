@@ -459,18 +459,17 @@
            
             // console.log("{{ $id }}");
             //User Chart
-            const onlineCall = () => $.ajax({
+           $.ajax({
                 url:"{{ route('eventee.chartJs') }}",
                 method:"POST",
                 data:{id:"{{ $id }}"},
                 success:function(response){
                     drawChart(response.userobj,response.total);
-                    setTimeout(function(){ sessionCall(); }, 3000);
                 }
             });
-            onlineCall();
+          
             //Session Chart
-            const sessionCall = () =>$.ajax({
+            =>$.ajax({
                 url:"{{ route('eventee.sessionChart') }}",
                 method:"POST",
                 data:{id:"{{ $id }}"},
@@ -490,11 +489,11 @@
                     }
                     
                     drawPieChart(response);
-                    setTimeout(function(){ pageChart(); }, 3000);
+             
                 }
             });
             //Page Chart
-            const pageChart = () => $.ajax({
+           $.ajax({
                 url:"{{ route('eventee.pageChart') }}",
                 method:"POST",
                 data:{id:"{{ $id }}"},
@@ -510,11 +509,11 @@
                         $('.pageUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
                     }
                     drawPageChart(response);
-                    setTimeout(function(){ boothCall(); }, 3000);
+                    
                 }
             });
             //Booth Chart
-            const boothCall = () => $.ajax({
+           $.ajax({
                 url:"{{ route('eventee.boothChart') }}",
                 method:"POST",
                 data:{id:"{{ $id }}"},
@@ -532,12 +531,12 @@
                         $('.botthUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
                     }
                     drawBoothChart(response);
-                    setTimeout(function(){ lobbyCall(); }, 3000);
+                   
                 }
             });
 
             //Lobby User
-            const lobbyCall = () => $.ajax({
+          $.ajax({
                 url:"{{ route('eventee.lobbyUser') }}",
                 method:"POST",
                 data:{id:"{{ $id }}"},
@@ -550,13 +549,13 @@
                         });
                     }
                    
-                    setTimeout(function(){ LoungeCall(); }, 3000);
+                   
                     
                 }
             });
         
             //Lounge User
-            const LoungeCall = () => $.ajax({
+           $.ajax({
                 url:"{{ route('eventee.loungeUser') }}",
                 method:"POST",
                 data:{id:"{{ $id }}"},
@@ -569,138 +568,139 @@
                         });
                     }
                     else{
+                        $('.loungeUser').empty();
                         $('.loungeUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
                     }
                    
-                    setTimeout(function(){ onlineCall(); }, 3000);
+                   
                     
                 }
             });
                
-                    // setInterval(function(){ 
-                    //     //User Chart
-                    //     $.ajax({
-                    //         url:"{{ route('eventee.chartJs') }}",
-                    //         method:"POST",
-                    //         data:{id:"{{ $id }}"},
-                    //         success:function(response){
-                    //             drawChart(response.userobj,response.total);
-                    //             // console.log(1);
-                    //         }
-                    //     });
-                    //     //Session Chart
-                    //     $.ajax({
-                    //         url:"{{ route('eventee.sessionChart') }}",
-                    //         method:"POST",
-                    //         data:{id:"{{ $id }}"},
-                    //         success:function(response){
-                    //             // console.log(response);
+                    setInterval(function(){ 
+                        //User Chart
+                        $.ajax({
+                            url:"{{ route('eventee.chartJs') }}",
+                            method:"POST",
+                            data:{id:"{{ $id }}"},
+                            success:function(response){
+                                drawChart(response.userobj,response.total);
+                                // console.log(1);
+                            }
+                        });
+                        //Session Chart
+                        $.ajax({
+                            url:"{{ route('eventee.sessionChart') }}",
+                            method:"POST",
+                            data:{id:"{{ $id }}"},
+                            success:function(response){
+                                // console.log(response);
                                 
-                    //             if(response.locations.length > 0)
-                    // {   
-                    //                 $('.sesroomUSer').empty();
-                    //                 $.each(response.locations,function(key,value){
-                    //                     $('.sesroomUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
-                    //                 });
-                    //             }
-                    //             else{
-                    //                 $('.sesroomUSer').empty();
-                    //                 $('.sesroomUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
-                    //             }
+                                if(response.locations.length > 0)
+                    {   
+                                    $('.sesroomUSer').empty();
+                                    $.each(response.locations,function(key,value){
+                                        $('.sesroomUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
+                                    });
+                                }
+                                else{
+                                    $('.sesroomUSer').empty();
+                                    $('.sesroomUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                                }
                                 
-                    //             drawPieChart(response);
+                                drawPieChart(response);
                                 
-                    //         }
-                    //     });
-                    //     //Page Chart
-                    //     $.ajax({
-                    //         url:"{{ route('eventee.pageChart') }}",
-                    //         method:"POST",
-                    //         data:{id:"{{ $id }}"},
-                    //         success:function(response){
-                    //             // console.log(response);
+                            }
+                        });
+                        //Page Chart
+                        $.ajax({
+                            url:"{{ route('eventee.pageChart') }}",
+                            method:"POST",
+                            data:{id:"{{ $id }}"},
+                            success:function(response){
+                                // console.log(response);
                                
-                    //             if(response.locations.length > 0)
-                    // {   
-                    //                 $('.pageUSer').empty();
-                    //                 $.each(response.locations,function(key,value){
-                    //                     $('.pageUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
-                    //                 });
-                    //             }
-                    //             else{
-                    //                 $('.pageUSer').empty();
-                    //                 $('.pageUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
-                    //             }
-                    //             drawPageChart(response);
+                                if(response.locations.length > 0)
+                    {   
+                                    $('.pageUSer').empty();
+                                    $.each(response.locations,function(key,value){
+                                        $('.pageUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
+                                    });
+                                }
+                                else{
+                                    $('.pageUSer').empty();
+                                    $('.pageUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                                }
+                                drawPageChart(response);
                                 
-                    //         }
-                    //     });
-                    //     //Booth Chart
-                    //     $.ajax({
-                    //         url:"{{ route('eventee.boothChart') }}",
-                    //         method:"POST",
-                    //         data:{id:"{{ $id }}"},
-                    //         success:function(response){
-                    //             // console.log(response);
+                            }
+                        });
+                        //Booth Chart
+                        $.ajax({
+                            url:"{{ route('eventee.boothChart') }}",
+                            method:"POST",
+                            data:{id:"{{ $id }}"},
+                            success:function(response){
+                                // console.log(response);
                                
-                    //             if(response.locations.length > 0)
-                    // {   
-                    //                 $('.botthUSer').empty();
-                    //                 $.each(response.locations,function(key,value){
-                    //                     $('.botthUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
-                    //                 });
-                    //             }
-                    //             else{
-                    //                 $('.botthUSer').empty();
-                    //                 $('.botthUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
-                    //             }
-                    //             drawBoothChart(response);
+                                if(response.locations.length > 0)
+                    {   
+                                    $('.botthUSer').empty();
+                                    $.each(response.locations,function(key,value){
+                                        $('.botthUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
+                                    });
+                                }
+                                else{
+                                    $('.botthUSer').empty();
+                                    $('.botthUSer').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                                }
+                                drawBoothChart(response);
                                 
-                    //         }
-                    //     });
-                    //     //Lobby User
-                    //     $.ajax({
-                    //         url:"{{ route('eventee.lobbyUser') }}",
-                    //         method:"POST",
-                    //         data:{id:"{{ $id }}"},
-                    //         success:function(response){
-                    //             // console.log(response);
-                    //             if(response.length > 0){
-                    //                 $('.lobbyUser').empty();
-                    //                 $.each(response,function(key,value){
-                    //                     $('.lobbyUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
-                    //                 });
-                    //             }
-                    //             else{
-                    //                 $('.lobbyUser').empty();
-                    //                 $('.lobbyUser').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
-                    //             }
-                    //         }
-                    //     });
+                            }
+                        });
+                        //Lobby User
+                        $.ajax({
+                            url:"{{ route('eventee.lobbyUser') }}",
+                            method:"POST",
+                            data:{id:"{{ $id }}"},
+                            success:function(response){
+                                // console.log(response);
+                                if(response.length > 0){
+                                    $('.lobbyUser').empty();
+                                    $.each(response,function(key,value){
+                                        $('.lobbyUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
+                                    });
+                                }
+                                else{
+                                    $('.lobbyUser').empty();
+                                    $('.lobbyUser').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                                }
+                            }
+                        });
 
-                    //      //Lounge User
-                    //         $.ajax({
-                    //             url:"{{ route('eventee.loungeUser') }}",
-                    //             method:"POST",
-                    //             data:{id:"{{ $id }}"},
-                    //             success:function(response){
-                    //                 // console.log(response);
-                    //                 if(response.length > 0){
-                    //                     $('.loungeUser').empty();
-                    //                     $.each(response,function(key,value){
-                    //                         $('.loungeUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
-                    //                     });
-                    //                 }
-                    //                 else{
-                    //                     $('.loungeUser').empty();
-                    //                     $('.loungeUser').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
-                    //                 }
+                         //Lounge User
+                            $.ajax({
+                                url:"{{ route('eventee.loungeUser') }}",
+                                method:"POST",
+                                data:{id:"{{ $id }}"},
+                                success:function(response){
+                                    // console.log(response);
+                                    if(response.length > 0){
+                                        $('.loungeUser').empty();
+                                        $.each(response,function(key,value){
+                                            $('.loungeUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
+                                        });
+                                    }
+                                    else{
+                                        $('.loungeUser').empty();
+                                        $('.loungeUser').html('<tr><td colspan="2"><center>No Data Available</center></td></tr>');
+                                    }
                                 
                                     
                                     
-                    //             }
-                    //         });
-                    // }, 5000);
+                                }
+                            });
+                    }, 5000);
                 
             
             
