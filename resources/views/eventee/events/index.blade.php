@@ -255,7 +255,7 @@
              let dateDiff = new Date(start_date - end_date);
              console.log(start_date);
              
-            if(start_date.getHours() >= end_date.getHours()){
+            if(start_date.getHours() >= end_date.getHours() && dateDiff > 0)){
                 $(this).addClass('is-invalid');
                 $('#erroshowEnd').show();
             }
