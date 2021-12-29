@@ -17,7 +17,7 @@ class LocationController extends Controller
         $typeloc = $req->typeloc;
         // return($type);
         switch($type){
-            case 'Lobby':
+            case 'lobby':
                 UserLocation::where('user_id',Auth::id())->where('current_status',1)->update(['current_status'=>0]);
                 // DB::UPDATE("UPDATE user_locations SET current_status = ? WHERE user_id = ?",[0,Auth::id()]);
                 $user = UserLocation::create(['type'=>$type,'type_location'=>null,'user_id'=>Auth::id(),'current_status'=>1,'event_id'=>Auth::user()->event_id]);

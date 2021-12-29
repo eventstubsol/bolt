@@ -140,13 +140,13 @@
                         <label for="name">Start Date
                             <span style="color:red">*</span>
                         </label>
-                        <input type="datetime-local" name="start_date" id="event_start" class="form-control" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" required>
+                        <input type="datetime-local" name="start_date" id="event_start" class="event_start form-control" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" required>
                     </div>
                     <div class="col">
                         <label for="name">End Date
                             <span style="color:red">*</span>
                         </label>
-                        <input type="datetime-local" name="end_date" min="{{ Carbon\Carbon::today()->format('Y-m-d')}}" class="form-control" id="event_end"required>
+                        <input type="datetime-local" name="end_date" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="event_end form-control" id="event_end"required>
                         <span id="erroshowEndDate"  style="color:red;display:none">Event end date cannot be before the start date</span>
                         <span id="erroshowEnd"  style="color:red;display:none">Event Start Time and End Time Cannot Be The Same</span>
                     </div>
@@ -249,22 +249,16 @@
             $('#event_slug').val(slug);
          });
 
-         $('#event_end').on('input',function(){
-             let start_date =new Date($('#event_start').val());
+         $('.event_end').on('input',function(){
+             let start_date =new Date($('.event_start').val());
              let end_date = new Date($(this).val());
-             let dateDiff = new Date(start_date - end_date);
-             console.log(start_date);
-            if(dateDiff > 0){
+            //  console.log(start_date.getHours());
+            if((start_date.getDate() == end_date.getDate()) && (start_date.getHours() >= end_date.getHours()) && (start_date.getMinutes() >= end_date.getMinutes())){
                 $(this).addClass('is-invalid');
-                $('#erroshowEndDate').show();
-             }
-            // else if(start_date.getHours() <= end_date.getHours()){
-            //     $(this).addClass('is-invalid');
-            //     $('#erroshowEnd').show();
-            // }
+                $('#erroshowEnd').show();
+            }
             
-             else{
-                 
+             else{  
                 $(this).removeClass('is-invalid');
                 $('#erroshowEndDate').hide();
                 $('#erroshowEnd').hide();

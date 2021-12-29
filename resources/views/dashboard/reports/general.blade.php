@@ -459,7 +459,7 @@
            
             // console.log("{{ $id }}");
             //User Chart
-           $.ajax({
+            $.ajax({
                 url:"{{ route('eventee.chartJs') }}",
                 method:"POST",
                 data:{id:"{{ $id }}"},
@@ -469,7 +469,7 @@
             });
           
             //Session Chart
-            =>$.ajax({
+            $.ajax({
                 url:"{{ route('eventee.sessionChart') }}",
                 method:"POST",
                 data:{id:"{{ $id }}"},
@@ -621,7 +621,7 @@
                                 // console.log(response);
                                
                                 if(response.locations.length > 0)
-                    {   
+                                {   
                                     $('.pageUSer').empty();
                                     $.each(response.locations,function(key,value){
                                         $('.pageUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
