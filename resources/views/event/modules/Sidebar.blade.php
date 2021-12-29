@@ -50,7 +50,7 @@ $menus = App\Menu::where('type','nav')->where('event_id',$event_id)->where('pare
                             <li class="not-booth-menu"><a href="javascript:void(0);" data-toggle="modal" data-target="#announcement-modal"><i class="{{ $footer->iClass }}"></i>Annoucements</a></li>
 
                            @else
-                           <li class="custom-dropdown not-booth-menu"> 
+                           <li class="custom-dropdown"> 
                                 {!! getMenuLink($footer) !!}
                                     <ul>
                                         <li>
