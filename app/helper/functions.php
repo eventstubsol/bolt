@@ -577,7 +577,7 @@ HTML;
         break;
     case("chat_user"):
         return <<<HTML
-                <a  class="chat_user not-booth-menu" data-link="$menu->link" >    
+                <a  class="chat_user" data-link="$menu->link" >    
                 <img src="$icon" width="26" alt="">
    
                 <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
@@ -588,7 +588,7 @@ HTML;
         break;
     case("chat_group"):
         return <<<HTML
-                <a   class="chat_group not-booth-menu" data-link="$menu->link" > 
+                <a   class="chat_group" data-link="$menu->link" > 
                         <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                         <img src="$icon" width="26" alt="">
                         $menu->name 

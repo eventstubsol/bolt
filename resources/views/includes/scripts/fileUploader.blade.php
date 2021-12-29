@@ -87,7 +87,7 @@
             // Dropify
             fileInputs.each(function(){
                 let fileInput = $(this);
-                // fileInput.closest(".image-uploader").append(`<div class=""><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
+                fileInput.closest(".image-uploader").append(`<div class=""><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
                 // if(! fileInput.closest(".image-uploader .progress") ){
 
                 //     fileInput.closest(".image-uploader").append(`<div class=""><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
