@@ -87,7 +87,12 @@
             // Dropify
             fileInputs.each(function(){
                 let fileInput = $(this);
-                fileInput.closest(".image-uploader").append(`<div class="progress progress-sm upload mb-2"><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
+                // fileInput.closest(".image-uploader").append(`<div class="progress progress-sm upload mb-2"><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
+                // if(! fileInput.closest(".image-uploader .progress") ){
+
+                //     fileInput.closest(".image-uploader").append(`<div class="progress progress-sm upload mb-2"><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
+
+                // }
                 if(!fileInput.data("initdropify")){ //Only initialize if not already done so
                     fileInput.data("initdropify", true);
                     console.log(fileInput);
