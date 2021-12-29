@@ -236,7 +236,7 @@ class EventManageController extends Controller
                     $locObj =new \stdClass();
                     $counts = UserLocation::where('type_location',$loaction->type_location)->where('current_status',1)->count();
                     $locObj->room_name = $loaction->type_location;
-                    $locObj->room_count = $counts;
+                    $locObj->room_count = (int)$counts -1  ;
                     array_push($locationArr,$locObj);
                 }
             }

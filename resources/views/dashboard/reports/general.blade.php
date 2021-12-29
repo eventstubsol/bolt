@@ -644,7 +644,7 @@
                                 // console.log(response);
                                
                                 if(response.locations !=  null)
-                    {   
+                                {   
                                     $('.botthUSer').empty();
                                     $.each(response.locations,function(key,value){
                                         $('.botthUSer').append('<tr><td>'+ value.room_name +'</td><td>'+ value.room_count +'</td></tr>');
