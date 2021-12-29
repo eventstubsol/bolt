@@ -129,9 +129,9 @@
         <!--Auth fluid left content -->
         <div class="auth-fluid-image">
             @if(isset($id))
-                <img src="{{assetUrl(getFieldId('login_background',$id))}}" alt="No Image">
+                <img src="{{assetUrl(getFieldId('login_background',$id,"uploads/lwpPY8GV8rL48VqbfMNzbLvTNlov7GhpZtfUZT1I.jpeg"))}}" alt="No Image">
             @else
-                <img src="{{assetUrl(getField('login_background'))}}"  alt="No Image">
+                <img src="{{assetUrl(getField('login_background',"uploads/lwpPY8GV8rL48VqbfMNzbLvTNlov7GhpZtfUZT1I.jpeg"))}}"  alt="No Image">
                 
 
             @endif

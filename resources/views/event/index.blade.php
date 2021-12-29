@@ -77,7 +77,7 @@ $user = Auth::user();
             opacity: 0 !important;
         }
 
-        @media only screen and (max-device-width: 767px) {
+        @media only screen and (max-device-width: 867px) {
             .theme-chat.right-bar#chat-container {
                 min-width: 90% !important;
             }
