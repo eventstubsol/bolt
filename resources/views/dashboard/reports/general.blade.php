@@ -358,10 +358,11 @@
             else{
                 var data = google.visualization.arrayToDataTable([
                     ['SessionRoom', 'UserCount'],
-                    [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                    // [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                    ["None"+":"+0,0],
                 ]);
-                if(object.locationArr.length > 0){
-                    $.each(object.locationArr,function(key,value){
+                if(object.locations !=  null ){
+                    $.each(object.locations,function(key,value){
                         data.addRows([
                             [value.room_name +' : '+value.room_count,value.room_count],
                         ]);
@@ -397,10 +398,11 @@
                     // console.log(object);
                     var data = google.visualization.arrayToDataTable([
                         ['Page Name', 'UserCount'],
-                        [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                        // [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                        ["None"+":"+0,0],
                     ]);
-                    if(object.locationArr.length > 0){
-                    $.each(object.locationArr,function(key,value){
+                    if(object.locations !=  null){
+                    $.each(object.locations,function(key,value){
                         data.addRows([
                             [value.room_name +' : '+value.room_count,value.room_count],
                         ]);
@@ -432,10 +434,11 @@
                 else{
                     var data = google.visualization.arrayToDataTable([
                         ['Booth Name', 'UserCount'],
-                        [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                        // [object.locationObj.room_name+': '+object.locationObj.room_count,object.locationObj.room_count],
+                        ["None"+":"+0,0],
                     ]);
-                    if(object.locationArr.length >  0){
-                        $.each(object.locationArr,function(key,value){
+                    if(object.locations !=  null){
+                        $.each(object.locations,function(key,value){
                             data.addRows([
                                 [value.room_name +' : '+value.room_count,value.room_count],
                             ]);
