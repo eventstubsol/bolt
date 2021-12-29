@@ -69,12 +69,7 @@ $menus = App\Menu::where('type','nav')->where('event_id',$event_id)->where('pare
                      
                 
             @endforeach
-            <li class="hidden" id="notbooth_menu_toggle" >
-                <a href="javascript:void(0);" style="font-size: 22px">
-                    <i class="mdi mdi-chevron-left-circle"></i>
-                </a>
-            </li>
-            <li class="booth-menu hidden">
+            {{-- <li class="booth-menu hidden">
                 <a href="javascript:void(0);" data-modal="description-modal-" class="modal-toggle booth_description">
                     <i class="mdi mdi-note-text" style="font-size: 22px;"></i>
                     Description
@@ -97,7 +92,7 @@ $menus = App\Menu::where('type','nav')->where('event_id',$event_id)->where('pare
                     <i class="mdi mdi-file-pdf" style="font-size: 22px;"></i>
                     Show Interest
                 </a>
-            </li>
+            </li> --}}
             <li class="booth-menu hidden">
                 <a href="javascript:void(0);"  data-modal="book-a-call-modal-" class="modal-toggle booth_call_booking">
                     <i class="mdi mdi-calendar" style="font-size: 22px;"></i>
