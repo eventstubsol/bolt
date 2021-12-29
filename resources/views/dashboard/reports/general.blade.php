@@ -569,7 +569,7 @@
                     }
                     else{
                         $('.loungeUser').empty();
-                        $('.loungeUser').append('<tr><td>'+ value.name +'</td><td>'+ value.time +'</td></tr>');
+                        $('.loungeUser').append('<tr><td colspan="2">No Data Avaailable</td></tr>');
                     }
                    
                    
@@ -596,7 +596,7 @@
                             success:function(response){
                                 // console.log(response);
                                 
-                                if(response.locations.length > 0)
+                                if(response.locations !=  null)
                     {   
                                     $('.sesroomUSer').empty();
                                     $.each(response.locations,function(key,value){
@@ -620,7 +620,7 @@
                             success:function(response){
                                 // console.log(response);
                                
-                                if(response.locations.length > 0)
+                                if(response.locations !=  null)
                                 {   
                                     $('.pageUSer').empty();
                                     $.each(response.locations,function(key,value){
@@ -643,7 +643,7 @@
                             success:function(response){
                                 // console.log(response);
                                
-                                if(response.locations.length > 0)
+                                if(response.locations !=  null)
                     {   
                                     $('.botthUSer').empty();
                                     $.each(response.locations,function(key,value){
