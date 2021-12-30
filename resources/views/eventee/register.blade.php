@@ -9,14 +9,25 @@
             display: block;
         } */
         form{
-            overflow: scroll;
-            max-height: 20rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 3%;
+            max-height: 25rem;
         }
+        /* @media screen and (min-width: 1400px) and (min-height: 1000px) and (max-width:1366px) and (max-height:768px){
+            /* STYLES HERE */
+            /* form{
+                overflow-x: auto;
+                white-space: nowrap;
+                padding: 3%;
+                max-height: 25%;
+            } */
+        } */
     </style>
 @endsection
 
 @section('form')
-    <form method="POST" class="register mt-2" action="{{ route('Eventee.register') }}">
+    <form method="POST" class="register mt-6" action="{{ route('Eventee.register') }}">
         @csrf
         <div class="move form-group row input-group">
             <div class="form-group">
