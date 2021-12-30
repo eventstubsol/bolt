@@ -14,15 +14,15 @@
             padding: 3%;
             max-height: 25rem;
         }
-        /* @media screen and (min-width: 1400px) and (min-height: 1000px) and (max-width:1366px) and (max-height:768px){
+        @media screen and (min-width: 1000px) and (min-height: 1400px) and (max-width:1366px) and (max-height:768px){
             /* STYLES HERE */
-            /* form{
+            form{
                 overflow-x: auto;
                 white-space: nowrap;
                 padding: 3%;
                 max-height: 25%;
-            } */
-        } */
+            }
+        }
     </style>
 @endsection
 
