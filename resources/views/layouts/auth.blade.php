@@ -232,16 +232,16 @@
                 return !window.screen.orientation.angle;
             }
 
-            window.addEventListener("orientationchange", function(event) {
-                (isMobile() && isProtrait()) ?  deviceElem.classList.remove('disabled') : deviceElem.classList.add('disabled');
-            });
+            // window.addEventListener("orientationchange", function(event) {
+            //     (isMobile() && isProtrait()) ?  deviceElem.classList.remove('disabled') : deviceElem.classList.add('disabled');
+            // });
 
-            window.addEventListener("DOMContentLoaded", function(){
-                (isMobile() && isProtrait()) ?  deviceElem.classList.remove('disabled') : deviceElem.classList.add('disabled');
-                deviceElemClose.addEventListener('click', function(){
-                    deviceElem.classList.add('disabled');
-                });
-            }, false);
+            // window.addEventListener("DOMContentLoaded", function(){
+            //     (isMobile() && isProtrait()) ?  deviceElem.classList.remove('disabled') : deviceElem.classList.add('disabled');
+            //     deviceElemClose.addEventListener('click', function(){
+            //         deviceElem.classList.add('disabled');
+            //     });
+            // }, false);
         })();
     </script>
     <!-- Vendor js -->

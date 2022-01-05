@@ -478,12 +478,12 @@
                 <span> Event Admin Logs </span>
             </a>
         </li>
-        <li>
+        {{-- <li>
             <a href="{{ route("notification.logs.delete") }}">
                 <i class="fa fa-trash" aria-hidden="true"></i>
                 <span> Delete Database Logs </span>
             </a>
-        </li>
+        </li> --}}
     </ul>
 
     

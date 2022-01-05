@@ -9,6 +9,19 @@
 @endsection
 
 
+@section('styles')
+<style>
+    form{
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 3%;
+            max-height: 25rem;
+        }
+</style>
+
+@endsection
+
+
 @section('subtitle-text')
     Sign in your account
 @endsection
