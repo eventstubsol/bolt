@@ -116,7 +116,7 @@
         align-items: center;
         display: flex;
         justify-content: center;
-        margin:0 15px 15px 0;
+        margin:0 15px 25px 0;
         position: relative;
     }
     .TableBlock{
@@ -243,6 +243,15 @@
         margin: 2px 0 0;
     }
 
+    #networking{
+        background: #01493e;
+        padding-top:100px;
+    }
+
+    .justify-content-evenly{
+        justify-content: space-evenly;
+    }
+
 
 
 </style>
@@ -307,8 +316,8 @@
     </div>
 </div>
 
-<div class="mt-5 py-5">
-    <div class="container-fluid d-flex flex-wrap pr-0">
+<div class="" id="networking">
+    <div class="container-fluid d-flex flex-wrap justify-content-evenly pr-0">
         <div class="table_Box">
             <div class="TableBlock d-flex justify-content-center flex-column" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
                 <div>
