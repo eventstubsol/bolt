@@ -12,6 +12,8 @@
     @include("includes.styles.fileUploader")
     @include("includes.styles.wyswyg")
     <link rel="stylesheet" href="{{ asset("event-assets/css/app.css") }}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
     <style>
         .positioned .dropify-wrapper {
             height: 100%;
@@ -35,6 +37,26 @@
         width: 100%;
 
     }
+
+    .newBox{
+        position: absolute;
+        top: 5%;
+        left: 3%;
+        background-color: rgb(55 55 55 / 50%);
+        color: #fff;
+        font-size: 14px;
+        overflow: hidden;
+        line-height: 16px;
+        cursor: pointer;
+        width: 130px;
+        height: 40px;
+        border-radius: 4px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(3px);
+    }
 </style>
 @endsection
 
@@ -45,8 +67,8 @@
 
 @section("content")
     <form action="{{ route("exhibiter.update", [ "booth" => $booth->id ,"id"=>$id]) }}" method="POST">
-        @csrf
-        <div class="position-relative">
+        @csrf"
+        <div class="position-relative" id="container">
             <div id="image_demo"  class="im-section" style="position:relative; padding:0" >
                 @if(isset($booth->vidbg_url))
                     <video loop class="full-width-videos" autoplay src="{{$booth->vidbg_url?assetUrl($booth->vidbg_url):''}}" repeat style="width: 100%"></video>
@@ -56,6 +78,10 @@
                 @foreach($booth->links as $ids => $link)
                     <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$ids}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
                 @endforeach
+
+                <div class="newBox" id="resizeDiv">
+                    Event name
+                </div>
             </div>
 
      </div>
@@ -780,7 +806,31 @@
                 }
             })
         }
-    </script>
+</script>
 
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script>
+ $(function(){
+    $(".image_links").draggable({
+        containment: "#container",
+        stop: function () {
+            var l = ( 100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())) ) + "%" ;
+            var t = ( 100 * parseFloat($(this).position().top / parseFloat($(this).parent().height())) ) + "%" ;
+            $(this).css("left", l);
+            $(this).css("top", t);
+        }
+    })
+    .resizable({
+        containment: "#container",
+        stop: function () {
+            var l = ( 100 * parseFloat($(this).width() / parseFloat($(this).parent().width())) ) + "%" ;
+            var t = ( 100 * parseFloat($(this).height() / parseFloat($(this).parent().height())) ) + "%" ;
+            $(this).css("width", l);
+            $(this).css("height", t);
+        }
+    });
+    
+});
+</script>
 
 @endsection
