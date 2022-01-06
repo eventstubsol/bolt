@@ -1,111 +1,6 @@
 <style>
     
-    #lounge_tables{
-        padding: 0 0px;
-        margin-top: 51px;
-    }
     
-    .lounge_container li{
-        position: relative;
-    }
-    .lounge_container span{
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        width: 68%;
-        height: 78%;
-        color: white;
-        display: flex;
-        flex-direction: column;
-    }
-    .lounge_container img{
-        position: absolute;
-        top: 10px;
-        left: 12px;
-        width: 64%;
-        height: 69%;
-        object-fit: cover;
-        border-radius: 6px;
-    }
-
-
-    .lounge_container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: start;
-        margin-top: 20px;
-    }
-    .table_container a{
-        width: 59%;
-        height: 47%;
-        background: #e9ba84;
-        border-radius: 15px;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center; 
-        color: white !important;
-
-    }
-    .table_container { 
-        background: #e9d4c1;
-        height: 500px;
-        width: 33%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        /* margin: 20px; */
-        margin: 20px 8px;
-        border-radius:20px;
-
-    }
-    .table_container ul{
-        list-style-type: none;
-        top: -32px;
-        left: 50px;
-        display: flex;
-        justify-content: space-evenly;
-        width: 300px;
-    } 
-    ul.top{
-        position: absolute;
-        top: 29px;
-        
-    }
-    ul.left{
-        position: absolute;
-        left: -105px;
-        top: 214px;
-        transform: rotate(270deg);
-        
-    }
-    ul.right{
-        position: absolute;
-        transform: rotate(-270deg);
-        left: 223px;
-        top: 182px;
-    }
-    ul.bottom{
-        position: absolute;
-        transform: rotate(180deg);
-        top: 370px;
-        left: 82px;
-    }
-    img.profile_image {
-        width: 30px;
-        border-radius: 50%;
-        display: inline-block;
-        position: absolute;
-        top: -110%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    div#lounge-session-content {
-        align-items: center;
-        display: flex;
-        justify-content: center;
-    }
 
     /* //New css// */
     .table_Box{
@@ -118,6 +13,7 @@
         justify-content: center;
         margin:0 15px 25px 0;
         position: relative;
+        cursor: pointer;
     }
     .TableBlock{
         width: 150px;
@@ -125,8 +21,9 @@
         border-radius: 5px;
         border: 1px solid #d1864f;
         background: #e9ba84;
-        padding: 10px;
+        padding: 20px 10px 10px;
         cursor: pointer;
+        justify-content: space-between;
     }
     .TableBlock h2{
         font-size:13px;
@@ -318,7 +215,7 @@
 
 
 <div class="page py-5" id="networking" style="min-height:100vh">
-    <div class="container-fluid d-flex mt-4 flex-wrap justify-content-evenly pr-0" id="lounge_tables">
+    <div class="container-fluid d-flex mt-5 flex-wrap justify-content-evenly pr-0" id="lounge_tables">
         @foreach($tables as $i=> $table)
          
             <div class="table_Box lounge_meeting table" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
@@ -328,14 +225,14 @@
                     $participants = $table->participants;
 
                 @endphp
-                <div class="TableBlock d-flex justify-content-center flex-column" >
+                <div class="TableBlock d-flex justify-content-between flex-column" >
                     <div>
                         <h2>Seats: <span>{{$avs}} Available<span></h2>
                         {{-- <h2 class="mt-3">Seats: <span>2<span></h2> --}}
                     </div>
-                    <div class="mt-4">
+                    <div class="mt-0">
                         <h3 class="d-flex align-items-center"> 
-                            <span class="mr-2">
+                            <span class="mr-2 d-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#fff" class="bi bi-person-check" viewBox="0 0 16 16">
                                 <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                                 <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
@@ -380,9 +277,8 @@
                                             @if(isset($participants[$i+4]->user->profileImage))
                                                 <img src="{{ $participants[$i+4]->user->profileImage ? assetUrl($participants[$i+4]->user->profileImage) : ''}}" alt="">
                                             @else
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#fff" class="bi bi-person-check" viewBox="0 0 16 16">
-                                                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                                </svg>
+                                                <!-- <img src="/assets/images/userIcon.png" alt=""> -->
+                                                <i class="fa fa-user text-white"></i>
                                             @endif
                                         </span>
             
@@ -398,7 +294,7 @@
             </div>
         @endforeach
         {{-- <div class="table_Box">
-            <div class="TableBlock d-flex justify-content-center flex-column" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
+            <div class="TableBlock d-flex justify-content-between flex-column" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
                 <div>
                     <h2>Seats: <span>2 Available<span></h2>
                     <h2 class="mt-3">Seats: <span>2<span></h2>
@@ -443,7 +339,7 @@
             </ul>
         </div>
         <div class="table_Box">
-            <div class="TableBlock d-flex justify-content-center flex-column" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
+            <div class="TableBlock d-flex justify-content-between flex-column" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
                 <div>
                     <h2>Seats: <span>2 Available<span></h2>
                     <h2 class="mt-3">Seats: <span>2<span></h2>
@@ -476,7 +372,7 @@
             </ul>
         </div>
         <div class="table_Box">
-            <div class="TableBlock d-flex justify-content-center flex-column" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
+            <div class="TableBlock d-flex justify-content-between flex-column" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
                 <div>
                     <h2>Seats: <span>2 Available<span></h2>
                     <h2 class="mt-3">Seats: <span>2<span></h2>
@@ -507,7 +403,7 @@
             </ul>
         </div>
         <div class="table_Box">
-            <div class="TableBlock d-flex justify-content-center flex-column" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
+            <div class="TableBlock d-flex justify-content-between flex-column" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
                 <div>
                     <h2>Seats: <span>2 Available<span></h2>
                     <h2 class="mt-3">Seats: <span>2<span></h2>
