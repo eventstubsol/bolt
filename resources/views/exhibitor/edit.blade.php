@@ -29,7 +29,7 @@
         align-items: center;
         justify-content: center;
         background: #0d613978 !important;
-        border: 5px solid;
+        /* border: 5px solid; */
     }
     .im_names{
         background: #ffffff78 !important;
