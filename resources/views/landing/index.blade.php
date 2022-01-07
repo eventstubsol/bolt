@@ -83,12 +83,9 @@
 
         }
     </style>
-    <link rel="shortcut icon" href="{{asset("assets/landing/favicon.png")}}" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.1.0/css/jquery.countdown.min.css" integrity="sha512-3TZ6IiaoL7KEeLwJgOfw+/dEOxOUpb9YhmUokvcFOvNuFJ7t9kvilMNAMqeJ8neRT4iBnCe35TZsPwD2Y1Gl6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <!-- <img class="bg_image" src="./bg.png" alt=""> -->
-    <video class="bg_image" src="{{asset("assets/landing/video.mp4")}}" alt="" autoplay loop muted></video>
 
     <div id="defaultCountdown"></div>
 
@@ -99,8 +96,8 @@
     
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{{asset("assets/libs/countdown/js/jquery.plugin.min.js")}}"></script>
-    <script src="{{asset("assets/libs/countdown/js/jquery.countdown.js")}}"></script>
+    {{-- <script src="{{asset("assets/libs/countdown/js/jquery.plugin.min.js")}}"></script>
+    <script src="{{asset("assets/libs/countdown/js/jquery.countdown.js")}}"></script> --}}
     <script>
         $(document).ready(function() { 
             // var newYear = new Date(); 
