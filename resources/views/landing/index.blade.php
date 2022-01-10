@@ -1,120 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>MLK Celebrations</title>
-    <meta content="width=device-width" name="viewport" />
+<title>Landing page</title>
+<meta content="width=device-width" name="viewport" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-    <style>
-        .bg_image{
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-        }
-        *{
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-        body{
-            overflow: hidden;
-            background: linear-gradient(-949deg, #910cff, #52009e);
-        }
-        #defaultCountdown{
-            position: absolute;
-            top: 10%;
-            left: 71%;
-            width: 26%;
-            color: white;
-            padding-left: 14px;
-            padding: 6px 1px 6px 7px;
-            background-color: #1313137d;
-            border: none;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-        }
-        #defaultCountdown .countdown-section:not(:last-child){
-            border-right: 1px solid white;
-        }
-        #defaultCountdown .countdown-period{
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
-        }
-        .register_now{            
-            position: absolute;
-            top: 90%;
-            left: 23%;
-            color: #52009e;
-            background: #ffd900;
-            padding: 18px;
-            text-decoration: none;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            border-radius: 7px;
-        }
-        @media only screen and (max-width: 880px)  and (min-width: 480px)  {
-            #defaultCountdown{                
-                font-size: 10px;
-                top: 5%;
-                left: 66%;
-                width: 207px;
-            }
-            .register_now{
-                top: 280px;
-                left: 616px;
-                padding: 10px;
-            }
-        }
-        @media only screen and (max-width: 480px) {
-            .bg_image{
-                object-fit: contain;
-            }
-            #defaultCountdown{                
-                top: 24%;
-                left: 1%;
-                width: 352px;
-            }
-            .register_now{
-                top: 440px;
-                left: 109px;
-            }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.1.0/css/jquery.countdown.min.css" integrity="sha512-3TZ6IiaoL7KEeLwJgOfw+/dEOxOUpb9YhmUokvcFOvNuFJ7t9kvilMNAMqeJ8neRT4iBnCe35TZsPwD2Y1Gl6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+
+<style>
+    body{
+        /* font-family: 'MuseoModerno', cursive; */
+        overflow-x: hidden;
+    }
+    img.bigBanner{
+        width: 100%;
+        max-width: 100%;
+        height: 1075px;
+    }
+    .banner_block{
+        position: relative;
+    }
+    .banner_block:before{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* background: #00000078; */
+    }
+
+    .textSection{
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 50px 80px 80px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .logosection{
+        width: 225px;
+        height: 60px;
+        display: flex;
+        overflow: hidden;
+        justify-content: start;
+    }
+    .logosection img{
+        height: 60px;
+        object-fit: contain;
+        width: 100%;
+    }
+
+    #timer{
+        display: flex;
+        justify-content: center;
+        color: #fff;
+        min-height: 72px;
+        margin: 90px 0 30px;
+    }
+
+    .setTime{
+        text-align: center;
+        margin: 0 10px;
+        font-size: 40px;
+        font-weight: 700;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        min-width: 85px;
+        line-height: 1;
+    }
+
+    .setTime span{
+        display: block;
+        font-size: 16px;
+        font-weight: 200;
+        padding: 7px 0;
+    }
+
+    h4{
+        text-align: center;
+        color: #18333c;
+        background: #fff;
+        border-radius: 30px;
+        width: 360px;
+        font-size: 38px;
+        line-height: 50px;
+        margin: 0 auto;
+        text-transform: uppercase;
+        padding: 25px;
+        font-family: 'Varela Round', sans-serif;
+    }
+
+    h4 span{
+        display: block;
+        font-weight: bold;
+        font-size: 38px;
+    }
+
+    p{
+      text-align: center;
+      color: #fff;
+      text-transform: uppercase;
+      padding: 0;
+      margin: 30px 0 70px;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    p span{
+      font-weight: bold;
+    }
+
+    .bottom-section{
+      display: flex;
+      justify-content: space-between;
+      padding: 0 200px;
+      flex-wrap: wrap;
+    }
+
+    @media screen and (max-width: 1440px) {
+      .bottom-section{
+        padding: 0;
+      }
+    }
+
+    .img_box img{
+      border-radius: 50px;
+    }
+
+    h3{
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    sup{
+      font-size: 12px;
+      top: -0.9em;
+    }
+    
+    .regBtn{
+      border-radius: 50px;
+      background: #18333c;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+      border: 2px solid #fff;
+      font-size: 25px;
+      padding: 12px 40px;
+      margin-top: 50px;
+    }
+    
+</style>
 </head>
 <body>
 
-    <div id="defaultCountdown"></div>
-
-    <a class="register_now" href="https://www.eventsibles.online/mlk2022-pep-register">Register Now</a>
 
 
+<!-- Home page start -->
+<div class="banner_block">
+    <img src="/assets/images/landing/landing-img.jpg" alt="" class="bigBanner" />
+    <div class="textSection">
+        <!-- Site Logo Start -->
+        <div class="logosection">
+            <img src="/assets/images/landing/logo.png" alt="">
+        </div>    
+        <!-- Site Logo End -->
 
-    
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    {{-- <script src="{{asset("assets/libs/countdown/js/jquery.plugin.min.js")}}"></script>
-    <script src="{{asset("assets/libs/countdown/js/jquery.countdown.js")}}"></script> --}}
-    <script>
-        $(document).ready(function() { 
-            // var newYear = new Date(); 
-            // newYear = new Date(newYear.getFullYear() + 1, 1 - 1, 1); 
-            var newYear = new Date("10 January 2022 12:00 CDT");
-            $('#defaultCountdown').countdown({until: newYear}); 
-            
-            $('#removeCountdown').click(function() { 
-                var destroy = $(this).text() === 'Remove'; 
-                $(this).text(destroy ? 'Re-attach' : 'Remove'); 
-                $('#defaultCountdown').countdown(destroy ? 'destroy' : {until: newYear}); 
-            });
-            document.querySelector("video").play()
+        <!-- Countdown Start -->
+        <div id="timer" data-endtime="10 june 2022 10:00:00 GMT+01:00"></div>
+        <!-- Countdown Start -->
 
-        });
+        <h4>VirtuaL EVENT <span>SUMMIT 2022</span></h4>
+        <p>bring your <span>brand image</span> to the highest destination</p>
 
-        
-    </script>
+        <!-- Register section Start -->
+        <div class="bottom-section">
+          <div class="img_box">
+            <img src="/assets/images/landing/img-1.jpg" alt="">
+          </div>
+          <div class="text-center mt-4">
+            <h3 class="mt-4">23<sup>rd</sup> january 2022</h3>
+            <button class="regBtn">Register now</button>
+          </div>
+          <div class="img_box mt-4">
+            <img src="/assets/images/landing/img-1.jpg" alt="">
+          </div>
+        </div>
+        <!-- Register section End -->
+
+    </div>
+</div>
+<!-- Home page end -->
+
+
+<!-- Script All -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+
+<script>
+
+//Countdown jquery Start //
+function myTimer() {
+  var ending = jQuery("#timer").attr("data-endtime"),
+  endTime = new Date(ending);
+  endTime = Date.parse(endTime) / 1000;
+
+  var now = new Date();
+  now = Date.parse(now) / 1000;
+
+  var timeLeft = endTime - now;
+
+  var days = Math.floor(timeLeft / 86400);
+  var hours = Math.floor((timeLeft - days * 86400) / 3600);
+  var minutes = Math.floor((timeLeft - days * 86400 - hours * 3600) / 60);
+  var seconds = Math.floor(
+    timeLeft - days * 86400 - hours * 3600 - minutes * 60
+  );
+
+//   if (days < "10") {
+//     days = "0" + days;
+//   }
+  if (days < "1") {
+    days = "0";
+  }
+//   if (hours < "10") {
+//     hours = "0" + hours;
+//   }
+  if (hours < "1") {
+    hours = "0";
+  }
+//   if (minutes < "10") {
+//     minutes = "0" + minutes;
+//   }
+  if (minutes < "1") {
+    minutes = "0";
+  }
+//   if (seconds < "10") {
+//     seconds = "0" + seconds;
+//   }
+  if (seconds < "1") {
+    seconds = "0";
+  }
+
+  $("#timer").html(
+    "<span id='days' class='setTime'>" +
+    days +
+    "<span>Days</span></span>" +
+    "<span id='hours' class='setTime'>" +
+    hours +
+    "<span>Hours</span></span>" +
+    "<span id='minutes' class='setTime'>" +
+    minutes +
+    "<span>Minutes</span></span>" +
+    "<span id='seconds' class='setTime'>" +
+    seconds +
+    "<span>Seconds</span></span>"
+  );
+}
+setInterval(function() {
+  myTimer();
+}, 1000);
+//Countdown jquery End //
+
+
+
+</script>
 </body>
 </html>
