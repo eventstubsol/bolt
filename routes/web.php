@@ -756,6 +756,7 @@ Route::group($options, function () use ($options) {
 
 });
 
+Route::get("/landing", "EventController@landingPage");
 
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
     Route::post('notification/seen','UerNotifiicationController@seen')->name('notification.user.seen');

@@ -407,8 +407,11 @@ function initApp() {
 
     function setLoungeLinks(){
         $(".lounge_meeting").on("click",(e)=>{
-            let meetingId= $(e.target).data("meeting");
-            let tableId= $(e.target).data("table");
+            // e.stopPropagation();
+            let meetingId= $(e.currentTarget).data("meeting");
+            let tableId= $(e.currentTarget).data("table");
+            console.log(e);
+            console.log(tableId);
             let participant_interval = setInterval(addParticipant,15000,tableId);
             // addParticipant(tableId);
             

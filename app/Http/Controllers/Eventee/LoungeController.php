@@ -88,6 +88,7 @@ class LoungeController extends Controller
         $tables =  NetworkingTable::where("event_id",$event->id)->get();
         
         $tables->load(["participants.user"]);
+        // dd($tables);
 
         
         return view("event.modules.loungeTables")->with(compact("tables"));
