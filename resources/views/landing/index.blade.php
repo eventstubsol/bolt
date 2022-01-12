@@ -159,6 +159,98 @@
       padding: 12px 40px;
       margin-top: 50px;
     }
+
+    .speaker_block{
+      background: url('/assets/images/landing/speaker_bg.jpg') no-repeat left top;
+      background-size: cover;
+      padding: 55px 0;
+    }
+
+    .speaker_block h4{
+      margin-bottom: 100px;
+    }
+
+    .speaker_block h5{
+      text-align: center;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 300;
+      font-size: 55px;
+      position: relative;
+      letter-spacing: 3px; 
+      margin-bottom: 80px;
+    }
+
+  .speaker_block h5:before{
+    content: "";
+    background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
+    width: 263px;
+    height: 33px;
+    position: absolute;
+    top: 20px;
+    left: -570px;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  .speaker_block h5:after{
+    content: "";
+    background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
+    width: 263px;
+    height: 33px;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: -570px;
+    margin: 0 auto;
+  }
+
+  .speakerbox{
+    width: 355px;
+  }
+
+  .speakerbox h6{
+    font-size: 20px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .speakerbox h6 span{
+    font-weight: 100;
+  }
+
+  .speakerbox .boxBg{
+    height: 305px;
+    background: #d0d0d0;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .speakerbox .boxBg img{
+    width: 100%;
+    height: 305px;
+    object-fit: cover;
+  }
+
+  .justify-content-evenly{
+    justify-content: space-evenly;
+  }
+
+  .register_block{
+    background: url('/assets/images/landing/register_bg.jpg') no-repeat left top;
+    background-size: cover;
+    padding: 55px 0;
+    min-height: 1080px;
+    position: relative;
+  }
+
+  .registerLogo{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
     
 </style>
 </head>
@@ -202,6 +294,44 @@
 </div>
 <!-- Home page end -->
 
+<!-- Speaker page Start -->
+<div class="speaker_block">
+  <h4>VirtuaL EVENT <span>SUMMIT 2022</span></h4>
+  <h5>Speakers</h5>
+
+  <div class="d-flex justify-content-evenly flex-wrap">
+    <div class="speakerbox">
+      <div class="boxBg">
+        <!-- <img src="/assets/images/landing/register_bg.jpg" alt=""> -->
+      </div>
+      <h6 class="text-center">Name <span class="d-block">Designation</span></h6>
+    </div>
+    <div class="speakerbox">
+      <div class="boxBg">
+        <!-- <img src="/assets/images/landing/register_bg.jpg" alt=""> -->
+      </div>
+      <h6 class="text-center">Name <span class="d-block">Designation</span></h6>
+    </div>
+    <div class="speakerbox">
+      <div class="boxBg">
+        <!-- <img src="/assets/images/landing/register_bg.jpg" alt=""> -->
+      </div>
+      <h6 class="text-center">Name <span class="d-block">Designation</span></h6>
+    </div>
+  </div>
+  
+</div>
+<!-- Speaker page End -->
+
+<!-- Register page Start -->
+<div class="register_block">
+  <div class="registerLogo">
+    <img src="/assets/images/landing/register_pageLogo.png" alt="" />
+  </div>
+
+  
+</div>
+<!-- Register page End -->
 
 <!-- Script All -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
