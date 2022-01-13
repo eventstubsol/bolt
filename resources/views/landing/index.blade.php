@@ -241,7 +241,7 @@
   .register_block{
     background: url('/assets/images/landing/register_bg.jpg') no-repeat left top;
     background-size: cover;
-    padding: 55px 0;
+    padding: 255px 0 50px;
     min-height: 1080px;
     position: relative;
   }
@@ -250,6 +250,43 @@
     position: absolute;
     top: 0;
     left: 0;
+  }
+
+  .regBox{
+    border: 1px solid #fff;
+    background: #5b6e758a;
+    padding: 50px;
+    border-radius: 40px;
+  }
+
+  .regBox h2{
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 3px;
+    margin-bottom: 50px;
+  }
+
+  .form-control{
+    height: 65px;
+    border-radius: 30px;
+    margin-bottom: 40px;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .btn{
+    background: #00a0fc;
+    border: 1px solid #fff;
+    border-radius: 30px;
+    font-size: 20px;
+    color: #fff;
+    width: 160px;
+    padding: 10px 0;
+    margin: 0 auto;
+    display: block;
   }
     
 </style>
@@ -328,8 +365,19 @@
   <div class="registerLogo">
     <img src="/assets/images/landing/register_pageLogo.png" alt="" />
   </div>
-
-  
+  <div class="row justify-content-lg-end align-items-center pr-5">
+    <div class="col-lg-5">
+      <div class="regBox">
+        <h2>Registration</h2>
+        <form action="">
+          <input type="text" class="form-control" placeholder="Name" name="">
+          <input type="text" class="form-control" placeholder="Mobile no." name="">
+          <input type="text" class="form-control mb-5" placeholder="Email address" name="">
+          <button class="btn">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>  
 </div>
 <!-- Register page End -->
 
