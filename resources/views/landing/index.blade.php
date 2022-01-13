@@ -5,6 +5,7 @@
 <meta content="width=device-width" name="viewport" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="shortcut icon" href="https://virturo-bucket.s3.us-east-2.amazonaws.com/uploads/fi1awmsj1YbbTuNQpfKxYJsoflCWrVHBsHV0L7cN.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -371,7 +372,7 @@
         <h2>Registration</h2>
         <form action="">
           <input type="text" class="form-control" placeholder="Name" name="">
-          <input type="text" class="form-control" placeholder="Mobile no." name="">
+          <input type="text" class="form-control" placeholder="Mobile no." name="" min="10" max="13">
           <input type="text" class="form-control mb-5" placeholder="Email address" name="">
           <button class="btn">Register</button>
         </form>
