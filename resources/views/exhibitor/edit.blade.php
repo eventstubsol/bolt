@@ -29,6 +29,7 @@
         align-items: center;
         justify-content: center;
         background: #0d613978 !important;
+        cursor: all-scroll;
         /* border: 5px solid; */
     }
     .im_names{
@@ -76,12 +77,8 @@
                     <img src="{{$booth->boothurl?assetUrl($booth->boothurl):''}}" style="min-width:100%" />
                 @endif
                 @foreach($booth->links as $ids => $link)
-                    <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$ids}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
+                    <div data-id="im-{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$ids}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
                 @endforeach
-
-                <div class="newBox" id="resizeDiv">
-                    Event name
-                </div>
             </div>
 
      </div>
@@ -207,24 +204,24 @@
                                    
                                     <div  class="row positioning-{{$ids}} col-md-12" >
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="top">top</label>
-                                        <input value="{{$link->top}}" type="number" step="any" required  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                        <input value="{{$link->top}}" type="number" step="any" required  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control top-{{$ids}}">
                                     </div>
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">left</label>
-                                        <input value="{{$link->left}}" type="number" step="any" required  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                        <input value="{{$link->left}}" type="number" step="any" required  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control left-{{$ids}}">
                                     </div>
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">width</label>
-                                        <input value="{{$link->width}}" type="number" step="any" required  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                        <input value="{{$link->width}}" type="number" step="any" required  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control width-{{$ids}}">
                                     </div>
 
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">height</label>
-                                        <input value="{{$link->height}}" type="number" step="any" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                        <input value="{{$link->height}}" type="number" step="any" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control height-{{$ids}}">
                                     </div>
                                     <div  class="form-group mb-3 col-md-3">
                                         <label for="pos">Perspective Type</label>
@@ -363,6 +360,7 @@
 @section("scripts")
     @include("includes.scripts.fileUploader")
     @include("includes.scripts.wyswyg")
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
         function addvideo(e) {
             e.preventDefault();
@@ -520,6 +518,34 @@
             width: "40%",
         });
     }
+    function initDraggable(){
+    $(".image_links").draggable({
+        containment: "#container",
+        stop: function () {
+            var l = ( 100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())) ) + "%" ;
+            var t = ( 100 * parseFloat($(this).position().top / parseFloat($(this).parent().height())) ) + "%" ;
+            $(this).css("left", l);
+            $(this).css("top", t);
+            let linkId = $(this).data("id").split("-")[1];
+            $(".top-"+linkId).val(parseFloat(t).toFixed(2));
+            $(".left-"+linkId).val(parseFloat(l).toFixed(2));
+            console.log(linkId);
+        }
+    })
+    .resizable({
+        containment: "#container",
+        stop: function () {
+            var w = ( 100 * parseFloat($(this).width() / parseFloat($(this).parent().width())) ) + "%" ;
+            var h = ( 100 * parseFloat($(this).height() / parseFloat($(this).parent().height())) ) + "%" ;
+            $(this).css("width", w);
+            $(this).css("height", h);
+            let linkId = $(this).data("id").split("-")[1];
+            $(".width-"+linkId).val(parseFloat(w).toFixed(2));
+            $(".height-"+linkId).val(parseFloat(h).toFixed(2));
+        }
+    });
+    
+}
     function getRotation(area){
         if(area[4]=="X"){
             return {
@@ -632,7 +658,7 @@
         // console.log(n);
 
         $(".im-section").append(`
-            <div class="im-${n} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" ><div class="im_names im_name-${n}" style="height:100%; background:red;" >Link ${n} </div></div>      
+            <div data-id="im-${n}" class="im-${n} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; cursor: all-scroll; " ><div class="im_names im_name-${n}" style="height:100%; background:red;" >Link ${n} </div></div>      
         `);
         
 
@@ -736,24 +762,24 @@
 
                                     <div  class="row positioning-${n} col-md-12" >
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="top">top</label>
-                                        <input type="number" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} form-control">
+                                        <input type="number" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
                                     </div>
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">left</label>
-                                        <input type="number" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} form-control">
+                                        <input type="number" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
                                     </div>
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">width</label>
-                                        <input type="number" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} form-control">
+                                        <input type="number" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
                                     </div>
 
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">height</label>
-                                        <input type="number" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} form-control">
+                                        <input type="number" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
                                     </div>
                                     <div  class="form-group mb-3 col-md-3">
                                         <label for="pos">Perspective Type</label>
@@ -794,7 +820,7 @@
             $(".add-image").unbind().on("click", addImage);
             $(".pers").on("change",togglePerspective);
         
-
+            initDraggable()
 
         }
 
@@ -808,29 +834,5 @@
         }
 </script>
 
-<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-<script>
- $(function(){
-    $(".image_links").draggable({
-        containment: "#container",
-        stop: function () {
-            var l = ( 100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())) ) + "%" ;
-            var t = ( 100 * parseFloat($(this).position().top / parseFloat($(this).parent().height())) ) + "%" ;
-            $(this).css("left", l);
-            $(this).css("top", t);
-        }
-    })
-    .resizable({
-        containment: "#container",
-        stop: function () {
-            var l = ( 100 * parseFloat($(this).width() / parseFloat($(this).parent().width())) ) + "%" ;
-            var t = ( 100 * parseFloat($(this).height() / parseFloat($(this).parent().height())) ) + "%" ;
-            $(this).css("width", l);
-            $(this).css("height", t);
-        }
-    });
-    
-});
-</script>
 
 @endsection
