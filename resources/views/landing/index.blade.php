@@ -130,10 +130,104 @@
       .bottom-section{
         padding: 0;
       }
+      
+    }
+    
+    @media screen and (max-width: 1100px) {
+      .bottom-section{
+        flex-direction: column;
+        align-items: center;
+      }
+
+      img.bigBanner{
+        height: 1400px;
+        object-fit: cover;
+      }
+
+      #timer{
+        margin: 20px 0;
+      }
+
+      .banner_block::before {
+        background: #000000b5;
+      }
+
+      .textSection{
+        padding: 20px;
+      }
+
+      .regBtn{
+        margin: 20px 0 !important;
+      }
+
+      .speaker_block h5::before {
+        display: none;
+      }
+
+      .speaker_block h5::after {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      .register_block{
+        min-height: 850px !important;
+      }
+
+      .speaker_block h4 {
+        margin-bottom: 30px !important;
+      }
+      .speaker_block h5 {
+        margin-bottom: 30px !important;
+        font-size: 40px !important;
+      }
+
+      .setTime{
+        font-size: 22px !important;
+        min-width: 60px;
+      }
+
+      .setTime span{
+        font-size: 13px !important;
+      }
+
+      #timer{
+        min-height: 52px !important;
+      }
+
+      h4{
+        width: 100%;
+        padding: 10px;
+        font-size: 25px;
+        line-height: 30px;
+      }
+
+      h4 span {
+        font-size: 23px;
+      }
+      
+    }
+
+    @media screen and (max-width: 400px) {
+      .img_box{
+        width: 100% !important;
+      }
+      .regBox{
+        padding: 20px !important;
+      }
+    }
+
+    .img_box{
+      overflow: hidden;
+      width: 310px;
+      height: 315px;
+      border-radius: 50px;
     }
 
     .img_box img{
       border-radius: 50px;
+      height: 315px;
+      object-fit: cover;
     }
 
     h3{
@@ -318,7 +412,7 @@
           <div class="img_box">
             <img src="/assets/images/landing/img-1.jpg" alt="">
           </div>
-          <div class="text-center mt-4">
+          <div class="text-center mt-4 mx-0 mx-lg-3">
             <h3 class="mt-4">23<sup>rd</sup> january 2022</h3>
             <button class="regBtn">Register now</button>
           </div>
@@ -366,7 +460,7 @@
   <div class="registerLogo">
     <img src="/assets/images/landing/register_pageLogo.png" alt="" />
   </div>
-  <div class="row justify-content-lg-end align-items-center pr-5">
+  <div class="row justify-content-lg-end align-items-center pr-lg-5">
     <div class="col-lg-5">
       <div class="regBox">
         <h2>Registration</h2>
