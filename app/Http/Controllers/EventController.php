@@ -946,8 +946,9 @@ class EventController extends Controller
         return ["success" => true];
     }
 
-    public function landingPage(){
-        return view("landing.index");
+    public function landingPage($subdomain){
+        $event = Event::where('slug',$subdomain)->first();
+        return view("landing.index",compact('event'));
     }
     public function sendSessionNotifications()
     {
