@@ -237,36 +237,36 @@
 @if(Auth::user()->type == 'eventee')
 @section("scripts")
     <script>
-        function fetchData(){
-            $.ajax({
-                url: "{{ route("reports.general.api") }}",
-                method: "POST",
-                data:{
-                    _token: "{{ csrf_token() }}",
-                },
-                success: function(response){
-                    if(typeof response === "object"){
-                        if(response.hasOwnProperty("login_last_1h")){
-                            $("#login_last_1h").html(response.login_last_1h);
-                        }
-                        if(response.hasOwnProperty("unique_login_count")){
-                            $("#today-unique-logins").html(response.unique_login_count);
-                        }
-                        if(response.hasOwnProperty("login_total")){
-                            $("#login_total").html(response.login_total);
-                        }
-                        if(response.hasOwnProperty("last_login_list") && Array.isArray(response.last_login_list)){
-                            $("#list-of-last-users").html(response.last_login_list.map(user => {
-                                return `<li class="list-group-item"><span>${user.name}</span>&nbsp;(${user.email})</li>`;
-                            }).join(""))
-                        }
-                    }
-                }
-            })
-        }
+        // function fetchData(){
+        //     $.ajax({
+        //         url: "{{ route("reports.general.api") }}",
+        //         method: "POST",
+        //         data:{
+        //             _token: "{{ csrf_token() }}",
+        //         },
+        //         success: function(response){
+        //             if(typeof response === "object"){
+        //                 if(response.hasOwnProperty("login_last_1h")){
+        //                     $("#login_last_1h").html(response.login_last_1h);
+        //                 }
+        //                 if(response.hasOwnProperty("unique_login_count")){
+        //                     $("#today-unique-logins").html(response.unique_login_count);
+        //                 }
+        //                 if(response.hasOwnProperty("login_total")){
+        //                     $("#login_total").html(response.login_total);
+        //                 }
+        //                 if(response.hasOwnProperty("last_login_list") && Array.isArray(response.last_login_list)){
+        //                     $("#list-of-last-users").html(response.last_login_list.map(user => {
+        //                         return `<li class="list-group-item"><span>${user.name}</span>&nbsp;(${user.email})</li>`;
+        //                     }).join(""))
+        //                 }
+        //             }
+        //         }
+        //     })
+        // }
         $(document).ready(function(){
-            fetchData();
-            setInterval(fetchData, 15000);
+            // fetchData();
+            // setInterval(fetchData, 15000);
             let downloadButton = $("#download-login-logs");
             downloadButton.on("click", function () {
                 downloadButton.addClass("loading").prop("disabled", true).html("Building Logs...");
@@ -703,7 +703,7 @@
                                     
                                 }
                             });
-                    }, 5000);
+                    }, 15000);
                 
             
             
