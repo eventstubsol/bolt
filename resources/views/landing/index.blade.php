@@ -404,7 +404,7 @@
         <div id="timer" data-endtime="10 june 2022 10:00:00 GMT+01:00"></div>
         <!-- Countdown Start -->
 
-        <h4>VirtuaL EVENT <span>SUMMIT 2022</span></h4>
+        <h4>{{ $event->name }}</h4>
         <p>bring your <span>brand image</span> to the highest destination</p>
 
         <!-- Register section Start -->
