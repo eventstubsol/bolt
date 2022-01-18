@@ -1,11 +1,11 @@
 @extends("layouts.admin")
 
 @section("page_title")
-Edit Page
+Edit Lobby
 @endsection
 
 @section("title")
-Edit Page
+Edit Lobby
 @endsection
 
 
@@ -22,16 +22,25 @@ Edit Page
         align-items: center;
         justify-content: center;
         background: #0d613978 !important;
-        border: 5px solid;
+        /* border: 5px solid; */
+        cursor: all-scroll;
     }
+.im_names{
+    background: #ffffff78 !important;
+    height: 100%;
+    width: 100%;
+
+}
 </style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+
 @endsection
 
 
 
 @section("breadcrumbs")
 <li class="breadcrumb-item"><a href="{{ route("page.index") }}">Pages</a></li>
-<li class="breadcrumb-item active">Edit</li>
+<li class="breadcrumb-item active">Lobby</li>
 @endsection
 
 @php 
@@ -44,14 +53,14 @@ $event_id = $id;
         <div class="card" style="position: relative;" >
             Visit Page: 
             <a href="/event#page/{{$page->name}}" target="_blank">here</a>
-            <div id="cont" class="card-body">
+            <div  id="container" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
                     <img src="{{ assetUrl(getFieldId('main_lobby_image',$event_id)) }}" style="min-width:100%" />
                     @foreach($page->links as $ids => $link)
-                        <div class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
+                        <div data-id="im-{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;" >{{$link->name}}</div>
                     @endforeach
                     @foreach($page->treasures as $ids => $link)
-                        <div class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
+                        <div  data-id="tim-{{$ids}}" class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
                     @endforeach
                 </div>
 
@@ -160,24 +169,24 @@ $event_id = $id;
                                    
                                     <div  class="row positioning-{{$ids}} col-md-12" >
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden"  class="form-group mb-3 col-md-3">
                                         <label for="top">top</label>
-                                        <input value="{{$link->top}}" type="number" required  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                        <input value="{{$link->top}}" type="number" required step="any"  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control top-{{$ids}}">
                                     </div>
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div  style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">left</label>
-                                        <input value="{{$link->left}}" type="number" required  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                        <input value="{{$link->left}}" type="number" required step="any"  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control left-{{$ids}}">
                                     </div>
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div  style="visibility: hidden"  class="form-group mb-3 col-md-3">
                                         <label for="pos">width</label>
-                                        <input value="{{$link->width}}" type="number" required  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                        <input value="{{$link->width}}" type="number" required step="any"  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control width-{{$ids}}">
                                     </div>
 
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div   style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">height</label>
-                                        <input value="{{$link->height}}" type="number" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
+                                        <input value="{{$link->height}}" type="number" required step="any"  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control height-{{$ids}}">
                                     </div>
 
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
@@ -191,9 +200,10 @@ $event_id = $id;
                                                 <input type="hidden" name="flyin[]" class="upload_input" value={{$link->flyin ? $link->flyin->url : ''}} >
                                                 <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video" data-default-file="{{$link->flyin ? assetUrl($link->flyin->url) : ''}}"  />
                                             </div>
-                                        
-                                           <button class="btn btn-primary addflyin" data-index="{{$ids}}">Add Fly In Video</button>
-                                    </div>
+                                       
+                                            {{-- <button class="btn btn-primary mt-2 mb-4 mr-2  add-image"  data-index="{{$ids}}" >Add Background Image</button> --}}
+                                            <button class="btn btn-primary addflyin" data-index="{{$ids}}">Add Fly In Video</button>
+                                        </div>
 
 
 
@@ -304,6 +314,7 @@ $event_id = $id;
 
 @section("scripts")
 @include("includes.scripts.fileUploader")
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
 <script>
     let resetflag = true;
@@ -327,6 +338,8 @@ $event_id = $id;
         $(".donet").hide();
         $(".done").on("click",resetPosition)
         $(".donet").on("click",resetPositiont)
+        
+        $(".add-image").unbind("click").on("click", addImage);
 
         $(".addflyin").on("click",addFlyIn);
         
@@ -335,6 +348,23 @@ $event_id = $id;
 
     });
 
+    
+    function addImage(e){
+        e.preventDefault();
+        let target = $(e.target);
+        const index = target.data("index");
+        console.log(index);
+        
+        $(".background_images_"+index).append(
+            `<div class="form-group image-uploader mb-3 col-md-4">
+                <label for="bgimages">Background</label>       
+                <input type="hidden" name="bgimages[${index}][]" class="upload_input">
+                <input type="file" data-name="bgimages[${index}][]" data-plugins="dropify" data-type="image"   />                                   
+            </div>`);
+            initializeFileUploads();
+
+
+    }
     function addFlyIn(e){
         e.preventDefault();
         console.log("test");
@@ -345,6 +375,34 @@ $event_id = $id;
         target.hide();
         initializeFileUploads();
 
+    }
+
+    function initDraggable(){
+        $(".image_links").draggable({
+            containment: "#container",
+            stop: function () {
+                var l = ( 100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())) ) + "%" ;
+                var t = ( 100 * parseFloat($(this).position().top / parseFloat($(this).parent().height())) ) + "%" ;
+                $(this).css("left", l);
+                $(this).css("top", t);
+                let linkId = $(this).data("id").split("-")[1];
+                $(".top-"+linkId).val(parseFloat(t).toFixed(2));
+                $(".left-"+linkId).val(parseFloat(l).toFixed(2));
+                console.log(linkId);
+            }
+        })
+        .resizable({
+            containment: "#container",
+            stop: function () {
+                var w = ( 100 * parseFloat($(this).width() / parseFloat($(this).parent().width())) ) + "%" ;
+                var h = ( 100 * parseFloat($(this).height() / parseFloat($(this).parent().height())) ) + "%" ;
+                $(this).css("width", w);
+                $(this).css("height", h);
+                let linkId = $(this).data("id").split("-")[1];
+                $(".width-"+linkId).val(parseFloat(w).toFixed(2));
+                $(".height-"+linkId).val(parseFloat(h).toFixed(2));
+            }
+        });
     }
 
     function resetPosition(e){
@@ -563,7 +621,7 @@ $event_id = $id;
         console.log(n);
 
         $(".im-section").append(`
-            <div class="im-${n} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" >Link ${n}</div>      
+            <div data-id="im-${n}"  class="im-${n} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; " >Link ${n}</div>      
         `);
         
 
@@ -656,25 +714,25 @@ $event_id = $id;
 
 
                                     <div  class="row positioning-${n}" >
-                                    
-                                    <div  class="form-group mb-3 col-md-3">
+                                       
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="top">top</label>
-                                        <input type="number" required  name="top[]" data-index="${n}" class="pos pos-${n} form-control">
+                                        <input type="number" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
                                     </div>
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">left</label>
-                                        <input type="number" required  name="left[]" data-index="${n}" class="pos pos-${n} form-control">
+                                        <input type="number" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
                                     </div>
                                     
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">width</label>
-                                        <input type="number" required  name="width[]" data-index="${n}" class="pos pos-${n} form-control">
+                                        <input type="number" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
                                     </div>
 
-                                    <div  class="form-group mb-3 col-md-3">
+                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
                                         <label for="pos">height</label>
-                                        <input type="number" required  name="height[]" data-index="${n}" class="pos pos-${n} form-control">
+                                        <input type="number" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
                                     </div>
 
                                     <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
@@ -708,6 +766,35 @@ $event_id = $id;
         initializeFileUploads();
     }
 
+    function initTreasuresDraggable(){
+        $(".treasure_links").draggable({
+            containment: "#container",
+            stop: function () {
+                var l = ( 100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())) ) + "%" ;
+                var t = ( 100 * parseFloat($(this).position().top / parseFloat($(this).parent().height())) ) + "%" ;
+                $(this).css("left", l);
+                $(this).css("top", t);
+                let linkId = $(this).data("id").split("-")[1];
+                $(".ttop-"+linkId).val(parseFloat(t).toFixed(2));
+                $(".tleft-"+linkId).val(parseFloat(l).toFixed(2));
+                console.log(linkId);
+            }
+        })
+        .resizable({
+            containment: "#container",
+            stop: function () {
+                var w = ( 100 * parseFloat($(this).width() / parseFloat($(this).parent().width())) ) + "%" ;
+                var h = ( 100 * parseFloat($(this).height() / parseFloat($(this).parent().height())) ) + "%" ;
+                $(this).css("width", w);
+                $(this).css("height", h);
+                let linkId = $(this).data("id").split("-")[1];
+                $(".twidth-"+linkId).val(parseFloat(w).toFixed(2));
+                $(".theight-"+linkId).val(parseFloat(h).toFixed(2));
+            }
+        });
+    }
+
+
 
     function bindRemoveButton() {
         $(".remove-link").unbind().on("click", removelink);
@@ -721,6 +808,9 @@ $event_id = $id;
         $(".donet").hide();
         $(".donet").on("click",resetPositiont)
         $(".addflyin").on("click",addFlyIn);
+        initDraggable();   
+        initTreasuresDraggable();
+        
     }
 
     function removelink(e) {

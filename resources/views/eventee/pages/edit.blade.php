@@ -333,22 +333,22 @@ Edit Page
                                     </div>
                                     <div  class="row tpositioning-{{$ids}} col-md-12" >
                                             
-                                            <div  class="form-group mb-3 col-md-3">
+                                            <div style="visibility: hidden"  class="form-group mb-3 col-md-3">
                                                 <label for="top">top</label>
                                                 <input value="{{$treasure->top}}"  step="any" type="number" required  name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} ttop-{{$ids}} form-control">
                                             </div>
                                             
-                                            <div  class="form-group mb-3 col-md-3">
+                                            <div style="visibility: hidden"  class="form-group mb-3 col-md-3">
                                                 <label for="pos">left</label>
                                                 <input value="{{$treasure->left}}"  step="any" type="number" required  name="tleft[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} tleft-{{$ids}} form-control">
                                             </div>
                                             
-                                            <div  class="form-group mb-3 col-md-3">
+                                            <div style="visibility: hidden"  class="form-group mb-3 col-md-3">
                                                 <label for="pos">width</label>
                                                 <input value="{{$treasure->width}}"  step="any" type="number" required  name="twidth[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} twidth-{{$ids}} form-control">
                                             </div>
 
-                                            <div  class="form-group mb-3 col-md-3">
+                                            <div style="visibility: hidden"  class="form-group mb-3 col-md-3">
                                                 <label for="pos">height</label>
                                                 <input value="{{$treasure->height}}"  step="any" type="number" required  name="theight[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} theight-{{$ids}} form-control">
                                             </div>
