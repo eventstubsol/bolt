@@ -269,22 +269,22 @@ $event_id = $id;
                                             
                                             <div  class="form-group mb-3 col-md-3">
                                                 <label for="top">top</label>
-                                                <input value="{{$treasure->top}}" type="number" required  name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                                <input value="{{$treasure->top}}" type="number" required step="any" name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} ttop-{{$ids}} form-control">
                                             </div>
                                             
                                             <div  class="form-group mb-3 col-md-3">
                                                 <label for="pos">left</label>
-                                                <input value="{{$treasure->left}}" type="number" required  name="tleft[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                                <input value="{{$treasure->left}}" type="number" required step="any" name="tleft[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} tleft-{{$ids}} form-control">
                                             </div>
                                             
                                             <div  class="form-group mb-3 col-md-3">
                                                 <label for="pos">width</label>
-                                                <input value="{{$treasure->width}}" type="number" required  name="twidth[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                                <input value="{{$treasure->width}}" type="number" required step="any" name="twidth[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} twidth-{{$ids}} form-control">
                                             </div>
 
                                             <div  class="form-group mb-3 col-md-3">
                                                 <label for="pos">height</label>
-                                                <input value="{{$treasure->height}}" type="number" required  name="theight[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} form-control">
+                                                <input value="{{$treasure->height}}" type="number" required step="any" name="theight[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} theight-{{$ids}} form-control">
                                             </div>
 
                                             <button data-index="{{$ids}}" class="btn btn-primary donet-{{$ids}} donet" >DONE</button>
@@ -571,7 +571,7 @@ $event_id = $id;
         console.log({t});
 
         $(".im-section").append(`
-            <div class="tim-${t} image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; border: 5px solid;" >Treasure Item ${t}</div>      
+            <div data-id="tim-${t}" class="tim-${t}  treasure_links image_links" style="  position:absolute; top:0px; left:0px; width:100px; height:100px; background: #0d613978 !important; " >Treasure Item ${t}</div>      
         `);
         
 
@@ -585,22 +585,22 @@ $event_id = $id;
                                         
                                         <div  class="form-group mb-3 col-md-3">
                                             <label for="top">top</label>
-                                            <input type="number" required  name="ttop[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                            <input type="number" required step="any" name="ttop[]" data-index="${t}" class="tpos tpos-${t} ttop-${t} form-control">
                                         </div>
                                         
                                         <div  class="form-group mb-3 col-md-3">
                                             <label for="pos">left</label>
-                                            <input type="number" required  name="tleft[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                            <input type="number" required step="any" name="tleft[]" data-index="${t}" class="tpos tpos-${t} tleft-${t} form-control">
                                         </div>
                                         
                                         <div  class="form-group mb-3 col-md-3">
                                             <label for="pos">width</label>
-                                            <input type="number" required  name="twidth[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                            <input type="number" required step="any" name="twidth[]" data-index="${t}" class="tpos tpos-${t} twidth-${t} form-control">
                                         </div>
 
                                         <div  class="form-group mb-3 col-md-3">
                                             <label for="pos">height</label>
-                                            <input type="number" required  name="theight[]" data-index="${t}" class="tpos tpos-${t} form-control">
+                                            <input type="number" required step="any" name="theight[]" data-index="${t}" class="tpos tpos-${t} theight-${t} form-control">
                                         </div>
 
                                         <button data-index="${t}" class="btn btn-primary donet-${t} donet" >DONE</button>
