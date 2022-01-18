@@ -175,7 +175,7 @@ class EventManageController extends Controller
         $users = User::where('event_id',$event_id)->get();
         foreach($users as $user){
             $user_location =  UserLocation::where("user_id",$user->id)->where("current_status",1)->first();
-            if($user->online_status === 1 && $user->updated_at < Carbon::now("UTC")->subtract(ONLINE_KEEPING_TIME, "seconds")->toDateTimeString()){
+            if($user->online_status === 1 && $user->updated_at < Carbon::now("UTC")->subMinutes(1)->toDateTimeString()){
                 $user->online_status = 0;
                 $user_location->current_status = 0;
                 $user_location->save();
