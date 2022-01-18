@@ -719,7 +719,7 @@ Route::group($options, function () use ($options) {
 
         // return "This will respond to requests for 'admin.localhost/'";
     });
-    
+    Route::get("/landing", "EventController@landingPage");
     Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
 
     Route::get("/faq", "HomeController@faqs")->name("faq");
@@ -755,6 +755,7 @@ Route::group($options, function () use ($options) {
 
 
 });
+
 
 
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access

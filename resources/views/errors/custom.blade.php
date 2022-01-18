@@ -27,7 +27,7 @@
             position: fixed;
             top: 85vh;
             right: 0;
-            z-index: 9999;
+            z-index: 999;
             width: 60px;
             height: 60px;
             display: flex;

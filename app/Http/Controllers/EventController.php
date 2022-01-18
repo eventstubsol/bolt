@@ -946,6 +946,10 @@ class EventController extends Controller
         return ["success" => true];
     }
 
+    public function landingPage($subdomain){
+        $event = Event::where('slug',$subdomain)->first();
+        return view("landing.index",compact('event'));
+    }
     public function sendSessionNotifications()
     {
         $sessions = EventSession::where("start_time", "<=", Carbon::now("UTC")->add(10, "minutes"))->where("start_time", ">=", Carbon::now("UTC"))->with("subscriptions.user_min")->get();
