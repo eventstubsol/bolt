@@ -5,6 +5,7 @@
 <meta content="width=device-width" name="viewport" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="shortcut icon" href="https://virturo-bucket.s3.us-east-2.amazonaws.com/uploads/fi1awmsj1YbbTuNQpfKxYJsoflCWrVHBsHV0L7cN.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,10 +130,104 @@
       .bottom-section{
         padding: 0;
       }
+      
+    }
+    
+    @media screen and (max-width: 1100px) {
+      .bottom-section{
+        flex-direction: column;
+        align-items: center;
+      }
+
+      img.bigBanner{
+        height: 1400px;
+        object-fit: cover;
+      }
+
+      #timer{
+        margin: 20px 0;
+      }
+
+      .banner_block::before {
+        background: #000000b5;
+      }
+
+      .textSection{
+        padding: 20px;
+      }
+
+      .regBtn{
+        margin: 20px 0 !important;
+      }
+
+      .speaker_block h5::before {
+        display: none;
+      }
+
+      .speaker_block h5::after {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      .register_block{
+        min-height: 850px !important;
+      }
+
+      .speaker_block h4 {
+        margin-bottom: 30px !important;
+      }
+      .speaker_block h5 {
+        margin-bottom: 30px !important;
+        font-size: 40px !important;
+      }
+
+      .setTime{
+        font-size: 22px !important;
+        min-width: 60px;
+      }
+
+      .setTime span{
+        font-size: 13px !important;
+      }
+
+      #timer{
+        min-height: 52px !important;
+      }
+
+      h4{
+        width: 100%;
+        padding: 10px;
+        font-size: 25px;
+        line-height: 30px;
+      }
+
+      h4 span {
+        font-size: 23px;
+      }
+      
+    }
+
+    @media screen and (max-width: 400px) {
+      .img_box{
+        width: 100% !important;
+      }
+      .regBox{
+        padding: 20px !important;
+      }
+    }
+
+    .img_box{
+      overflow: hidden;
+      width: 310px;
+      height: 315px;
+      border-radius: 50px;
     }
 
     .img_box img{
       border-radius: 50px;
+      height: 315px;
+      object-fit: cover;
     }
 
     h3{
@@ -241,7 +336,7 @@
   .register_block{
     background: url('/assets/images/landing/register_bg.jpg') no-repeat left top;
     background-size: cover;
-    padding: 55px 0;
+    padding: 255px 0 50px;
     min-height: 1080px;
     position: relative;
   }
@@ -250,6 +345,43 @@
     position: absolute;
     top: 0;
     left: 0;
+  }
+
+  .regBox{
+    border: 1px solid #fff;
+    background: #5b6e758a;
+    padding: 50px;
+    border-radius: 40px;
+  }
+
+  .regBox h2{
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 300;
+    letter-spacing: 3px;
+    margin-bottom: 50px;
+  }
+
+  .form-control{
+    height: 65px;
+    border-radius: 30px;
+    margin-bottom: 40px;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .btn{
+    background: #00a0fc;
+    border: 1px solid #fff;
+    border-radius: 30px;
+    font-size: 20px;
+    color: #fff;
+    width: 160px;
+    padding: 10px 0;
+    margin: 0 auto;
+    display: block;
   }
     
 </style>
@@ -272,7 +404,7 @@
         <div id="timer" data-endtime="10 june 2022 10:00:00 GMT+01:00"></div>
         <!-- Countdown Start -->
 
-        <h4>VirtuaL EVENT <span>SUMMIT 2022</span></h4>
+        <h4>{{ $event->name }}</h4>
         <p>bring your <span>brand image</span> to the highest destination</p>
 
         <!-- Register section Start -->
@@ -280,7 +412,7 @@
           <div class="img_box">
             <img src="/assets/images/landing/img-1.jpg" alt="">
           </div>
-          <div class="text-center mt-4">
+          <div class="text-center mt-4 mx-0 mx-lg-3">
             <h3 class="mt-4">23<sup>rd</sup> january 2022</h3>
             <button class="regBtn">Register now</button>
           </div>
@@ -328,8 +460,19 @@
   <div class="registerLogo">
     <img src="/assets/images/landing/register_pageLogo.png" alt="" />
   </div>
-
-  
+  <div class="row justify-content-lg-end align-items-center pr-lg-5">
+    <div class="col-lg-5">
+      <div class="regBox">
+        <h2>Registration</h2>
+        <form action="">
+          <input type="text" class="form-control" placeholder="Name" name="">
+          <input type="text" class="form-control" placeholder="Mobile no." name="" min="10" max="13">
+          <input type="text" class="form-control mb-5" placeholder="Email address" name="">
+          <button class="btn">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>  
 </div>
 <!-- Register page End -->
 
