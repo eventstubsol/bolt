@@ -227,7 +227,7 @@
     .img_box img{
       border-radius: 50px;
       height: 315px;
-      object-fit: cover;
+      object-fit: fill;
       width: 100%;
     }
 
