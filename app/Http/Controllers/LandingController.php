@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\LandingPage;
 use App\LandingSpeaker;
 use App\User;
+use App\Event;
 
 class LandingController extends Controller
 {
@@ -64,5 +65,15 @@ class LandingController extends Controller
         $landPage = LandingPage::findOrFail($id);
         $landPage->speaker_status = $req->status;
         $landPage->save();
+    }
+
+    public function updateStatus(Request $req){
+        $id = $req->id;
+        $status = $req->status;
+        $event = Event::findOrFail($id);
+        $event->land_page = $status;
+        if($event->save()){
+            return response()->json(['code'=>200]);
+        }
     }
 }

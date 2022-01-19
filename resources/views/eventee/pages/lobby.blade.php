@@ -99,7 +99,7 @@ $event_id = $id;
 
                                     <div @if($link->type !== "booth") style="display: none;" @endif  class="booth-{{$ids}} booths form-group mb-3 col-md-4">
                                         <label for="to">to(Booth)</label>
-                                        <select     class="form-control" name="booths[]">
+                                        <select class="form-control" name="booths[]">
                                             @foreach($booths as $booth)
                                                 <option @if($link->to === $booth->id) selected @endif value="{{$booth->id}}">{{$booth->name}}</option>
                                             @endforeach

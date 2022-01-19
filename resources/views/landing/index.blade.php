@@ -395,6 +395,7 @@
 <div class="banner_block">
     <img src="{{ assetUrl($landing->banner_image) }}" alt="" class="bigBanner" />
     <div class="textSection">
+      @include('flash::message')
         <!-- Site Logo Start -->
         <div class="logosection">
             <img src="{{ assetUrl(getFieldId('logo',$event->id)) }}" alt="">
@@ -456,7 +457,11 @@
 <!-- Speaker page End -->
 
 @endif
-
+@if (\Session::has('message'))
+    <script>
+      showMessage(`User Created Succesfully`,'success');
+    </script>
+@endif
 <!-- Register page Start -->
 <div id="regInit" class="register_block">
   <!-- <div class="registerLogo">
@@ -466,8 +471,8 @@
     <div class="col-lg-5">
       <div class="regBox">
         <h2>Registration</h2>
-        @if(isset($form))
-        <form method="POST" class="register mt-2"  action="{{route('attendee_register.confirmReg',$event->slug)}}" enctype="multipart/form-data">
+        @if($form != null)
+        <form method="POST" class="register mt-2" id="customform"  action="{{route('attendee_register.confirmReg.landingSave',$event->slug)}}" enctype="multipart/form-data">
           @csrf
           @foreach($form->fields as $field)
               @php 
@@ -799,11 +804,11 @@
           </div>
       </form>
         @else
-          <form action="">
-            <input type="text" class="form-control" placeholder="Name" name="">
-            <input type="text" class="form-control" placeholder="Mobile no." name="" min="10" max="13">
-            <input type="text" class="form-control mb-5" placeholder="Email address" name="">
-            <button class="btn">Register</button>
+          <form action="{{ route('attendee_register.confirmReg.defaultsave',$event->slug) }}" method="POST">
+            <input type="text" class="form-control" placeholder="Name" name="name">
+            <input type="text" class="form-control" placeholder="Mobile no." name="phone" min="10" max="13">
+            <input type="text" class="form-control mb-5" placeholder="Email address" name="email">
+            <button type="submit" class="theme-btn btn primary-filled">{{ __('Register') }}</button>
           </form>
         @endif
       </div>
@@ -817,6 +822,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 
 <script>
+
+ 
 
 //Countdown jquery Start //
 function myTimer() {
@@ -883,6 +890,9 @@ setInterval(function() {
 
 
 
+</script>
+<script>
+  $('#flash-overlay-modal').modal();
 </script>
 </body>
 </html>

@@ -27,7 +27,12 @@
     <link href="../assets/css/config/default/bootstrap-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" disabled="disabled"> --}}
 
     <!-- icons -->
-    <link rel="stylesheet" href="{{ asset('assets/css/icons.min.css') }}" type="text/css">
+   
+        {{-- <link href="https://coderthemes.com/ubold/layouts/assets/css/config/default/bootstrap.min.css" rel="stylesheet" type="text/css" /> --}}
+        <link href="https://coderthemes.com/ubold/layouts/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+        <link href="https://coderthemes.com/ubold/layouts/assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('assets/css/icons.min.css') }}" type="text/css">
+
     <style>
         .dataTables_length select{
             width: 54px !important;
@@ -480,7 +485,24 @@
 </a>
 <div class="rightbar-overlay"></div>
 
-<div class="rightSection">hello</div>
+<div class="rightSection">
+    @if(Auth::user()->type == 'eventee')
+        @php
+            $event = App\Event::findOrFail($id);
+        @endphp
+        @if($event->land_page == 0)
+            <div class="form-check form-switch ml-3">
+                <label for="#landPage">Set Landing Page</label>
+                <input type="checkbox" value="0" class="form-check-input" onchange="landingPage(this)">
+            </div>
+        @else
+        <div class="form-check form-switch ml-3">
+            <label for="#landPage">Set Landing Page</label>
+            <input type="checkbox" value="0" class="form-check-input" onchange="landingPage(this)" checked>
+        </div>
+        @endif
+    @endif    
+</div>
 
 <script>
 $(document).ready(function(){
@@ -489,7 +511,23 @@ $(document).ready(function(){
     });
 });
 </script>
-
+<script>
+    function landingPage(e){
+        let status = e.value;
+        if(status == 0){
+            e.value = 1;
+            $.get("{{ route('update.landing.status') }}",{'status':1,'id':"{{ $id }}"},function(res){
+                alert("turned on");
+            });
+        }
+        else{
+            e.value = 0;
+            $.get("{{ route('update.landing.status') }}",{'status':0,'id':"{{ $id }}"},function(res){
+                alert("turned off");
+            }); 
+        }
+    }    
+</script>
 <script>
     window.config = {
         ...(window.config || {}),
@@ -510,7 +548,11 @@ $(document).ready(function(){
 <script src="{{ asset('assets/js/sortable.min.js') }}"></script>
 <script src="{{ asset('assets/js/d3.min.js') }}"></script>
 
-
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/mohithg-switchery/switchery.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/js/vendor.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/multiselect/js/jquery.multi-select.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/libs/select2/js/select2.min.js"></script>
 
 <!-- App js -->
 <script src="{{ asset('assets/js/app.js') }}"></script>

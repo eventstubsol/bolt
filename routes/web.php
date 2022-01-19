@@ -59,6 +59,10 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
     
+    //Landing Update
+    Route::get('landing/update/status','LandingController@updateStatus')->name('update.landing.status');
+
+
     Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
     Route::get('/adddns','eventeeController@verifyDomain')->name('verifyDomain');
     Route::get('Events','eventeeController@Event')->name('event.index');
@@ -711,7 +715,12 @@ Route::group($options, function () use ($options) {
         // dd($subdomain);
         $user = Auth::user();
         if(!$user){
-            return redirect(route('attendeeLogin',$subdomain));
+            if($event->land_page == 0){
+                return redirect(route('attendeeLogin',$subdomain));
+            }
+            else{
+                return redirect()->route('event.landpage',$subdomain);
+            }
         }
         if($user->type === "exhibiter"){
             return redirect(route("exhibiterhome",$subdomain));
@@ -726,8 +735,11 @@ Route::group($options, function () use ($options) {
         // Route::get("/", "HomeController@index")->name("home");
 
         // return "This will respond to requests for 'admin.localhost/'";
+        
     });
-    Route::get("/landing", "EventController@landingPage");
+    Route::get("/landing", "EventController@landingPage")->name('event.landpage');
+    Route::post("/event/register/landing", "EventRegController@CustomFormSave")->name("attendee_register.confirmReg.landingSave");
+    Route::post("/event/register/landing/default", "EventRegController@BasicForm")->name("attendee_register.confirmReg.defaultsave");
     Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
 
     Route::get("/faq", "HomeController@faqs")->name("faq");
@@ -746,6 +758,7 @@ Route::group($options, function () use ($options) {
         Route::get("/booths", "Eventee\BoothController@exhibiterhome")->name("exhibiterhome");
     });
     Route::post("/event/register", "AttendeeAuthController@confirmReg")->name("attendee_register.confirmReg");
+    
     Route::middleware(["auth"])->group(function ($subdomain) {
         Route::get("/event", "EventController@index")->name("eventee.event");
         Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
@@ -769,6 +782,7 @@ Route::group($options, function () use ($options) {
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
     Route::post('notification/seen','UerNotifiicationController@seen')->name('notification.user.seen');
     Route::get('notification/seen/all','UerNotifiicationController@seenAll')->name('notification.user.seenAll');
+   
     Route::post("/Event/Location","LocationController@setLocation")->name("set.Location");
     
     Route::get("/event/session-notifications", "EventController@sendSessionNotifications");
