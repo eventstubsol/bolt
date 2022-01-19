@@ -228,6 +228,7 @@
       border-radius: 50px;
       height: 315px;
       object-fit: cover;
+      width: 100%;
     }
 
     h3{
