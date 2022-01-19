@@ -583,7 +583,7 @@ $event_id = $id;
                                             @endforeach
                                         </select>
                                     </div>
-
+                                    
                                     
 
                                     <div  class="pages-${n} pages form-group mb-3 col-md-4">
@@ -680,6 +680,7 @@ $event_id = $id;
                                     <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
 
                                     </div>
+                                    
 
                                         <div class="col-md-12 flyin ">
                                             <div style="display:none" class="image-uploader flyin-${n}">
@@ -688,6 +689,15 @@ $event_id = $id;
                                                 <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video"  />
                                             </div>
                                             <button class="btn btn-primary addflyin" data-index="${n}">Add Fly In Video</button>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-12 flyin ">
+                                            <div style="display:none" class="image-uploader flyin-${n}">
+                                                <label class="mb-3" for="images">Fly In Video</label>
+                                                <input type="hidden" name="flyin[]" class="upload_input" >
+                                                <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video"  />
+                                            </div>
+                                           
                                         </div>
                                    
 
@@ -731,7 +741,10 @@ $event_id = $id;
             }
         })
     }
+   
+    
 </script>
 
 
 @endsection
+
