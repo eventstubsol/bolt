@@ -34,7 +34,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        /* background: #00000078; */
+        background: #00000078;
     }
 
     .textSection{
@@ -336,7 +336,7 @@
   .register_block{
     background: url("{{ assetUrl($landing->banner_image) }}") no-repeat left top;
     background-size: cover;
-    padding: 255px 0 50px;
+    padding: 155px 0 50px;
     min-height: 1080px;
     position: relative;
   }
@@ -349,7 +349,7 @@
 
   .regBox{
     border: 1px solid #fff;
-    background: #5b6e758a;
+    background: #515151c4;
     padding: 50px;
     border-radius: 40px;
   }
@@ -414,9 +414,9 @@
           </div>
           <div class="text-center mt-4 mx-0 mx-lg-3">
             <h3 class="mt-4">{{ Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }}</h3>
-            <a href="#regInit" style="text-decoration: none" class="regBtn">Register now</a>
+            <a href="#regInit" style="text-decoration: none" class="regBtn d-block">Register now</a>
           </div>
-          <div class="img_box mt-4">
+          <div class="img_box mt-lg-0 mt-4">
             <img src="{{ assetUrl($landing->second_logo) }}" alt="">
           </div>
         </div>
@@ -435,8 +435,8 @@
   <div class="d-flex justify-content-evenly flex-wrap">
     @if(count($speakers) > 0)
 
+    @foreach ($speakers as $speaker)
       <div class="speakerbox">
-        @foreach ($speakers as $speaker)
           <div class="boxBg">
             <img src="{{ assetUrl($speaker->image) }}" alt="">
           </div>
@@ -444,8 +444,9 @@
             $user = App\User::findOrFail($speaker->speaker_id);
           @endphp
           <h6 class="text-center">{{ ($user->name).' '.$user->last_name }} <span class="d-block">{{ $speaker->designation }}</span></h6>
-        @endforeach
+        
       </div>
+      @endforeach
 
     @endif  
   </div>
@@ -457,9 +458,9 @@
 
 <!-- Register page Start -->
 <div id="regInit" class="register_block">
-  <div class="registerLogo">
-    <img src="{{ assetUrl($landing->banner_image) }}" alt="" />
-  </div>
+  <!-- <div class="registerLogo">
+  <img src="{{ assetUrl(getFieldId('logo',$event->id)) }}" alt="">
+  </div> -->
   <div class="row justify-content-lg-end align-items-center pr-lg-5">
     <div class="col-lg-5">
       <div class="regBox">
@@ -477,7 +478,7 @@
                   @case("email")
                   @case("tel")
                           <div class="form-group">
-                              <label for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label>
+                              <label class="text-white" for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label>
                               <input @if($field->required) required @endif class="form-control" type="{{ $struct->type }}" placeholder="{{ $field->placeholder ?? $struct->label
                               }}" name="{{ $struct->field }}">
                           </div>
@@ -485,7 +486,7 @@
                       @break
                   @case("country")
                           <div class="form-group">
-                              <label for="country" >{{ $field->placeholder ?? $struct->label }}</label>
+                              <label class="text-white" for="country" >{{ $field->placeholder ?? $struct->label }}</label>
                               <select id="country" class="form-control" name="country">
                                   <option value="Afganistan">Afghanistan</option>
                                   <option value="Albania">Albania</option>
@@ -739,7 +740,7 @@
   
                   @case("image")
                       <div class="image-uploader profilepic">
-                          <label class="mb-3" for="images">{{ $field->placeholder }}</label>
+                          <label class="mb-3 text-white" for="images">{{ $field->placeholder }}</label>
                           <input type="hidden" name="profileImage" class="upload_input"  >
                           <input type="file" data-name="profileImage" data-plugins="dropify" data-type="image" />
                       </div>
