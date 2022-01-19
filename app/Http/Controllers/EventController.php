@@ -6,9 +6,11 @@ use App\AccessSpecifiers;
 use App\Api;
 use App\Booth;
 use App\BoothInterest;
+use App\Form;
 use App\CometChat;
 use App\Event;
-
+use App\LandingPage;
+use App\LandingSpeaker;
 use App\EventSession;
 use App\LoginLog;
 use App\Notification;
@@ -948,7 +950,11 @@ class EventController extends Controller
 
     public function landingPage($subdomain){
         $event = Event::where('slug',$subdomain)->first();
-        return view("landing.index",compact('event'));
+        $landing = LandingPage::where('event_id',$event->id)->first();
+        $speakers = LandingSpeaker::where('page_id',$landing->id)->get();
+        $form = Form::where('event_id',$event->id)->where('user_type','attendee')->first();
+        $form->load("fields.formStruct");
+        return view("landing.index",compact('event','landing','speakers','form'));
     }
     public function sendSessionNotifications()
     {

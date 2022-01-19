@@ -220,6 +220,11 @@
                     <span> Default Settings </span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route("landing.settings",$id) }}">
+                    <span> Landing Page Settings</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>

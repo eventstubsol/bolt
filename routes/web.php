@@ -2,6 +2,7 @@
 
 use App\CometChat;
 use App\Event;
+use App\Http\Controllers\LandingController;
 use App\User;
 use Carbon\Carbon;
 use App\Menu;
@@ -70,6 +71,13 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
 
     Route::get('settings/chat/{id}','ChatController@ChatSettings')->name('settings.chat');
     Route::post('settings/savechat/{id}','ChatController@SaveChatSettings')->name('settings.savechat');
+
+
+    //Landing Page Setting
+    Route::get('/Landing/Setting/{id}',"LandingController@index")->name('landing.settings');
+    Route::POST('/Landing/Setting/Post/{id}','LandingController@LandingStore')->name('landing.settings.store');
+    Route::POST('/Landing/Setting/Speaker/{id}/{page_id}','LandingController@SpeakerStore')->name('landing.settings.speaker');
+    Route::get('/set/speaker/status','LandingController@setStatus')->name('landing.settings.setStatus');
 
 
     //User Wise Report
