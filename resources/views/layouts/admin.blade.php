@@ -141,6 +141,67 @@
             cursor: pointer;
             line-height: 0;
         }
+
+        .switch {
+        position: relative;
+        display: inline-block;
+        width: 30px;
+        height: 14px;
+        margin: 0;
+        }
+
+        .switch input { 
+        opacity: 0;
+        width: 0;
+        height: 0;
+        }
+
+        .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        .slider:before {
+        position: absolute;
+        content: "";
+        height: 10px;
+        width: 10px;
+        left: 4px;
+        bottom: 2px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        }
+
+        input:checked + .slider {
+        background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+        -webkit-transform: translateX(12px);
+        -ms-transform: translateX(12px);
+        transform: translateX(12px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+        border-radius: 34px;
+        }
+
+        .slider.round:before {
+        border-radius: 50%;
+        }
     </style>
     @if(isset($id))
         @php
@@ -244,7 +305,7 @@
                         </div>
                     </li>
                     <li>
-                        <span class="ml-2 rightPanel">
+                        <span class="ml-2 rightPanel" data-toggle="tooltip" title="Open Right Side Bar">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
                                 <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
                                 <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
@@ -491,24 +552,34 @@
             $event = App\Event::findOrFail($id);
         @endphp
         @if($event->land_page == 0)
-            <div class="form-check form-switch ml-3">
-                <label for="#landPage">Set Landing Page</label>
-                <input type="checkbox" value="0" class="form-check-input" onchange="landingPage(this)">
+            <div class="form-check form-switch ml-0 pl-0">
+                <label for="#landPage" class="mr-1 mb-0">Set Landing Page</label>
+                <label class="switch">
+                    <input type="checkbox" value="0" onchange="landingPage(this)">
+                    <span class="slider round"></span>
+                </label>
             </div>
         @else
-        <div class="form-check form-switch ml-3">
-            <label for="#landPage">Set Landing Page</label>
-            <input type="checkbox" value="1" class="form-check-input" onchange="landingPage(this)" checked>
+        <div class="form-check form-switch ml-0 pl-0">
+            <label for="#landPage" class="mr-1 mb-0">Set Landing Page</label>
+            <label class="switch">
+                <input type="checkbox" value="1" onchange="landingPage(this)" checked>
+                <span class="slider round"></span>
+            </label>
         </div>
         @endif
     @endif    
 </div>
 
 <script>
+
 $(document).ready(function(){
     $(".rightPanel").click(function(){
         $(".rightSection").toggleClass("showDiv");
     });
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 });
 </script>
 @if(isset($id))
