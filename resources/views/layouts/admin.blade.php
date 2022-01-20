@@ -486,7 +486,7 @@
 <div class="rightbar-overlay"></div>
 
 <div class="rightSection">
-    @if(Auth::user()->type == 'eventee')
+    @if(isset($id))
         @php
             $event = App\Event::findOrFail($id);
         @endphp
@@ -498,7 +498,7 @@
         @else
         <div class="form-check form-switch ml-3">
             <label for="#landPage">Set Landing Page</label>
-            <input type="checkbox" value="0" class="form-check-input" onchange="landingPage(this)" checked>
+            <input type="checkbox" value="1" class="form-check-input" onchange="landingPage(this)" checked>
         </div>
         @endif
     @endif    
@@ -511,6 +511,7 @@ $(document).ready(function(){
     });
 });
 </script>
+@if(isset($id))
 <script>
     function landingPage(e){
         let status = e.value;
@@ -528,6 +529,8 @@ $(document).ready(function(){
         }
     }    
 </script>
+@endif
+
 <script>
     window.config = {
         ...(window.config || {}),
