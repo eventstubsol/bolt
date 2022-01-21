@@ -273,6 +273,8 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post("/settings/update/{id}", "EventController@settingsUpdate")->name("eventee.settingsUpdate");
     Route::post("/settings/update/color/{id}", "EventController@settingsColorUpdate")->name("eventee.settingscolorUpdate");
     Route::post("Loader/Update",'EventController@LoaderUpdate')->name("eventee.loader.update");
+    Route::get('/Loader/Create/{id}','LoaderController@create')->name('eventee.loader.create');
+    Route::POST('/Loader/store/{id}','LoaderController@store')->name('eventee.loader.store');
     
     Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
     Route::post("/options/update/{id}", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");

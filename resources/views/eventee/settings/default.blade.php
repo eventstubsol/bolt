@@ -103,20 +103,27 @@
             </div>
         </div>
         <div class="card">
-            <div class="card-header">  Loaders    </div>
+            <div class="card-header">  
+                
+                <div class="d-flex" >
+                    <h5>Loaders</h5>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{{ route('eventee.loader.create',$id) }}" class="btn btn-primary float-right" >Add New Loader</a>
+                </div>
+            </div>
+
             <div class="card-body">
                 @foreach ($loaders as $loader)
                     <div class="d-flex justify-content-between">
                         @if($loader->id == $event->def_loader)
                             <input name="laoder_id" type="radio" checked class="radioCheck form-check-input" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
                             <div style="width:8rem;height:8rem;background:white;">
-                                <img src="{{ asset(''.$loader->load_class.'') }}" alt="no" width="100%" height="100%">
+                                <img src="{{ assetUrl($loader->load_class) }}" alt="no" width="100%" height="100%">
                             </div>
                             
                         @else
                             <input name="laoder_id" type="radio" class="radioCheck form-check-input" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
                             <div style="width:5rem;height:5rem;background:white;">
-                                <img src="{{ asset(''.$loader->load_class.'') }}" alt="no" width="100%" height="100%" >
+                                <img src="{{ assetUrl($loader->load_class) }}" alt="no" width="100%" height="100%" >
                             </div>
                         @endif
                 
