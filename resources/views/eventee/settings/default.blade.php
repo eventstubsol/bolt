@@ -102,6 +102,28 @@
                 </form>
             </div>
         </div>
+        <div class="card">
+            <div class="card-header">  Loaders    </div>
+            <div class="card-body">
+                @foreach ($loaders as $loader)
+                    <div class="d-flex justify-content-between">
+                        @if($loader->id == $event->def_loader)
+                            <input name="laoder_id" type="radio" checked class="radioCheck form-check-input" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
+                            <div style="width:8rem;height:8rem;background:white;">
+                                <img src="{{ asset(''.$loader->load_class.'') }}" alt="no" width="100%" height="100%">
+                            </div>
+                            
+                        @else
+                            <input name="laoder_id" type="radio" class="radioCheck form-check-input" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
+                            <div style="width:5rem;height:5rem;background:white;">
+                                <img src="{{ asset(''.$loader->load_class.'') }}" alt="no" width="100%" height="100%" >
+                            </div>
+                        @endif
+                
+                    </div>
+                @endforeach
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -139,6 +161,18 @@
                 break;
         }
         // console.log(val);
+    }
+    function radioCheck(e){
+        let loader_id = e.getAttribute('data-id');
+        let event_id = "{{ $event->id }}";
+        $.post("{{ route('eventee.loader.update') }}",{'loader_id':loader_id,'event_id':event_id},function(res){
+            if(res.code == 200){
+                showMessage(res.message,'success');
+            }
+            else{
+                showMessage(res.message,'error');
+            }
+        });
     }
     </script>
 @endsection
