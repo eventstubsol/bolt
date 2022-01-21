@@ -21,4 +21,8 @@ class Event extends Model
     public function user(){
         $this->belongsTo("\App\User");
     }
+
+    public function loader(){
+        $this->hasOne('App\Loader','def_loader');
+    }
 }

@@ -230,6 +230,9 @@
 
 <script>
     $('#flash-overlay-modal').modal();
+    /* setTimeout(function(){ 
+        $('#flash-overlay-modal').modal('toggle'); 
+    }, 2000); */
 </script>
 
 </head>

@@ -212,6 +212,8 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post('/page/DeleteAll',"Eventee\PageController@DeleteAll")->name('eventee.pages.deleteAll');
 
 
+
+
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
     
@@ -270,6 +272,7 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get("/settings/{id}", "EventController@settings")->name("eventee.settings");
     Route::post("/settings/update/{id}", "EventController@settingsUpdate")->name("eventee.settingsUpdate");
     Route::post("/settings/update/color/{id}", "EventController@settingsColorUpdate")->name("eventee.settingscolorUpdate");
+    Route::post("Loader/Update",'EventController@LoaderUpdate')->name("eventee.loader.update");
     
     Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
     Route::post("/options/update/{id}", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");
