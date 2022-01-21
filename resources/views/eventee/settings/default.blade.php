@@ -13,6 +13,11 @@
 @section("styles")
     @include("includes.styles.wyswyg")
     <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.css">
+    <style>
+        .bg-white{
+            height: 150px;
+        }
+    </style>
 @endsection    
 
 @section("content")
@@ -105,23 +110,29 @@
         <div class="card">
             <div class="card-header">  Loaders    </div>
             <div class="card-body">
-                @foreach ($loaders as $loader)
-                    <div class="d-flex justify-content-between">
+                
+                    
+
+                    <div class="row">
+                    @foreach ($loaders as $loader)
                         @if($loader->id == $event->def_loader)
-                            <input name="laoder_id" type="radio" checked class="radioCheck form-check-input" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
-                            <div style="width:8rem;height:8rem;background:white;">
-                                <img src="{{ asset(''.$loader->load_class.'') }}" alt="no" width="100%" height="100%">
+                            <div class="col-md-3 text-center mb-3">
+                                <div class="bg-white">
+                                    <img src="{{ asset(''.$loader->load_class.'') }}" alt="no" width="100%" height="100%">
+                                </div>
+                                <input name="laoder_id" type="radio" checked class="radioCheck form-check-input ml-0 pt-2" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
                             </div>
-                            
                         @else
-                            <input name="laoder_id" type="radio" class="radioCheck form-check-input" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
-                            <div style="width:5rem;height:5rem;background:white;">
-                                <img src="{{ asset(''.$loader->load_class.'') }}" alt="no" width="100%" height="100%" >
+                            <div class="col-md-3 text-center mb-3">
+                                <div class="bg-white">
+                                    <img src="{{ asset(''.$loader->load_class.'') }}" alt="no" width="100%" height="100%" >
+                                </div>
+                                <input name="laoder_id" type="radio" class="radioCheck form-check-input ml-0 pt-2" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
                             </div>
                         @endif
-                
+                    @endforeach
                     </div>
-                @endforeach
+                
             </div>
         </div>
     </div>
