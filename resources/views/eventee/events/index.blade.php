@@ -79,7 +79,7 @@
                                 <td>
                                     <a href="{{ route('event.Edit',['event_id'=>( $event->id )]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
                                     <a href="{{ route('event.Dashboard',['id'=>( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
-                                    <button onclick="deleteEvent(this)" data-id="{{ $event->id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    <button onclick="deleteEvent(this)" data-id="{{ $event->id }}" class="btn btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             @endforeach
@@ -179,6 +179,7 @@
 @section('scripts')
 @include("includes.scripts.datatables")
   <script>
+
       function CreateEvent(){
           $('#createModal').modal('toggle');
       }
