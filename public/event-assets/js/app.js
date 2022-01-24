@@ -1028,7 +1028,6 @@ function initApp() {
         },
         'page/:page': function (page) {
             // if(page === "auditorium"){
-                // CometChatWidget.chatWithGroup(page);
             // }
             // alert(page);
             let video = $('.video-'+page);
@@ -1041,6 +1040,7 @@ function initApp() {
                     routie("lobby");
                 }
                 pages.hide().filter("#page-" + page).show();
+                let chatname = pages.filter("#page-" + page).data("chat");
                 if(page==="Program-Workshop-2"||page==="Program-Workshop-1"){
                     trackEvent({
                         type:"workshopVisit",
@@ -1048,7 +1048,9 @@ function initApp() {
                     });
                 }
                 pageChangeActions(false);
-
+                createGroup(chatname);
+                CometChatWidget.chatWithGroup(chatname);
+                
                recordPageView("page/" + page, page + " page", "page",page);
             }
             video.show();

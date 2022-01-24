@@ -4,7 +4,7 @@
     @include("includes.styles.datatables")
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <style>
-        #eventData .slugInp{
+        /* #eventData .slugInp{
             width: 85%;
             border: 1px solid grey;
             height: calc(1.5rem+ 0.9rem+ 2px);
@@ -13,7 +13,7 @@
             background-clip: padding-box;
             border: 1px solid #ced4da;
             border-radius: 0.2rem;
-        }
+        } */
         #event_link{
             font-weight: 700;
             white-space: nowrap;
@@ -118,7 +118,7 @@
                 <div class="form-group">
                     <label for="name">Event Link
                         <span style="color:red">*</span></label><br>
-                    <input type="text" id="event_slug" name="event_slug" class="slugInp" required>
+                    <input type="text" id="event_slug" name="event_slug" class="form-control" required>
                     @php
                         $baseurl = URL::to('/');
                         if(strpos($baseurl,'https')){
@@ -132,7 +132,7 @@
                 </div>
                 <div class="form-group">
                     <label for="name">Custom Domain (Optional)</label><br>
-                    <input type="text" id="domain" name="domain" class="slugInp" >
+                    <input type="text" id="domain" name="domain" class="form-control" >
                     <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps and do not use http:// or https://.  </strong> </span>
                 </div>
                 <div class="row">
