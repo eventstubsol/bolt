@@ -52,6 +52,7 @@ class EventController extends Controller
     public function index($event_name)
     {
         $event = Event::where("slug",$event_name)->first();
+        $loader = Loader::findOrFail($event->def_loader);
         $event_id = $event->id;
         $leaderboard =Leaderboard::where('event_id',$event_id)->first();
         $chat_app = CometChat::where("event_id",$event->id)->first();
@@ -142,6 +143,7 @@ class EventController extends Controller
                     "sessionrooms",
                     "sessionroomnames",
                     "event_id",
+                    "loader",
                     "tables",
                     "event_name",
                     "access_specifiers",

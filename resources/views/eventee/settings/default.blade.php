@@ -123,14 +123,14 @@
                     <div class="row">
                     @foreach ($loaders as $loader)
                         @if($loader->id == $event->def_loader)
-                            <div class="col-md-3 text-center mb-3">
+                            <div class="col-md-2 text-center mb-3">
                                 <div class="bg-white">
                                     <img src="{{ assetUrl($loader->load_class) }}" alt="no" width="100%" height="100%">
                                 </div>
                                 <input name="laoder_id" type="radio" checked class="radioCheck form-check-input ml-0 pt-2" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
                             </div>
                         @else
-                            <div class="col-md-3 text-center mb-3">
+                            <div class="col-md-2 text-center mb-3">
                                 <div class="bg-white">
                                     <img src="{{ assetUrl($loader->load_class) }}" alt="no" width="100%" height="100%" >
                                 </div>

@@ -37,7 +37,7 @@
         color: {{ $event->secondary_color }};
     }
 </style>
-<div class="menu-custom navs hidden theme-nav">
+<div class="menu-custom navs hidden theme-nav" >
     <div class="container-fluid row">
         <ul class="menu">
             
