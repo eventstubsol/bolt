@@ -23,7 +23,7 @@ Background
         <div class="card">
             <div class="card-body">
                 <div class="float-right"><a href="{{ route('eventee.background.create',$id) }}" class="btn btn-success">Create</a></div><br>
-                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>#</th>

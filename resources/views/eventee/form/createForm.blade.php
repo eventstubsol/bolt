@@ -71,7 +71,7 @@
                     
                     <div class="form-group mb-3">
                         <label for="type">Fields</label>
-                        <table class="table datatable table-striped dt-responsive nowrap w-100">
+                        <table class="table datatable   dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
                                     <th>Name</th>

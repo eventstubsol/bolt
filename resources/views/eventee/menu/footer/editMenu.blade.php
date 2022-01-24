@@ -155,7 +155,7 @@ Update Menu
             <div class="card-body">
               
 
-                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>Menu</th>

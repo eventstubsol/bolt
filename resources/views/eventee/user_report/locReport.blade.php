@@ -196,7 +196,7 @@
                     end.val(end_date);
                     $('#resultDivReport').empty();
                     $.each(report,function(key,value){
-                        $('#resultDivReport').append('<table class="table table-striped" id="childApp'+key+'"><thead><tr><th>'+ key + '</th></tr></thead><thead><tr><th>Name</th><th>Email</th><th>Entered At</th><th>Left At</th></tr></thead>');
+                        $('#resultDivReport').append('<table class="table  " id="childApp'+key+'"><thead><tr><th>'+ key + '</th></tr></thead><thead><tr><th>Name</th><th>Email</th><th>Entered At</th><th>Left At</th></tr></thead>');
                         $.each(value,function(secondKey,secondValue){
                             if(secondValue.type_location != null){
                                 $('#childApp'+key+'').append('<tbody><tr><td>'+secondValue.name+'</td><td>'+secondValue.email+'</td><td>'+SetTime(secondValue.created_at)+'</td><td>'+SetTime(secondValue.updated_at)+'</td></tr></tbody>');

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     @foreach ($reports as $key => $report)
-    <table class="table table-striped">
+    <table class="table  ">
         <thead>
             <tr>
                 <th>{{ $key }}</th>

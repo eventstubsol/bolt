@@ -21,7 +21,7 @@
             <div class="card-body">
                 <h3>Please add the Followig DNS Record to Your Domain and Click Verify</h3>
             
-                <table class="table table-hover table-striped">
+                <table class="table table-hover  ">
                     <thead>
                         <tr>
                             <th>Record Type</th>

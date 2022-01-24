@@ -22,7 +22,7 @@ Manage License
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th width="20%">Name</th>

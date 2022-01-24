@@ -26,7 +26,7 @@ $announcements = App\Announcement::where('user_id', 'all')
 
             <div class="modal-body">
                 @if (count($announcements) < 1)
-                    <table id="announcement_table2" class="table table-striped table-bordered table-hover">
+                    <table id="announcement_table2" class="table   table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Subject</th>
@@ -40,7 +40,7 @@ $announcements = App\Announcement::where('user_id', 'all')
                         </tbody>
                     </table>
                 @else
-                    <table id="announcement_table" class="table table-striped table-bordered table-hover">
+                    <table id="announcement_table" class="table   table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Subject</th>
@@ -101,7 +101,7 @@ $per_announcements = App\Announcement::where('user_id', Auth::id())
 
             <div class="modal-body">
                 @if (count($per_announcements) < 1)
-                    <table id="announcement_table2" class="table table-striped table-bordered table-hover">
+                    <table id="announcement_table2" class="table   table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Subject</th>
@@ -117,7 +117,7 @@ $per_announcements = App\Announcement::where('user_id', Auth::id())
                     </table>
 
                 @else
-                    <table id="announcement_table2" class="table table-striped table-bordered table-hover">
+                    <table id="announcement_table2" class="table   table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Subject</th>

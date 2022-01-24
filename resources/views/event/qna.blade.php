@@ -32,7 +32,7 @@ $questions = App\LiveQuestion::where('view', 1)
                                 Questions</button></center>
                     </div>
                 @else
-                    <table id="qna_table" class="table table-striped table-bordered table-hover">
+                    <table id="qna_table" class="table   table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Author</th>
@@ -148,7 +148,7 @@ $questions = App\LiveQuestion::where('view', 1)
                                 Questions</button></center>
                     </div>
                 @else
-                    <table id="qna_table" class="table table-striped table-bordered table-hover">
+                    <table id="qna_table" class="table   table-bordered table-hover">
                         <thead>
                             <tr>
 

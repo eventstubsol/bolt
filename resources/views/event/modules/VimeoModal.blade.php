@@ -5,7 +5,7 @@
             <button style="right: 7px  !important;top: 9px  !important;" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h2>NPHC Greetings</h2>
             <div class="modal-body">
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered  ">
                         <thead>
                         <tr>
                             <th>Name</th>

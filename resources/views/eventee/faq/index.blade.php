@@ -43,7 +43,7 @@
                 <div class="float-right"><a href="{{ route('eventee.faq.create',$id) }}" class="btn btn-success">Create FAQ</a></div>
             </div>
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table  ">
                     <thead>
                         <tr>
                             <th>#</th>

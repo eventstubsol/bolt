@@ -13,7 +13,7 @@
     </div>
 
     @foreach ($reports as $key => $report)
-    <table class="table table-striped">
+    <table class="table  ">
         <thead>
             <tr>
                 <th>{{ $key }}</th>

@@ -35,7 +35,7 @@
 {{--                        <a class="btn btn-primary" href="{{ route("eventee.sessionrooms.create") }}">Create New</a>--}}
 {{--                    </div>--}}
 {{--                </div>--}}
-                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
                     <thead>
                         <tr class="head">
                             <th class="checks" style="display: none"><input type="checkbox" class="checkall"></th>

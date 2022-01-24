@@ -25,7 +25,7 @@
                 <a href="{{ route('eventee.mail.create',$id) }}" style="float: right" class="btn btn-success"><i class="fa fa-envelope" aria-hidden="true"></i> New Mail</a>
             </div>
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table  ">
                     <thead>
                         <tr>
                             <th width ="10%">#</th>

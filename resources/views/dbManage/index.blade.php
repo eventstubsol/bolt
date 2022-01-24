@@ -33,7 +33,7 @@ Database Logs
                 <center>  Event Deleted Successfully </center>
             </div>
             <div class="card-body">
-                <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th width="80%">Table Name</th>

@@ -101,7 +101,7 @@
             </div>
             <div class="modal-body">
                @if(count($booth->videos))
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered  ">
                         <thead>
                         <tr>
                             <th>Name</th>
@@ -168,7 +168,7 @@
             </div>
             <div class="modal-body">
             @if(count($booth->resources))
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered  ">
                     <thead>
                     <tr>
                         <th>Name</th>

@@ -23,7 +23,7 @@
                     <h3>{{ $section }}</h3>
                 </div>
                 <div class="card-body">
-                    <table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+                    <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
                         <thead>
                         <tr>
                             <th>Name</th>

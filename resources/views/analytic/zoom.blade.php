@@ -42,7 +42,7 @@
 	        		@endif
 				</div>
 				<div class="card-body">
-					<table id="datatable-buttons" class="table datatable table-striped dt-responsive nowrap w-100">
+					<table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
 						<thead>
 							<th width="20%">Title</th>
 							<th width="20%">API KEY</th>

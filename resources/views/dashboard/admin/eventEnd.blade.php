@@ -17,7 +17,7 @@
             <div class="card-header">Events Close To Expiry</div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table datatable table-striped dt-responsive nowrap w-100" id="datatable-buttons">
+                    <table class="table datatable   dt-responsive nowrap w-100" id="datatable-buttons">
                         <thead>
                             <tr>
                                 <th>#</th>

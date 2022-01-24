@@ -33,7 +33,7 @@
                 </div>
                 <div class="card-body">
                     <table id="datatable-buttons"
-                        class="table datatable table-striped table-hover dt-responsive nowrap w-100">
+                        class="table datatable   table-hover dt-responsive nowrap w-100">
                         <thead>
                             <tr>
                                 <th>Questions</th>

@@ -50,7 +50,7 @@ Manage Polls
          <div class="card-body">
             <fieldset>
                <legend></legend>
-               <table class="table datatable table-striped dt-responsive nowrap w-100">
+               <table class="table datatable   dt-responsive nowrap w-100">
                   <thead>
                      <th>Current Polls</th>
                      <th>Actions</th>
