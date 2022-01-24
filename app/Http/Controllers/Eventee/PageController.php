@@ -44,7 +44,7 @@ class PageController extends Controller
         $page = new Page([
             "name" => $name,
             'event_id'=>$id,
-            'chat_name'=>$name,
+            'chat_name'=>$request->chat_name,
             // "bg_type" =>$request->bg_type,
         ]);
      
@@ -156,6 +156,7 @@ class PageController extends Controller
         $pag =  Page::where('event_id',$id)->first();
         $event_id = $id;
         $page->name = $request->name;
+        $page->chat_name =  $request->chat_name;
         $page->save();
 
         $page->treasures()->delete();
