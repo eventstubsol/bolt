@@ -6,9 +6,12 @@ use App\AccessSpecifiers;
 use App\Api;
 use App\Booth;
 use App\BoothInterest;
+use App\Form;
+use App\Loader;
 use App\CometChat;
 use App\Event;
-
+use App\LandingPage;
+use App\LandingSpeaker;
 use App\EventSession;
 use App\LoginLog;
 use App\Notification;
@@ -49,6 +52,7 @@ class EventController extends Controller
     public function index($event_name)
     {
         $event = Event::where("slug",$event_name)->first();
+        $loader = Loader::findOrFail($event->def_loader);
         $event_id = $event->id;
         $leaderboard =Leaderboard::where('event_id',$event_id)->first();
         $chat_app = CometChat::where("event_id",$event->id)->first();
@@ -139,6 +143,7 @@ class EventController extends Controller
                     "sessionrooms",
                     "sessionroomnames",
                     "event_id",
+                    "loader",
                     "tables",
                     "event_name",
                     "access_specifiers",
@@ -190,9 +195,10 @@ class EventController extends Controller
     public function settings($id)
     {
         $event = Event::where("id",$id)->first();
+        $loaders = Loader::all();
         $pages = Page::where("event_id",$id)->get();
         $session_rooms = sessionRooms::where("event_id",$id)->get();
-        return view("eventee.settings.default")->with(compact("id","pages","session_rooms","event"));
+        return view("eventee.settings.default")->with(compact("id","pages","session_rooms","event",'loaders'));
     }
     public function settingsUpdate(Request $request,$id)
     {
@@ -948,7 +954,17 @@ class EventController extends Controller
 
     public function landingPage($subdomain){
         $event = Event::where('slug',$subdomain)->first();
-        return view("landing.index",compact('event'));
+        $landing = LandingPage::where('event_id',$event->id)->first();
+        $speakers = LandingSpeaker::where('page_id',$landing->id)->get();
+        $form = Form::where('event_id',$event->id)->where('user_type','attendee')->first();
+        if(isset($form)){
+            $form->load("fields.formStruct");
+            return view("landing.index",compact('event','landing','speakers','form'));
+        }
+        else{
+            $form = null;
+            return view("landing.index",compact('event','landing','speakers','form'));
+        }
     }
     public function sendSessionNotifications()
     {
@@ -1171,5 +1187,20 @@ class EventController extends Controller
             flash("Couldnot Save The Color Try Again")->error();
             return redirect()->back();
         }
+    }
+
+
+    public function LoaderUpdate(Request $req){
+        $loader = $req->loader_id;
+        $id = $req->event_id;
+        $event = Event::findOrFail($id);
+        $event->def_loader = $loader;
+        if($event->save()){
+            return response()->json(['code'=>200,'message'=>"Loader Changed Successfully"]);
+        }
+        else{
+            return response()->json(['code'=>500,'message'=>"Something Went Wrong"]);
+        }
+        
     }
 }

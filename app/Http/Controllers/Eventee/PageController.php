@@ -44,6 +44,7 @@ class PageController extends Controller
         $page = new Page([
             "name" => $name,
             'event_id'=>$id,
+            'chat_name'=>$name,
             // "bg_type" =>$request->bg_type,
         ]);
      
@@ -132,6 +133,7 @@ class PageController extends Controller
         $page_name = "lobby_".$ids;
 
         $links = Link::where(["page"=>$page_name])->get()->load("background");
+        // dd($links);
         $treasures = Treasure::where(["owner"=>$page_name])->get();
         $page = (object) [
             "id"=>$id,
@@ -364,10 +366,12 @@ class PageController extends Controller
                     "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
                
                 ]);
+                
                 if($request->has("bgimages") && isset($request->bgimages[$id]) ){
                     if(count($request->bgimages[$id])>0 ){
                       foreach($request->bgimages[$id] as $bgimage){
                         if($bgimage){ //check if not null
+                            dd($bgimage);
                           $link->background()->create([
                             "owner"=>$link->id,
                             "url" => $bgimage,

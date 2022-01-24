@@ -16,6 +16,8 @@ use App\Link;
 use App\Leaderboard;
 use App\LeadPoint;
 use App\Image;
+use App\LandingPage;
+use App\LandingSpeaker;
 use App\UserTag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -1564,4 +1566,10 @@ function EventAttendee($event_id){
         return 0;
     }
 
+}
+
+function LandPage($event_id){
+    $page = new LandingPage;
+    $page->event_id = $event_id;
+    $page->save();
 }

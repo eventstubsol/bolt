@@ -2,6 +2,7 @@
 
 use App\CometChat;
 use App\Event;
+use App\Http\Controllers\LandingController;
 use App\User;
 use Carbon\Carbon;
 use App\Menu;
@@ -58,6 +59,10 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
     
+    //Landing Update
+    Route::get('landing/update/status','LandingController@updateStatus')->name('update.landing.status');
+
+
     Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
     Route::get('/adddns','eventeeController@verifyDomain')->name('verifyDomain');
     Route::get('Events','eventeeController@Event')->name('event.index');
@@ -70,6 +75,13 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
 
     Route::get('settings/chat/{id}','ChatController@ChatSettings')->name('settings.chat');
     Route::post('settings/savechat/{id}','ChatController@SaveChatSettings')->name('settings.savechat');
+
+
+    //Landing Page Setting
+    Route::get('/Landing/Setting/{id}',"LandingController@index")->name('landing.settings');
+    Route::POST('/Landing/Setting/Post/{id}','LandingController@LandingStore')->name('landing.settings.store');
+    Route::POST('/Landing/Setting/Speaker/{id}/{page_id}','LandingController@SpeakerStore')->name('landing.settings.speaker');
+    Route::get('/set/speaker/status','LandingController@setStatus')->name('landing.settings.setStatus');
 
 
     //User Wise Report
@@ -200,6 +212,8 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post('/page/DeleteAll',"Eventee\PageController@DeleteAll")->name('eventee.pages.deleteAll');
 
 
+
+
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
     
@@ -258,6 +272,9 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get("/settings/{id}", "EventController@settings")->name("eventee.settings");
     Route::post("/settings/update/{id}", "EventController@settingsUpdate")->name("eventee.settingsUpdate");
     Route::post("/settings/update/color/{id}", "EventController@settingsColorUpdate")->name("eventee.settingscolorUpdate");
+    Route::post("Loader/Update",'EventController@LoaderUpdate')->name("eventee.loader.update");
+    Route::get('/Loader/Create/{id}','LoaderController@create')->name('eventee.loader.create');
+    Route::POST('/Loader/store/{id}','LoaderController@store')->name('eventee.loader.store');
     
     Route::get("/options/{id}", "Eventee\CMSController@optionsList")->name("eventee.options");
     Route::post("/options/update/{id}", "Eventee\CMSController@optionsUpdate")->name("eventee.updateContent");
@@ -703,7 +720,12 @@ Route::group($options, function () use ($options) {
         // dd($subdomain);
         $user = Auth::user();
         if(!$user){
-            return redirect(route('attendeeLogin',$subdomain));
+            if($event->land_page == 0){
+                return redirect(route('attendeeLogin',$subdomain));
+            }
+            else{
+                return redirect()->route('event.landpage',$subdomain);
+            }
         }
         if($user->type === "exhibiter"){
             return redirect(route("exhibiterhome",$subdomain));
@@ -718,8 +740,11 @@ Route::group($options, function () use ($options) {
         // Route::get("/", "HomeController@index")->name("home");
 
         // return "This will respond to requests for 'admin.localhost/'";
+        
     });
-    Route::get("/landing", "EventController@landingPage");
+    Route::get("/landing", "EventController@landingPage")->name('event.landpage');
+    Route::post("/event/register/landing", "EventRegController@CustomFormSave")->name("attendee_register.confirmReg.landingSave");
+    Route::post("/event/register/landing/default", "EventRegController@BasicForm")->name("attendee_register.confirmReg.defaultsave");
     Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
 
     Route::get("/faq", "HomeController@faqs")->name("faq");
@@ -738,6 +763,7 @@ Route::group($options, function () use ($options) {
         Route::get("/booths", "Eventee\BoothController@exhibiterhome")->name("exhibiterhome");
     });
     Route::post("/event/register", "AttendeeAuthController@confirmReg")->name("attendee_register.confirmReg");
+    
     Route::middleware(["auth"])->group(function ($subdomain) {
         Route::get("/event", "EventController@index")->name("eventee.event");
         Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
@@ -761,6 +787,7 @@ Route::group($options, function () use ($options) {
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
     Route::post('notification/seen','UerNotifiicationController@seen')->name('notification.user.seen');
     Route::get('notification/seen/all','UerNotifiicationController@seenAll')->name('notification.user.seenAll');
+   
     Route::post("/Event/Location","LocationController@setLocation")->name("set.Location");
     
     Route::get("/event/session-notifications", "EventController@sendSessionNotifications");

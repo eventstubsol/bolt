@@ -13,6 +13,11 @@
 @section("styles")
     @include("includes.styles.wyswyg")
     <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.css">
+    <style>
+        .bg-white{
+            height: 150px;
+        }
+    </style>
 @endsection    
 
 @section("content")
@@ -102,6 +107,41 @@
                 </form>
             </div>
         </div>
+        <div class="card">
+            <div class="card-header">  
+                
+                <div class="d-flex" >
+                    <h5>Loaders</h5>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{{ route('eventee.loader.create',$id) }}" class="btn btn-primary float-right" >Add New Loader</a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                
+                    
+
+                    <div class="row">
+                    @foreach ($loaders as $loader)
+                        @if($loader->id == $event->def_loader)
+                            <div class="col-md-2 text-center mb-3">
+                                <div class="bg-white">
+                                    <img src="{{ assetUrl($loader->load_class) }}" alt="no" width="100%" height="100%">
+                                </div>
+                                <input name="laoder_id" type="radio" checked class="radioCheck form-check-input ml-0 pt-2" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
+                            </div>
+                        @else
+                            <div class="col-md-2 text-center mb-3">
+                                <div class="bg-white">
+                                    <img src="{{ assetUrl($loader->load_class) }}" alt="no" width="100%" height="100%" >
+                                </div>
+                                <input name="laoder_id" type="radio" class="radioCheck form-check-input ml-0 pt-2" onchange="radioCheck(this)" data-id="{{ $loader->id }}">
+                            </div>
+                        @endif
+                    @endforeach
+                    </div>
+                
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -139,6 +179,18 @@
                 break;
         }
         // console.log(val);
+    }
+    function radioCheck(e){
+        let loader_id = e.getAttribute('data-id');
+        let event_id = "{{ $event->id }}";
+        $.post("{{ route('eventee.loader.update') }}",{'loader_id':loader_id,'event_id':event_id},function(res){
+            if(res.code == 200){
+                showMessage(res.message,'success');
+            }
+            else{
+                showMessage(res.message,'error');
+            }
+        });
     }
     </script>
 @endsection
