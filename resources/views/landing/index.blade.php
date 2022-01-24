@@ -402,9 +402,11 @@
         </div>    
         <!-- Site Logo End -->
 
-        <!-- Countdown Start -->
-        <div id="timer" data-endtime="{{ $event->start_date }}"></div>
-        <!-- Countdown Start -->
+       @if(Carbon\Carbon::parse($event->start_date) >=  Carbon\Carbon::now())
+         <!-- Countdown Start -->
+         <div id="timer" data-endtime="{{ $event->start_date }}"></div>
+         <!-- Countdown Start -->
+        @endif
 
         <h4>{{ $event->name }}</h4>
         <p>@if($landing->tagline != null){{ $landing->tagline	 }}@endif</p>

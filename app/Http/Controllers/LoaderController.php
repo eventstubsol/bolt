@@ -17,6 +17,7 @@ class LoaderController extends Controller
         $loaderUrl = $req->loader;
         $loader = new Loader;
         $loader->load_class = $loaderUrl;
+        $loader->event_id = $id;
         if($loader->save()){
             flash("New Loader Has Been Added")->success();
             return redirect()->route('eventee.settings',$id);
