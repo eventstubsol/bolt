@@ -257,7 +257,7 @@
     }
 
     .speaker_block{
-      background: url('/assets/images/landing/speaker_bg.jpg') no-repeat left top;
+      background: url( {{ asset('images/landing/speaker_bg.jpg') }}) no-repeat left top;
       background-size: cover;
       padding: 55px 0;
     }

@@ -201,7 +201,7 @@ $event_id = $id;
                                                 <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video" data-default-file="{{$link->flyin ? assetUrl($link->flyin->url) : ''}}"  />
                                             </div>
                                        
-                                            {{-- <button class="btn btn-primary mt-2 mb-4 mr-2  add-image"  data-index="{{$ids}}" >Add Background Image</button> --}}
+                                            <button class="btn btn-primary mt-2 mb-4 mr-2  add-image"  data-index="{{$ids}}" >Add Background Image</button>
                                             <button class="btn btn-primary addflyin" data-index="{{$ids}}">Add Fly In Video</button>
                                         </div>
 
