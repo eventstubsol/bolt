@@ -435,6 +435,7 @@ $user = Auth::user();
         .loader-logo img {
             width: auto;
             max-width: 100%;
+            margin: 0 auto;
         }
         
         .loaderSection {
@@ -443,7 +444,10 @@ $user = Auth::user();
             display: flex;
             align-items: center;
             justify-content: center;
+            position: absolute;
             flex-direction: column;
+            z-index: 2119;
+            background: #00000085;
         }
         .loader-logo{
             width: 300px;
