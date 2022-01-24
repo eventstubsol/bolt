@@ -166,6 +166,19 @@ $event_id = $id;
                                     </div>
                                     
 
+                                    
+                                    <div class="background_images_{{$ids}} row col-md-12">
+                                        @if(isset($link->background[0]))
+                                            @foreach($link->background as $bgimages)
+                                                <div class="form-group image-uploader mb-3 col-md-4">
+                                                    <label for="bgimages">Background</label>       
+                                                    <input type="hidden" name="bgimages[{{$ids}}][]" class="upload_input"  value="{{$bgimages->url}}"  >
+                                                    <input type="file" data-name="bgimages[{{$ids}}][]" data-plugins="dropify" data-type="image"  data-default-file="{{assetUrl($bgimages->url)}}" />                                   
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                   
                                    
                                     <div  class="row positioning-{{$ids}} col-md-12" >
                                     
@@ -319,7 +332,7 @@ $event_id = $id;
 <script>
     let resetflag = true;
     let links = {!! json_encode($page->links) !!};
-    let n = links.length;
+    let n = links.length -1 ;
     let treasures = {!! json_encode($page->treasures) !!}
     let t = treasures.length;
     console.log(n);
@@ -712,6 +725,8 @@ $event_id = $id;
                                         <input  type="text"   name="gallery_link[]" class="form-control">
                                     </div>
 
+                                    <div class="background_images_${n} row col-md-12">
+                                    </div>
 
                                     <div  class="row positioning-${n}" >
                                        
@@ -768,7 +783,8 @@ $event_id = $id;
 
 
 
-
+                                        <button class="btn btn-primary mt-2 mb-4 mr-2  add-image"  data-index="${n}"  >Add Background Image</button>
+                                    
                                     <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
                                 </div>`);
         bindRemoveButton();
@@ -818,6 +834,8 @@ $event_id = $id;
         $(".donet").hide();
         $(".donet").on("click",resetPositiont)
         $(".addflyin").on("click",addFlyIn);
+        $(".add-image").unbind("click").on("click", addImage);
+
         initDraggable();   
         initTreasuresDraggable();
         

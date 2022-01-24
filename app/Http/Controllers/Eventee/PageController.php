@@ -371,7 +371,7 @@ class PageController extends Controller
                     if(count($request->bgimages[$id])>0 ){
                       foreach($request->bgimages[$id] as $bgimage){
                         if($bgimage){ //check if not null
-                            dd($bgimage);
+                            // dd($bgimage);
                           $link->background()->create([
                             "owner"=>$link->id,
                             "url" => $bgimage,

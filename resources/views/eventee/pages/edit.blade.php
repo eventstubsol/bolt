@@ -396,7 +396,7 @@ Edit Page
 <script>
     let resetflag = true;
     let links = {!! json_encode($page->links) !!};
-    let n = links.length;
+    let n = links.length -1;
     let treasures = {!! json_encode($page->treasures) !!}
     let t = treasures.length;
     console.log(n);
