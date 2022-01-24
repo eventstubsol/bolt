@@ -1048,6 +1048,7 @@ function initApp() {
                     });
                 }
                 pageChangeActions(false);
+                createGroup(chatname);
                 CometChatWidget.chatWithGroup(chatname);
                 
                recordPageView("page/" + page, page + " page", "page",page);
