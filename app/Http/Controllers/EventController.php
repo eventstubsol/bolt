@@ -196,7 +196,7 @@ class EventController extends Controller
     public function settings($id)
     {
         $event = Event::where("id",$id)->first();
-        $loaders = Loader::all();
+        $loaders = Loader::where('event_id',0)->orWhere('event_id',$id)->get();
         $pages = Page::where("event_id",$id)->get();
         $session_rooms = sessionRooms::where("event_id",$id)->get();
         return view("eventee.settings.default")->with(compact("id","pages","session_rooms","event",'loaders'));
