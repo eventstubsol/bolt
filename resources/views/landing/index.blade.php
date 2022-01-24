@@ -406,6 +406,11 @@
          <!-- Countdown Start -->
          <div id="timer" data-endtime="{{ $event->start_date }}"></div>
          <!-- Countdown Start -->
+        @else
+        <br><br><br><br><br>
+          <div class="pt-5">
+
+          </div>
         @endif
 
         <h4>{{ $event->name }}</h4>
