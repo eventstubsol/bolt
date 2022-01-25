@@ -78,7 +78,7 @@ $event_id = $id;
                             <h4 class="header-title mb-3">links</h4>
                             <div class="link-section">
                             @foreach($page->links as $ids => $link) 
-                                <div class="row  border border-primary p-2 mt-2">
+                                <div class="row  border border-primary p-2 mt-2 mb-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
                                         <input type="text" value="{{$link->name}}" required  name="linknames[]" class="name-{{$ids}} form-control">
@@ -182,31 +182,31 @@ $event_id = $id;
                                    
                                     <div  class="row positioning-{{$ids}} col-md-12" >
                                     
-                                    <div style="visibility: hidden"  class="form-group mb-3 col-md-3">
-                                        <label for="top">top</label>
-                                        <input value="{{$link->top}}" type="number" required step="any"  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control top-{{$ids}}">
-                                    </div>
+                                    {{-- <div style="visibility: hidden"  class="form-group mb-3 col-md-3"> --}}
+                                        {{-- <label for="top">top</label> --}}
+                                        <input value="{{$link->top}}" type="hidden" required step="any"  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control top-{{$ids}}">
+                                    {{-- </div> --}}
                                     
-                                    <div  style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">left</label>
-                                        <input value="{{$link->left}}" type="number" required step="any"  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control left-{{$ids}}">
-                                    </div>
+                                    {{-- <div  style="visibility: hidden" class="form-group mb-3 col-md-3"> --}}
+                                        {{-- <label for="pos">left</label> --}}
+                                        <input value="{{$link->left}}" type="hidden" required step="any"  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control left-{{$ids}}">
+                                    {{-- </div> --}}
                                     
-                                    <div  style="visibility: hidden"  class="form-group mb-3 col-md-3">
-                                        <label for="pos">width</label>
-                                        <input value="{{$link->width}}" type="number" required step="any"  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control width-{{$ids}}">
-                                    </div>
+                                    {{-- <div  style="visibility: hidden"  class="form-group mb-3 col-md-3"> --}}
+                                        {{-- <label for="pos">width</label> --}}
+                                        <input value="{{$link->width}}" type="hidden" required step="any"  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control width-{{$ids}}">
+                                    {{-- </div> --}}
 
-                                    <div   style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">height</label>
-                                        <input value="{{$link->height}}" type="number" required step="any"  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control height-{{$ids}}">
-                                    </div>
+                                    {{-- <div   style="visibility: hidden" class="form-group mb-3 col-md-3"> --}}
+                                        {{-- <label for="pos">height</label> --}}
+                                        <input value="{{$link->height}}" type="hidden" required step="any"  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control height-{{$ids}}">
+                                    {{-- </div> --}}
 
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
 
                                     </div>
                                     
-                                    <div class="flyin  col-md-12">
+                                    <div class="flyin  col-md-12 mb-2">
                                         
                                             <div @if(!$link->flyin) style="display:none" @endif class="image-uploader flyin-{{$ids}}">
                                                 <label class="mb-3" for="images">Fly In Video</label>
@@ -280,41 +280,39 @@ $event_id = $id;
                                     </div>
                                     <div  class="row tpositioning-{{$ids}} col-md-12" >
                                             
-                                            <div  class="form-group mb-3 col-md-3">
-                                                <label for="top">top</label>
-                                                <input value="{{$treasure->top}}" type="number" required step="any" name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} ttop-{{$ids}} form-control">
-                                            </div>
+                                            {{-- <div  class="form-group mb-3 col-md-3"> --}}
+                                                {{-- <label for="top">top</label> --}}
+                                                <input value="{{$treasure->top}}" type="hidden" required step="any" name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} ttop-{{$ids}} form-control">
+                                            {{-- </div> --}}
                                             
-                                            <div  class="form-group mb-3 col-md-3">
-                                                <label for="pos">left</label>
-                                                <input value="{{$treasure->left}}" type="number" required step="any" name="tleft[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} tleft-{{$ids}} form-control">
-                                            </div>
+                                            {{-- <div  class="form-group mb-3 col-md-3"> --}}
+                                                {{-- <label for="pos">left</label> --}}
+                                                <input value="{{$treasure->left}}" type="hidden" required step="any" name="tleft[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} tleft-{{$ids}} form-control">
+                                            {{-- </div> --}}
                                             
-                                            <div  class="form-group mb-3 col-md-3">
-                                                <label for="pos">width</label>
-                                                <input value="{{$treasure->width}}" type="number" required step="any" name="twidth[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} twidth-{{$ids}} form-control">
-                                            </div>
+                                            {{-- <div  class="form-group mb-3 col-md-3"> --}}
+                                                {{-- <label for="pos">width</label> --}}
+                                                <input value="{{$treasure->width}}" type="hidden" required step="any" name="twidth[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} twidth-{{$ids}} form-control">
+                                            {{-- </div> --}}
 
-                                            <div  class="form-group mb-3 col-md-3">
-                                                <label for="pos">height</label>
-                                                <input value="{{$treasure->height}}" type="number" required step="any" name="theight[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} theight-{{$ids}} form-control">
-                                            </div>
+                                            {{-- <div  class="form-group mb-3 col-md-3"> --}}
+                                                {{-- <label for="pos">height</label> --}}
+                                                <input value="{{$treasure->height}}" type="hidden" required step="any" name="theight[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} theight-{{$ids}} form-control">
+                                            {{-- </div> --}}
 
                                             <button data-index="{{$ids}}" class="btn btn-primary donet-{{$ids}} donet" >DONE</button>
 
                                     </div>
-                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                    <button class="btn btn-danger mt-2  remove-link">Remove</button>
                                 </div>
 
                             @endforeach
                         </div>
-                        <div>
-                            <button class="btn btn-primary" id="add-treasure">Add Treasure</button>
-                        </div>
-                    <!-- Treasure Hunt Items End -->
-
-                    <div>
-                        <input class="btn btn-primary" type="submit" value="Save" />
+                        <!-- Treasure Hunt Items End -->
+                        
+                    <div class="mt-2">
+                        <button class="btn btn-primary ml-2" id="add-treasure">Add Treasure</button>
+                        <input class="btn btn-primary ml-2" type="submit" value="Save" />
                     </div>
                 </form>
             </div>
@@ -596,30 +594,16 @@ $event_id = $id;
                                     </div>
                                     <div  class="row tpositioning-${t} col-md-12" >
                                         
-                                        <div  class="form-group mb-3 col-md-3">
-                                            <label for="top">top</label>
-                                            <input type="number" required step="any" name="ttop[]" data-index="${t}" class="tpos tpos-${t} ttop-${t} form-control">
-                                        </div>
+                                            <input type="hidden" required step="any" name="ttop[]" data-index="${t}" class="tpos tpos-${t} ttop-${t} form-control">
+                                            <input type="hidden" required step="any" name="tleft[]" data-index="${t}" class="tpos tpos-${t} tleft-${t} form-control">
                                         
-                                        <div  class="form-group mb-3 col-md-3">
-                                            <label for="pos">left</label>
-                                            <input type="number" required step="any" name="tleft[]" data-index="${t}" class="tpos tpos-${t} tleft-${t} form-control">
-                                        </div>
-                                        
-                                        <div  class="form-group mb-3 col-md-3">
-                                            <label for="pos">width</label>
-                                            <input type="number" required step="any" name="twidth[]" data-index="${t}" class="tpos tpos-${t} twidth-${t} form-control">
-                                        </div>
-
-                                        <div  class="form-group mb-3 col-md-3">
-                                            <label for="pos">height</label>
-                                            <input type="number" required step="any" name="theight[]" data-index="${t}" class="tpos tpos-${t} theight-${t} form-control">
-                                        </div>
-
+                                            <input type="hidden" required step="any" name="twidth[]" data-index="${t}" class="tpos tpos-${t} twidth-${t} form-control">
+                                            <input type="hidden" required step="any" name="theight[]" data-index="${t}" class="tpos tpos-${t} theight-${t} form-control">
+                                    
                                         <button data-index="${t}" class="btn btn-primary donet-${t} donet" >DONE</button>
 
                                     </div>
-                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                    <button class="btn btn-danger mt-2 remove-link">Remove</button>
                                 </div>
         `);
         bindRemoveButton();
@@ -639,7 +623,7 @@ $event_id = $id;
         
 
         $(".link-section").append(`
-                                <div class="row  border border-primary p-2 mt-2">
+                                <div class="row  border border-primary p-2 mt-2 mb-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
                                         <input type="text" required  name="linknames[]" class="name-${n} form-control">
@@ -730,32 +714,17 @@ $event_id = $id;
 
                                     <div  class="row positioning-${n}" >
                                        
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="top">top</label>
-                                        <input type="number" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
-                                    </div>
-                                    
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">left</label>
-                                        <input type="number" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
-                                    </div>
-                                    
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">width</label>
-                                        <input type="number" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
-                                    </div>
-
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">height</label>
-                                        <input type="number" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
-                                    </div>
-
+                                        <input type="hidden" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
+                                        <input type="hidden" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
+                                        <input type="hidden" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
+                                        <input type="hidden" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
+                                
                                     <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
 
                                     </div>
                                     
 
-                                        <div class="col-md-12 flyin ">
+                                        <div class="col-md-12 flyin mb-2 ">
                                             <div style="display:none" class="image-uploader flyin-${n}">
                                                 <label class="mb-3" for="images">Fly In Video</label>
                                                 <input type="hidden" name="flyin[]" class="upload_input" >
