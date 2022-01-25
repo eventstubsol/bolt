@@ -8,6 +8,8 @@
     General Event Stats
 @endsection
 
+
+
 @section("content")
 {{-- <div class="row">
     <div class="col-md-6 col-xl-4  mb-3">
@@ -336,8 +338,13 @@
         
         
         var options = {
-          title: 'Online Users',
-          sliceVisibilityThreshold:0
+          title: ' ',
+          sliceVisibilityThreshold:0,
+          backgroundColor:'#313941',
+          legend:{textStyle:
+            {color: '#FAFADA'},
+          },
+          titleTextStyle:{color:'#FAFADA'},
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -372,7 +379,12 @@
             
             
             var options = {
-            title: 'Session Room Users'
+            title: ' ',
+            backgroundColor:'#313941',
+            legend:{textStyle:
+                {color: '#FAFADA'},
+            },
+            titleTextStyle:{color:'#FAFADA'},
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
@@ -413,7 +425,12 @@
             
 
                 var options = {
-                title: 'Active Page Users'
+                title: ' ',
+                backgroundColor:'#313941',
+                legend:{textStyle:
+                    {color: '#FAFADA'},
+                },
+                titleTextStyle:{color:'#FAFADA'},
                 };
 
                 var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
@@ -449,7 +466,12 @@
            
 
                 var options = {
-                title: 'Active Booth Users'
+                title: ' ',
+                backgroundColor:'#313941',
+                legend:{textStyle:
+                    {color: '#FAFADA'},
+                },
+                titleTextStyle:{color:'#FAFADA'},
                 };
 
                 var chart = new google.visualization.PieChart(document.getElementById('piechart4'));
