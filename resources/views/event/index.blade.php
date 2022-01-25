@@ -928,9 +928,9 @@ $user = Auth::user();
     <script src="{{ asset('/js/profile/index.js') }}?cb=21872367628489"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=21872367628489"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=21872367628489"></script>
-    @if (isOpenForPublic('polls'))
+    {{-- @if (isOpenForPublic('polls'))
         @include("event.poll")
-    @endif
+    @endif --}}
     <style>
         fieldset.scheduler-border {
             border: 1px groove #ddd !important;
