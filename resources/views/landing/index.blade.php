@@ -222,12 +222,13 @@
       width: 310px;
       height: 315px;
       border-radius: 50px;
+      border: 5px solid #fff;
     }
 
     .img_box img{
-      border-radius: 50px;
+      border-radius: 30px;
       height: 315px;
-      object-fit: fill;
+      object-fit: cover;
       width: 100%;
     }
 
@@ -322,6 +323,7 @@
     border-radius: 50px;
     margin-bottom: 20px;
     overflow: hidden;
+    border: 5px solid #fff;
   }
 
   .speakerbox .boxBg img{
@@ -337,9 +339,20 @@
   .register_block{
     background: url("{{ assetUrl($landing->banner_image) }}") no-repeat left top;
     background-size: cover;
-    padding: 155px 0 50px;
-    min-height: 1080px;
+    padding: 100px 0 50px;
+    min-height: 780px;
     position: relative;
+  }
+
+  .register_block:after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: url("assets/images/landing/register_bg.png") no-repeat left top;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .registerLogo{
@@ -350,9 +363,11 @@
 
   .regBox{
     border: 1px solid #fff;
-    background: #515151c4;
+    background: #47474787;
     padding: 50px;
     border-radius: 40px;
+    position: relative;
+    z-index: 2;
   }
 
   .regBox h2{
@@ -383,6 +398,50 @@
     padding: 10px 0;
     margin: 0 auto;
     display: block;
+  }
+
+  .scedule{
+    min-height: 1080px;
+    background: url("assets/images/landing/scedule_bg.jpg") no-repeat left top;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .scedule h5{
+      text-align: center;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 55px;
+      position: relative;
+      letter-spacing: 3px; 
+      margin-bottom: 80px;
+    }
+
+  .scedule h5:before{
+    content: "";
+    background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
+    width: 263px;
+    height: 33px;
+    position: absolute;
+    top: 20px;
+    left: -50rem;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  .scedule h5:after{
+    content: "";
+    background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
+    width: 263px;
+    height: 33px;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: -50rem;
+    margin: 0 auto;
   }
     
 </style>
@@ -463,6 +522,17 @@
 </div>
 <!-- Speaker page End -->
 
+<!-- Scedule page Start -->
+<div class="scedule">
+  <div>
+    <h5>Event Schedule</h5>
+
+    sfdjhjk
+  </div>
+</div>
+<!-- Scedule page End -->
+
+
 @endif
 @if (\Session::has('message'))
     <script>
@@ -491,7 +561,7 @@
                   @case("email")
                   @case("tel")
                           <div class="form-group">
-                              <label class="text-white" for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label>
+                              <!-- <label class="text-white" for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label> -->
                               <input @if($field->required) required @endif class="form-control" type="{{ $struct->type }}" placeholder="{{ $field->placeholder ?? $struct->label
                               }}" name="{{ $struct->field }}">
                           </div>
@@ -499,7 +569,7 @@
                       @break
                   @case("country")
                           <div class="form-group">
-                              <label class="text-white" for="country" >{{ $field->placeholder ?? $struct->label }}</label>
+                              <!-- <label class="text-white" for="country" >{{ $field->placeholder ?? $struct->label }}</label> -->
                               <select id="country" class="form-control" name="country">
                                   <option value="Afganistan">Afghanistan</option>
                                   <option value="Albania">Albania</option>
@@ -753,7 +823,7 @@
   
                   @case("image")
                       <div class="image-uploader profilepic">
-                          <label class="mb-3 text-white" for="images">{{ $field->placeholder }}</label>
+                          <!-- <label class="mb-3 text-white" for="images">{{ $field->placeholder }}</label> -->
                           <input type="hidden" name="profileImage" class="upload_input"  >
                           <input type="file" data-name="profileImage" data-plugins="dropify" data-type="image" />
                       </div>
@@ -768,7 +838,7 @@
                           @endphp
                           @if(count($options))
                               <div class="form-group mb-3 ">
-                                  <label for="type">{{ $field->placeholder }}</label>
+                                  <!-- <label for="type">{{ $field->placeholder }}</label> -->
                                   <select  @if($field->required && count($options)) required @endif  class="form-control"  name="subtype">
                                       <option value="">Select {{$field->placeholder}}</option>
                                       @foreach($options  as $type)
@@ -784,7 +854,7 @@
                               $options = explode(",",$struct->options);
                           @endphp
                           <div class="form-group mb-3 ">
-                              <label for="type">{{ $struct->label }}</label>
+                              <!-- <label for="type">{{ $struct->label }}</label> -->
                               <select  @if($field->required) required @endif  class="form-control"  name="{{$struct->field}}">
                                   <option value="">Select {{$struct->label}}</option>
                                   @foreach($options  as $type)
