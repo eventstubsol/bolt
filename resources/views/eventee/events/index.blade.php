@@ -19,6 +19,30 @@
             white-space: nowrap;
         }
     </style>
+    <style>
+
+        .form-control::-webkit-input-placeholder {
+
+            color: white;
+
+            }
+
+
+
+            .form-control:-ms-input-placeholder {
+
+            color: white;
+
+            }
+
+
+
+            .form-control::placeholder {
+
+            color: white;
+
+            }
+    </style>
 @endsection
 
 @section('page_title')
