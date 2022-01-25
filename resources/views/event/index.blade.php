@@ -705,19 +705,19 @@ $user = Auth::user();
     @include("event.modules.Exterior")
     @include("event.modules.Lobby")
 
-    @include("event.modules.Booths.BoothList")
+    {{-- @include("event.modules.Booths.BoothList") --}}
 
-    @include("event.modules.Booths.BoothDirectory")
+    {{-- @include("event.modules.Booths.BoothDirectory") --}}
 
-    @include("event.modules.Booths.ExpoHall")
-
+    {{-- @include("event.modules.Booths.ExpoHall") --}}
+    {{-- Session Rooms --}}
     @include("event.modules.Sessions")
     @include("event.modules.Pages")
 
     @include("event.modules.Booths.SingleBooth")
 
     @include("event.modules.Leaderboard")
-    @include("event.modules.MuseumList")
+    {{-- @include("event.modules.MuseumList") --}}
 
     @include("event.modules.MuseumSingle")
 
@@ -728,9 +728,9 @@ $user = Auth::user();
         @include("event.modules.Report")
     @endif
 
-    @if (isOpenForPublic('meet-and-greet'))
+    {{-- @if (isOpenForPublic('meet-and-greet'))
         @include("event.modules.MeetGreet")
-    @endif
+    @endif --}}
 
     @include("event.modules.Faq")
 
@@ -739,47 +739,47 @@ $user = Auth::user();
     @endif
 
 
-    @if (isOpenForPublic('lounge'))
+    {{-- @if (isOpenForPublic('lounge'))
         @include("event.modules.Lounge")
-    @endif
+    @endif --}}
 
     @include("event.modules.SchedulePopup")
-    @include("event.modules.WorkshopPopup")
+    {{-- @include("event.modules.WorkshopPopup") --}}
     @include("event.modules.Personalagenda")
-    @include("event.poll")
-    @include("event.qna")
-    @include("event.announce")
-    @include("event.toast")
+    {{-- @include("event.poll") --}}
+    {{-- @include("event.qna") --}}
+    {{-- @include("event.announce") --}}
+    {{-- @include("event.toast") --}}
 
     @include("event.modules.Profile")
     @if(isset($chat_app))
         @include("event.modules.chat")
     @endif
-    @include("event.modules.networking")
+    {{-- @include("event.modules.networking") --}}
 
     @include("event.modules.Confirmation")
 
-    @include("event.modules.webinar")
-    @include("event.modules.workshop")
+    {{-- @include("event.modules.webinar") --}}
+    {{-- @include("event.modules.workshop") --}}
 
-    @if (isOpenForPublic('caucus'))
+    {{-- @if (isOpenForPublic('caucus'))
         @include("event.modules.caucusRoom")
-    @endif
+    @endif --}}
 
-    @include("event.modules.infodesk")
+    {{-- @include("event.modules.infodesk") --}}
 
     {{-- Information Dialog - for opening of booth rooms at specific timings && also for booth enquiry - DO NOT REMOVE --}}
-    @include("event.modules.Information")
+    {{-- @include("event.modules.Information") --}}
 
-    @include("event.modules.Delegates")
-    @include("event.modules.ArchiveVideos")
+    {{-- @include("event.modules.Delegates") --}}
+    {{-- @include("event.modules.ArchiveVideos") --}}
 
-    @include("event.modules.ByLaws")
+    {{-- @include("event.modules.ByLaws") --}}
     @include("event.modules.FlyIn")
 
 
     <div id="chat_div"></div>
-    <div id="announce_div" class="d-flex justify-content-end">
+    {{-- <div id="announce_div" class="d-flex justify-content-end">
         <div class="modal fade bd-example-modal-sm" id="myModal" tabindex="-1" role="dialog"
             aria-labelledby="mySmallModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" style="margin-left: 80%;margin-top:29%">
@@ -798,7 +798,7 @@ $user = Auth::user();
                     onclick="AnnouceChecked(this)">Close</button>
             </div>
         </div>
-    </div>
+    </div> --}}
     </div>
     </div>
     <script defer src="https://widget-js.cometchat.io/v2/cometchatwidget.js"></script>
@@ -928,9 +928,9 @@ $user = Auth::user();
     <script src="{{ asset('/js/profile/index.js') }}?cb=21872367628489"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=21872367628489"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=21872367628489"></script>
-    @if (isOpenForPublic('polls'))
+    {{-- @if (isOpenForPublic('polls'))
         @include("event.poll")
-    @endif
+    @endif --}}
     <style>
         fieldset.scheduler-border {
             border: 1px groove #ddd !important;
@@ -944,6 +944,71 @@ $user = Auth::user();
             font-size: 1.2em !important;
             font-weight: bold !important;
             text-align: left !important;
+        }
+        .positionBlock {
+            position: absolute;
+            left: 2%;
+            top: 2%;
+            display: flex;
+            align-items: center;
+            /* background: #fff; */
+            padding: 0px 6px;
+            border-radius: 4px;
+            height: 30px;
+        }
+        
+        .rightTop {
+            right: 2%;
+            left: inherit;
+        }
+        
+        .leftBottom {
+            top: inherit;
+            bottom: 2%;
+        }
+        
+        .rightBottom {
+            top: inherit;
+            bottom: 2%;
+            left: inherit;
+            right: 2%;
+        }
+        
+        .centerBottom {
+            top: 50%;
+            bottom: inherit;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .positionBlock span {
+            line-height: 0;
+            animation: infinite example 1500ms;
+            position: absolute;
+            bottom: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        @keyframes example {
+            0% {
+                bottom: -80%;
+            }
+            33% {
+                bottom: -48%;
+            }
+            100% {
+                bottom: -80%;
+            }
+        }
+        
+        .positionBlock p {
+            line-height: 0;
+            padding: 0;
+            margin: 0 0 0 3px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #515151;
         }
 
     </style>
@@ -993,19 +1058,19 @@ $user = Auth::user();
 
         });
 
-        function AnnouceChecked(e) {
-            var id = e.getAttribute('data-id');
+        // function AnnouceChecked(e) {
+        //     var id = e.getAttribute('data-id');
             
-            $.get("{{ route('announcement.Close') }}", {
-                'id': id
-            }, function(result) {
-                if (result.status == 200) {
-                    console.log(result.message);
-                } else {
-                    console.log(result.message);
-                }
-            });
-        }
+        //     $.get("{{ route('announcement.Close') }}", {
+        //         'id': id
+        //     }, function(result) {
+        //         if (result.status == 200) {
+        //             console.log(result.message);
+        //         } else {
+        //             console.log(result.message);
+        //         }
+        //     });
+        // }
 
         function initJs() {
             $('body').addClass('loaded');
