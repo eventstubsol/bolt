@@ -945,6 +945,71 @@ $user = Auth::user();
             font-weight: bold !important;
             text-align: left !important;
         }
+        .positionBlock {
+            position: absolute;
+            left: 2%;
+            top: 2%;
+            display: flex;
+            align-items: center;
+            /* background: #fff; */
+            padding: 0px 6px;
+            border-radius: 4px;
+            height: 30px;
+        }
+        
+        .rightTop {
+            right: 2%;
+            left: inherit;
+        }
+        
+        .leftBottom {
+            top: inherit;
+            bottom: 2%;
+        }
+        
+        .rightBottom {
+            top: inherit;
+            bottom: 2%;
+            left: inherit;
+            right: 2%;
+        }
+        
+        .centerBottom {
+            top: 50%;
+            bottom: inherit;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .positionBlock span {
+            line-height: 0;
+            animation: infinite example 1500ms;
+            position: absolute;
+            bottom: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        @keyframes example {
+            0% {
+                bottom: -80%;
+            }
+            33% {
+                bottom: -48%;
+            }
+            100% {
+                bottom: -80%;
+            }
+        }
+        
+        .positionBlock p {
+            line-height: 0;
+            padding: 0;
+            margin: 0 0 0 3px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #515151;
+        }
 
     </style>
     <script>
