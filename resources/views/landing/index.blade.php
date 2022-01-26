@@ -527,7 +527,6 @@
   <div>
     <h5>Event Schedule</h5>
 
-    sfdjhjk
   </div>
 </div>
 <!-- Scedule page End -->
