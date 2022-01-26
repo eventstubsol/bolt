@@ -226,6 +226,7 @@
 
       .img_box{
         display: none;
+        
       }
       img.bigBanner {
         height: 650px;
