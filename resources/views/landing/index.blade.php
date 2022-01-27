@@ -755,9 +755,11 @@
                   <div class="d-flex">
                     <ul class="list-unstyled timeline-sm descUl"> 
                       <li class="timeline-sm-item d-flex align-items-start">
-                          <span class="timeline-sm-date">
-                              {{ $event['start_date']['dts'] }} - {{ $event['start_date']['dte'] }}
-                          </span>
+                          <div class="d-flex flex-column">
+                            <span class="timeline-sm-date">
+                                {{ $event['start_date']['dts'] }} - {{ $event['start_date']['dte'] }}
+                            </span>
+                          </div>
                           <div @if($event['status'] === 1) @endif class="desc_block"> 
                             <h3 class="">{{ $event['name'] }}</h3>
                             <p class="">{!! $event['description'] !!}</p>
