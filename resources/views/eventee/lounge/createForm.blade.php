@@ -49,7 +49,15 @@
                         <label>Number of Seats
                             <span style="color:red">*</span>
                         </label>
-                        <input type="text" name="seats" class="form-control @error('seats') is-invalid @enderror" value="{{old('seats')}}">
+                        <select name="seats" class="form-control @error('seats') is-invalid @enderror">
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                        </select>
                         @error('seats')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -59,7 +67,13 @@
 
                     <input type="text" name="meetingId" class="form-control "  id="meetingId" style="display:none"  >
  
-
+                    <div class="form-group">
+                        <div class="image-uploader" id="imgBg" >
+                            <label class="mb-3" for="images">Logo <small style="color:red"><b>(Optional)</b></small></label>
+                            <input type="hidden" name="logo_url" class="upload_input"  >
+                            <input type="file" data-name="logo" data-plugins="dropify" data-type="image"  />
+                        </div>
+                    </div>
 
                     <div>
                         <input class="btn btn-primary" type="submit" id="create_session" value="Create" />

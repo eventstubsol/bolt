@@ -25,7 +25,7 @@ class LoungeController extends Controller
         return view("eventee.lounge.createForm")->with(compact(["id"]));
     }
 
-    public function store(LoungeFormRequest $request,$id)
+    public function store(LoungeFormRequest $request,$id,Request $req)
     {
         // if(empty($request->name)){
         //     flash("Name Field Cannot Be Left Blank")->error();
@@ -35,12 +35,16 @@ class LoungeController extends Controller
         //     flash("Seats Field Cannot Be Left Blank")->error();
         //     return redirect()->back();
         // }
-        NetworkingTable::create([
+        $network = NetworkingTable::create([
             "name"=>$request->name,
             "seats"=>$request->seats,
             "meeting_id"=>$request->meetingId,
             "event_id"=>$id
         ]);
+        $network->save();
+        if($req->has('logo_url')){
+            NetworkingTable::where('id',$network->id)->update(['logo'=>$req->logo_url]);
+        }
         // dd("done");
         return redirect(route("eventee.lounge.index",$id));
         // dd($request->all());
@@ -56,10 +60,12 @@ class LoungeController extends Controller
     public function update(Request $request,NetworkingTable $table,$id)
     {
         // dd($request->all());
-        $table->update([
-            "name"=>$request->name,
-            "seats"=>$request->seats
-        ]);
+        $table->name = $request->name;
+        $table->seats = $request->seats;
+        if($request->has('logo_url')){
+            $table->logo = $request->logo_url;
+        }
+        $table->save();
         return redirect(route("eventee.lounge.index",$id));
     }
     public function appParticipant(Request $request,$subdomain,NetworkingTable $table, $user)
