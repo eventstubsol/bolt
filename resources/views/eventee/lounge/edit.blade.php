@@ -13,7 +13,9 @@ Edit Lounge
     <li class="breadcrumb-item"><a href="{{ route("eventee.lounge.index",['id'=>$id]) }}">Sessions</a></li>
     <li class="breadcrumb-item active">Update</li>
 @endsection
-
+@section('styles')
+@include("includes.styles.fileUploader")
+@endsection
 @section("content")
 <div class="row">
     <div class="col-12">
@@ -136,4 +138,7 @@ Edit Lounge
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+@include("includes.scripts.fileUploader")
 @endsection
