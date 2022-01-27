@@ -533,50 +533,53 @@
   }
 
   .tab-pane .descUl{
-    margin:0 30px 0 0;
-    padding: 0 40px 0 0;
-    position: relative;
+    
   }
 
-  .tab-pane .descUl:before{
-    content: "";
-    width: 2px;
-    height: 100%;
-    background: #fff;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+  
 
-  .tab-pane .descUl li{
+  .tab-pane .descUl .timeline-sm-date{
     background: #fff;
-    font-size: 14px;
+    font-size: 12px;
     text-transform: uppercase;
-    font-weight: 200;
+    font-weight: 400;
     border-radius: 20px;
     padding: 7px 15px;
-    margin: 20px 0;
     list-style: none;
     width: 140px;
+    margin: 20px 30px 0 0;
     position: relative;
+    flex-shrink: 0;
   }
 
-  .tab-pane .descUl li:before{
+  .tab-pane .descUl .timeline-sm-date:before{
     content: "";
     width: 15px;
     height: 15px;
     background: #fff;
     position: absolute;
     right: -46px;
-    top: 12px;
+    top: 9px;
     border-radius: 100%;
   }
 
   .desc_block{
     background: #fff;
-    border-radius: 50px;
+    border-radius: 25px;
     color: #18333c;
     padding: 30px 40px;
+    position: relative;
+    margin-left: 40px;
+  }
+
+  .desc_block:after{
+    content: "";
+    width: 2px;
+    height: 100%;
+    background: #fff;
+    position: absolute;
+    left: -32px;
+    top: 0;
   }
 
   .desc_block h3{
@@ -750,14 +753,14 @@
                 @endphp
                 <div class="tab-pane fade show active" id="sch-{{$i}}-{{$j}}" role="tabpanel" aria-labelledby="chat1-tab">
                   <div class="d-flex">
-                    <ul style="padding-left: 110px !important;" class="list-unstyled timeline-sm"> 
-                      <li class="timeline-sm-item">
+                    <ul class="list-unstyled timeline-sm descUl"> 
+                      <li class="timeline-sm-item d-flex align-items-start">
                           <span class="timeline-sm-date">
-                              {{ $event['start_date']['dts'] }} - <br> {{ $event['start_date']['dte'] }}
+                              {{ $event['start_date']['dts'] }} - {{ $event['start_date']['dte'] }}
                           </span>
-                          <div @if($event['status'] === 1) style="border: 3px solid #00a15f!important; border-radius: 5px;" @endif class="border border-heavy p-2 mb-3 bg-white hover-shadow "> 
-                              <h5 class="mt-0 mb-1">{{ $event['name'] }}</h5>
-                              <p class="text-dark mt-2">{!! $event['description'] !!}</p>
+                          <div @if($event['status'] === 1) @endif class="desc_block"> 
+                            <h3 class="">{{ $event['name'] }}</h3>
+                            <p class="">{!! $event['description'] !!}</p>
                           </div>
                       </li>
                     </ul>
