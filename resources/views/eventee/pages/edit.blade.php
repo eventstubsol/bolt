@@ -55,17 +55,21 @@ Edit Page
             {{-- Visit Page: 
             <a href="/event#page/{{$page->name}}" target="_blank">here</a> --}}
             <div id="container" class="card-body">
+                {{-- Drag and Drop Visual Container --}}
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
+                        {{-- Main Image/Video Section --}}
                         @if($page->videoBg)
                             <video loop autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat style="min-width:100%; width:100%;"></video>
                         @elseif(isset($page->images[0]))
                             <img data-test="{{$page->videoBg}}" src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
                         @endif
+                        {{-- All Links Positioned --}}
                         @foreach($page->links as $ids => $link)
-                            <div data-id="im-{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$ids}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
-           
-                            {{-- <div data-index="{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;  perspective:{{$link->perspective}}px;" >{{$link->name}}</div> --}}
+                        <div data-id="im-{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$ids}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
+                        
+                        {{-- <div data-index="{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;  perspective:{{$link->perspective}}px;" >{{$link->name}}</div> --}}
                         @endforeach
+                        {{-- All Treasure Hunt Items Positioned --}}
                         @foreach($page->treasures as $ids => $link)
                             <div data-id="tim-{{$ids}}"  data-index="{{$ids}}" class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
                         @endforeach
@@ -205,49 +209,49 @@ Edit Page
                                    
                                     <div  class="row col-md-12 positioning-{{$ids}}" >
                                     
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="top">top</label>
-                                        <input value="{{$link->top}}" type="number" step="any" required  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control top-{{$ids}}">
-                                    </div>
+                                    {{-- <div style="visibility: hidden" class="form-group mb-3 col-md-3"> --}}
+                                        {{-- <label for="top">top</label> --}}
+                                        <input value="{{$link->top}}" type="hidden" step="any" required  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control top-{{$ids}}">
+                                    {{-- </div> --}}
                                     
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">left</label>
-                                        <input value="{{$link->left}}" type="number" step="any" required  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control left-{{$ids}}">
-                                    </div>
+                                    {{-- <div style="visibility: hidden" class="form-group mb-3 col-md-3">
+                                        <label for="pos">left</label> --}}
+                                        <input value="{{$link->left}}" type="hidden" step="any" required  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control left-{{$ids}}">
+                                    {{-- </div> --}}
                                     
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">width</label>
-                                        <input value="{{$link->width}}" type="number" step="any" required  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control width-{{$ids}}">
-                                    </div>
+                                    {{-- <div style="visibility: hidden" class="form-group mb-3 col-md-3"> --}}
+                                        {{-- <label for="pos">width</label> --}}
+                                        <input value="{{$link->width}}" type="hidden" step="any" required  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control width-{{$ids}}">
+                                    {{-- </div> --}}
 
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">height</label>
-                                        <input value="{{$link->height}}" type="number" step="any" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control height-{{$ids}}">
-                                    </div>
-                                    <div  class="form-group mb-3 col-md-3">
+                                    {{-- <div style="visibility: hidden" class="form-group mb-3 col-md-3"> --}}
+                                        {{-- <label for="pos">height</label> --}}
+                                        <input value="{{$link->height}}" type="hidden" step="any" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control height-{{$ids}}">
+                                    {{-- </div> --}}
+                                    {{-- <div  class="form-group mb-3 col-md-3">
                                         <label for="pos">Perspective Type</label>
                                         <select name="rotationtype[]" data-index="{{$ids}}" class="pers pos pos-{{$ids}} form-control" id="">
                                             <option value="">None</option>
                                             <option @if($link->rotationtype=="X") selected @endif value="X">X</option>
                                             <option @if($link->rotationtype=="Y") selected @endif value="Y">Y</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     
-                                    <div @if(!($link->rotationtype)) style="display:none" @endif  class="pr-{{$ids}} form-group mb-3 col-md-3">
+                                    {{-- <div @if(!($link->rotationtype)) style="display:none" @endif  class="pr-{{$ids}} form-group mb-3 col-md-3">
                                             <label for="pos">Perspective</label>
                                             <input value="{{$link->perspective}}" type="number" step="any"  name="perspective[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
                                     </div>
                                     <div @if(!($link->rotationtype)) style="display:none" @endif  class="rt-{{$ids}} form-group mb-3 col-md-3">
                                         <label for="pos">Rotation</label>
                                         <input value="{{$link->rotation}}" type="number" step="any"  name="rotation[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
-                                    </div>
+                                    </div> --}}
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
 
                                     </div>
 
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
     
-                                    <div class="flyin  col-md-12">
+                                    <div class="flyin  col-md-12 mb-2">
                                         
                                             <div @if(!$link->flyin) style="display:none" @endif class="image-uploader flyin-{{$ids}}">
                                                 <label class="mb-3" for="images">Fly In Video</label>
@@ -266,9 +270,9 @@ Edit Page
                                         
                                         
                                         
-                                    <button class="btn btn-primary mt-2 mb-4 mr-2  add-image"  data-index="{{$ids}}" >Add Background Image</button>
-                                    <button class="btn btn-primary mt-2 mb-4 mr-3 addflyin" data-index="{{$ids}}">Add Fly In Video</button>
-                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                    <button class="btn btn-primary  mb-2 mr-2  add-image"  data-index="{{$ids}}" >Add Background Image</button>
+                                    <button class="btn btn-primary  mb-2 mr-3 addflyin" data-index="{{$ids}}">Add Fly In Video</button>
+                                    <button class="btn btn-danger  mb-2 remove-link">Remove</button>
                                 </div>
                               @endforeach
                              
@@ -326,7 +330,7 @@ Edit Page
                         <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{isset($page->images[0])?assetUrl($page->images[0]->url):''}}" />
                     </div>
                     <div class="image-uploader" id="vidBg">
-                        <label class="mb-3" for="images">Background Video (Optional)</label>
+                        <label class="mb-3 mt-3" for="images">Background Video (Optional)</label>
                         <input type="hidden" name="video_url" class="upload_input" value="{{$page->videoBg?$page->videoBg->url:''}}">
                         <input type="file" data-name="video_url" data-plugins="dropify" data-type="video" data-default-file="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" />
                     </div>
@@ -334,9 +338,9 @@ Edit Page
 
                     <!-- Treasure Hunt Items Start -->
                         <div id="treasures">
-                            <label class="mb-3" for="images">Treasure Hunt Items</label>
+                            <h3 class="mb-3 mt-3" for="images">Treasure Hunt Items</h3>
                             @foreach($page->treasures as $ids =>$treasure)
-                                <div class="row">
+                                <div class="row  border border-primary p-2 mt-2 mb-2">
 
                                     <div class="image-uploader col-md-12">
                                         <input type="hidden" name="treasures[]" class="upload_input" value="{{$treasure?$treasure->url:''}}">
@@ -344,40 +348,23 @@ Edit Page
                                     </div>
                                     <div  class="row tpositioning-{{$ids}} col-md-12" >
                                             
-                                            <div style="visibility: hidden"  class="form-group mb-3 col-md-3">
-                                                <label for="top">top</label>
-                                                <input value="{{$treasure->top}}"  step="any" type="number" required  name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} ttop-{{$ids}} form-control">
-                                            </div>
-                                            
-                                            <div style="visibility: hidden"  class="form-group mb-3 col-md-3">
-                                                <label for="pos">left</label>
-                                                <input value="{{$treasure->left}}"  step="any" type="number" required  name="tleft[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} tleft-{{$ids}} form-control">
-                                            </div>
-                                            
-                                            <div style="visibility: hidden"  class="form-group mb-3 col-md-3">
-                                                <label for="pos">width</label>
-                                                <input value="{{$treasure->width}}"  step="any" type="number" required  name="twidth[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} twidth-{{$ids}} form-control">
-                                            </div>
-
-                                            <div style="visibility: hidden"  class="form-group mb-3 col-md-3">
-                                                <label for="pos">height</label>
-                                                <input value="{{$treasure->height}}"  step="any" type="number" required  name="theight[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} theight-{{$ids}} form-control">
-                                            </div>
-
+                                                <input value="{{$treasure->top}}"  step="any" type="hidden" required  name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} ttop-{{$ids}} form-control">
+                                                <input value="{{$treasure->left}}"  step="any" type="hidden" required  name="tleft[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} tleft-{{$ids}} form-control">
+                                                <input value="{{$treasure->width}}"  step="any" type="hidden" required  name="twidth[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} twidth-{{$ids}} form-control">
+                                                <input value="{{$treasure->height}}"  step="any" type="hidden" required  name="theight[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} theight-{{$ids}} form-control">
+                                         
                                             <button data-index="{{$ids}}" class="btn btn-primary donet-{{$ids}} donet" >DONE</button>
 
                                     </div>
-                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                    <button class="btn btn-danger mt-2  remove-link">Remove</button>
                                 </div>
 
                             @endforeach
                         </div>
-                        <div>
-                            <button class="btn btn-primary" id="add-treasure">Add Treasure</button>
-                        </div>
-                    <!-- Treasure Hunt Items End -->
-
-                    <div>
+                        <!-- Treasure Hunt Items End -->
+                        
+                    <div class="mt-2">
+                        <button class="btn btn-primary" id="add-treasure">Add Treasure</button>
                         <input class="btn btn-primary" type="submit" value="Save" />
                     </div>
                 </form>
@@ -728,37 +715,22 @@ Edit Page
         
 
         $("#treasures").append(`
-                                <div class="row ">
+                                <div class="row border border-primary p-2 mt-2 mb-2 ">
                                     <div class="image-uploader col-md-12">
                                         <input type="hidden" name="treasures[]" class="upload_input" >
                                         <input type="file" data-name="treasures[]" data-plugins="dropify" data-type="image"/>
                                     </div>
-                                    <div  class="row tpositioning-${t} col-md-12" >
+                                    <div  class="row tpositioning-${t} col-md-12 mb-2" >
                                         
-                                        <div  class="form-group mb-3 col-md-3">
-                                            <label for="top">top</label>
-                                            <input type="number"  step="any" required  name="ttop[]" data-index="${t}" class="tpos tpos-${t} ttop-${n} form-control">
-                                        </div>
-                                        
-                                        <div  class="form-group mb-3 col-md-3">
-                                            <label for="pos">left</label>
-                                            <input type="number"  step="any" required  name="tleft[]" data-index="${t}" class="tpos tpos-${t} tleft-${n} form-control">
-                                        </div>
-                                        
-                                        <div  class="form-group mb-3 col-md-3">
-                                            <label for="pos">width</label>
-                                            <input type="number"  step="any" required  name="twidth[]" data-index="${t}" class="tpos tpos-${t} twidth-${n} form-control">
-                                        </div>
-
-                                        <div  class="form-group mb-3 col-md-3">
-                                            <label for="pos">height</label>
-                                            <input type="number"  step="any" required  name="theight[]" data-index="${t}" class="tpos tpos-${t} theight-${n} form-control">
-                                        </div>
-
+                                            <input type="hidden"  step="any" required  name="ttop[]" data-index="${t}" class="tpos tpos-${t} ttop-${n} form-control">
+                                            <input type="hidden"  step="any" required  name="tleft[]" data-index="${t}" class="tpos tpos-${t} tleft-${n} form-control">
+                                            <input type="hidden"  step="any" required  name="twidth[]" data-index="${t}" class="tpos tpos-${t} twidth-${n} form-control">
+                                            <input type="hidden"  step="any" required  name="theight[]" data-index="${t}" class="tpos tpos-${t} theight-${n} form-control">
+                            
                                         <button data-index="${t}" class="btn btn-primary donet-${t} donet" >DONE</button>
 
                                     </div>
-                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                    <button class="btn btn-danger mt-2 remove-link">Remove</button>
                                 </div>
         `);
         bindRemoveButton();
@@ -878,41 +850,12 @@ Edit Page
 
                                     <div  class="row positioning-${n}" >
                                        
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="top">top</label>
-                                        <input type="number" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
-                                    </div>
-                                    
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">left</label>
-                                        <input type="number" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
-                                    </div>
-                                    
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">width</label>
-                                        <input type="number" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
-                                    </div>
-
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">height</label>
-                                        <input type="number" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
-                                    </div>
-                                    <div  class="form-group mb-3 col-md-3">
-                                        <label for="pos">Perspective Type</label>
-                                        <select name="rotationtype[]" data-index="${n}" class="pers pos pos-${n} form-control">
-                                            <option value="">None</option>
-                                            <option value="X">X</option>
-                                            <option value="Y">Y</option>
-                                        </select>
-                                    </div>
-                                    <div style="display: none;"   class="pr-${n} form-group mb-3 col-md-3">
-                                        <label for="pos">Perspective</label>
-                                        <input  type="number" step="any"   name="perspective[]" data-index="${n}" class="pos pos-${n} form-control">
-                                    </div>
-                                    <div  style="display: none;"  class="rt-${n} form-group mb-3 col-md-3">
-                                        <label for="pos">Rotation</label>
-                                        <input  type="number" step="any"   name="rotation[]" data-index="${n}" class="pos pos-${n} form-control">
-                                    </div>
+                                        <input type="hidden" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
+                                        <input type="hidden" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
+                                        <input type="hidden" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
+                                        <input type="hidden" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
+                                
+                                  
 
                                     <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
 
