@@ -213,6 +213,19 @@
       h4 span {
         font-size: 23px;
       }
+
+      .nav-tabs .nav-link{
+        margin-bottom: 15px;
+      }
+
+      .img_box{
+        display: none;
+      }
+
+      img.bigBanner {
+        height: 650px;
+        object-fit: cover;
+      }
       
     }
 
@@ -498,13 +511,34 @@
     padding: 7px 15px;
     margin: 20px 0;
   }
-  .tab-pane ul{
+
+  .tabSec .nav-item{
+    margin: 25px 15px 20px 0;
+  }
+
+  .tabSec .nav-item:last-child{
+    margin-right: 0;
+  }
+
+  .tabSec .nav-item .nav-link{
+    margin-right: 0px;
+    display: inline-block;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 3px 15px;
+    border-color: #fff;
+    border: 2px solid #fff;
+  }
+
+  .tab-pane .descUl{
     margin:0 30px 0 0;
     padding: 0 40px 0 0;
     position: relative;
   }
 
-  .tab-pane ul:before{
+  .tab-pane .descUl:before{
     content: "";
     width: 2px;
     height: 100%;
@@ -514,7 +548,7 @@
     top: 0;
   }
 
-  .tab-pane ul li{
+  .tab-pane .descUl li{
     background: #fff;
     font-size: 14px;
     text-transform: uppercase;
@@ -527,7 +561,7 @@
     position: relative;
   }
 
-  .tab-pane ul li:before{
+  .tab-pane .descUl li:before{
     content: "";
     width: 15px;
     height: 15px;
@@ -657,59 +691,152 @@
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <h2>Fireside chat</h2>
-          <div class="d-flex">
-            <ul class="d-flex flex-column justify-content-between">
-              <li>7.00 PM - 7.45PM</li>
-              <li>7.00 PM - 7.45PM</li>
-              <li>7.00 PM - 7.45PM</li>
-            </ul>
-            <div class="desc_block">
-              <h3>Headline</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-              <h3>Headline</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-              <h3>Headline</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <h2>Amphitheatre</h2>
-          <div class="d-flex">
-            <ul class="d-flex flex-column justify-content-between">
-              <li>7.00 PM - 7.45PM</li>
-              <li>7.00 PM - 7.45PM</li>
-              <li>7.00 PM - 7.45PM</li>
-            </ul>
-            <div class="desc_block">
-              <h3>Headline</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-              <h3>Headline</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-              <h3>Headline</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-          <h2>Fireside chat</h2>
-            <div class="d-flex">
-              <ul class="d-flex flex-column justify-content-between">
-                <li>7.00 PM - 7.45PM</li>
-                <li>7.00 PM - 7.45PM</li>
-                <li>7.00 PM - 7.45PM</li>
-              </ul>
-              <div class="desc_block">
-                <h3>Headline</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                <h3>Headline</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                <h3>Headline</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+          <ul class="nav nav-tabs tabSec" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="chat1-tab" data-toggle="tab" href="#chat1" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="chat2-tab" data-toggle="tab" href="#chat2" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="chat1" role="tabpanel" aria-labelledby="chat1-tab">
+              <div class="d-flex">
+                <ul class="d-flex flex-column justify-content-between descUl">
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                </ul>
+                <div class="desc_block">
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                </div>
               </div>
             </div>
+
+            <div class="tab-pane fade" id="chat2" role="tabpanel" aria-labelledby="chat2-tab">
+              <div class="d-flex">
+                <ul class="d-flex flex-column justify-content-between descUl">
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                </ul>
+                <div class="desc_block">
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <ul class="nav nav-tabs tabSec" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="chat1-tab" data-toggle="tab" href="#chat1" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="chat2-tab" data-toggle="tab" href="#chat2" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="chat1" role="tabpanel" aria-labelledby="chat1-tab">
+              <div class="d-flex">
+                <ul class="d-flex flex-column justify-content-between descUl">
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                </ul>
+                <div class="desc_block">
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="chat2" role="tabpanel" aria-labelledby="chat2-tab">
+              <div class="d-flex">
+                <ul class="d-flex flex-column justify-content-between descUl">
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                </ul>
+                <div class="desc_block">
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+          <ul class="nav nav-tabs tabSec" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="chat1-tab" data-toggle="tab" href="#chat1" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
+            </li>
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" id="chat2-tab" data-toggle="tab" href="#chat2" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="chat1" role="tabpanel" aria-labelledby="chat1-tab">
+              <div class="d-flex">
+                <ul class="d-flex flex-column justify-content-between descUl">
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                </ul>
+                <div class="desc_block">
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="chat2" role="tabpanel" aria-labelledby="chat2-tab">
+              <div class="d-flex">
+                <ul class="d-flex flex-column justify-content-between descUl">
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                  <li>7.00 PM - 7.45PM</li>
+                </ul>
+                <div class="desc_block">
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                  <h3>Headline</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
   </div>
