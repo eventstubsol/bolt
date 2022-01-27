@@ -55,17 +55,21 @@ Edit Page
             {{-- Visit Page: 
             <a href="/event#page/{{$page->name}}" target="_blank">here</a> --}}
             <div id="container" class="card-body">
+                {{-- Drag and Drop Visual Container --}}
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
+                        {{-- Main Image/Video Section --}}
                         @if($page->videoBg)
                             <video loop autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat style="min-width:100%; width:100%;"></video>
                         @elseif(isset($page->images[0]))
                             <img data-test="{{$page->videoBg}}" src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
                         @endif
+                        {{-- All Links Positioned --}}
                         @foreach($page->links as $ids => $link)
-                            <div data-id="im-{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$ids}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
-           
-                            {{-- <div data-index="{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;  perspective:{{$link->perspective}}px;" >{{$link->name}}</div> --}}
+                        <div data-id="im-{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white; perspective:{{$link->perspective}}px; " ><div class="im_names im_name-{{$ids}}" style="background:red; height:100%; @if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif " >{{$link->name}}</div></div>
+                        
+                        {{-- <div data-index="{{$ids}}" class="im-{{$ids}} image_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:white;  perspective:{{$link->perspective}}px;" >{{$link->name}}</div> --}}
                         @endforeach
+                        {{-- All Treasure Hunt Items Positioned --}}
                         @foreach($page->treasures as $ids => $link)
                             <div data-id="tim-{{$ids}}"  data-index="{{$ids}}" class="tim-{{$ids}} treasure_links " style=" position:absolute; top:{{$link->top}}%; left:{{$link->left}}%; width:{{$link->width}}%; height:{{$link->height}}%; background:url('{{assetUrl($link->url)}}') no-repeat; background-size: contain; " >{{$link->name}}</div>
                         @endforeach
@@ -326,7 +330,7 @@ Edit Page
                         <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{isset($page->images[0])?assetUrl($page->images[0]->url):''}}" />
                     </div>
                     <div class="image-uploader" id="vidBg">
-                        <label class="mb-3" for="images">Background Video (Optional)</label>
+                        <label class="mb-3 mt-3" for="images">Background Video (Optional)</label>
                         <input type="hidden" name="video_url" class="upload_input" value="{{$page->videoBg?$page->videoBg->url:''}}">
                         <input type="file" data-name="video_url" data-plugins="dropify" data-type="video" data-default-file="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" />
                     </div>
@@ -334,9 +338,9 @@ Edit Page
 
                     <!-- Treasure Hunt Items Start -->
                         <div id="treasures">
-                            <label class="mb-3" for="images">Treasure Hunt Items</label>
+                            <h3 class="mb-3 mt-3" for="images">Treasure Hunt Items</h3>
                             @foreach($page->treasures as $ids =>$treasure)
-                                <div class="row">
+                                <div class="row  border border-primary p-2 mt-2 mb-2">
 
                                     <div class="image-uploader col-md-12">
                                         <input type="hidden" name="treasures[]" class="upload_input" value="{{$treasure?$treasure->url:''}}">
@@ -352,17 +356,15 @@ Edit Page
                                             <button data-index="{{$ids}}" class="btn btn-primary donet-{{$ids}} donet" >DONE</button>
 
                                     </div>
-                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                    <button class="btn btn-danger mt-2  remove-link">Remove</button>
                                 </div>
 
                             @endforeach
                         </div>
-                        <div>
-                            <button class="btn btn-primary" id="add-treasure">Add Treasure</button>
-                        </div>
-                    <!-- Treasure Hunt Items End -->
-
-                    <div>
+                        <!-- Treasure Hunt Items End -->
+                        
+                    <div class="mt-2">
+                        <button class="btn btn-primary" id="add-treasure">Add Treasure</button>
                         <input class="btn btn-primary" type="submit" value="Save" />
                     </div>
                 </form>
@@ -713,7 +715,7 @@ Edit Page
         
 
         $("#treasures").append(`
-                                <div class="row border border-primary p-2 mt-2 ">
+                                <div class="row border border-primary p-2 mt-2 mb-2 ">
                                     <div class="image-uploader col-md-12">
                                         <input type="hidden" name="treasures[]" class="upload_input" >
                                         <input type="file" data-name="treasures[]" data-plugins="dropify" data-type="image"/>
