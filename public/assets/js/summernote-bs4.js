@@ -10150,13 +10150,15 @@ var ui_ui = function ui(editorOptions) {
           $node.attr({
             title: options.tooltip,
             'aria-label': options.tooltip
-          }).tooltip({
-            container: options.container || editorOptions.container,
-            trigger: 'hover',
-            placement: 'bottom'
           }).on('click', function (e) {
             external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()(e.currentTarget).tooltip('hide');
           });
+          // .tooltip({
+          //   container: options.container || editorOptions.container,
+          //   trigger: 'hover',
+          //   placement: 'bottom'
+          // })
+          
         }
 
         if (options && options.codeviewButton) {
