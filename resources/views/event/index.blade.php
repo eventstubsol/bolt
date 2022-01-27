@@ -755,7 +755,7 @@ $user = Auth::user();
     @if(isset($chat_app))
         @include("event.modules.chat")
     @endif
-    {{-- @include("event.modules.networking") --}}
+    @include("event.modules.networking")
 
     @include("event.modules.Confirmation")
 

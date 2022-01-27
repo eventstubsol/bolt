@@ -642,6 +642,9 @@
 
     </div>
 </div>
+@php
+  $main_event = $event;
+@endphp
 <!-- Home page end -->
 
 @if($landing->speaker_status == 1)
@@ -670,181 +673,112 @@
   </div>
   
 </div>
+
+@endif
 <!-- Speaker page End -->
 
 <!-- Scedule page Start -->
+
+@php
+  $lastDate = false;
+  $i = 0;
+  $dates = []; 
+      foreach($schedule as $room => $scheduleForRoom){
+          foreach ($scheduleForRoom as $id => $event){
+              if($lastDate != $event['start_date']['m']){
+                  $lastDate = $event['start_date']['m'];
+              }
+              if($event['type']!=="PRIVATE_SESSION"){
+                  $event['id'] = $id;
+                  $dates[$lastDate][$room][] = $event;
+               }
+
+          }
+      }
+@endphp
+
 <div class="scedule">
   <div>
     <h5>Event Schedule</h5>
 
     <div class="container">
+      {{-- Date Pills --}}
       <ul class="nav nav-tabs justify-content-between" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">sUN, 23RD JAN, 2022</a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">sUN, 24th JAN, 2022</a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">sUN, 25th JAN, 2022</a>
-        </li>
+        @foreach($dates as $date => $room)
+          @php
+              $i++;
+          @endphp
+          <li class="nav-item" role="presentation">
+            <a class="nav-link @if($i === 1) active @endif"  data-toggle="tab" href="#sch-{{$i}}" role="tab" aria-controls="home"  aria-expanded="{{ $i === 1 ? 'true' : 'false' }}" aria-selected="{{ $i === 1 ? 'true' : 'false' }}">{{ $date }}</a>
+          </li>
+        @endforeach
       </ul>
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <ul class="nav nav-tabs tabSec" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="chat1-tab" data-toggle="tab" href="#chat1" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="chat2-tab" data-toggle="tab" href="#chat2" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
-            </li>
-          </ul>
-
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="chat1" role="tabpanel" aria-labelledby="chat1-tab">
-              <div class="d-flex">
-                <ul class="d-flex flex-column justify-content-between descUl">
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                </ul>
-                <div class="desc_block">
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
+      @php
+          $i = 0;
+      @endphp
+      {{-- Tab For Each Date --}}
+      <div class="tab-content">
+        @foreach($dates as $date => $rooms)
+          @php
+              $i++;
+          @endphp
+          <div class="tab-pane fade {{ $i === 1 ? "active show" : "" }}" id="sch-{{$i}}" role="tabpanel" >
+            @php
+                $j = 0;
+            @endphp
+            {{-- Room Name Pills --}}
+            <ul class="nav nav-tabs tabSec" id="myTab" role="tablist">
+              @foreach($rooms as $room => $events)
+                @php
+                  $j++;
+                @endphp
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link @if($j === 1) active @endif"  data-toggle="tab" href="#sch-{{$i}}-{{$j}}" role="tab" aria-controls="home" aria-expanded="{{ $j === 1 ? 'true' : 'false' }}" aria-selected="{{ $j === 1 ? 'true' : 'false' }}">{{$room}}</a>
+                </li>
+              @endforeach
+                
+            </ul>
+            
+            @php
+              $j = 0;
+            @endphp
+            {{-- Tab For Each Room --}}
+            <div class="tab-content" >
+              @foreach($rooms as $room => $events)
+                @php
+                    $j++;
+                @endphp
+                <div class="tab-pane fade show active" id="sch-{{$i}}-{{$j}}" role="tabpanel" aria-labelledby="chat1-tab">
+                  <div class="d-flex">
+                    <ul style="padding-left: 110px !important;" class="list-unstyled timeline-sm"> 
+                      <li class="timeline-sm-item">
+                          <span class="timeline-sm-date">
+                              {{ $event['start_date']['dts'] }} - <br> {{ $event['start_date']['dte'] }}
+                          </span>
+                          <div @if($event['status'] === 1) style="border: 3px solid #00a15f!important; border-radius: 5px;" @endif class="border border-heavy p-2 mb-3 bg-white hover-shadow "> 
+                              <h5 class="mt-0 mb-1">{{ $event['name'] }}</h5>
+                              <p class="text-dark mt-2">{!! $event['description'] !!}</p>
+                          </div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            <div class="tab-pane fade" id="chat2" role="tabpanel" aria-labelledby="chat2-tab">
-              <div class="d-flex">
-                <ul class="d-flex flex-column justify-content-between descUl">
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                </ul>
-                <div class="desc_block">
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <ul class="nav nav-tabs tabSec" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="chat1-tab" data-toggle="tab" href="#chat1" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="chat2-tab" data-toggle="tab" href="#chat2" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
-            </li>
-          </ul>
-
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="chat1" role="tabpanel" aria-labelledby="chat1-tab">
-              <div class="d-flex">
-                <ul class="d-flex flex-column justify-content-between descUl">
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                </ul>
-                <div class="desc_block">
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-pane fade" id="chat2" role="tabpanel" aria-labelledby="chat2-tab">
-              <div class="d-flex">
-                <ul class="d-flex flex-column justify-content-between descUl">
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                </ul>
-                <div class="desc_block">
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                </div>
-              </div>
+              @endforeach
             </div>
           </div>
-        </div>
-
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-          <ul class="nav nav-tabs tabSec" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <a class="nav-link active" id="chat1-tab" data-toggle="tab" href="#chat1" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
-            </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" id="chat2-tab" data-toggle="tab" href="#chat2" role="tab" aria-controls="home" aria-selected="true">Fireside chat</a>
-            </li>
-          </ul>
-
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="chat1" role="tabpanel" aria-labelledby="chat1-tab">
-              <div class="d-flex">
-                <ul class="d-flex flex-column justify-content-between descUl">
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                </ul>
-                <div class="desc_block">
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-pane fade" id="chat2" role="tabpanel" aria-labelledby="chat2-tab">
-              <div class="d-flex">
-                <ul class="d-flex flex-column justify-content-between descUl">
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                  <li>7.00 PM - 7.45PM</li>
-                </ul>
-                <div class="desc_block">
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                  <h3>Headline</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
+        @endforeach
       </div>
     </div>
   </div>
 </div>
+
+@php
+  $event  = $main_event;
+@endphp
 <!-- Scedule page End -->
 
 
-@endif
 @if (\Session::has('message'))
     <script>
       showMessage(`User Created Succesfully`,'success');
@@ -852,9 +786,9 @@
 @endif
 <!-- Register page Start -->
 <div id="regInit" class="register_block">
-  <!-- <div class="registerLogo">
+  {{-- <!-- <div class="registerLogo">
   <img src="{{ assetUrl(getFieldId('logo',$event->id)) }}" alt="">
-  </div> -->
+  </div> --> --}}
   <div class="row justify-content-lg-end align-items-center pr-lg-5">
     <div class="col-lg-5">
       <div class="regBox">
