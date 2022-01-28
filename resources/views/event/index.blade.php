@@ -452,6 +452,11 @@ $user = Auth::user();
         .loader-logo{
             width: 300px;
         }
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+        color: #fff;
+        background-color: "{{ $event->primary_color }}" !important;
+        }
 
     </style>
     {{-- Notification Modal --}}
