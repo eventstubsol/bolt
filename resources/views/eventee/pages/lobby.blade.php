@@ -734,15 +734,6 @@ $event = App\Event::findOrFail($id);
                                                 <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video"  />
                                             </div>
                                         </div>
-                                        <br />
-                                        <div class="col-md-12 flyin ">
-                                            <div style="display:none" class="image-uploader flyin-${n}">
-                                                <label class="mb-3" for="images">Fly In Video</label>
-                                                <input type="hidden" name="flyin[]" class="upload_input" >
-                                                <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video"  />
-                                            </div>
-                                           
-                                        </div>
                                    
 
 
