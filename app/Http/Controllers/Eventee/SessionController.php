@@ -221,6 +221,7 @@ class SessionController extends Controller
     public function update(SessionFormRequest $request, EventSession $session,$id)
     {
         $event_id = $id;
+        $event = Event::findOrFail($event_id);
         $speakers = $request->speakers;
         $request->speakers = null;
         $session->load("speakers");
@@ -228,6 +229,11 @@ class SessionController extends Controller
         $session->update($request->except("_token","_method","meetingId"));
         $session->zoom_webinar_id = $request->zoom_webinar_id;
         $session->room = $room->name;
+        $start =  (new Carbon($request->start_time,$event->timezone))->setTimezone(new CarbonTimeZone("UTC"))->toString();
+        $end =  (new Carbon($request->end_time,$event->timezone))->setTimezone(new CarbonTimeZone("UTC"))->toString();
+        $session->start_time = $start;
+        $session->end_time = $end;
+
         if($request->type==="VIDEO_SDK" && $request->has("meetingId") && $request->meetingId){
             $session->zoom_webinar_id = $request->meetingId;
         }
