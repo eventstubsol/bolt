@@ -144,7 +144,7 @@ class eventeeController extends Controller
             $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->limit(5)->count();
            
             $liveEvent = Event::where('end_date','>=',Carbon::now("UTC")->format('Y-m-d'))->where('user_id',Auth::id())->count();
-            $recent = Event::where('user_id',Auth::id())->orderBy('start_date','desc')->limit(5)->get();
+            $recent = Event::where('user_id',Auth::id())->orderBy('start_date','asc')->limit(5)->get();
             // $latest_users = User::whereBetween('created_at',[Carbon::now("UTC")->subDays(5)->format('Y-m-d H:i:s'),Carbon::now("UTC")->format('Y-m-d H:i:s')])->where('type','eventee')->limit(5)->get();
             $ending_event  =Event::whereBetween('end_date',[Carbon::now("UTC")->format('Y-m-d'),Carbon::now("UTC")->addDays(5)->format('Y-m-d')])->where('user_id',Auth::id())->limit(5)->get();
             $eventUser = Event::where('user_id',Auth::id())->get();
