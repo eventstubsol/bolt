@@ -641,9 +641,9 @@ $user = Auth::user();
     {{-- <div class="loader"></div> --}}
     
     <div class="loader loaderSection ">
-        <div class="loader-logo">
+        <!-- <div class="loader-logo">
             <img src="{{ assetUrl(getFieldId('logo',$event_id)) }}" alt="">
-        </div>
+        </div> -->
         <img  src="{{ assetUrl($loader->load_class) }}" class="w-25 mt-5" alt="">
     </div>
     @php

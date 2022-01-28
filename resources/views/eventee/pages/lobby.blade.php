@@ -51,8 +51,10 @@ $event_id = $id;
 <div class="row">
     <div class="col-12">
         <div class="card" style="position: relative;" >
-            Visit Page: 
-            <a href="/event#page/{{$page->name}}" target="_blank">here</a>
+            <div class="d-flex align-items-center justify-content-between p-3">
+                <h5>Visit Page: </h5>
+                <a class="btn btn-primary" href="/event#page/{{$page->name}}" target="_blank">here</a>
+            </div>
             <div  id="container" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
                     <img src="{{ assetUrl(getFieldId('main_lobby_image',$event_id)) }}" style="min-width:100%" />
