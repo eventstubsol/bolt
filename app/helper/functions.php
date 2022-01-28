@@ -12,6 +12,7 @@ use App\ArchiveVideos;
 use App\UserConnection;
 use App\sessionRooms;
 use App\Contact;
+use App\Event;
 use App\Link;
 use App\Leaderboard;
 use App\LeadPoint;
@@ -71,8 +72,8 @@ define('LINK_TYPES', [
     'zoom',
     "booth",
     "vimeo",
-    // "chat_user",
-    // "chat_group",
+    "chat_user",
+    "chat_group",
     "pdf",
     // "custom_page",
     "lobby",
@@ -1572,4 +1573,14 @@ function LandPage($event_id){
     $page = new LandingPage;
     $page->event_id = $event_id;
     $page->save();
+}
+
+function getDomain($event_id){
+    $event = Event::findOrFail($event_id);
+    if($event->domain == null){
+        return $event->link;
+    }
+    else{
+        return $event->domain;
+    }
 }

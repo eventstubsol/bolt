@@ -1,3 +1,6 @@
+@php
+    $event = App\Event::findOrFail($id);
+@endphp
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <li>
@@ -8,7 +11,7 @@
         </span>  
     </a>
 </li>
-
+@if(Carbon\Carbon::now() <= $event->end_date)
 <li class="menu-title">Administration</li>
 <li>
     <a href="#users" data-toggle="collapse">
@@ -344,7 +347,7 @@
         </ul>
     </div>
 </li>
-
+@endif
 <li class="menu-title">Reporting & Analytics</li>
 
 <li>
