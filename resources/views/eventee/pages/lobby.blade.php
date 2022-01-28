@@ -45,6 +45,7 @@ Edit Lobby
 
 @php 
 $event_id = $id;
+$event = App\Event::findOrFail($id);
 @endphp
 
 @section("content")
@@ -52,7 +53,7 @@ $event_id = $id;
     <div class="col-12">
         <div class="card" style="position: relative;" >
             Visit Page: 
-            <a href="/event#page/{{$page->name}}" target="_blank">here</a>
+            <a href="{{ getDomain($id) }}/event#lobby" target="_blank">here</a>
             <div  id="container" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
                     <img src="{{ assetUrl(getFieldId('main_lobby_image',$event_id)) }}" style="min-width:100%" />
