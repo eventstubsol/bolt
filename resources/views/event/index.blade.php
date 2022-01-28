@@ -455,7 +455,7 @@ $user = Auth::user();
         .theme-modal .nav-pills .nav-link.active,
         .nav-pills .nav-link.active,
         .nav-pills .show > .nav-link {
-            background-color: "{{ $event->primary_color }}";
+            background-color: "{{ $event->primary_color }}" !important;
             color: #fff;
         }
 
