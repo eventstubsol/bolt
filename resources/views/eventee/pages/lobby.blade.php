@@ -352,7 +352,7 @@ $event_id = $id;
         
         $(".add-image").unbind("click").on("click", addImage);
 
-        $(".addflyin").on("click",addFlyIn);
+        $(".addflyin").unbind("click").on("click",addFlyIn);
         
 
         bindRemoveButton();
