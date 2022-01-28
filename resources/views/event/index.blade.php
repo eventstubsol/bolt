@@ -861,7 +861,7 @@ $user = Auth::user();
             addParticipant: "{{route('addParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
             removeParicipant: "{{route('removeParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
             updateLounge: "{{route('updateLounge',['subdomain'=>$event_name])}}",
-            leaderboard: "{{ route('leaderboard',['subdomain'=>$event_name,'id'=>$event_id]) }}",
+            leaderboard: "{{ route('leaderboard',['id'=>$event_id,'subdomain'=>$event_name]) }}",
             token: "{{ csrf_token() }}",
             trackEvent: "{{ route('trackEvent') }}",
             getswagBag: "{{ route('getSwagBag') }}",
