@@ -22,7 +22,7 @@
     img.bigBanner{
         width: 100%;
         max-width: 100%;
-        height: 1075px;
+        height: 850px;
     }
     .banner_block{
         position: relative;
@@ -252,15 +252,15 @@
 
     .img_box{
       overflow: hidden;
-      width: 310px;
-      height: 315px;
+      width: 22%;
+      height: 250px;
       border-radius: 50px;
       border: 5px solid #fff;
     }
 
     .img_box img{
       border-radius: 30px;
-      height: 315px;
+      height: 250px;
       object-fit: cover;
       width: 100%;
     }
@@ -336,7 +336,7 @@
   }
 
   .speakerbox{
-    width: 355px;
+    width: 280px;
   }
 
   .speakerbox h6{
@@ -351,7 +351,7 @@
   }
 
   .speakerbox .boxBg{
-    height: 305px;
+    height: 250px;
     background: #d0d0d0;
     border-radius: 50px;
     margin-bottom: 20px;
@@ -361,7 +361,7 @@
 
   .speakerbox .boxBg img{
     width: 100%;
-    height: 305px;
+    height: 250px;
     object-fit: cover;
   }
 

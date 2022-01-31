@@ -103,11 +103,12 @@
         z-index: 1;
         top: 0;
         right: 0;
-        background-color: #111111f5;
+        background-color: #111111d4;
         overflow-x: hidden;
         transition: 0.5s;
         padding-top: 0;
         overflow-y: hidden;
+        backdrop-filter: blur(3px);
     }
     .sidenav.w-22{
         height: 100vh;
