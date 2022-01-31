@@ -118,12 +118,12 @@ class EventManageController extends Controller
     }
 
     public function update($event_id,Request $req){
-        $baseurl = URL::to('/');
-        if(strpos($baseurl,'https')){
-            $baseurl =  str_replace('https://app.','',$baseurl);
-         }else{
-           $baseurl=  str_replace('http://app.','',$baseurl);
-         }
+        $baseurl = "eventstub.co";
+        // if(strpos($baseurl,'https')){
+        //     $baseurl =  str_replace('https://app.','',$baseurl);
+        //  }else{
+        //    $baseurl=  str_replace('http://app.','',$baseurl);
+        //  }
         $event = Event::findOrFail( ($event_id));
         $event->name = trim($req->name);
         $slug =  str_replace(" ","-",strtolower($req->slug));
