@@ -103,7 +103,7 @@
         z-index: 1;
         top: 0;
         right: 0;
-        background-color: #111111d4;
+        background-color: #111111db;
         overflow-x: hidden;
         transition: 0.5s;
         padding-top: 0;
@@ -137,6 +137,12 @@
         font-size: 50px;
         margin-left: 50px;
         color: #d3d2d2 !important;
+    }
+
+    @media screen and (max-width: 1024px) {
+        .sidenav {
+            overflow-y: auto;
+        }
     }
     
 </style> 

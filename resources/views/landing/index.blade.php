@@ -91,7 +91,7 @@
         background: #fff;
         border-radius: 30px;
         width: 360px;
-        font-size: 38px;
+        font-size: 30px;
         line-height: 50px;
         margin: 0 auto;
         text-transform: uppercase;
@@ -285,7 +285,7 @@
       letter-spacing: 1px;
       font-weight: bold;
       border: 2px solid #fff;
-      font-size: 25px;
+      font-size: 20px;
       padding: 12px 40px;
       margin-top: 50px;
     }
