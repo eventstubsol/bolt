@@ -130,7 +130,7 @@ class EventManageController extends Controller
         // return  $slug.'.'.str_replace('https://','',$baseurl).'';
         if($req->has('slug')){
             $event->slug = str_replace(" ","-",strtolower($req->slug));
-            $event->link = $slug.'.'.str_replace('https://','',$baseurl).'';
+            $event->link = $slug.'.'. $baseurl .'';
         }
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
