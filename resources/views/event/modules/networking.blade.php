@@ -249,7 +249,7 @@
                             {{--  --}}
                             @if(isset($participants[$i]) && isset($participants[$i]->user))
                                 <li>
-                                    <img src="/assets/images/chair-svg.svg" />
+                                    <img src="{{asset("/assets/images/chair-svg.svg")}}" />
                                     <div class="chairBooking">
                                         <span>
                                             @if(isset($participants[$i]->user->profileImage))
@@ -265,13 +265,13 @@
                                     </div>
                                 </li>
                             @else
-                                <li><img src="/assets/images/chair-svg.svg" /></li>
+                                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
                             @endif 
 
                             {{--  --}}
                             @if(isset($participants[$i+4]) && isset($participants[$i+4]->user))
                                 <li>
-                                    <img src="/assets/images/chair-svg.svg" />
+                                    <img src="{{asset("/assets/images/chair-svg.svg")}}" />
                                     <div class="chairBooking">
                                         <span>
                                             @if(isset($participants[$i+4]->user->profileImage))
@@ -286,7 +286,7 @@
                                     </div>
                                 </li>
                             @elseif($i+4 < $table->seats)
-                                <li><img src="/assets/images/chair-svg.svg" /></li>
+                                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
                             @endif 
                         @endif 
                     </ul>
@@ -313,7 +313,7 @@
             </div>
             <ul class="tob_Chair">
                 <li>
-                    <img src="/assets/images/chair-svg.svg" />
+                    <img src="{{asset("/assets/images/chair-svg.svg")}}" />
                     <div class="chairBooking">
                         <span>
                             <img src="/assets/images/user_img.png" alt="">
@@ -322,7 +322,7 @@
                     </div>
                 </li>
                 <li>
-                    <img src="/assets/images/chair-svg.svg" />
+                    <img src="{{asset("/assets/images/chair-svg.svg")}}" />
                     <div class="chairBooking">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#fff" class="bi bi-person" viewBox="0 0 16 16">
@@ -334,8 +334,8 @@
                 </li>
             </ul>
             <ul class="bottom_Chair">
-                <li><img src="/assets/images/chair-svg.svg" /></li>
-                <li><img src="/assets/images/chair-svg.svg" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
             </ul>
         </div>
         <div class="table_Box">
@@ -358,7 +358,7 @@
             </div>
             <ul class="tob_Chair">
                 <li>
-                    <img src="/assets/images/chair-svg.svg" />
+                    <img src="{{asset("/assets/images/chair-svg.svg")}}" />
                     <div class="chairBooking">
                         <span>
                             <img src="/assets/images/user_img.png" alt="">
@@ -368,7 +368,7 @@
                 </li>
             </ul>
             <ul class="bottom_Chair">
-                <li><img src="/assets/images/chair-svg.svg" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
             </ul>
         </div>
         <div class="table_Box">
@@ -390,16 +390,16 @@
                 </div>
             </div>
             <ul class="tob_Chair">
-                <li><img src="/assets/images/chair-svg.svg" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
             </ul>
             <ul class="right_Chair">
-                <li><img src="/assets/images/chair-svg.svg" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
             </ul>
             <ul class="bottom_Chair">
-                <li><img src="/assets/images/chair-svg.svg" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
             </ul>
             <ul class="left_Chair">
-                <li><img src="/assets/images/chair-svg.svg" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
             </ul>
         </div>
         <div class="table_Box">
@@ -421,18 +421,18 @@
                 </div>
             </div>
             <ul class="tob_Chair">
-                <li><img src="/assets/images/chair-svg.svg" /></li>
-                <li><img src="/assets/images/chair-svg.svg" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
             </ul>
             <ul class="right_Chair">
-                <li><img src="/assets/images/chair-svg.svg" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
             </ul>
             <ul class="bottom_Chair">
-                <li><img src="/assets/images/chair-svg.svg" /></li>
-                <li><img src="/assets/images/chair-svg.svg" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
             </ul>
             <ul class="left_Chair">
-                <li><img src="/assets/images/chair-svg.svg" /></li>
+                <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
             </ul>
         </div> --}}
     </div>

@@ -95,7 +95,7 @@
                             <h4 class="header-title mb-3">links</h4>
                             <div class="link-section">
                             @foreach($booth->links as $ids => $link) 
-                                <div class="row">
+                                <div class="row border border-primary p-2 mb-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
                                         <input type="text" value="{{$link->name}}" required  name="linknames[]" class="name-{{$ids}} form-control">
@@ -196,74 +196,57 @@
                                             @endforeach
                                         @endif
                                     </div>
-                                    <div>
-                                        <button class="btn btn-primary add-image"  data-index="{{$ids}}" >Add Background Image</button>
-                                    </div>
                                         
                                     
                                    
                                     <div  class="row positioning-{{$ids}} col-md-12" >
                                     
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="top">top</label>
-                                        <input value="{{$link->top}}" type="number" step="any" required  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control top-{{$ids}}">
+                                        <input value="{{$link->top}}" type="hidden" step="any" required  name="top[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control top-{{$ids}}">
+                                        <input value="{{$link->left}}" type="hidden" step="any" required  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control left-{{$ids}}">
+                                        <input value="{{$link->width}}" type="hidden" step="any" required  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control width-{{$ids}}">
+                                        <input value="{{$link->height}}" type="hidden" step="any" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control height-{{$ids}}">
                                     </div>
-                                    
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">left</label>
-                                        <input value="{{$link->left}}" type="number" step="any" required  name="left[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control left-{{$ids}}">
-                                    </div>
-                                    
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">width</label>
-                                        <input value="{{$link->width}}" type="number" step="any" required  name="width[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control width-{{$ids}}">
-                                    </div>
-
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">height</label>
-                                        <input value="{{$link->height}}" type="number" step="any" required  name="height[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control height-{{$ids}}">
-                                    </div>
-                                    <div  class="form-group mb-3 col-md-3">
+                                    {{-- <div  class="form-group mb-3 col-md-3">
                                         <label for="pos">Perspective Type</label>
                                         <select name="rotationtype[]" data-index="{{$ids}}" class="pers pos pos-{{$ids}} form-control" id="">
                                             <option value="">None</option>
                                             <option @if($link->rotationtype=="X") selected @endif value="X">X</option>
                                             <option @if($link->rotationtype=="Y") selected @endif value="Y">Y</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     
-                                    <div @if(!($link->rotationtype)) style="display:none" @endif  class="pr-{{$ids}} form-group mb-3 col-md-3">
+                                    {{-- <div @if(!($link->rotationtype)) style="display:none" @endif  class="pr-{{$ids}} form-group mb-3 col-md-3">
                                             <label for="pos">Perspective</label>
                                             <input value="{{$link->perspective}}" type="number" step="any"  name="perspective[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
                                     </div>
                                     <div @if(!($link->rotationtype)) style="display:none" @endif  class="rt-{{$ids}} form-group mb-3 col-md-3">
                                         <label for="pos">Rotation</label>
                                         <input value="{{$link->rotation}}" type="number" step="any"  name="rotation[]" data-index="{{$ids}}" class="pos pos-{{$ids}} form-control">
-                                    </div>
-                                     <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
+                                    </div> --}}
+                                     {{-- <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button> --}}
 
-                                    </div>
-
-
+                                    {{-- </div> --}}
 
 
 
 
+                                    <button class="btn btn-primary add-image"  data-index="{{$ids}}" >Add Background Image</button>
 
 
 
 
 
-                                    <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+
+                                    <button class="btn btn-danger remove-link ml-2">Remove</button>
                                 </div>
                               @endforeach
                              
 
                             </div>
-                            <div>
+                            <div class="ml-2 mb-2">
                                 <button class="btn btn-primary">Save</button>
-                                <button class="btn btn-primary" id="add-link">Add links</button>
-                                <button class="btn btn-primary action_items">Save</button>
+                                <button class="btn btn-primary ml-2 " id="add-link">Add links</button>
+                                <button class="btn btn-primary ml-2  action_items">Save</button>
 
                             </div>
 
@@ -663,7 +646,7 @@
         
 
         $(".link-section").append(`
-                                <div class="row">
+                                <div class="row  border border-primary p-2 mb-2">
                                     <div class="form-group mb-3 col-md-4">
                                         <label for="linktitles">Name</label>
                                         <input type="text" required  name="linknames[]" class="name-${n} form-control">
@@ -755,53 +738,19 @@
 
                                     <div class="background_images_${n} row col-md-12">
                                     </div>
-                                    <div>
-                                        <button class="btn btn-primary add-image"  data-index="${n}"  >Add Background Image</button>
-                                    </div>
-
-
+                                    
+                                    
                                     <div  class="row positioning-${n} col-md-12" >
-                                    
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="top">top</label>
-                                        <input type="number" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
+                                        
+                                        <input type="hidden" step="any" required value='0'  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
+                                        <input type="hidden" step="any" required value='0'  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
+                                        <input type="hidden" step="any" required value="5"  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
+                                        <input type="hidden" step="any" required value="5"  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
                                     </div>
-                                    
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">left</label>
-                                        <input type="number" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
-                                    </div>
-                                    
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">width</label>
-                                        <input type="number" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
-                                    </div>
-
-                                    <div style="visibility: hidden" class="form-group mb-3 col-md-3">
-                                        <label for="pos">height</label>
-                                        <input type="number" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
-                                    </div>
-                                    <div  class="form-group mb-3 col-md-3">
-                                        <label for="pos">Perspective Type</label>
-                                        <select name="rotationtype[]" data-index="${n}" class="pers pos pos-${n} form-control">
-                                            <option value="">None</option>
-                                            <option value="X">X</option>
-                                            <option value="Y">Y</option>
-                                        </select>
-                                    </div>
-                                    <div style="display: none;"   class="pr-${n} form-group mb-3 col-md-3">
-                                        <label for="pos">Perspective</label>
-                                        <input  type="number" step="any"   name="perspective[]" data-index="${n}" class="pos pos-${n} form-control">
-                                    </div>
-                                    <div  style="display: none;"  class="rt-${n} form-group mb-3 col-md-3">
-                                        <label for="pos">Rotation</label>
-                                        <input  type="number" step="any"   name="rotation[]" data-index="${n}" class="pos pos-${n} form-control">
-                                    </div>
-
-                                    <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
-
-                                    </div>
-                                        <button class="btn btn-danger mt-2 mb-4 remove-link">Remove</button>
+                                        
+                                        
+                                        <button class="btn btn-primary add-image"  data-index="${n}"  >Add Background Image</button>
+                                        <button class="btn btn-danger ml-2 remove-link">Remove</button>
                                     </div>`);
             bindRemoveButton();
         n++;

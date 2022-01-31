@@ -91,6 +91,7 @@ class MenuController extends Controller
     {
         // dd($request->all());
         $to = '';
+        $url = '';
         switch($request->type){
             case "session_room": 
                 $to = $request->rooms;
@@ -137,6 +138,10 @@ class MenuController extends Controller
             case "social_wall":
                 $to = "social_wall";
                 break;
+            case "photobooth":
+                $to = $request->capture_link;
+                $url = $request->gallery_link;
+                break;
         }
         $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
        
@@ -148,6 +153,7 @@ class MenuController extends Controller
         $menu->parent_id = 0;
         $menu->position = $positionArr[0]->position ? $positionArr[0]->position : 0 ;
         $menu->link_type = $request->type;
+        $menu->url = $url;
         if($request->icon === 'custom'){
             $menu->iClass =  env("AWS_URL") . $request->c_icon;
         }else{
@@ -161,6 +167,7 @@ class MenuController extends Controller
     {
         // dd($request->all());
         $to = '';
+        $url = '';
         switch($request->type){
             case "session_room": 
                 $to = $request->rooms;
@@ -208,6 +215,12 @@ class MenuController extends Controller
             case "social_wall":
                 $to = "social_wall";
                 break;
+            case "photobooth":
+                $to = $request->capture_link;
+                $url = $request->gallery_link;
+                break;
+
+
         }
         $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
         $menu = new Menu;
@@ -216,6 +229,8 @@ class MenuController extends Controller
         $menu->event_id = $id;
         $menu->type = "footer";
         $menu->position = $positionArr[0]->position ? $positionArr[0]->position : 0 ;
+        $menu->url = $url;
+      
         if($request->has("isChild") && $request->isChild){
             $menu->parent_id = $request->parent_id ;
         }
@@ -282,6 +297,8 @@ class MenuController extends Controller
     {
            // dd($request->all());
            $to = '';
+           $url = '';
+
            switch($request->type){
                case "session_room": 
                    $to = $request->rooms;
@@ -328,6 +345,10 @@ class MenuController extends Controller
                 case "modal":
                     $to = $request->modals;
                     break;
+                case "photobooth":
+                    $to = $request->capture_link;
+                    $url = $request->gallery_link;
+                    break;
            }
            $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
           
@@ -335,7 +356,9 @@ class MenuController extends Controller
            $menu->link = $to;
            $menu->link_type = $request->type;
            $menu->iClass = $request->icon;
+           
            $menu->save();
+
            // dd($menu);
            return redirect(route("eventee.menu",$id));
     }
@@ -391,6 +414,7 @@ class MenuController extends Controller
                     break;
            }
            $positionArr = \DB::SELECT("SELECT MAX(position) as position From menus where type = 'nav' ");
+           $menu->url = $url;
           
            $menu->name = $request->name;
            $menu->link = $to;
