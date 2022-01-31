@@ -12,6 +12,7 @@ use App\ArchiveVideos;
 use App\UserConnection;
 use App\sessionRooms;
 use App\Contact;
+use App\Template;
 use App\Event;
 use App\Link;
 use App\Leaderboard;
@@ -1583,4 +1584,12 @@ function getDomain($event_id){
     else{
         return $event->domain;
     }
+}
+
+function CreateTemplate($event_id){
+    $template = new Template;
+    $template->event_id = $event_id;
+    $template->subject = null;
+    $template->message = null;
+    $template->save();
 }

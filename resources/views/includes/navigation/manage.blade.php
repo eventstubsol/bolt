@@ -69,6 +69,9 @@
             <li>
                 <a href="{{ route("eventee.mail.create",['id'=>$id]) }}">New Mail</a>
             </li>
+            <li>
+                <a href="{{ route("eventee.mail.template",['id'=>$id]) }}">Manage Template</a>
+            </li>
         </ul>
     </div>
 </li>

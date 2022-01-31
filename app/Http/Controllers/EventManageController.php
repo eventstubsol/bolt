@@ -126,10 +126,12 @@ class EventManageController extends Controller
         }
         $event = Event::findOrFail( ($event_id));
         $event->name = trim($req->name);
-        $slug =str_replace(" ","-",strtolower($req->event_slug));
+        $slug =  str_replace(" ","-",strtolower($req->slug));
         // return  $slug.'.'.str_replace('https://','',$baseurl).'';
-        // $event->slug = str_replace(" ","-",strtolower($req->event_slug));
-        // $event->link = $slug.'.'.str_replace('https://','',$baseurl).'';
+        if($req->has('slug')){
+            $event->slug = str_replace(" ","-",strtolower($req->slug));
+            $event->link = $slug.'.'.str_replace('https://','',$baseurl).'';
+        }
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
         $event->timezone = $req->timezone;
