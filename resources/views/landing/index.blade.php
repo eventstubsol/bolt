@@ -167,6 +167,14 @@
       .speaker_block h5::after {
         display: none;
       }
+
+      .scedule h5::before {
+        display: none;
+      }
+
+      .scedule h5::after {
+        display: none;
+      }
     }
 
     @media screen and (max-width: 767px) {
@@ -205,6 +213,19 @@
       h4 span {
         font-size: 23px;
       }
+
+      .nav-tabs .nav-link{
+        margin-bottom: 15px;
+      }
+
+      .img_box{
+        display: none;
+      }
+
+      img.bigBanner {
+        height: 650px;
+        object-fit: cover;
+      }
       
     }
 
@@ -215,6 +236,18 @@
       .regBox{
         padding: 20px !important;
       }
+
+      .img_box{
+        display: none;
+        
+      }
+      img.bigBanner {
+        height: 650px;
+      }
+
+      .speakerbox {
+        width: 290px;
+      }
     }
 
     .img_box{
@@ -222,12 +255,13 @@
       width: 310px;
       height: 315px;
       border-radius: 50px;
+      border: 5px solid #fff;
     }
 
     .img_box img{
-      border-radius: 50px;
+      border-radius: 30px;
       height: 315px;
-      object-fit: fill;
+      object-fit: cover;
       width: 100%;
     }
 
@@ -322,6 +356,7 @@
     border-radius: 50px;
     margin-bottom: 20px;
     overflow: hidden;
+    border: 5px solid #fff;
   }
 
   .speakerbox .boxBg img{
@@ -337,9 +372,20 @@
   .register_block{
     background: url("{{ assetUrl($landing->banner_image) }}") no-repeat left top;
     background-size: cover;
-    padding: 155px 0 50px;
-    min-height: 1080px;
+    padding: 100px 0 50px;
+    min-height: 780px;
     position: relative;
+  }
+
+  .register_block:after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: url("assets/images/landing/register_bg.png") no-repeat left top;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .registerLogo{
@@ -350,9 +396,11 @@
 
   .regBox{
     border: 1px solid #fff;
-    background: #515151c4;
+    background: #47474787;
     padding: 50px;
     border-radius: 40px;
+    position: relative;
+    z-index: 2;
   }
 
   .regBox h2{
@@ -384,7 +432,171 @@
     margin: 0 auto;
     display: block;
   }
+
+  .scedule{
+    background: url("assets/images/landing/scedule_bg.jpg") no-repeat left top;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0 100px;
+    min-height: 740px;
+  }
+
+  .scedule h5{
+      text-align: center;
+      color: #fff;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 55px;
+      position: relative;
+      letter-spacing: 3px; 
+      margin-bottom: 80px;
+    }
+
+  .scedule h5:before{
+    content: "";
+    background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
+    width: 263px;
+    height: 33px;
+    position: absolute;
+    top: 20px;
+    left: -50rem;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  .scedule h5:after{
+    content: "";
+    background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
+    width: 263px;
+    height: 33px;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: -50rem;
+    margin: 0 auto;
+  }
+  .nav-tabs{
+    border: inherit;
+  }
+  .nav-tabs .nav-link{
+    border-radius: 50px;
+    border: 4px solid #fff;
+    padding: 10px 40px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 500;
+    margin-right: 20px;
+  }
+  .nav-tabs .nav-item:last-child .nav-link{
+    margin-right: 0px;
+  }
+  .nav-tabs .nav-link.active {
+    color: #18333c;
+    background-color: #fff;
+  }
+  .nav-tabs .nav-link:hover{
+    color: #18333c;
+    background-color: #fff;
+  }
+
+  .tab-pane h2{
+    background: #fff;
+    display: inline-block;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 7px 15px;
+    margin: 20px 0;
+  }
+
+  .tabSec .nav-item{
+    margin: 25px 15px 20px 0;
+  }
+
+  .tabSec .nav-item:last-child{
+    margin-right: 0;
+  }
+
+  .tabSec .nav-item .nav-link{
+    margin-right: 0px;
+    display: inline-block;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 3px 15px;
+    border-color: #fff;
+    border: 2px solid #fff;
+  }
+
+  .tab-pane .descUl{
     
+  }
+
+  
+
+  .tab-pane .descUl .timeline-sm-date{
+    background: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 400;
+    border-radius: 20px;
+    padding: 7px 15px;
+    list-style: none;
+    width: 140px;
+    margin: 20px 30px 0 0;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .tab-pane .descUl .timeline-sm-date:before{
+    content: "";
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    position: absolute;
+    right: -46px;
+    top: 9px;
+    border-radius: 100%;
+  }
+
+  .desc_block{
+    background: #fff;
+    border-radius: 25px;
+    color: #18333c;
+    padding: 30px 40px;
+    position: relative;
+    margin-left: 40px;
+  }
+
+  .desc_block:after{
+    content: "";
+    width: 2px;
+    height: 100%;
+    background: #fff;
+    position: absolute;
+    left: -32px;
+    top: 0;
+  }
+
+  .desc_block h3{
+    color: #18333c;
+    font-size: 13px;
+  }
+  .desc_block p{
+    color: #18333c;
+    font-size: 13px;
+    text-align: left;
+    margin: 0 0 20px;
+  }
+  .desc_block p:last-child{
+    margin: 0;
+  }
+  
+
 </style>
 </head>
 <body>
@@ -433,6 +645,9 @@
 
     </div>
 </div>
+@php
+  $main_event = $event;
+@endphp
 <!-- Home page end -->
 
 @if($landing->speaker_status == 1)
@@ -461,9 +676,114 @@
   </div>
   
 </div>
-<!-- Speaker page End -->
 
 @endif
+<!-- Speaker page End -->
+
+<!-- Scedule page Start -->
+
+@php
+  $lastDate = false;
+  $i = 0;
+  $dates = []; 
+      foreach($schedule as $room => $scheduleForRoom){
+          foreach ($scheduleForRoom as $id => $event){
+              if($lastDate != $event['start_date']['m']){
+                  $lastDate = $event['start_date']['m'];
+              }
+              if($event['type']!=="PRIVATE_SESSION"){
+                  $event['id'] = $id;
+                  $dates[$lastDate][$room][] = $event;
+               }
+
+          }
+      }
+@endphp
+
+<div class="scedule">
+  <div>
+    <h5>Event Schedule</h5>
+
+    <div class="container">
+      {{-- Date Pills --}}
+      <ul class="nav nav-tabs justify-content-between" id="myTab" role="tablist">
+        @foreach($dates as $date => $room)
+          @php
+              $i++;
+          @endphp
+          <li class="nav-item" role="presentation">
+            <a class="nav-link @if($i === 1) active @endif"  data-toggle="tab" href="#sch-{{$i}}" role="tab" aria-controls="home"  aria-expanded="{{ $i === 1 ? 'true' : 'false' }}" aria-selected="{{ $i === 1 ? 'true' : 'false' }}">{{ $date }}</a>
+          </li>
+        @endforeach
+      </ul>
+      @php
+          $i = 0;
+      @endphp
+      {{-- Tab For Each Date --}}
+      <div class="tab-content">
+        @foreach($dates as $date => $rooms)
+          @php
+              $i++;
+          @endphp
+          <div class="tab-pane fade {{ $i === 1 ? "active show" : "" }}" id="sch-{{$i}}" role="tabpanel" >
+            @php
+                $j = 0;
+            @endphp
+            {{-- Room Name Pills --}}
+            <ul class="nav nav-tabs tabSec" id="myTab" role="tablist">
+              @foreach($rooms as $room => $events)
+                @php
+                  $j++;
+                @endphp
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link @if($j === 1) active @endif"  data-toggle="tab" href="#sch-{{$i}}-{{$j}}" role="tab" aria-controls="home" aria-expanded="{{ $j === 1 ? 'true' : 'false' }}" aria-selected="{{ $j === 1 ? 'true' : 'false' }}">{{$room}}</a>
+                </li>
+              @endforeach
+                
+            </ul>
+            
+            @php
+              $j = 0;
+            @endphp
+            {{-- Tab For Each Room --}}
+            <div class="tab-content" >
+              @foreach($rooms as $room => $events)
+                @php
+                    $j++;
+                @endphp
+                <div class="tab-pane fade show active" id="sch-{{$i}}-{{$j}}" role="tabpanel" aria-labelledby="chat1-tab">
+                  <div class="d-flex">
+                    <ul class="list-unstyled timeline-sm descUl"> 
+                      <li class="timeline-sm-item d-flex align-items-start">
+                          <div class="d-flex flex-column">
+                            <span class="timeline-sm-date">
+                                {{ $event['start_date']['dts'] }} - {{ $event['start_date']['dte'] }}
+                            </span>
+                          </div>
+                          <div @if($event['status'] === 1) @endif class="desc_block"> 
+                            <h3 class="">{{ $event['name'] }}</h3>
+                            <p class="">{!! $event['description'] !!}</p>
+                          </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+              @endforeach
+            </div>
+          </div>
+        @endforeach
+      </div>
+    </div>
+  </div>
+</div>
+
+@php
+  $event  = $main_event;
+@endphp
+<!-- Scedule page End -->
+
+
 @if (\Session::has('message'))
     <script>
       showMessage(`User Created Succesfully`,'success');
@@ -471,9 +791,9 @@
 @endif
 <!-- Register page Start -->
 <div id="regInit" class="register_block">
-  <!-- <div class="registerLogo">
+  {{-- <!-- <div class="registerLogo">
   <img src="{{ assetUrl(getFieldId('logo',$event->id)) }}" alt="">
-  </div> -->
+  </div> --> --}}
   <div class="row justify-content-lg-end align-items-center pr-lg-5">
     <div class="col-lg-5">
       <div class="regBox">
@@ -491,7 +811,7 @@
                   @case("email")
                   @case("tel")
                           <div class="form-group">
-                              <label class="text-white" for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label>
+                              <!-- <label class="text-white" for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label> -->
                               <input @if($field->required) required @endif class="form-control" type="{{ $struct->type }}" placeholder="{{ $field->placeholder ?? $struct->label
                               }}" name="{{ $struct->field }}">
                           </div>
@@ -499,7 +819,7 @@
                       @break
                   @case("country")
                           <div class="form-group">
-                              <label class="text-white" for="country" >{{ $field->placeholder ?? $struct->label }}</label>
+                              <!-- <label class="text-white" for="country" >{{ $field->placeholder ?? $struct->label }}</label> -->
                               <select id="country" class="form-control" name="country">
                                   <option value="Afganistan">Afghanistan</option>
                                   <option value="Albania">Albania</option>
@@ -753,7 +1073,7 @@
   
                   @case("image")
                       <div class="image-uploader profilepic">
-                          <label class="mb-3 text-white" for="images">{{ $field->placeholder }}</label>
+                          <!-- <label class="mb-3 text-white" for="images">{{ $field->placeholder }}</label> -->
                           <input type="hidden" name="profileImage" class="upload_input"  >
                           <input type="file" data-name="profileImage" data-plugins="dropify" data-type="image" />
                       </div>
@@ -768,7 +1088,7 @@
                           @endphp
                           @if(count($options))
                               <div class="form-group mb-3 ">
-                                  <label for="type">{{ $field->placeholder }}</label>
+                                  <!-- <label for="type">{{ $field->placeholder }}</label> -->
                                   <select  @if($field->required && count($options)) required @endif  class="form-control"  name="subtype">
                                       <option value="">Select {{$field->placeholder}}</option>
                                       @foreach($options  as $type)
@@ -784,7 +1104,7 @@
                               $options = explode(",",$struct->options);
                           @endphp
                           <div class="form-group mb-3 ">
-                              <label for="type">{{ $struct->label }}</label>
+                              <!-- <label for="type">{{ $struct->label }}</label> -->
                               <select  @if($field->required) required @endif  class="form-control"  name="{{$struct->field}}">
                                   <option value="">Select {{$struct->label}}</option>
                                   @foreach($options  as $type)

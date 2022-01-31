@@ -52,8 +52,10 @@ $event = App\Event::findOrFail($id);
 <div class="row">
     <div class="col-12">
         <div class="card" style="position: relative;" >
-            Visit Page: 
-            <a href="{{ getDomain($id) }}/event#lobby" target="_blank">here</a>
+            <div class="d-flex align-items-center justify-content-between p-3">
+                <h5>Visit Page: </h5>
+                <a class="btn btn-primary" href="{{ getDomain($id) }}/event#lobby" target="_blank">here</a>
+            </div>
             <div  id="container" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
                     <img src="{{ assetUrl(getFieldId('main_lobby_image',$event_id)) }}" style="min-width:100%" />
@@ -353,7 +355,7 @@ $event = App\Event::findOrFail($id);
         
         $(".add-image").unbind("click").on("click", addImage);
 
-        $(".addflyin").on("click",addFlyIn);
+        $(".addflyin").unbind("click").on("click",addFlyIn);
         
 
         bindRemoveButton();
@@ -731,15 +733,6 @@ $event = App\Event::findOrFail($id);
                                                 <input type="hidden" name="flyin[]" class="upload_input" >
                                                 <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video"  />
                                             </div>
-                                        </div>
-                                        <br />
-                                        <div class="col-md-12 flyin ">
-                                            <div style="display:none" class="image-uploader flyin-${n}">
-                                                <label class="mb-3" for="images">Fly In Video</label>
-                                                <input type="hidden" name="flyin[]" class="upload_input" >
-                                                <input type="file" data-name="flyin[]" data-plugins="dropify" data-type="video"  />
-                                            </div>
-                                           
                                         </div>
                                    
 

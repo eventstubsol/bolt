@@ -649,9 +649,9 @@ $user = Auth::user();
     {{-- <div class="loader"></div> --}}
     
     <div class="loader loaderSection ">
-        <div class="loader-logo">
+        <!-- <div class="loader-logo">
             <img src="{{ assetUrl(getFieldId('logo',$event_id)) }}" alt="">
-        </div>
+        </div> -->
         <img  src="{{ assetUrl($loader->load_class) }}" class="w-25 mt-5" alt="">
     </div>
     @php
@@ -763,7 +763,7 @@ $user = Auth::user();
     @if(isset($chat_app))
         @include("event.modules.chat")
     @endif
-    {{-- @include("event.modules.networking") --}}
+    @include("event.modules.networking")
 
     @include("event.modules.Confirmation")
 
@@ -861,7 +861,7 @@ $user = Auth::user();
             addParticipant: "{{route('addParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
             removeParicipant: "{{route('removeParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
             updateLounge: "{{route('updateLounge',['subdomain'=>$event_name])}}",
-            leaderboard: "{{ route('leaderboard',['subdomain'=>$event_name,'id'=>$event_id]) }}",
+            leaderboard: "{{ route('leaderboard',['id'=>$event_id,'subdomain'=>$event_name]) }}",
             token: "{{ csrf_token() }}",
             trackEvent: "{{ route('trackEvent') }}",
             getswagBag: "{{ route('getSwagBag') }}",

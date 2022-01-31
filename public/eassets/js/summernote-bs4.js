@@ -10137,7 +10137,7 @@ var ui_ui = function ui(editorOptions) {
 
         if (options.tooltip) {
           $node.find('.note-color-btn').tooltip({
-            container: options.container || editorOptions.container,
+            // container: options.container || editorOptions.container,
             trigger: 'hover',
             placement: 'bottom'
           });
@@ -10152,12 +10152,12 @@ var ui_ui = function ui(editorOptions) {
             'aria-label': options.tooltip
           }).on('click', function (e) {
             external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()(e.currentTarget).tooltip('hide');
+          })
+          .tooltip({
+            container: options.container || editorOptions.container,
+            trigger: 'hover',
+            placement: 'bottom'
           });
-          // .tooltip({
-          //   container: options.container || editorOptions.container,
-          //   trigger: 'hover',
-          //   placement: 'bottom'
-          // })
           
         }
 

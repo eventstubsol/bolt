@@ -961,13 +961,15 @@ class EventController extends Controller
         $landing = LandingPage::where('event_id',$event->id)->first();
         $speakers = LandingSpeaker::where('page_id',$landing->id)->get();
         $form = Form::where('event_id',$event->id)->where('user_type','attendee')->first();
+        $schedule =  getSchedule($event->id);
+        // dd($event->id);
         if(isset($form)){
             $form->load("fields.formStruct");
-            return view("landing.index",compact('event','landing','speakers','form'));
+            return view("landing.index",compact(['event','landing','speakers','form','schedule']));
         }
         else{
             $form = null;
-            return view("landing.index",compact('event','landing','speakers','form'));
+            return view("landing.index",compact(['event','landing','speakers','form','schedule']));
         }
     }
     public function sendSessionNotifications()

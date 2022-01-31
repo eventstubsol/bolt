@@ -121,6 +121,14 @@ Update Menu
                             </select>
                         </div>
 
+                         {{-- Photobooth  --}}
+                         <div @if($menu->link_type!=="photobooth") style="display: none;" @endif class="image-uploader photobooth ph form-group mb-3 col-md-4">
+                            <label for="phb">Photobooth Capture Link</label>
+                            <input @if($menu->link_type==="photobooth") value="{{$menu->link}}" @endif type="text"   name="capture_link" class="form-control">
+                            <label for="phb">Photobooth Gallery Link</label>
+                            <input @if($menu->link_type==="photobooth") value="{{$menu->url}}" @endif type="text"   name="gallery_link" class="form-control">
+                        </div>
+
                     <!-- To Link End -->
 
                     <!-- Icon Select Start  -->
@@ -311,6 +319,7 @@ Update Menu
         $(".chat_group").hide();
         $(".custom_page").hide();
         $(".modals").hide();
+        $(".photobooth").hide();
 
 
         switch(selectbox.val()){
@@ -343,6 +352,9 @@ Update Menu
                 break;
             case "modal":
                 $(".modals").show();
+                break;
+            case "photobooth":
+                $(".photobooth").show();
                 break;
    
         }
