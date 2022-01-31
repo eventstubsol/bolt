@@ -145,6 +145,14 @@ Create Menu
                             </label>
                             <input type="text" name="custom_page" class="form-control">
                         </div>
+                        
+                        {{-- Photobooth  --}}
+                        <div  style="display: none;"  class="image-uploader photobooth form-group mb-3 col-md-4">
+                            <label for="phb">Photobooth Capture Link</label>
+                            <input  type="text"   name="capture_link" class="form-control">
+                            <label for="phb">Photobooth Gallery Link</label>
+                            <input  type="text"   name="gallery_link" class="form-control">
+                        </div>
 
                     <!-- To Link End -->
 
@@ -274,6 +282,7 @@ Create Menu
         $(".chat_group").hide();
         $(".custom_page").hide();
         $(".modals").hide();
+        $(".photobooth").hide();
 
         switch(selectbox.val()){
             case "session_room":
@@ -305,6 +314,9 @@ Create Menu
                 break;
             case "modal":
                 $(".modals").show();
+                break;
+            case "photobooth":
+                $(".photobooth").show();
                 break;
    
         }
