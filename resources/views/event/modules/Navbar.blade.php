@@ -95,6 +95,48 @@
     /* .menu-col .menu{
         background:{{ $event->primary_color }};
     } */
+
+    .sidenav {
+        height: 0;
+        width: 100%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        background-color: #111111f5;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 0;
+        overflow-y: hidden;
+    }
+    .sidenav.w-22{
+        height: 100vh;
+        padding-top: 50px;
+    }
+
+    .sidenav a {
+        margin-bottom: 30px;
+        text-decoration: none;
+        text-align:center;
+        font-size: 20px;
+        color: #c5c5c5 !important;
+        display: block;
+        transition: 0.3s;
+        font-weight:300;
+    }
+
+    .sidenav a:hover {
+        color: #fff !important;
+    }
+
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0px;
+        right: 25px;
+        font-size: 50px;
+        margin-left: 50px;
+        color: #d3d2d2 !important;
+    }
     
 </style> 
 <script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
@@ -112,7 +154,7 @@
             $menus = App\Menu::where('type','nav')->where('event_id',$event_id)->where('parent_id','0')->where('status','1')->orderBy('position','asc')->get();
             
         @endphp
-        <div class="col-2 col-md-8 fluid-col menu-col">
+        <div class="col-2 col-md-7 fluid-col menu-col">
            <ul class="menu">
                @foreach($menus as $menu)
                 @if($menu->name === 'lounge')      
@@ -185,7 +227,7 @@
         {{-- <div class=" col-md-2 fluid-col ">
             
         </div> --}}
-        <div style="display:flex; align-items:center" class="col-5 col-md-2 fluid-col profile-col">
+        <div style="display:flex; align-items:center;justify-content: space-between;" class="col-5 col-md-3 fluid-col profile-col">
            <div class="dropdown notification-list topbar-dropdown">
                <a onclick="clearNoteAll()" class="nav-link dropdown-toggle waves-effect waves-light" id="dropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                    <i class="fe-bell noti-icon" ></i>
@@ -279,7 +321,29 @@
                 </div>
                 @endguest
             </div>
+
+            <div class="">
+                <button class="btn" id="ham-bar" class="menu-icon" onclick="openNav()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#111A34" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                </button>
+                <div id="mySidenav" class="sidenav" data-backdrop='true'>
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+                    <a href="#home" onclick="closeNav()">Home</a>
+                    <a href="#developing" onclick="closeNav()">Home</a>
+                    <a href="#word" onclick="closeNav()">Web Home</a>
+                    <a href="#digital" onclick="closeNav()">Digital Home</a>
+                    <a href="#about" onclick="closeNav()">About</a>
+                    <a href="#virtual" onclick="closeNav()">Home</a>
+                    <a href="#partnering" onclick="closeNav()">Partnering</a>
+                    <a href="#contact" onclick="closeNav()">Conatct Us</a>
+                </div>
+            </div>
         </div>
+
+        
     </div>
 </div>
 
@@ -370,3 +434,26 @@
         });
     </script>
 
+<script>
+function openNav() {
+    $('#mySidenav').addClass('w-22');
+}
+function closeNav() {
+    $('#mySidenav').removeClass('w-22');
+}
+
+function sidebar() {
+    $('#ham-bar').click(function(e) {
+      e.stopPropagation();
+      $('#mySidenav').addClass('w-22');
+    });
+    $('#mySidenav').click(function(e) {
+      e.stopPropagation();
+    });
+    $('body,html').click(function(e) {
+      $('#mySidenav').removeClass('w-22');
+      // $('.hamburger').removeClass('open');
+    });
+}
+sidebar();
+</script>
