@@ -49,7 +49,7 @@
                             <td class="text-right" >
                                 <a href="{{ route("booth.edit", [
                                         "booth" => $booth->id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Edit"><i class="fe-edit-2" ></i></a>
                                         
                                     <button data-toggle="tooltip" data-placement="top" data-id="{{$booth->id}}" title="" data-original-title="Delete" class="btn btn-danger ml-1 delete"  type="submit"><i class="fas fa-trash-alt"></i></button>
                                 <a href="{{ route("exhibiter.edit", [

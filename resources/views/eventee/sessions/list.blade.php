@@ -54,8 +54,8 @@
                             <td class="text-right" >
                                 <a href="{{ route("eventee.sessions.edit", [
                                         "session" => $session->id,'id'=>$id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
-                                    <button data-toggle="tooltip" data-placement="top" data-id="{{$session->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Edit"><i class="fe-edit-2" ></i></a>
+                                    <button data-toggle="tooltip" title="Delete" data-id="{{$session->id}}" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
                             </td>
                         </tr>
                       @endforeach

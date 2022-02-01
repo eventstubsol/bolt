@@ -49,7 +49,7 @@
                                    
                                         {{-- <a href="{{ route('editForm',['id'=>$id,'form'=>$form->id]) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a> --}}
                                         {{-- <a href="{{ route('eventee.form.preview',$id) }}" class="btn btn-warning"><i class="far fa-eye"></i></a> --}}
-                                        <a data-id="{{ $form->id }}" data-toggle="tooltip" data-placement="top" data-original-title="Delete" class="btn btn-danger ml-1 delete"><span style="color: white"><i class="fas fa-trash"></i></span></a>
+                                        <a data-id="{{ $form->id }}" data-toggle="tooltip" title="Delete" class="btn btn-danger ml-1 delete"><span style="color: white"><i class="fas fa-trash"></i></span></a>
                                  
                                 </td>  
                             </tr>
