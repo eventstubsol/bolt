@@ -81,12 +81,11 @@ Manage Users
                             <td class="text-right">
 							    <a href="{{ route("eventee.user.information", [
                                     "id" => $id,"user_id"=>$user->id
-                                ]) }}" class="btn btn-info" ><i class="fas fa-eye"></i></a>
+                                ]) }}" class="btn btn-info" data-toggle="tooltip" title="View"><i class="fas fa-eye"></i></a>
                                 <a href="{{ route("eventee.user.edit", [
                                         "id" => $id,"user_id"=>$user->id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title=""
-                                    data-original-title="Edit"><i class="fe-edit-2"></i></a>
-                                <button onclick="deleteUser(this)" data-id="{{ $user->id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Edit"><i class="fe-edit-2"></i></a>
+                                <button onclick="deleteUser(this)" data-id="{{ $user->id }}" class="btn btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></button>
 
                             </td>
                         </tr>
