@@ -106,7 +106,7 @@
                 t = $(this);
                 let deleteUrl = '{{route("eventee.booth.destroy", ["id"=> $id , "booth" => ":id"])}}';
                 let id = t.data("id");
-                confirmDelete("Are you sure you want to DELETE Prize?","Confirm Prize Delete").then(confirmation=>{
+                confirmDelete("Are you sure you want to DELETE Booth?","Confirm Booth Delete").then(confirmation=>{
                     if(confirmation){
                         $.ajax({
                             url:deleteUrl.replace(":id", id),

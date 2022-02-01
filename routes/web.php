@@ -83,6 +83,10 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::POST('/Landing/Setting/Speaker/{id}/{page_id}','LandingController@SpeakerStore')->name('landing.settings.speaker');
     Route::get('/set/speaker/status','LandingController@setStatus')->name('landing.settings.setStatus');
 
+    //Mail Template
+    Route::get('/template/{id}','Eventee\TemplateController@index')->name('eventee.mail.template');
+    Route::POST('/template/POST/{id}','Eventee\TemplateController@store')->name('eventee.mail.template.post');
+
 
     //User Wise Report
     Route::get("User_Report/{id}","Eventee\UserReportController@index")->name('eventee.user.report');
@@ -846,6 +850,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::get("/delegates-list", "EventController@getDelegatesList")->name("delegateList");
     Route::post("/updates/check", "EventController@contentTicker")->name("contentTicker");
     Route::get("/createGroup", "EventController@createRoomGroup")->name("createGroup");
+    
+
     
 
 
