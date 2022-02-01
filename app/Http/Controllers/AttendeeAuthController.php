@@ -325,4 +325,8 @@ class AttendeeAuthController extends Controller
         return redirect(route("attendee_login",$subdomain));
         // return redirect(route("event"));
     }
+    public function thankPage($subdomain){
+         return view('thanks.index',compact('subdomain'));
+    }
+
 }

@@ -25,7 +25,7 @@ class LoungeController extends Controller
         return view("eventee.lounge.createForm")->with(compact(["id"]));
     }
 
-    public function store(LoungeFormRequest $request,$id,Request $req)
+    public function store($id,Request $request)
     {
         // if(empty($request->name)){
         //     flash("Name Field Cannot Be Left Blank")->error();
@@ -42,8 +42,8 @@ class LoungeController extends Controller
             "event_id"=>$id
         ]);
         $network->save();
-        if($req->has('logo_url')){
-            NetworkingTable::where('id',$network->id)->update(['logo'=>$req->logo_url]);
+        if($request->has('logo_url')){
+            NetworkingTable::where('id',$network->id)->update(['logo'=>$request->logo_url]);
         }
         // dd("done");
         return redirect(route("eventee.lounge.index",$id));

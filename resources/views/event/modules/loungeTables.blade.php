@@ -12,6 +12,9 @@
             <h2>Seats: <span>{{$avs}} Available<span></h2>
             {{-- <h2 class="mt-3">Seats: <span>2<span></h2> --}}
         </div>
+        <div class="for-checking">
+            <img src="https://virturo-bucket.s3.us-east-2.amazonaws.com/uploads/GW3FAJAP9242aO5oUuL2mYYXUl9qrlcVd0lxUavj.jpg" alt="">
+        </div>
         <div class="mt-0">
             <h3 class="d-flex align-items-center"> 
                 <span class="mr-2 d-none">
@@ -31,7 +34,7 @@
                 {{--  --}}
                 @if(isset($participants[$i]) && isset($participants[$i]->user))
                     <li>
-                        <img src="/assets/images/chair-svg.svg" />
+                        <img src="{{asset("/assets/images/chair-svg.svg")}}" />
                         <div class="chairBooking">
                             <span>
                                 @if(isset($participants[$i]->user->profileImage))
@@ -45,13 +48,13 @@
                         </div>
                     </li>
                 @else
-                    <li><img src="/assets/images/chair-svg.svg" /></li>
+                    <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
                 @endif 
 
                 {{--  --}}
                 @if(isset($participants[$i+4]) && isset($participants[$i+4]->user))
                     <li>
-                        <img src="/assets/images/chair-svg.svg" />
+                        <img src="{{asset("/assets/images/chair-svg.svg")}}" />
                         <div class="chairBooking">
                             <span>
                                 @if(isset($participants[$i+4]->user->profileImage))
@@ -67,7 +70,7 @@
                         </div>
                     </li>
                 @elseif($i+4 < $table->seats)
-                    <li><img src="/assets/images/chair-svg.svg" /></li>
+                    <li><img src="{{asset("/assets/images/chair-svg.svg")}}" /></li>
                 @endif 
             @endif 
         </ul>
