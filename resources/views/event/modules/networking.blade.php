@@ -149,6 +149,21 @@
         justify-content: space-evenly;
     }
 
+    .for-checking{
+        width: 100%;
+        height: 50%;
+        justify-content: center;
+        display: flex;
+        overflow: hidden;
+        border-radius: 4px;
+    }
+
+    .for-checking img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
 
 
 </style>
@@ -231,7 +246,7 @@
                         {{-- <h2 class="mt-3">Seats: <span>2<span></h2> --}}
                     </div>
                     <div class="for-checking">
-                        <img class="img-fluid" src="https://virturo-bucket.s3.us-east-2.amazonaws.com/uploads/GW3FAJAP9242aO5oUuL2mYYXUl9qrlcVd0lxUavj.jpg" alt="">
+                        <img src="https://virturo-bucket.s3.us-east-2.amazonaws.com/uploads/GW3FAJAP9242aO5oUuL2mYYXUl9qrlcVd0lxUavj.jpg" alt="">
                     </div>
                     <div class="mt-0">
                         <h3 class="d-flex align-items-center"> 
