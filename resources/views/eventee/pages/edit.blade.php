@@ -40,7 +40,7 @@ Edit Page
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 
 @endsection
-
+ 
 
 
 @section("breadcrumbs")
@@ -52,8 +52,10 @@ Edit Page
 <div class="row">
     <div class="col-12">
         <div class="card" style="position: relative;" >
-            {{-- Visit Page: 
-            <a href="/event#page/{{$page->name}}" target="_blank">here</a> --}}
+            <div class="d-flex align-items-center justify-content-between p-3">
+                <h5>Visit Page: </h5>
+                <a class="btn btn-primary" href="{{ getDomain($id) }}/event#pages/{{ $page->name }}" target="_blank">here</a>
+            </div>
             <div id="container" class="card-body">
                 {{-- Drag and Drop Visual Container --}}
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >

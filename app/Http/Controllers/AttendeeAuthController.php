@@ -269,7 +269,7 @@ class AttendeeAuthController extends Controller
             $userData->save();
         }
         flash("Registered Successfully")->success();
-        return redirect()->route('attendeeLogin',$subdomain);
+        return redirect()->route('thank.page',$subdomain);
     }
 
     public function saveRegistration(Request $request,$subdomain)
@@ -326,7 +326,8 @@ class AttendeeAuthController extends Controller
         // return redirect(route("event"));
     }
     public function thankPage($subdomain){
-         return view('thanks.index',compact('subdomain'));
+         $event = Event::where('slug',$subdomain)->first();
+         return view('thanks.index',compact('subdomain','event'));
     }
 
 }

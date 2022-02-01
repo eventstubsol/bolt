@@ -245,9 +245,11 @@
                         <h2>Seats: <span>{{$avs}} Available<span></h2>
                         {{-- <h2 class="mt-3">Seats: <span>2<span></h2> --}}
                     </div>
-                    <div class="for-checking">
-                        <img src="https://virturo-bucket.s3.us-east-2.amazonaws.com/uploads/GW3FAJAP9242aO5oUuL2mYYXUl9qrlcVd0lxUavj.jpg" alt="">
-                    </div>
+                    @if($table->logo != null)
+                        <div class="for-checking">
+                            <img src="{{ assetUrl($table->logo) }}" alt="">
+                        </div>
+                    @endif
                     <div class="mt-0">
                         <h3 class="d-flex align-items-center"> 
                             <span class="mr-2 d-none">
