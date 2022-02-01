@@ -100,6 +100,13 @@ $user = Auth::user();
             color: #fff;
         }
 
+        button.pb-button {
+            color: "{{ $event->secondary_color }}" !important;
+        }
+        .custom-theme a{
+            color: "{{ $event->secondary_color }}" !important;
+        }
+
         .tab-content .nav-justified .nav-item:nth-child(2) a {
             background: #1b9e84;
             color: #fff;

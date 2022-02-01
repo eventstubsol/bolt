@@ -93,7 +93,7 @@
         width: 360px;
         font-size: 30px;
         line-height: 50px;
-        margin: 0 auto;
+        margin: 0px auto 30px ;
         text-transform: uppercase;
         padding: 25px;
         font-family: 'Varela Round', sans-serif;
@@ -381,7 +381,7 @@
     content: "";
     width: 100%;
     height: 100%;
-    background: url("assets/images/landing/register_bg.png") no-repeat left top;
+    background: url("{{ assetUrl($landing->banner_image) }}") no-repeat left top;
     background-size: cover;
     position: absolute;
     top: 0;
@@ -620,9 +620,9 @@
          <!-- Countdown Start -->
         @else
         <br><br><br><br><br>
-          <div class="pt-5">
+          {{-- <div class="pt-5">
 
-          </div>
+          </div> --}}
         @endif
 
         <h4>{{ $event->name }}</h4>
@@ -706,7 +706,7 @@
 
     <div class="container">
       {{-- Date Pills --}}
-      <ul class="nav nav-tabs justify-content-between" id="myTab" role="tablist">
+      <ul class="nav nav-tabs " id="myTab" role="tablist">
         @foreach($dates as $date => $room)
           @php
               $i++;
