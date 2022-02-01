@@ -18,6 +18,8 @@ Thank You
 @endsection
 
 @section('form')
-    <h2>Thank you</h2>
-    <a href="{{ route('attendeeLogin',$subdomain) }}" class="btn btn-primary">Return To Login</a>
+    <div class="d-flex align-items-center flex-column">
+        <h3>Thank You, You Have Successfully Registered</h3>
+        <a href="{{ route('attendeeLogin',$subdomain) }}" class="btn btn-primary mt-2">Return To Login</a>
+    </div>
 @endsection
