@@ -751,6 +751,9 @@ Route::group($options, function () use ($options) {
     Route::post("/event/register/landing/default", "EventRegController@BasicForm")->name("attendee_register.confirmReg.defaultsave");
     Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
 
+    //thank you page
+    Route::get('/thank/you','AttendeeAuthController@thankPage')->name('thank.page');
+
     Route::get("/faq", "HomeController@faqs")->name("faq");
     Route::get("privacy-policy", "HomeController@privacyPolicy")->name("privacyPolicy");
 
