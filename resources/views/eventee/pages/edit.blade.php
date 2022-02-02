@@ -53,8 +53,8 @@ Edit Page
     <div class="col-12">
         <div class="card" style="position: relative;" >
             <div class="d-flex align-items-center justify-content-between p-3">
-                <h5>Visit Page: </h5>
-                <a class="btn btn-primary" href="{{ getDomain($id) }}/event#pages/{{ $page->name }}" target="_blank">here</a>
+                {{-- <h5>Visit Page: </h5> --}}
+                <a class="btn btn-primary" href="{{ getDomain($id) }}/event#pages/{{ $page->name }}" target="_blank">Visit Page</a>
             </div>
             <div id="container" class="card-body">
                 {{-- Drag and Drop Visual Container --}}
