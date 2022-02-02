@@ -57,8 +57,8 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $faq->question }}</td>
-                                    <td><a href="{{ route('eventee.faq.edit',['id'=>$id,'faq_id'=>$faq->id]) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                                        <button onclick="deleteFaq(this)" data-id="{{ $faq->id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button></td>
+                                    <td><a href="{{ route('eventee.faq.edit',['id'=>$id,'faq_id'=>$faq->id]) }}" class="btn btn-warning" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
+                                        <button onclick="deleteFaq(this)" data-id="{{ $faq->id }}" class="btn btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></button></td>
                                 </tr>
                             @endforeach
                         @else

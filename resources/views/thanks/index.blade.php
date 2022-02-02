@@ -20,6 +20,9 @@ Thank You
 @section('form')
     <div class="d-flex align-items-center flex-column">
         <h3>Thank You, You Have Successfully Registered</h3>
+        @if(Carbon\Carbon::now() < Carbon\Carbon::parse($event->start_date))
+            <h5>Event Starting On : {{ Carbon\Carbon::parse($event->start)->format('d-m-Y').  ' At '  .Carbon\Carbon::parse($event->start)->format('H:i')}}</h5>
+        @endif
         <a href="{{ route('attendeeLogin',$subdomain) }}" class="btn btn-primary mt-2">Return To Login</a>
     </div>
 @endsection

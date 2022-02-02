@@ -54,12 +54,12 @@
                             <td class="text-right" >
                                 <a href="{{ route("eventee.sessionrooms.edit", [
                                         "sessionroom" => $sessionroom->id,'id'=>$id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Edit"><i class="fe-edit-2" ></i></a>
                                  <a href="{{ route("eventee.duplicate", [
                                     "object" => $sessionroom ,"type"=>"session_room"
-                                ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="duplicate" data-original-title="duplicate"><i class="fe-copy" ></i></a>
+                                ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Copy"><i class="fe-copy" ></i></a>
                            
-                             <button data-toggle="tooltip" data-placement="top" data-id="{{$sessionroom->id}}" onclick="DeleteRoom(this)" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
+                             <button data-toggle="tooltip" data-placement="top" data-id="{{$sessionroom->id}}" onclick="DeleteRoom(this)" data-toggle="tooltip" title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
                             </td>
                         </tr>
                       @endforeach
