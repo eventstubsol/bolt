@@ -64,14 +64,14 @@
                             <td class="text-right" >
                                 <a href="{{ route("eventee.booth.edit", [
                                         "booth_id" => $booth->id,"id"=>$id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>   
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Edit"><i class="fe-edit-2" ></i></a>   
                              <a href="{{ route("eventee.duplicate", [
                                 "object" => $booth ,"type"=>"booth"
-                            ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="duplicate" data-original-title="duplicate"><i class="fe-copy" ></i></a>
-                                <button data-toggle="tooltip" data-placement="top" data-id="{{$booth->id}}" title="" data-original-title="Delete" class="btn btn-danger ml-1 delete"  type="submit"><i class="fas fa-trash-alt"></i></button>
+                            ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Copy"><i class="fe-copy" ></i></a>
+                                <button data-toggle="tooltip" title="Delete" data-id="{{$booth->id}}" class="btn btn-danger delete"  type="submit"><i class="fas fa-trash-alt"></i></button>
                                 <a href="{{ route("exhibiter.edit", [
                                         "booth" => $booth->id, "id"=>$id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Contents"><i class="fe-edit-2" ></i></a>
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Edit"><i class="fe-edit-2" ></i></a>
 
                             </td>
                         </tr>
