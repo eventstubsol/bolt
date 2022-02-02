@@ -912,10 +912,6 @@ button[disabled] {
   outline: none;
 }
 
-.custom-theme a {
-  color: #00a15f;
-}
-
 .custom-theme .btn-link {
   color: #00a15f;
 }
