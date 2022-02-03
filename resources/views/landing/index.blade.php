@@ -434,7 +434,7 @@
   }
 
   .scedule{
-    background: url("assets/images/landing/scedule_bg.jpg") no-repeat left top;
+    background: url({{ asset("assets/images/landing/scedule_bg.jpg") }} ) no-repeat left top;
     background-size: cover;
     display: flex;
     align-items: center;
@@ -456,7 +456,7 @@
 
   .scedule h5:before{
     content: "";
-    background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
+    background: url({{ asset("/assets/images/landing/speaker_textBorder.png") }} ) no-repeat center;
     width: 263px;
     height: 33px;
     position: absolute;
@@ -468,7 +468,7 @@
 
   .scedule h5:after{
     content: "";
-    background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
+    background: url( {{ asset("/assets/images/landing/speaker_textBorder.png") }} ) no-repeat center;
     width: 263px;
     height: 33px;
     position: absolute;
