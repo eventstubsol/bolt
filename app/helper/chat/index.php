@@ -16,7 +16,8 @@ define("CHAT_SETTINGS",[
 ]);
 define("EXTENSIONS",[
    "enabled"=>[
-       "widget"
+       "widget",
+       "polls"
    ]
 ]);
 
@@ -82,7 +83,7 @@ function createWidget($chat_app){
             ],
             "main" => [
                 "allow_add_members"=> true,
-                "allow_creating_polls"=> false,
+                "allow_creating_polls"=> true,
                 "allow_delete_groups"=> false,
                 "allow_kick_ban_members"=> false,
                 "allow_message_reactions"=> true,

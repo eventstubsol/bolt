@@ -56,6 +56,7 @@ Edit Lounge
                                     <option value="6">6</option>
                                     <option value="7">7</option>
                                     <option value="8">8</option>
+                                    <option value="16">16 (Grand Table)</option>
                                 @break
                                 @case(3)
                                     <option value="2">2</option>
@@ -65,6 +66,7 @@ Edit Lounge
                                     <option value="6">6</option>
                                     <option value="7">7</option>
                                     <option value="8">8</option>
+                                    <option value="16">16 (Grand Table)</option>
                                 @break
                                 @case(4)
                                     <option value="2">2</option>
@@ -74,6 +76,7 @@ Edit Lounge
                                     <option value="6">6</option>
                                     <option value="7">7</option>
                                     <option value="8">8</option>
+                                    <option value="16">16 (Grand Table)</option>
                                 @break
                                 @case(5)
                                     <option value="2">2</option>
@@ -83,6 +86,7 @@ Edit Lounge
                                     <option value="6">6</option>
                                     <option value="7">7</option>
                                     <option value="8">8</option>
+                                    <option value="16">16 (Grand Table)</option>
                                 @break
                                 @case(6)
                                     <option value="2">2</option>
@@ -92,6 +96,7 @@ Edit Lounge
                                     <option value="6" checked>6</option>
                                     <option value="7">7</option>
                                     <option value="8">8</option>
+                                    <option value="16">16 (Grand Table)</option>
                                 @break
                                 @case(7)
                                     <option value="2">2</option>
@@ -101,7 +106,18 @@ Edit Lounge
                                     <option value="6">6</option>
                                     <option value="7" checked>7</option>
                                     <option value="8">8</option>
-                                @break   
+                                    <option value="16">16 (Grand Table)</option>
+                                @break
+                                @case(16)
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="16" checked>16 (Grand Table)</option>
+                                @break      
                                 @default
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -110,6 +126,7 @@ Edit Lounge
                                     <option value="6">6</option>
                                     <option value="7" >7</option>
                                     <option value="8" checked>8</option> 
+                                    <option value="16">16 (Grand Table)</option>
                                                      
                             @endswitch
                         </select>

@@ -53,8 +53,8 @@ $event = App\Event::findOrFail($id);
     <div class="col-12">
         <div class="card" style="position: relative;" >
             <div class="d-flex align-items-center justify-content-between p-3">
-                <h5>Visit Page: </h5>
-                <a class="btn btn-primary" href="{{ getDomain($id) }}/event#lobby" target="_blank">here</a>
+                {{-- <h5>Visit Page: </h5> --}}
+                <a class="btn btn-primary" href="https://{{ getDomain($id) }}/event#lobby" target="_blank">Visit Page</a>
             </div>
             <div  id="container" class="card-body">
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
