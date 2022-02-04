@@ -166,7 +166,7 @@
 
     .BigTableBox{
         width: 614px;
-        margin: 0 auto 25px;
+        margin: 0 15px 25px 0;
     }
 
     .bigTable{
@@ -269,7 +269,7 @@
 
 
 <div class="page py-5" id="networking" style="min-height:100vh">
-    <div class="container-fluid d-flex mt-5 flex-wrap justify-content-evenly pr-0" id="lounge_tables">
+    <div class="container-fluid d-flex mt-5 flex-wrap pr-0" id="lounge_tables">
         @foreach($tables as $i=> $table)
         @php
             $classes = ["tob_Chair","bottom_Chair","right_Chair","left_Chair"];
@@ -278,7 +278,7 @@
 
         @endphp
             @if($table->seats == 16)
-            <div class="container-fluid">
+            
                 <div class="table_Box BigTableBox">
                     <div class="TableBlock bigTable d-flex justify-content-between align-items-center">
                         <div>
@@ -326,7 +326,7 @@
                         <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
                     </ul>
                 </div>
-            </div>
+            
             @else
             <div class="table_Box lounge_meeting table" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
                
