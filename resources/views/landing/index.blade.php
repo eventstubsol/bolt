@@ -756,7 +756,6 @@
                   @foreach($events as $id => $event)
                     @php 
                         $id = $event['id'];
-                        $l++;
                     @endphp
                     <div class="d-flex">
                       <ul class="list-unstyled timeline-sm descUl"> 
