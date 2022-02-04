@@ -69,7 +69,8 @@ function createWidget($chat_app){
             "style"=>[
                 "docked_layout_icon_background"=>"#03a9f4",
                 "docked_layout_icon_close"=>"https://widget-js.cometchat.io/v2/resources/chat_close.svg",
-                "docked_layout_icon_open"=>"https://widget-js.cometchat.io/v2/resources/chat_bubble.svg"
+                "docked_layout_icon_open"=>"https://widget-js.cometchat.io/v2/resources/chat_bubble.svg",
+                "custom_css"=>".option__videocall-group{ display: none }"
             ],
             "sidebar"=>[
                     "chats"=>"true",
