@@ -161,17 +161,27 @@
     .for-checking img{
         height: 100%;
         width: 100%;
-        object-fit: cover;
+        object-fit: contain;
     }
 
     .BigTableBox{
-        width: 50%;
-        margin: 0 auto;
+        width: 614px;
+        margin: 0 auto 25px;
     }
 
     .bigTable{
         width: 75%;
     }
+
+    
+    .bigTable .for-checking{ 
+        width: 35%;
+    }
+
+    .bigTable .for-checking img{
+        object-fit: contain;
+    }
+
 
     .bigTopchair{
         padding: 0 12%;
