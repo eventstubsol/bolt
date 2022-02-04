@@ -1,12 +1,63 @@
 @foreach($tables as $i=> $table)
-         
-<div class="table_Box lounge_meeting table" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
-    @php
-        $classes = ["tob_Chair","bottom_Chair","right_Chair","left_Chair"];
-        $avs = $table->availableSeats();
-        $participants = $table->participants;
+@php
+$classes = ["tob_Chair","bottom_Chair","right_Chair","left_Chair"];
+$avs = $table->availableSeats();
+$participants = $table->participants;
 
-    @endphp
+@endphp
+@if($table->seats == 16)
+            <div class="container-fluid">
+                <div class="table_Box BigTableBox">
+                    <div class="TableBlock bigTable d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2>Seats: <span>{{ $avs }} Available<span></span></span></h2>
+                        </div>
+                        @if($table->logo !== null)
+                            <div class="for-checking">
+                                <img src="{{ assetUrl($table->logo) }}" alt="">
+                            </div>
+                        @endif
+                        <div class="mt-0">
+                            <h3 class="d-flex align-items-center"> 
+                                <span class="mr-2 d-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#fff" class="bi bi-person-check" viewBox="0 0 16 16">
+                                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
+                                    <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
+                                    </svg>
+                                </span> 
+                                {{ $table->name }}
+                            </h3>
+                        </div>
+                    </div>
+                    <ul class="tob_Chair bigTopchair">
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                    </ul>
+                    <ul class="left_Chair bigLeftchair">
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                    </ul>
+                    <ul class="right_Chair bigRightchair">
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                    </ul>
+                    <ul class="bottom_Chair bigBottomchair">
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                        <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
+                    </ul>
+                </div>
+            </div>
+@else
+<div class="table_Box lounge_meeting table" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
+   
     <div class="TableBlock d-flex justify-content-between flex-column" >
         <div>
             <h2>Seats: <span>{{$avs}} Available<span></h2>
@@ -78,6 +129,7 @@
         </ul>
     @endfor
 </div>
+@endif
 @endforeach
 
 
