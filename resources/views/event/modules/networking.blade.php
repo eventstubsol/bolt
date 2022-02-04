@@ -166,7 +166,7 @@
 
     .BigTableBox{
         width: 614px;
-        margin: 0 15px 25px 0;
+        margin: 0 25px 25px 0;
     }
 
     .bigTable{
