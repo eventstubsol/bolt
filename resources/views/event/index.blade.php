@@ -154,8 +154,6 @@ $user = Auth::user();
 
         .tab-content .nav-justified .nav-item a.active {
             background: none;
-            color: #00a15f;
-            border: 1px solid #00a15f;
         }
 
         .nav-justified .nav-item {
@@ -462,7 +460,7 @@ $user = Auth::user();
         .theme-modal .nav-pills .nav-link.active,
         .nav-pills .nav-link.active,
         .nav-pills .show > .nav-link {
-            background-color: "{{ $event->primary_color }}" !important;
+            background-color: {{ $event->primary_color }} !important;
             color: #fff;
         }
 
