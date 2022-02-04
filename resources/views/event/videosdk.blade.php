@@ -38,7 +38,7 @@
           webcamEnabled: false,
           participantCanToggleSelfWebcam: true,
           participantCanToggleSelfMic: true,
-          redirectOnLeave: window.location.href,
+          // redirectOnLeave: ,
 
           chatEnabled: true,
           screenShareEnabled: true,
@@ -55,7 +55,7 @@
           brandName: "",
           poweredBy: false,
 
-          participantCanLeave: true, // if false, leave button won't be visible
+          participantCanLeave: false, // if false, leave button won't be visible
 
           // Live stream meeting to youtube
           livestream: {
