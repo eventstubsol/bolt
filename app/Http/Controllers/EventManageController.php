@@ -146,6 +146,9 @@ class EventManageController extends Controller
             if(env("APP_ENV")!=='staging'){
                 whitelistDomain($domain);
             }
+        }else{
+            $event->domain = '';
+           
         }
         if($event->save()){
             flash("Event Updated Succesfully")->success();
