@@ -507,26 +507,26 @@ define("SCAVENGER_HUNT", [
             "image" => "event-assets/images/treasurehunt/1.png",
         ]
     ],
-    "auditorium" => [
-        [
-            "id" => 19,
-            "name" => "Silver Gem",
-            "area" => [ 25, 80, 2, 4 ],
-            "image" => "event-assets/images/treasurehunt/2.png",
-        ],
-        [
-            "id" => 20,
-            "name" => "Pink Gem",
-            "area" => [ 44, 2, 2, 4 ],
-            "image" => "event-assets/images/treasurehunt/5.png",
-        ],
-        [
-            "id" => 21,
-            "name" => "Round Gem",
-            "area" => [ 45, 94, 2, 4 ],
-            "image" => "event-assets/images/treasurehunt/1.png",
-        ]
-    ],
+    // "auditorium" => [
+    //     [
+    //         "id" => 19,
+    //         "name" => "Silver Gem",
+    //         "area" => [ 25, 80, 2, 4 ],
+    //         "image" => "event-assets/images/treasurehunt/2.png",
+    //     ],
+    //     [
+    //         "id" => 20,
+    //         "name" => "Pink Gem",
+    //         "area" => [ 44, 2, 2, 4 ],
+    //         "image" => "event-assets/images/treasurehunt/5.png",
+    //     ],
+    //     [
+    //         "id" => 21,
+    //         "name" => "Round Gem",
+    //         "area" => [ 45, 94, 2, 4 ],
+    //         "image" => "event-assets/images/treasurehunt/1.png",
+    //     ]
+    // ],
 ]);
 
 define("AUDI_SCREEN_AREA", [ 27, 5.3, 87.5, 43 ]);
