@@ -6,7 +6,7 @@ $participants = $table->participants;
 
 @endphp
 @if($table->seats == 16)
-            <div class="container-fluid">
+            
                 <div class="table_Box BigTableBox">
                     <div class="TableBlock bigTable d-flex justify-content-between align-items-center">
                         <div>
@@ -54,7 +54,7 @@ $participants = $table->participants;
                         <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
                     </ul>
                 </div>
-            </div>
+            
 @else
 <div class="table_Box lounge_meeting table" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
    
