@@ -1,4 +1,34 @@
 <script id="dropify_script"  async=false defer=false src="{{ asset("assets/libs/dropify/js/dropify.min.js") }}"></script>
+<style>
+    .img-gallery{
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+    }
+    .img-gallery.selected:before {
+        content: "";
+        width: 30px;
+        height: 30px;
+        background: blue;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .img-gallery.selected{
+        border: 3px solid blue;
+        
+    }
+
+    #gallery-container,#video-gallery-container{
+        position: relative;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        padding: 10px;
+
+        grid-column-gap: 23px;
+        grid-row-gap: 10px;
+    }
+</style>
 <script>
     let Upload = function (file, fileInput) {
         this.file = file;
@@ -42,6 +72,7 @@
 
         // add assoc key values, this will be posts values
         formData.append("file", this.file, this.getName());
+        formData.append("event_id", "{{ $id }}");
         this.lockForm();
 
         $.ajax({
@@ -84,24 +115,15 @@
     let data_type = ' ';
     function initializeFileUploads(){
         let fileInputs = $('[data-plugins="dropify"]');
-        // let fileInputs = $('.image-uploader>input[type="file"]');
         if (fileInputs.length > 0) {
             // Dropify
             fileInputs.each(function(){
                 let  flag = 0 ;
                 let fileInput = $(this);
-                // fileInput.closest(".image-uploader").append(`<div class=""><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
-                // if(! fileInput.closest(".image-uploader .progress") ){
-                    // console.log({fileInput});
-                    // if(flag === 0){
                         if(! (fileInput.closest(".image-uploader").hasClass("pbadded"))){
                                fileInput.closest(".image-uploader").append(`<div class="progress progress-sm upload mb-2"><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
                                fileInput.closest(".image-uploader").addClass("pbadded") ;
                         }
-                        // $(fileInput.closest(".image-uploader")).removeClass("image-uploader");
-                        // flag = 1;
-                    // }
-                // }
                 if(!fileInput.data("initdropify")){ //Only initialize if not already done so
                     fileInput.data("initdropify", true);
                     console.log(fileInput);
@@ -118,41 +140,30 @@
                       let input = target.closest(".image-uploader").find(`.upload_input`).val("");
                     });
 
-                    // fileInput.on("change", function(e){
-                    //     let target = $(e.target);
-                    //     let type = target.data("type");
-                    //     let input = target.closest(".image-uploader").find(`.upload_input`);
-                    //     let files = e.target.files;
-                    //     if(files.length){
-                    //         let upload = new Upload(files[0], fileInput);
-                    //         if(upload.getType().includes(type)){
-                    //             upload.doUpload(function(path){
-                    //                 if(path){
-                    //                     input.val(path)
-                    //                     input[0].dispatchEvent(new Event("uploaded"));
-                    //                 }
-                    //             });
-                    //         }else{
-                    //             setTimeout(() => target.parent().find(".dropify-clear").trigger("click"), 200);
-                    //         }
-                    //     }
-                    // });
-                    fileInput.on('click',function(e){
-                        e.preventDefault();
-                        e.stopPropagation();
-                        $('#exampleModal').modal('toggle');
+                    fileInput.on("change", function(e){
                         let target = $(e.target);
+                        let type = target.data("type");
                         let input = target.closest(".image-uploader").find(`.upload_input`);
-                        input.addClass("active-input");
-                        fileInput.addClass("active-uploader");
-                        console.log("{{ $id }}");
+                        let files = e.target.files;
+                        if(files.length){
+                            let upload = new Upload(files[0], fileInput);
+                            if(upload.getType().includes(type)){
+                                upload.doUpload(function(path){
+                                    if(path){
+                                        input.val(path)
+                                        input[0].dispatchEvent(new Event("uploaded"));
+                                    }
+                                });
+                            }else{
+                                setTimeout(() => target.parent().find(".dropify-clear").trigger("click"), 200);
+                            }
+                        }
+                    });
+                    fileInput.on('click',function(e){
                         data_type = fileInput.attr('data-type');
-                        $('#uploadModalContainer').empty();
-                        $('#uploadModalContainer').append(`<label class="mb-3" for="images">Upload `+data_type+`
-                </label>
-                <input type="hidden" name="url" class="upload_input" >
-                <input type="file" id="setDataType" data-name="url" data-plugins="drop" data-type="`+data_type+`"  />`);
-                    initUpload();
+                        if(data_type === 'image' || data_type === 'video'){
+                            openGalleryModal(e,fileInput,data_type);
+                        }
                     });
                    
                 }
@@ -160,12 +171,95 @@
         }
       
     }
-    $(document).ready(
-        $("#dropify_script").on("load",()=>{
 
+    function openGalleryModal(e,fileInput,data_type){
+        e.preventDefault();
+        e.stopPropagation();
+        $('#exampleModal').modal('toggle');
+        let target = $(e.target);
+        let input = target.closest(".image-uploader").find(`.upload_input`);
+        input.addClass("active-input");
+        fileInput.addClass("active-uploader");
+        console.log("{{ $id }}");
+        $('#uploadModalContainer').empty();
+        $('#uploadModalContainer').append(`<label class="mb-3" for="images">Upload `+data_type+`
+            </label>
+            <input type="hidden" name="url" class="upload_input" >
+            <input type="file" id="setDataType" data-name="url" data-plugins="drop" data-type="`+data_type+`"  />`);
+        initUpload();
+        if(data_type==='image'){
+            $("#gallery-container").show();
+            $("#video-gallery-container").hide();
+        }else{
+            $("#gallery-container").hide();
+            $("#video-gallery-container").show();
+            
+        }
+    }
+    function initGallery(){
+        $(".img-gallery").on("click",(e)=>{
+            console.log(e)
+            $(".img-gallery.selected").removeClass("selected")
+            // $(".img-gallery.selected").removeClass("selected")
+            $(e.target).addClass("selected");
+            $($(e.target).parent()).addClass("selected-p");
+            $("#select-button").on("click",selectFromGallery)
+        });
+    }
+    function selectFromGallery(){
+        let selected = $(".img-gallery.selected");
+        let input = $($('.active-input')[0]);
+        let active_input = $($('.active-uploader')[0]);
+        let path = selected.data("path");
+        if(path){
+            input.val(path);
+            input.removeClass('active-input');
+            console.log(active_input);
+            if(data_type != 'video'){
+                let img = $($($($(active_input).parent().children('.dropify-preview')[0]).children('span')[0]).children('img')[0]);
+                if(img.length){
+                    img.attr("src","{{ assetUrl("") }}"+ path);
+                }else{
+                    $($($(active_input).parent().children('.dropify-preview')[0]).children('span')[0]).append(`<img src="${ "{{ assetUrl("") }}"+ path }" >`)
+                    $($(active_input).parent().children('.dropify-preview')[0]).show();
+                }
+            }
+            else{
+                let ext = path.split(".")[1];
+                let vid = $($($($(active_input).parent().children('.dropify-preview')[0]).children('span')[0]).children('.dropify-extension')[0]);
+                if(vid.length){
+                    vid.text(ext);
+                }
+                else{
+                    $($($(active_input).parent().children('.dropify-preview')[0]).children('span')[0]).append(`<span class="dropify-extension">`+ext+`</span>`)
+                    $($(active_input).parent().children('.dropify-preview')[0]).show();
+                }
+            }
+            // console.log((active_input.closest(".dropify-preview").querySelector('div')));
+        //    let img = $($(".dropify-render>img")[index]);
+        //    img.attr("src","{{ assetUrl("") }}"+ path);
+            
+            // $(active_input.parent().children(".dropify-preview>.dropify-render>img")[0]).attr("src","{{ assetUrl("") }}"+ path);
+            active_input.removeClass('active-uploader');
+            input[0].dispatchEvent(new Event("uploaded"));
+            $('#exampleModal').modal('toggle');
+        }
+                           
+        // $(".img-gallery").on("click",(e)=>{
+        //     console.log(e)
+        //     $(".img-gallery.selected").removeClass("selected")
+        //     // $(".img-gallery.selected").removeClass("selected")
+        //     $(e.target).addClass("selected");
+        // });
+    }
+    $(document).ready(()=>{
+
+        $("#dropify_script").on("load",()=>{
+            
             initializeFileUploads();
         })
-        );
+        initGallery();
+    });
         function ModClose(){
             $('#exampleModal').modal('toggle');
         }
@@ -178,18 +272,7 @@
                 fileUploads.each(function(index){
                     let  flag = 0 ;
                     let fileUpload = $(this);
-                    // fileInput.closest(".image-uploader").append(`<div class=""><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
-                    // if(! fileInput.closest(".image-uploader .progress") ){
-                        // console.log({fileInput});
-                        // if(flag === 0){
-                            // if(! (fileUpload.closest(".image-uploader").hasClass("pbadded"))){
-                                fileUpload.closest(".image-uploader").append(`<div class="progress progress-sm upload mb-2"><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
-                                // fileUpload.closest(".image-uploader").addClass("pbadded") ;
-                            // }
-                            // $(fileInput.closest(".image-uploader")).removeClass("image-uploader");
-                            // flag = 1;
-                        // }
-                    // }
+                    fileUpload.closest(".image-uploader").append(`<div class="progress progress-sm upload mb-2"><div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>`);
                     if(!fileUpload.data("initdropify")){ //Only initialize if not already done so
                         fileUpload.data("initdropify", true);
                         console.log(fileUpload);
@@ -222,18 +305,11 @@
                                             input.val(path);
                                             input.removeClass('active-input');
                                             console.log(active_input);
-                                            // console.log(active_input.find('.dropify-preview'));
                                             if(data_type != 'video'){
                                                 let img = $($($($(active_input).parent().children('.dropify-preview')[0]).children('span')[0]).children('img')[0]);
                                                 if(img.length){
                                                     img.attr("src","{{ assetUrl("") }}"+ path);
-                                                    // alert("not appended")
                                                 }else{
-                                                    // active_input.attr("data-default-file", "{{ assetUrl("") }}"+ path)
-                                                    // active_input.dropify({
-                                                    //     'defaultFile': "{{ assetUrl("") }}"+ path
-                                                    // })
-                                                    // alert("appended")
                                                     $($($(active_input).parent().children('.dropify-preview')[0]).children('span')[0]).append(`<img src="${ "{{ assetUrl("") }}"+ path }" >`)
                                                     $($(active_input).parent().children('.dropify-preview')[0]).show();
                                                 }
@@ -274,8 +350,8 @@
 
 {{-- Pop Modal Gallery --}}
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade thememodal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Image Gallery</h5>
@@ -284,12 +360,48 @@
           </button>
         </div>
         <div class="modal-body">
-            <div class="image-uploader" id="uploadModalContainer" >
-                
-              </div>
+            <div class="mb-3" >
+                <ul class="nav nav-pills navtab-bg nav-justified" style="margin: 0px -5px;">
+                    <li class="nav-item "> 
+                        <a href="#upload" data-toggle="tab" aria-expanded="false" class="nav-link  ">Upload New</a>
+                    </li>
+                    <li class="nav-item active "> 
+                        <a href="#gallery" data-toggle="tab" aria-expanded="true" class="nav-link active">Gallery</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane " id="upload">
+                        <div class="image-uploader" id="uploadModalContainer" >
+                            
+                        </div>
+                    </div>
+                    <div class="tab-pane active show" id="gallery">
+                        <div id="gallery-container">
+                            @php
+                            $images = \App\Image::whereNotNull("event_id")->get();
+                            @endphp
+                            @foreach ($images as $i=> $image)
+                                <div class="img-gallery @if($i===0) selected-p @endif ">
+                                    <img width="250px" class="img-gallery @if($i===0) selected @endif " data-path="{{$image->url}}" src="{{assetUrl($image->url)}}" >
+                                </div>
+                            @endforeach
+                        </div>
+                        <div id="video-gallery-container">
+                            @php
+                            $videos = \App\Video::whereNotNull("event_id")->get();
+                            @endphp
+                            @foreach ($videos as $i=> $video)
+                                <video width="250px" autoplay loop class="img-gallery @if($i===0) selected @endif " data-path="{{$video->url}}" src="{{assetUrl($video->url)}}" >
+                            @endforeach
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="ModClose()">Close</button>
+          <button type="button" id="select-button" class="btn btn-primary"  >Select</button>
         </div>
       </div>
     </div>
