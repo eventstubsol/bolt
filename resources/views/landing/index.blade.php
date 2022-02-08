@@ -751,22 +751,28 @@
                 @php
                     $j++;
                 @endphp
-                <div class="tab-pane fade show active" id="sch-{{$i}}-{{$j}}" role="tabpanel" aria-labelledby="chat1-tab">
-                  <div class="d-flex">
-                    <ul class="list-unstyled timeline-sm descUl"> 
-                      <li class="timeline-sm-item d-flex align-items-start">
-                          <div class="d-flex flex-column">
-                            <span class="timeline-sm-date">
-                                {{ $event['start_date']['dts'] }} - {{ $event['start_date']['dte'] }}
-                            </span>
-                          </div>
-                          <div @if($event['status'] === 1) @endif class="desc_block"> 
-                            <h3 class="">{{ $event['name'] }}</h3>
-                            <p class="">{!! $event['description'] !!}</p>
-                          </div>
-                      </li>
-                    </ul>
-                  </div>
+                <div class="tab-pane fade show @if($j === 1) active @endif" id="sch-{{$i}}-{{$j}}" role="tabpanel" aria-labelledby="chat1-tab">
+                   <!-- Print each event in schedule -->
+                  @foreach($events as $id => $event)
+                    @php 
+                        $id = $event['id'];
+                    @endphp
+                    <div class="d-flex">
+                      <ul class="list-unstyled timeline-sm descUl"> 
+                        <li class="timeline-sm-item d-flex align-items-start">
+                            <div class="d-flex flex-column">
+                              <span class="timeline-sm-date">
+                                  {{ $event['start_date']['dts'] }} - {{ $event['start_date']['dte'] }}
+                              </span>
+                            </div>
+                            <div @if($event['status'] === 1) @endif class="desc_block"> 
+                              <h3 class="">{{ $event['name'] }}</h3>
+                              <p class="">{!! $event['description'] !!}</p>
+                            </div>
+                        </li>
+                      </ul>
+                    </div>
+                  @endforeach
                 </div>
 
               @endforeach
