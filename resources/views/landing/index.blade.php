@@ -706,7 +706,7 @@
 
     <div class="container">
       {{-- Date Pills --}}
-      <ul class="nav nav-tabs " id="myTab" role="tablist">
+      <ul class="nav nav-tabs mt-3 " id="myTab" role="tablist">
         @foreach($dates as $date => $room)
           @php
               $i++;
@@ -730,7 +730,7 @@
                 $j = 0;
             @endphp
             {{-- Room Name Pills --}}
-            <ul class="nav nav-tabs tabSec" id="myTab" role="tablist">
+            <ul class="nav nav-tabs tabSec mb-3" id="myTab" role="tablist">
               @foreach($rooms as $room => $events)
                 @php
                   $j++;
