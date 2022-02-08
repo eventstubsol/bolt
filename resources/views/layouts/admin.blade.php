@@ -379,7 +379,7 @@
                                 </span>
                             </a>
                           
-                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                            <div class="dropdown-menu dropdown-menu-left profile-dropdown ">
                                @php
                                     $events = App\Event::where('user_id',Auth::id())->orderBy('id','desc')->get();
                                @endphp
