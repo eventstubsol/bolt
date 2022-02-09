@@ -8,6 +8,7 @@
             overflow: hidden;
             height: 150px;
             margin: 0 10px 10px 0;
+            border-radius: 2px;
         }
         .box img{
             height: 150px;
