@@ -39,6 +39,6 @@ class Image extends Model
     use UUID;
     public $incrementing = false;
 
-    protected $fillable = ["owner", "url", "title", "link"];
+    protected $fillable = ["owner", "url", "title", "link","event_id"];
     protected $hidden = ["id", "owner", "created_at", "deleted_at", "updated_at"];
 }
