@@ -14,6 +14,12 @@
 @if(Carbon\Carbon::now() <= $event->end_date)
 <li class="menu-title">Administration</li>
 <li>
+    <a href="{{ route('eventee.media',$id) }}">
+        <i class="fa fa-picture-o" aria-hidden="true"></i>
+        <span> My Media </span>
+    </a>
+</li>
+<li>
     <a href="#users" data-toggle="collapse">
         <i data-feather="users"></i>
         <span> Users</span>

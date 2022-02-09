@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Content;
 use App\ContentMaster;
+use App\Image;
 use http\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -51,12 +52,22 @@ class CMSController extends Controller
 
     public function uploadFile(Request $request){
         $size = $request->file("file")->getSize();
-        // dd($size);
+        // dd($request->event_id);
         if($size > 12600000 ){
             return ["success" => false,"message"=> "file too big"];
         }
+      
+
+
 
         $path = $request->file('file')->store('/uploads',env("UPLOADS_FILE_DRIVER", "public"));
+        // $image = new Image([
+        //     "owner"=>'gallery',
+        //     "url"=>$path,
+        //     "title"=>'gallery',
+        //     "event_id"=>$request->event_id??null
+        // ]);
+        // $image->save();
         // $path =  Storage::disk('s3')->put('/uploads', $request->file('file'));
         return [
             "success" => true,

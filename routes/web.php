@@ -58,6 +58,11 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post('BoothChart',"EventManageController@BoothChartJs")->name('eventee.boothChart');
     Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
+
+    //Media
+    Route::get("/mdeia/{id}","MediaController@index")->name("eventee.media");
+    Route::get("media/create/{id}","MediaController@create")->name("eventee.media.create");
+    Route::POST("media/store/{id}","MediaController@store")->name("eventee.media.store");
     
     //Landing Update
     Route::get('landing/update/status','LandingController@updateStatus')->name('update.landing.status');

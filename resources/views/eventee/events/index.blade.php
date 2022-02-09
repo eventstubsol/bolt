@@ -190,7 +190,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary" id="sameType">Save</button>
             </form>
             </div>
         
@@ -281,12 +281,14 @@
             if((start_date.getDate() == end_date.getDate()) && (start_date.getHours() >= end_date.getHours()) && (start_date.getMinutes() >= end_date.getMinutes())){
                 $(this).addClass('is-invalid');
                 $('#erroshowEnd').show();
+                $('#sameType').attr('disabled',true);
             }
             
              else{  
                 $(this).removeClass('is-invalid');
                 $('#erroshowEndDate').hide();
                 $('#erroshowEnd').hide();
+                $('#sameType').attr('disabled',false);
              }
          });
      });
@@ -295,4 +297,4 @@
          $('#createModal').modal('toggle');
      }
   </script>
-@endsection
+@endsection`

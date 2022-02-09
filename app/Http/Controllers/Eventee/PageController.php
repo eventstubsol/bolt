@@ -64,14 +64,16 @@ class PageController extends Controller
             $page->images()->create([
                 "url"=>$request->url,
                 "link"=>"",
-                "title"=>$page->name
+                "title"=>$page->name,
+                'event_id' => $id,
             ]);
         }
         if($request->has("video_url")  && $request->video_url != null){
     
             $page->videoBg()->create([
                 "url"=>$request->video_url,
-                "title"=>$page->name
+                "title"=>$page->name,
+                "event_id"=>$id,
             ]);
         }
         // $pages = Page::with(["images", "links.background"])->get();
@@ -250,7 +252,8 @@ class PageController extends Controller
                           $link->background()->create([
                             "owner"=>$link->id,
                             "url" => $bgimage,
-                            "title" => "link"
+                            "title" => "link",
+                            "event_id" => $id,
                           ]);
                         }
         
@@ -274,7 +277,8 @@ class PageController extends Controller
             $page->images()->create([
                 "url"=>$request->url,
                 "link"=>"",
-                "title"=>$page->name
+                "title"=>$page->name,
+                "event_id" => $id,
             ]);
         }
         $page->videoBg()->delete();
@@ -282,7 +286,8 @@ class PageController extends Controller
         {
             $page->videoBg()->create([
                 "url"=>$request->video_url,
-                "title"=>$page->name
+                "title"=>$page->name,
+                "event_id" =>$id
             ]);
         }
 
@@ -376,7 +381,8 @@ class PageController extends Controller
                           $link->background()->create([
                             "owner"=>$link->id,
                             "url" => $bgimage,
-                            "title" => "link"
+                            "title" => "link",
+                            "event_id" => $id,
                           ]);
                         }
         
