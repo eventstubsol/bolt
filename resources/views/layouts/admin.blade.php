@@ -110,7 +110,7 @@
             position: fixed;
             top: 2%;
             right: 14%;
-            z-index: 9999;
+            z-index: 1002;
         }
         .action_item_2{
             position: fixed;
@@ -379,7 +379,7 @@
                                 </span>
                             </a>
                           
-                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                            <div class="dropdown-menu dropdown-menu-left profile-dropdown ">
                                @php
                                     $events = App\Event::where('user_id',Auth::id())->orderBy('id','desc')->get();
                                @endphp

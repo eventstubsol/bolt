@@ -41,4 +41,11 @@ class Image extends Model
 
     protected $fillable = ["owner", "url", "title", "link","event_id"];
     protected $hidden = ["id", "owner", "created_at", "deleted_at", "updated_at"];
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function($model){
+            
+        });
+    }
 }
