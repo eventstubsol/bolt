@@ -24,7 +24,7 @@ class BulkMediaRequest extends FormRequest
     public function rules()
     {
         return [
-            'media' => 'required|mimes:png,jpg,jpeg,video/mp4,video/avi,video/webp|max:12288',
+            'media' => 'required|mimes:png,jpg,jpeg|max:12288',
         ];
     }
 }

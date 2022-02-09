@@ -63,6 +63,8 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get("/mdeia/{id}","MediaController@index")->name("eventee.media");
     Route::get("media/create/{id}","MediaController@create")->name("eventee.media.create");
     Route::POST("media/store/{id}","MediaController@store")->name("eventee.media.store");
+    Route::get("media/create/video/{id}","MediaController@createVideo")->name("eventee.media.createVideo");
+    Route::POST("media/store/video/{id}","MediaController@storeVideo")->name("eventee.media.storeVideo");
     
     //Landing Update
     Route::get('landing/update/status','LandingController@updateStatus')->name('update.landing.status');

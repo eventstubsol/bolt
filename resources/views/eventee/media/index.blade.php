@@ -6,10 +6,11 @@
         .box{
             width: 25%;
             overflow: hidden;
-            height: 150px;
+            height: 40%;
+            padding: 10px;
         }
         .box img{
-            height: 150px;
+            height: 20%;
             width: 100%;
             object-fit: contain;
         }
@@ -56,37 +57,41 @@
             <div class="card-body">
                 
                 
-                <div class="d-flex justify-content-end">
-                    <a href="{{ route('eventee.media.create',$id) }}" class="btn btn-primary">Bulk Upload</a>
-                </div>
+                
                 
 
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="card-title">
+                            <div class="d-flex justify-content-end">
+                                <a href="{{ route('eventee.media.create',$id) }}" class="btn btn-primary">Bulk Upload</a>
+                            </div>
+                        </div>
                         <div class="d-flex align-items-center">
-                            @foreach($urls as $url)
+                            @foreach($images as $url)
                             <section class="box">
                             @if(isset($url))
-                                    @if($url->type == 'image')
-                                        <a href="javajavascript:void(0)" class="d-block"><img class="show" src="{{ assetUrl($url->url) }}"  width="100%" height="100%"></a>
-                                    @elseif($url->type == 'video')
-                                        <a href="javajavascript:void(0)" class="d-block"><video autoplay loop class="show" src="{{ assetUrl($url->url) }}" width="100%" height="100%"></video></a>
-                                    @endif
+                                   
+                                    <a href="javajavascript:void(0)" class="d-block"><img class="show" src="{{ assetUrl($url->url) }}"  width="100%" height="100%"></a>
+                                   
                                     @endif
                                 </section>
                             @endforeach
                         </div>
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="card-title">
+                            <div class="d-flex justify-content-end">
+                                <a href="{{ route('eventee.media.createVideo',$id) }}" class="btn btn-primary">Bulk Upload</a>
+                            </div>
+                        </div>
                         <div class="d-flex align-items-center">
-                            @foreach($urls as $url)
+                            @foreach($videoes as $url)
                                 <section class="box">
                                 @if(isset($url))
-                                    @if($url->type == 'image')
-                                        <a href="javajavascript:void(0)" class="d-block"><img class="show" src="{{ assetUrl($url->url) }}"  width="100%" height="100%"></a>
-                                    @elseif($url->type == 'video')
-                                        <a href="javajavascript:void(0)" class="d-block"><video autoplay loop class="show" src="{{ assetUrl($url->url) }}" width="100%" height="100%"></video></a>
-                                    @endif
+                                   
+                                    <a href="javajavascript:void(0)" class="d-block"><video autoplay loop class="show" src="{{ assetUrl($url->url) }}" width="100%" height="100%"></video></a>
+                                   
                                     @endif
                                 </section>
                             @endforeach
