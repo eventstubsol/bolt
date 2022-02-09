@@ -72,7 +72,12 @@
 
         // add assoc key values, this will be posts values
         formData.append("file", this.file, this.getName());
-        formData.append("event_id", "{{ $id }}");
+        @if(isset($id))
+            formData.append("event_id", "{{ $id }}");
+        @endif
+        @if(isset($event_id))
+            formData.append("event_id", "{{ $event_id }}");
+        @endif
         this.lockForm();
 
         $.ajax({
@@ -180,7 +185,6 @@
         let input = target.closest(".image-uploader").find(`.upload_input`);
         input.addClass("active-input");
         fileInput.addClass("active-uploader");
-        console.log("{{ $id }}");
         $('#uploadModalContainer').empty();
         $('#uploadModalContainer').append(`<label class="mb-3" for="images">Upload `+data_type+`
             </label>
