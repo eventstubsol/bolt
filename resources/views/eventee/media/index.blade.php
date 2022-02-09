@@ -4,14 +4,15 @@
     @include("includes.styles.datatables")
     <style>
         .box{
-            width: 25%;
+            width: 24%;
             overflow: hidden;
             height: 150px;
+            margin: 0 10px 10px 0;
         }
         .box img{
             height: 150px;
             width: 100%;
-            object-fit: contain;
+            object-fit: cover;
         }
         .box a{
             text-decoration: none;
