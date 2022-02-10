@@ -11,7 +11,7 @@
             border-radius: 2px;
         }
         .box img{
-            height: 20%;
+            height: 150px;
             width: 100%;
             object-fit: cover;
         }
