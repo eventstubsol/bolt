@@ -11,7 +11,7 @@
             border-radius: 2px;
         }
         .box img{
-            height: 20%;
+            height: 150px;
             width: 100%;
             object-fit: cover;
         }
@@ -68,7 +68,7 @@
                                 <a href="{{ route('eventee.media.create',$id) }}" class="btn btn-primary">Bulk Upload</a>
                             </div>
                         </div>
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center flex-wrap">
                             @foreach($images as $url)
                             <section class="box">
                             @if(isset($url))
@@ -82,7 +82,7 @@
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="card-title">
-                            <div class="d-flex justify-content-end">
+                            <div class="d-flex justify-content-end flex-wrap">
                                 <a href="{{ route('eventee.media.createVideo',$id) }}" class="btn btn-primary">Bulk Upload</a>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                                 <section class="box">
                                 @if(isset($url))
                                    
-                                    <a href="javajavascript:void(0)" class="d-block"><video autoplay loop class="show" src="{{ assetUrl($url->url) }}" width="100%" height="100%"></video></a>
+                                    <a href="javajavascript:void(0)" class="d-block"><video muted autoplay loop class="show" src="{{ assetUrl($url->url) }}" width="100%" height="100%"></video></a>
                                    
                                     @endif
                                 </section>

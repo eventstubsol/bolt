@@ -61,7 +61,7 @@ Edit Page
                 <div id="image_demo" class="im-section" style="position:relative; padding:0" >
                         {{-- Main Image/Video Section --}}
                         @if($page->videoBg)
-                            <video loop autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat style="min-width:100%; width:100%;"></video>
+                            <video muted loop autoplay src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" repeat style="min-width:100%; width:100%;"></video>
                         @elseif(isset($page->images[0]))
                             <img data-test="{{$page->videoBg}}" src="{{$page->images?assetUrl($page->images[0]->url):''}}" style="min-width:100%" />
                         @endif
@@ -252,6 +252,16 @@ Edit Page
                                     </div>
 
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
+                                     <div class="form-group col-md-2">
+                                            
+                                        <div class="form-group">
+                                            <label for="#landPage" class="mr-1 mb-0">Set Location Status</label>
+                                            <select name="set_location[]" class="form-control">
+                                                <option value="0" @if($link->location_status == 0) selected @endif>Off</option>
+                                                <option value="1" @if($link->location_status == 1) selected @endif>On</option>
+                                            </select>
+                                        </div>
+                                    </div>
     
                                     <div class="flyin  col-md-12 mb-2">
                                         
@@ -265,12 +275,9 @@ Edit Page
                                         
                                         
                                         
+                                      
                                         
-                                        
-                                        
-                                        
-                                        
-                                        
+                                      
                                         
                                     <button class="btn btn-primary  mb-2 mr-2  add-image"  data-index="{{$ids}}" >Add Background Image</button>
                                     <button class="btn btn-primary  mb-2 mr-3 addflyin" data-index="{{$ids}}">Add Fly In Video</button>
@@ -350,7 +357,7 @@ Edit Page
                                     </div>
                                     <div  class="row tpositioning-{{$ids}} col-md-12" >
                                             
-                                                <input value="{{$treasure->top}}"  step="any" type="hidden" required  name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} ttop-{{$ids}} form-control">
+                                                <input value="{{$treasure->top}}"   step="any" type="hidden" required  name="ttop[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} ttop-{{$ids}} form-control">
                                                 <input value="{{$treasure->left}}"  step="any" type="hidden" required  name="tleft[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} tleft-{{$ids}} form-control">
                                                 <input value="{{$treasure->width}}"  step="any" type="hidden" required  name="twidth[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} twidth-{{$ids}} form-control">
                                                 <input value="{{$treasure->height}}"  step="any" type="hidden" required  name="theight[]" data-index="{{$ids}}" class="tpos tpos-{{$ids}} theight-{{$ids}} form-control">
@@ -724,10 +731,10 @@ Edit Page
                                     </div>
                                     <div  class="row tpositioning-${t} col-md-12 mb-2" >
                                         
-                                            <input type="hidden"  step="any" required  name="ttop[]" data-index="${t}" class="tpos tpos-${t} ttop-${n} form-control">
-                                            <input type="hidden"  step="any" required  name="tleft[]" data-index="${t}" class="tpos tpos-${t} tleft-${n} form-control">
-                                            <input type="hidden"  step="any" required  name="twidth[]" data-index="${t}" class="tpos tpos-${t} twidth-${n} form-control">
-                                            <input type="hidden"  step="any" required  name="theight[]" data-index="${t}" class="tpos tpos-${t} theight-${n} form-control">
+                                            <input type="hidden" value="5"  step="any" required  name="ttop[]" data-index="${t}" class="tpos tpos-${t} ttop-${n} form-control">
+                                            <input type="hidden" value="5" step="any" required  name="tleft[]" data-index="${t}" class="tpos tpos-${t} tleft-${n} form-control">
+                                            <input type="hidden" value="5" step="any" required  name="twidth[]" data-index="${t}" class="tpos tpos-${t} twidth-${n} form-control">
+                                            <input type="hidden" value="5" step="any" required  name="theight[]" data-index="${t}" class="tpos tpos-${t} theight-${n} form-control">
                             
                                         <button data-index="${t}" class="btn btn-primary donet-${t} donet" >DONE</button>
 
@@ -852,17 +859,26 @@ Edit Page
 
                                     <div  class="row positioning-${n}" >
                                        
-                                        <input type="hidden" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
-                                        <input type="hidden" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
-                                        <input type="hidden" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
-                                        <input type="hidden" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
+                                        <input type="hidden" value="5" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
+                                        <input type="hidden" value="5" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
+                                        <input type="hidden" value="5" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
+                                        <input type="hidden" value="5" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
                                 
                                   
 
                                     <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
 
                                     </div>
-
+                                    <div class="form-group col-md-2">
+                                            
+                                            <div class="form-group">
+                                                <label for="#landPage" class="mr-1 mb-0">Set Location Status</label>
+                                                <select name="set_location[]" class="form-control">
+                                                    <option value="0"  >Off</option>
+                                                    <option value="1">On</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12 flyin ">
                                             <div style="display:none" class="image-uploader flyin-${n}">
                                                 <label class="mb-3" for="images">Fly In Video</label>
@@ -879,7 +895,7 @@ Edit Page
 
 
 
-
+                                       
                                         <button class="btn btn-primary mt-2 mb-4 mr-2  add-image"  data-index="${n}"  >Add Background Image</button>
                                         <button class="btn btn-primary  mt-2 mb-4 addflyin" data-index="${n}">Add Fly In Video</button>
                                     <button class="btn btn-danger mt-2 mb-4 ml-2 remove-link">Remove</button>
@@ -936,7 +952,26 @@ Edit Page
               }
           });
       });
-
+    
+    // function LocaitonStatus(e){
+    //     let current_value = e.value;
+    //     if(current_value == 0){
+    //         e.value = 1;
+    //         current_value = 1;
+    //     }
+    //     else{
+    //         e.value = 0;
+    //         current_value = 0;
+    //     }
+    //     $.post("{{ route('eventee.pages.updatelocation') }}",{"id":e.getAttribute("data-id"),"status":current_value},function(res){
+    //         if(res.code == 200){
+    //             showMessage(res.message,'success');
+    //         }
+    //         else{
+    //             showMessage(res.message,'error');
+    //         }
+    //     });
+    // }
 </script>
 
 

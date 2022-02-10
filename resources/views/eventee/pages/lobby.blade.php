@@ -208,7 +208,13 @@ $event = App\Event::findOrFail($id);
                                      <button data-index="{{$ids}}" class="btn btn-primary done-{{$ids}} done" >DONE</button>
 
                                     </div>
-                                    
+                                    <div class="form-group">
+                                        <label for="#landPage" class="mr-1 mb-0">Set Location Status</label>
+                                        <select name="set_location[]" class="form-control">
+                                            <option value="0" @if($link->location_status == 0) selected @endif>Off</option>
+                                            <option value="1" @if($link->location_status == 1) selected @endif>On</option>
+                                        </select>
+                                    </div>
                                     <div class="flyin  col-md-12 mb-2">
                                         
                                             <div @if(!$link->flyin) style="display:none" @endif class="image-uploader flyin-{{$ids}}">
@@ -222,6 +228,8 @@ $event = App\Event::findOrFail($id);
                                         
                                         
                                         
+                                           
+                                      
                                         
                                         
                                         
@@ -597,11 +605,11 @@ $event = App\Event::findOrFail($id);
                                     </div>
                                     <div  class="row tpositioning-${t} col-md-12" >
                                         
-                                            <input type="hidden" required step="any" name="ttop[]" data-index="${t}" class="tpos tpos-${t} ttop-${t} form-control">
-                                            <input type="hidden" required step="any" name="tleft[]" data-index="${t}" class="tpos tpos-${t} tleft-${t} form-control">
+                                            <input type="hidden" value="5" required step="any" name="ttop[]" data-index="${t}" class="tpos tpos-${t} ttop-${t} form-control">
+                                            <input type="hidden" value="5" required step="any" name="tleft[]" data-index="${t}" class="tpos tpos-${t} tleft-${t} form-control">
                                         
-                                            <input type="hidden" required step="any" name="twidth[]" data-index="${t}" class="tpos tpos-${t} twidth-${t} form-control">
-                                            <input type="hidden" required step="any" name="theight[]" data-index="${t}" class="tpos tpos-${t} theight-${t} form-control">
+                                            <input type="hidden" value="5" required step="any" name="twidth[]" data-index="${t}" class="tpos tpos-${t} twidth-${t} form-control">
+                                            <input type="hidden" value="5" required step="any" name="theight[]" data-index="${t}" class="tpos tpos-${t} theight-${t} form-control">
                                     
                                         <button data-index="${t}" class="btn btn-primary donet-${t} donet" >DONE</button>
 
@@ -717,16 +725,23 @@ $event = App\Event::findOrFail($id);
 
                                     <div  class="row positioning-${n}" >
                                        
-                                        <input type="hidden" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
-                                        <input type="hidden" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
-                                        <input type="hidden" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
-                                        <input type="hidden" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
+                                        <input type="hidden" value="5" step="any" required  name="top[]" data-index="${n}" class="pos pos-${n} top-${n} form-control">
+                                        <input type="hidden" value="5" step="any" required  name="left[]" data-index="${n}" class="pos pos-${n} left-${n} form-control">
+                                        <input type="hidden" value="5" step="any" required  name="width[]" data-index="${n}" class="pos pos-${n} width-${n} form-control">
+                                        <input type="hidden" value="5" step="any" required  name="height[]" data-index="${n}" class="pos pos-${n} height-${n} form-control">
                                 
                                     <button data-index="${n}" class="btn btn-primary done-${n} done" >DONE</button>
 
+
                                     </div>
                                     
-
+                                    <div class="form-group">
+                                                <label for="#landPage" class="mr-1 mb-0">Set Location Status</label>
+                                                <select name="set_location[]" class="form-control">
+                                                    <option value="0"  >Off</option>
+                                                    <option value="1">On</option>
+                                                </select>
+                                            </div>
                                         <div class="col-md-12 flyin mb-2 ">
                                             <div style="display:none" class="image-uploader flyin-${n}">
                                                 <label class="mb-3" for="images">Fly In Video</label>
@@ -735,7 +750,6 @@ $event = App\Event::findOrFail($id);
                                             </div>
                                         </div>
                                    
-
 
 
 
@@ -809,7 +823,25 @@ $event = App\Event::findOrFail($id);
             }
         })
     }
-   
+    function LobbyLocaitonStatus(e){
+        let current_value = e.value;
+        if(current_value == 0){
+            e.value = 1;
+            current_value = 1;
+        }
+        else{
+            e.value = 0;
+            current_value = 0;
+        }
+        $.post("{{ route('eventee.pages.updatelocation') }}",{"id":e.getAttribute("data-id"),"status":current_value},function(res){
+            if(res.code == 200){
+                showMessage(res.message,'success');
+            }
+            else{
+                showMessage(res.message,'error');
+            }
+        });
+    }
     
 </script>
 

@@ -221,7 +221,7 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get('duplicate/{object}/{type}',"Eventee\PageController@duplicate")->name('eventee.duplicate');
     Route::post('/page/Bulkdelete',"Eventee\PageController@BulkDelete")->name('eventee.pages.bulkDelete');
     Route::post('/page/DeleteAll',"Eventee\PageController@DeleteAll")->name('eventee.pages.deleteAll');
-
+    Route::post("link/location","Eventee\PageController@UpdateLocationStatus")->name('eventee.pages.updatelocation');
 
 
 
@@ -493,6 +493,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
             "recaptcha"=>"RecatchaController",
             //            "provisional" => "ProvisionalController",
         ]);
+        //Default Creative
+        Route::get("Default/Creative","AdminCreativeController@index")->name("default.creative");
         // DBManage
         Route::get('delete/Notifications','DBManageController@NotificationDelete')->name('delete.notification.all');
         Route::get('delete/Schedule/Notifications','DBManageController@ScheduleNotificationDelete')->name('delete.schedulenotification.all');

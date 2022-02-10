@@ -437,6 +437,12 @@
                     <span> License </span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route("default.creative") }}">
+                    <i class="fab fa-creative-commons"></i>
+                    <span> Default Creatives </span>
+                </a>
+            </li>
         </ul>
 
 
