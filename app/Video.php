@@ -38,5 +38,5 @@ class Video extends Model
     use SoftDeletes;
     use UUID;
     public $incrementing = false;
-    protected $fillable = [ "owner","url","title","thumbnail"];
+    protected $fillable = [ "owner","url","title","thumbnail","event_id"];
 }

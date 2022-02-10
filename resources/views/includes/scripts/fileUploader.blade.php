@@ -186,7 +186,7 @@
         input.addClass("active-input");
         fileInput.addClass("active-uploader");
         $('#uploadModalContainer').empty();
-        $('#uploadModalContainer').append(`<label class="mb-3" for="images">Upload `+data_type+`
+        $('#uploadModalContainer').append(`<label class="mb-3" for="images">Upload `+data_type+` <small style="color:red"><b>"(File Size Cannot Be More Than 12MB)"</b></small>
             </label>
             <input type="hidden" name="url" class="upload_input" >
             <input type="file" id="setDataType" data-name="url" data-plugins="drop" data-type="`+data_type+`"  />`);
@@ -367,7 +367,7 @@
             <div class="mb-3" >
                 <ul class="nav nav-pills navtab-bg nav-justified" style="margin: 0px -5px;">
                     <li class="nav-item "> 
-                        <a href="#upload" data-toggle="tab" aria-expanded="false" class="nav-link  ">Upload New</a>
+                        <a href="#upload" data-toggle="tab" aria-expanded="false" class="nav-link  ">Upload New </a>
                     </li>
                     <li class="nav-item active "> 
                         <a href="#gallery" data-toggle="tab" aria-expanded="true" class="nav-link active">Gallery</a>

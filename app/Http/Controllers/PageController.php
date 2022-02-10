@@ -125,7 +125,7 @@ class PageController extends Controller
                         $url = $request->gallery_link[$id];
                         break;
                 }
-                Link::create([
+                $link = Link::create([
                     "page"=>$page->id,
                     "name"=> $linkname,
                     "type"=>$request->type[$id],
@@ -134,8 +134,10 @@ class PageController extends Controller
                     "left"=> $request->left[$id],
                     "width"=> $request->width[$id],
                     "height"=> $request->height[$id],
-                    "url" => $url
+                    "url" => $url,
+                    "location_status"=>$request->set_location[$id]
                 ]);
+                dd($link);
             }
         }
 

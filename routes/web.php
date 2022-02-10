@@ -58,6 +58,13 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post('BoothChart',"EventManageController@BoothChartJs")->name('eventee.boothChart');
     Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
+
+    //Media
+    Route::get("/mdeia/{id}","MediaController@index")->name("eventee.media");
+    Route::get("media/create/{id}","MediaController@create")->name("eventee.media.create");
+    Route::POST("media/store/{id}","MediaController@store")->name("eventee.media.store");
+    Route::get("media/create/video/{id}","MediaController@createVideo")->name("eventee.media.createVideo");
+    Route::POST("media/store/video/{id}","MediaController@storeVideo")->name("eventee.media.storeVideo");
     
     //Landing Update
     Route::get('landing/update/status','LandingController@updateStatus')->name('update.landing.status');
@@ -214,7 +221,7 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get('duplicate/{object}/{type}',"Eventee\PageController@duplicate")->name('eventee.duplicate');
     Route::post('/page/Bulkdelete',"Eventee\PageController@BulkDelete")->name('eventee.pages.bulkDelete');
     Route::post('/page/DeleteAll',"Eventee\PageController@DeleteAll")->name('eventee.pages.deleteAll');
-
+    Route::post("link/location","Eventee\PageController@UpdateLocationStatus")->name('eventee.pages.updatelocation');
 
 
 
@@ -486,6 +493,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
             "recaptcha"=>"RecatchaController",
             //            "provisional" => "ProvisionalController",
         ]);
+        //Default Creative
+        Route::get("Default/Creative","AdminCreativeController@index")->name("default.creative");
         // DBManage
         Route::get('delete/Notifications','DBManageController@NotificationDelete')->name('delete.notification.all');
         Route::get('delete/Schedule/Notifications','DBManageController@ScheduleNotificationDelete')->name('delete.schedulenotification.all');

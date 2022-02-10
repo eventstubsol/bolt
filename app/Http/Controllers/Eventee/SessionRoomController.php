@@ -57,6 +57,7 @@ class SessionRoomController extends Controller
                     "owner" => $room->id,
                     "title" => $request->name,
                     "url" => $request->background,
+                    "event_id"=>$id,
                 ]);
             }
             else{
@@ -67,7 +68,8 @@ class SessionRoomController extends Controller
         
                 $room->videoBg()->create([
                     "url"=>$request->video_url,
-                    "title"=>$room->name
+                    "title"=>$room->name,
+                    "event_id"=>$id,
                 ]);
             }
     

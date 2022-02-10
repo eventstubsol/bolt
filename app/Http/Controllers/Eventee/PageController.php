@@ -64,14 +64,16 @@ class PageController extends Controller
             $page->images()->create([
                 "url"=>$request->url,
                 "link"=>"",
-                "title"=>$page->name
+                "title"=>$page->name,
+                'event_id' => $id,
             ]);
         }
         if($request->has("video_url")  && $request->video_url != null){
     
             $page->videoBg()->create([
                 "url"=>$request->video_url,
-                "title"=>$page->name
+                "title"=>$page->name,
+                "event_id"=>$id,
             ]);
         }
         // $pages = Page::with(["images", "links.background"])->get();
@@ -228,6 +230,7 @@ class PageController extends Controller
                         $to = "lounge";
                         break;
                 }
+                
                 $link = Link::create([
                     "page"=>$page->id,
                     "name"=> $linkname,
@@ -241,8 +244,10 @@ class PageController extends Controller
                     "perspective"=>isset($request->perspective[$id])?$request->perspective[$id]:'',
                     "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
                     "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
+                    "location_status"=>$request->set_location[$id]
                
                 ]);
+                // dd($link);
                 if($request->has("bgimages") && isset($request->bgimages[$id]) ){
                     if(count($request->bgimages[$id])>0 ){
                       foreach($request->bgimages[$id] as $bgimage){
@@ -250,7 +255,8 @@ class PageController extends Controller
                           $link->background()->create([
                             "owner"=>$link->id,
                             "url" => $bgimage,
-                            "title" => "link"
+                            "title" => "link",
+                            "event_id" => $id,
                           ]);
                         }
         
@@ -274,7 +280,8 @@ class PageController extends Controller
             $page->images()->create([
                 "url"=>$request->url,
                 "link"=>"",
-                "title"=>$page->name
+                "title"=>$page->name,
+                "event_id" => $id,
             ]);
         }
         $page->videoBg()->delete();
@@ -282,7 +289,8 @@ class PageController extends Controller
         {
             $page->videoBg()->create([
                 "url"=>$request->video_url,
-                "title"=>$page->name
+                "title"=>$page->name,
+                "event_id" =>$id
             ]);
         }
 
@@ -365,9 +373,9 @@ class PageController extends Controller
                     "perspective"=>isset($request->perspective[$id])?$request->perspective[$id]:'',
                     "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
                     "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
+                    "location_status"=>$request->set_location[$id]
                
                 ]);
-                
                 if($request->has("bgimages") && isset($request->bgimages[$id]) ){
                     if(count($request->bgimages[$id])>0 ){
                       foreach($request->bgimages[$id] as $bgimage){
@@ -376,7 +384,8 @@ class PageController extends Controller
                           $link->background()->create([
                             "owner"=>$link->id,
                             "url" => $bgimage,
-                            "title" => "link"
+                            "title" => "link",
+                            "event_id" => $id,
                           ]);
                         }
         
@@ -433,5 +442,17 @@ class PageController extends Controller
             $page->delete();
         }
         return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+    }
+
+    public function UpdateLocationStatus(Request $req){
+       $status = $req->status;
+       $id = $req->id;
+       $link = Link::where("id",$id)->update(['location_status'=>$status]);
+        if($link){
+            return response()->json(['code'=>200,"message"=>"Location Status Is Updated"]);
+        }
+        else{
+            return response()->json(['code'=>500,"message"=>"Something Went Wrong"]);
+        }
     }
 }
