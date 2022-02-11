@@ -98,6 +98,12 @@
         </ul>
     </div>
 </li>
+<li>
+    <a href="{{ route('eventee.restore',$id) }}">
+        <i class="fas fa-trash-restore"></i>
+        <span> Restore Data </span>
+    </a>
+</li>
 {{-- <li>
     <a href="#form" data-toggle="collapse">
         <i class="fas fa-align-justify"></i>
