@@ -495,6 +495,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         ]);
         //Default Creative
         Route::get("Default/Creative","AdminCreativeController@index")->name("default.creative");
+        Route::POST("Default/Creative/post","AdminCreativeController@store")->name("default.creative.store");
         // DBManage
         Route::get('delete/Notifications','DBManageController@NotificationDelete')->name('delete.notification.all');
         Route::get('delete/Schedule/Notifications','DBManageController@ScheduleNotificationDelete')->name('delete.schedulenotification.all');
@@ -546,6 +547,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         // Route::get('details/create','menuDetailsController@index')->('details.create');
         //Event List
         Route::get('event/list','AdminEventController@eventList')->name('admin.event.list');
+      
         /**
          * CHAT USER START
          */
