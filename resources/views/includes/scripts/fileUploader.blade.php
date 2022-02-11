@@ -27,6 +27,28 @@
 
         grid-column-gap: 23px;
         grid-row-gap: 10px;
+        max-height: 90vh;
+        overflow-y: scroll;
+    }
+
+    #gallery-container::-webkit-scrollbar {
+        width: 4px;
+        border-radius: 50px;
+    }
+
+    #gallery-container::-webkit-scrollbar-thumb {
+        background-color: #00a15f;
+        border-radius: 500px;
+    }
+
+    #video-gallery-container::-webkit-scrollbar {
+        width: 4px;
+        border-radius: 50px;
+    }
+
+    #video-gallery-container::-webkit-scrollbar-thumb {
+        background-color: #00a15f;
+        border-radius: 500px;
     }
 </style>
 <script>
