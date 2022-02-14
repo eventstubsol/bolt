@@ -209,13 +209,13 @@
             $secondary_color = App\Event::findOrFail($id)->secondary_color;
         @endphp
         <style>
-            .navbar-custom{
+            /* .navbar-custom{
                 background: {{ $primary_color }};
                
             }
             .navbar-custom a{
                 color: {{ $secondary_color }} !important;
-            }
+            } */
         </style>
     @endif
     @yield("styles_after")

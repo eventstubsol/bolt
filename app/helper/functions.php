@@ -36,6 +36,8 @@ use App\Treasure;
 use App\UserSubtype;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Aws\SecretsManager\SecretsManagerClient; 
+use Aws\Exception\AwsException;
 
 
 include_once "clickableAreasConfig.php";
@@ -893,6 +895,24 @@ function areaStyles($area)
 function assetUrl($url = "")
 {
     return env("UPLOADS_FILE_DRIVER") === "spaces" ? ( env("DO_PUBLIC_URL") . $url ):( env("AWS_URL") . $url);
+}
+
+function myenv($key = "test"){
+    $client = new SecretsManagerClient([
+        'profile' => 'default',
+        'version' => '2017-10-17',
+        'region' => 'us-east-2',
+    ]);
+    $secretName = $key;
+    $result = $client->getSecretValue([
+        'SecretId' => $secretName,
+    ]);
+    if (isset($result['SecretString'])) {
+        $secret = $result['SecretString'];
+    } else {
+        $secret = base64_decode($result['SecretBinary']);
+    }
+    dd($secret);
 }
 
 function storageUrl($url = "")
