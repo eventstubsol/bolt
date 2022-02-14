@@ -274,7 +274,7 @@ class BoothController extends Controller
                     $to = $request->vimeo[$id];
                     break;
                 case "pdf":
-                    $to = $request->pdf[$id];
+                    $to = $request->pdfs[$id];
                     break;
                 case "chat_user":
                     $to = $request->chatuser[$id];
