@@ -27,6 +27,28 @@
 
         grid-column-gap: 23px;
         grid-row-gap: 10px;
+        max-height: 90vh;
+        overflow-y: scroll;
+    }
+
+    #gallery-container::-webkit-scrollbar {
+        width: 4px;
+        border-radius: 50px;
+    }
+
+    #gallery-container::-webkit-scrollbar-thumb {
+        background-color: #00a15f;
+        border-radius: 500px;
+    }
+
+    #video-gallery-container::-webkit-scrollbar {
+        width: 4px;
+        border-radius: 50px;
+    }
+
+    #video-gallery-container::-webkit-scrollbar-thumb {
+        background-color: #00a15f;
+        border-radius: 500px;
     }
 </style>
 <script>
@@ -72,7 +94,12 @@
 
         // add assoc key values, this will be posts values
         formData.append("file", this.file, this.getName());
-        formData.append("event_id", "{{ $id }}");
+        @if(isset($id))
+            formData.append("event_id", "{{ $id }}");
+        @endif
+        @if(isset($event_id))
+            formData.append("event_id", "{{ $event_id }}");
+        @endif
         this.lockForm();
 
         $.ajax({
@@ -180,9 +207,8 @@
         let input = target.closest(".image-uploader").find(`.upload_input`);
         input.addClass("active-input");
         fileInput.addClass("active-uploader");
-        console.log("{{ $id }}");
         $('#uploadModalContainer').empty();
-        $('#uploadModalContainer').append(`<label class="mb-3" for="images">Upload `+data_type+`
+        $('#uploadModalContainer').append(`<label class="mb-3" for="images">Upload `+data_type+` <small style="color:red"><b>"(File Size Cannot Be More Than 12MB)"</b></small>
             </label>
             <input type="hidden" name="url" class="upload_input" >
             <input type="file" id="setDataType" data-name="url" data-plugins="drop" data-type="`+data_type+`"  />`);
@@ -363,7 +389,7 @@
             <div class="mb-3" >
                 <ul class="nav nav-pills navtab-bg nav-justified" style="margin: 0px -5px;">
                     <li class="nav-item "> 
-                        <a href="#upload" data-toggle="tab" aria-expanded="false" class="nav-link  ">Upload New</a>
+                        <a href="#upload" data-toggle="tab" aria-expanded="false" class="nav-link  ">Upload New </a>
                     </li>
                     <li class="nav-item active "> 
                         <a href="#gallery" data-toggle="tab" aria-expanded="true" class="nav-link active">Gallery</a>

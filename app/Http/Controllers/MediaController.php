@@ -23,8 +23,17 @@ class MediaController extends Controller
 
     public function store(Request $req,$id){
         $file = $req->file("media");
+        $fileTypes = ['jpg','jpeg','png'];
         for($i = 0 ; $i < count($file) ; $i++){
-            $mainFile = $file[$i];
+           $mainFile = $file[$i];
+           if(!in_array($mainFile->getClientOriginalExtension(),$fileTypes)){
+               flash("Available File Types 'jpg','jpeg','png'")->error();
+               return redirect()->back();
+            }
+            if($mainFile->getSize() > 12288){
+                flash("Max File Size Is 12 MB")->error();
+                return redirect()->back();
+            }
            $path = $mainFile->store('/uploads',env("UPLOADS_FILE_DRIVER", "public"));
            $image = new Image;
            $image->title = "gallery";
@@ -41,8 +50,18 @@ class MediaController extends Controller
     }
     public function storeVideo(Request $req,$id){
         $file = $req->file("media");
+        $fileTypes = ['mp4','avi','webp','mkv'];
         for($i = 0 ; $i < count($file) ; $i++){
             $mainFile = $file[$i];
+            $mainFile = $file[$i];
+           if(!in_array($mainFile->getClientOriginalExtension(),$fileTypes)){
+               flash("Available File Types 'mp4','avi','webp','mkv'")->error();
+               return redirect()->back();
+            }
+            if($mainFile->getSize() > 12288){
+                flash("Max File Size Is 12 MB")->error();
+                return redirect()->back();
+            }
            $path = $mainFile->store('/uploads',env("UPLOADS_FILE_DRIVER", "public"));
            $video = new Video;
            $video->title = "gallery";

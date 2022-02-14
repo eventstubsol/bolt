@@ -224,9 +224,11 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get('duplicate/{object}/{type}',"Eventee\PageController@duplicate")->name('eventee.duplicate');
     Route::post('/page/Bulkdelete',"Eventee\PageController@BulkDelete")->name('eventee.pages.bulkDelete');
     Route::post('/page/DeleteAll',"Eventee\PageController@DeleteAll")->name('eventee.pages.deleteAll');
+    Route::post("link/location","Eventee\PageController@UpdateLocationStatus")->name('eventee.pages.updatelocation');
 
-
-
+    //Restore Route
+    Route::get("Eventee/Restore/{id}","RestoreController@index")->name("eventee.restore");
+    Route::post("Eventee/Restore/Post","RestoreController@restore")->name("eventee.restore.post");
 
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
@@ -496,6 +498,9 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
             "recaptcha"=>"RecatchaController",
             //            "provisional" => "ProvisionalController",
         ]);
+        //Default Creative
+        Route::get("Default/Creative","AdminCreativeController@index")->name("default.creative");
+        Route::POST("Default/Creative/post","AdminCreativeController@store")->name("default.creative.store");
         // DBManage
         Route::get('delete/Notifications','DBManageController@NotificationDelete')->name('delete.notification.all');
         Route::get('delete/Schedule/Notifications','DBManageController@ScheduleNotificationDelete')->name('delete.schedulenotification.all');
@@ -547,6 +552,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         // Route::get('details/create','menuDetailsController@index')->('details.create');
         //Event List
         Route::get('event/list','AdminEventController@eventList')->name('admin.event.list');
+      
         /**
          * CHAT USER START
          */
