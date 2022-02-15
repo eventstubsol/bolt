@@ -32,7 +32,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 
 
-$appurl = 'localhost'; //env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
+$appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
 
 
