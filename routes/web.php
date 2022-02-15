@@ -32,7 +32,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 
 
-$appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
+$appurl = 'localhost'; //env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
 // to get request domain  dd(\Request::getHost());
 Route::get("/verifydomain", "EventManageController@verifyDomain")->name("verify");
@@ -924,4 +924,6 @@ Route::get("/runSchedularJobs", "SchedularJobsController@runJobs")->name("runJob
            echo 0;
        }*/
 //});
-
+Route::get("aws/secret",function(){
+    AwsSecret();
+});

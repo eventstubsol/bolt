@@ -177,13 +177,12 @@
                                         <input @if($link->type==="custom_page") value="{{$link->to}}" @endif type="text"   name="custom_page[]" class="form-control">
                                     </div>
 
-
                                     <div @if($link->type!=="pdf") style="display: none;" @endif class="image-uploader pdf-{{$ids}} pdf form-group mb-3 col-md-4">
                                         <label for="pdf">PDF </label>
-                                   
                                         <input type="hidden" name="pdfs[]" class="upload_input" @if($link->type==="pdf") value="{{$link->to}}" @endif">
-                                        <input type="file"      data-name="pdfs[]" data-plugins="dropify" data-type="application/pdf"  @if($link->type==="pdf") data-default-file="{{assetUrl($link->to)}}" @endif }} />                                   
+                                        <input type="file"      data-name="pdfs" data-plugins="dropify" data-type="application/pdf"  @if($link->type==="pdf") data-default-file="{{assetUrl($link->to)}}" @endif }} />                                   
                                     </div>
+                                    
                                    
                                     <div class="background_images_{{$ids}} row col-md-12">
                                         @if(isset($link->background[0]))
