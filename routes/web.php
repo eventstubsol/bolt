@@ -34,8 +34,11 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 $appurl = 'localhost'; //env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
 
+
+
 // to get request domain  dd(\Request::getHost());
 Route::get("/verifydomain", "EventManageController@verifyDomain")->name("verify");
+Route::get("/testenv", function(){myenv();})->name("envveri");
 
 Route::group(['domain' => $appurl], function () {
 

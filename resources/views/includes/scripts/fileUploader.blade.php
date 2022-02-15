@@ -1,4 +1,5 @@
-<script id="dropify_script"  async=false defer=false src="{{ asset("assets/libs/dropify/js/dropify.min.js") }}"></script>
+<!-- <script id="dropify_script"  async=false defer=false src="{{ asset("assets/libs/dropify/js/dropify.min.js") }}"></script> -->
+<script  id="dropify_script"  async=false defer=false  src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js" integrity="sha512-8QFTrG0oeOiyWo/VM9Y8kgxdlCryqhIxVeRpWSezdRRAvarxVtwLnGroJgnVW9/XBRduxO/z1GblzPrMQoeuew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
     .img-gallery{
         min-width: 100%;
@@ -27,6 +28,28 @@
 
         grid-column-gap: 23px;
         grid-row-gap: 10px;
+        max-height: 90vh;
+        overflow-y: scroll;
+    }
+
+    #gallery-container::-webkit-scrollbar {
+        width: 4px;
+        border-radius: 50px;
+    }
+
+    #gallery-container::-webkit-scrollbar-thumb {
+        background-color: #00a15f;
+        border-radius: 500px;
+    }
+
+    #video-gallery-container::-webkit-scrollbar {
+        width: 4px;
+        border-radius: 50px;
+    }
+
+    #video-gallery-container::-webkit-scrollbar-thumb {
+        background-color: #00a15f;
+        border-radius: 500px;
     }
 </style>
 <script>
@@ -261,8 +284,8 @@
         $("#dropify_script").on("load",()=>{
             
             initializeFileUploads();
+            initGallery();
         })
-        initGallery();
     });
         function ModClose(){
             $('#exampleModal').modal('toggle');

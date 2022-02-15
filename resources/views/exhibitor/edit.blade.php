@@ -716,8 +716,8 @@
                                     <div  style="display: none;"  class=" pdf-${n} pdf  mb-3 col-md-4">
                                         <div class="image-uploader">
                                         <label for="pdf">PDF </label>
-                                        <input type="hidden" name="pdf[]" class="upload_input">
-                                        <input type="file"    data-name="pdf[]" data-plugins="dropify" data-type="application/pdf" />                                   
+                                        <input type="hidden" name="pdfs[]" class="upload_input">
+                                        <input type="file"    data-name="pdfs[]" data-plugins="dropify" data-type="application/pdf" />                                   
                                         </div>
                                     </div>
                                     <div  style="display: none;"  class="chat_user-${n} chat_user form-group mb-3 col-md-4">
