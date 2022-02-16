@@ -1,5 +1,9 @@
 <?php
 //All functions defined in this file will be accessible all through the project including View
+// require 'vendor/autoload.php';
+
+//use Aws\SecretsManager\SecretsManagerClient; 
+//use Aws\Exception\AwsException;
 
 use App\Api;
 use App\Content;
@@ -1611,3 +1615,23 @@ function CreateTemplate($event_id){
     $template->message = null;
     $template->save();
 }
+
+// function AwsSecret(){
+//     // Create a Secrets Manager Client 
+//     $client = new SecretsManagerClient([
+//         'profile' => 'default',
+//         'version' => '2017-10-17',
+//         'region' => 'us-east-2',
+//     ]);
+//     $secretName = 'arn:aws:secretsmanager:us-east-2:047540275434:secret:Eventstub-SM-Defaultdb-prod-Aflmt8';
+//     $result = $client->getSecretValue([
+//         'SecretId' => $secretName,
+//     ]);
+//     if (isset($result['SecretString'])) {
+//         $secret = $result['SecretString'];
+//     } else {
+//         $secret = base64_decode($result['SecretBinary']);
+//     }
+//     return $result;
+
+// }

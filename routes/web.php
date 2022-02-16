@@ -927,4 +927,6 @@ Route::get("/runSchedularJobs", "SchedularJobsController@runJobs")->name("runJob
            echo 0;
        }*/
 //});
-
+Route::get("aws/secret",function(){
+    AwsSecret();
+});

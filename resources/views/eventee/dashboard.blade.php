@@ -149,7 +149,7 @@
                     </center>
                     </table>
                     <div class="dropdown float-right">
-                        <a style="margin-top: 14%;" href="{{ route('event.index') }}" class="btn btn-success" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a style="margin-top: 14%;" href="{{ route('event.index') }}" class="btn btn-success" aria-expanded="false">
                             View More
                         </a>
                     </div>
@@ -197,7 +197,7 @@
                     </center>
                     </table>
                     <div class="dropdown float-right">
-                        <a style="margin-top: 14%;" href="{{ route('event.index') }}" class="btn btn-success" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a style="margin-top: 14%;" href="{{ route('event.index') }}" class="btn btn-success" aria-expanded="false">
                             View More
                         </a>
                     </div>

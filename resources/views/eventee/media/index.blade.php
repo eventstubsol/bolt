@@ -69,9 +69,9 @@
                             </div>
                         </div>
                         <div class="d-flex align-items-center flex-wrap">
-                            @foreach($images as $url)
+                            @foreach($imageUrl as $url)
                             <section class="box">
-                            @if(isset($url))
+                                @if(isset($url))
                                    
                                     <a href="javajavascript:void(0)" class="d-block"><img class="show" src="{{ assetUrl($url->url) }}"  width="100%" height="100%"></a>
                                    
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                         <div class="d-flex align-items-center">
-                            @foreach($videoes as $url)
+                            @foreach($vidUrl as $url)
                                 <section class="box">
                                 @if(isset($url))
                                    
