@@ -62,7 +62,7 @@
                         <label for="sentTo">Exhibitor<span style="color:red">*</span></label>
                         <select name="sent_to_type_Exhibitor[]" class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user2"  data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
                             <option value="0" disabled>None</option>
-                            @foreach($usersExhibitor as $user)
+                            @foreach($usersExibitor as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}  {{ $user->email }}</option>
                             @endforeach
                         </select>
