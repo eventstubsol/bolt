@@ -301,4 +301,4 @@
          $('#createModal').modal('toggle');
      }
   </script>
-@endsection`
+@endsection

@@ -579,6 +579,7 @@ function initApp() {
             // if (isMobile()) {
             //     document.querySelector("#lobby_view").src = '';
             // }
+            createGroup("general");
             pages.filter("#lobby").show();
             pageChangeActions();
             recordPageView("lobby", "lobby","lobby");

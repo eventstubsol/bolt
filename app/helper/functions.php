@@ -1613,22 +1613,22 @@ function CreateTemplate($event_id){
     $template->save();
 }
 
-function AwsSecret(){
-    // Create a Secrets Manager Client 
-    $client = new SecretsManagerClient([
-        'profile' => 'default',
-        'version' => '2017-10-17',
-        'region' => 'us-east-2',
-    ]);
-    $secretName = 'arn:aws:secretsmanager:us-east-2:047540275434:secret:Eventstub-SM-Defaultdb-prod-Aflmt8';
-    $result = $client->getSecretValue([
-        'SecretId' => $secretName,
-    ]);
-    if (isset($result['SecretString'])) {
-        $secret = $result['SecretString'];
-    } else {
-        $secret = base64_decode($result['SecretBinary']);
-    }
-    return $result;
+// function AwsSecret(){
+//     // Create a Secrets Manager Client 
+//     $client = new SecretsManagerClient([
+//         'profile' => 'default',
+//         'version' => '2017-10-17',
+//         'region' => 'us-east-2',
+//     ]);
+//     $secretName = 'arn:aws:secretsmanager:us-east-2:047540275434:secret:Eventstub-SM-Defaultdb-prod-Aflmt8';
+//     $result = $client->getSecretValue([
+//         'SecretId' => $secretName,
+//     ]);
+//     if (isset($result['SecretString'])) {
+//         $secret = $result['SecretString'];
+//     } else {
+//         $secret = base64_decode($result['SecretBinary']);
+//     }
+//     return $result;
 
-}
+// }
