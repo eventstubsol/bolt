@@ -70,7 +70,11 @@
  
                     <div class="form-group">
                         <div class="image-uploader" id="imgBg" >
-                            <label class="mb-3" for="images">Logo <small style="color:red"><b>(Optional)</b></small></label>
+                            <label class="mb-3" for="images">Logo 
+                                <span>
+                                    <small style="color:red"><b>(Optional)</b></small>
+                                </span>
+                            </label>
                             <input type="hidden" name="logo_url" class="upload_input"  >
                             <input type="file" data-name="logo" data-plugins="dropify" data-type="image"  />
                         </div>
