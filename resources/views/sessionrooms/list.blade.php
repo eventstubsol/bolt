@@ -27,29 +27,31 @@
 {{--                        <a class="btn btn-primary" href="{{ route("sessionrooms.create") }}">Create New</a>--}}
 {{--                    </div>--}}
 {{--                </div>--}}
-                <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Master Room</th>
-                            <th class="text-right mr-2">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      @foreach($sessionrooms as $sessionroom)
-                        <tr>
-                            <td>{{$sessionroom->name}}</td>
-                            <th>{{$sessionroom->master_room}}</th>
-                            <td class="text-right" >
-                                <a href="{{ route("sessionrooms.edit", [
-                                        "sessionroom" => $sessionroom->id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
-                                    <button data-toggle="tooltip" data-placement="top" data-id="{{$sessionroom->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
-                            </td>
-                        </tr>
-                      @endforeach
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Master Room</th>
+                                <th class="text-right mr-2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($sessionrooms as $sessionroom)
+                            <tr>
+                                <td>{{$sessionroom->name}}</td>
+                                <th>{{$sessionroom->master_room}}</th>
+                                <td class="text-right" >
+                                    <a href="{{ route("sessionrooms.edit", [
+                                            "sessionroom" => $sessionroom->id
+                                        ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
+                                        <button data-toggle="tooltip" data-placement="top" data-id="{{$sessionroom->id}}" title="" data-original-title="Delete" class="delete btn btn-danger ml-1 "  type="submit"><i class="fas fa-trash-alt"></i></button>        
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
             </div> <!-- end card body-->
         </div> <!-- end card -->
