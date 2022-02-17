@@ -47,7 +47,7 @@
                       @foreach($menus as $menu)
                         <tr class="checkedbox" data-id="{{ $menu->id }}">
                             <td width="5%" class="incheck" style="display: none" ><input type="checkbox"  onclick="checkedValue(this)"  class="inchecked"></td>
-                            <td>{{$menu->name}}</td>
+                            <td>@if($menu->name  == 'personalagenda')Personal Agenda @else {{$menu->name}} @endif</td>
                             <td>{{ $menu->status ? 'Active' : 'Disabled' }}</td>
                          <td class="text-right" >
                               @if($menu->status)

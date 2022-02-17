@@ -134,10 +134,10 @@
     <div class="collapse" id="notification">
         <ul class="nav-second-level">
             <li>
-                <a href="{{ route("eventee.notification",$id) }}">Instantly Send Notification</a>
+                <a href="{{ route("eventee.notification",$id) }}">Instant Notification</a>
             </li>
             <li>
-                <a href="{{ route("eventee.schedule",$id) }}">Schedule A Notification</a>
+                <a href="{{ route("eventee.schedule",$id) }}">Schedule Notification</a>
             </li>
         </ul>
     </div>
@@ -265,7 +265,7 @@
 <li>
     <a href="#booths" data-toggle="collapse">
         <i data-feather="grid"></i>
-        <span> Booths </span>
+        <span> Manage Booths </span>
     </a>
     <div class="collapse" id="booths">
         <ul class="nav-second-level">

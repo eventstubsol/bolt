@@ -74,7 +74,11 @@ Create Users
                         </label>
                         <select class="form-control" id="user-type" name="type"    >
                             @foreach(USER_TYPES as $type)
-                            <option value="{{ $type }}">{{ ucfirst($type) }}</option>
+                                @if($type == 'exhibiter')
+                                    <option value="exhibiter">Exhibitor</option>
+                                @else
+                                    <option value="{{ $type }}">{{ ucfirst($type) }}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

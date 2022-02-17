@@ -5,11 +5,11 @@
 @endsection
 
 @section("page_title")
-    Sessions Page
+Manage Sessions
 @endsection
 
 @section("title")
-    Sessions Page
+Manage Sessions
 @endsection
 
 @section("breadcrumbs")

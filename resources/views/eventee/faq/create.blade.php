@@ -23,7 +23,7 @@
     </style>
 @endsection
 @section('page_title')
-   FREQUESTLY ASKED QUESTION(FAQ)  
+Frequently ASKED QUESTION(FAQ)  
 @endsection
 
 @section('title')
