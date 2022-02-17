@@ -72,7 +72,7 @@
                         <div class="image-uploader" id="imgBg" >
                             <label class="mb-3" for="images">Logo 
                                 <span>
-                                    <small style="color:red"><b>(Optional)</b></small>
+                                    <h6 style="color:red"><b>(Optional)</b></h6>
                                 </span>
                             </label>
                             <input type="hidden" name="logo_url" class="upload_input"  >
