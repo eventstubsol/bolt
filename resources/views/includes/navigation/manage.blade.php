@@ -243,6 +243,11 @@
                     <span> Landing Page Settings</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route("onboard.settings",$id) }}">
+                    <span> Onboard Settings</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>
@@ -265,7 +270,7 @@
 <li>
     <a href="#booths" data-toggle="collapse">
         <i data-feather="grid"></i>
-        <span> Manage Booths </span>
+        <span> Managee Booths </span>
     </a>
     <div class="collapse" id="booths">
         <ul class="nav-second-level">
