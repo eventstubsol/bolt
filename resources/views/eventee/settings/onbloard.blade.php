@@ -46,7 +46,7 @@ Onboard Settings
                     Onboard Character Text & Locations     
                 </div> 
                 <div class="d-flex">
-                    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary float-right">Create</button>
+                    <button type="button" data-toggle="modal" data-target="#OnboardModal" class="btn btn-primary float-right">Create</button>
                 </div> 
             </div>
             <div class="card-body"> 
@@ -95,7 +95,7 @@ Onboard Settings
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="OnboardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
