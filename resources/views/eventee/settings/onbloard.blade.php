@@ -30,6 +30,10 @@ Onboard Settings
                     <input type="hidden" name="url" class="upload_input" value="@if($event->character_url != null){{ $event->character_url }}@endif">
                     <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="@if($event->character_url != null){{ $event->character_url }}@endif" />
                 </div>
+                <div class="form-group">
+                    <label for="">Hover Text</label>
+                    <input type="text" class="form-control" value="@if($event->character_url != null){{ $event->character_hover }}@endif">
+                </div>
                 <button type="submit" class="btn btn-success float-right">Save</button>
                </form>
             </div>
