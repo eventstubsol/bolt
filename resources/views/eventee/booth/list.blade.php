@@ -12,11 +12,11 @@
 @endsection
 
 @section("page_title")
-    Booths Page
+    Manage Booths 
 @endsection
 
 @section("title")
-    Booths Page
+Manage Booths 
 @endsection
 
 @section("breadcrumbs")
