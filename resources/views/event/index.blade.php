@@ -799,6 +799,9 @@ $user = Auth::user();
 
     {{-- @include("event.modules.ByLaws") --}}
     @include("event.modules.FlyIn")
+    @include("event.modules.Onboarding")
+
+
 
 
     <div id="chat_div"></div>
