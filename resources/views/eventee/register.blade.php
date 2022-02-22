@@ -1,373 +1,251 @@
-@extends('layouts.auth')
-@section('title')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-    Register
-@endsection
-@section("styles_after")
     <style>
-        /* body.auth .login-container .form .register label{
-            display: block;
-        } */
-        form{
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 3%;
-            max-height: 25rem;
+        body{
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: url('../assets/images/reg.jpg') no-repeat left top;
+            background-size: cover;
         }
-        @media screen and (min-width: 1000px) and (min-height: 1400px) and (max-width:1366px) and (max-height:768px){
-            /* STYLES HERE */
-            form{
-                overflow-x: auto;
-                white-space: nowrap;
-                padding: 3%;
-                max-height: 25%;
-            }
+        
+        img{
+            max-width: 100%;
+            width: auto;
+        }
+        .logo{
+            margin: 20px 0 0 35px;
+        }
+        .regBlock{
+            padding-bottom: 80px;
+        }
+
+        .formBlock{
+            border-radius: 10px;
+            border: 1px solid #fff;
+            background: #ffffff70;
+            padding: 40px 35px;
+        }
+
+        .formBlock h5{
+            font-size: 26px;
+            padding-bottom: 35px;
+            text-align: center;
+            font-weight: 600;
+            color: #fff;
+        }
+        .form-control{
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 14px;
+            min-height: 46px;
+            border-radius: 6px;
+        }
+        .form-control:focus{
+            box-shadow: none;
+            border-color: #007a7c;
+        }
+        .form-control::-webkit-input-placeholder { 
+            color: #007a7c;
+        }
+        .form-control:-ms-input-placeholder { 
+            color: #007a7c;
+        }
+        .form-control::placeholder {
+            color: #007a7c;
+        }
+
+        .btn-reg{
+            background: #0fb602;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid #fff;
+            padding: 0.6rem 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .phone-number-prefix{
+            background: #cecece;
+            min-height: 46px;
+            border-radius: 6px 0 0px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 14px;
+            padding: 0 5px;
+            min-width: 48px;
+        }
+
+        .phone-number .form-control{
+            border-radius: 0px 6px 6px 0px;
         }
     </style>
-@endsection
+</head>
+<body>
+<div class="regBlock">
+    <div class="logo">
+        <img src="/assets/images/reg_logo.png" alt="">
+    </div>
+    <div class="row align-items-center pe-5">
+        <div class="col-md-4 offset-md-1">
+            <img src="/assets/images/reg_lt_img.png" alt="">
+        </div>
+        <div class="col-md-7 ps-5">
+            <div class="formBlock">
+                <h5>Registration</h5>
+                <form action="">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder ="First Name*">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder ="Last Name*">
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder ="Corporate e-Mail Address *">
+                    <select class="form-control" placeholder ="Last Name*" id="phone-number-country" name="phone-number-country" autocomplete="off"></select>
+                    <div class="phone-number mb-3 d-flex">
+                        <div class="phone-number-prefix"></div>
+                        <input class="form-control mb-0" id="phone-number" name="phone-number" type="tel" autocomplete="off">
+                        <input type="hidden" id="phone-number-full" name="phone-number-full" />
+                    </div>
 
-@section('form')
-    <form method="POST" class="register mt-6" action="{{ route('Eventee.register') }}">
-        @csrf
-        <div class="move form-group row input-group">
-            <div class="form-group">
-                <label for="name">First Name
-                    <span style="color:red">*</span>
-                </label>
-                <input id="name" type="text" class="field form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"   autocomplete="first-name" placeholder="First Name" autofocus>
-                @error('name')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-            {{-- &nbsp; --}}
-            <div class=" form-group">
-                <label for="last_name">Last Name
-                    <span style="color:red">*</span>
-                </label>
-                <input id="last_name" type="text" class="field form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}"   autocomplete="family-name" placeholder="Last Name">
-                @error('last_name')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                    <input type="text" class="form-control" placeholder ="Password *">
+                    <input type="text" class="form-control" placeholder ="Job Title *">
+                    <input type="text" class="form-control" placeholder ="">
+
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-reg">Register</button>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="move2  form-group row input-group">
-            <div class="form-group">
-                <label for="email" >Corporate E-Mail Address
-                    <span style="color:red">*</span>
-                </label>
-                <input id="email" type="email" class="field form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"   autocomplete="email" placeholder="Email Address" >
+    </div>
+</div>
 
-                @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
+<script src="//code.jquery.com/jquery.js"></script>
+<script type="text/javascript" src="https://1cf5229636340d3e1dd5-0eccc4d82b7628eccb93a74a572fd3ee.ssl.cf1.rackcdn.com/testing/jquery.formatter.min.js"></script>
+<script type="text/javascript" src="https://1cf5229636340d3e1dd5-0eccc4d82b7628eccb93a74a572fd3ee.ssl.cf1.rackcdn.com/testing/intlTelInput.min.js"></script>
 
-            <div class="form-group">
-                <label for="phone" >Phone Number
-                    <span style="color:red">*</span>
-                </label>
-                <input id="phone" type="tel" class="field form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}"   autocomplete="tel" placeholder="Phone Number">
-                @error('phone')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="password" >Password
-                    <span style="color:red">*</span>
-                </label>
-                <input id="password" type="password" class="field form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" placeholder="Password">
-                @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
 
-        <div class="move3 form-group row input-group">
-            <div class="form-group">
-                <label for="job_title" >Job Title
-                    <span style="color:red">*</span>
-                </label>
-                <input id="job_title" type="text" class="field form-control @error('job_title') is-invalid @enderror" style="width:100%" name="job_title" value="{{ old('job_title') }}" placeholder="Job Title">
-                @error('job_title')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
+<script>
+const intlPhoneNumber = function(countryCode) {
+  // get the country data from the plugin
+  const countryData = $.fn.intlTelInput.getCountryData();
+  const telInput = $("#phone-number");
+  const telInputLabel = telInput.parents(".form-group").find("label");
+  const countryDropdown = $("#phone-number-country");
+  const phonePrefix = $('.phone-number-prefix');
+  const fullPhoneNumber = $('#phone-number-full');
+  const errorMsg = $("#error-msg");
+  const initCountry = countryCode || 'us';
+  let pattern = '';
+  
+  //set initial pattern for formatting
+  if (initCountry === 'us') {
+    pattern = '({{999}}) {{999}}-{{9999}}';
+  } else {
+    // using as temp until formatting on init figured out
+    pattern = '{{9999999999999999999999}}'; 
+  }
+  
+  // reset function to reset error state on validation
+  const reset = function() {
+    telInput.attr("placeholder", "PHONE NUMBER");
+    telInput.removeClass("has-error");
+    telInputLabel.removeClass("has-error");
+    errorMsg.addClass("hidden-xs-up");
+  };
 
-        <div class="move4 form-group row input-group">
-            <div class="form-group">
-                <label for="country" >Country
-                    <span style="color:red">*</span>
-                </label>
-                <select id="country" class="form-control" name="country">
-                    <option value="Afganistan">Afghanistan</option>
-                    <option value="Albania">Albania</option>
-                    <option value="Algeria">Algeria</option>
-                    <option value="American Samoa">American Samoa</option>
-                    <option value="Andorra">Andorra</option>
-                    <option value="Angola">Angola</option>
-                    <option value="Anguilla">Anguilla</option>
-                    <option value="Antigua & Barbuda">Antigua & Barbuda</option>
-                    <option value="Argentina">Argentina</option>
-                    <option value="Armenia">Armenia</option>
-                    <option value="Aruba">Aruba</option>
-                    <option value="Australia">Australia</option>
-                    <option value="Austria">Austria</option>
-                    <option value="Azerbaijan">Azerbaijan</option>
-                    <option value="Bahamas">Bahamas</option>
-                    <option value="Bahrain">Bahrain</option>
-                    <option value="Bangladesh">Bangladesh</option>
-                    <option value="Barbados">Barbados</option>
-                    <option value="Belarus">Belarus</option>
-                    <option value="Belgium">Belgium</option>
-                    <option value="Belize">Belize</option>
-                    <option value="Benin">Benin</option>
-                    <option value="Bermuda">Bermuda</option>
-                    <option value="Bhutan">Bhutan</option>
-                    <option value="Bolivia">Bolivia</option>
-                    <option value="Bonaire">Bonaire</option>
-                    <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
-                    <option value="Botswana">Botswana</option>
-                    <option value="Brazil">Brazil</option>
-                    <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
-                    <option value="Brunei">Brunei</option>
-                    <option value="Bulgaria">Bulgaria</option>
-                    <option value="Burkina Faso">Burkina Faso</option>
-                    <option value="Burundi">Burundi</option>
-                    <option value="Cambodia">Cambodia</option>
-                    <option value="Cameroon">Cameroon</option>
-                    <option value="Canada">Canada</option>
-                    <option value="Canary Islands">Canary Islands</option>
-                    <option value="Cape Verde">Cape Verde</option>
-                    <option value="Cayman Islands">Cayman Islands</option>
-                    <option value="Central African Republic">Central African Republic</option>
-                    <option value="Chad">Chad</option>
-                    <option value="Channel Islands">Channel Islands</option>
-                    <option value="Chile">Chile</option>
-                    <option value="China">China</option>
-                    <option value="Christmas Island">Christmas Island</option>
-                    <option value="Cocos Island">Cocos Island</option>
-                    <option value="Colombia">Colombia</option>
-                    <option value="Comoros">Comoros</option>
-                    <option value="Congo">Congo</option>
-                    <option value="Cook Islands">Cook Islands</option>
-                    <option value="Costa Rica">Costa Rica</option>
-                    <option value="Cote DIvoire">Cote DIvoire</option>
-                    <option value="Croatia">Croatia</option>
-                    <option value="Cuba">Cuba</option>
-                    <option value="Curaco">Curacao</option>
-                    <option value="Cyprus">Cyprus</option>
-                    <option value="Czech Republic">Czech Republic</option>
-                    <option value="Denmark">Denmark</option>
-                    <option value="Djibouti">Djibouti</option>
-                    <option value="Dominica">Dominica</option>
-                    <option value="Dominican Republic">Dominican Republic</option>
-                    <option value="East Timor">East Timor</option>
-                    <option value="Ecuador">Ecuador</option>
-                    <option value="Egypt">Egypt</option>
-                    <option value="El Salvador">El Salvador</option>
-                    <option value="Equatorial Guinea">Equatorial Guinea</option>
-                    <option value="Eritrea">Eritrea</option>
-                    <option value="Estonia">Estonia</option>
-                    <option value="Ethiopia">Ethiopia</option>
-                    <option value="Falkland Islands">Falkland Islands</option>
-                    <option value="Faroe Islands">Faroe Islands</option>
-                    <option value="Fiji">Fiji</option>
-                    <option value="Finland">Finland</option>
-                    <option value="France">France</option>
-                    <option value="French Guiana">French Guiana</option>
-                    <option value="French Polynesia">French Polynesia</option>
-                    <option value="French Southern Ter">French Southern Ter</option>
-                    <option value="Gabon">Gabon</option>
-                    <option value="Gambia">Gambia</option>
-                    <option value="Georgia">Georgia</option>
-                    <option value="Germany">Germany</option>
-                    <option value="Ghana">Ghana</option>
-                    <option value="Gibraltar">Gibraltar</option>
-                    <option value="Great Britain">Great Britain</option>
-                    <option value="Greece">Greece</option>
-                    <option value="Greenland">Greenland</option>
-                    <option value="Grenada">Grenada</option>
-                    <option value="Guadeloupe">Guadeloupe</option>
-                    <option value="Guam">Guam</option>
-                    <option value="Guatemala">Guatemala</option>
-                    <option value="Guinea">Guinea</option>
-                    <option value="Guyana">Guyana</option>
-                    <option value="Haiti">Haiti</option>
-                    <option value="Hawaii">Hawaii</option>
-                    <option value="Honduras">Honduras</option>
-                    <option value="Hong Kong">Hong Kong</option>
-                    <option value="Hungary">Hungary</option>
-                    <option value="Iceland">Iceland</option>
-                    <option value="Indonesia">Indonesia</option>
-                    <option value="India" selected>India</option>
-                    <option value="Iran">Iran</option>
-                    <option value="Iraq">Iraq</option>
-                    <option value="Ireland">Ireland</option>
-                    <option value="Isle of Man">Isle of Man</option>
-                    <option value="Israel">Israel</option>
-                    <option value="Italy">Italy</option>
-                    <option value="Jamaica">Jamaica</option>
-                    <option value="Japan">Japan</option>
-                    <option value="Jordan">Jordan</option>
-                    <option value="Kazakhstan">Kazakhstan</option>
-                    <option value="Kenya">Kenya</option>
-                    <option value="Kiribati">Kiribati</option>
-                    <option value="Korea North">Korea North</option>
-                    <option value="Korea Sout">Korea South</option>
-                    <option value="Kuwait">Kuwait</option>
-                    <option value="Kyrgyzstan">Kyrgyzstan</option>
-                    <option value="Laos">Laos</option>
-                    <option value="Latvia">Latvia</option>
-                    <option value="Lebanon">Lebanon</option>
-                    <option value="Lesotho">Lesotho</option>
-                    <option value="Liberia">Liberia</option>
-                    <option value="Libya">Libya</option>
-                    <option value="Liechtenstein">Liechtenstein</option>
-                    <option value="Lithuania">Lithuania</option>
-                    <option value="Luxembourg">Luxembourg</option>
-                    <option value="Macau">Macau</option>
-                    <option value="Macedonia">Macedonia</option>
-                    <option value="Madagascar">Madagascar</option>
-                    <option value="Malaysia">Malaysia</option>
-                    <option value="Malawi">Malawi</option>
-                    <option value="Maldives">Maldives</option>
-                    <option value="Mali">Mali</option>
-                    <option value="Malta">Malta</option>
-                    <option value="Marshall Islands">Marshall Islands</option>
-                    <option value="Martinique">Martinique</option>
-                    <option value="Mauritania">Mauritania</option>
-                    <option value="Mauritius">Mauritius</option>
-                    <option value="Mayotte">Mayotte</option>
-                    <option value="Mexico">Mexico</option>
-                    <option value="Midway Islands">Midway Islands</option>
-                    <option value="Moldova">Moldova</option>
-                    <option value="Monaco">Monaco</option>
-                    <option value="Mongolia">Mongolia</option>
-                    <option value="Montserrat">Montserrat</option>
-                    <option value="Morocco">Morocco</option>
-                    <option value="Mozambique">Mozambique</option>
-                    <option value="Myanmar">Myanmar</option>
-                    <option value="Nambia">Nambia</option>
-                    <option value="Nauru">Nauru</option>
-                    <option value="Nepal">Nepal</option>
-                    <option value="Netherland Antilles">Netherland Antilles</option>
-                    <option value="Netherlands">Netherlands (Holland, Europe)</option>
-                    <option value="Nevis">Nevis</option>
-                    <option value="New Caledonia">New Caledonia</option>
-                    <option value="New Zealand">New Zealand</option>
-                    <option value="Nicaragua">Nicaragua</option>
-                    <option value="Niger">Niger</option>
-                    <option value="Nigeria">Nigeria</option>
-                    <option value="Niue">Niue</option>
-                    <option value="Norfolk Island">Norfolk Island</option>
-                    <option value="Norway">Norway</option>
-                    <option value="Oman">Oman</option>
-                    <option value="Pakistan">Pakistan</option>
-                    <option value="Palau Island">Palau Island</option>
-                    <option value="Palestine">Palestine</option>
-                    <option value="Panama">Panama</option>
-                    <option value="Papua New Guinea">Papua New Guinea</option>
-                    <option value="Paraguay">Paraguay</option>
-                    <option value="Peru">Peru</option>
-                    <option value="Phillipines">Philippines</option>
-                    <option value="Pitcairn Island">Pitcairn Island</option>
-                    <option value="Poland">Poland</option>
-                    <option value="Portugal">Portugal</option>
-                    <option value="Puerto Rico">Puerto Rico</option>
-                    <option value="Qatar">Qatar</option>
-                    <option value="Republic of Montenegro">Republic of Montenegro</option>
-                    <option value="Republic of Serbia">Republic of Serbia</option>
-                    <option value="Reunion">Reunion</option>
-                    <option value="Romania">Romania</option>
-                    <option value="Russia">Russia</option>
-                    <option value="Rwanda">Rwanda</option>
-                    <option value="St Barthelemy">St Barthelemy</option>
-                    <option value="St Eustatius">St Eustatius</option>
-                    <option value="St Helena">St Helena</option>
-                    <option value="St Kitts-Nevis">St Kitts-Nevis</option>
-                    <option value="St Lucia">St Lucia</option>
-                    <option value="St Maarten">St Maarten</option>
-                    <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
-                    <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
-                    <option value="Saipan">Saipan</option>
-                    <option value="Samoa">Samoa</option>
-                    <option value="Samoa American">Samoa American</option>
-                    <option value="San Marino">San Marino</option>
-                    <option value="Sao Tome & Principe">Sao Tome & Principe</option>
-                    <option value="Saudi Arabia">Saudi Arabia</option>
-                    <option value="Senegal">Senegal</option>
-                    <option value="Seychelles">Seychelles</option>
-                    <option value="Sierra Leone">Sierra Leone</option>
-                    <option value="Singapore">Singapore</option>
-                    <option value="Slovakia">Slovakia</option>
-                    <option value="Slovenia">Slovenia</option>
-                    <option value="Solomon Islands">Solomon Islands</option>
-                    <option value="Somalia">Somalia</option>
-                    <option value="South Africa">South Africa</option>
-                    <option value="Spain">Spain</option>
-                    <option value="Sri Lanka">Sri Lanka</option>
-                    <option value="Sudan">Sudan</option>
-                    <option value="Suriname">Suriname</option>
-                    <option value="Swaziland">Swaziland</option>
-                    <option value="Sweden">Sweden</option>
-                    <option value="Switzerland">Switzerland</option>
-                    <option value="Syria">Syria</option>
-                    <option value="Tahiti">Tahiti</option>
-                    <option value="Taiwan">Taiwan</option>
-                    <option value="Tajikistan">Tajikistan</option>
-                    <option value="Tanzania">Tanzania</option>
-                    <option value="Thailand">Thailand</option>
-                    <option value="Togo">Togo</option>
-                    <option value="Tokelau">Tokelau</option>
-                    <option value="Tonga">Tonga</option>
-                    <option value="Trinidad & Tobago">Trinidad & Tobago</option>
-                    <option value="Tunisia">Tunisia</option>
-                    <option value="Turkey">Turkey</option>
-                    <option value="Turkmenistan">Turkmenistan</option>
-                    <option value="Turks & Caicos Is">Turks & Caicos Is</option>
-                    <option value="Tuvalu">Tuvalu</option>
-                    <option value="Uganda">Uganda</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="Ukraine">Ukraine</option>
-                    <option value="United Arab Erimates">United Arab Emirates</option>
-                    <option value="United States of America">United States of America</option>
-                    <option value="Uraguay">Uruguay</option>
-                    <option value="Uzbekistan">Uzbekistan</option>
-                    <option value="Vanuatu">Vanuatu</option>
-                    <option value="Vatican City State">Vatican City State</option>
-                    <option value="Venezuela">Venezuela</option>
-                    <option value="Vietnam">Vietnam</option>
-                    <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
-                    <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
-                    <option value="Wake Island">Wake Island</option>
-                    <option value="Wallis & Futana Is">Wallis & Futana Is</option>
-                    <option value="Yemen">Yemen</option>
-                    <option value="Zaire">Zaire</option>
-                    <option value="Zambia">Zambia</option>
-                    <option value="Zimbabwe">Zimbabwe</option>
-                </select>
-            </div>
+  // populate the country dropdown with intl-tel-input countries data
+  $.each(countryData, function(i, country) {
+    countryDropdown.append($("<option></option>").attr("value", country.iso2).text(country.name));
+  });
 
-            
-        </div>
+  // init plugin for formatting placeholders
+  telInput.intlTelInput({
+    allowDropdown: false,
+    initialCountry: initCountry,
+    utilsScript: "https://1cf5229636340d3e1dd5-0eccc4d82b7628eccb93a74a572fd3ee.ssl.cf1.rackcdn.com/testing/utils.js"
+  });
+  
+    // set dropdowns initial value
+  const initialCountry = telInput.intlTelInput("getSelectedCountryData").iso2;
+  let dialCode = telInput.intlTelInput("getSelectedCountryData").dialCode;
+  countryDropdown.val(initialCountry);
+  phonePrefix.text("+" + dialCode);
 
-        <div class="input-group form-group">
-            <div class="col-md-12 mb-2">
-                <button type="submit" class="log-btn theme-btn btn primary-filled">{{ __('Register') }}</button>
-            </div>
-        </div>
-    </form>
-@endsection
+  // init format
+  telInput.formatter({
+    'pattern': pattern
+  });  
+  
+  // delete intl-tel-input items that aren't needed
+  $('.flag-container').remove();
+  $('.intl-tel-input').replaceWith(function() {
+    return $('#phone-number', this);
+  });
+
+  // set placeholder
+  telInput.attr("placeholder", "PHONE NUMBER");
+
+  // on blur: validate
+  telInput.blur(function() {
+    // reset states
+    reset();
+
+    if ($.trim(telInput.val())) {
+      // if number is not valid
+      if (telInput.intlTelInput("isValidNumber")) {
+        // set hidden input to dial code + inputted number
+        fullPhoneNumber.val(telInput.intlTelInput("getSelectedCountryData").dialCode + telInput.val());
+      } else {
+        // set error states
+        telInput.addClass("has-error");
+        telInputLabel.addClass("has-error");
+        errorMsg.removeClass("hidden-xs-up");
+        //clear hidden input val
+        fullPhoneNumber.val("");
+      }
+    }
+  });
+
+  // on keyup / change flag: reset
+  telInput.on("keyup change", reset);
+
+  // listen to the country dropdown for changes.
+  // updates placeholder and prefix when changed
+  countryDropdown.change(function() {
+    // Update Placeholder via plugin - so we can get the example number + format
+    telInput.intlTelInput("setCountry", $(this).val());
+    // Update Dial Code Prefix
+    dialCode = telInput.intlTelInput("getSelectedCountryData").dialCode;
+    phonePrefix.text("+" + dialCode);
+    // Use updated placeholder to define formatting pattern
+    pattern = telInput.attr("placeholder").replace(new RegExp("[0-9]", "g"), "9").replace(/([9]\d{0,10})/g, '{{"$1"}}');
+    // update formatter
+    telInput.formatter().resetPattern(pattern);
+    // clear telephone input to prevent validation errors
+    telInput.val("");
+    // update placeholder to specific
+    telInput.attr("placeholder", "PHONE NUMBER");
+  });
+};
+
+// Testing for prepopulation. If country code not supplied: default = 'us'
+// const initCountryCode = 'ca'; // uncomment to pass in as param
+intlPhoneNumber();
+</script>
+</body>
+</html>
