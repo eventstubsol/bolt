@@ -93,12 +93,14 @@ $user = Auth::user();
             min-width: max-content;
             max-width: 25%;
             margin-top: 15px;
-        }
-
-        .tab-content .nav-justified .nav-item:nth-child(1) a {
-            background: #ff7549;
+            background-color: {{ $event->primary_color }} !important;
             color: #fff;
         }
+
+        /* .tab-content .nav-justified .nav-item:nth-child(1) a {
+            background: #ff7549;
+            color: #fff;
+        } */
 
         button.pb-button {
             color: {{ $event->secondary_color }} !important;
@@ -107,7 +109,7 @@ $user = Auth::user();
             color: {{ $event->secondary_color }} ;
         }
 
-        .tab-content .nav-justified .nav-item:nth-child(2) a {
+        /* .tab-content .nav-justified .nav-item:nth-child(2) a {
             background: #1b9e84;
             color: #fff;
         }
@@ -150,7 +152,7 @@ $user = Auth::user();
         .tab-content .nav-justified .nav-item:nth-child(10) a {
             background: #563d3d;
             color: #fff;
-        }
+        } */
 
         .tab-content .nav-justified .nav-item a.active {
             background: none;
@@ -1135,7 +1137,7 @@ $user = Auth::user();
     <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
     <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
 
-    @include("includes.scripts.fileUploader")
+    @include("includes.scripts.fileUploaderFrontend")
     @include("includes.scripts.sweetalert2")
 
     {{-- Select2 init --}}

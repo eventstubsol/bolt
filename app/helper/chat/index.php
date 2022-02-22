@@ -58,6 +58,54 @@ function createApp($event){
     createWidget($chat_app);
     return $chat_app;
 }
+function getAuthToken($appId,$apiKey,$user_id){
+    // dd($appId);
+    $response = Http::withHeaders([
+        'apiKey' => $apiKey, 
+        "Content-Type"=>"application/json",
+        "Accept"=>"application/json",
+        ])
+        ->post("https://$appId.api-eu.cometchat.io/v2"."/users/$user_id/auth_tokens", []);
+    // return ($response);
+    return  json_decode($response)->data->authToken;
+}
+
+
+function createPoll($chat_app,$question,$options,$reciever,$reciever_type,$user_id){
+    $appId = $chat_app->appid;
+    // $res = getGroups($chat_app);
+    // dd($res);
+    $body = [
+        "question"  => $question,
+        "options"  =>  $options,
+        "receiver"  => $reciever,
+        "receiverType"  => $reciever_type,
+    ];
+
+    $authToken = (getAuthToken($chat_app->appid,$chat_app->apiKey,$user_id));
+    $response = Http::withHeaders([
+        'appId' => $appId,
+        'authToken'=>$authToken,
+        "Content-Type"=>"application/json",
+        "Accept"=>"application/json",
+        ])
+        ->post("https://polls-eu.cometchat.io/v2/create", $body);   
+    return $response;
+    
+}
+
+
+function getGroups($chat_app){
+    $response = Http::withHeaders([
+        'apiKey' => $chat_app->apiKey, 
+        "Content-Type"=>"application/json",
+        "Accept"=>"application/json",
+        ])
+        ->get("https://$chat_app->appid.api-eu.cometchat.io/v2"."/groups");
+
+    return json_decode($response->body())->data;
+    
+}
 
 function createWidget($chat_app){
     //Enable Widget  widget
@@ -142,7 +190,8 @@ function updateWidget($chat_app,$settings){
             "style"=>[
                 "docked_layout_icon_background"=>$settings->docked_layout_icon_background,
                 "docked_layout_icon_close"=>$settings->docked_layout_icon_close,
-                "docked_layout_icon_open"=>$settings->docked_layout_icon_open
+                "docked_layout_icon_open"=>$settings->docked_layout_icon_open,
+                "custom_css"=>".option__videocall-group{ display: none }"
             ],
             "sidebar"=>[
                     "chats"=>"true",
@@ -233,6 +282,32 @@ function createUser($chat_app,$user){
             'uid' => $user->id,
             'name' => $user->name
         ]);
+        // dd($response->body());
+}
+function updateProfile($chat_app,$user){
+    $url = "https://api-eu.cometchat.io";
+    $response = Http::withHeaders(
+        [
+            "apiKey" => $chat_app->apiKey,
+            "appId" => $chat_app->appid,
+            "Accept-Encoding" => "deflate, gzip",
+            "Content-Encoding" => "gzip"
+        ])->post($url . '/v2.0/users', [
+            'uid' => $user->id,
+            'name' => $user->name,
+            'avatar' => assetUrl($user->profileImage)
+        ]);
+        // dd($response->body());
+}
+function deleteUser($chat_app,$user){
+    $url = "https://api-eu.cometchat.io";
+    $response = Http::withHeaders(
+        [
+            "apiKey" => $chat_app->apiKey,
+            "appId" => $chat_app->appid,
+            "Accept-Encoding" => "deflate, gzip",
+            "Content-Encoding" => "gzip"
+        ])->delete($url . '/v2.0/users/'.$user->id);
         // dd($response->body());
 }
 function chatPostRequest($route,$body){

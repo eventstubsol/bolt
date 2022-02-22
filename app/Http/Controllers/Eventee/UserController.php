@@ -23,6 +23,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 use App\Http\Requests\UserFormRequest;
 use App\Http\Requests\SubTypeFormRequest;
 use stdClass;
+use App\CometChat;
 
 class UserController extends Controller
 {
@@ -340,7 +341,10 @@ class UserController extends Controller
      */
     public function destroy(Request $req)
     {
+        
         $user = User::findOrFail($req->id);
+        $chat_app = CometChat::where("event_id",$user->event_id)->first();
+        deleteUser($chat_app,$user);
         
         $user->delete();
         return response()->json(['message'=>"User Deleted Succesfully"]);

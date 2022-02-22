@@ -85,6 +85,9 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
 
     Route::get('settings/chat/{id}','ChatController@ChatSettings')->name('settings.chat');
     Route::post('settings/savechat/{id}','ChatController@SaveChatSettings')->name('settings.savechat');
+    Route::get('pollsTest/{id}','ChatController@testPoll')->name('settings.testPoll');
+    Route::get('createPolls/{id}','ChatController@createpoll')->name('polls.createpoll');
+    Route::post('storePolls/{id}','ChatController@storepoll')->name('polls.store');
 
 
     //Landing Page Setting
@@ -928,5 +931,5 @@ Route::get("/runSchedularJobs", "SchedularJobsController@runJobs")->name("runJob
        }*/
 //});
 Route::get("aws/secret",function(){
-    AwsSecret();
+   return AwsSecret();
 });
