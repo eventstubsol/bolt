@@ -270,7 +270,7 @@
 <li>
     <a href="#booths" data-toggle="collapse">
         <i data-feather="grid"></i>
-        <span> Managee Booths </span>
+        <span>  Booths </span>
     </a>
     <div class="collapse" id="booths">
         <ul class="nav-second-level">
