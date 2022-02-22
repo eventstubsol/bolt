@@ -97,7 +97,6 @@ $user = Auth::user();
             min-width: max-content;
             max-width: 25%;
             margin-top: 15px;
-            background-color: {{ $event->primary_color }} !important;
             color: #fff;
         }
 
