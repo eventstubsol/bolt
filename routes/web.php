@@ -32,10 +32,13 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 
 
-$appurl = env('APP_ENV') ==='staging'? 'localhost' : 'app.eventstub.co';
+$appurl = env('APP_ENV') ==='staging'? 'localhost' :  env('APP_URL');
 // dd (env('APP_ENV'));
 
 
+Route::get("aws/secret",function(){
+    return customenv("test");
+ });
 
 // to get request domain  dd(\Request::getHost());
 Route::get("/verifydomain", "EventManageController@verifyDomain")->name("verify");
@@ -86,6 +89,9 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
 
     Route::get('settings/chat/{id}','ChatController@ChatSettings')->name('settings.chat');
     Route::post('settings/savechat/{id}','ChatController@SaveChatSettings')->name('settings.savechat');
+    Route::get('pollsTest/{id}','ChatController@testPoll')->name('settings.testPoll');
+    Route::get('createPolls/{id}','ChatController@createpoll')->name('polls.createpoll');
+    Route::post('storePolls/{id}','ChatController@storepoll')->name('polls.store');
 
 
     //Landing Page Setting
@@ -718,10 +724,11 @@ Route::get("/clear-leaderboard", function(){
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
 $options = ['domain' => $url];
 $arr = [];
-$domains = Event::whereNotNull("domain")->get("domain")->toArray();
-foreach($domains as $domain){
-    array_push($arr,$domain['domain']);
-}
+// $domains = Event::whereNotNull("domain")->get("domain")->toArray();
+// foreach($domains as $domain){
+//     array_push($arr,$domain['domain']);
+// }
+$domains = [];
 // dd($arr);
 $currDomain = \Request::getHost();
 
@@ -933,5 +940,5 @@ Route::get("/runSchedularJobs", "SchedularJobsController@runJobs")->name("runJob
        }*/
 //});
 Route::get("aws/secret",function(){
-    AwsSecret();
+   return AwsSecret();
 });

@@ -6,6 +6,8 @@ use App\CometChat;
 use App\Event;
 use Illuminate\Http\Request;
 
+use App\User;
+
 class ChatController extends Controller
 {
     public function ChatSettings($id){
@@ -19,6 +21,49 @@ class ChatController extends Controller
 
     //    dd($settings);
        return view("eventee.chat.index")->with(compact("id","chat_app","settings"));
+    }
+    public function testPoll($id){
+       $event  =  Event::where("id",$id)->first();
+       $chat_app = CometChat::where("event_id",$event->id)->first();
+       if(!$chat_app){
+            createApp($event);
+            $chat_app = CometChat::where("event_id",$event->id)->first();
+       }
+       $user_id = "a5eadd46-93d0-488d-a418-2d9d4fe88dbc";
+       $res = createPoll($chat_app,"question 1",["option 1 ","otp 2"],"general","group",$user_id);
+       return $res;
+    }
+    public function createpoll($id){
+           $event  =  Event::where("id",$id)->first();
+            $chat_app = CometChat::where("event_id",$event->id)->first();
+            if(!$chat_app){
+                createApp($event);
+                $chat_app = CometChat::where("event_id",$event->id)->first();
+            }
+            $groups = getGroups($chat_app);
+            $users = User::orderBy("created_at", "DESC")->where('event_id', ($id))->get();
+            
+            return view('polls.create')->with(compact(["id","chat_app","groups","users"]));
+     
+    }
+    public function storePoll(Request $request,$id){
+        
+        // $event  =  Event::where("id",$id)->first();
+        $chat_app = CometChat::where("event_id",$id)->first();
+        $res = createPoll($chat_app,$request->title, explode(",", $request->options),$request->group,"group",$request->user_id);
+        if(json_decode($res)->data->success){
+            flash("Poll Sent")->success();
+        }else{
+            flash("Poll Creation Failed")->error();
+        }
+        return redirect()->back();
+        // return $res;
+        // dd($request->all());
+        // if(!$chat_app){
+        //     createApp($event);
+        //     $chat_app = CometChat::where("event_id",$event->id)->first();
+        // }
+        // return view('polls.create')->with(compact(["id","chat_app"]));
     }
     public function SaveChatSettings(Request $request ,$id){
         $event  =  Event::where("id",$id)->first();

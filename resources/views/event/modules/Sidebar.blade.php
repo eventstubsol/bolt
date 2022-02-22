@@ -28,6 +28,36 @@ $menus = App\Menu::where('type','nav')->where('event_id',$event_id)->where('pare
                  </li>
              @endif
          @endforeach
+            <li class="booth-menu hidden">
+                <a href="javascript:void(0);" data-modal="description-modal-" class="modal-toggle booth_description">
+                    <i class="mdi mdi-note-text" style="font-size: 22px;"></i>
+                    Description
+                </a>
+            </li>
+            <li class="booth-menu hidden">
+                <a href="javascript:void(0);" data-modal="videolist-modal-" class="modal-toggle booth_videos">
+                    <i class="mdi mdi-play" style="font-size: 22px;"></i>
+                    Videos
+                </a>
+            </li> 
+            <li class="booth-menu hidden">
+                <a href="javascript:void(0);" data-modal="resourcelist-modal-" class="modal-toggle booth_resources">
+                    <i class="mdi mdi-file-pdf" style="font-size: 22px;"></i>
+                    Resources
+                </a>
+            </li>
+            <li class="booth-menu hidden">
+                <a href="javascript:void(0);" class="show-interest">
+                    <i class="mdi mdi-file-pdf" style="font-size: 22px;"></i>
+                    Show Interest
+                </a>
+            </li>
+            <li class="booth-menu hidden">
+                <a href="javascript:void(0);"  data-modal="book-a-call-modal-" class="modal-toggle booth_call_booking">
+                    <i class="mdi mdi-calendar" style="font-size: 22px;"></i>
+                    Book a Call
+                </a>
+            </li>
         </ul>
         @php
             $footers = App\Menu::where('type','footer')->where('event_id',$event_id)->where('status','1')->where('parent_id','0')->orderBy('position','asc')->get()->load(["submenus"]);

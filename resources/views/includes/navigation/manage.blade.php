@@ -99,6 +99,20 @@
     </div>
 </li>
 <li>
+    <a href="#polls" data-toggle="collapse">
+        <i data-feather="users"></i>
+        <span> Polls</span>
+    </a>
+    <div class="collapse" id="polls">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("polls.createpoll",['id'=>$id]) }}">Create</a>
+            </li>
+           
+        </ul>
+    </div>
+</li>
+<li>
     <a href="{{ route('eventee.restore',$id) }}">
         <i class="fas fa-trash-restore"></i>
         <span> Restore Data </span>
@@ -270,7 +284,7 @@
 <li>
     <a href="#booths" data-toggle="collapse">
         <i data-feather="grid"></i>
-        <span> Managee Booths </span>
+        <span>  Booths </span>
     </a>
     <div class="collapse" id="booths">
         <ul class="nav-second-level">

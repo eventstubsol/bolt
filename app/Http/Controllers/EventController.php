@@ -47,6 +47,7 @@ use App\Leaderboard;
 use File;
 use Illuminate\Support\Facades\Storage as Storage;
 
+
 class EventController extends Controller
 {
     public function index($event_name)
@@ -350,6 +351,8 @@ class EventController extends Controller
     public function saveprofile(Request $request)
     {
         $currentUser = Auth::user();
+        $chat_app = CometChat::where("event_id",$event->id)->first();
+        updateProfile($chat_app,$currentUser);
         $url = $request->get("url");
         if (isset($url)) {
             $user = User::where("id", $currentUser->id)->update(["profileImage" => $url]);
