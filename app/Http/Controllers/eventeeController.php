@@ -30,7 +30,7 @@ class eventeeController extends Controller
     }
 
     public function ConfirmRegister(registerEventeeRequest $request){
-        
+        // dd($request->all());
         // if(empty($request->name)){
         //     flash("Name Field Cannot Be blank")->error();
         //     return redirect()->back();
