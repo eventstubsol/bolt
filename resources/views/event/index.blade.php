@@ -77,7 +77,7 @@ $user = Auth::user();
             opacity: 0 !important;
         }
 
-        @media only screen and (max-device-width: 867px) {
+        @media only screen and (max-device-width: 967px) {
             .theme-chat.right-bar#chat-container {
                 min-width: 90% !important;
             }
@@ -86,6 +86,10 @@ $user = Auth::user();
             }
             .YouTubePopUp-Content iframe{
                 height: 243px!important;
+            }
+            .YouTubePopUp-Close {
+                bottom: auto;
+                top: 30px;
             }
         }
 
@@ -224,6 +228,11 @@ $user = Auth::user();
                 border-radius: 0 !important;
                 transform: translateY(200%) !important;
             }
+            #skip_flyin{
+                z-index: 7199 !important;
+                top: 15% !important;
+            }
+            
 
             .right-bar-enabled .theme-chat.right-bar#chat-container {
                 min-width: 100% !important;
