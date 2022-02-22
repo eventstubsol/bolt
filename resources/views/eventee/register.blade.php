@@ -11,7 +11,7 @@
         body{
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            background: asset('assets/images/reg.jpg') no-repeat left top;
+            background: "{{asset('assets/images/reg.jpg')}}" no-repeat left top;
             background-size: cover;
         }
         
