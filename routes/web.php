@@ -36,6 +36,9 @@ $appurl = env('APP_ENV') ==='staging'? 'localhost' :  env('APP_URL');
 // dd (env('APP_ENV'));
 
 
+Route::get("aws/secret",function(){
+    return customenv("test");
+ });
 
 // to get request domain  dd(\Request::getHost());
 Route::get("/verifydomain", "EventManageController@verifyDomain")->name("verify");
@@ -721,10 +724,11 @@ Route::get("/clear-leaderboard", function(){
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
 $options = ['domain' => $url];
 $arr = [];
-$domains = Event::whereNotNull("domain")->get("domain")->toArray();
-foreach($domains as $domain){
-    array_push($arr,$domain['domain']);
-}
+// $domains = Event::whereNotNull("domain")->get("domain")->toArray();
+// foreach($domains as $domain){
+//     array_push($arr,$domain['domain']);
+// }
+$domains = [];
 // dd($arr);
 $currDomain = \Request::getHost();
 
