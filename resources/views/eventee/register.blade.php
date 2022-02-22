@@ -11,7 +11,7 @@
         body{
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            background: url('../assets/images/reg.jpg') no-repeat left top;
+            background: asset('assets/images/reg.jpg') no-repeat left top;
             background-size: cover;
         }
         
@@ -92,11 +92,11 @@
 <body>
 <div class="regBlock">
     <div class="logo">
-        <img src="/assets/images/reg_logo.png" alt="">
+        <img src="{{asset("assets/images/reg_logo.png")}}" alt="">
     </div>
     <div class="row align-items-center pe-5">
         <div class="col-md-4 offset-md-1">
-            <img src="/assets/images/reg_lt_img.png" alt="">
+            <img src="{{asset("assets/images/reg_lt_img.png")}}" alt="">
         </div>
         <div class="col-md-7 ps-5">
             <div class="formBlock">
