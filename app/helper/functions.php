@@ -2,9 +2,6 @@
 //All functions defined in this file will be accessible all through the project including View
 // require 'vendor/autoload.php';
 
-//use Aws\SecretsManager\SecretsManagerClient; 
-//use Aws\Exception\AwsException;
-
 use App\Api;
 use App\Content;
 use App\Poll;

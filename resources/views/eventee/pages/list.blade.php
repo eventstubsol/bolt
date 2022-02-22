@@ -5,11 +5,11 @@
 @endsection
 
 @section("page_title")
-    Pages Page
+    Manage Page
 @endsection
 
 @section("title")
-    Pages Page
+Manage Page
 @endsection
 
 @section("breadcrumbs")

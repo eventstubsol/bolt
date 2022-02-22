@@ -5,15 +5,15 @@
 @endsection
 
 @section("page_title")
-    Session Room Page
+Manage Session Rooms
 @endsection
 
 @section("title")
-    Session Room Page
+Manage Session Rooms
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Session Rooms</li>
+    <li class="breadcrumb-item active">Manage Sessions</li>
 @endsection
 
 @section("content")

@@ -33,7 +33,7 @@
                         <label for="sentTo">Send To <span style="color:red">*</span></label>
                         <select name="sent_to_type" class="form-control" onchange="setDropdown(this)" >
                             <option value="0">All</option>
-                            <option value="2">All Exibitor</option>
+                            <option value="2">All Exhibitor</option>
                             <option value="3">All Delegate</option>
                             <option value="4">All Attendee</option>
                             <option value="1">Specific User Types</option>
@@ -43,7 +43,7 @@
                         <label for="sentTo">Specific Types <span style="color:red">*</span></label>
                         <select name="sent_to_type_specific" class="form-control" onchange="setSecondDropdown(this)">
                             <option value="-1">None</option>
-                            <option value="0">Exibitor</option>
+                            <option value="0">Exhibitor</option>
                             <option value="1">Delegate</option>
                             <option value="2">Attendee</option>
                             <option value="3">Specific Subtypes</option>
@@ -58,9 +58,9 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group" id="exibitor" style="display: none;">
-                        <label for="sentTo">Exibitor<span style="color:red">*</span></label>
-                        <select name="sent_to_type_exibitor[]" class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user2"  data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
+                    <div class="form-group" id="Exhibitor" style="display: none;">
+                        <label for="sentTo">Exhibitor<span style="color:red">*</span></label>
+                        <select name="sent_to_type_Exhibitor[]" class="form-control select2-multiple @error('userids') is-invalid @enderror" id="user2"  data-toggle="select2" multiple="multiple" data-placeholder="Choose ..." >
                             <option value="0" disabled>None</option>
                             @foreach($usersExibitor as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}  {{ $user->email }}</option>
@@ -139,32 +139,32 @@
             var option = e.value;
             
             if(option == 0){
-                $('#exibitor').show();
+                $('#Exhibitor').show();
                 $('#delegate').hide();
                 $('#subtype').hide();
                 $('#attendee').hide();
             }
             else if(option == 1){
-                $('#exibitor').hide();
+                $('#Exhibitor').hide();
                 $('#delegate').show();
                 $('#subtype').hide();
                 $('#attendee').hide();
             }
             else if(option == 2){
-                $('#exibitor').hide();
+                $('#Exhibitor').hide();
                 $('#delegate').hide();
                 $('#subtype').hide();
                 $('#attendee').show();
             }
             else if(option == 3){
                 
-                $('#exibitor').hide();
+                $('#Exhibitor').hide();
                 $('#delegate').hide();
                 $('#subtype').show();
                 $('#attendee').hide();  
             }
             else{
-                $('#exibitor').hide();
+                $('#Exhibitor').hide();
                 $('#delegate').hide();
                 $('#subtype').hide();
                 $('#attendee').hide(); 
@@ -173,7 +173,7 @@
             initializeSelect();
         }
 
-        $('#exibitor').change(function(){
+        $('#Exhibitor').change(function(){
                 $('#delegate').prop('selectedIndex',0);
                 $('#subtype').prop('selectedIndex',0);
                 $('#attendee').prop('selectedIndex',0);
@@ -181,17 +181,17 @@
         $('#attendee').change(function(){
                 $('#delegate').prop('selectedIndex',0);
                 $('#subtype').prop('selectedIndex',0);
-                $('#exibitor').prop('selectedIndex',0);
+                $('#Exhibitor').prop('selectedIndex',0);
         });
         $('#subtype').change(function(){
                 $('#delegate').prop('selectedIndex',0);
                 $('#attendee').prop('selectedIndex',0);
-                $('#exibitor').prop('selectedIndex',0);
+                $('#Exhibitor').prop('selectedIndex',0);
         });
         $('#delegate').change(function(){
                 $('#subtype').prop('selectedIndex',0);
                 $('#attendee').prop('selectedIndex',0);
-                $('#exibitor').prop('selectedIndex',0);
+                $('#Exhibitor').prop('selectedIndex',0);
         });
 
     </script>

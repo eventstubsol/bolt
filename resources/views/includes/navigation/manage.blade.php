@@ -148,10 +148,10 @@
     <div class="collapse" id="notification">
         <ul class="nav-second-level">
             <li>
-                <a href="{{ route("eventee.notification",$id) }}">Instantly Send Notification</a>
+                <a href="{{ route("eventee.notification",$id) }}">Instant Notification</a>
             </li>
             <li>
-                <a href="{{ route("eventee.schedule",$id) }}">Schedule A Notification</a>
+                <a href="{{ route("eventee.schedule",$id) }}">Schedule Notification</a>
             </li>
         </ul>
     </div>
@@ -257,6 +257,11 @@
                     <span> Landing Page Settings</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route("onboard.settings",$id) }}">
+                    <span> Onboard Settings</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>
@@ -279,7 +284,7 @@
 <li>
     <a href="#booths" data-toggle="collapse">
         <i data-feather="grid"></i>
-        <span> Booths </span>
+        <span> Managee Booths </span>
     </a>
     <div class="collapse" id="booths">
         <ul class="nav-second-level">

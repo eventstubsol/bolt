@@ -32,7 +32,8 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 
 
-$appurl = env('APP_ENV') ==='staging'? 'localhost' :'app.eventstub.co';
+$appurl = env('APP_ENV') ==='staging'? 'localhost' : 'app.eventstub.co';
+// dd (env('APP_ENV'));
 
 
 
@@ -135,7 +136,11 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get("/chat-user/sync/{id}", "UserController@syncUserChat")->name("sync-users");
     Route::get("/chat-group/sync/{id}", "UserController@syncGroupChat")->name("sync-groups");
     
-
+    //Onboard settings
+    Route::get("Onboard/Setting/{id}","OnboardController@index")->name("onboard.settings");
+    Route::POST("Onboard/Setting/SetCharacter/{id}","OnboardController@setCharacter")->name("onboard.setCharacter");
+    Route::POST("onboard/search/link","OnboardController@SearchLink")->name("onboard.search");
+    Route::POST("onboard/save/setting/{id}","OnboardController@SaveSetting")->name("onboard.save");
 
 
 	Route::get('icons',"EventController@getIcons")->name('icons');

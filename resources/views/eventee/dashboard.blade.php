@@ -113,7 +113,7 @@
             <div class="card-body">
                 
 
-                <h4 class="header-title mb-3">Last 5 Recent Events</h4>
+                <h4 class="header-title mb-3">Last 5 Events</h4>
                 
                 <div class="table-responsive">
                     <table class="table table-borderless table-hover table-nowrap table-centered m-0">
@@ -163,7 +163,7 @@
             <div class="card-body">
                 
 
-                <h4 class="header-title mb-3">Top 5 Events Expiring Soon</h4>
+                <h4 class="header-title mb-3">Events Expiring Soon</h4>
 
                 <div class="table-responsive">
                     <table class="table table-borderless table-nowrap table-hover table-centered m-0">

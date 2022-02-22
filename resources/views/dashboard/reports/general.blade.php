@@ -79,7 +79,7 @@
 <div class="col-md-6 col-xl-4  mb-3">
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
-            <div class="card-header">Session Room Active Users</div>
+            <div class="card-header">Session Room Chart</div>
             <div id="piechart2" style="left:0;width: 50rem; height: 20rem;"></div>
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
@@ -90,7 +90,7 @@
         <div class="row">
             
             <div class="card">
-                <div class="card-header">Session Room Active Users</div>
+                <div class="card-header">Session Room Table</div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
@@ -112,7 +112,7 @@
 <div class="col-md-6 col-xl-4  mb-3">
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
-            <div class="card-header">Active Page Users</div>
+            <div class="card-header">Page Chart</div>
             <div id="piechart3" style="left:0;width: 50rem; height: 20rem;"></div>
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
@@ -123,7 +123,7 @@
         <div class="row">
             
             <div class="card">
-                <div class="card-header">Active Page Users</div>
+                <div class="card-header">Page Table</div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
@@ -144,7 +144,7 @@
 <div class="col-md-6 col-xl-4  mb-3">
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
-            <div class="card-header">Active Booth Users</div>
+            <div class="card-header">Booth Chart</div>
             <div id="piechart4" style="left:0;width: 50rem; height: 20rem;"></div>
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
@@ -153,7 +153,7 @@
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
             <div class="card">
-                <div class="card-header">Active Booth Users</div>
+                <div class="card-header">Booth Table</div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
@@ -187,7 +187,7 @@
             <div class="row">
                 
                 <div class="card">
-                    <div class="card-header">Active Lobby Users</div>
+                    <div class="card-header">Lobby Table</div>
                     <div class="card-body">
                         <table class="table table-bordered">
                             <thead>
@@ -211,7 +211,7 @@
         <div class="widget-rounded-circle card-box h-100">
             <div class="row">
                 <div class="card">
-                    <div class="card-header">Active Lounge Users</div>
+                    <div class="card-header">Lounge Table</div>
                     <div class="card-body">
                         <table class="table table-bordered">
                             <thead>
