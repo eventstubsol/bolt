@@ -89,7 +89,7 @@ $user = Auth::user();
             }
             .YouTubePopUp-Close {
                 bottom: auto;
-                top: 30px;
+                top: 20px;
             }
         }
 
@@ -705,7 +705,7 @@ $user = Auth::user();
                     </g>
                 </svg>
             </div>
-            <p>{{ getFieldId('mobilemessage',$event_id, 'For an immersive experience, please login using a Tablet Device/Laptop/PC Or switch to landscape mode in your mobile phone.') }}
+            <p> For an immersive experience, please login using a Tablet Device/Laptop/PC Or switch to landscape mode in your mobile phone.
             </p>
         </div>
     </div>
