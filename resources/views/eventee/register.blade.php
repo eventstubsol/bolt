@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -104,29 +101,31 @@
         <div class="col-md-7 ps-5">
             <div class="formBlock">
                 <h5>Registration</h5>
-                <form action="">
+                <form method="POST" class="register mt-6" action="{{ route('Eventee.register') }}">
+                  @csrf
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder ="First Name*">
+                            <input type="text" name="name"  class="form-control" placeholder ="First Name*">
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder ="Last Name*">
+                            <input type="text"  name="last_name" class="form-control" placeholder ="Last Name*">
                         </div>
                     </div>
-                    <input type="text" class="form-control" placeholder ="Corporate e-Mail Address *">
+                    <input type="text" class="form-control"  name="email" placeholder ="Corporate e-Mail Address *">
+                    <input type="password" class="form-control" placeholder ="Password *">
+
                     <select class="form-control" placeholder ="Last Name*" id="phone-number-country" name="phone-number-country" autocomplete="off"></select>
                     <div class="phone-number mb-3 d-flex">
                         <div class="phone-number-prefix"></div>
-                        <input class="form-control mb-0" id="phone-number" name="phone-number" type="tel" autocomplete="off">
+                        <input class="form-control mb-0" id="phone-number" name="phone"  type="tel" autocomplete="off">
                         <input type="hidden" id="phone-number-full" name="phone-number-full" />
                     </div>
 
-                    <input type="text" class="form-control" placeholder ="Password *">
-                    <input type="text" class="form-control" placeholder ="Job Title *">
-                    <input type="text" class="form-control" placeholder ="">
+                    <input type="text" class="form-control" name="job_title" placeholder ="Job Title *">
+                    {{-- <input type="text" class="form-control" placeholder =""> --}}
 
                     <div class="d-flex justify-content-center">
-                        <button class="btn btn-reg">Register</button>
+                        <button  type="submit"  class="btn btn-reg">Register</button>
                     </div>
                 </form>
             </div>
@@ -153,12 +152,12 @@ const intlPhoneNumber = function(countryCode) {
   let pattern = '';
   
   //set initial pattern for formatting
-  if (initCountry === 'us') {
-    pattern = '({{999}}) {{999}}-{{9999}}';
-  } else {
-    // using as temp until formatting on init figured out
-    pattern = '{{9999999999999999999999}}'; 
-  }
+  // if (initCountry === 'us') {
+  //   pattern = '({{{999}}}) {{{999}}}-{{{9999}}}';
+  // } else {
+  //   // using as temp until formatting on init figured out
+  //   pattern = '{{{9999999999999999999999}}}'; 
+  // }
   
   // reset function to reset error state on validation
   const reset = function() {
@@ -187,9 +186,9 @@ const intlPhoneNumber = function(countryCode) {
   phonePrefix.text("+" + dialCode);
 
   // init format
-  telInput.formatter({
-    'pattern': pattern
-  });  
+  // telInput.formatter({
+  //   'pattern': pattern
+  // });  
   
   // delete intl-tel-input items that aren't needed
   $('.flag-container').remove();
