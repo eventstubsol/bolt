@@ -557,14 +557,15 @@
         @php
             $event = App\Event::findOrFail($id);
         @endphp
+       <div class="form-group">
         @if($event->land_page == 0)
-            <div class="form-check form-switch ml-0 pl-0">
-                <label for="#landPage" class="mr-1 mb-0">Set Landing Page</label>
-                <label class="switch">
-                    <input type="checkbox" value="0" onchange="landingPage(this)">
-                    <span class="slider round"></span>
-                </label>
-            </div>
+        <div class="form-check form-switch ml-0 pl-0">
+            <label for="#landPage" class="mr-1 mb-0">Set Landing Page</label>
+            <label class="switch">
+                <input type="checkbox" value="0" onchange="landingPage(this)">
+                <span class="slider round"></span>
+            </label>
+        </div>
         @else
         <div class="form-check form-switch ml-0 pl-0">
             <label for="#landPage" class="mr-1 mb-0">Set Landing Page</label>
@@ -574,6 +575,26 @@
             </label>
         </div>
         @endif
+       </div>
+       <div class="form-group mt-2">
+        @if($event->otp_option == 0)
+            <div class="form-check form-switch ml-0 pl-0">
+                <label for="#landPage" class="mr-1 mb-0">Set Otp Option</label>
+                <label class="switch">
+                    <input type="checkbox" value="0" onchange="OtpOption(this)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        @else
+            <div class="form-check form-switch ml-0 pl-0">
+                <label for="#landPage" class="mr-1 mb-0">Set Otp Option</label>
+                <label class="switch">
+                    <input type="checkbox" value="1" onchange="OtpOption(this)" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        @endif
+       </div>
     @endif    
 </div>
 
@@ -606,7 +627,25 @@ $(document).ready(function(){
                 alert("turned off");
             }); 
         }
-    }    
+    }
+    function OtpOption(e){
+        let status = e.value;
+        
+        if(status == 0){
+            e.value = 1;
+            $.get("{{ route('update.otp.status') }}",{'status':1,'id':"{{ $id }}"},function(res){
+                showMessage(res.message,'success');
+                console.log(res);
+            });
+        }
+        else{
+            e.value = 0;
+            $.get("{{ route('update.otp.status') }}",{'status':0,'id':"{{ $id }}"},function(res){
+                showMessage(res.message,'success');
+                console.log(res);
+            }); 
+        }
+    } 
 </script>
 @endif
 

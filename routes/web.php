@@ -33,7 +33,7 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 
 $appurl = env('APP_ENV') ==='staging'? 'localhost' : 'app.eventstub.co';
-// dd (env('APP_ENV'));
+// dd (env('SG_API'));
 
 
 
@@ -52,7 +52,8 @@ Route::post('/Register/EventAdmin',"eventeeController@ConfirmRegister");
 Route::get('EventAdmin/Login',"eventeeController@Login")->name('Eventee.login');
 Route::post('EventAdmin/Login/Confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
 Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
-
+Route::get("Verify/otp/{user_id}","EventAdminController@OtpView")->name("eventadmin.verify");
+Route::POST("/verify/otp/{user_id}","EventAdminController@VerifyOtp")->name("Eventee.verify");
 
 Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
@@ -72,6 +73,8 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     
     //Landing Update
     Route::get('landing/update/status','LandingController@updateStatus')->name('update.landing.status');
+    //otp setup
+    Route::get('otp/update/status','OTPController@updateStatus')->name('update.otp.status');
 
 
     Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
@@ -774,7 +777,8 @@ Route::group($options, function () use ($options) {
     Route::post("/event/register/landing", "EventRegController@CustomFormSave")->name("attendee_register.confirmReg.landingSave");
     Route::post("/event/register/landing/default", "EventRegController@BasicForm")->name("attendee_register.confirmReg.defaultsave");
     Route::get("/confirm-login", "HomeController@confirmLogin")->name("confirmLogin");
-
+    Route::get("Verify/otp/attendee/{user_id}","EventAdminController@OtpViewAttendee")->name("eventadmin.verify.attendee");
+    Route::POST("/verify/otp/attendee/{user_id}","EventAdminController@VerifyOtpAttendee")->name("Eventee.verify.attendee");
     //thank you page
     Route::get('/thank/you','AttendeeAuthController@thankPage')->name('thank.page');
 

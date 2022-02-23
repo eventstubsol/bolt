@@ -120,34 +120,40 @@ class AttendeeAuthController extends Controller
             if ($user->type !== 'attendee' && $user->type !== 'delegate' ) {
                 return redirect( route("exhibitorLogin",['subdomain'=>$subdomain,'email'=>$user->email]));
             }
-            $user->online_status = 1;
-            $user->save();
-            DB::table("sessions")->where("user_id", $user->id)->whereNotIn("id", [session()->getId()])->delete();
-            Auth::login($user);
-            LoginLog::create(["ip" => $request->ip(), "user_id" => $user->id]);
-            // UserLocation::create(['user_id'=>$user->id,'event_id'=>$user->event_id,'type'=>"exterior"]);
-            $pointsDetails = [
-                "points_to" => $user->id,
-                "points_for" => "login",
-                "details" => "",
-                "points" => LOGIN_POINTS,
-            ];
-            if (!Points::where($pointsDetails)->count()) {
-                Points::create($pointsDetails);
-                $user->update([
-                    "points" => DB::raw('points+' . LOGIN_POINTS),
-                ]);
+            if($event->otp_option == 1){
+                GenerateOtp($user->id);
+                return redirect()->route("eventadmin.verify.attendee",['user_id'=>$user->id,'subdomain'=>$subdomain]);
             }
-            //Users to whoom we have to notify about the recent login of current user
-            foreach ($user->tags as $tag) {
-                foreach ($tag->looking_users as $looking_user) {
-                    $looking_user->sendNotification("suggested_user_login", "One of your suggested users just logged in. Visit attendees section to grow your network.", "info", $user->id);
+            else{
+                $user->online_status = 1;
+                $user->save();
+                DB::table("sessions")->where("user_id", $user->id)->whereNotIn("id", [session()->getId()])->delete();
+                Auth::login($user);
+                LoginLog::create(["ip" => $request->ip(), "user_id" => $user->id]);
+                // UserLocation::create(['user_id'=>$user->id,'event_id'=>$user->event_id,'type'=>"exterior"]);
+                $pointsDetails = [
+                    "points_to" => $user->id,
+                    "points_for" => "login",
+                    "details" => "",
+                    "points" => LOGIN_POINTS,
+                ];
+                if (!Points::where($pointsDetails)->count()) {
+                    Points::create($pointsDetails);
+                    $user->update([
+                        "points" => DB::raw('points+' . LOGIN_POINTS),
+                    ]);
                 }
-            }
-            $user->touch();
-            // dd("test");
+                //Users to whoom we have to notify about the recent login of current user
+                foreach ($user->tags as $tag) {
+                    foreach ($tag->looking_users as $looking_user) {
+                        $looking_user->sendNotification("suggested_user_login", "One of your suggested users just logged in. Visit attendees section to grow your network.", "info", $user->id);
+                    }
+                }
+                $user->touch();
+                // dd("test");
 
-            return redirect(route("eventee.event",['subdomain'=>$event->slug]));
+                return redirect(route("eventee.event",['subdomain'=>$event->slug]));
+            }
             // return redirect("/");
         }
     }
@@ -303,8 +309,8 @@ class AttendeeAuthController extends Controller
             flash("Registered Successfully")->success();
             return redirect()->route('attendeeLogin',$subdomain);
         }
-        $user->sendEmailVerificationNotification();
-        Auth::login($user);
+        // $user->sendEmailVerificationNotification();
+        // Auth::login($user);
         // Mail::send([], [], function (Message $message) use ($user) {
         //     $message
         //         ->to($user->email)

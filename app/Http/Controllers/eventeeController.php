@@ -10,6 +10,7 @@ use App\EventSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
+
 use App\Event;
 // use Illuminate\Support\Facades\Http;
 // use Maatwebsite\Excel\Facades\Excel;
@@ -71,8 +72,10 @@ class eventeeController extends Controller
         $user->type = 'eventee';
         $user->country = $request->country;
         if($user->save()){
-            $request->Session()->put('eventee-register', 'Registration Successful');
-            return redirect()->route('Eventee.login');
+            GenerateOtp($user->id);
+            return redirect()->route("eventadmin.verify",$user->id);
+            // $request->Session()->put('eventee-register', 'Registration Successful');
+            
         }
         else{
             $request->Session()->put('eventee-register', 'Oops! Something Went Wrong');
@@ -118,8 +121,14 @@ class eventeeController extends Controller
                 // dd($user);
                 $pass = password_verify($req->password,$user->password);
                 if($pass && $user->type == 'eventee'){
-                    Auth::login($user);
-                    return redirect(route('teacher.dashboard'));
+                   if($user->email_status == 1){
+                        Auth::login($user);
+                        return redirect(route('teacher.dashboard'));
+                   }
+                   else{
+                    GenerateOtp($user->id);
+                    return redirect()->route("eventadmin.verify",$user->id);
+                   }
                 }
                 else{
                     flash("Please Check Your Email And Password")->error();

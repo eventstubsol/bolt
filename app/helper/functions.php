@@ -16,6 +16,7 @@ use App\Contact;
 use App\Template;
 use App\Event;
 use App\Link;
+use Illuminate\Support\Facades\Mail as Mailing;
 use App\Leaderboard;
 use App\LeadPoint;
 use App\Image;
@@ -39,6 +40,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Aws\SecretsManager\SecretsManagerClient; 
 use Aws\Exception\AwsException;
+use App\Mail\OtpSetup;
 
 
 include_once "clickableAreasConfig.php";
@@ -1631,4 +1633,22 @@ function AwsSecret(){
     }
     return $result;
 
+}
+function GenerateOtp($user_id){
+    $otp = mt_rand(111111,999999);
+    $user = User::findOrFail($user_id);
+    $user->otp = $otp;
+    $user->save();
+    Mailing::to($user->email)->send(new OtpSetup($user,$otp));
+    return 1;
+}
+
+function VerifyOTP($user_id,$otp){
+    $user = User::findOrFail($user_id);
+    if($user->otp == trim($otp)){
+        $user->email_status = 1;
+        $user->save();
+        return 1;
+    }
+    return 0;
 }
