@@ -29,7 +29,7 @@
         .formBlock{
             border-radius: 10px;
             border: 1px solid #fff;
-            background: #ffffff70;
+            background: #003135;
             padding: 40px 35px;
         }
 
@@ -42,23 +42,26 @@
         }
         .form-control{
             margin-bottom: 15px;
-            color: #333;
+            color: #fff;
             font-size: 14px;
             min-height: 46px;
             border-radius: 6px;
+            background: #001010;
+            border-color: #001010;
         }
         .form-control:focus{
             box-shadow: none;
-            border-color: #007a7c;
+            border-color: #fff;
+            background: #001010;
         }
         .form-control::-webkit-input-placeholder { 
-            color: #007a7c;
+            color: #fff;
         }
         .form-control:-ms-input-placeholder { 
-            color: #007a7c;
+            color: #fff;
         }
         .form-control::placeholder {
-            color: #007a7c;
+            color: #fff;
         }
 
         .btn-reg{
@@ -72,13 +75,13 @@
         }
 
         .phone-number-prefix{
-            background: #cecece;
+            background: #021d1d;
             min-height: 46px;
             border-radius: 6px 0 0px 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #333;
+            color: #fff;
             font-size: 14px;
             padding: 0 5px;
             min-width: 48px;
@@ -95,10 +98,7 @@
         <img src="/assets/images/reg_logo.png" alt="">
     </div>
     <div class="row align-items-center pe-5">
-        <div class="col-md-4 offset-md-1">
-            <img src="/assets/images/reg_lt_img.png" alt="">
-        </div>
-        <div class="col-md-7 ps-5">
+        <div class="col-md-6 offset-md-3 ps-5">
             <div class="formBlock">
                 <h5>Registration</h5>
                 <form method="POST" class="register mt-6" action="{{ route('Eventee.register') }}">
