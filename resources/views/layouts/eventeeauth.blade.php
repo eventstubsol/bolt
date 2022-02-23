@@ -102,7 +102,7 @@
                 <div class="icon">
                     <svg id="Capa_1" enable-background="new 0 0 512 512" height="32" viewBox="0 0 512 512" width="32" xmlns="http://www.w3.org/2000/svg"><g><path d="m356.225 417v-76-55-186c-49.254 0-88.509-10-137.764-10-50.745 0-101.49 0-152.236 0v337h150.902c49.7 0 89.399-10 139.098-10z" fill="#e9f6ff"/><path d="m66.225 166h120v30h-120z" fill="#d2e4fd"/><path d="m66.225 226h75v30h-75z" fill="#d2e4fd"/><path d="m356.225 64.5c0-35.565-28.935-59.5-64.5-59.5l-75.5-5h-85.5c-35.565 0-64.5 28.935-64.5 64.5v25.5h150l140-5z" fill="#4c607e"/><path d="m66.225 447.5c0 35.565 28.935 64.5 64.5 64.5h85.5l75.5-5c35.565 0 64.5-23.935 64.5-59.5v-22.5l-140-5h-150z" fill="#4c607e"/><path d="m216.225 420h150v-79-55-196h-150z" fill="#d2e4fd"/><path d="m301.725 0h-85.5v90h150v-25.5c0-35.565-28.935-64.5-64.5-64.5z" fill="#374965"/><path d="m216.225 512h85.5c35.565 0 64.5-28.935 64.5-64.5v-27.5h-150z" fill="#374965"/><path d="m440.775 211.377-37.427-37.426-37.123 32.123-37.123-37.123-42.427 42.426 37.124 37.123-37.124 37.123 42.427 42.426 37.123-37.123 37.123 32.123 37.427-37.426-37.124-37.123z" fill="#e58f22"/><path d="m445.775 285.623-37.124-37.123 37.124-37.123-42.427-42.426-37.123 37.123v84.852l37.123 37.123z" fill="#df6426"/></g></svg>
                 </div>
-                <p>{{ getField("mobilemessage", "For an immersive experience, please login using a Tablet Device/Laptop/PC Or switch to landscape mode in your mobile phone.") }}</p>
+                <p> For an immersive experience, please login using a Tablet Device/Laptop/PC Or switch to landscape mode in your mobile phone.</p>
             </div>
         </div>
 

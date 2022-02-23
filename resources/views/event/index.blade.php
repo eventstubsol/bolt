@@ -21,6 +21,7 @@ $user = Auth::user();
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
     <link href={{ asset('assets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
     <style>  
         .loader span,
         .loader:after {
@@ -77,7 +78,7 @@ $user = Auth::user();
             opacity: 0 !important;
         }
 
-        @media only screen and (max-device-width: 867px) {
+        @media only screen and (max-device-width: 967px) {
             .theme-chat.right-bar#chat-container {
                 min-width: 90% !important;
             }
@@ -87,13 +88,16 @@ $user = Auth::user();
             .YouTubePopUp-Content iframe{
                 height: 243px!important;
             }
+            .YouTubePopUp-Close {
+                bottom: auto;
+                top: 20px;
+            }
         }
 
         .tab-content .nav-justified .nav-item {
             min-width: max-content;
             max-width: 25%;
             margin-top: 15px;
-            background-color: {{ $event->primary_color }} !important;
             color: #fff;
         }
 
@@ -224,6 +228,11 @@ $user = Auth::user();
                 border-radius: 0 !important;
                 transform: translateY(200%) !important;
             }
+            #skip_flyin{
+                z-index: 7199 !important;
+                top: 15% !important;
+            }
+            
 
             .right-bar-enabled .theme-chat.right-bar#chat-container {
                 min-width: 100% !important;
@@ -543,11 +552,11 @@ $user = Auth::user();
     @include("includes.styles.fileUploader")
     <!-- Custom -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=21872367628534" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=21872367628534" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=21872367628534" type="text/css">
-    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=21872367628534">
-    <link href="{{ asset('assets/css/custom.css') }}?v=21872367628534" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=21872367628567" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=21872367628567" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=21872367628567" type="text/css">
+    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=21872367628567">
+    <link href="{{ asset('assets/css/custom.css') }}?v=21872367628567" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
@@ -634,6 +643,9 @@ $user = Auth::user();
             a.appendChild(r);
         })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
     </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    
+
 </head>
 
 <body class="custom-theme">
@@ -697,7 +709,7 @@ $user = Auth::user();
                     </g>
                 </svg>
             </div>
-            <p>{{ getFieldId('mobilemessage',$event_id, 'For an immersive experience, please login using a Tablet Device/Laptop/PC Or switch to landscape mode in your mobile phone.') }}
+            <p> For an immersive experience, please login using a Tablet Device/Laptop/PC Or switch to landscape mode in your mobile phone.
             </p>
         </div>
     </div>
@@ -791,6 +803,9 @@ $user = Auth::user();
 
     {{-- @include("event.modules.ByLaws") --}}
     @include("event.modules.FlyIn")
+    @include("event.modules.Onboarding")
+
+
 
 
     <div id="chat_div"></div>
@@ -934,15 +949,15 @@ $user = Auth::user();
         window.config = config;
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=21872367628534"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}?cb=21872367628534"></script>
-    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=21872367628534"></script>
-    <script src="{{ asset('event-assets/js/app.js') }}?cb=21872367628534"></script>
-    <script src="{{ asset('/js/chat/app.js') }}?cb=21872367628534"></script>
-    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=21872367628534"></script> -->
-    <script src="{{ asset('/js/profile/index.js') }}?cb=21872367628534"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=21872367628534"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=21872367628534"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=21872367628567"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}?cb=21872367628567"></script>
+    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=21872367628567"></script>
+    <script src="{{ asset('event-assets/js/app.js') }}?cb=21872367628567"></script>
+    <script src="{{ asset('/js/chat/app.js') }}?cb=21872367628567"></script>
+    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=21872367628567"></script> -->
+    <script src="{{ asset('/js/profile/index.js') }}?cb=21872367628567"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=21872367628567"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=21872367628567"></script>
     {{-- @if (isOpenForPublic('polls'))
         @include("event.poll")
     @endif --}}

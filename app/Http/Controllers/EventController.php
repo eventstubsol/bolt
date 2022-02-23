@@ -46,6 +46,7 @@ use App\Image;
 use App\Leaderboard;
 use File;
 use Illuminate\Support\Facades\Storage as Storage;
+use App\Onboard;
 
 
 class EventController extends Controller
@@ -56,7 +57,10 @@ class EventController extends Controller
         $event = Event::where("slug",$event_name)->first();
         $loader = Loader::findOrFail($event->def_loader);
         // dd("schedule");
+        
         $event_id = $event->id;
+        $onboards = Onboard::where("event_id",$event_id)->get();
+        // dd(json_encode($onboards));
         $leaderboard =Leaderboard::where('event_id',$event_id)->first();
         $chat_app = CometChat::where("event_id",$event->id)->first();
         // dd(Image::where('owner',$leaderboard->id)->get()); 

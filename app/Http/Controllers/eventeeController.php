@@ -31,7 +31,7 @@ class eventeeController extends Controller
     }
 
     public function ConfirmRegister(registerEventeeRequest $request){
-        
+        // dd($request->all());
         // if(empty($request->name)){
         //     flash("Name Field Cannot Be blank")->error();
         //     return redirect()->back();
@@ -56,6 +56,8 @@ class eventeeController extends Controller
         //     flash("Job Title Field Cannot Be blank")->error();
         //     return redirect()->back();
         // }
+      
+
         
         $userEmail = User::where('email',$request->email)->where('event_id',null)->count();
         if($userEmail > 0){

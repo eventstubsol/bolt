@@ -46,6 +46,19 @@ class ChatController extends Controller
             return view('polls.create')->with(compact(["id","chat_app","groups","users"]));
      
     }
+    public function pollResults($id){
+           $event  =  Event::where("id",$id)->first();
+            $chat_app = CometChat::where("event_id",$event->id)->first();
+            if(!$chat_app){
+                createApp($event);
+                $chat_app = CometChat::where("event_id",$event->id)->first();
+            }
+            $groups = getGroups($chat_app);
+            $users = User::orderBy("created_at", "DESC")->where('event_id', ($id))->get();
+            
+            return view('polls.results')->with(compact(["id","chat_app","groups","users"]));
+     
+    }
     public function storePoll(Request $request,$id){
         
         // $event  =  Event::where("id",$id)->first();

@@ -26,10 +26,10 @@ button[disabled] {
     font-size: 40px;
 }
 
-.table {
+/* .table {
     color: #fff;
     background-color: #323b44!important;
-}
+} */
 
 table.dataTable {
     border-collapse: inherit !important;

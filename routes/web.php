@@ -32,8 +32,8 @@ use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 
 
-$appurl = env('APP_ENV') ==='staging'? 'localhost' : 'app.eventstub.co';
-// dd (env('SG_API'));
+$appurl = env('APP_ENV') ==='staging'? 'localhost' :  env('APP_URL');
+// dd (env('APP_ENV'));
 
 
 
@@ -48,7 +48,7 @@ Route::post("/leaderboard", "EventManageController@leaderboard")->name("leaderbo
 Route::Post("admin/logout","HomeController@logout")->name('admin.logout');
 Auth::routes();
 Route::get("/Register/EventAdmin","eventeeController@Regiter")->name('Eventee.register');
-Route::post('/Register/EventAdmin',"eventeeController@ConfirmRegister");
+Route::post('/Register/EventAdmin',"eventeeController@ConfirmRegister")->name('Eventee.confirmRegister');
 Route::get('EventAdmin/Login',"eventeeController@Login")->name('Eventee.login');
 Route::post('EventAdmin/Login/Confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
 Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
@@ -91,6 +91,7 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post('settings/savechat/{id}','ChatController@SaveChatSettings')->name('settings.savechat');
     Route::get('pollsTest/{id}','ChatController@testPoll')->name('settings.testPoll');
     Route::get('createPolls/{id}','ChatController@createpoll')->name('polls.createpoll');
+    Route::get('pollResults/{id}','ChatController@pollResults')->name('polls.pollResults');
     Route::post('storePolls/{id}','ChatController@storepoll')->name('polls.store');
 
 
@@ -724,10 +725,11 @@ Route::get("/clear-leaderboard", function(){
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
 $options = ['domain' => $url];
 $arr = [];
-$domains = Event::whereNotNull("domain")->get("domain")->toArray();
-foreach($domains as $domain){
-    array_push($arr,$domain['domain']);
-}
+// $domains = Event::whereNotNull("domain")->get("domain")->toArray();
+// foreach($domains as $domain){
+//     array_push($arr,$domain['domain']);
+// }
+$domains = [];
 // dd($arr);
 $currDomain = \Request::getHost();
 
