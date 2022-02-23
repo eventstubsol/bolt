@@ -11,7 +11,7 @@
         body{
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            background: url('../assets/images/reg.jpg') no-repeat left top;
+            background: url("{{asset('assets/images/reg.jpg')}}") no-repeat left top;
             background-size: cover;
         }
         
@@ -53,6 +53,7 @@
             box-shadow: none;
             border-color: #fff;
             background: #001010;
+            color: #fff;
         }
         .form-control::-webkit-input-placeholder { 
             color: #fff;
@@ -90,37 +91,75 @@
         .phone-number .form-control{
             border-radius: 0px 6px 6px 0px;
         }
+
+        label{
+          color: #fff;
+          font-size: 13px;
+        }
+        
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus,
+        textarea:-webkit-autofill,
+        textarea:-webkit-autofill:hover,
+        textarea:-webkit-autofill:focus,
+        select:-webkit-autofill,
+        select:-webkit-autofill:hover,
+        select:-webkit-autofill:focus {
+          border: 1px solid #1d1d1d;
+          -webkit-text-fill-color: #ebebeb ;
+          transition: background-color 5000s ease-in-out 0s;
+        }
     </style>
 </head>
 <body>
 <div class="regBlock">
     <div class="logo">
-        <img src="/assets/images/reg_logo.png" alt="">
+        <img src="{{asset("assets/images/reg_logo.png")}}" alt="">
     </div>
-    <div class="row align-items-center pe-5">
-        <div class="col-md-6 offset-md-3 ps-5">
+    <div class="row align-items-center mt-5">
+        <!-- <div class="col-md-4 offset-md-1">
+            <img src="{{asset("assets/images/reg_lt_img.png")}}" alt="">
+        </div> -->
+        <div class="col-md-6 offset-md-3">
             <div class="formBlock">
                 <h5>Registration</h5>
+                @if($errors->any())
+                    @foreach ($errors->all('<p>:message</p>') as $input_error)
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $input_error }}</strong>
+                        </span>
+                    @endforeach 
+                @endif
                 <form method="POST" class="register mt-6" action="{{ route('Eventee.register') }}">
                   @csrf
                     <div class="row">
                         <div class="col-md-6">
+                          <label>First Name <span class="text-danger">*</span></label>
                             <input type="text" name="name"  class="form-control" placeholder ="First Name*">
                         </div>
                         <div class="col-md-6">
+                          <label>Last Name <span class="text-danger">*</span></label>
                             <input type="text"  name="last_name" class="form-control" placeholder ="Last Name*">
                         </div>
                     </div>
+                    <label>Corporate e-Mail Address <span class="text-danger">*</span></label>
                     <input type="text" class="form-control"  name="email" placeholder ="Corporate e-Mail Address *">
-                    <input type="password" class="form-control" placeholder ="Password *">
 
-                    <select class="form-control" placeholder ="Last Name*" id="phone-number-country" name="phone-number-country" autocomplete="off"></select>
+                    <label>Password <span class="text-danger">*</span></label>
+                    <input type="password" name="password" class="form-control" placeholder ="Password *">
+
+                    <label>Country <span class="text-danger">*</span></label>
+                    <select class="form-control" placeholder ="Last Name*" id="phone-number-country" name="country" autocomplete="off"></select>
+                    <label>Phone Number <span class="text-danger">*</span></label>
                     <div class="phone-number mb-3 d-flex">
                         <div class="phone-number-prefix"></div>
                         <input class="form-control mb-0" id="phone-number" name="phone"  type="tel" autocomplete="off">
-                        <input type="hidden" id="phone-number-full" name="phone-number-full" />
+                        <input type="hidden" id="phone-number-full" name="phone" />
                     </div>
 
+                    <label>Job Title <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="job_title" placeholder ="Job Title *">
                     {{-- <input type="text" class="form-control" placeholder =""> --}}
 
