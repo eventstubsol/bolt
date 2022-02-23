@@ -237,7 +237,9 @@ class eventeeController extends Controller
         // return $response;
         $event = new Event;
         $event->name = trim($req->name);
-        $event->total_attendees = $req->total_attendees;
+        if($req->total_attendees !== null){
+            $event->total_attendees = $req->total_attendees;
+        }
         $event->slug = str_replace(" ","-",strtolower($req->event_slug));
         $event->user_id = Auth::id();
         $event->start_date = $req->start_date;
