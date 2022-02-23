@@ -108,6 +108,9 @@
             <li>
                 <a href="{{ route("polls.createpoll",['id'=>$id]) }}">Create</a>
             </li>
+            <li>
+                <a href="{{ route("polls.pollResults",['id'=>$id]) }}">Results</a>
+            </li>
            
         </ul>
     </div>

@@ -18,7 +18,9 @@
             left: 0%;
             cursor: pointer;
         }
-        
+        .introjs-tooltip{
+            display: none !important;
+        }
         .botChat img {
             width: 100%;
             height: 100%;
@@ -30,7 +32,7 @@
             bottom: 0%;
             left: 1%;
             width: 10%;
-            z-index: 20;
+            z-index: 9999999;
             transform: translateY(70%);
             transition: all 500ms ease-in-out;
             cursor: pointer;
@@ -156,6 +158,9 @@
             var script = document.createElement("script");
             script.src = "http://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.1/typed.min.js";
             document.head.appendChild(script);
+            var script = document.createElement("script");
+            script.src = "https://unpkg.com/intro.js/minified/intro.min.js";
+            document.head.appendChild(script);
             // $("#typedjs").on("load",()=>{
                 // alert("typedloaded");
                 $(".clickImg").click(function() {
@@ -167,13 +172,26 @@
                             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever"
                         ],
                         typeSpeed: 5,
-                        contentType: 'html'
+                        contentType: 'html',
+                        
                     });
+                    introJs().setOptions({
+                    steps: [ {
+                        element: document.querySelector('.menu-col'),
+                    }],
+                    exitOnOverlayClick: false
+                    }).start();
+                    $(".introjs-overlay").click(()=>{
+                        
+                        // $(".clickAfter").removeClass("activeDiv");
+                        // $(".Textblock").removeClass("ActiveTextblock");
+                    })
                 });
             // });
             function onboard(){
               
             }
+            
             $(".closebtn").click(function() {
                 $(".clickAfter").removeClass("activeDiv");
                 $(".Textblock").removeClass("ActiveTextblock");

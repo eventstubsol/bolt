@@ -287,7 +287,7 @@
             </div>
             <div class="extra">
                 @auth
-                <div class="custom-dropdown profile">
+                <div class="custom-dropdown profile area" data-link="attendees">
                     <a href="javascript:void(0);" class="menu-trigger">
                         <p class="pro-user-name m-0">
                             <span>{{ Auth::user()->name }}</span><i class="mdi mdi-chevron-down mx-1"></i>
@@ -329,7 +329,7 @@
                 @endguest
             </div>
 
-            <div class="">
+            {{-- <div class="">
                 <button class="btn" id="ham-bar" class="menu-icon" onclick="openNav()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#111A34" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
@@ -347,7 +347,7 @@
                     <a href="#partnering" onclick="closeNav()">Partnering</a>
                     <a href="#contact" onclick="closeNav()">Conatct Us</a>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         
