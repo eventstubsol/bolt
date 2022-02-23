@@ -803,7 +803,7 @@ $user = Auth::user();
 
     {{-- @include("event.modules.ByLaws") --}}
     @include("event.modules.FlyIn")
-    @include("event.modules.Onboarding")
+    {{-- @include("event.modules.Onboarding")  --}}
 
 
 

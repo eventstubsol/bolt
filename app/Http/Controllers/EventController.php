@@ -59,7 +59,7 @@ class EventController extends Controller
         // dd("schedule");
         
         $event_id = $event->id;
-        $onboards = Onboard::where("event_id",$event_id)->get();
+        // $onboards = Onboard::where("event_id",$event_id)->get();
         // dd(json_encode($onboards));
         $leaderboard =Leaderboard::where('event_id',$event_id)->first();
         $chat_app = CometChat::where("event_id",$event->id)->first();
