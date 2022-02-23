@@ -642,6 +642,10 @@ $user = Auth::user();
             a.appendChild(r);
         })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
     </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    /* <script id="typedjs"  async=false defer=false src="http://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js"></script> */
+
+
 </head>
 
 <body class="custom-theme">

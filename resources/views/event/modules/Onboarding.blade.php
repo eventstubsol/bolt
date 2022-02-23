@@ -30,9 +30,13 @@
             bottom: 0%;
             left: 1%;
             width: 10%;
+            z-index: 20;
             transform: translateY(70%);
             transition: all 500ms ease-in-out;
             cursor: pointer;
+        }
+        #intro{
+            color: white;
         }
         
         .activeDiv {
@@ -93,8 +97,8 @@
             position: absolute;
             top: -35px;
             left: 0;
-            background: #fff;
-            color: #444;
+            background: black;
+            color: #fff;
             font-size: 10px;
             line-height: 12px;
             font-weight: 500;
@@ -138,29 +142,37 @@
         <!-- Hover Text -->
         <p class="HelpText">Need Help?</p>
         <!-- Character Image -->
-        <img src="images/avatar.png" alt="" class="clickImg">
+        <img src="{{ assetUrl($event->character_url)}}" alt="" class="clickImg">
         <div class="Textblock">
             <p id="intro" class="m-0"></p>
             <div class="closebtn">x</div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.1/typed.min.js"></script> --}}
+
     <script>
         $(document).ready(function() {
-            $(".clickImg").click(function() {
-                onboard();
-            });
-            function onboard(){
-                $(".clickAfter").addClass("activeDiv");
-                $(".Textblock").addClass("ActiveTextblock");
-                $('#intro').typed({
-                    strings: [
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever"
-                    ],
-                    typeSpeed: 5,
-                    contentType: 'html'
+            var script = document.createElement("script");
+            script.src = "http://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.1/typed.min.js";
+            document.head.appendChild(script);
+            // $("#typedjs").on("load",()=>{
+                // alert("typedloaded");
+                $(".clickImg").click(function() {
+                    // onboard();
+                    $(".clickAfter").addClass("activeDiv");
+                    $(".Textblock").addClass("ActiveTextblock");
+                    $('#intro').typed({
+                        strings: [
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever"
+                        ],
+                        typeSpeed: 5,
+                        contentType: 'html'
+                    });
                 });
+            // });
+            function onboard(){
+              
             }
             $(".closebtn").click(function() {
                 $(".clickAfter").removeClass("activeDiv");
