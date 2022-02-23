@@ -57,13 +57,15 @@
                                @else
                                <li class="custom-dropdown not-booth-menu"> 
                                     {!! getMenuLink($footer) !!}
-                                        <div class=" custom-dropdown-menu">
-                                            @foreach($footer->submenus as $submenu)
-                                                @if($submenu->status)
-                                                    {!! getMenuLink($submenu) !!}
-                                                @endif
-                                            @endforeach
-                                        </div>
+                                        @if(count($footer->submenus) )
+                                            <div class=" custom-dropdown-menu">
+                                                @foreach($footer->submenus as $submenu)
+                                                    @if($submenu->status)
+                                                        {!! getMenuLink($submenu) !!}
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        @endif
                                 </li> 
                                
                             @endif

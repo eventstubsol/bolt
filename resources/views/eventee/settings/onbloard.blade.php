@@ -28,7 +28,7 @@ Onboard Settings
                       <span style="color:red">*</span>
                     </label>
                     <input type="hidden" name="url" class="upload_input" value="@if($event->character_url != null){{ $event->character_url }}@endif">
-                    <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="@if($event->character_url != null){{ $event->character_url }}@endif" />
+                    <input type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="@if($event->character_url != null){{ assetUrl($event->character_url) }}@endif" />
                 </div>
                 <div class="form-group">
                     <label for="">Hover Text</label>

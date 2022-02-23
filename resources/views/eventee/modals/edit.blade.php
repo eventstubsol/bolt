@@ -116,7 +116,10 @@
                                                 <input type="file"  data-default-file={{assetUrl($item->to)}}   data-name="pdfs" data-plugins="dropify" data-type="application/pdf" />                                   
                                                 </div>
                                             </div>
-                                            <button class="btn btn-danger mt-2 mb-4 ml-2 remove-link">Remove</button>
+                                            <div class="mt-2">
+
+                                                <button class="btn btn-danger mt-2 mb-4 ml-2 remove-link">Remove</button>
+                                            </div>
                                         </div>
                                     @endforeach
                                    

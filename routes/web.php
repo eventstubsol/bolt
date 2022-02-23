@@ -91,6 +91,7 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post('settings/savechat/{id}','ChatController@SaveChatSettings')->name('settings.savechat');
     Route::get('pollsTest/{id}','ChatController@testPoll')->name('settings.testPoll');
     Route::get('createPolls/{id}','ChatController@createpoll')->name('polls.createpoll');
+    Route::get('pollResults/{id}','ChatController@pollResults')->name('polls.pollResults');
     Route::post('storePolls/{id}','ChatController@storepoll')->name('polls.store');
 
 
