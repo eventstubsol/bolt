@@ -55,29 +55,35 @@ class eventeeController extends Controller
         //     flash("Job Title Field Cannot Be blank")->error();
         //     return redirect()->back();
         // }
+        try{
+
         
-        $userEmail = User::where('email',$request->email)->where('event_id',null)->count();
-        if($userEmail > 0){
-            flash("User Already Exist")->error();
-            return redirect()->back();
-        }
-        $user = new User;
-        $user->name = $request->name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->password = password_hash($request->password,PASSWORD_DEFAULT);
-        $user->job_title = $request->job_title;
-        $user->type = 'eventee';
-        $user->country = $request->country;
-        if($user->save()){
-            $request->Session()->put('eventee-register', 'Registration Successful');
-            return redirect()->route('Eventee.login');
-        }
-        else{
-            $request->Session()->put('eventee-register', 'Oops! Something Went Wrong');
-            return redirect()->route('Eventee.login');
-        }   
+            $userEmail = User::where('email',$request->email)->where('event_id',null)->count();
+            if($userEmail > 0){
+                flash("User Already Exist")->error();
+                return redirect()->back();
+            }
+            $user = new User;
+            $user->name = $request->name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->password = password_hash($request->password,PASSWORD_DEFAULT);
+            $user->job_title = $request->job_title;
+            $user->type = 'eventee';
+            $user->country = $request->country;
+            if($user->save()){
+                $request->Session()->put('eventee-register', 'Registration Successful');
+                return redirect()->route('Eventee.login');
+            }
+            else{
+                $request->Session()->put('eventee-register', 'Oops! Something Went Wrong');
+                return redirect()->route('Eventee.login');
+            }
+        }catch(\Exception $e){
+                Log::error($e->getMessage());
+            }
+
     }
 
     public function Login(){

@@ -51,7 +51,7 @@ Route::post("/leaderboard", "EventManageController@leaderboard")->name("leaderbo
 Route::Post("admin/logout","HomeController@logout")->name('admin.logout');
 Auth::routes();
 Route::get("/Register/EventAdmin","eventeeController@Regiter")->name('Eventee.register');
-Route::post('/Register/EventAdmin',"eventeeController@ConfirmRegister");
+Route::post('/Register/EventAdmin',"eventeeController@ConfirmRegister")->name('Eventee.confirmRegister');
 Route::get('EventAdmin/Login',"eventeeController@Login")->name('Eventee.login');
 Route::post('EventAdmin/Login/Confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
 Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');

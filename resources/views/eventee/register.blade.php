@@ -101,6 +101,13 @@
         <div class="col-md-7 ps-5">
             <div class="formBlock">
                 <h5>Registration</h5>
+                @if($errors->any())
+                    @foreach ($errors->all('<p>:message</p>') as $input_error)
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $input_error }}</strong>
+                        </span>
+                    @endforeach 
+                @endif
                 <form method="POST" class="register mt-6" action="{{ route('Eventee.register') }}">
                   @csrf
                     <div class="row">
@@ -112,13 +119,13 @@
                         </div>
                     </div>
                     <input type="text" class="form-control"  name="email" placeholder ="Corporate e-Mail Address *">
-                    <input type="password" class="form-control" placeholder ="Password *">
+                    <input type="password" name="password" class="form-control" placeholder ="Password *">
 
-                    <select class="form-control" placeholder ="Last Name*" id="phone-number-country" name="phone-number-country" autocomplete="off"></select>
+                    <select class="form-control" placeholder ="Last Name*" id="phone-number-country" name="country" autocomplete="off"></select>
                     <div class="phone-number mb-3 d-flex">
                         <div class="phone-number-prefix"></div>
                         <input class="form-control mb-0" id="phone-number" name="phone"  type="tel" autocomplete="off">
-                        <input type="hidden" id="phone-number-full" name="phone-number-full" />
+                        <input type="hidden" id="phone-number-full" name="phone" />
                     </div>
 
                     <input type="text" class="form-control" name="job_title" placeholder ="Job Title *">
