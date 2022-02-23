@@ -234,7 +234,7 @@
         {{-- <div class=" col-md-2 fluid-col ">
             
         </div> --}}
-        <div style="display:flex; align-items:center;justify-content: space-between;" class="col-5 col-md-3 fluid-col profile-col">
+        <div style="display:flex; align-items:center;justify-content: end;" class="col-5 col-md-3 fluid-col profile-col">
            <div class="dropdown notification-list topbar-dropdown">
                <a onclick="clearNoteAll()" class="nav-link dropdown-toggle waves-effect waves-light" id="dropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                    <i class="fe-bell noti-icon" ></i>

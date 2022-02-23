@@ -10,7 +10,7 @@
             /* justify-content: center; */
             /* flex-direction: column; */
             /* align-items: center; */
-            background: #910cff;
+            background: #228b88;
             color: white;
             padding: 20px 0;
             
@@ -55,7 +55,7 @@
             <span class="mail_signoff_c">Thanks & Regards</span>
             <span class="mail_signoff_c">{{ assetUrl(getField('logo')) }}</span>
             </div>
-            <div class="mail_copyright_c" >© 2021 Eventsibles, Inc. </div>
+            <div class="mail_copyright_c" >© 2021 EventStub, Inc. </div>
         </div>
    </div>
 </body>
