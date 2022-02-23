@@ -47,7 +47,7 @@
             <div class="extra">
                 @guest
                     <div class="dropdown notification-list topbar-dropdown">
-                        <a class="" href="{{ route('attendee_login') }}" aria-expanded="false">Login</a>
+                        <a class="" href="/" aria-expanded="false">Login</a>
                     </div>
                 @endguest
             </div>
