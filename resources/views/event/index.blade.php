@@ -1043,11 +1043,11 @@ $user = Auth::user();
 
     </style>
     <script>
-        function oneSignalJsInit() {
-            OneSignal.push(function() {
-                OneSignal.showNativePrompt();
-            });
-        }
+        // function oneSignalJsInit() {
+            // OneSignal.push(function() {
+            //     OneSignal.showNativePrompt();
+            // });
+        // }
 
         $(document).ready(function() {
             setInterval(function() {
@@ -1104,31 +1104,31 @@ $user = Auth::user();
 
         function initJs() {
             $('body').addClass('loaded');
-            let consent = localStorage.getItem('notifyConsent');
-            let consentNotify = $('.consent-notification');
+            // let consent = localStorage.getItem('notifyConsent');
+            // let consentNotify = $('.consent-notification');
 
-            if (consent === null || consent === 'skip') {
-                consentNotify.addClass('enable');
-                recordEvent("push_notification_consent", "Push Notifications Consent Box Shown");
-            } else if (consent === 'allow') {
-                oneSignalJsInit();
-            }
+            // if (consent === null || consent === 'skip') {
+            //     // consentNotify.addClass('enable');
+            //     // recordEvent("push_notification_consent", "Push Notifications Consent Box Shown");
+            // } else if (consent === 'allow') {
+            //     // oneSignalJsInit();
+            // }
 
-            $('.btn[data-consent]').on('click', function() {
-                let consent = $(this).data('consent');
-                if (consent == "skip") {
-                    localStorage.setItem('notifyConsent', 'skip');
-                    recordEvent("push_notification_allow", "Push Notifications Skipped");
-                } else if (consent == true) {
-                    localStorage.setItem('notifyConsent', 'allow');
-                    recordEvent("push_notification_allow", "Push Notifications Allowed");
-                    oneSignalJsInit();
-                } else {
-                    recordEvent("push_notification_deny", "Push Notifications Denied");
-                    localStorage.setItem('notifyConsent', 'dontallow');
-                }
-                consentNotify.removeClass('enable');
-            });
+            // $('.btn[data-consent]').on('click', function() {
+            //     let consent = $(this).data('consent');
+            //     if (consent == "skip") {
+            //         localStorage.setItem('notifyConsent', 'skip');
+            //         recordEvent("push_notification_allow", "Push Notifications Skipped");
+            //     } else if (consent == true) {
+            //         localStorage.setItem('notifyConsent', 'allow');
+            //         recordEvent("push_notification_allow", "Push Notifications Allowed");
+            //         oneSignalJsInit();
+            //     } else {
+            //         recordEvent("push_notification_deny", "Push Notifications Denied");
+            //         localStorage.setItem('notifyConsent', 'dontallow');
+            //     }
+            //     consentNotify.removeClass('enable');
+            // });
 
             $('#prizes').on('slid.bs.carousel', function() {
                 var $parent = $(this).parents('.d-block');
