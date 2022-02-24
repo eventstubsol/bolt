@@ -78,6 +78,7 @@
                             <th>#</th>
                             <th>Event Name</th>
                             <th>Url</th>
+                            <th>Total Users</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Status</th>
@@ -91,6 +92,7 @@
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $event->name }}</td>
                                 <td id="copyTarget" style="cursor: pointer" data-id="{{ $event->link }}" ondblclick="openPage(this)" onclick="copyclip(this)" data-des="{{ $event->link }}">{{ Str::limit($event->link,50) }}</td>
+                                <td>{{ App\User::where("event_id",$event->id)->count() }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->end_date)->format('d-m-Y') }}</td>
                                 <td>
@@ -134,24 +136,25 @@
                         <span style="color:red">*</span>
 
                     </label>
-                    <input type="text" id="event_name" name="name" class="form-control" required>
-                    <span class="successShow " role="alert" style="display: none;color:green;"></span>
-                    <span class="errorShow " role="alert" style="display: none;color:red;"></span>
+                   <input type="text" id="event_name" name="name" class="form-control" required>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="name">Event Link
                         <span style="color:red">*</span></label><br>
                     <input type="text" id="event_slug" name="event_slug" class="form-control" required>
+                    
+                    <span class="successShow " role="alert" style="display: none;color:green;"></span>
+                    <span class="errorShow " role="alert" style="display: none;color:red;"></span>
                     @php
-                        $baseurl = URL::to('/');
-                        if(strpos($baseurl,'https')){
-                                $baseurl =  str_replace('https://app.',' ',$baseurl);
-                        }else{
-                            $baseurl=  str_replace('http://app.','',$baseurl);
+                        if(env('APP_ENV') == 'staging'){
+                            $link= ['http://','.'.explode(".",$event->link)[1]];
+                        }
+                        else{
+                            $link= ['https://','.'.explode(".",$event->link)[1].'.'.explode(".",$event->link)[2]];
                         }
                     @endphp
-                    <span id="event_link">.{{ $baseurl }}</span><br>
+                    <br><span id="event_link">@if(env('APP_ENV') == 'staging'){{ ".localhost:8000" }}@else{{ $link[1]}}@endif</span><br>
                     <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps </strong> Between Subdomain Name, use '-' only if needed</span>
                 </div>
                 <div class="form-group">
@@ -252,7 +255,9 @@
          $('#event_name').on('input',function(){
             
             let event_name = $(this).val();
-            $.get("{{ route('event.available') }}",{'event_name':event_name},function(res){
+            
+            let slug = event_name.toLowerCase().replaceAll(" ","-");
+            $.get("{{ route('event.available') }}",{'event_name':slug},function(res){
                 if(res.code == 203){
                     $('.successShow').hide();
                     $('.errorShow').show();
@@ -273,10 +278,32 @@
                     $('.successShow').html(res.message);
                 }
             });
-            let slug = event_name.toLowerCase().replaceAll(" ","-");
-        
             $('#event_slug').val(slug);
          });
+         $('#event_slug').on('input',function(){
+            $.get("{{ route('event.available') }}",{'event_name':$(this).val()},function(res){
+                if(res.code == 203){
+                    $('.successShow').hide();
+                    $('.errorShow').show();
+                    $('.errorShow').empty();
+                    $('.errorShow').html(res.message);
+                }
+                else if(res.code == 202){
+                    $('.successShow').hide();
+                    $('.errorShow').show();
+                    $('.errorShow').empty();
+                    $('.errorShow').html(res.message);
+                   
+                }
+                else if(res.code == 200){
+                    $('.errorShow').hide();
+                    $('.successShow').show();
+                    $('.successShow').empty();
+                    $('.successShow').html(res.message);
+                }
+            });
+         });
+
 
          $('.event_end').on('input',function(){
             let start_date =new Date($('.event_start').val());

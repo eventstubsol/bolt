@@ -76,6 +76,21 @@
                         </div>
                     </div>
                     <div class="row">
+                        @if($event->start_dates < Carbon\Carbon::today())
+                        <div class="col-md-6">
+                            <label for="name">Start Date
+                                <span style="color:#03fffd">*</span>
+                            </label>
+                            <input type="text" data-start="{{ $event->start_dates }}" disabled  value="{{ Carbon\Carbon::parse($event->start_dates)->format('d-m-Y') }}" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="event_Start form-control" >
+                        </div>
+                        @elseif($event->start_dates >= Carbon\Carbon::today())
+                        <div class="col-md-6">
+                            <label for="name">Start Date
+                                <span style="color:#03fffd">*</span>
+                            </label>
+                            <input type="datetime-local" name="start_date"  value="{{ $event->start_dates }}" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="event_Start form-control" >
+                        </div>
+                        @endif
                         @if($event->end_dates >= Carbon\Carbon::today())
                                 <div class="col-md-6">
                                     <label for="name">End Date
@@ -93,7 +108,7 @@
                     
                         
                         @endif
-                        <div class="form-group  col-md-3">
+                        <div class="form-group  col-sm-12">
                             <label for="timezone">Timezone
                                 <span style="color:red">*</span>
                             </label>

@@ -22,7 +22,7 @@
                     @csrf
                     
                     <div class="form-group mb-3">
-                        <label for="name">Name
+                        <label for="name">First Name
                             <span style="color:red">*</span>
                         </label>
                         <input autofocus required value="{{ $user->name }}" type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" />

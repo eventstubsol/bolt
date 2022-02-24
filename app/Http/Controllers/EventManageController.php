@@ -134,6 +134,11 @@ class EventManageController extends Controller
         //  }
         $except = ["'" , '"' ,"/","'\'","."," "];
         $slug = str_ireplace($except,"-",strtolower($req->slug));
+        $name = trim($req->name);
+        if(empty($name) || empty($slug)){
+            flash("Plase Fill In Event Name")->error();
+            return redirect()->back();
+        }
         $event = Event::findOrFail( ($event_id));
         $event->name = trim($req->name);
         // $slug =  str_replace(" ","-",strtolower($req->slug));
@@ -393,7 +398,7 @@ class EventManageController extends Controller
         if(strlen($event_name)< 5){
             return response()->json(['code'=>203,'message'=>"Event Name Must Be Greater Than 3 Characters"]);
         }
-        $event = Event::where('name',$event_name)->count();
+        $event = Event::where('slug',$event_name)->count();
         if($event > 0){
             return response()->json(['code'=>202,'message'=>"Event Already Exists"]);
         }

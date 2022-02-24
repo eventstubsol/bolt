@@ -55,7 +55,7 @@ class FaqController extends Controller
         return response()->json(['code'=>200,'message'=>"Done"]);
     }
 
-    public function update($id,$faq_id,Request $req){
+    public function update($id,$faq_id,FaqFormRequest $req){
         $faq = FAQ::findOrFail($faq_id);
         $faq->event_id = $id;
         $faq->question = $req->question;

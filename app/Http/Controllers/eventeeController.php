@@ -191,7 +191,7 @@ class eventeeController extends Controller
 
     public function Event(Request $req){
         $req->session()->put('MangeEvent',0);
-        $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->get();
+        $events = Event::where('user_id',Auth::id())->orderBy(DB::raw("date(start_date)"),'desc')->get();
         return view('eventee.events.index',compact('events'));
     }
 
@@ -223,7 +223,7 @@ class eventeeController extends Controller
         $slug = str_ireplace($except,"-",strtolower($req->event_slug));
         
         $name = trim($req->name);
-        if(empty($name)){
+        if(empty($name) || empty($slug)){
             flash("Plase Fill In Event Name")->error();
             return redirect()->back();
         }
