@@ -150,7 +150,7 @@
         <!-- <div class="col-md-4 offset-md-1">
             <img src="{{asset("assets/images/reg_lt_img.png")}}" alt="">
         </div> -->
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-12 col-lg-6 offset-lg-3">
             <div class="formBlock">
                 <h5>Login</h5>
                 @include('flash::message')
