@@ -11,15 +11,15 @@ class OTPController extends Controller
         $id = $req->id;
         
         $event = Event::findOrFail($id);
-        $event->otp_option = $req->status;
+        $event->active_option = $req->status;
         if($event->save()){
             if($req->status == 1){
                 
-                return response()->json(["code"=>200,"message"=>"OTP System is turned On"]);
+                return response()->json(["code"=>200,"message"=>"Activation System is turned On"]);
             }
             else{
                
-                return response()->json(["code"=>200,"message"=>"OTP System is turned Off"]);
+                return response()->json(["code"=>200,"message"=>"Activation System is turned Off"]);
             }
         }
        

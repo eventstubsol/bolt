@@ -74,8 +74,9 @@ class eventeeController extends Controller
         $user->type = 'eventee';
         $user->country = $request->country;
         if($user->save()){
-            GenerateOtp($user->id);
-            return redirect()->route("eventadmin.verify",$user->id);
+            GenerateLink($user);
+            flash("A Verification link is sent to your account, Please check your email an activate your account")->info();
+            return redirect()->route("Eventee.login");
             // $request->Session()->put('eventee-register', 'Registration Successful');
             
         }
@@ -128,8 +129,9 @@ class eventeeController extends Controller
                         return redirect(route('teacher.dashboard'));
                    }
                    else{
-                    GenerateOtp($user->id);
-                    return redirect()->route("eventadmin.verify",$user->id);
+                    GenerateLink($user);
+                    flash("A Verification link is sent to your account, Please check your email an activate your account")->info();
+                    return redirect()->route("Eventee.login");
                    }
                 }
                 else{

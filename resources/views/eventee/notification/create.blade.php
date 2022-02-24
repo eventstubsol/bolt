@@ -110,10 +110,10 @@
                         </select>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="user-type">Select Roles
+                        <label for="user-type">Select a Role
                             <span style="color:red">*</span>
                         </label>
-                        <select id="user-type" name="roles[]" required multiple="" class="form-control select2-multiple @error('message') is-invalid @enderror" data-toggle="select2" multiple="multiple" data-placeholder="Choose ...">
+                        <select id="user-type" name="roles[]" required class="form-control  @error('message') is-invalid @enderror" >
                             <option >All</option>
                             <option>Attendee</option>
                             <option>Delegates</option>
