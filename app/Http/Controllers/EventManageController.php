@@ -132,12 +132,14 @@ class EventManageController extends Controller
         //  }else{
         //    $baseurl=  str_replace('http://app.','',$baseurl);
         //  }
+        $except = ["'" , '"' ,"/","'\'","."," "];
+        $slug = str_ireplace($except,"-",strtolower($req->slug));
         $event = Event::findOrFail( ($event_id));
         $event->name = trim($req->name);
-        $slug =  str_replace(" ","-",strtolower($req->slug));
+        // $slug =  str_replace(" ","-",strtolower($req->slug));
         // return  $slug.'.'.str_replace('https://','',$baseurl).'';
         if($req->has('slug')){
-            $event->slug = str_replace(" ","-",strtolower($req->slug));
+            $event->slug = $slug;
             $event->link = $slug.'.'. $baseurl .'';
         }
         $event->start_date = $req->start_date;
