@@ -94,10 +94,18 @@ class EventManageController extends Controller
             $et = $event->end_date ? Carbon::parse($event->end_date)->format('Y-m-d\TH:i') : "";
             unset($event->end_date);
             $event->end_dates = $et;
+           
+            if(env('APP_ENV') == 'staging'){
+                $link= ['http://','.'.explode(".",$event->link)[1]];
+            }
+            else{
+                $link= ['https://','.'.explode(".",$event->link)[1].'.'.explode(".",$event->link)[2]];
+            }
         } catch (\Exception $e) {
             //Do Nothing for now
         }
-        return view('eventee.events.edit',compact('event_id','event'));
+        // return $link;
+        return view('eventee.events.edit',compact('event_id','event','link'));
     }
     public function verifyDomain(){
         $currDomain = \Request::getHost();

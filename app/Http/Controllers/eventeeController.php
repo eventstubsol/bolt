@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\EventSession;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
@@ -154,7 +155,7 @@ class eventeeController extends Controller
     public function Dashboard(Request $req){
         try{
             $req->session()->put('MangeEvent',0);
-            $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->limit(5)->count();
+            $events = Event::where('user_id',Auth::id())->orderBy(DB::raw("date(created_at)"),'desc')->limit(5)->count();
            
             $liveEvent = Event::where('end_date','>=',Carbon::now("UTC")->format('Y-m-d'))->where('user_id',Auth::id())->count();
             $recent = Event::where('user_id',Auth::id())->orderBy('start_date','asc')->limit(5)->get();

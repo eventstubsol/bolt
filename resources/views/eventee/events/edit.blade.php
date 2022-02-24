@@ -53,20 +53,13 @@
                         <div class="form-group col-md-6">
                             <label for="name">Event Link
                                 <span style="color:#03fffd">*</span></label><br>
-                                <span id="event_link">https://</span>
+                                <span id="event_link">{{ $link[0] }}</span>
                                 <input type="text" style="  width: 50% !important; display: inline-block !important" id="event_slug" name="slug" class="slugInp  form-control @error('slug') is-invalid @enderror" value="{{ $event->slug }}" required>
                                 @error('slug')
                                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
-                                @php
-                                    $baseurl = URL::to('/');
-                                    if(strpos($baseurl,'https')){
-                                        $baseurl =  str_replace('https://app','',$baseurl);
-                                    }else{
-                                        $baseurl=  str_replace('http://app','',$baseurl);
-                                    }
-                                @endphp
-                            <span id="event_link">.{{ $baseurl }}</span><br>
+                                
+                            <span id="event_link">{{ $link[1]  }}</span><br>
                             <span style="color:#03fffd">**Note : Do Not Use <strong>Spaces Or Caps </strong> Between Subdomain Name, use '-' only if needed</span>
                         </div>
                     </div>
