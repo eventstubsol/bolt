@@ -120,7 +120,7 @@ class AttendeeAuthController extends Controller
             if ($user->type !== 'attendee' && $user->type !== 'delegate' ) {
                 return redirect( route("exhibitorLogin",['subdomain'=>$subdomain,'email'=>$user->email]));
             }
-            if($event->otp_option == 1 && $user->email_status == 0){
+            if($event->active_option == 1 && $user->email_status == 0){
                 GenerateLinkAttendee($user,$subdomain);
                 flash("A Verification link is sent to your account, Please check your email an activate your account")->info();
                 return redirect()->route("attendeeLogin",['subdomain'=>$subdomain]);
