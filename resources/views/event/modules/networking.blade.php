@@ -204,6 +204,15 @@
         justify-content: space-between;
     }
 
+    @media(max-width:931px) {
+        .table_Box{
+            width: 47%;
+        }
+        .BigTableBox{
+            width: 100%;
+        }
+    }
+
 
 </style>
 {{-- <div class="page py-5 d-none" id="networking">

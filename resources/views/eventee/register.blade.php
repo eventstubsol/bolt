@@ -11,7 +11,7 @@
         body{
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            background: url("{{asset('assets/images/reg.jpg')}}") no-repeat left top;
+            background: url("{{asset('assets/images/reg.jpg')}}") no-repeat center fixed;
             background-size: cover;
         }
         
@@ -111,6 +111,11 @@
           -webkit-text-fill-color: #ebebeb ;
           transition: background-color 5000s ease-in-out 0s;
         }
+
+        .register_now{
+            color: white;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -187,7 +192,7 @@
 
                     </div>
                 </form>
-                <p class="text register_now" style="color:white">Login As An Event Admin<a href="{{ route('Eventee.login') }}"> Click here</a></p>
+                <h6 class="text register_now mt-4">Login As An Event Admin <a href="{{ route('Eventee.login') }}"> Click here</a></h6>
             </div>
         </div>
     </div>
