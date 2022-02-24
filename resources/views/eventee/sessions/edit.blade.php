@@ -273,13 +273,15 @@ Create Update
         $('.event_end').on('input', function() {
                     let start_date = new Date($('.event_start').val());
                     let end_date = new Date($(this).val());
-                    if ((start_date.getDate() == end_date.getDate()) && (start_date.getHours() == end_date
+                    let start_main_date = new Date(start_date.getFullYear(),month_start , start_date.getDate());
+                    let end_main_date = new Date(end_date.getFullYear(),month_end , end_date.getDate());
+                    if ((start_main_date ==end_main_date) && (start_date.getHours() == end_date
                             .getHours()) && (start_date.getMinutes() == end_date.getMinutes())) {
                         $(this).addClass('is-invalid');
                         $('#erroshowEnd').show();
                         $('#erroshowEndDate').hide();
                         $('.sameType').attr('disabled', true);
-                    }else if (((start_date.getDate() >= end_date.getDate()) && (start_date.getHours() >= end_date
+                    }else if (((start_main_date >= end_main_date) && (start_date.getHours() >= end_date
                             .getHours()) && (start_date.getMinutes() >= end_date.getMinutes()))){
                                 $(this).addClass('is-invalid');
                                 $('#erroshowEndDate').show();
