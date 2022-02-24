@@ -152,6 +152,7 @@
         <div class="col-md-6 offset-md-3">
             <div class="formBlock">
                 <h5>Login</h5>
+                @include('flash::message')
                 @if($errors->any())
                     @foreach ($errors->all('<p>:message</p>') as $input_error)
                         <span class="invalid-feedback" role="alert">
@@ -162,7 +163,7 @@
                 <form action="{{ route('Eventee.login.confirm') }}" method="post">
                     @csrf
                     <label>Email address <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control"  name="email" placeholder ="Enter Your E-Mail Address *">
+                    <input type="text" class="form-control @error('email') is-invalid @enderror"  name="email" placeholder ="Enter Your E-Mail Address *">
                     @error('email')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
@@ -170,7 +171,7 @@
                    
 
                     <label>Password <span class="text-danger">*</span></label>
-                    <input type="password" name="password" class="form-control" placeholder ="Password *">
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder ="Password *">
                     @error('password')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
@@ -188,4 +189,10 @@
 </div>
 
 </body>
+<script>
+    $('#flash-overlay-modal').modal();
+    /* setTimeout(function(){ 
+        $('#flash-overlay-modal').modal('toggle'); 
+    }, 2000); */
+</script>
 </html>
