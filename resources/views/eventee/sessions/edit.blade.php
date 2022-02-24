@@ -103,7 +103,7 @@ Create Update
                                 <label class="form-label">Start Time
                                     <span style="color:red">*</span>
                                 </label>
-                                <input value="{{$session->start_times}}" name="start_time" id="start_time" type="datetime-local" class="form-control @error('start_time') is-invalid @enderror" required />
+                                <input value="{{$session->start_times}}" name="start_time" id="start_time" type="datetime-local" class="event_start form-control @error('start_time') is-invalid @enderror" required />
                                 @error('start_time')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -116,7 +116,11 @@ Create Update
                                 <label class="form-label">End Time
                                     <span style="color:red">*</span>
                                 </label>
-                                <input value="{{$session->end_times}}" name="end_time" type="datetime-local" class="form-control  @error('end_time') is-invalid @enderror" required/>
+                                <input value="{{$session->end_times}}" name="end_time" type="datetime-local" class="event_end form-control  @error('end_time') is-invalid @enderror" required/>
+                                <span id="erroshowEndDate" style="color:red;display:none">Session end date and time cannot be
+                                    before the session start date and time</span>
+                                <span id="erroshowEnd" style="color:red;display:none">Session Start Time and End Time
+                                    Cannot Be The Same</span>
                                 @error('end_time')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -197,7 +201,7 @@ Create Update
                     </div>
 
                     <div>
-                        <input class="btn btn-primary" id="create_session" type="submit" value="Save" />
+                        <input class="sameType btn btn-primary" id="create_session" type="submit" value="Save" />
                     </div>
                 </form>
             </div>
@@ -266,6 +270,30 @@ Create Update
             changeType(e);
         })
         // $("#session_type").on("change",changeType);
+        $('.event_end').on('input', function() {
+                    let start_date = new Date($('.event_start').val());
+                    let end_date = new Date($(this).val());
+                    if ((start_date.getDate() == end_date.getDate()) && (start_date.getHours() == end_date
+                            .getHours()) && (start_date.getMinutes() == end_date.getMinutes())) {
+                        $(this).addClass('is-invalid');
+                        $('#erroshowEnd').show();
+                        $('#erroshowEndDate').hide();
+                        $('.sameType').attr('disabled', true);
+                    }else if (((start_date.getDate() >= end_date.getDate()) && (start_date.getHours() >= end_date
+                            .getHours()) && (start_date.getMinutes() >= end_date.getMinutes()))){
+                                $(this).addClass('is-invalid');
+                                $('#erroshowEndDate').show();
+                                $('#erroshowEnd').hide();
+                                $('.sameType').attr('disabled', true);
+                        }
+                        
+                    else {
+                        $(this).removeClass('is-invalid');
+                        $('#erroshowEndDate').hide();
+                        $('#erroshowEnd').hide();
+                        $('.sameType').attr('disabled', false);
+                    }
+                });
     })
 
     function changeType(e){
