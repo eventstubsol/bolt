@@ -88,7 +88,9 @@
                                     <label for="name">End Date
                                         <span style="color:#03fffd">*</span>
                                     </label>
-                                    <input type="datetime-local" name="end_date" value="{{ $event->end_dates }}" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="form-control @error('end_date') is-invalid @enderror" required>
+                                    <input type="datetime-local" data-start="{{ $event->start_dates }}" name="end_date"  value="{{ $event->end_dates }}" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="event_end form-control @error('end_date') is-invalid @enderror" required>
+                                    <span id="erroshowEndDate"  style="color:red;display:none">Event end date and time cannot be before the start date and time</span>
+                                    <span id="erroshowEnd"  style="color:red;display:none">Event Start Time and End Time Cannot Be The Same</span>
                                     @error('end_date')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
@@ -110,7 +112,7 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary" id="sameType">Update</button>
                 </form>
             </div>
         </div>
@@ -128,6 +130,31 @@
             let slug = event_name.toLowerCase().replaceAll(" ","-");
         
             $('#event_slug').val(slug);
+         });
+         $('.event_end').on('input',function(){
+            let start_date =new Date("{{ $event->start_dates }}");
+            let end_date = new Date($(this).val());
+            //  console.log(start_date.getHours());
+            if ((start_date.getDate() == end_date.getDate()) && (start_date.getHours() == end_date
+                            .getHours()) && (start_date.getMinutes() == end_date.getMinutes())) {
+                $(this).addClass('is-invalid');
+                $('#erroshowEnd').show();
+                $('#erroshowEndDate').hide();
+                $('#sameType').attr('disabled', true);
+            }else if (((start_date.getDate() >= end_date.getDate()) && (start_date.getHours() >= end_date
+                    .getHours()) && (start_date.getMinutes() >= end_date.getMinutes()))){
+                        $(this).addClass('is-invalid');
+                        $('#erroshowEndDate').show();
+                        $('#erroshowEnd').hide();
+                        $('#sameType').attr('disabled', true);
+                }
+                
+            else {
+                $(this).removeClass('is-invalid');
+                $('#erroshowEndDate').hide();
+                $('#erroshowEnd').hide();
+                $('#sameType').attr('disabled', false);
+            }
          });
      });
 </script>
