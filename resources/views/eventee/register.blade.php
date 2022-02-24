@@ -29,7 +29,7 @@
         .formBlock{
             border-radius: 10px;
             border: 1px solid #fff;
-            background: #ffffff70;
+            background: #003135;
             padding: 40px 35px;
         }
 
@@ -42,23 +42,27 @@
         }
         .form-control{
             margin-bottom: 15px;
-            color: #333;
+            color: #fff;
             font-size: 14px;
             min-height: 46px;
             border-radius: 6px;
+            background: #001010;
+            border-color: #001010;
         }
         .form-control:focus{
             box-shadow: none;
-            border-color: #007a7c;
+            border-color: #fff;
+            background: #001010;
+            color: #fff;
         }
         .form-control::-webkit-input-placeholder { 
-            color: #007a7c;
+            color: #fff;
         }
         .form-control:-ms-input-placeholder { 
-            color: #007a7c;
+            color: #fff;
         }
         .form-control::placeholder {
-            color: #007a7c;
+            color: #fff;
         }
 
         .btn-reg{
@@ -72,13 +76,13 @@
         }
 
         .phone-number-prefix{
-            background: #cecece;
+            background: #021d1d;
             min-height: 46px;
             border-radius: 6px 0 0px 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #333;
+            color: #fff;
             font-size: 14px;
             padding: 0 5px;
             min-width: 48px;
@@ -87,6 +91,26 @@
         .phone-number .form-control{
             border-radius: 0px 6px 6px 0px;
         }
+
+        label{
+          color: #fff;
+          font-size: 13px;
+        }
+        
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus,
+        textarea:-webkit-autofill,
+        textarea:-webkit-autofill:hover,
+        textarea:-webkit-autofill:focus,
+        select:-webkit-autofill,
+        select:-webkit-autofill:hover,
+        select:-webkit-autofill:focus {
+          border: 1px solid #1d1d1d;
+          -webkit-text-fill-color: #ebebeb ;
+          transition: background-color 5000s ease-in-out 0s;
+        }
     </style>
 </head>
 <body>
@@ -94,11 +118,11 @@
     <div class="logo">
         <img src="{{asset("assets/images/reg_logo.png")}}" alt="">
     </div>
-    <div class="row align-items-center pe-5">
-        <div class="col-md-4 offset-md-1">
+    <div class="row align-items-center mt-5">
+        <!-- <div class="col-md-4 offset-md-1">
             <img src="{{asset("assets/images/reg_lt_img.png")}}" alt="">
-        </div>
-        <div class="col-md-7 ps-5">
+        </div> -->
+        <div class="col-md-6 offset-md-3">
             <div class="formBlock">
                 <h5>Registration</h5>
                 @if($errors->any())
@@ -112,22 +136,30 @@
                   @csrf
                     <div class="row">
                         <div class="col-md-6">
+                          <label>First Name <span class="text-danger">*</span></label>
                             <input type="text" name="name"  class="form-control" placeholder ="First Name*">
                         </div>
                         <div class="col-md-6">
+                          <label>Last Name <span class="text-danger">*</span></label>
                             <input type="text"  name="last_name" class="form-control" placeholder ="Last Name*">
                         </div>
                     </div>
+                    <label>Corporate e-Mail Address <span class="text-danger">*</span></label>
                     <input type="text" class="form-control"  name="email" placeholder ="Corporate e-Mail Address *">
+
+                    <label>Password <span class="text-danger">*</span></label>
                     <input type="password" name="password" class="form-control" placeholder ="Password *">
 
+                    <label>Country <span class="text-danger">*</span></label>
                     <select class="form-control" placeholder ="Last Name*" id="phone-number-country" name="country" autocomplete="off"></select>
+                    <label>Phone Number <span class="text-danger">*</span></label>
                     <div class="phone-number mb-3 d-flex">
                         <div class="phone-number-prefix"></div>
                         <input class="form-control mb-0" id="phone-number" name="phone"  type="tel" autocomplete="off">
                         <input type="hidden" id="phone-number-full" name="phone" />
                     </div>
 
+                    <label>Job Title <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" name="job_title" placeholder ="Job Title *">
                     {{-- <input type="text" class="form-control" placeholder =""> --}}
 

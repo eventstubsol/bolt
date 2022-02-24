@@ -725,12 +725,12 @@ Route::get("/clear-leaderboard", function(){
 
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
 $options = ['domain' => $url];
-$arr = [];
+$arr = ["ciscoevent.gecmediagroup.com"];
 // $domains = Event::whereNotNull("domain")->get("domain")->toArray();
 // foreach($domains as $domain){
 //     array_push($arr,$domain['domain']);
 // }
-$domains = [];
+$domains = ["ciscoevent.eventstub.co"];
 // dd($arr);
 $currDomain = \Request::getHost();
 
