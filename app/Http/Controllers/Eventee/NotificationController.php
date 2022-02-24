@@ -15,17 +15,17 @@ use App\Page;
 use App\Booth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Http;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Mail\Message;
 use Mail;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
-use URL;
+use Illuminate\Support\Facades\URL;
 
 class NotificationController extends Controller
 {
     public function index($id)
     {
-        $notifications = PushNotification::where('event_id',$id)->orderBy("created_at")->get();
+        $notifications = PushNotification::where('event_id',$id)->orderBy("created_at",'desc')->get();
         return view("eventee.notification.index")->with(compact("notifications","id"));
     }
 
@@ -40,7 +40,7 @@ class NotificationController extends Controller
     public function store(Request $request,$id)
     {
         $event = Event::findOrFail($id);
-        $request->validate(["title" => "required|max:255", "message" => "required|max:255", "roles" => "required|array|min:1"]);
+        $request->validate(["title" => "required|max:255", "message" => "required|max:175", "roles" => "required|array|min:1"]);
         if ($request->post("url", NULL)) {
             $request->validate(["url" => "url"]);
         }
@@ -165,6 +165,35 @@ class NotificationController extends Controller
 
         return "Sent";
  
+    }
+
+    public function resend($id,$notification_id){
+        $note = PushNotification::findOrFail($notification_id);
+        $notify = new PushNotification;
+        $notify->title = $note->title;
+        $notify->url = $note->url;
+        $notify->message = $note->message;
+        $notify->roles = $note->roles ;
+        $notify->event_id = $id;
+        $notify->location_type = $note->location_type;  
+        $notify->location = $note->location;  
+        $event = Event::findOrFail($id); 
+        if($note->location != 'lobby'){
+            event(new NotificationEvent($note->message,$note->title,$event->slug,$notify->id,$note->role,$note->url,$note->location,$note->location_type));
+      
+        }
+        else{
+            event(new NotificationEvent($note->message,$note->title,$event->slug,$notify->id,$note->role,$note->url,$note->location,$note->location_type));
+        }
+        if($notify->save()){
+            
+            flash("Notification Sent Succesfully")->success();
+            return redirect()->route('eventee.notification',$id);
+        }
+        else{
+            flash("Something Went Wrong")->error();
+            return redirect()->back();
+        } 
     }
 }
 

@@ -577,9 +577,9 @@
         @endif
        </div>
        <div class="form-group mt-2">
-        @if($event->otp_option == 0)
+        @if($event->active_option == 0)
             <div class="form-check form-switch ml-0 pl-0">
-                <label for="#landPage" class="mr-1 mb-0">Set Otp Option</label>
+                <label for="#landPage" class="mr-1 mb-0">Set Email Activation Option</label>
                 <label class="switch">
                     <input type="checkbox" value="0" onchange="OtpOption(this)">
                     <span class="slider round"></span>
@@ -587,7 +587,7 @@
             </div>
         @else
             <div class="form-check form-switch ml-0 pl-0">
-                <label for="#landPage" class="mr-1 mb-0">Set Otp Option</label>
+                <label for="#landPage" class="mr-1 mb-0">Set Email Activation Option</label>
                 <label class="switch">
                     <input type="checkbox" value="1" onchange="OtpOption(this)" checked>
                     <span class="slider round"></span>

@@ -362,6 +362,7 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get('/notification/{id}',"Eventee\NotificationController@index")->name('eventee.notification');
     Route::get('/notification/create/{id}',"Eventee\NotificationController@create")->name('eventee.notification.create');
     Route::post('/notification/store/{id}',"Eventee\NotificationController@store")->name('eventee.notification.store');
+    Route::get("/notification/store/{id}/{notification_id}","Eventee\NotificationController@resend")->name("eventee.notification.resend");
     Route::get('/Poll/{id}',"Eventee\PollController@index")->name('eventee.poll');
     Route::get('qna/{id}',"Eventee\QnaController@index")->name('eventee.qna');
     Route::get("/polls", "PollController@index")->name("poll.manage"); // list all polls
@@ -420,7 +421,7 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post('License/update/{id}/{license_id}',"Eventee\LicenseController@update")->name('eventee.license.update');
     
 });
-
+Route::get("active/account/{user_id}","AccountActiveController@active")->name("active.account");
 Route::get("/", "HomeController@index")->name("home"); //Landing Page
 
 Route::get("/event/login", "AttendeeAuthController@show")->name("attendee_login");
@@ -783,6 +784,8 @@ Route::group($options, function () use ($options) {
     Route::POST("/verify/otp/attendee/{user_id}","EventAdminController@VerifyOtpAttendee")->name("Eventee.verify.attendee");
     //thank you page
     Route::get('/thank/you','AttendeeAuthController@thankPage')->name('thank.page');
+    //Activate Account
+    Route::get("active/account/attendee/{user_id}","AccountActiveController@activeAttendee")->name("active.account.attendee");
 
     Route::get("/faq", "HomeController@faqs")->name("faq");
     Route::get("privacy-policy", "HomeController@privacyPolicy")->name("privacyPolicy");

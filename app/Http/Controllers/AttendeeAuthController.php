@@ -120,9 +120,10 @@ class AttendeeAuthController extends Controller
             if ($user->type !== 'attendee' && $user->type !== 'delegate' ) {
                 return redirect( route("exhibitorLogin",['subdomain'=>$subdomain,'email'=>$user->email]));
             }
-            if($event->otp_option == 1){
-                GenerateOtp($user->id);
-                return redirect()->route("eventadmin.verify.attendee",['user_id'=>$user->id,'subdomain'=>$subdomain]);
+            if($event->otp_option == 1 && $user->email_status == 0){
+                GenerateLinkAttendee($user,$subdomain);
+                flash("A Verification link is sent to your account, Please check your email an activate your account")->info();
+                return redirect()->route("attendeeLogin",['subdomain'=>$subdomain]);
             }
             else{
                 $user->online_status = 1;
@@ -274,8 +275,15 @@ class AttendeeAuthController extends Controller
             $userData->field_value = $userdata;
             $userData->save();
         }
-        flash("Registered Successfully")->success();
+       if($event->active_option == 1){
+            flash("A Verification link is sent to your account, Please check your email an activate your account")->info();
+            GenerateLinkAttendee($user,$subdomain);
+            return redirect()->route('attendeeLogin',$subdomain);
+       }
+       else{
+        flash("Registration Successful")->success();
         return redirect()->route('thank.page',$subdomain);
+       }
     }
 
     public function saveRegistration(Request $request,$subdomain)
@@ -327,11 +335,11 @@ class AttendeeAuthController extends Controller
         //             'template_id' => config("services.sendgrid.templates.register"),
         //         ], SendgridTransport::SMTP_API_NAME);
         // });
-        $request->session()->put('attendee_reg',1);
         return redirect(route("attendee_login",$subdomain));
         // return redirect(route("event"));
     }
     public function thankPage($subdomain){
+        
          $event = Event::where('slug',$subdomain)->first();
          return view('thanks.index',compact('subdomain','event'));
     }

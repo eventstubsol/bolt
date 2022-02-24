@@ -41,7 +41,8 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use Aws\SecretsManager\SecretsManagerClient; 
 use Aws\Exception\AwsException;
 use App\Mail\OtpSetup;
-
+use App\Mail\ActiveMail;
+use App\Mail\ActiveMailAttendee;
 
 include_once "clickableAreasConfig.php";
 include_once "chat/index.php";
@@ -1642,6 +1643,16 @@ function GenerateOtp($user_id){
     Mailing::to($user->email)->send(new OtpSetup($user,$otp));
     return 1;
 }
+
+function GenerateLink($user){
+    Mailing::to($user->email)->send(new ActiveMail($user));
+    return 1;
+}
+function GenerateLinkAttendee($user,$subdomeain){
+    Mailing::to($user->email)->send(new ActiveMailAttendee($user,$subdomeain));
+    return 1;
+}
+
 
 function VerifyOTP($user_id,$otp){
     $user = User::findOrFail($user_id);

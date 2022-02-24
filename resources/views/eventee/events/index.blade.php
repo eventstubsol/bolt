@@ -279,8 +279,8 @@
          });
 
          $('.event_end').on('input',function(){
-             let start_date =new Date($('.event_start').val());
-             let end_date = new Date($(this).val());
+            let start_date =new Date($('.event_start').val());
+            let end_date = new Date($(this).val());
             //  console.log(start_date.getHours());
             if((start_date.getDate() == end_date.getDate()) && (start_date.getHours() >= end_date.getHours()) && (start_date.getMinutes() >= end_date.getMinutes())){
                 $(this).addClass('is-invalid');
