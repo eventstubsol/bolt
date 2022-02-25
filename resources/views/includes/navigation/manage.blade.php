@@ -13,12 +13,12 @@
 </li>
 @if(Carbon\Carbon::now() <= $event->end_date)
 <li class="menu-title">Administration</li>
-<li>
+{{-- <li>
     <a href="{{ route('eventee.media',$id) }}">
         <i class="fa fa-picture-o" aria-hidden="true"></i>
         <span> My Media </span>
     </a>
-</li>
+</li> --}}
 <li>
     <a href="#users" data-toggle="collapse">
         <i data-feather="users"></i>
@@ -75,9 +75,9 @@
             <li>
                 <a href="{{ route("eventee.mail.create",['id'=>$id]) }}">New Mail</a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ route("eventee.mail.template",['id'=>$id]) }}">Manage Template</a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </li>
@@ -98,7 +98,7 @@
         </ul>
     </div>
 </li>
-<li>
+{{-- <li>
     <a href="#polls" data-toggle="collapse">
         <i data-feather="users"></i>
         <span> Polls</span>
@@ -114,7 +114,7 @@
            
         </ul>
     </div>
-</li>
+</li> --}}
 <li>
     <a href="{{ route('eventee.restore',$id) }}">
         <i class="fas fa-trash-restore"></i>
@@ -260,11 +260,11 @@
                     <span> Landing Page Settings</span>
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ route("onboard.settings",$id) }}">
                     <span> Onboard Settings</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </li>
