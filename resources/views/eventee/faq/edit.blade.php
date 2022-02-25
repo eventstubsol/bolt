@@ -52,7 +52,10 @@
                             <label for="answer">Answer
                                 <span style="color:red">*</span>
                             </label>
-                            <textarea name="answer" id="summernote-basic" class="form-control" cols="500" rows="1000">{{ $faq->answer }}</textarea>
+                            <textarea name="answer"  id="summernote-basic" class="form-control  @error('answer') is-invalid @enderror" cols="500" rows="1000">{{ $faq->answer }}</textarea>
+                            @error('answer')
+                                <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <span style="float: right"><button type="submit" class="btn btn-success">Update</button></span>

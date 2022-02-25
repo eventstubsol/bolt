@@ -23,7 +23,7 @@ Create Users
                     @csrf
                     <input type="hidden" name="event_id" value="{{ ($id) }}">
                     <div class="form-group mb-3">
-                        <label for="name">Name 
+                        <label for="name">First Name 
                             <span style="color:red">*</span>
                         </label>
                         <input autofocus  value="{{ old('name') }}" type="text" id="name" name="name"
@@ -59,7 +59,9 @@ Create Users
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="password">Password (optional)</label>
+                        <label for="password">Password 
+                            <span style="color:red">*</span>
+                        </label>
                         <input id="password"  name="password" type="password"
                             class="form-control @error('password') is-invalid @enderror" />
                         @error('password')

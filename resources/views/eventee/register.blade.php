@@ -125,6 +125,7 @@
         <div class="col-md-6 offset-md-3">
             <div class="formBlock">
                 <h5>Registration</h5>
+                @include('flash::message')
                 @if($errors->any())
                     @foreach ($errors->all('<p>:message</p>') as $input_error)
                         <span class="invalid-feedback" role="alert">
@@ -137,36 +138,56 @@
                     <div class="row">
                         <div class="col-md-6">
                           <label>First Name <span class="text-danger">*</span></label>
-                            <input type="text" name="name"  class="form-control" placeholder ="First Name*">
+                            <input type="text" name="name"  class="form-control @error('name') is-invalid @enderror" placeholder ="First Name*">
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
                         </div>
                         <div class="col-md-6">
                           <label>Last Name <span class="text-danger">*</span></label>
-                            <input type="text"  name="last_name" class="form-control" placeholder ="Last Name*">
+                            <input type="text"  name="last_name" class="form-control @error('last_name') is-invalid @enderror" placeholder ="Last Name*">
+                            @error('last_name')
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
                         </div>
                     </div>
                     <label>Corporate e-Mail Address <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control"  name="email" placeholder ="Corporate e-Mail Address *">
+                    <input type="text" class="form-control @error('email') is-invalid @enderror"  name="email" placeholder ="Corporate e-Mail Address *">
+                    @error('email')
+                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    @enderror
 
                     <label>Password <span class="text-danger">*</span></label>
-                    <input type="password" name="password" class="form-control" placeholder ="Password *">
+                    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder ="Password *">
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    @enderror
 
                     <label>Country <span class="text-danger">*</span></label>
                     <select class="form-control" placeholder ="Last Name*" id="phone-number-country" name="country" autocomplete="off"></select>
                     <label>Phone Number <span class="text-danger">*</span></label>
                     <div class="phone-number mb-3 d-flex">
                         <div class="phone-number-prefix"></div>
-                        <input class="form-control mb-0" id="phone-number" name="phone"  type="tel" autocomplete="off">
+                        <input class="form-control mb-0 @error('phone') is-invalid @enderror" id="phone-number" name="phone"  type="tel" autocomplete="off">
                         <input type="hidden" id="phone-number-full" name="phone" />
+                        @error('phone')
+                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <label>Job Title <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="job_title" placeholder ="Job Title *">
+                    <input type="text" class="form-control @error('job_title') is-invalid @enderror" name="job_title" placeholder ="Job Title *">
+                    @error('job_title')
+                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    @enderror
                     {{-- <input type="text" class="form-control" placeholder =""> --}}
 
                     <div class="d-flex justify-content-center">
                         <button  type="submit"  class="btn btn-reg">Register</button>
+
                     </div>
                 </form>
+                <p class="text register_now" style="color:white">Login As An Event Admin<a href="{{ route('Eventee.login') }}"> Click here</a></p>
             </div>
         </div>
     </div>
@@ -176,7 +197,12 @@
 <script type="text/javascript" src="https://1cf5229636340d3e1dd5-0eccc4d82b7628eccb93a74a572fd3ee.ssl.cf1.rackcdn.com/testing/jquery.formatter.min.js"></script>
 <script type="text/javascript" src="https://1cf5229636340d3e1dd5-0eccc4d82b7628eccb93a74a572fd3ee.ssl.cf1.rackcdn.com/testing/intlTelInput.min.js"></script>
 
-
+<script>
+  $('#flash-overlay-modal').modal();
+  /* setTimeout(function(){ 
+      $('#flash-overlay-modal').modal('toggle'); 
+  }, 2000); */
+</script>
 <script>
 const intlPhoneNumber = function(countryCode) {
   // get the country data from the plugin

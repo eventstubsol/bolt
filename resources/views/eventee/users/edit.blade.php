@@ -22,7 +22,7 @@
                     @csrf
                     
                     <div class="form-group mb-3">
-                        <label for="name">Name
+                        <label for="name">First Name
                             <span style="color:red">*</span>
                         </label>
                         <input autofocus required value="{{ $user->name }}" type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" />
@@ -56,7 +56,7 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="password">Password(Optional)</label>
+                        <label for="password">Password</label>
                         <input id="password" name="password" type="password" class="form-control @error('password') is-invalid @enderror" />
                         @error('password')
                         <span class="invalid-feedback" role="alert">

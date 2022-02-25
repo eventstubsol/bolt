@@ -28,6 +28,10 @@ Manage Users
                     <li class="list-group-item">Name:<b> {{ $user->name }} {{ $user->last_name }} </b></li>
                     <li class="list-group-item">Email:<b> {{ $user->email }}</b></li>
                     <li class="list-group-item">Role:<b> {{ $user->type }}</b></li>
+                    <li class="list-group-item">User Type:<b> {{ $user->type }} </b></li>
+                    @if($user->subtype != null)
+                    <li class="list-group-item">User Sub Category:<b> {{ $user->subtype }} </b></li>
+                    @endif
                     @foreach ( $user_data as $data)
                      <li class="list-group-item">{{ ($data->user_field) }}: &nbsp;<b>{{ ($data->field_value) }}</b></li>
                     @endforeach

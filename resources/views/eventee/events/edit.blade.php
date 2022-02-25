@@ -53,20 +53,13 @@
                         <div class="form-group col-md-6">
                             <label for="name">Event Link
                                 <span style="color:#03fffd">*</span></label><br>
-                                <span id="event_link">https://</span>
+                                <span id="event_link">{{ $link[0] }}</span>
                                 <input type="text" style="  width: 50% !important; display: inline-block !important" id="event_slug" name="slug" class="slugInp  form-control @error('slug') is-invalid @enderror" value="{{ $event->slug }}" required>
                                 @error('slug')
                                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
-                                @php
-                                    $baseurl = URL::to('/');
-                                    if(strpos($baseurl,'https')){
-                                        $baseurl =  str_replace('https://app','',$baseurl);
-                                    }else{
-                                        $baseurl=  str_replace('http://app','',$baseurl);
-                                    }
-                                @endphp
-                            <span id="event_link">.{{ $baseurl }}</span><br>
+                                
+                            <span id="event_link">{{ $link[1]  }}</span><br>
                             <span style="color:#03fffd">**Note : Do Not Use <strong>Spaces Or Caps </strong> Between Subdomain Name, use '-' only if needed</span>
                         </div>
                     </div>
@@ -83,12 +76,29 @@
                         </div>
                     </div>
                     <div class="row">
+                        @if($event->start_dates < Carbon\Carbon::today())
+                        <div class="col-md-6">
+                            <label for="name">Start Date
+                                <span style="color:#03fffd">*</span>
+                            </label>
+                            <input type="text" data-start="{{ $event->start_dates }}" disabled  value="{{ Carbon\Carbon::parse($event->start_dates)->format('d-m-Y') }}" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="event_Start form-control" >
+                        </div>
+                        @elseif($event->start_dates >= Carbon\Carbon::today())
+                        <div class="col-md-6">
+                            <label for="name">Start Date
+                                <span style="color:#03fffd">*</span>
+                            </label>
+                            <input type="datetime-local" name="start_date"  value="{{ $event->start_dates }}" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="event_Start form-control" >
+                        </div>
+                        @endif
                         @if($event->end_dates >= Carbon\Carbon::today())
                                 <div class="col-md-6">
                                     <label for="name">End Date
                                         <span style="color:#03fffd">*</span>
                                     </label>
-                                    <input type="datetime-local" name="end_date" value="{{ $event->end_dates }}" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="form-control @error('end_date') is-invalid @enderror" required>
+                                    <input type="datetime-local" data-start="{{ $event->start_dates }}" name="end_date"  value="{{ $event->end_dates }}" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="event_end form-control @error('end_date') is-invalid @enderror" required>
+                                    <span id="erroshowEndDate"  style="color:red;display:none">Event end date and time cannot be before the start date and time</span>
+                                    <span id="erroshowEnd"  style="color:red;display:none">Event Start Time and End Time Cannot Be The Same</span>
                                     @error('end_date')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
@@ -98,7 +108,7 @@
                     
                         
                         @endif
-                        <div class="form-group  col-md-3">
+                        <div class="form-group  col-sm-12">
                             <label for="timezone">Timezone
                                 <span style="color:red">*</span>
                             </label>
@@ -110,7 +120,7 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary" id="sameType">Update</button>
                 </form>
             </div>
         </div>
@@ -128,6 +138,35 @@
             let slug = event_name.toLowerCase().replaceAll(" ","-");
         
             $('#event_slug').val(slug);
+         });
+         $('.event_end').on('input',function(){
+            let start_date =new Date("{{ $event->start_dates }}");
+            let end_date = new Date($(this).val());
+            let month_start = parseInt(start_date.getMonth())+1;
+            let month_end = parseInt(end_date.getMonth())+1;
+            let start_main_date = new Date(start_date.getFullYear(),month_start , start_date.getDate());
+            let end_main_date = new Date(end_date.getFullYear(),month_end , end_date.getDate());
+            //  console.log(start_date.getHours());
+            if ((start_main_date == end_main_date) && (start_date.getHours() == end_date
+                            .getHours()) && (start_date.getMinutes() == end_date.getMinutes())) {
+                $(this).addClass('is-invalid');
+                $('#erroshowEnd').show();
+                $('#erroshowEndDate').hide();
+                $('#sameType').attr('disabled', true);
+            }else if (((start_main_date >= end_main_date) && (start_date.getHours() >= end_date
+                    .getHours()) && (start_date.getMinutes() >= end_date.getMinutes()))){
+                        $(this).addClass('is-invalid');
+                        $('#erroshowEndDate').show();
+                        $('#erroshowEnd').hide();
+                        $('#sameType').attr('disabled', true);
+                }
+                
+            else {
+                $(this).removeClass('is-invalid');
+                $('#erroshowEndDate').hide();
+                $('#erroshowEnd').hide();
+                $('#sameType').attr('disabled', false);
+            }
          });
      });
 </script>

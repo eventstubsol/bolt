@@ -14,6 +14,7 @@ use App\sessionRooms;
 use App\Page;
 use App\Booth;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Mail\Message;
@@ -25,7 +26,7 @@ class NotificationController extends Controller
 {
     public function index($id)
     {
-        $notifications = PushNotification::where('event_id',$id)->orderBy("created_at",'desc')->get();
+        $notifications = PushNotification::where('event_id',$id)->orderBy(DB::raw("date(created_at)"),'desc')->get();
         return view("eventee.notification.index")->with(compact("notifications","id"));
     }
 

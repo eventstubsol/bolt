@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\EventSession;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
@@ -154,7 +155,7 @@ class eventeeController extends Controller
     public function Dashboard(Request $req){
         try{
             $req->session()->put('MangeEvent',0);
-            $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->limit(5)->count();
+            $events = Event::where('user_id',Auth::id())->orderBy(DB::raw("date(created_at)"),'desc')->limit(5)->count();
            
             $liveEvent = Event::where('end_date','>=',Carbon::now("UTC")->format('Y-m-d'))->where('user_id',Auth::id())->count();
             $recent = Event::where('user_id',Auth::id())->orderBy('start_date','asc')->limit(5)->get();
@@ -190,7 +191,7 @@ class eventeeController extends Controller
 
     public function Event(Request $req){
         $req->session()->put('MangeEvent',0);
-        $events = Event::where('user_id',Auth::id())->orderBy('id','desc')->get();
+        $events = Event::where('user_id',Auth::id())->orderBy(DB::raw("date(start_date)"),'desc')->get();
         return view('eventee.events.index',compact('events'));
     }
 
@@ -209,6 +210,8 @@ class eventeeController extends Controller
     }
     public function Save(Request $req){
         // dd($req->timezone);
+        $except = ["'" , '"' ,"/","'\'","."," "];
+        
         if(Carbon::parse($req->start_date)->format('Y-m-d') > Carbon::parse($req->end_date)->format('Y-m-d')){
             flash("Event end date cannot be before the start date")->error();
             return redirect()->back();
@@ -217,7 +220,13 @@ class eventeeController extends Controller
             flash("Event Start Time and End Time Cannot Be The Same")->error();
             return redirect()->back();
         }
-        $slug = str_replace(" ","-",strtolower($req->event_slug));
+        $slug = str_ireplace($except,"-",strtolower($req->event_slug));
+        
+        $name = trim($req->name);
+        if(empty($name) || empty($slug)){
+            flash("Plase Fill In Event Name")->error();
+            return redirect()->back();
+        }
         $eve = Event::where('slug',$slug)->count();
         if($eve > 0){
             flash("An Event With The Same Name Already Exist")->error();
@@ -242,7 +251,7 @@ class eventeeController extends Controller
         if($req->total_attendees !== null){
             $event->total_attendees = $req->total_attendees;
         }
-        $event->slug = str_replace(" ","-",strtolower($req->event_slug));
+        $event->slug = $slug;
         $event->user_id = Auth::id();
         $event->start_date = $req->start_date;
         $event->end_date = $req->end_date;
@@ -288,7 +297,14 @@ class eventeeController extends Controller
             //     Menu::create(['name'=>$menusNames[$i],'position'=>$manuPos[$i],'link'=>$menuLink[$i],'iClass'=>$menuClass[$i],'event_id'=>$event->id,'type'=>'footer','parent_id'=>0]);
             // }
             flash("Event Saved Successfully")->success();
-            Event::where('id',$event->id)->update(['link'=> $event->slug.'.'.str_replace('https://app.','',$baseurl).'']);
+            
+            if(env('APP_ENV') == 'staging'){
+                Event::where('id',$event->id)->update(['link'=> $slug.'.'."localhost:8000"]);
+            }
+            else{
+                Event::where('id',$event->id)->update(['link'=> $slug.'.'.str_replace('https://app.','',$baseurl).'']);
+            }
+            
             if(isset($domain)){
                 return redirect(route("verifyDomain",['domain'=>$domain]));
             }else{

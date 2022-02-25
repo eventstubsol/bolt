@@ -27,29 +27,17 @@
 @endsection
 
 @section('form')
-@if(Session::has('eventee-register'))
-    <script>
-        var show = "{{ Session::get('eventee-register') }}";
-        showMessage(show,'success');
-    </script>
-@endif
 
-@if(Session::has('login-failed'))
-    <script>
-        $(document).ready(function(){
-            showMessage("{{ Session::get('login-failed') }}",'error');
-            alert("Please Check Your Login ID And Password");
-            
-        });
-    </script>
-    @php
-        Session::forget('login-failed');
-    @endphp
-@endif
-    
+<script>
+    $('#flash-overlay-modal').modal();
+    /* setTimeout(function(){ 
+        $('#flash-overlay-modal').modal('toggle'); 
+    }, 2000); */
+</script>
 
 <form action="{{ route('Eventee.login.confirm') }}" method="post">
     @csrf
+    @include('flash::message')
     <div class="input-group">
         <label for="emailaddress">Email address
             <span style="color:red">*</span>
