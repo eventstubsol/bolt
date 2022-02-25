@@ -78,7 +78,7 @@
 @endsection
 
 @section("form_footer")
-    <p class="text">Register As An Event Admin<a href="{{ route('Eventee.register') }}"> Click here</a></p>
+    <p class="text mt-4">Register As An Event Admin<a href="{{ route('Eventee.register') }}"> Click here</a></p>
 @endsection
 
 @section('extra')
