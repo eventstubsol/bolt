@@ -123,7 +123,7 @@
                                     <span id="erroshowEndDate" style="color:red;display:none">Session end date and time cannot be
                                         before the session start date and time</span>
                                     <span id="erroshowEnd" style="color:red;display:none">Session Start Time and End Time
-                                        Cannot Be The Same</span>
+                                        Cannot Be The Same Nor End Time Can Be Before Start Time</span>
                                     @error('end_time')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -265,19 +265,30 @@
                     let month_end = parseInt(end_date.getMonth())+1;
                     let start_main_date = new Date(start_date.getFullYear(),month_start , start_date.getDate());
                     let end_main_date = new Date(end_date.getFullYear(),month_end , end_date.getDate());
-                    if ((start_main_date == end_main_date) && (start_date.getHours() == end_date
-                            .getHours()) && (start_date.getMinutes() == end_date.getMinutes())) {
+                    
+                    if((start_main_date > end_main_date)){
+                        $(this).addClass('is-invalid');
+                        $('#erroshowEndDate').show();
+                        $('#erroshowEnd').hide();
+                        $('.sameType').attr('disabled', true);
+                    }
+                    
+                    else if ((start_main_date >= end_main_date) && (start_date.getHours() >= end_date
+                            .getHours()) && (start_date.getMinutes() >= end_date.getMinutes())) {
+                        console.log(1);
                         $(this).addClass('is-invalid');
                         $('#erroshowEnd').show();
                         $('#erroshowEndDate').hide();
                         $('.sameType').attr('disabled', true);
-                    }else if (((start_main_date >= end_main_date) && (start_date.getHours() >= end_date
-                            .getHours()) && (start_date.getMinutes() >= end_date.getMinutes()))){
-                                $(this).addClass('is-invalid');
-                                $('#erroshowEndDate').show();
-                                $('#erroshowEnd').hide();
-                                $('.sameType').attr('disabled', true);
-                        }
+                     }
+                     //else if (((start_main_date >= end_main_date) && (start_date.getHours() >= end_date
+                    //         .getHours()) && (start_date.getMinutes() >= end_date.getMinutes()))){
+                    //             console.log(2);
+                    //             $(this).addClass('is-invalid');
+                    //             $('#erroshowEndDate').show();
+                    //             $('#erroshowEnd').hide();
+                    //             $('.sameType').attr('disabled', true);
+                    //     }
                         
                     else {
                         $(this).removeClass('is-invalid');

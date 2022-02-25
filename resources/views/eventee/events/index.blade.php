@@ -158,8 +158,9 @@
                     <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps </strong> Between Subdomain Name, use '-' only if needed</span>
                 </div>
                 <div class="form-group">
-                    <label for="number">Number Of Attendess</label><br>
-                    <input type="number" id="domain" name="total_attendees" class="form-control" >
+                    <label for="number">Number Of Attendess
+                        <span style="color:red">*</span></label><br>
+                    <input type="number" id="domain" name="total_attendees" class="form-control"  value="1">
                 </div>
                 <div class="form-group">
                     <label for="name">Custom Domain (Optional)</label><br>

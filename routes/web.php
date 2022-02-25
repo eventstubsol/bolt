@@ -239,8 +239,8 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::post("link/location","Eventee\PageController@UpdateLocationStatus")->name('eventee.pages.updatelocation');
 
     //Restore Route
-    Route::get("Eventee/Restore/{id}","RestoreController@index")->name("eventee.restore");
-    Route::post("Eventee/Restore/Post","RestoreController@restore")->name("eventee.restore.post");
+    Route::get("Event/Restore/{id}","RestoreController@index")->name("eventee.restore");
+    Route::post("Event/Restore/Post","RestoreController@restore")->name("eventee.restore.post");
 
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
