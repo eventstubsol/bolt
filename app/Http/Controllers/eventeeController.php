@@ -227,6 +227,10 @@ class eventeeController extends Controller
             flash("Plase Fill In Event Name")->error();
             return redirect()->back();
         }
+        if(empty($req->total_attendees)){
+            flash("Plase Fill In Total Number Of Attendees")->error();
+            return redirect()->back();
+        }
         $eve = Event::where('slug',$slug)->count();
         if($eve > 0){
             flash("An Event With The Same Name Already Exist")->error();

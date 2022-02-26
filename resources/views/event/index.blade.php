@@ -471,7 +471,7 @@ $user = Auth::user();
         .theme-modal .nav-pills .nav-link.active,
         .nav-pills .nav-link.active,
         .nav-pills .show > .nav-link {
-            background-color: {{ $event->primary_color }} !important;
+            background-color: "{{ $event->primary_color }}" !!important;
             color: #fff;
         }
 
@@ -480,7 +480,7 @@ $user = Auth::user();
     </style>
     {{-- Notification Modal --}}
     <!-- Small modal -->
-    <div style="z-index:99999" class="consent-notification hide-on-exterior"  id="notification-smallModal">
+    <div style="z-index:99999" class="notification-smallModal consent-notification hide-on-exterior"  id="notification-smallModal">
     <h4 id="notification-head"></h4>
     <p id="notification-body" ></p>
     <div class="flex">
@@ -1269,13 +1269,12 @@ $user = Auth::user();
             }
            
         });
-        function offNotification(){
-           
-            
-            $('#notification-smallModal').removeClass('enable');
-        }
+        
               
           });
+          function offNotification(){
+            $('.notification-smallModal').removeClass('enable');
+        }
       </script>
 </body>
 

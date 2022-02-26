@@ -144,10 +144,38 @@
             overflow-y: auto;
         }
     }
+
+    /* .sidebar-custom{
+        position: relative;
+    }
+
+    .sidebar-custom:after{
+        content: ' ';
+        background: #000;
+        width: 100%; 
+        height: 100%;
+        position: absolute;
+    } */
+
+    .overLay{
+        background: #000c;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        position: absolute;
+        top: 56px;
+        left: 0;
+        display: none;
+    }
+
+    .d-block{
+        display: block;
+    }
     
 </style> 
-<script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
-<script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
+<div class="overLay">
+
+</div>
 <div class="navbar-custom navs hidden theme-nav">
     <div class="container-fluid row">
         <div class="col-5 col-md-2 fluid-col logo-col">
@@ -315,7 +343,7 @@
                     </div>
                 </div>
                 <div class="mob-menu ml-2" style="display:none;">
-                    <a href="void:javascript(0);">
+                    <a href="void:javascript(0);" id="OverLayer">
                         <span class="round-icon">
                             <i class="fa fa-bars"></i>
                         </span>
@@ -354,10 +382,24 @@
     </div>
 </div>
 
-
+<script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
 <!-- end Topbar -->
 
+   
+
     <script>
+        $(document).ready(function(){
+            $("#OverLayer").click(function(){
+                $(".overLay").toggleClass("d-block");
+            });
+            $(".overLay").click(function(){
+                $(".sidebar-custom").removeClass("enabled");
+                $(this).toggleClass("d-block");
+                $(".fa").removeClass("fa-times").addClass("fa-bars");
+            });
+        });           
+
       function clearAll(){
           $('#count').empty();
           $('#count').html(0);

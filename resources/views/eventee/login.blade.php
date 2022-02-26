@@ -35,7 +35,7 @@
         body{
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            background: url("{{asset('assets/images/reg.jpg')}}") no-repeat left top;
+            background: url("{{asset('assets/images/reg.jpg')}}") no-repeat center fixed;
             background-size: cover;
         }
         
@@ -137,6 +137,7 @@
         }
         .register_now{
             color: white;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -149,7 +150,7 @@
         <!-- <div class="col-md-4 offset-md-1">
             <img src="{{asset("assets/images/reg_lt_img.png")}}" alt="">
         </div> -->
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-12 col-lg-6 offset-lg-3">
             <div class="formBlock">
                 <h5>Login</h5>
                 @include('flash::message')
@@ -167,7 +168,6 @@
                     @error('email')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
-                    <br/>
                    
 
                     <label>Password <span class="text-danger">*</span></label>
@@ -181,7 +181,7 @@
                         <button class="btn btn-reg" type="submit">Login</button>
                     </div>
                 </form>
-                <p class="text register_now">Register As An Event Admin<a href="{{ route('Eventee.register') }}"> Click here</a></p>
+                <h6 class="text register_now mt-4">Register As An Event Admin <a href="{{ route('Eventee.register') }}"> Click here</a></h6>
             </div>
 
         </div>

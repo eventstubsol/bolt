@@ -1583,6 +1583,7 @@ function EventAttendee($event_id){
     $user->email = 'attendee@eventstub.co';
     $user->type = 'attendee';
     $user->event_id = $event_id;
+    $user->email_status = 1;
     if($user->save()){
         return 1;
     }
