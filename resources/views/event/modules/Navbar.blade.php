@@ -401,11 +401,11 @@
     <script>
         $(document).ready(function(){
             $("#OverLayer").click(function(){
-                $(".overLay").toggleClass("d-block");
+                $(".overLay").addClass("d-block");
             });
             $(".overLay").click(function(){
                 $(".sidebar-custom").removeClass("enabled");
-                $(this).toggleClass("d-block");
+                $(this).removeClass("d-block");
                 $(".fa").removeClass("fa-times").addClass("fa-bars");
             });
         });           

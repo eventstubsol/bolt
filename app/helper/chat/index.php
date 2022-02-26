@@ -280,7 +280,7 @@ function createUser($chat_app,$user){
             "Content-Encoding" => "gzip"
         ])->post($url . '/v2.0/users', [
             'uid' => $user->id,
-            'name' => $user->name
+            'name' => $user->getFullName()
         ]);
         // dd($response->body());
 }

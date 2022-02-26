@@ -207,6 +207,7 @@ function initApp() {
 
         if(flyin && checkDestination(link)){
             flyIn.show();
+            navs.addClass('hidden');
             $("#skip_flyin").show();
             $("#skip_flyin").unbind().on("click",()=>{
                 routie(link);
@@ -1390,6 +1391,9 @@ function initSideMenu() {
     });
     sidebar.find('.menu a').on('click', function () {
         if (sidebar.hasClass('enabled')) {
+            // $(".sidebar-custom").removeClass("enabled");
+            $(".overLay").removeClass("d-block");
+            $(".fa").removeClass("fa-times").addClass("fa-bars");
             sidebar.removeClass('enabled')
             trigger.find('i').removeClass('fa-times').addClass('fa-bars')
         }
