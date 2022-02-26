@@ -22,13 +22,15 @@ if(isset($leaderboard)){
                             <li> Visiting a booth</li>
                         </ul> --}}
                        @if(isset($leaderboard))
-                        @foreach(App\Leadpoint::where('owner',$leaderboard->id)->get() as $point)
-                            <ul>
+                       <ul>
+                            @foreach(App\Leadpoint::where('owner',$leaderboard->id)->where('status',1)->get() as $point)
+                            
                                 <li>{{ $point->point }}</li>
                                 
-                            </ul>
                             
-                        @endforeach
+                            
+                            @endforeach
+                        </ul>
                         @endif
                     </div>
                 </div>

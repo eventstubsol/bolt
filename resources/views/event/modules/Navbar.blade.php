@@ -3,18 +3,28 @@
     $finalnotes = [];
     $noteCount = 0;
     $event = App\Event::findOrFail($event_id);
+    $seenNotes = null;
+    $noteSeenAll = \DB::table("push_notification")->join("seen_notifications",'seen_notifications.notification_id','=','push_notification.id')
+    ->where('push_notification.event_id',$event_id)
+    ->where("seen_notifications.user_id",Auth::id())
+    ->count();
+    $notesAll = App\PushNotification::where('event_id',$event_id)->count();
+    $totalNote = (int)$notesAll - (int)$noteSeenAll;
+    if($totalNote < 0){
+        $totalNote = 0;
+    }
     foreach ($notifications as $note) {
         $seens = App\SeenNotification::where('notification_id',$note->id)->where('user_id',Auth::id())->count();
-        if($seens < 1){
-            $notes = new \stdClass();
-            $notes->id = $note->id;
-            $notes->message = $note->message;
-            $notes->title = $note->title;
-            $notes->url = $note->url;
-            $notes->created_at = $note->created_at;
-            array_push($finalnotes,$notes);
-            $noteCount++;
-        }
+        $seenNotes = $seens;
+        $notes = new \stdClass();
+        $notes->id = $note->id;
+        $notes->message = $note->message;
+        $notes->title = $note->title;
+        $notes->url = $note->url;
+        $notes->created_at = $note->created_at;
+        array_push($finalnotes,$notes);
+        
+        
     }
 @endphp
 <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/css/config/default/app-dark.min.css">
@@ -266,7 +276,7 @@
            <div class="dropdown notification-list topbar-dropdown">
                <a onclick="clearNoteAll()" class="nav-link dropdown-toggle waves-effect waves-light" id="dropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                    <i class="fe-bell noti-icon" ></i>
-                   <span id="count" class="badge count bg-danger rounded-circle noti-icon-badge">{{ $noteCount }}</span>
+                   <span id="count" class="badge count bg-danger rounded-circle noti-icon-badge">{{ $totalNote }}</span>
                </a>
                <div class="dropdown-menu dropdown-menu-start dropdown-lg" data-popper-placement="bottom-start" aria-labelledby="dropdownMenuLink">
    
@@ -460,16 +470,18 @@
             $.get("{{ route('notification.user.seenAll') }}",{id:"{{ $event_id }}"},function(response){
                 if(response.code == 200){
                     console.log("Done");
+                    $('#count').html(0);
                 }
                 else{
                     console.log("error");
                 }
             });
         }
-        var spanCount = 0;
+        
         $(document).ready(function(){
+            var spanCount = 0;
             $('#dropdownMenuLink').on('click',function(){
-                if(spamCount == 0){
+                if(spanCount == 0){
                     spanCount = 1;
                 }
                 else{

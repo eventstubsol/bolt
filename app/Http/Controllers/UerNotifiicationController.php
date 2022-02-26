@@ -13,11 +13,8 @@ class UerNotifiicationController extends Controller
     public function seen(Request $req){
         $id = $req->id;
         $user_id = Auth::id();
-        $note = new SeenNotification;
-        $note->notification_id = $id;
-        $note->user_id = $user_id;
-        $note->seen = 1;
-        if($note->save()){
+        $seenNote = SeenNotification::updateOrCreate(['notification_id'=>$req->id,'user_id'=>Auth::id()],['notification_id'=>$req->id,'user_id'=>Auth::id(),'seen'=>1]);
+        if($seenNote){
             return response()->json(['code'=>200]);
 
         }
