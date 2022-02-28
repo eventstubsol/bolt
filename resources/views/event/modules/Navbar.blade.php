@@ -4,10 +4,7 @@
     $noteCount = 0;
     $event = App\Event::findOrFail($event_id);
     $seenNotes = null;
-    $noteSeenAll = \DB::table("push_notification")->join("seen_notifications",'seen_notifications.notification_id','=','push_notification.id')
-    ->where('push_notification.event_id',$event_id)
-    ->where("seen_notifications.user_id",Auth::id())
-    ->count();
+    $noteSeenAll = 0;
     $notesAll = App\PushNotification::where('event_id',$event_id)->count();
     $totalNote = (int)$notesAll - (int)$noteSeenAll;
     if($totalNote < 0){
