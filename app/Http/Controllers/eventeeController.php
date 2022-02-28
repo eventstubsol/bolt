@@ -163,9 +163,9 @@ class eventeeController extends Controller
             $ending_event  =Event::whereBetween('end_date',[Carbon::now("UTC")->format('Y-m-d'),Carbon::now("UTC")->addDays(5)->format('Y-m-d')])->where('user_id',Auth::id())->limit(5)->get();
             $eventUser = Event::where('user_id',Auth::id())->get();
             $totaluser = [];
-            $totaluserLive = [];
+            $totaluserOn = [];
             $alluser = 0;
-            $liveUser = 0;
+            $totaluserLive = 0;
             foreach($eventUser as $event){
                 $userCount = User::where('event_id',$event->id);
                 if($userCount->count() > 0){
@@ -173,7 +173,7 @@ class eventeeController extends Controller
                 }
                 $userCountLive = $userCount->where('online_status',1)->where('type','attendee')->count();
                 if($userCountLive > 0){
-                    $totaluserLive = $userCountLive;
+                   array_push($totaluserOn , $userCountLive);
                 }
             }
 
@@ -181,7 +181,7 @@ class eventeeController extends Controller
                 $alluser += $totaluser[$i];
             }
 
-           
+            $totaluserLive = array_sum($totaluserOn);
             return view('eventee.dashboard',compact('events','liveEvent','alluser','liveUser','recent','ending_event','totaluserLive')); 
         }
         catch(\Exception $e){
