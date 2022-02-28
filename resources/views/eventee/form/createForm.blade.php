@@ -17,15 +17,16 @@
     </style>
 @endsection
 
-@section("page_title")
+{{-- @section("page_title")
     Crete Form
-@endsection
+@endsection --}}
 
 @section("title")
    Create Form
 @endsection
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Form</li>
+    <li class="breadcrumb-item "><a href="{{ route("eventee.form",['id'=>$id]) }}">Form</a></li>
+    <li class="breadcrumb-item active">Create</li>
 @endsection
 
 @section("content")
@@ -57,6 +58,8 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+                        <span class="successShow " role="alert" style="display: none;color:green;"></span>
+                        <span class="errorShow " role="alert" style="display: none;color:red;"></span>
                     </div>
                     <div class="form-group mb-3 ">
                         <label for="type">Form Type of User
@@ -165,7 +168,7 @@
 
 
                     <button class="btn btn-primary" id="add_feild">Add Field</button>
-                    <button class="btn btn-primary"  type="submit">Create</button>
+                    <button class="submit btn btn-primary"  type="submit">Create</button>
                 </form>
             </div>
         </div>
@@ -202,10 +205,56 @@
             $("#name").on("input",(e)=>{
                 let formname = e.target.value;
                 $("#slug").val(formname.replaceAll(" ","_"));
+                $.get("{{ route('form.link') }}",{'event_name':formname.replaceAll(" ","_")},function(res){
+                if(res.code == 203){
+                    $('.successShow').hide();
+                    $('.errorShow').show();
+                    $('.errorShow').empty();
+                    $('.errorShow').html(res.message);
+                    $(".submit").attr("disabled",true);
+                }
+                else if(res.code == 202){
+                    $('.successShow').hide();
+                    $('.errorShow').show();
+                    $('.errorShow').empty();
+                    $('.errorShow').html(res.message);
+                   
+                }
+                else if(res.code == 200){
+                    $('.errorShow').hide();
+                    $('.successShow').show();
+                    $('.successShow').empty();
+                    $('.successShow').html(res.message);
+                    $(".submit").attr("disabled",false);
+                }
+            });
             });
             $("#slug").on("input",(e)=>{
                 let formname = e.target.value;
                 $("#slug").val(formname.replaceAll(" ","_"));
+                $.get("{{ route('form.link') }}",{'event_name':formname.replaceAll(" ","_")},function(res){
+                    if(res.code == 203){
+                        $('.successShow').hide();
+                        $('.errorShow').show();
+                        $('.errorShow').empty();
+                        $('.errorShow').html(res.message);
+                        $(".submit").attr("disabled",true);
+                    }
+                    else if(res.code == 202){
+                        $('.successShow').hide();
+                        $('.errorShow').show();
+                        $('.errorShow').empty();
+                        $('.errorShow').html(res.message);
+                    
+                    }
+                    else if(res.code == 200){
+                        $('.errorShow').hide();
+                        $('.successShow').show();
+                        $('.successShow').empty();
+                        $('.successShow').html(res.message);
+                        $(".submit").attr("disabled",false);
+                    }
+                });
             });
         });
         function bindDelete(){

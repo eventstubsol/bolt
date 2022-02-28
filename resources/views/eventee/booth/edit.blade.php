@@ -13,7 +13,7 @@
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item"><a href="{{ route("booth.index") }}">Booth</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("eventee.booth",$id) }}">Booth</a></li>
     <li class="breadcrumb-item active">Edit</li>
 @endsection
 

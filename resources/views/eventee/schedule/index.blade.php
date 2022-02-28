@@ -13,7 +13,7 @@ Manage Scheduled Notifications
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Schedule Notifications</li>
+    <li class="breadcrumb-item active"><a href="{{ route("eventee.schedule",$id) }}"> Schedule Notifications</a></li>
 @endsection
 
 @section('content')

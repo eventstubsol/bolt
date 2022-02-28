@@ -16,7 +16,7 @@
 
 @section('breadcrumbs')
     <li class="breadcrumb-item">Settings</li>
-    <li class="breadcrumb-item active">Chat</li>
+    <li class="breadcrumb-item active"><a href="{{ route("settings.chat",$id) }}">Chat</a></li>
 @endsection
 
 @section('content')

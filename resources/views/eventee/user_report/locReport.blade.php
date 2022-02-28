@@ -5,16 +5,16 @@
     @include("includes.styles.select")
 @endsection
 
-@section("page_title")
+{{-- @section("page_title")
     Room Report
-@endsection
+@endsection --}}
 
 @section("title")
     Room Report
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Room Report</li>
+    <li class="breadcrumb-item active"><a href="{{ route('eventee.room.report',$id) }}">Room Report</a></li>
 @endsection
 
 @section("content")

@@ -13,9 +13,9 @@
     <link href="https://coderthemes.com/ubold/layouts/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 @endsection
 
-@section("page_title")
+{{-- @section("page_title")
     Landing Page Settings
-@endsection
+@endsection --}}
 
 @section("breadcrumbs")
     <li class="breadcrumb-item active"><a href="{{ route("landing.settings",$id) }}">Landing Page Setting</a></li>

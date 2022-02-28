@@ -20,7 +20,7 @@ Manage Booths
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Booths</li>
+    <li class="breadcrumb-item active"><a href="{{ route("eventee.booth",$id) }}" style="cursor: pointer">Booths</a></li>
 @endsection
 
 @section("content")

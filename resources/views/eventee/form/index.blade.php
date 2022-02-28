@@ -5,15 +5,15 @@
 @endsection
 
 @section("page_title")
-    Form Page
+    Manage Form 
 @endsection
 
 @section("title")
-    Form Page
+    Manage Form 
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Form</li>
+    <li class="breadcrumb-item active"> <a href="{{ route("eventee.form",['id'=>$id]) }}">Form</a></li>
 @endsection
 
 @section("content")

@@ -4,16 +4,16 @@
     @include("includes.styles.datatables")
 @endsection
 
-@section("page_title")
+{{-- @section("page_title")
     Sent Mails
-@endsection
+@endsection --}}
 
 @section("title")
     Sent Mails
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Sent Mails</li>
+    <li class="breadcrumb-item active"><a href="{{ route("eventee.mail",['id'=>$id]) }}">Sent Mails</a></li>
 @endsection
 
 @section("content")

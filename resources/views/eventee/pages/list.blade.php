@@ -13,7 +13,7 @@ Manage Page
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Pages</li>
+    <li class="breadcrumb-item active"><a href="{{ route("eventee.pages.index",$id) }}">Pages</a></li>
 @endsection
 
 @section("content")

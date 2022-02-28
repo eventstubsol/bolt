@@ -30,7 +30,7 @@
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item active">Events &nbsp; > &nbsp;Edit</li>
+    <li class="breadcrumb-item active"><a href="{{ route("event.index") }}">Events</a> &nbsp; > &nbsp;Edit</li>
 @endsection
 
 @section('content')

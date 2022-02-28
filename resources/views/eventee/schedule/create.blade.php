@@ -14,7 +14,7 @@ Create Schedule Notification
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active"><a href="{{ route("eventee.notification",$id) }}">Notifications</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route("eventee.schedule",$id) }}">Notifications</a></li>
     <li class="breadcrumb-item active">Create</li>
 @endsection
 

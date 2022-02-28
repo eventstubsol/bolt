@@ -80,6 +80,7 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
     Route::get('/adddns','eventeeController@verifyDomain')->name('verifyDomain');
     Route::get('Events','eventeeController@Event')->name('event.index');
+    Route::get('Events/Expiring','eventeeController@Expiring')->name('event.expiring');
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');
     Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
@@ -172,6 +173,10 @@ Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
     Route::get("/form/rearrange/{id}/{form}","Eventee\FormController@rearrange")->name("rearrange");
     Route::post("/form/savePosition","Eventee\FormController@savePosition")->name('form.position');
     Route::delete('/form/delete/{form}',"Eventee\FormController@Destroy")->name('form.destroy');
+
+
+//CHeck Form Url    
+Route::get("/form/link","Eventee\FormController@CheckUrl")->name("form.link");
 
 
     // Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');

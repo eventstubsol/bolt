@@ -15,7 +15,7 @@
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item">Modal</li>
+    <li class="breadcrumb-item"><a href="{{ route("eventee.modal",$id) }}">Modal</a></li>
     <li class="breadcrumb-item active">Create</li>
 @endsection
 

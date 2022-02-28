@@ -44,11 +44,13 @@ class FormController extends Controller
         //     flash("Name Field Cannot Be Blank")->error();
         //     return redirect()->back();
         // }
+        $except = ["'" , '"' ,"/","'\'","."," "];
+        $slug = str_ireplace($except,"-",strtolower($request->slug));
         $form = Form::create([
             "name"=>$request->name,
             "event_id"=>$id,
             "user_type"=>$request->usertype,
-            "slug"=>$request->slug
+            "slug"=>$slug
         ]);
 
         //Create Form Field for Enabled Default Fields
@@ -95,5 +97,17 @@ class FormController extends Controller
         // $form = Form::findOrFail($req->form_id);
         $formFields = FormField::where('form_id',$form->id);
         $form->delete();
+    }
+
+    public function CheckUrl(Request $req){
+        $slug =  $req->event_name;
+        $count = Form::where('slug',$slug)->count();
+        if($count > 0){
+            return response()->json(['code'=>203,'message'=>"Link Is not Available"]);
+        }
+        else{
+            return response()->json(['code'=>200,'message'=>"Link Is Available"]);
+        }
+
     }
 }

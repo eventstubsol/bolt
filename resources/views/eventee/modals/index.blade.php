@@ -29,16 +29,16 @@
         }
     </style>
 @endsection
-@section('page_title')
+{{-- @section('page_title')
    Modals  
-@endsection
+@endsection --}}
 
 @section('title')
     Modals
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item active">Modals</li>
+    <li class="breadcrumb-item active"><a href="{{ route("eventee.modal",$id) }}">Modals</a></li>
 @endsection
 
 @section('content')

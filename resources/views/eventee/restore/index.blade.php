@@ -8,12 +8,12 @@ Restore Data
     @include("includes.styles.datatables")
 @endsection
 
-@section("page_title")
+{{-- @section("page_title")
 Restore Data
-@endsection
+@endsection --}}
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Restore Data</li>
+    <li class="breadcrumb-item active"><a href="{{ route('eventee.restore',$id) }}">Restore Data</a></li>
 @endsection
 
 @section('content')

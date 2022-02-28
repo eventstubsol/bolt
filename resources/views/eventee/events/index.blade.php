@@ -45,16 +45,16 @@
     </style>
 @endsection
 
-@section('page_title')
-    Events  
-@endsection
+{{-- @section('page_title')
+    All Events  
+@endsection --}}
 
 @section('title')
     Events
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item active">Events</li>
+    <li class="breadcrumb-item active"><a href="{{ route("event.index") }}">Events</a></li>
 @endsection
 
 @section('content')
@@ -137,6 +137,7 @@
 
                     </label>
                    <input type="text" id="event_name" name="name" class="form-control" required>
+                   <span id="letterError" style="display: none;color:red">Event Name And Link Must Contain Some Letter</span>
                 </div>
                 <br>
                 <div class="form-group">
@@ -211,7 +212,9 @@
 @section('scripts')
 @include("includes.scripts.datatables")
   <script>
-
+      function containsAnyLetter(str) {
+        return /[a-zA-Z]/.test(str);
+        }
       function CreateEvent(){
           $('#createModal').modal('toggle');
       }
@@ -256,7 +259,14 @@
          $('#event_name').on('input',function(){
             
             let event_name = $(this).val();
-            
+            if(containsAnyLetter(event_name) == false){
+                $('#letterError').show();
+                $('#sameType').attr('disabled', true);
+            }
+            else{
+                $('#letterError').hide();
+                $('#sameType').attr('disabled', false);
+            }
             let slug = event_name.toLowerCase().replaceAll(" ","-");
             $.get("{{ route('event.available') }}",{'event_name':slug},function(res){
                 if(res.code == 203){
@@ -283,6 +293,15 @@
          });
          $('#event_slug').on('input',function(){
             $.get("{{ route('event.available') }}",{'event_name':$(this).val()},function(res){
+                if(containsAnyLetter($(this).val()) == false){
+                    $('#letterError').show();
+                    $('.successShow').hide();
+                    $('#sameType').attr('disabled', true);
+                }
+                else{
+                    $('#letterError').hide();
+                    $('#sameType').attr('disabled', false);
+                }
                 if(res.code == 203){
                     $('.successShow').hide();
                     $('.errorShow').show();

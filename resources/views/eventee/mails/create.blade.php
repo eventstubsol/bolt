@@ -6,16 +6,17 @@
     @include("includes.styles.wyswyg");
 @endsection
 
-@section("page_title")
+{{-- @section("page_title")
     Sent Mails
-@endsection
+@endsection --}}
 
 @section("title")
     Sent Mails
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Sent Mails</li>
+<li class="breadcrumb-item "><a href="{{ route("eventee.mail",['id'=>$id]) }}">Sent Mails</a></li>
+    <li class="breadcrumb-item active">Send New</li>
 @endsection
 
 @section("content")

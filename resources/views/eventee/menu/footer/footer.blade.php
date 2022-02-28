@@ -21,7 +21,8 @@
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Menus</li>
+    <li class="breadcrumb-item ">Menu</li>
+    <li class="breadcrumb-item active"><a href="{{ route("eventee.menu.footer",$id) }}">Footer</a></li>
 @endsection
 
 

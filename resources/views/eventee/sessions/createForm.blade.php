@@ -1,8 +1,8 @@
 @extends("layouts.admin")
 
-@section('page_title')
+{{-- @section('page_title')
     Create Session
-@endsection
+@endsection --}}
 
 
 @section('styles')
@@ -17,7 +17,7 @@
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item"><a href="{{ route('sessions.index') }}">Sessions</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("eventee.sessions.index",$id) }}">Sessions</a></li>
     <li class="breadcrumb-item active">Create</li>
 @endsection
 

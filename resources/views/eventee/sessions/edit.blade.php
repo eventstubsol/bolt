@@ -1,8 +1,8 @@
 @extends("layouts.admin")
 
-@section("page_title")
+{{-- @section("page_title")
 Create Session
-@endsection
+@endsection --}}
 
 
 @section("styles")

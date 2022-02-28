@@ -13,7 +13,8 @@ Manage Users
 @endsection
 
 @section("breadcrumbs")
-<li class="breadcrumb-item active">Users</li>
+<li class="breadcrumb-item "><a href="{{ route("eventee.user",['id'=>$id]) }}">Users</a></li>
+<li class="breadcrumb-item active">Info</li>
 @endsection
 
 @section('content')

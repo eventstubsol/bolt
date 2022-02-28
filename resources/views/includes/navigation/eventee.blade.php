@@ -7,3 +7,7 @@
     <a href="{{ route('event.index') }}">Events</a>
 </li>
 
+<li>
+    <a href="{{ route('event.expiring') }}">Events Expiring Soon</a>
+</li>
+

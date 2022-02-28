@@ -21,7 +21,7 @@
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Sessions</li>
+    <li class="breadcrumb-item active"><a href="{{ route("eventee.lounge.index",$id) }}">Lounge</a></li>
 @endsection
 
 @section("content")

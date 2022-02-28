@@ -13,7 +13,7 @@
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item"><a href="{{ route("eventee.sessionrooms.index",['id'=>$id]) }}">Rooms</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("eventee.sessionrooms.index",['id'=>$id]) }}">Session Rooms</a></li>
     <li class="breadcrumb-item active">Create</li>
 @endsection
 

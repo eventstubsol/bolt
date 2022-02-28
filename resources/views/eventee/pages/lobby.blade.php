@@ -39,7 +39,7 @@ Edit Lobby
 
 
 @section("breadcrumbs")
-<li class="breadcrumb-item"><a href="{{ route("page.index") }}">Pages</a></li>
+<li class="breadcrumb-item"><a href="{{ route("eventee.pages.index",$id) }}">Pages</a></li>
 <li class="breadcrumb-item active">Lobby</li>
 @endsection
 

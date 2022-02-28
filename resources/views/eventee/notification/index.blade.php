@@ -13,7 +13,7 @@
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Notifications</li>
+    <li class="breadcrumb-item active"> <a href="{{ route("eventee.notification",$id) }}">Notifications</a></li>
 @endsection
 
 @section('content')

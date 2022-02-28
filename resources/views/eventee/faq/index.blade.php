@@ -30,7 +30,7 @@ Frequently Asked Question(FAQ)
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item active">FAQ</li>
+    <li class="breadcrumb-item active" ><a href="{{ route("eventee.faq",['id'=>$id]) }}">FAQ</a></li>
 @endsection
 
 @section('content')

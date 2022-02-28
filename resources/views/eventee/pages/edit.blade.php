@@ -1,7 +1,12 @@
 @extends("layouts.admin")
 
-@section("page_title")
+{{-- @section("page_title")
 Edit Page
+@endsection --}}
+
+@section("breadcrumbs")
+    <li class="breadcrumb-item"><a href="{{ route("eventee.pages.index",$id) }}">Page</a></li>
+    <li class="breadcrumb-item active">Edit</li>
 @endsection
 
 @section("title")

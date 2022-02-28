@@ -13,7 +13,7 @@ Manage Session Rooms
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item active">Manage Sessions</li>
+    <li class="breadcrumb-item active"><a href="{{ route("eventee.sessionrooms.index",$id) }}">Manage Sessions</a></li>
 @endsection
 
 @section("content")

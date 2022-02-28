@@ -96,7 +96,7 @@
                     </div>
                     <div class="col-6">
                         <div class="text-end">
-                            <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $liveUser }}</span></h3>
+                            <h3 class="text-dark mt-1"><span data-plugin="counterup">@php echo $totaluserLive @endphp</span></h3>
                             <p class="text-muted mb-1 text-truncate">Total Online Attendees</p>
                         </div>
                     </div>
@@ -197,7 +197,7 @@
                     </center>
                     </table>
                     <div class="dropdown float-right">
-                        <a style="margin-top: 14%;" href="{{ route('event.index') }}" class="btn btn-success" aria-expanded="false">
+                        <a style="margin-top: 14%;" href="{{ route('event.expiring') }}" class="btn btn-success" aria-expanded="false">
                             View More
                         </a>
                     </div>

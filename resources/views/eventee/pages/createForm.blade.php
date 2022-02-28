@@ -14,7 +14,7 @@
 @endsection
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item"><a href="{{ route("page.index") }}">FAQs</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("eventee.pages.index",$id) }}">Page</a></li>
     <li class="breadcrumb-item active">Create</li>
 @endsection
 
