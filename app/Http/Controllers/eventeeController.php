@@ -156,7 +156,7 @@ class eventeeController extends Controller
         try{
             $req->session()->put('ManageEvent',0);
             $events = Event::where('user_id',Auth::id())->orderBy(DB::raw("date(created_at)"),'desc')->limit(5)->count();
-           
+            
             $liveEvent = Event::where('end_date','>=',Carbon::now("UTC")->format('Y-m-d'))->where('user_id',Auth::id())->count();
             $recent = Event::where('user_id',Auth::id())->orderBy('start_date','desc')->limit(5)->get();
             // $latest_users = User::whereBetween('created_at',[Carbon::now("UTC")->subDays(5)->format('Y-m-d H:i:s'),Carbon::now("UTC")->format('Y-m-d H:i:s')])->where('type','eventee')->limit(5)->get();
@@ -173,18 +173,19 @@ class eventeeController extends Controller
                 }
                 $userCountLive = $userCount->where('online_status',1)->where('type','attendee')->count();
                 if($userCountLive > 0){
-                   array_push($totaluserOn , $userCountLive);
+                    array_push($totaluserOn , $userCountLive);
                 }
             }
 
             for($i = 0 ; $i < count($totaluser) ; $i++){
                 $alluser += $totaluser[$i];
             }
-
+            
             $totaluserLive = array_sum($totaluserOn);
-            return view('eventee.dashboard',compact('events','liveEvent','alluser','liveUser','recent','ending_event','totaluserLive')); 
+            return view('eventee.dashboard',compact(['events','liveEvent','alluser','recent','ending_event','totaluserLive'])); 
         }
         catch(\Exception $e){
+            // dd($e->getMessage());
             Log::error($e->getMessage());
         }
     }
