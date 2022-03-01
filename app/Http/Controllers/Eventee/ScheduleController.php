@@ -12,7 +12,7 @@ class ScheduleController extends Controller
 {
     //
     public function index($id){
-        $notifications = ScheduleNotification::where('event_id',$id)->orderBy(DB::raw("date(created_at"),'desc')->get();
+        $notifications = ScheduleNotification::where('event_id',$id)->orderBy(DB::raw("date(created_at)"),'desc')->get();
         return view('eventee.schedule.index',compact('id','notifications'));
     }
 
