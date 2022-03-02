@@ -25,6 +25,9 @@ class UserImport implements ToModel,WithHeadingRow
     public function model(array $row)
     {
         $user = User::where('email',$row['email'])->where('event_id',$this->event_id);
+        if($row["type"] == null){
+            $row["type"] = 'attendee';
+        }
         if($user->count() < 1){
             return new User([
                 "name"=>$row["name"],

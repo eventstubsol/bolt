@@ -21,13 +21,13 @@ Bulk Upload Users
             <div class="card-body">
                 <h5>Note: ** </h5>
                 <h5><b>
-                    Please Enter The Names properly, Columns First Name, Email, Password, Type(User Type) And Event Name Can not be left blank <br>
+                    Please Enter The Names properly, Columns First Name, Email, Password (optional for attendee only), Type(User Type)  Can not be left blank <br>
 
                 </b></h5>
-                <h5>The User Types are <br> <ul><li><span style="color: red">attendee</span></li>
-                    <li><span style="color: red">exhibiter</span></li>
-                    <li><span style="color: red">speaker</span></li>
-                    <li><span style="color: red">delegate</b></span></li></ul>, Make Sure To Use Each Type With Same Convention Written In The Red Marked Text</h5>
+                <h5>The User Types are <br> <ul><li><span style="color: rgb(27, 228, 211)">attendee</span></li>
+                    <li><span style="color: rgb(27, 228, 211)">exhibiter</span></li>
+                    <li><span style="color: rgb(27, 228, 211)">speaker</span></li>
+                    <li><span style="color: rgb(27, 228, 211)">delegate</b></span></li></ul>, Make Sure To Use Each Type With Same Convention Written In The Red Marked Text</h5>
             </div>
         </div>
         <a href="{{ asset('excel/bulk_user_upload.csv') }}" class="btn btn-primary" download='bulk_user_upload'>Download The Excel File</a>
