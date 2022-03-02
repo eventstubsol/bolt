@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Eventee;
 
 use App\AccessSpecifiers;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 use App\sessionRooms;
@@ -14,15 +15,35 @@ use Illuminate\Support\Facades\Log;
 class SessionRoomController extends Controller
 {
     public function index($id){
-        $sessionrooms = sessionRooms::where('event_id',$id)->get();
-        // dd($sessionrooms);
-        return view("eventee.sessionrooms.list")
-            ->with(compact("sessionrooms","id"));
+        try{
+            $sessionrooms = sessionRooms::where('event_id',$id)->get();
+            // dd($sessionrooms);
+            return view("eventee.sessionrooms.list")
+                ->with(compact("sessionrooms","id"));
+        }
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+        }
     }
 
 
     public function create($id){
-        return view("eventee.sessionrooms.createForm")->with(compact('id'));
+        try{
+            return view("eventee.sessionrooms.createForm")->with(compact('id'));
+        }
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+        }
     }
 
     public function store(RoomFormRequest $request,$id){
@@ -82,43 +103,68 @@ class SessionRoomController extends Controller
             return redirect()->to(route("eventee.sessionrooms.index",['id'=>$id]));
         }
         catch(\Exception $e){
-            Log::error($e->getMessage());
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
         }
        
     }
 
     public function edit(sessionRooms $sessionroom,$id){
+       try{
         $sessionroom->load("background");
-        return view("eventee.sessionrooms.edit")
+            return view("eventee.sessionrooms.edit")
             ->with(compact("sessionroom","id"));
+        }
+       catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+        }
     }
 
     public function update(Request $request, sessionRooms $sessionroom,$id){
         // $request->validate(["name"=>"required","background"=>"required"]);
         // dd($sessionroom->load("background")->background);
-        $name = str_replace(" ","_",$request->name);
-        $sessionroom->update([
-            "name"=>$name,
-            "master_room"=>isset($request->master_room)?$request->master_room:"",
-            "top"=> $request->top,
-            "left"=> $request->left,
-            "width"=> $request->width,
-            "height"=> $request->height,
-        ]);       
-        if(isset($request->background)){
-            Image::where("owner",$sessionroom->id)->update([
-                "title" => $request->name,
-                "url" => $request->background,  
-            ]);
+        try{
+            $name = str_replace(" ","_",$request->name);
+            $sessionroom->update([
+                "name"=>$name,
+                "master_room"=>isset($request->master_room)?$request->master_room:"",
+                "top"=> $request->top,
+                "left"=> $request->left,
+                "width"=> $request->width,
+                "height"=> $request->height,
+            ]);       
+            if(isset($request->background)){
+                Image::where("owner",$sessionroom->id)->update([
+                    "title" => $request->name,
+                    "url" => $request->background,  
+                ]);
+            }
+            $sessionroom->videoBg()->delete();
+            if($request->has("video_url")  && $request->video_url != null){
+                $sessionroom->videoBg()->create([
+                    "url"=>$request->video_url,
+                    "title"=>$sessionroom->name
+                ]);
+            }
+            return redirect()->to(route("eventee.sessionrooms.index",['id'=>$id]));
         }
-        $sessionroom->videoBg()->delete();
-        if($request->has("video_url")  && $request->video_url != null){
-            $sessionroom->videoBg()->create([
-                "url"=>$request->video_url,
-                "title"=>$sessionroom->name
-            ]);
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
         }
-        return redirect()->to(route("eventee.sessionrooms.index",['id'=>$id]));
     }
 
     public function destroy(Request $req){
@@ -128,30 +174,50 @@ class SessionRoomController extends Controller
     }
 
     public function BulkDelete(Request $req){
-        $ids = $req->ids;
-        $totalcount = 0;
-        for($i = 0 ; $i < count($ids); $i++){
-            $page = sessionRooms::findOrFail($ids[$i]);
-            $page->delete();
-            $pageCount = sessionRooms::where('id',$ids[$i])->count();
-            if($pageCount > 0){
-                $totalcount++;
-            }
+        try{
+            $ids = $req->ids;
+            $totalcount = 0;
+            for($i = 0 ; $i < count($ids); $i++){
+                $page = sessionRooms::findOrFail($ids[$i]);
+                $page->delete();
+                $pageCount = sessionRooms::where('id',$ids[$i])->count();
+                if($pageCount > 0){
+                    $totalcount++;
+                }
 
+            }
+            if(($totalcount)>0){
+            return response()->json(['code'=>500,"Message"=>"Something Went Wrong"]);
+            }
+            else{
+            return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+            }
         }
-        if(($totalcount)>0){
-        return response()->json(['code'=>500,"Message"=>"Something Went Wrong"]);
-        }
-        else{
-        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
         }
     }
 
     public function DeleteAll(Request $req){
-        $sessionrooms = sessionRooms::where('event_id',$req->id)->get();
-        foreach($sessionrooms as $sessionroom){
-            $sessionroom->delete();
+        try{
+            $sessionrooms = sessionRooms::where('event_id',$req->id)->get();
+            foreach($sessionrooms as $sessionroom){
+                $sessionroom->delete();
+            }
+            return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
         }
-        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+        }
     }
 }

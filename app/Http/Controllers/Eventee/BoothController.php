@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\BoothInterest;
 use App\Booth;
+use Illuminate\Support\Facades\Auth;
 
 
 use App\Room;
@@ -30,26 +31,48 @@ class BoothController extends Controller
     //
     public function index($id)
   {
-    $booths = Booth::with(["room", "admins"])->where('event_id',$id)->get(["id", "name", "url","type","boothurl","room_id"]);
+    try{
+      $booths = Booth::with(["room", "admins"])->where('event_id',$id)->get(["id", "name", "url","type","boothurl","room_id"]);
 
-    return view("eventee.booth.list")
-      ->with(compact(["booths","id"]));
+      return view("eventee.booth.list")
+        ->with(compact(["booths","id"]));
+    }
+    catch(\Exception $e){
+        if(Auth::user()->type === 'admin'){
+            dd($e->getMessage());
+        }
+        else{
+            Log::error($e->getMessage());
+        }
+    }
   }
 
 
   //booth create form
   public function create($id)
   {
-    $rooms = Room::where('event_id',$id)->get()->load("booths");
-    $users = User::where("type", "exhibiter")->where('event_id',$id)->get();
-    return view("eventee.booth.create")
+    try{
+      $rooms = Room::where('event_id',$id)->get()->load("booths");
+      $users = User::where("type", "exhibiter")->where('event_id',$id)->get();
+      return view("eventee.booth.create")
       ->with(compact(["rooms", "users","id"]));
+    }
+
+      catch(\Exception $e){
+        if(Auth::user()->type === 'admin'){
+            dd($e->getMessage());
+        }
+        else{
+            Log::error($e->getMessage());
+        }
+    }
   }
 
   //Create new booth instance
   public function store(BoothFormRequest $request,$id)
   {
-      // dd($request->all());
+     try{
+        // dd($request->all());
       if(empty($request->name)){
         flash("Name Field cannot be left blank")->error();
         return redirect()->back();
@@ -118,24 +141,43 @@ class BoothController extends Controller
             return redirect()->to(route("eventee.booth",$id)); 
             // }
             // create group in comet chat
-            
+     }
+     catch(\Exception $e){
+      if(Auth::user()->type === 'admin'){
+          dd($e->getMessage());
+      }
+      else{
+          Log::error($e->getMessage());
+      }
+  } 
     
   }
 
   //Show edit form
   public function edit($id,$booth_id)
   {
-    $rooms = Room::where('event_id',$id)->get();
-    $booth = Booth::findOrFail($booth_id);
-    $booth->load(["admins", "room"]);
-    $users = User::where("type", "exhibiter")->where('event_id',$id)->get();
-    return view("eventee.booth.edit")
-      ->with(compact(["booth", "rooms", "users","id"]));
+    try{
+      $rooms = Room::where('event_id',$id)->get();
+      $booth = Booth::findOrFail($booth_id);
+      $booth->load(["admins", "room"]);
+      $users = User::where("type", "exhibiter")->where('event_id',$id)->get();
+      return view("eventee.booth.edit")
+        ->with(compact(["booth", "rooms", "users","id"]));
+    }
+    catch(\Exception $e){
+      if(Auth::user()->type === 'admin'){
+          dd($e->getMessage());
+      }
+      else{
+          Log::error($e->getMessage());
+      }
+    } 
   }
 
   //Update booth Instance
   public function update(Request $request,$id,  $booth){
-    // dd($request->all());
+    try{
+        // dd($request->all());
     $request->validate(['name' => 'required',
     'userids' => 'required',
   ]);
@@ -204,6 +246,15 @@ class BoothController extends Controller
 //      ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
     flash("Booth Updated Successfully")->success();
     return redirect()->to(route("eventee.booth",$id));
+    }
+    catch(\Exception $e){
+      if(Auth::user()->type === 'admin'){
+          dd($e->getMessage());
+      }
+      else{
+          Log::error($e->getMessage());
+      }
+    } 
   }
 
   //Delete booth
@@ -223,185 +274,226 @@ class BoothController extends Controller
   }
 
   public function exhibiterhome($subdomain){
-    // dd($subdomain);
+   try{
+      // dd($subdomain);
     $id = Event::where("slug",$subdomain)->first()->id;
     $event_name = Event::where("slug",$subdomain)->first()->slug;
     return view("dashboard.exhibiter")->with(compact("id","event_name"));
-
+   }
+   catch(\Exception $e){
+    if(Auth::user()->type === 'admin'){
+        dd($e->getMessage());
+    }
+    else{
+        Log::error($e->getMessage());
+    }
+  } 
   }
   public function adminEdit(Request $req, Booth $booth,$id)
   {
+    try{
+      $pages = Page::where("event_id",$booth->event_id)->get();
+
+      $booths = Booth::where("event_id",$booth->event_id)->get();
+      $modals = Modal::where("event_id",$booth->event_id)->get();
   
-    $pages = Page::where("event_id",$booth->event_id)->get();
-
-    $booths = Booth::where("event_id",$booth->event_id)->get();
-    $modals = Modal::where("event_id",$booth->event_id)->get();
-
-    $session_rooms = sessionRooms::where("event_id",$booth->event_id)->get();
-
-    $booth->load(["images", "videos", "resources","links.background"]);
-    $links = Link::where(["page"=>$booth->id])->with(["background"])->get();
+      $session_rooms = sessionRooms::where("event_id",$booth->event_id)->get();
   
-      $booth->load(["images", "videos", "resources"]);
-      // dd("test");
-      // $id=null;
-      // dd(isset($id));
-    return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms","id","modals"));
+      $booth->load(["images", "videos", "resources","links.background"]);
+      $links = Link::where(["page"=>$booth->id])->with(["background"])->get();
+    
+        $booth->load(["images", "videos", "resources"]);
+        // dd("test");
+        // $id=null;
+        // dd(isset($id));
+      return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms","id","modals"));
+    }  
+    catch(\Exception $e){
+      if(Auth::user()->type === 'admin'){
+          dd($e->getMessage());
+      }
+      else{
+          Log::error($e->getMessage());
+      }
+    } 
   }
+  
 
   public function adminUpdate(Request $request, Booth $booth,$id)
   {
-    $event_id = $id;
+    try{
+      $event_id = $id;
     // dd($request->all());
-    $booth->load(["images", "videos", "resources","links.background"]);
+      $booth->load(["images", "videos", "resources","links.background"]);
 
 
 
-    $booth->links()->delete();
-    if($request->has("linknames")){
-        foreach($request->linknames as $id => $linkname){
-            $to = "";
-            // dd($request->type);
-            switch($request->type[$id]){
-                case "session_room": 
-                    $to = $request->rooms[$id];
-                    break;
-                case "page":
-                    $to = $request->pages[$id];
-                    break;
-                case "zoom":
-                    $to = $request->zoom[$id];
-                    break;
-                case "booth":
-                    $to = $request->booths[$id];
-                    break;
-                case "vimeo":
-                    $to = $request->vimeo[$id];
-                    break;
-                case "pdf":
-                    $to = $request->pdfs[$id];
-                    break;
-                case "chat_user":
-                    $to = $request->chatuser[$id];
-                    break;
-                case "chat_group":
-                    $to = $request->chatgroup[$id];
-                    break;
-                case "custom_page":
-                    $to = $request->custom_page[$id];
-                    break;
-                case "modal":
-                    $to = $request->modal[$id];
-                    break;
-            }
-            // dd(isset($request->rotationtype[$id])?$request->rotationtype[$id]:'');
-            $link  =Link::create([
-              "page"=>$booth->id,
-              "name"=> $linkname,
-              "type"=>$request->type[$id],
-              "to"=> $to,
-              "top"=> $request->top[$id],
-              "left"=> $request->left[$id],
-              "width"=> $request->width[$id],
-              "height"=> $request->height[$id],
-              "perspective"=>isset($request->perspective[$id])?$request->perspective[$id]:'',
-              "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
-              "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
-          ]);
-          // dd($link);
-          // dd($request->bgimages);
-          if($request->has("bgimages") && isset($request->bgimages[$id]) ){
-            if(count($request->bgimages[$id])>0 ){
-              foreach($request->bgimages[$id] as $bgimage){
-                if($bgimage){ //check if not null
-                  $link->background()->create([
-                    "owner"=>$link->id,
-                    "url" => $bgimage,
-                    "title" => "link"
-                  ]);
-                }
-
+      $booth->links()->delete();
+      if($request->has("linknames")){
+          foreach($request->linknames as $id => $linkname){
+              $to = "";
+              // dd($request->type);
+              switch($request->type[$id]){
+                  case "session_room": 
+                      $to = $request->rooms[$id];
+                      break;
+                  case "page":
+                      $to = $request->pages[$id];
+                      break;
+                  case "zoom":
+                      $to = $request->zoom[$id];
+                      break;
+                  case "booth":
+                      $to = $request->booths[$id];
+                      break;
+                  case "vimeo":
+                      $to = $request->vimeo[$id];
+                      break;
+                  case "pdf":
+                      $to = $request->pdfs[$id];
+                      break;
+                  case "chat_user":
+                      $to = $request->chatuser[$id];
+                      break;
+                  case "chat_group":
+                      $to = $request->chatgroup[$id];
+                      break;
+                  case "custom_page":
+                      $to = $request->custom_page[$id];
+                      break;
+                  case "modal":
+                      $to = $request->modal[$id];
+                      break;
               }
+              // dd(isset($request->rotationtype[$id])?$request->rotationtype[$id]:'');
+              $link  =Link::create([
+                "page"=>$booth->id,
+                "name"=> $linkname,
+                "type"=>$request->type[$id],
+                "to"=> $to,
+                "top"=> $request->top[$id],
+                "left"=> $request->left[$id],
+                "width"=> $request->width[$id],
+                "height"=> $request->height[$id],
+                "perspective"=>isset($request->perspective[$id])?$request->perspective[$id]:'',
+                "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
+                "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
+            ]);
+            // dd($link);
+            // dd($request->bgimages);
+            if($request->has("bgimages") && isset($request->bgimages[$id]) ){
+              if(count($request->bgimages[$id])>0 ){
+                foreach($request->bgimages[$id] as $bgimage){
+                  if($bgimage){ //check if not null
+                    $link->background()->create([
+                      "owner"=>$link->id,
+                      "url" => $bgimage,
+                      "title" => "link"
+                    ]);
+                  }
+
+                }
+              }
+
             }
-
           }
-        }
-    }
-
-
-    //uploading videos
-    Video::where("owner", $booth->id)->delete();
-    if ($request->has("boothvideos")  && is_array($request->boothvideos)) {
-      foreach ($request->boothvideos as $id => $boothvideo) {
-        if (!empty(trim($boothvideo))) {
-          $booth->videos()->create([
-            "url" => $boothvideo,
-            "title" => $request->videotitles[$id],
-          ]);
-        }
       }
-    }
 
 
-
-
-
-    //updating resources
-    $requesturls = $request->resources; //Recieved from form
-    $deletedResources = [];
-    if(!$requesturls || !is_array($requesturls)){
-        $requesturls = [];
-    }
-    $oldResources = Resource::where("booth_id", $booth->id)->get();
-    $oldResourceurls = []; //From database
-    foreach ($oldResources as $id => $resource) {
-      if (!in_array($resource->url, $requesturls)) {
-        $resource->swagbag()->delete();
-        $resource->delete();
-        array_push($deletedResources, $resource->url);
-      } else {
-        array_push($oldResourceurls, $resource->url);
-      }
-    }
-    if ($requesturls) {
-      foreach ($requesturls as $id => $requrl) {
-        if(empty(trim($request->resourcetitles[$id]))){
-          flash("Please Fill The Title Of Resources")->error();
-          return redirect()->back();
-        }
-        elseif (!in_array($requrl, $oldResourceurls)) {
-          if (!empty(trim($requrl)) && !empty(trim($request->resourcetitles[$id]))) {
-            Resource::create([
-              "booth_id" => $booth->id,
-              "url" => $requrl,
-              "title" => $request->resourcetitles[$id],
+      //uploading videos
+      Video::where("owner", $booth->id)->delete();
+      if ($request->has("boothvideos")  && is_array($request->boothvideos)) {
+        foreach ($request->boothvideos as $id => $boothvideo) {
+          if (!empty(trim($boothvideo))) {
+            $booth->videos()->create([
+              "url" => $boothvideo,
+              "title" => $request->videotitles[$id],
             ]);
           }
-        } elseif (!in_array($requrl, $deletedResources)  && !empty(trim($request->resourcetitles[$id]))) {
-          $resource = Resource::where("url", $requrl)->update(["title" => $request->resourcetitles[$id]]);
         }
-      
       }
-    }
-    //booth description update
-    $booth->update([
-      "description" => $request->description,
-      "description_two" => $request->description_two,
-      "url" => $request->url,   //Booth Website
-    ]);
 
-      // $booth->load(["images", "videos", "resources","links"]);
-     
-    $id = $event_id;
-    return redirect()->to(route("exhibiter.update", ["booth" => $booth->id,"id"=>$id]));}
+
+
+
+
+      //updating resources
+      $requesturls = $request->resources; //Recieved from form
+      $deletedResources = [];
+      if(!$requesturls || !is_array($requesturls)){
+          $requesturls = [];
+      }
+      $oldResources = Resource::where("booth_id", $booth->id)->get();
+      $oldResourceurls = []; //From database
+      foreach ($oldResources as $id => $resource) {
+        if (!in_array($resource->url, $requesturls)) {
+          $resource->swagbag()->delete();
+          $resource->delete();
+          array_push($deletedResources, $resource->url);
+        } else {
+          array_push($oldResourceurls, $resource->url);
+        }
+      }
+      if ($requesturls) {
+        foreach ($requesturls as $id => $requrl) {
+          if(empty(trim($request->resourcetitles[$id]))){
+            flash("Please Fill The Title Of Resources")->error();
+            return redirect()->back();
+          }
+          elseif (!in_array($requrl, $oldResourceurls)) {
+            if (!empty(trim($requrl)) && !empty(trim($request->resourcetitles[$id]))) {
+              Resource::create([
+                "booth_id" => $booth->id,
+                "url" => $requrl,
+                "title" => $request->resourcetitles[$id],
+              ]);
+            }
+          } elseif (!in_array($requrl, $deletedResources)  && !empty(trim($request->resourcetitles[$id]))) {
+            $resource = Resource::where("url", $requrl)->update(["title" => $request->resourcetitles[$id]]);
+          }
+        
+        }
+      }
+      //booth description update
+      $booth->update([
+        "description" => $request->description,
+        "description_two" => $request->description_two,
+        "url" => $request->url,   //Booth Website
+      ]);
+
+        // $booth->load(["images", "videos", "resources","links"]);
+      
+      $id = $event_id;
+      return redirect()->to(route("exhibiter.update", ["booth" => $booth->id,"id"=>$id]));
+    } 
+    catch(\Exception $e){
+      if(Auth::user()->type === 'admin'){
+          dd($e->getMessage());
+      }
+      else{
+          Log::error($e->getMessage());
+      }
+    } 
+  }
 
   public function boothEnquiries(Booth $booth){
-      $booth->load("interests.user");
+      try{
+        $booth->load("interests.user");
 //      return $booth;
-      return view("exhibitor.enquiries")->with(compact("booth"));
+        return view("exhibitor.enquiries")->with(compact("booth"));
+      }
+      catch(\Exception $e){
+        if(Auth::user()->type === 'admin'){
+            dd($e->getMessage());
+        }
+        else{
+            Log::error($e->getMessage());
+        }
+      } 
   }
 
   public function boothEnquiriesRaw(Booth $booth){
+     try{
       $booth->load("interests.user");
       $toReturn = [];
       foreach ($booth->interests as $interest){
@@ -429,11 +521,30 @@ class BoothController extends Controller
       }
 
       return $toReturn;
+     }
+     catch(\Exception $e){
+      if(Auth::user()->type === 'admin'){
+          dd($e->getMessage());
+      }
+      else{
+          Log::error($e->getMessage());
+      }
+    } 
   }
 
   public function publish(Booth $booth){
-      $booth->publish();
-      return ['success' => true];
+      try{
+        $booth->publish();
+        return ['success' => true];
+      }
+      catch(\Exception $e){
+        if(Auth::user()->type === 'admin'){
+            dd($e->getMessage());
+        }
+        else{
+            Log::error($e->getMessage());
+        }
+      } 
   }
 
   public function unpublish(Booth $booth){

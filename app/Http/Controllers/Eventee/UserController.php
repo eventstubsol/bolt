@@ -31,9 +31,19 @@ class UserController extends Controller
     public function index($id)
     {
 
-        $users = User::orderBy("created_at", "DESC")->where('event_id', ($id))->get();
+        try{
+            $users = User::orderBy("created_at", "DESC")->where('event_id', ($id))->get();
         // return $users;
-        return view("eventee.users.list", compact("id", "users"));
+            return view("eventee.users.list", compact("id", "users"));
+        }
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+          } 
     }
 
     /**
@@ -43,20 +53,50 @@ class UserController extends Controller
      */
     public function create($id)
     {
-        $subtypes = UserSubtype::where('event_id',$id)->get();
+        try{
+            $subtypes = UserSubtype::where('event_id',$id)->get();
 
-        return view("eventee.users.create", compact('id',"subtypes"));
+            return view("eventee.users.create", compact('id',"subtypes"));
+        }
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+          } 
     }
     
     public function subTypesList($id)
     {
+       try{
         $subtypes = UserSubtype::where('event_id',$id)->get();
         return view("eventee.subtype.list",compact("id","subtypes"));
+       }
+       catch(\Exception $e){
+        if(Auth::user()->type === 'admin'){
+            dd($e->getMessage());
+        }
+        else{
+            Log::error($e->getMessage());
+        }
+      } 
     }
    
     public function subTypecreate($id)
     {
-        return view("eventee.subtype.create", compact('id'));
+        try{
+            return view("eventee.subtype.create", compact('id'));
+        }
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+          } 
     }
 
     /**
@@ -67,30 +107,50 @@ class UserController extends Controller
      */
     public function subTypestore(SubTypeFormRequest $request, $id)
     {
-        // if(empty($request->name)){
+        try{
+            // if(empty($request->name)){
         //     flash('Name Cannot Be Blank')->error();
         //     return redirect()->back();
-        // }
-        $check = UserSubtype::where('name',$request->name)->where('event_id',$id)->count();
-        if($check < 1){
-            $usertype = UserSubtype::create([
-                'name'=>$request->name,
-                'event_id'=>$id
-            ]);
-            flash("Subtype is created")->success();
-            return redirect(route("eventee.subtypes",$id));
+            // }
+            $check = UserSubtype::where('name',$request->name)->where('event_id',$id)->count();
+            if($check < 1){
+                $usertype = UserSubtype::create([
+                    'name'=>$request->name,
+                    'event_id'=>$id
+                ]);
+                flash("Subtype is created")->success();
+                return redirect(route("eventee.subtypes",$id));
+            }
+            else{
+                flash("Cannot Create Same Sub Types")->error();
+                return redirect()->back();
+            }
         }
-        else{
-            flash("Cannot Create Same Sub Types")->error();
-            return redirect()->back();
-        }
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+          } 
         
     }
     public function subTypedelete(Request $request, UserSubtype $id)
     {
         // dd($id);
-        $id->delete();
-        return true;
+        try{
+            $id->delete();
+            return true;
+        }
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+          } 
     }
 
 
@@ -98,7 +158,7 @@ class UserController extends Controller
 
     public function store(UserFormRequest $request, $id)
     {
-       
+       try{
             // if(empty($request->name)){
             //     flash("Name Field Cannot Be Blank")->error();
             //     return redirect()->back();
@@ -168,7 +228,15 @@ class UserController extends Controller
                 // flash($message)->info();
                 // return redirect()->back();
             // }
-       
+       }
+       catch(\Exception $e){
+        if(Auth::user()->type === 'admin'){
+            dd($e->getMessage());
+        }
+        else{
+            Log::error($e->getMessage());
+        }
+      } 
     }
 
     public function bulk_create(Request $request)
@@ -233,16 +301,36 @@ class UserController extends Controller
      */
     public function edit(Request $request, $id, $user_id)
     {
-        $user = User::findOrFail($user_id);
-        $subtypes = UserSubtype::where('event_id',$id)->get();
+        try{
+            $user = User::findOrFail($user_id);
+            $subtypes = UserSubtype::where('event_id',$id)->get();
 
-        // return $user;
-        return view("eventee.users.edit", compact("id", "user_id", "user","subtypes"));
+            // return $user;
+            return view("eventee.users.edit", compact("id", "user_id", "user","subtypes"));
+        }
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+          } 
     }
     
     public function subTypeedit(Request $request, $id, UserSubtype $subtype)
     {
-        return view("eventee.subtype.edit", compact("id", "subtype"));
+        try{
+            return view("eventee.subtype.edit", compact("id", "subtype"));
+        }
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+          } 
 
     }
     /**
@@ -254,83 +342,103 @@ class UserController extends Controller
      */
     public function subTypeupdate(Request $request, $id, UserSubtype $subtype)
     {
-        $subtype->update([
-            "name"=>$request->name
-        ]);
-        return redirect(route("eventee.subtypes",$id));
-        // dd($subtype);
+       try{
+            $subtype->update([
+                "name"=>$request->name
+            ]);
+            return redirect(route("eventee.subtypes",$id));
+            // dd($subtype);
+       }
+       catch(\Exception $e){
+        if(Auth::user()->type === 'admin'){
+            dd($e->getMessage());
+        }
+        else{
+            Log::error($e->getMessage());
+        }
+      } 
     }
     public function update(Request $request, $id, $user_id)
     {
-        // dd($request->all());
-        $user = User::findOrFail($user_id);
-        $cometChat = isset($userData["enable_chat"]) ? 'enable' : null;
-        $cometChat =  isset($userData["disable_chat"]) ? 'disable' : $cometChat;
+        try{
+            // dd($request->all());
+            $user = User::findOrFail($user_id);
+            $cometChat = isset($userData["enable_chat"]) ? 'enable' : null;
+            $cometChat =  isset($userData["disable_chat"]) ? 'disable' : $cometChat;
 
-        // switch ($cometChat) {
-        //     case 'enable':
-        //         // attempt creating account
-        //         $response = Http::withHeaders([
-        //             'appId' => env('COMET_CHAT_APP_ID'),
-        //             'apiKey' => env('COMET_CHAT_API_KEY'),
-        //             "Accept-Encoding" => "deflate, gzip",
-        //             "Content-Encoding" => "gzip"
-        //         ])
-        //             ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
-        //                 'uid' => $user->id,
-        //                 'name' => $user->name
-        //             ]);
+            // switch ($cometChat) {
+            //     case 'enable':
+            //         // attempt creating account
+            //         $response = Http::withHeaders([
+            //             'appId' => env('COMET_CHAT_APP_ID'),
+            //             'apiKey' => env('COMET_CHAT_API_KEY'),
+            //             "Accept-Encoding" => "deflate, gzip",
+            //             "Content-Encoding" => "gzip"
+            //         ])
+            //             ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
+            //                 'uid' => $user->id,
+            //                 'name' => $user->name
+            //             ]);
 
-        //         // account created, reactivate it
-        //         if ($response->clientError()) {
-        //             Http::withHeaders([
-        //                 'appId' => env('COMET_CHAT_APP_ID'),
-        //                 'apiKey' => env('COMET_CHAT_API_KEY'),
-        //                 "Accept-Encoding" => "deflate, gzip",
-        //                 "Content-Encoding" => "gzip"
-        //             ])
-        //                 ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users',  ['uidsToActivate' => [$user->id]]);
-        //             $user->isCometChatAccountExist = TRUE;
-        //         }
-        //         break;
-        //     case 'disable':
-        //         Http::withHeaders([
-        //             'appId' => env('COMET_CHAT_APP_ID'),
-        //             'apiKey' => env('COMET_CHAT_API_KEY'),
-        //             "Accept-Encoding" => "deflate, gzip",
-        //             "Content-Encoding" => "gzip"
-        //         ])
-        //             ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => FALSE]);
-        //         $user->isCometChatAccountExist = FALSE;
-        //         break;
-        // }
+            //         // account created, reactivate it
+            //         if ($response->clientError()) {
+            //             Http::withHeaders([
+            //                 'appId' => env('COMET_CHAT_APP_ID'),
+            //                 'apiKey' => env('COMET_CHAT_API_KEY'),
+            //                 "Accept-Encoding" => "deflate, gzip",
+            //                 "Content-Encoding" => "gzip"
+            //             ])
+            //                 ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users',  ['uidsToActivate' => [$user->id]]);
+            //             $user->isCometChatAccountExist = TRUE;
+            //         }
+            //         break;
+            //     case 'disable':
+            //         Http::withHeaders([
+            //             'appId' => env('COMET_CHAT_APP_ID'),
+            //             'apiKey' => env('COMET_CHAT_API_KEY'),
+            //             "Accept-Encoding" => "deflate, gzip",
+            //             "Content-Encoding" => "gzip"
+            //         ])
+            //             ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => FALSE]);
+            //         $user->isCometChatAccountExist = FALSE;
+            //         break;
+            // }
 
-        // update name in comet chat as well
-        if ($user->name != $request->name && $user->isCometChatAccountExist) {
-            Http::withHeaders([
-                'appId' => env('COMET_CHAT_APP_ID'),
-                'apiKey' => env('COMET_CHAT_API_KEY'),
-                "Accept-Encoding" => "deflate, gzip",
-                "Content-Encoding" => "gzip"
-            ])
-                ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["name" => $request->name]);
+            // update name in comet chat as well
+            if ($user->name != $request->name && $user->isCometChatAccountExist) {
+                Http::withHeaders([
+                    'appId' => env('COMET_CHAT_APP_ID'),
+                    'apiKey' => env('COMET_CHAT_API_KEY'),
+                    "Accept-Encoding" => "deflate, gzip",
+                    "Content-Encoding" => "gzip"
+                ])
+                    ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["name" => $request->name]);
+            }
+
+            $user->name = $request->name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $user->type = $request->type;
+            if($request->has('subtype')){
+                $user->subtype = $request->subtype;
+            }
+            
+            if($request->passsword){
+                $user->password = Hash::make($request->pasword);
+            }
+            $user->save();
+            // dd($user);
+
+            return redirect()->route('eventee.user', $id);
         }
-
-        $user->name = $request->name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $user->type = $request->type;
-        if($request->has('subtype')){
-            $user->subtype = $request->subtype;
-        }
-        
-        if($request->passsword){
-            $user->password = Hash::make($request->pasword);
-        }
-        $user->save();
-        // dd($user);
-
-        return redirect()->route('eventee.user', $id);
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+          } 
     }
 
     /**
