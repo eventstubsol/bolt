@@ -39,6 +39,11 @@ class ModalController extends Controller
         //     flash("Name Field Cannot Be Left Blank")->error();
         //     return redirect()->back();
         // }
+        $count = Modal::where("name",$request->name)->where('event_id',$id)->count();
+        if($count > 0){
+            flash("Same Modal Already Exist")->error();
+            return redirect()->back();
+        }
         $event_id = $id;
         $name = $request->name;
         $modal = new Modal([

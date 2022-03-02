@@ -58,6 +58,11 @@ class BoothController extends Controller
         flash("Please Select A Exibitor First")->error();
         return redirect()->back();
       }
+      $count = Booth::where("name",$request->name)->where('event_id',$id)->count();
+        if($count > 0){
+            flash("Same Booth Already Exist")->error();
+            return redirect()->back();
+        }
       $booth = new Booth;
       if($request->has("name")){
         $booth->name = $request->get("name");
