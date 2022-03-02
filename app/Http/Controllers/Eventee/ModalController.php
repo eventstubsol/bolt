@@ -43,7 +43,7 @@ class ModalController extends Controller
         if($count > 0){
             flash("Same Modal Already Exist")->error();
             return redirect()->back();
-        }
+        } 
         $event_id = $id;
         $name = $request->name;
         $modal = new Modal([

@@ -38,7 +38,7 @@ class SessionRoomController extends Controller
             if($count > 0){
                 flash("Same Session Room Already Exist")->error();
                 return redirect()->back();
-            }
+            } 
             $room = new sessionRooms([
                 "name"=>$name,
                 // "master_room"=>isset($request->master_room)?$request->master_room:"",

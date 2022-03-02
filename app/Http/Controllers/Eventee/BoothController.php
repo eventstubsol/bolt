@@ -62,7 +62,7 @@ class BoothController extends Controller
         if($count > 0){
             flash("Same Booth Already Exist")->error();
             return redirect()->back();
-        }
+        } 
       $booth = new Booth;
       if($request->has("name")){
         $booth->name = $request->get("name");

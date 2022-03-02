@@ -45,7 +45,7 @@ class PageController extends Controller
         if($count > 0){
             flash("Same Page Already Exist")->error();
             return redirect()->back();
-        }
+        } 
         $page = new Page([
             "name" => $name,
             'event_id'=>$id,
