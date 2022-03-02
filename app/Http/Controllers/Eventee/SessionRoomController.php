@@ -34,11 +34,6 @@ class SessionRoomController extends Controller
             //     return redirect()->back();
             // }
             $name = str_replace(" ","_",$request->name);
-            $count = sessionRooms::where("name",$name)->where('event_id',$id)->count();
-            if($count > 0){
-                flash("Same Session Room Already Exist")->error();
-                return redirect()->back();
-            }
             $room = new sessionRooms([
                 "name"=>$name,
                 // "master_room"=>isset($request->master_room)?$request->master_room:"",

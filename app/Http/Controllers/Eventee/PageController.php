@@ -41,11 +41,6 @@ class PageController extends Controller
         //     return redirect()->back();
         // }
         $name = str_replace(" ","_",$request->name);
-        $count = Page::where("name",$name)->where('event_id',$id)->count();
-        if($count > 0){
-            flash("Same Page Already Exist")->error();
-            return redirect()->back();
-        }
         $page = new Page([
             "name" => $name,
             'event_id'=>$id,
