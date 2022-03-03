@@ -413,7 +413,7 @@ function initApp() {
             let tableId= $(e.currentTarget).data("table");
             console.log(e);
             console.log(tableId);
-            let participant_interval = setInterval(addParticipant,15000,tableId);
+            let participant_interval = setInterval(addParticipant,25000,tableId);
             // addParticipant(tableId);
             
             $("#lounge-session-content").empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.videoSDK.replace(":id",meetingId)}"></iframe>`);
@@ -448,7 +448,7 @@ function initApp() {
                         setLoungeLinks();
                     }
                 });
-        },10000);
+        },30000);
     }
     let addingParticipant = false;
     let last_add = 0;
@@ -1448,7 +1448,7 @@ const [
     };
 
     refreshContents(); //Calling for initialization
-    setInterval(refreshContents, 15000); //Will be called every 15 seconds
+    setInterval(refreshContents, 25000); //Will be called every 15 seconds
 
     return [
         listenForChanges,

@@ -140,8 +140,8 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::get('mail/{id}',"Eventee\MailController@index")->name('eventee.mail');
     Route::get('mail/create/{id}',"Eventee\MailController@create")->name('eventee.mail.create');
     Route::post('mail/send/{id}',"Eventee\MailController@send")->name('eventee.mail.send');
-    Route::get("/chat-user/sync/{id}", "UserController@syncUserChat")->name("sync-users");
-    Route::get("/chat-group/sync/{id}", "UserController@syncGroupChat")->name("sync-groups");
+    Route::get("/chat-user/sync/{id}", "Eventee\UserController@syncUserChat")->name("sync-users");
+    Route::get("/chat-group/sync/{id}", "Eventee\UserController@syncGroupChat")->name("sync-groups");
     
     //Onboard settings
     Route::get("Onboard/Setting/{id}","OnboardController@index")->name("onboard.settings");

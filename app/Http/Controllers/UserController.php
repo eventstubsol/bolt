@@ -288,52 +288,7 @@ class UserController extends Controller
         }
     }
 
-    public function syncUserChat($id)
-    {
-        // return $id;
-        $users = User::where("event_id",$id)->get(["id", "name"]);
-        $chat_app = CometChat::where("event_id",$id)->first();
-        if(!$chat_app){
-            return ["success" => FALSE];
-        }
-
-        if (count($users) == 0) {
-            return ["success" => TRUE];
-        }
-
-        $users->each(function ($user) use($chat_app) {
-            createUser($chat_app,$user);
-            // $user->isCometChatAccountExist = TRUE;
-            // $user->save();
-        });
-
-        // $left = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)->count();
-        // $total = User::where("event_id",$id)->count();
-        return ["success" => TRUE];
-    }
-
-    public function syncGroupChat($id)
-    {
-        $booths = Booth::where("event_id",$id)->get(["id", "name"]);
-        $chat_app = CometChat::where("event_id",$id)->first();
-
-        $booths->each(function ($booth) use($chat_app) {
-            createGroup($chat_app,$booth);
-            // Http::withHeaders([
-            //     "apiKey" => env("COMET_CHAT_API_KEY"),
-            //     "appId" => env("COMET_CHAT_APP_ID"),
-            //     "accept" => "application/json",
-            //     "Accept-Encoding"=> "deflate, gzip",
-            //     "Content-Encoding"=> "gzip"
-            // ])
-            //     ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
-            //         "guid" => $booth->id,
-            //         "name" => $booth->name,
-            //         "type" => "public"
-            //     ]);
-        });
-        return ["success" => TRUE];
-    }
+    
 
     public function sendConnectionRequest(Request $request)
     {
