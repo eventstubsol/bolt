@@ -48,6 +48,7 @@ Manage Booths
                             <th class="checks" style="display: none">#</th>
                             <th>Name</th>
                             <th>Admins</th>
+                            <th>Created On</th>
                             <th class="text-right mr-2">Actions</th>
                         </tr>
                     </thead>
@@ -61,17 +62,18 @@ Manage Booths
                                 return $user->name;
                             })->toArray())
                           !!}</td>
+                          <td>{{ Carbon\Carbon::parse($booth->create_at)->format('d-m-Y') }}</td>
                             <td class="text-right" >
                                 <a href="{{ route("eventee.booth.edit", [
                                         "booth_id" => $booth->id,"id"=>$id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Edit"><i class="fe-edit-2" ></i></a>   
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Edit Booth"><i class="fe-edit-2" ></i></a>   
                              <a href="{{ route("eventee.duplicate", [
                                 "object" => $booth ,"type"=>"booth"
                             ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Copy"><i class="fe-copy" ></i></a>
                                 <button data-toggle="tooltip" title="Delete" data-id="{{$booth->id}}" class="btn btn-danger delete"  type="submit"><i class="fas fa-trash-alt"></i></button>
                                 <a href="{{ route("exhibiter.edit", [
                                         "booth" => $booth->id, "id"=>$id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Edit"><i class="fe-edit-2" ></i></a>
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" title="Edit Resource"><i class="fa fa-rocket" aria-hidden="true"></i></a>
 
                             </td>
                         </tr>

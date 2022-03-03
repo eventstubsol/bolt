@@ -73,6 +73,7 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     
     //Landing Update
     Route::get('landing/update/status','LandingController@updateStatus')->name('update.landing.status');
+    
     //otp setup
     Route::get('otp/update/status','OTPController@updateStatus')->name('update.otp.status');
 
@@ -98,6 +99,7 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
 
     //Landing Page Setting
     Route::get('/Landing/Setting/{id}',"LandingController@index")->name('landing.settings');
+    Route::get('/Landing/Speaker/Delete',"LandingController@deleteSpeaker")->name('landing.speaker.delete');
     Route::POST('/Landing/Setting/Post/{id}','LandingController@LandingStore')->name('landing.settings.store');
     Route::POST('/Landing/Setting/Speaker/{id}/{page_id}','LandingController@SpeakerStore')->name('landing.settings.speaker');
     Route::get('/set/speaker/status','LandingController@setStatus')->name('landing.settings.setStatus');

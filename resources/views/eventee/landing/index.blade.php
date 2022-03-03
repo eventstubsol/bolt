@@ -53,7 +53,7 @@
                         <label for="">Tagline</label>
                         <input type="text" class="form-control" name="tagline" @if($landingPage->tagline !== null) value="{{ $landingPage->tagline }}"  @endif>
                     </div>
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success ml-2">Save</button>
                </form>
             </div>
         </div>
@@ -67,10 +67,10 @@
             <div class="card-body form-check form-switch ml-3">
             @if($landingPage->speaker_status == 1)
                 <input type="checkbox" value="1" class="setoption form-check-input" onchange="setopt(this)" checked>
-                <label class="form-check-label" for="checkbox_id">Do You Want To Add New Speakers?</label>
+                <label class="form-check-label" for="checkbox_id">Do You Want To Add Speakers?</label>
             @else
                 <input type="checkbox" value="0" class="setoption form-check-input" onchange="setopt(this)">
-                <label class="form-check-label" for="checkbox_id">Do You Want To Add New Speakers?</label>
+                <label class="form-check-label" for="checkbox_id">Do You Want To Add Speakers?</label>
             @endif
             </div>
             <div class="card-body SetSpeakers" id="SetSpeakers">
@@ -79,31 +79,36 @@
                     <div class="speakerAppend">
                         @if(count($speakers) > 0)
                             @foreach ($speakers as $speaker)
-                            <div class="form-group">
-                                <label for="text">Speakers</label>
-                                <select name="speaker[]" class="form-control">\
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}" <?php if($speaker->speaker_id == $user->id) echo 'selected'?>>{{ ($user->name).' ' .($user->last_name) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <div class="image-uploader" id="imgBg" >
-                                    <label class="mb-3" for="images">Speaker's Image</label>
-                                    <input type="hidden" name="speaker_img[]" class="upload_input"  value="{{ $speaker->image }}" >
-                                    <input type="file" data-name="speaker_img_det" data-plugins="dropify" data-type="image" data-default-file={{  assetUrl($speaker->image) }} />
+                            <div class="speakers">
+                                <div class="form-group">
+                                    <label for="text">Speakers</label>
+                                    <select name="speaker[]" class="form-control">\
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}" <?php if($speaker->speaker_id == $user->id) echo 'selected'?>>{{ ($user->name).' ' .($user->last_name) }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Designation</label>
-                                <input type="text" name="designation[]" class="form-control" value="{{ $speaker->designation }}">
+                                <div class="form-group">
+                                    <div class="image-uploader" id="imgBg" >
+                                        <label class="mb-3" for="images">Speaker's Image</label>
+                                        <input type="hidden" name="speaker_img[]" class="upload_input"  value="{{ $speaker->image }}" >
+                                        <input type="file" data-name="speaker_img_det" data-plugins="dropify" data-type="image" data-default-file={{  assetUrl($speaker->image) }} />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Designation</label>
+                                    <input type="text" name="designation[]" class="form-control" value="{{ $speaker->designation }}">
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-danger mb-2" data-id="{{ $speaker->id }}" onclick="DeleteSpeaker(this)">Delete Speaker</button>
+                                </div>
                             </div>
                             @endforeach
                         @endif
                     </div>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary" onclick="addSpeakerNew()">Add new speaker</button>
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success ml-2">Save</button>
                     </div>
                 </form>
                
@@ -163,6 +168,27 @@
         // alert(1);
         $('.speakerAppend').append(appendable);
         initializeFileUploads();
+    }
+</script>
+<script>
+    function DeleteSpeaker(e){
+        var id = e.getAttribute('data-id');
+        var close = e.closest(".speakers");
+        confirmDelete("Are you sure you want to DELETE Speaker?","Confirm Speaker Delete").then(confirmation=>{
+                if(confirmation){
+                    
+                    // var data = e.closest('tr');
+                    $.get('{{ route("landing.speaker.delete") }}',{'id':id},function(res){
+                        if(res.code == 200){
+                            showMessage(res.message,'success');
+                            close.remove();
+                        }
+                        else{
+                            showMessage(res.message,'error');
+                        }
+                    });
+                }
+            });
     }
 </script>
 @endsection

@@ -131,10 +131,10 @@ var deltype = 0;
 $(document).ready(function(){
     
     $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.menu.create",$id) }}">Create New</a>');
-    $("#buttons-container").append('<button class="btn btn-success" onclick="setOrder()">Set Order</button>');
-    $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success" onclick="SavePositions()" style="display:none">Save</button>');
-    $("#buttons-container").append('<button type="button" onclick="AddCheckBox(this)" class="addbox btn btn-info" >Bulk Disable</button>');
-    $("#buttons-container").append('<button class="deleteBulk btn btn-danger float-right" onclick="BulkDelete()" style="display: none">Disable</button>');
+    $("#buttons-container").append('<button class="btn btn-success ml-2" onclick="setOrder()">Set Order</button>');
+    $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success ml-2" onclick="SavePositions()" style="display:none">Save</button>');
+    $("#buttons-container").append('<button type="button" onclick="AddCheckBox(this)" class="addbox btn btn-info ml-2" >Bulk Disable</button>');
+    $("#buttons-container").append('<button class="deleteBulk btn btn-danger float-right ml-2" onclick="BulkDelete()" style="display: none">Disable</button>');
     //setStatus
     $("body").on("click",".disable",function(e){
                     t = $(this);

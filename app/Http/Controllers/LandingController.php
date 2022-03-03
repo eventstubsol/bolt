@@ -76,4 +76,13 @@ class LandingController extends Controller
             return response()->json(['code'=>200]);
         }
     }
+    public function deleteSpeaker(Request $req){
+        $land = LandingSpeaker::findOrFail($req->id);
+        if($land->delete()){
+            return response()->json(['code'=>200,'message'=>"Speaker Deleted Successfully"]);
+        }
+        else{
+            return response()->json(['code'=>500,'message'=>"Something Went Wrong"]);
+        }
+    }
 }

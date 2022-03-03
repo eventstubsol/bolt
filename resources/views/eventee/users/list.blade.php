@@ -35,7 +35,7 @@ Manage Users
                     <center>  User Deleted Successfully </center>
                 </div>
                 <div class="alert alert-success" role="alert" id="successAlert" style="display: none">
-                        Selected Booths Have Deleted Successfully, Please Wait 2 Seconds....
+                        Selected Users Have Deleted Successfully, Please Wait 2 Seconds....
                   </div>
                   <div class="alert alert-danger" role="alert" id="errorAlert" style="display: none">
                     

@@ -123,8 +123,8 @@
 var final;
 $(document).ready(function(){
     $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.footer.create",$id) }}">Create New</a>');
-    $("#buttons-container").append('<button class="btn btn-success" onclick="setOrder()">Set Order</button>');
-    $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success" onclick="SavePositions()" style="display:none">Save</button>')
+    $("#buttons-container").append('<button class="btn btn-success ml-2" onclick="setOrder()">Set Order</button>');
+    $("#buttons-container").append('<button id="savebtn" type="button" class="btn btn-success ml-2" onclick="SavePositions()" style="display:none">Save</button>')
     //setStatus
     $("body").on("click",".disable",function(e){
                     t = $(this);
