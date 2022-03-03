@@ -55,8 +55,8 @@ Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.log
 Route::get("Verify/otp/{user_id}","EventAdminController@OtpView")->name("eventadmin.verify");
 Route::POST("/verify/otp/{user_id}","EventAdminController@VerifyOtp")->name("Eventee.verify");
 
-Route::prefix("EventAdmin")->middleware("eventee")->group(function(){
-    Route::get('Home','eventeeController@Dashboard')->name('teacher.dashboard');
+Route::prefix("eventadmin")->middleware("eventee")->group(function(){
+    Route::get('dashboard','eventeeController@Dashboard')->name('teacher.dashboard');
     Route::post('liveChart',"EventManageController@ChartJs")->name('eventee.chartJs');
     Route::post('SessionRoomChart',"EventManageController@SessionChartJs")->name('eventee.sessionChart');
     Route::post('pageChart',"EventManageController@PageChartJs")->name('eventee.pageChart');
@@ -570,7 +570,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         // Route::get('details/create','menuDetailsController@index')->('details.create');
         //Event List
         Route::get('event/list','AdminEventController@eventList')->name('admin.event.list');
-      
+        Route::get('event/feature/{id}',"FeatureController@index")->name('admin.event.feature');
+        Route::get('event/feature/options/permision','FeatureController@options')->name('admin.event.options');
         /**
          * CHAT USER START
          */

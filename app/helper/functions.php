@@ -43,6 +43,7 @@ use Aws\Exception\AwsException;
 use App\Mail\OtpSetup;
 use App\Mail\ActiveMail;
 use App\Mail\ActiveMailAttendee;
+use App\EventFeature;
 
 include_once "clickableAreasConfig.php";
 include_once "chat/index.php";
@@ -1663,4 +1664,16 @@ function VerifyOTP($user_id,$otp){
         return 1;
     }
     return 0;
+}
+
+function CreateFeature($event_id){
+    $options = ['booth','modals','lounge'];
+    for ($i = 0;$i < count($options); $i++){
+        $feature = new EventFeature;
+        $feature->event_id = $event_id;
+        $feature->name = $options[$i];
+        $feature->status = 1;
+        $feature->save();
+    }
+    return 1;
 }

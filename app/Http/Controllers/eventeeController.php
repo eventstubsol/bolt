@@ -283,6 +283,7 @@ class eventeeController extends Controller
             createLeaderboard($event->id);
             LandPage($event->id);
             CreateTemplate($event->id);
+            CreateFeature($event->id);
             $contents = ContentMaster::all();
             foreach($contents as $content){
                 Content::create([
