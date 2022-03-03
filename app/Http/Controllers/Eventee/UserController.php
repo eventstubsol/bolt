@@ -139,6 +139,7 @@ class UserController extends Controller
                 $user->email = $request->email;
                 // $user->isCometChatAccountExist = TRUE;
                 $user->subtype = $request->subtype;
+                
 
 
                 // $user->sendEmailVerificationNotification();
@@ -157,6 +158,10 @@ class UserController extends Controller
                 //     ]);
                 if ($user->save()) {
                     flash("New User Added")->success();
+                    $chat_app = CometChat::where("event_id",$id)->first();
+                    if($chat_app){
+                        createUser($chat_app,$user);    
+                    }
                     return redirect()->route('eventee.user', $id);
                 } else {
                     flash("Something went wrong")->error();
@@ -389,56 +394,51 @@ class UserController extends Controller
                 ]);;
         }
     }
-
-    public function syncUserChat()
+    public function syncUserChat($id)
     {
-        $users = User::where("isCometChatAccountExist", FALSE)
-            ->limit(rand(10, 25))
-            ->get(["id", "name"]);
+        // return $id;
+        $users = User::where("event_id",$id)->get(["id", "name"]);
+        $chat_app = CometChat::where("event_id",$id)->first();
+        if(!$chat_app){
+            return ["success" => FALSE];
+        }
 
         if (count($users) == 0) {
             return ["success" => TRUE];
         }
 
-        $users->each(function ($user) {
-            Http::withHeaders([
-                "apiKey" => env("COMET_CHAT_API_KEY"),
-                "appId" => env("COMET_CHAT_APP_ID"),
-                "accept" => "application/json",
-                "Accept-Encoding" => "deflate, gzip",
-                "Content-Encoding" => "gzip"
-            ])
-                ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/users", [
-                    "uid" => $user->id,
-                    "name" => $user->name
-                ]);
+        $users->each(function ($user) use($chat_app) {
+            createUser($chat_app,$user);
             // $user->isCometChatAccountExist = TRUE;
-            $user->save();
+            // $user->save();
         });
 
-        $left = User::where("isCometChatAccountExist", FALSE)->count();
-        $total = User::all()->count();
-
-        return ["success" => FALSE, "left" => $left, "total" => $total];
+        // $left = User::where("isCometChatAccountExist", FALSE)->where("event_id",$id)->count();
+        // $total = User::where("event_id",$id)->count();
+        return ["success" => TRUE];
     }
 
-    public function syncGroupChat()
-    {
-        $booths = Booth::all(["id", "name"]);
+   
 
-        $booths->each(function ($booth) {
-            Http::withHeaders([
-                "apiKey" => env("COMET_CHAT_API_KEY"),
-                "appId" => env("COMET_CHAT_APP_ID"),
-                "accept" => "application/json",
-                "Accept-Encoding" => "deflate, gzip",
-                "Content-Encoding" => "gzip"
-            ])
-                ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
-                    "guid" => $booth->id,
-                    "name" => $booth->name,
-                    "type" => "public"
-                ]);
+    public function syncGroupChat($id)
+    {
+        $booths = Booth::where("event_id",$id)->get(["id", "name"]);
+        $chat_app = CometChat::where("event_id",$id)->first();
+
+        $booths->each(function ($booth) use($chat_app) {
+            createGroup($chat_app,$booth);
+            // Http::withHeaders([
+            //     "apiKey" => env("COMET_CHAT_API_KEY"),
+            //     "appId" => env("COMET_CHAT_APP_ID"),
+            //     "accept" => "application/json",
+            //     "Accept-Encoding"=> "deflate, gzip",
+            //     "Content-Encoding"=> "gzip"
+            // ])
+            //     ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
+            //         "guid" => $booth->id,
+            //         "name" => $booth->name,
+            //         "type" => "public"
+            //     ]);
         });
         return ["success" => TRUE];
     }
@@ -773,6 +773,7 @@ class UserController extends Controller
             $file = $req->file('excel_file');
             // $file->event_id = $id;
             Excel::import(new UserImport($id),$file);
+            // $this->syncUserChat($id);
             flash("Data Updated Successfully")->success();
             return redirect()->route('eventee.user',$id);
         }
