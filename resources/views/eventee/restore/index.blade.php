@@ -17,8 +17,27 @@ Restore Data
 @endsection
 
 @section('content')
-
 <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="">Select Option</label>
+                    <select class="form-control" onchange="SetDelete(this)">
+                        <option value="0">None</option>
+                        <option value="1">User</option>
+                        <option value="2">Booth</option>
+                        <option value="3">Page</option>
+                        <option value="4">Session Room</option>
+                        <option value="5">Session</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row user" style="display: none">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -48,7 +67,7 @@ Restore Data
     </div>
 </div>
 
-<div class="row">
+<div class="row page" style="display: none">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -76,7 +95,7 @@ Restore Data
     </div>
 </div>
 
-<div class="row">
+<div class="row rooms" style="display: none">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -104,7 +123,7 @@ Restore Data
     </div>
 </div>
 
-<div class="row">
+<div class="row booth" style="display: none">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -132,7 +151,7 @@ Restore Data
     </div>
 </div>
 
-<div class="row">
+<div class="row session" style="display: none">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -175,6 +194,54 @@ Restore Data
                     showMessage(res.message,'error');
                 }
             });
+       }
+
+       function SetDelete(e){
+            var val = e.value;
+            switch(val) {
+                case "1":
+                    $(".user").show();
+                    $(".page").hide();
+                    $(".rooms").hide();
+                    $(".booth").hide();
+                    $(".session").hide();
+                    break;
+                case "2":
+                    $(".user").hide();
+                    $(".page").hide();
+                    $(".rooms").hide();
+                    $(".booth").show();
+                    $(".session").hide();
+                    break;
+                case "3":
+                    $(".user").hide();
+                    $(".page").show();
+                    $(".rooms").hide();
+                    $(".booth").hide();
+                    $(".session").hide();
+                    break;
+                case "4":
+                    $(".user").hide();
+                    $(".page").hide();
+                    $(".rooms").show();
+                    $(".booth").hide();
+                    $(".session").hide();
+                    break;
+                case "5":
+                    $(".user").hide();
+                    $(".page").hide();
+                    $(".rooms").hide();
+                    $(".booth").hide();
+                    $(".session").show();
+                    break;
+                default:
+                    $(".user").hide();
+                    $(".page").hide();
+                    $(".rooms").hide();
+                    $(".booth").hide();
+                    $(".session").hide();
+                    break;
+            }
        }
     </script>
 @endsection
