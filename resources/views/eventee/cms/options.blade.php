@@ -28,10 +28,10 @@ $fields = getAllFields($id);
                 <div class="card-header">
                     <h3>{{ $section }}</h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body row">
                     @foreach($fields as $field)
                     @if($field->section == $section)
-                    <div class="form-group">
+                    <div class="form-group col-md-4 ">
                         <label><b>{{ ucwords(str_replace("_", " ", $field->name)) }}</b></label>
                         @switch($field->type)
                         @case("text")
@@ -75,8 +75,10 @@ $fields = getAllFields($id);
                     </div>
                     @endif
                     @endforeach
-                    <div class="text-right"><button class="btn btn-primary w-25 mb-3">Save</button></div>
-                    <div class="text-right"><button class="btn btn-primary w-25 mb-3 action_items">Save</button></div>
+                    <div class="col-12 ">
+                        <div class=""><button class="btn btn-primary ">Save</button></div>
+                        <div class="text-right"><button class="btn btn-primary w-25 mb-3 action_items">Save</button></div>
+                    </div>
                 </div> <!-- end card body-->
             </div> <!-- end card -->
         </div><!-- end col-->

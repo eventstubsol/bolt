@@ -202,6 +202,9 @@
         .slider.round:before {
         border-radius: 50%;
         }
+        .buttons-pdf{
+            display: none !important;
+        }
     </style>
     @if(isset($id))
         @php

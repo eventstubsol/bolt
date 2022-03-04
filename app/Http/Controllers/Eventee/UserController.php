@@ -881,7 +881,7 @@ class UserController extends Controller
             $file = $req->file('excel_file');
             // $file->event_id = $id;
             Excel::import(new UserImport($id),$file);
-            // $this->syncUserChat($id);
+            $this->syncUserChat($id);
             flash("Data Updated Successfully")->success();
             return redirect()->route('eventee.user',$id);
         }

@@ -33,12 +33,12 @@ class UserImport implements ToModel,WithHeadingRow
                 "name"=>$row["name"],
                 "last_name" =>$row["last_name"],
                 "email" =>$row["email"],
-                "phone"=>$row["phone"],
-                "password" =>password_hash($row["password"],PASSWORD_DEFAULT),
+                "phone"=>$row["phone"]??'',
+                "password" =>password_hash($row["password"]??'',PASSWORD_DEFAULT),
                 "event_id"=> $this->event_id,
-                "type" => $row["type"],
-                "country" => $row["country"],
-                "subtype"=>$row['sub_type']
+                "type" => $row["type"]??'attendee',
+                "country" => $row["country"]??'',
+                "subtype"=>$row['sub_type']??''
             ]);
         }
     
