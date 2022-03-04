@@ -177,8 +177,8 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::delete('/form/delete/{form}',"Eventee\FormController@Destroy")->name('form.destroy');
 
 
-//CHeck Form Url    
-Route::get("/form/link","Eventee\FormController@CheckUrl")->name("form.link");
+    //CHeck Form Url    
+    Route::get("/form/link","Eventee\FormController@CheckUrl")->name("form.link");
 
 
     // Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');

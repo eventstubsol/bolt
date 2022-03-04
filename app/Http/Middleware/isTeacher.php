@@ -21,6 +21,7 @@ class isTeacher
         if(Auth::check() && ($user->type == 'eventee' || $user->type == 'admin')){
             return $next($request);
         }
-        abort(404);
+        return redirect('/');
+        // abort(404);
     }
 }
