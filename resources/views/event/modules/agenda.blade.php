@@ -58,7 +58,7 @@
                                    $j++;
                                 @endphp
                                     <li class="nav-item">
-                                        <a href="#agn-{{ $i }}-{{ $j }}" data-toggle="tab" aria-expanded="{{ $j === 1 ? 'true' : 'false' }}" class="nav-link @if($j === 1) active @endif">{{ $room }}</a>
+                                        <a href="#agn-{{ $i }}-{{ $j }}" data-toggle="tab" aria-expanded="{{ $j === 1 ? 'true' : 'false' }}" class="nav-link @if($j === 1) active @endif">{{ ucfirst(str_replace("_"," ",$room)) }}</a>
                                     </li>
                             @endforeach
                         </ul>

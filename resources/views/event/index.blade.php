@@ -158,9 +158,9 @@ $user = Auth::user();
             color: #fff;
         } */
 
-        .tab-content .nav-justified .nav-item a.active {
+        /* .tab-content .nav-justified .nav-item a.active {
             background: none;
-        }
+        } */
 
         .nav-justified .nav-item {
             min-width: max-content;
@@ -471,7 +471,7 @@ $user = Auth::user();
         .theme-modal .nav-pills .nav-link.active,
         .nav-pills .nav-link.active,
         .nav-pills .show > .nav-link {
-            background-color: "{{ $event->primary_color }}" !!important;
+            background-color: {{ $event->primary_color }} !important;
             color: #fff;
         }
 

@@ -402,8 +402,8 @@
                             $cur_eve = App\Event::findOrFail($id);
                         @endphp
                         <li class=" color-primary">
-                            <a class="visit_event" href="@if($cur_eve->domain) https://{{$cur_eve->domain}}/ @else https://{{$cur_eve->link}}/event @endif" target="_blank">Visit Event</a>    
-                            <a class="visit_event ml-2" href="@if($cur_eve->domain) https://{{$cur_eve->domain}}/landing @else https://{{$cur_eve->link}}/landing @endif" target="_blank">Visit Landing Page</a>    
+                            <a class="visit_event" href="@if($cur_eve->domain) https://{{$cur_eve->domain}}/ @else https://{{$cur_eve->link}}/event @endif" target="_blank">Preview Event</a>    
+                            <a class="visit_event ml-2" href="@if($cur_eve->domain) https://{{$cur_eve->domain}}/landing @else https://{{$cur_eve->link}}/landing @endif" target="_blank">Preview Landing Page</a>    
                         </li>
                     @endif
                  

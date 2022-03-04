@@ -1722,12 +1722,6 @@ table.dataTable tbody tr {
     transform: none;
 }
 
-.theme-modal .nav-pills .nav-link.active,
-.nav-pills .nav-link.active,
-.nav-pills .show>.nav-link {
-    background-color: #00a15f;
-    color: #fff;
-}
 
 .timeline-sm .timeline-sm-item:after {
     border-color: #00a15f;
