@@ -284,7 +284,7 @@ function createUser($chat_app,$user){
         ]);
         // dd($response->body());
 }
-function updateProfile($chat_app,$user){
+function updateChatProfile($chat_app,$user){
     $url = "https://api-eu.cometchat.io";
     $response = Http::withHeaders(
         [
@@ -292,10 +292,9 @@ function updateProfile($chat_app,$user){
             "appId" => $chat_app->appid,
             "Accept-Encoding" => "deflate, gzip",
             "Content-Encoding" => "gzip"
-        ])->post($url . '/v2.0/users', [
-            'uid' => $user->id,
-            'name' => $user->name,
-            'avatar' => assetUrl($user->profileImage)
+        ])->put($url . '/v2.0/users/'. $user->id , [
+            'name' => $user->getFullName(),
+            'avatar' => isset($user->profileImage) ? assetUrl($user->profileImage):''
         ]);
         // dd($response->body());
 }

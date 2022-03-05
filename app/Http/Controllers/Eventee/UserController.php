@@ -187,6 +187,11 @@ class UserController extends Controller
                     flash("Same Email ID Already Exist For The Current Event")->error();
                     return redirect()->back();
                 }
+                $userDEmail = User::onlyTrashed()->where('email','like','%'.$request->email.'%')->where('event_id',$id)->count();
+                if($userDEmail > 0){
+                    flash("Same Email ID Already Exist In the Trash Please Restore")->error();
+                    return redirect()->back();
+                }
                 
                 $user = new User;
                 $user->name = $request->name;

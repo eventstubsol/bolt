@@ -137,25 +137,25 @@
                         <!-- Vimeo URL -->
                         <div class="form-group">
                             <label class="form-label">Vimeo URL</label>
-                            <input name="vimeo_url" type="number" class="form-control" />
+                            <input name="vimeo_url" onwheel="this.blur()" type="number" class="form-control" />
                         </div>
 
                         <!-- Zoom Webinar Id -->
                         <div class="form-group">
                             <label class="form-label">Zoom Webinar Id</label>
-                            <input type="number" name="zoom_webinar_id" class="form-control" />
+                            <input type="number" onwheel="this.blur()" name="zoom_webinar_id" class="form-control" />
                         </div>
 
                         <!-- Zoom Password -->
                         <div class="form-group">
                             <label class="form-label">Zoom Webinar Password</label>
-                            <input type="number" name="zoom_password" class="form-control" />
+                            <input type="number" onwheel="this.blur()" name="zoom_password" class="form-control" />
                         </div>
 
                         <!-- Past Video Recording -->
                         <div class="form-group">
                             <label class="form-label">Past Video Recording</label>
-                            <input type="number" name="past_video" class="form-control" />
+                            <input type="number" onwheel="this.blur()" name="past_video" class="form-control" />
                         </div>
 
 

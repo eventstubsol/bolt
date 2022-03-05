@@ -561,9 +561,10 @@ $user = Auth::user();
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
         $user = Auth::user();
+        $gapi = App\Api::where("event_id",$event_id)->where("variable","GA_TRACKING_ID")->first();
     @endphp
     <script>
-        const GA_MEASUREMENT_ID = '{{ env('GA_TRACKING_ID') }}';
+        const GA_MEASUREMENT_ID = '{{ $gapi->key }}';
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {

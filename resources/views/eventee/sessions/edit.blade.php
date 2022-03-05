@@ -134,25 +134,25 @@ Create Update
                     <!-- Vimeo URL -->
                     <div class="form-group input_feilds VIMEO_VIDEO_SDK VIMEO_SESSION VIMEO_ZOOM_SDK VIMEO_ZOOM_EX">
                         <label class="form-label">Vimeo URL</label>
-                        <input value="{{$session->vimeo_url ??''}}" name="vimeo_url" type="number" class="form-control" />
+                        <input value="{{$session->vimeo_url ??''}}" onwheel="this.blur()" name="vimeo_url" type="number" class="form-control" />
                     </div>
 
                     <!-- Zoom URL -->
                     <div class="form-group  input_feilds ZOOM_SDK VIMEO_ZOOM_SDK">
                         <label class="form-label">Zoom Webinar Id / Zoom Url (In case we want an external link)</label>
-                        <input value="{{$session->zoom_webinar_id??''}}" type="number" name="zoom_webinar_id" class="form-control" />
+                        <input value="{{$session->zoom_webinar_id??''}}" onwheel="this.blur()" type="number" name="zoom_webinar_id" class="form-control" />
                     </div>
 
                     <!-- Zoom Password -->
                     <div class="form-group input_feilds  ZOOM_SDK VIMEO_ZOOM_SDK">
                         <label class="form-label">Zoom Webinar Password</label>
-                        <input value="{{$session->zoom_password??''}}" type="number" name="zoom_password" class="form-control" />
+                        <input value="{{$session->zoom_password??''}}" onwheel="this.blur()" type="number" name="zoom_password" class="form-control" />
                     </div>
 
                     <!-- Past Video Recording -->
                     <div class="form-group ">
                         <label class="form-label">Past Video Recording</label>
-                        <input value="{{$session->past_video??''}}" type="number" name="past_video" class="form-control" />
+                        <input value="{{$session->past_video??''}}" onwheel="this.blur()" type="number" name="past_video" class="form-control" />
                     </div>
 
 

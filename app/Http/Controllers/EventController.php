@@ -80,7 +80,7 @@ class EventController extends Controller
             "boothurl",
             "vidbg_url"
         ]);
-        $tables = NetworkingTable::where("event_id",$event_id)->get();
+        $tables = NetworkingTable::where("event_id",$event_id)->orderBy('seats', 'asc')->get();
         // dd($tables);
         $boothrooms = Room::where("event_id",$event_id)->orderBy("position")->get()->load("booths");
 
@@ -355,8 +355,6 @@ class EventController extends Controller
     public function saveprofile(Request $request)
     {
         $currentUser = Auth::user();
-        $chat_app = CometChat::where("event_id",$event->id)->first();
-        updateProfile($chat_app,$currentUser);
         $url = $request->get("url");
         if (isset($url)) {
             $user = User::where("id", $currentUser->id)->update(["profileImage" => $url]);
@@ -522,6 +520,8 @@ class EventController extends Controller
     {
         $currentUser = Auth::user();
         $currentUser->update($request->except(["email", "tags"]));
+        $chat_app = CometChat::where("event_id",$currentUser->event_id)->first();
+        updateChatProfile($chat_app,$currentUser);
         $tags = $request->get("tags", false);
         $looking_for_tags = $request->get("looking_for_tags", false);
         $interests = $request->get("interests", false);

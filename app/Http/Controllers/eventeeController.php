@@ -151,6 +151,17 @@ class eventeeController extends Controller
             Log::error($e->getMessage());
         }
     }
+    
+    public function updateUsers($event_id){
+        $users = User::where('event_id',$event_id)->get();
+        foreach($users as $user){
+            if($user->online_status === 1 && $user->updated_at < Carbon::now("UTC")->subMinutes(1)->toDateTimeString()){
+                $user->online_status = 0;
+                $user->save();
+            }
+        }
+    }
+
 
     public function Dashboard(Request $req){
         try{
@@ -166,17 +177,19 @@ class eventeeController extends Controller
             $totaluserOn = [];
             $alluser = 0;
             $totaluserLive = 0;
+            $userCountLive = 0;
             foreach($eventUser as $event){
                 $userCount = User::where('event_id',$event->id);
                 if($userCount->count() > 0){
                     array_push($totaluser,$userCount->count());
                 }
-                $userCountLive = $userCount->where('online_status',1)->where('type','attendee')->count();
-                if($userCountLive > 0){
-                    array_push($totaluserOn , $userCountLive);
+                $userCountLive = $userCount->where('online_status',1)->where("updated_at",">",Carbon::now("UTC")->subMinutes(1)->toDateTimeString())->where('type','attendee')->get();
+                if($userCountLive->count()){
+                        array_push($totaluserOn , $userCountLive);
                 }
             }
 
+          
             for($i = 0 ; $i < count($totaluser) ; $i++){
                 $alluser += $totaluser[$i];
             }

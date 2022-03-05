@@ -71,6 +71,7 @@
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
             <div class="card-header">User Status</div>
+            <div class="loader"><img src="{{ asset("/assets/images/loader/loader.gif") }}" alt=""></div>
             <div id="piechart" style="left:0;width: 50rem; height: 20rem;"></div>
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
@@ -80,6 +81,7 @@
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
             <div class="card-header">Session Room Chart</div>
+            <div class="loader2"><img src="{{ asset("/assets/images/loader/loader.gif") }}" alt=""></div>
             <div id="piechart2" style="left:0;width: 50rem; height: 20rem;"></div>
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
@@ -113,6 +115,8 @@
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
             <div class="card-header">Page Chart</div>
+            <div class="loader3"><img src="{{ asset("/assets/images/loader/loader.gif") }}" alt=""></div>
+
             <div id="piechart3" style="left:0;width: 50rem; height: 20rem;"></div>
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
@@ -145,6 +149,8 @@
     <div class="widget-rounded-circle card-box h-100">
         <div class="row">
             <div class="card-header">Booth Chart</div>
+            <div class="loader4"><img src="{{ asset("/assets/images/loader/loader.gif") }}" alt=""></div>
+
             <div id="piechart4" style="left:0;width: 50rem; height: 20rem;"></div>
         </div> <!-- end row-->
     </div> <!-- end widget-rounded-circle-->
@@ -267,6 +273,10 @@
         //     })
         // }
         $(document).ready(function(){
+            $("#piechart").hide();
+            $("#piechart2").hide();
+            $("#piechart3").hide();
+            $("#piechart4").hide();
             // fetchData();
             // setInterval(fetchData, 15000);
             let downloadButton = $("#download-login-logs");
@@ -301,6 +311,7 @@
     //User Chart
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
+
 
       function drawChart(obj,total) {
         //   console.log(obj.online);
@@ -348,6 +359,8 @@
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        $(".loader").hide();
+        $("#piechart").show();
 
         chart.draw(data, options);
       }
@@ -388,6 +401,8 @@
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+            $(".loader2").hide();
+            $("#piechart2").show();
 
             chart.draw(data, options);
         }
@@ -434,6 +449,8 @@
                 };
 
                 var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
+                $(".loader3").hide();
+                $("#piechart3").show();
 
                 chart.draw(data, options);
             }
@@ -474,6 +491,8 @@
                 titleTextStyle:{color:'#FAFADA'},
                 };
 
+                $(".loader4").hide();
+                $("#piechart4").show();
                 var chart = new google.visualization.PieChart(document.getElementById('piechart4'));
 
                 chart.draw(data, options);

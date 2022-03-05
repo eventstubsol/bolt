@@ -17,7 +17,7 @@ class LoungeController extends Controller
 {
     public function index($id)
     {
-        $tables = NetworkingTable::where("event_id",$id)->get();
+        $tables = NetworkingTable::where("event_id",$id)->orderBy('seats', 'asc')->get();
         return view("eventee.lounge.list")->with(compact(["tables","id"]));
     }
     public function create($id)
@@ -91,7 +91,7 @@ class LoungeController extends Controller
         $event = Event::where("slug",$subdomain)->first();
         Participant::where("updated_at", '<=', Carbon::now("UTC")->subtract('30','seconds'))->delete();
 
-        $tables =  NetworkingTable::where("event_id",$event->id)->get();
+        $tables =  NetworkingTable::where("event_id",$event->id)->orderBy('seats', 'asc')->get();
         
         $tables->load(["participants.user"]);
         // dd($tables);

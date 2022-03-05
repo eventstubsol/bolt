@@ -327,8 +327,9 @@
                 @auth
                 <div class="custom-dropdown profile area" data-link="attendees">
                     <a href="javascript:void(0);" class="menu-trigger">
-                        <p class="pro-user-name m-0">
-                            <span>{{ Auth::user()->name }}</span><i class="mdi mdi-chevron-down mx-1"></i>
+                        <p class="pro-user-name m-0 mr-1">
+                            <span>{{ Auth::user()->name }}</span>
+                            {{-- <i class="mdi mdi-chevron-down mx-1"></i> --}}
                         </p>
                         @if(isset(Auth::user()->profileImage))
                             <img async src="{{assetUrl(Auth::user()->profileImage)}}" class="avatar-sm round-icon">
@@ -336,6 +337,7 @@
                             <span class="round-icon"><i class="fa fa-user"></i></span><i class="mdi mdi-chevron-down mx-1"></i>
                         @endif
                     </a>
+                    
                     <div class="custom-dropdown-menu">
                         @if(Auth::user()->type=="admin" || Auth::user()->type=="exhibiter")
                             <a href="{{ url("/") }}" class="dropdown-item notify-item">
@@ -343,15 +345,19 @@
                             </a>
                             <div class="dropdown-divider"></div>
                         @endif
-                        <a class="dropdown-item notify-item" href="{{ route('attendeeLogout',$event_name) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{-- <a class="dropdown-item notify-item" href="{{ route('attendeeLogout',$event_name) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="fe-log-out mr-1"></i>
                             <span>Logout</span>
-                        </a>
+                        </a> --}}
                         <form id="logout-form" action="{{ route('attendeeLogout',$event_name )}}" method="GET" style="display: none;">
                             @csrf
                         </form>
                     </div>
                 </div>
+                <a class="dropdown-item notify-item " data-toggle="tooltip" title="Logout" style="font-size: 20px" href="{{ route('attendeeLogout',$event_name) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fe-log-out mr-1"></i>
+                    {{-- <span>Logout</span> --}}
+                </a>
                 <div class="mob-menu ml-2" style="display:none;">
                     <a href="void:javascript(0);" id="OverLayer">
                         <span class="round-icon">

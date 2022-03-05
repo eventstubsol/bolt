@@ -110,7 +110,9 @@ define('MENU_LINK_TYPES', [
     "Leaderboard",
     "Schedule",
     "Library",
-    "social_wall"
+    "social_wall",
+    "none",
+
 ]);
 
 define('MODAL_TYPES', [
@@ -573,6 +575,17 @@ function getMenuLink($menu){
 
                     
                     
+    case("none"):
+        return <<<HTML
+        <a   href="javascript:void(0);" >      
+        <img src="$icon" width="26" alt="">
+
+        <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
+                 $menu->name 
+        </a>
+    <!-- </li> -->
+HTML;
+    break;
     case("zoom"):
     case("custom_page"):
             return <<<HTML

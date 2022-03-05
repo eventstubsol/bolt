@@ -434,226 +434,6 @@ Route::get("/", "HomeController@index")->name("home"); //Landing Page
 Route::get("/event/login", "AttendeeAuthController@show")->name("attendee_login");
 Route::get("faq", "HomeController@faqs")->name("faq");
 
-Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
-    Route::post("/uploadFile", "CMSController@uploadFile")->name("cms.uploadFile");
-    Route::get("/home", "HomeController@dashboard");
-    // Route::get("/event", "EventController@index")->name("event");
-    
-    /**
-     * POLL ROUTE START
-     */
-    Route::get("/polls", "PollController@index")->name("poll.manage"); // list all polls
-    Route::get("/polls/multipleChoice", "PollController@MultipleChoice")->name("poll.multiple"); //multiple choice
-    Route::post("/polls/multipleChoice", "PollController@MultipleChoicePost");
-    Route::get("/polls/create", "PollController@create")->name("poll.create.get"); // get create form
-    Route::post("/polls/create", "PollController@save")->name("poll.create.post"); // create in db
-    Route::get("/polls/edit", "PollController@requestEdit")->name("poll.edit");
-    Route::post("/polls/update", "PollController@pollUpdate")->name("poll.update.post"); // Update db
-    Route::get("/polls/{poll}/edit", "PollController@update")->name("poll.update.get");
-    Route::put("/polls/{poll}/edit", "PollController@update")->name("poll.update.put");
-    Route::delete("/polls/{poll}", "PollController@destroy")->name("poll.delete");
-    Route::get("/polls/{poll}/results", "PollController@resultsView")->name("poll.results"); // View results of poll
-    Route::post("/polls/{poll}/results", "PollController@resultsView")->name("poll.results.api"); // View results of poll
-    Route::get('/poll/total-data','PollController@Polls')->name('polls.data');
-    Route::get('/poll/question','PollController@Questions')->name('poll.question');
-    Route::get('poll/delete/confirm','PollController@confirmData')->name('poll.delete.confirm');
-    Route::post('poll/delete','PollController@Delete')->name('poll.destroy');
-    Route::get('poll/update/status','PollController@updateStatus')->name('poll.status');
-    Route::get("by-laws", "PollController@getByLaws")->name("byLaws.get");
-    Route::post("by-laws", "PollController@submitByLaws")->name("byLaws.submit");
-    Route::post("by-laws/option-select", "PollController@submitByLawsOption")->name("byLaws.optionSubmit");
-    
-
-    Route::POST('/poll/question/edit',"QuestionController@Edit")->name('poll.question.edit');
-    Route::post('/poll/question/mcq','QuestionController@createMcq')->name('poll.mcq');
-    Route::post('poll/wordCloud','QuestionController@wordCloud')->name('poll.wordcloud');
-    Route::post('poll/rating','QuestionController@rating')->name('poll.rating');
-    Route::post('poll/survey','QuestionController@Survey')->name('poll.survey');
-    Route::post('question/delete','QuestionController@Delete')->name('question.delete');
-    Route::post('mcq/edit','QuestionController@MCQEdit')->name('mcq.edit');
-    Route::post('surv/edit','QuestionController@SURVEdit')->name('surv.edit');
-    Route::post('wc/edit','QuestionController@WCEdit')->name('wc.edit');
-    Route::get('ques/status','QuestionController@Status')->name('ques.status');
-    Route::get('user/Polls/{id}','UserPollController@index')->name('user.polls');
-    Route::post('user/Polls/update','UserPollController@update')->name('user.polls.update');
-    Route::get('user/Polls/Save','UserPollController@Save')->name('user.polls.save');
-    Route::get('user/poll/answer','UserPollController@Answer')->name('user.poll.answer');
-    Route::get('user/submitWc','UserPollController@WcSubmit')->name('user.poll.submit');
-    Route::get('mcq/data-by-user','QuestionController@UserData')->name('mcq.showData');
-    Route::get('rate/data-by-user','QuestionController@UserRateData')->name('rate.showData');
-    Route::get('wc/data-by-user','QuestionController@UserWcData')->name('wc.showData');
-    Route::get('Go/Mcq/{id}','QuestionController@ShowMCq')->name('ShowMcq');
-    Route::geT('Qna/ShowAnswer','LiveQuestionController@ShowAnswer')->name('qna.Show');
-    Route::geT('Qna/Save','LiveQuestionController@Save')->name('qna.Save');
-    Route::geT('Qna/Edit','LiveQuestionController@Edit')->name('qna.Edit');
-    Route::get('Qna/Update','LiveQuestionController@Update')->name('qna.Update');
-    Route::get('Qna/Delete','LiveQuestionController@Delete')->name('qna.Delete');
-    Route::get('Qna/Answer','LiveQuestionController@SaveAnswer')->name('qna.Answer');
-    Route::get('Announcement/Seen','UserAnnounceController@Seen')->name('announcement.Seen');
-    Route::get('Announcement/popUp/{id}','UserAnnounceController@PopUp')->name('announcement.popUp');
-    Route::get('Announcement/Close','UserAnnounceController@Close')->name('announcement.Close');
-   
-    /**
-     * POLL ROUTE END
-     */
-
-    //Admin Prefixed Routes and also will check if user is admin or not
-    Route::prefix("admin")->middleware("checkAccess:admin")->group(function () {
-        Route::get('/user/lobby',"UserController@lobby")->name('user.lobby');
-        Route::get("/Dashboard/reports", "AdminReportController@Dashboard")->name("reports.dashboard");
-        Route::resources([
-            "faq" => "FaqController",
-            "room" => "RoomController",
-            "booth" => "BoothController",
-            "user" => "UserController",
-            "report" => "ReportController",
-            "prize" => "PrizeController",
-            "sessionrooms" => "SessionRoomController",
-            "sessions" => "SessionController",
-            "subscriptions" => "EventSubscriptionController",
-            "page"=>"PageController",
-            // "menu"=>"Eventee/MenuController",
-            "menuDetail"=>"menuDetailsController",
-            "analytic"=>"AnalyticController",
-            "recaptcha"=>"RecatchaController",
-            //            "provisional" => "ProvisionalController",
-        ]);
-        //Default Creative
-        Route::get("Default/Creative","AdminCreativeController@index")->name("default.creative");
-        Route::POST("Default/Creative/post","AdminCreativeController@store")->name("default.creative.store");
-        // DBManage
-        Route::get('delete/Notifications','DBManageController@NotificationDelete')->name('delete.notification.all');
-        Route::get('delete/Schedule/Notifications','DBManageController@ScheduleNotificationDelete')->name('delete.schedulenotification.all');
-        Route::get('delete/Mails/Notifications','DBManageController@MailsnDelete')->name('delete.mails.all');
-        //Menu And Api
-        Route::get('delete/submenu','MenuController@subMenu')->name('delete.submenu');
-        Route::get('delete/savePosition','MenuController@SavePosition')->name('delete.savePosition');
-        Route::get('/setStatus','MenuController@setStatus')->name('setStatus');
-        Route::get('/getDetails','AnalyticController@GetDetails')->name('detailsApi');
-        Route::get('/third/delete','AnalyticController@DeleteData')->name('third.delete');
-        Route::post('/updateDetails','AnalyticController@updateData')->name('updateDetails');
-        Route::post('/updateCaptcha','RecatchaController@updateCatcha')->name('updateCaptcha');
-        Route::get('/Comet','RecatchaController@Comet')->name('comet.index');
-        Route::post('/Comet','RecatchaController@CometSave');
-
-        //Report Section 
-        Route::get("Recent/Events","AdminReportController@RecentEvent")->name('recent.event');
-        Route::get('Least/ActiveAdmin',"AdminReportController@LeastActiveUser")->name('Least.user');
-        Route::get('Recent/ActiveAdmin',"AdminReportController@RecentActiveUser")->name('recent.user');
-        Route::get('Event/Ending',"AdminReportController@EventEnding")->name('event.ending');
-        Route::get('Event/AdminLogs',"AdminReportController@EventLogs")->name('event.logs');
-        Route::get('Event/Delete/Notification',"AdminReportController@DeleteData")->name('notification.logs.delete');
-        //Package
-        Route::get('/package','PackageController@index')->name('package.index');
-        Route::get('/package/create','PackageController@create')->name('package.create');
-        Route::post('/package/store','PackageController@store')->name('package.store');
-        Route::get('/package/edit/{id}','PackageController@edit')->name('package.edit');
-        Route::Post('/package/update/{id}','PackageController@update')->name('package.update');
-        Route::Post('/package/delete/{id}','PackageController@destroy')->name('package.destroy');
-
-        //License
-        Route::get('/license',"LicenseController@index")->name('license.index');
-        Route::get('/license/edit/{id}',"LicenseController@edit")->name('license.edit');
-        Route::post('license/update/{id}',"LicenseController@update")->name('license.update');
-
-        Route::get('/Zoom','RecatchaController@Zoom')->name('zoom.index');
-        Route::post('/Zoom','RecatchaController@ZoomSave');
-        Route::get('qna',"AdminQnaController@index")->name('admin.qna');
-        Route::get('qna/view_update','AdminQnaController@View')->name('admin.qna.view');
-        Route::get('qna/discussion_update','AdminQnaController@Discussion')->name('admin.qna.discussion');
-        Route::get('qna/admin_answer','AdminQnaController@Answer')->name('admin.qna.answer');
-        Route::get('qna/getAnswer','AdminQnaController@GetAnswer')->name('admin.qna.getAnswer');
-        Route::get('qna/BestAnswer','AdminQnaController@BestAnswer')->name('admin.qna.BestAnswer');
-        Route::get('admin/Annoucement','AdminAnnounce@index')->name('admin.announce');
-        Route::get('admin/Annoucement/Create','AdminAnnounce@Create')->name('admin.announce.create');
-        Route::get('admin/Annoucement/Edit/{id}','AdminAnnounce@Edit')->name('admin.announce.edit');
-        Route::post('admin/Annoucement/Update','AdminAnnounce@Update')->name('admin.announce.update');
-        Route::get('admin/Annoucement/Delete','AdminAnnounce@Delete')->name('admin.announce.delete');
-        // Route::get('details/create','menuDetailsController@index')->('details.create');
-        //Event List
-        Route::get('event/list','AdminEventController@eventList')->name('admin.event.list');
-        Route::get('event/feature/{id}',"FeatureController@index")->name('admin.event.feature');
-        Route::get('event/feature/options/permision','FeatureController@options')->name('admin.event.options');
-        /**
-         * CHAT USER START
-         */
-        Route::get("/lobby", "PageController@lobby")->name("lobby");
-        Route::put("/lobbyupdate","PageController@Lobbyupdate")->name("lobbyupdate");
-        /**
-         * CHAT USER END
-         */
-        Route::get("/data-entry",function (){
-            return view("dataentry");
-        })->name("dataentry")  ;
-        Route::get("/options", "CMSController@optionsList")->name("options");
-        Route::post("/options/update", "CMSController@optionsUpdate")->name("cms.updateContent");
-        Route::get("SortRooms", "RoomController@sort")->name("room.sort");
-        Route::get("storesorting", "RoomController@storesort")->name("room.storesorting");
-
-        Route::get("/notifications", "NotificationController@index")->name("notifications.list.get");
-        Route::get("/notification/create", "NotificationController@create")->name("notifications.create.get");
-        Route::post("/notifications", "NotificationController@store")->name("notifications.create.post");
-
-        //        Route::get("/prizes/distribute", "PrizeController@distributePrize")->name("distribute_prizes");
-
-        Route::post("/user-bulk-upload", "UserController@bulk_create")->name("users.bulk_upload");
-        Route::post("/subscriptions-bulk-upload", "EventSubscriptionController@bulk_create")->name("subscriptions.bulk_upload");
-
-        Route::post("/booth/{booth}/publish", "BoothController@publish")->name("booth.publish");
-        Route::post("/booth/{booth}/unpublish", "BoothController@unpublish")->name("booth.unpublish");
-        
-
-        /**
-         * Event Sessions Routes start
-         */
-        // Route::get("/sessions", "EventSessionsController@index")->name("eventSession.manage");
-        // Route::post("/sessions", "EventSessionsController@save")->name("eventSession.save");
-        Route::get("/session/video-archive", "EventSessionsController@pastSessionVideosArchive")->name("eventSession.videoArchive");
-        Route::post("/session/video-archive", "EventSessionsController@savePastSessionVideosArchive")->name("eventSession.saveVideoArchive");
-        /**
-         * Event Sessions Routes End
-         */
-
-        /**
-         * Reports and Analytics
-         */
-        Route::get("/reports/general", "EventController@generalReports")->name("reports.general");
-        Route::post("/reports/general", "EventController@generalReportsData")->name("reports.general.api");
-        Route::post("/reports/login-logs/export", "EventController@exportLoginLogs")->name("reports.export.loginLogs");
-        Route::get("/reports/auditorium", "EventController@auditoriumReports")->name("reports.auditorium");
-        Route::post("/reports/auditorium", "EventController@auditoriumReportsData")->name("reports.auditorium.api");
-        Route::post("/reports/audi-logs/export", "EventController@exportAuditoriumLogs")->name("reports.export.audiLogs");
-        Route::get("/reports/leaderboard/", "EventController@leaderboardView")->name("reports.leaderboard");
-        
-
-        Route::post("/reports/workshop/{name}/export", "EventController@exportWorkshopLogs")->name("reports.export.workshopLogs");
-        Route::get("/reports/workshop/{name}/", "EventController@workshopReports")->name("reports.workshop");
-        Route::post("/reports/workshop/{name}/", "EventController@workshopReportsData")->name("reports.workshop.api");
-
-        
-
-    });
-
-    Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
-        Route::get("/booth/edit/{booth}/{id}", "Eventee\BoothController@adminEdit")->name("exhibiter.edit");
-        Route::post("/booth/edit/{booth}/{id}", "Eventee\BoothController@adminUpdate")->name("exhibiter.update");
-        Route::get("/booth/{booth}/enquiries/{id}", "BoothController@boothEnquiries")->name("exhibiter.enquiries");
-        Route::get("/booth/{booth}/enquiry/raw/", "BoothController@boothEnquiriesRaw")->name("exhibiter.enquiries.raw");
-        // Route::POST('booth/video/delete','Eventee\BoothController@deleteVideo')->name('booth.video.delete');
-        // Route::post("/booth/edit/{booth}","BoothController@adminUpdateImages")->name("exhibiter.updateimages");
-    });
-
-    Route::prefix("cms")->middleware("checkAccess:cms_manager")->group(function () {
-        Route::get("/field/create", "CMSController@createField")->name("cmsField.create");
-        Route::post("/field/create", "CMSController@storeField")->name("cmsField.store");
-        Route::get("/field/{field}/", "CMSController@editField")->name("cmsField.edit");
-        Route::post("/field/{field}/", "CMSController@updateField")->name("cmsField.update");
-        Route::post("/field/{field}/delete", "CMSController@deleteField")->name("cmsField.delete");
-    });
-
-  
-});
-
 Route::get("/usercreate",function ()
 {
     User::create([
@@ -900,6 +680,226 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
 
 
+});
+
+Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
+    Route::post("/uploadFile", "CMSController@uploadFile")->name("cms.uploadFile");
+    Route::get("/home", "HomeController@dashboard");
+    // Route::get("/event", "EventController@index")->name("event");
+    
+    /**
+     * POLL ROUTE START
+     */
+    Route::get("/polls", "PollController@index")->name("poll.manage"); // list all polls
+    Route::get("/polls/multipleChoice", "PollController@MultipleChoice")->name("poll.multiple"); //multiple choice
+    Route::post("/polls/multipleChoice", "PollController@MultipleChoicePost");
+    Route::get("/polls/create", "PollController@create")->name("poll.create.get"); // get create form
+    Route::post("/polls/create", "PollController@save")->name("poll.create.post"); // create in db
+    Route::get("/polls/edit", "PollController@requestEdit")->name("poll.edit");
+    Route::post("/polls/update", "PollController@pollUpdate")->name("poll.update.post"); // Update db
+    Route::get("/polls/{poll}/edit", "PollController@update")->name("poll.update.get");
+    Route::put("/polls/{poll}/edit", "PollController@update")->name("poll.update.put");
+    Route::delete("/polls/{poll}", "PollController@destroy")->name("poll.delete");
+    Route::get("/polls/{poll}/results", "PollController@resultsView")->name("poll.results"); // View results of poll
+    Route::post("/polls/{poll}/results", "PollController@resultsView")->name("poll.results.api"); // View results of poll
+    Route::get('/poll/total-data','PollController@Polls')->name('polls.data');
+    Route::get('/poll/question','PollController@Questions')->name('poll.question');
+    Route::get('poll/delete/confirm','PollController@confirmData')->name('poll.delete.confirm');
+    Route::post('poll/delete','PollController@Delete')->name('poll.destroy');
+    Route::get('poll/update/status','PollController@updateStatus')->name('poll.status');
+    Route::get("by-laws", "PollController@getByLaws")->name("byLaws.get");
+    Route::post("by-laws", "PollController@submitByLaws")->name("byLaws.submit");
+    Route::post("by-laws/option-select", "PollController@submitByLawsOption")->name("byLaws.optionSubmit");
+    
+
+    Route::POST('/poll/question/edit',"QuestionController@Edit")->name('poll.question.edit');
+    Route::post('/poll/question/mcq','QuestionController@createMcq')->name('poll.mcq');
+    Route::post('poll/wordCloud','QuestionController@wordCloud')->name('poll.wordcloud');
+    Route::post('poll/rating','QuestionController@rating')->name('poll.rating');
+    Route::post('poll/survey','QuestionController@Survey')->name('poll.survey');
+    Route::post('question/delete','QuestionController@Delete')->name('question.delete');
+    Route::post('mcq/edit','QuestionController@MCQEdit')->name('mcq.edit');
+    Route::post('surv/edit','QuestionController@SURVEdit')->name('surv.edit');
+    Route::post('wc/edit','QuestionController@WCEdit')->name('wc.edit');
+    Route::get('ques/status','QuestionController@Status')->name('ques.status');
+    Route::get('user/Polls/{id}','UserPollController@index')->name('user.polls');
+    Route::post('user/Polls/update','UserPollController@update')->name('user.polls.update');
+    Route::get('user/Polls/Save','UserPollController@Save')->name('user.polls.save');
+    Route::get('user/poll/answer','UserPollController@Answer')->name('user.poll.answer');
+    Route::get('user/submitWc','UserPollController@WcSubmit')->name('user.poll.submit');
+    Route::get('mcq/data-by-user','QuestionController@UserData')->name('mcq.showData');
+    Route::get('rate/data-by-user','QuestionController@UserRateData')->name('rate.showData');
+    Route::get('wc/data-by-user','QuestionController@UserWcData')->name('wc.showData');
+    Route::get('Go/Mcq/{id}','QuestionController@ShowMCq')->name('ShowMcq');
+    Route::geT('Qna/ShowAnswer','LiveQuestionController@ShowAnswer')->name('qna.Show');
+    Route::geT('Qna/Save','LiveQuestionController@Save')->name('qna.Save');
+    Route::geT('Qna/Edit','LiveQuestionController@Edit')->name('qna.Edit');
+    Route::get('Qna/Update','LiveQuestionController@Update')->name('qna.Update');
+    Route::get('Qna/Delete','LiveQuestionController@Delete')->name('qna.Delete');
+    Route::get('Qna/Answer','LiveQuestionController@SaveAnswer')->name('qna.Answer');
+    Route::get('Announcement/Seen','UserAnnounceController@Seen')->name('announcement.Seen');
+    Route::get('Announcement/popUp/{id}','UserAnnounceController@PopUp')->name('announcement.popUp');
+    Route::get('Announcement/Close','UserAnnounceController@Close')->name('announcement.Close');
+   
+    /**
+     * POLL ROUTE END
+     */
+
+    //Admin Prefixed Routes and also will check if user is admin or not
+    Route::prefix("admin")->middleware("checkAccess:admin")->group(function () {
+        Route::get('/user/lobby',"UserController@lobby")->name('user.lobby');
+        Route::get("/Dashboard/reports", "AdminReportController@Dashboard")->name("reports.dashboard");
+        Route::resources([
+            "faq" => "FaqController",
+            "room" => "RoomController",
+            "booth" => "BoothController",
+            "user" => "UserController",
+            "report" => "ReportController",
+            "prize" => "PrizeController",
+            "sessionrooms" => "SessionRoomController",
+            "sessions" => "SessionController",
+            "subscriptions" => "EventSubscriptionController",
+            "page"=>"PageController",
+            // "menu"=>"Eventee/MenuController",
+            "menuDetail"=>"menuDetailsController",
+            "analytic"=>"AnalyticController",
+            "recaptcha"=>"RecatchaController",
+            //            "provisional" => "ProvisionalController",
+        ]);
+        //Default Creative
+        Route::get("Default/Creative","AdminCreativeController@index")->name("default.creative");
+        Route::POST("Default/Creative/post","AdminCreativeController@store")->name("default.creative.store");
+        // DBManage
+        Route::get('delete/Notifications','DBManageController@NotificationDelete')->name('delete.notification.all');
+        Route::get('delete/Schedule/Notifications','DBManageController@ScheduleNotificationDelete')->name('delete.schedulenotification.all');
+        Route::get('delete/Mails/Notifications','DBManageController@MailsnDelete')->name('delete.mails.all');
+        //Menu And Api
+        Route::get('delete/submenu','MenuController@subMenu')->name('delete.submenu');
+        Route::get('delete/savePosition','MenuController@SavePosition')->name('delete.savePosition');
+        Route::get('/setStatus','MenuController@setStatus')->name('setStatus');
+        Route::get('/getDetails','AnalyticController@GetDetails')->name('detailsApi');
+        Route::get('/third/delete','AnalyticController@DeleteData')->name('third.delete');
+        Route::post('/updateDetails','AnalyticController@updateData')->name('updateDetails');
+        Route::post('/updateCaptcha','RecatchaController@updateCatcha')->name('updateCaptcha');
+        Route::get('/Comet','RecatchaController@Comet')->name('comet.index');
+        Route::post('/Comet','RecatchaController@CometSave');
+
+        //Report Section 
+        Route::get("Recent/Events","AdminReportController@RecentEvent")->name('recent.event');
+        Route::get('Least/ActiveAdmin',"AdminReportController@LeastActiveUser")->name('Least.user');
+        Route::get('Recent/ActiveAdmin',"AdminReportController@RecentActiveUser")->name('recent.user');
+        Route::get('Event/Ending',"AdminReportController@EventEnding")->name('event.ending');
+        Route::get('Event/AdminLogs',"AdminReportController@EventLogs")->name('event.logs');
+        Route::get('Event/Delete/Notification',"AdminReportController@DeleteData")->name('notification.logs.delete');
+        //Package
+        Route::get('/package','PackageController@index')->name('package.index');
+        Route::get('/package/create','PackageController@create')->name('package.create');
+        Route::post('/package/store','PackageController@store')->name('package.store');
+        Route::get('/package/edit/{id}','PackageController@edit')->name('package.edit');
+        Route::Post('/package/update/{id}','PackageController@update')->name('package.update');
+        Route::Post('/package/delete/{id}','PackageController@destroy')->name('package.destroy');
+
+        //License
+        Route::get('/license',"LicenseController@index")->name('license.index');
+        Route::get('/license/edit/{id}',"LicenseController@edit")->name('license.edit');
+        Route::post('license/update/{id}',"LicenseController@update")->name('license.update');
+
+        Route::get('/Zoom','RecatchaController@Zoom')->name('zoom.index');
+        Route::post('/Zoom','RecatchaController@ZoomSave');
+        Route::get('qna',"AdminQnaController@index")->name('admin.qna');
+        Route::get('qna/view_update','AdminQnaController@View')->name('admin.qna.view');
+        Route::get('qna/discussion_update','AdminQnaController@Discussion')->name('admin.qna.discussion');
+        Route::get('qna/admin_answer','AdminQnaController@Answer')->name('admin.qna.answer');
+        Route::get('qna/getAnswer','AdminQnaController@GetAnswer')->name('admin.qna.getAnswer');
+        Route::get('qna/BestAnswer','AdminQnaController@BestAnswer')->name('admin.qna.BestAnswer');
+        Route::get('admin/Annoucement','AdminAnnounce@index')->name('admin.announce');
+        Route::get('admin/Annoucement/Create','AdminAnnounce@Create')->name('admin.announce.create');
+        Route::get('admin/Annoucement/Edit/{id}','AdminAnnounce@Edit')->name('admin.announce.edit');
+        Route::post('admin/Annoucement/Update','AdminAnnounce@Update')->name('admin.announce.update');
+        Route::get('admin/Annoucement/Delete','AdminAnnounce@Delete')->name('admin.announce.delete');
+        // Route::get('details/create','menuDetailsController@index')->('details.create');
+        //Event List
+        Route::get('event/list','AdminEventController@eventList')->name('admin.event.list');
+        Route::get('event/feature/{id}',"FeatureController@index")->name('admin.event.feature');
+        Route::get('event/feature/options/permision','FeatureController@options')->name('admin.event.options');
+        /**
+         * CHAT USER START
+         */
+        Route::get("/lobby", "PageController@lobby")->name("lobby");
+        Route::put("/lobbyupdate","PageController@Lobbyupdate")->name("lobbyupdate");
+        /**
+         * CHAT USER END
+         */
+        Route::get("/data-entry",function (){
+            return view("dataentry");
+        })->name("dataentry")  ;
+        Route::get("/options", "CMSController@optionsList")->name("options");
+        Route::post("/options/update", "CMSController@optionsUpdate")->name("cms.updateContent");
+        Route::get("SortRooms", "RoomController@sort")->name("room.sort");
+        Route::get("storesorting", "RoomController@storesort")->name("room.storesorting");
+
+        Route::get("/notifications", "NotificationController@index")->name("notifications.list.get");
+        Route::get("/notification/create", "NotificationController@create")->name("notifications.create.get");
+        Route::post("/notifications", "NotificationController@store")->name("notifications.create.post");
+
+        //        Route::get("/prizes/distribute", "PrizeController@distributePrize")->name("distribute_prizes");
+
+        Route::post("/user-bulk-upload", "UserController@bulk_create")->name("users.bulk_upload");
+        Route::post("/subscriptions-bulk-upload", "EventSubscriptionController@bulk_create")->name("subscriptions.bulk_upload");
+
+        Route::post("/booth/{booth}/publish", "BoothController@publish")->name("booth.publish");
+        Route::post("/booth/{booth}/unpublish", "BoothController@unpublish")->name("booth.unpublish");
+        
+
+        /**
+         * Event Sessions Routes start
+         */
+        // Route::get("/sessions", "EventSessionsController@index")->name("eventSession.manage");
+        // Route::post("/sessions", "EventSessionsController@save")->name("eventSession.save");
+        Route::get("/session/video-archive", "EventSessionsController@pastSessionVideosArchive")->name("eventSession.videoArchive");
+        Route::post("/session/video-archive", "EventSessionsController@savePastSessionVideosArchive")->name("eventSession.saveVideoArchive");
+        /**
+         * Event Sessions Routes End
+         */
+
+        /**
+         * Reports and Analytics
+         */
+        Route::get("/reports/general", "EventController@generalReports")->name("reports.general");
+        Route::post("/reports/general", "EventController@generalReportsData")->name("reports.general.api");
+        Route::post("/reports/login-logs/export", "EventController@exportLoginLogs")->name("reports.export.loginLogs");
+        Route::get("/reports/auditorium", "EventController@auditoriumReports")->name("reports.auditorium");
+        Route::post("/reports/auditorium", "EventController@auditoriumReportsData")->name("reports.auditorium.api");
+        Route::post("/reports/audi-logs/export", "EventController@exportAuditoriumLogs")->name("reports.export.audiLogs");
+        Route::get("/reports/leaderboard/", "EventController@leaderboardView")->name("reports.leaderboard");
+        
+
+        Route::post("/reports/workshop/{name}/export", "EventController@exportWorkshopLogs")->name("reports.export.workshopLogs");
+        Route::get("/reports/workshop/{name}/", "EventController@workshopReports")->name("reports.workshop");
+        Route::post("/reports/workshop/{name}/", "EventController@workshopReportsData")->name("reports.workshop.api");
+
+        
+
+    });
+
+    Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
+        Route::get("/booth/edit/{booth}/{id}", "Eventee\BoothController@adminEdit")->name("exhibiter.edit");
+        Route::post("/booth/edit/{booth}/{id}", "Eventee\BoothController@adminUpdate")->name("exhibiter.update");
+        Route::get("/booth/{booth}/enquiries/{id}", "BoothController@boothEnquiries")->name("exhibiter.enquiries");
+        Route::get("/booth/{booth}/enquiry/raw/", "BoothController@boothEnquiriesRaw")->name("exhibiter.enquiries.raw");
+        // Route::POST('booth/video/delete','Eventee\BoothController@deleteVideo')->name('booth.video.delete');
+        // Route::post("/booth/edit/{booth}","BoothController@adminUpdateImages")->name("exhibiter.updateimages");
+    });
+
+    Route::prefix("cms")->middleware("checkAccess:cms_manager")->group(function () {
+        Route::get("/field/create", "CMSController@createField")->name("cmsField.create");
+        Route::post("/field/create", "CMSController@storeField")->name("cmsField.store");
+        Route::get("/field/{field}/", "CMSController@editField")->name("cmsField.edit");
+        Route::post("/field/{field}/", "CMSController@updateField")->name("cmsField.update");
+        Route::post("/field/{field}/delete", "CMSController@deleteField")->name("cmsField.delete");
+    });
+
+  
 });
 
 

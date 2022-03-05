@@ -206,10 +206,32 @@
 
     @media(max-width:931px) {
         .table_Box{
-            width: 47%;
+            width: 42%;
+            height: 286px;
         }
         .BigTableBox{
             width: 100%;
+        }
+        .bigRightchair{
+            right: 10% !important;
+        }
+        .bigLeftchair{
+            left: 10% !important;
+        }
+        .tob_Chair{
+            top: 0;
+        }
+        .right_Chair{
+            right: 0;
+        }
+        .bottom_Chair{
+            bottom: 0;
+        }
+        .left_Chair{
+            left: 0;
+        }
+        #networking{
+            padding-top: 69px !important;
         }
     }
 
@@ -278,7 +300,7 @@
 
 
 <div class="page py-5" id="networking" style="min-height:100vh">
-    <div class="container-fluid d-flex mt-5 flex-wrap pr-0" id="lounge_tables">
+    <div class="container-fluid d-flex  flex-wrap pr-0" id="lounge_tables" style="justify-content: space-evenly;">
         @foreach($tables as $i=> $table)
         @php
             $classes = ["tob_Chair","bottom_Chair","right_Chair","left_Chair"];
