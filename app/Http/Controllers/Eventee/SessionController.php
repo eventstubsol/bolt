@@ -98,19 +98,18 @@ class SessionController extends Controller
         $room = sessionRooms::where("id", $request->room_id)->first();
         // $request->room = $room->name;
         // $data = $request->except('meetingId',"_token");
-        $start =  (new Carbon($request->start_time,$event->timezone))->setTimezone(new CarbonTimeZone("UTC"))->toString();
-        $end =  (new Carbon($request->end_time,$event->timezone))->setTimezone(new CarbonTimeZone("UTC"))->toString();
+        $start =  (new Carbon($request->start_time,$event->timezone))->setTimezone(new CarbonTimeZone("UTC"));
+        $end =  (new Carbon($request->end_time,$event->timezone))->setTimezone(new CarbonTimeZone("UTC"));
         // $start_check =  (new Carbon($request->start_time,$event->timezone))->setTimezone(new CarbonTimeZone($event->timezone));
         // $end_check =  (new Carbon($request->end_time,$event->timezone))->setTimezone(new CarbonTimeZone($event->timezone));
-        // // dd($start);
-        // $timecheck = EventSession::where("room_id",$request->room_id)->whereDate("start_time",">=",$start)->whereDate("end_time","<=",$end)->count();
-        // if($timecheck){
-        //     dd($timecheck);
-        //     flash("Schedule Conflict! ")->error();
-        //     return redirect()->back();
-        // }
-        // $data["start_time"] = $start;
-        // $data["end_time"] = $end;
+        // dd($start);
+        $timecheck = EventSession::where("room_id",$request->room_id)->where("start_time","<=",$start)->where("end_time",">=",$start)->count();
+        if($timecheck){
+            flash("Schedule Conflict! ")->error();
+            return redirect()->back();
+        }
+        $data["start_time"] = $start;
+        $data["end_time"] = $end;
         // dd($start);
         // dd($event_id);
         $session = EventSession::create([
