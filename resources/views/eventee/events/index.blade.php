@@ -143,19 +143,20 @@
                 <div class="form-group">
                     <label for="name">Event Link
                         <span style="color:red">*</span></label><br>
-                    <input type="text" id="event_slug" name="event_slug" class="form-control" required>
-                    
-                    <span class="successShow " role="alert" style="display: none;color:green;"></span>
-                    <span class="errorShow " role="alert" style="display: none;color:red;"></span>
+                  
                     @php
-                        // if(env('APP_ENV') == 'staging'){
-                        //     $link= ['http://','.'.explode(".",$event->link)[1]];
-                        // }
-                        // else{
-                        //     $link= ['https://','.'.explode(".",$event->link)[1].'.'.explode(".",$event->link)[2]];
-                        // }
+                        if(env('APP_ENV') == 'staging'){
+                            $link= 'http://localhost:8000';
+                        }
+                        else{
+                            $link= ['https://','.'.explode(".",env('APP_URL'))[1].'.'.explode(".",env('APP_URL'))[2]];
+                        }
                     @endphp
-                    <br><span id="event_link">@if(env('APP_ENV') == 'staging'){{ ".localhost:8000" }}@else .eventstub.co @endif</span><br>
+                      <input type="text" id="event_slug" name="event_slug" class="form-control" required>
+                    <span>{{$link[0]}}</span>
+                      <span class="successShow " role="alert" style="display: none;color:green;"></span>
+                      <span class="errorShow " role="alert" style="display: none;color:red;"></span>
+                    <br><span id="event_link">@if(env('APP_ENV') == 'staging'){{ ".localhost:8000" }}@else $link[1] @endif</span><br>
                     <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps </strong> Between Subdomain Name, use '-' only if needed</span>
                 </div>
                 <div class="form-group">
