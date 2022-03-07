@@ -148,14 +148,14 @@
                     <span class="successShow " role="alert" style="display: none;color:green;"></span>
                     <span class="errorShow " role="alert" style="display: none;color:red;"></span>
                     @php
-                        if(env('APP_ENV') == 'staging'){
-                            $link= ['http://','.'.explode(".",$event->link)[1]];
-                        }
-                        else{
-                            $link= ['https://','.'.explode(".",$event->link)[1].'.'.explode(".",$event->link)[2]];
-                        }
+                        // if(env('APP_ENV') == 'staging'){
+                        //     $link= ['http://','.'.explode(".",$event->link)[1]];
+                        // }
+                        // else{
+                        //     $link= ['https://','.'.explode(".",$event->link)[1].'.'.explode(".",$event->link)[2]];
+                        // }
                     @endphp
-                    <br><span id="event_link">@if(env('APP_ENV') == 'staging'){{ ".localhost:8000" }}@else{{ $link[1]}}@endif</span><br>
+                    <br><span id="event_link">@if(env('APP_ENV') == 'staging'){{ ".localhost:8000" }}@else .eventstub.co @endif</span><br>
                     <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps </strong> Between Subdomain Name, use '-' only if needed</span>
                 </div>
                 <div class="form-group">
