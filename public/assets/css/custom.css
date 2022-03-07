@@ -1421,9 +1421,6 @@ table.dataTable tbody tr {
     transition: ease 0.3s;
 }
 
-.page#faq .faq-card .faq-title.active:before {
-    transform: rotate(-90deg);
-}
 
 .page#faq .faq-card .faq-content {
     display: block;

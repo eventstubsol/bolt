@@ -346,11 +346,6 @@ define("polls", 56.15);
 
 //Points definition for Gamification
 define("SCAVENGER_HUNT_POINTS", 25);
-//define("BOOTH_VISIT_POINTS", [
-//    "e5267c89-d3f0-43b9-b5c8-2e170dacc9d1" => 200, //Sponsors
-//    "acc62143-53a9-46e0-ab4e-8d95d463c41d" => 100, //Vendors
-//    "9371ce28-c9c8-4851-a877-74a9f7b1ab7c" => 50, //Candidates
-//]);
 define("BOOTH_VISIT_POINTS", 100);
 define("BOOTH_RESOURCES_VIEW_POINTS", 100);
 define("BOOTH_CHAT_POINTS", 0);

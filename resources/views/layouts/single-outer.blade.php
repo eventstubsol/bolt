@@ -26,7 +26,7 @@
     <!-- Onesignal -->
     <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset("event-assets/css/app.css") }}">
-    <link href={{asset("assets/css/custom.css")}} rel="stylesheet" type="text/css" />
+    <link href="{{asset("assets/css/custom.css")}}?v=322828" rel="stylesheet" type="text/css" />
     <style>
         #faq{
             display: block;
