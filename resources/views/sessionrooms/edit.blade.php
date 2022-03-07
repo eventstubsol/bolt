@@ -14,7 +14,7 @@
 
 
 @section("breadcrumbs")
-    <li class="breadcrumb-item"><a href="{{ route("sessionrooms.index") }}">Session Rooms</a></li>
+    <li class="breadcrumb-item"><a href="{{ route("eventee.sessionrooms.index",$id) }}">Session Rooms</a></li>
     <li class="breadcrumb-item active">Edit</li>
 @endsection
 
