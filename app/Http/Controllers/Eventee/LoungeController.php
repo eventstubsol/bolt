@@ -35,16 +35,16 @@ class LoungeController extends Controller
         //     flash("Seats Field Cannot Be Left Blank")->error();
         //     return redirect()->back();
         // }
+        
+      
         $network = NetworkingTable::create([
             "name"=>$request->name,
             "seats"=>$request->seats,
             "meeting_id"=>$request->meetingId,
-            "event_id"=>$id
+            "event_id"=>$id,
+            "logo"=> isset($request->logo_url)? $request->logo_url: null
         ]);
         $network->save();
-        if($request->has('logo_url')){
-            NetworkingTable::where('id',$network->id)->update(['logo'=>$request->logo_url]);
-        }
         // dd("done");
         return redirect(route("eventee.lounge.index",$id));
         // dd($request->all());
