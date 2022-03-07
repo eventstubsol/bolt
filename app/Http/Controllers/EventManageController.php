@@ -191,26 +191,14 @@ class EventManageController extends Controller
         
     }
 
-    public function updateUsers($event_id){
-        $users = User::where('event_id',$event_id)->get();
-        foreach($users as $user){
-            $user_location =  UserLocation::where("user_id",$user->id)->where("current_status",1)->first();
-            if($user->online_status === 1 && $user->updated_at < Carbon::now("UTC")->subMinutes(1)->toDateTimeString()){
-                $user->online_status = 0;
-                $user_location->current_status = 0;
-                $user_location->save();
-                $user->save();
-            }
-        }
-    }
+   
 
     public function ChartJs(Request $req){
 
         $event = Event::findOrFail($req->id); 
-        $this->updateUsers($event->id);
         $total = User::where('event_id',$event->id)->count();
-        $isOnline = User::where('event_id',$event->id)->where('online_status' ,1)->count();
-        $isOffline = User::where('event_id',$event->id)->where('online_status' ,0)->count();
+        $isOnline = User::where('event_id',$event->id)->where('online_status' ,1)->where("updated_at",">",Carbon::now("UTC")->subMinutes(1)->toDateTimeString())->count();
+        $isOffline = User::where('event_id',$event->id)->where('online_status' ,0)->where("updated_at",">",Carbon::now("UTC")->subMinutes(1)->toDateTimeString())->count();
         $userobj = new \stdClass();
         if($isOnline > 0){
             $userobj->online =$isOnline;
