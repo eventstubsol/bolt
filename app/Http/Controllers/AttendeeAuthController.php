@@ -95,10 +95,20 @@ class AttendeeAuthController extends Controller
             ->first();
         // dd($user);
         if (!$user) {
+            if($event->id === 201){
+                $user = new User([
+                   "name"=> explode("@", $request->post("email"))[0],
+                   "last_name"=>' ',
+                   "type"=>'attendee',
+                   "email"=> $request->post("email")
+                ]);
+       
+            }else{
+                flash("invalid credentials")->error();
+                return redirect()->back();
+            }
 
             // dd("not found");
-            flash("invalid credentials")->error();
-            return redirect()->back();
             // return view("eventUser.login")->with([
             //     "login" => $this->loginT,
             //     "notFound" => TRUE,
@@ -116,7 +126,8 @@ class AttendeeAuthController extends Controller
             //     "captchaError" => FALSE,
             //     "login" => $this->loginT
             // ]);
-        } else {
+        } 
+        // else {
             if ($user->type !== 'attendee' && $user->type !== 'delegate' ) {
                 return redirect( route("exhibitorLogin",['subdomain'=>$subdomain,'email'=>$user->email]));
             }
@@ -156,7 +167,7 @@ class AttendeeAuthController extends Controller
                 return redirect(route("eventee.event",['subdomain'=>$event->slug]));
             }
             // return redirect("/");
-        }
+        // }
     }
 
    public function showRegistration($subdomain,$slug){
