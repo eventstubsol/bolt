@@ -8,6 +8,7 @@ phases:
       - echo This is a pre build phase
   build:
     commands:
+      - cp .env.prod .env
       - composer install --ignore-platform-reqs
       - npm install
       - npm run production

@@ -518,12 +518,13 @@ Route::get("/clear-leaderboard", function(){
 
 $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
 $options = ['domain' => $url];
-$arr = ["ciscoevent.gecmediagroup.com"];
+// Add Custom Domains here
+$arr = ["ciscoevent.gecmediagroup.com","epkapsi46mfd.eventsibles.live"];
 // $domains = Event::whereNotNull("domain")->get("domain")->toArray();
 // foreach($domains as $domain){
 //     array_push($arr,$domain['domain']);
 // }
-$domains = ["ciscoevent.eventstub.co"];
+// $domains = ["ciscoevent.eventstub.co","epkapsi46mfd.eventsibles.live"];
 // dd($arr);
 $currDomain = \Request::getHost();
 
