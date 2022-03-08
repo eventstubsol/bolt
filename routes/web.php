@@ -366,10 +366,15 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::post('/user/DeleteAll',"Eventee\UserController@DeleteAll")->name('eventee.user.deleteAll');
 
     Route::get("/data-entry/{id}","Eventee\DataEntryController@index")->name('eventee.dataEntry');
+
+
     Route::get('/notification/{id}',"Eventee\NotificationController@index")->name('eventee.notification');
     Route::get('/notification/create/{id}',"Eventee\NotificationController@create")->name('eventee.notification.create');
     Route::post('/notification/store/{id}',"Eventee\NotificationController@store")->name('eventee.notification.store');
     Route::get("/notification/store/{id}/{notification_id}","Eventee\NotificationController@resend")->name("eventee.notification.resend");
+    Route::post("/notification/delete","Eventee\NotificationController@delete")->name("eventee.notification.delete");
+
+
     Route::get('/Poll/{id}',"Eventee\PollController@index")->name('eventee.poll');
     Route::get('qna/{id}',"Eventee\QnaController@index")->name('eventee.qna');
     Route::get("/polls", "PollController@index")->name("poll.manage"); // list all polls
