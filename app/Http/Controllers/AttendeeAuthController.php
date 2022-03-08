@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Points;
-use Http;
+
 use Illuminate\Support\Facades\Log;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Hash;
 use Mail;
 use App\FormStruct;
@@ -95,19 +96,20 @@ class AttendeeAuthController extends Controller
             ->first();
         // dd($user);
         if (!$user) {
-            if($event->id === 201){
-                $user = new User([
-                   "name"=> explode("@", $request->post("email"))[0],
-                   "last_name"=>' ',
-                   "type"=>'attendee',
-                   "email"=> $request->post("email")
-                ]);
+            // if($event->id === 201){
+            //     $user = new User([
+            //        "name"=> explode("@", $request->post("email"))[0],
+            //        "last_name"=>' ',
+            //        "type"=>'attendee',
+            //        "email"=> $request->post("email")
+            //     ]);
        
-            }else{
-                flash("invalid credentials")->error();
-                return redirect()->back();
-            }
-
+            // }else{
+            //     flash("invalid credentials")->error();
+            //     return redirect()->back();
+            // }
+            flash("invalid credentials")->error();
+            return redirect()->back();
             // dd("not found");
             // return view("eventUser.login")->with([
             //     "login" => $this->loginT,

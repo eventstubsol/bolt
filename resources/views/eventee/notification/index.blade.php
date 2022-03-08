@@ -38,7 +38,7 @@
                             <td>{{ $notification->title }}</td>
                             <td>{{ $notification->roles }}</td>
                             <td>{{ $notification->created_at }}</td>
-                            <td><button class="btn btn-info" data-subject="{{ $notification->title }}" data-message="{{ $notification->message }}" onclick="ShowDetails(this)"><i class="fa fa-eye" d aria-hidden="true" data-toggle="tooltip" data-placement="top" title="View"></i></button><a href="{{ route("eventee.notification.resend",['id'=>$id,"notification_id"=>$notification->id]) }}" class="btn btn-success ml-2" data-toggle="tooltip" data-placement="top" title="Resend"><i class="fa fa-paper-plane" aria-hidden="true"></i></a> </td>
+                            <td><button class="btn btn-info" data-subject="{{ $notification->title }}" data-message="{{ $notification->message }}" onclick="ShowDetails(this)"><i class="fa fa-eye" d aria-hidden="true" data-toggle="tooltip" data-placement="top" title="View"></i></button><a href="{{ route("eventee.notification.resend",['id'=>$id,"notification_id"=>$notification->id]) }}" class="btn btn-success ml-2" data-toggle="tooltip" data-placement="top" title="Resend"><i class="fa fa-paper-plane" aria-hidden="true"></i></a> <button class="btn btn-danger ml-2" data-id="{{ $notification->id }}"  onclick="DeleteNotification(this)"><i class="fa fa-trash" d aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete"></i></button></td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -101,6 +101,32 @@
         }
         function CloseModal(){
             $('#DetailsModal').modal("toggle");
+        }
+        function DeleteNotification(e){
+            let id = e.getAttribute('data-id');
+            let t = e.closest("tr");
+            confirmDelete("Are you sure you want to DELETE Notification?","Confirm Notification Delete").then(confirmation=>{
+            if(confirmation){
+                $.ajax({
+                    url:'{{route("eventee.notification.delete")}}',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id":id
+                    },
+                    method:"post",
+                    success: function(res){
+                       if(res.code == 200){
+                            t.remove();
+                            $(".tooltip").removeClass("show");
+                            showMessage(res.message,'success');
+                       }
+                       else{
+                        showMessage(res.message,'error');
+                       }
+                    }
+                })
+            }
+        });
         }
     </script>
 @endsection

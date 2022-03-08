@@ -64,7 +64,7 @@ if(Auth::user()){
 
     <div class="input-group input-footer">
         
-        <button class="login-btn theme-btn btn primary-filled" onclick="onSubmit">Login</button>
+        <button class="login-btn theme-btn btn primary-filled" onclick="onSubmit" style="background-color: {{ $event->primary_color }}">Login</button>
     </div>
     <p class="text mt-3">By logging in and using the platform, you hereby accept our  <a href="{{ route('privacyPolicy',['subdomain'=>$subdomain]) }}" >Privacy Policy</a> {{--  <a data-toggle="modal" data-target="#privacyPolicy" >Privacy Policy</a>--}}. For more details <a href="{{ route("faq",['subdomain'=>$subdomain]) }}">read the FAQs</a></p>
 

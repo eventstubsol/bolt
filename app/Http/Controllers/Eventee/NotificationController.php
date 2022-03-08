@@ -196,5 +196,16 @@ class NotificationController extends Controller
             return redirect()->back();
         } 
     }
+
+    public function delete(Request $req){
+        $id = $req->id;
+        $note = PushNotification::findOrFail($id);
+        if($note->delete()){
+            return response()->json(['code'=>200,'message'=>'Notification Deleted Successfully']);
+        }
+        else{
+            return response()->json(['code'=>500,'message'=>'Something Went Wrong']);
+        }
+    }
 }
 
