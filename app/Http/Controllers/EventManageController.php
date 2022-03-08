@@ -107,7 +107,7 @@ class EventManageController extends Controller
         // return $link;
         return view('eventee.events.edit',compact('event_id','event','link'));
     }
-    public function verifyDomain(){
+    public function verifyDomain(Request $req){
         $currDomain = \Request::getHost();
         $event = Event::where('domain',$currDomain)->first();
         if($event->domainverified){

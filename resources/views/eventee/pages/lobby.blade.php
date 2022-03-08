@@ -277,6 +277,11 @@ $event = App\Event::findOrFail($id);
                         <input type="hidden" name="url" class="upload_input" value="{{ getFieldId('main_lobby_image',$event_id) }}">
                         <input disabled type="file" data-name="url" data-plugins="dropify" data-type="image" data-default-file="{{ assetUrl(getFieldId('main_lobby_image',$event_id)) }}" />
                     </div>
+                    <div class="image-uploader mt-2">
+                        <label class="mb-3" for="images">Lobby Audio</label>
+                        <input type="hidden" name="audio_url" class="upload_input" value="@if($event->lobby_audio != null) {{ $event->lobby_audio }} @endif">
+                        <input  type="file" data-name="audio_url" data-plugins="dropify" data-type="audio/mpeg" data-default-file="@if($event->lobby_audio != null) {{ $event->lobby_audio }} @endif" />
+                    </div>
 
 
                     <!-- Treasure Hunt Items Start -->

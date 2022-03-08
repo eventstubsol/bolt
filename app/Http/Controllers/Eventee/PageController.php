@@ -186,6 +186,7 @@ class PageController extends Controller
             $booths = Booth::where('event_id',$ids)->get();
             
             $pag =  Page::where('event_id',$id)->first();
+            $event = Event::findOrFail($id);
             //todo link session rooms to event_id 
 
             $session_rooms = sessionRooms::where("event_id",$ids)->get();
@@ -204,7 +205,7 @@ class PageController extends Controller
             // dd($id);
 
 
-            return view("eventee.pages.lobby")->with(compact(["page","session_rooms","pages","booths","id","pag"]));
+            return view("eventee.pages.lobby")->with(compact(["page","session_rooms","pages","booths","id","pag",'event']));
         }
         catch(\Exception $e){
             if(Auth::user()->type === 'admin'){
@@ -386,6 +387,11 @@ class PageController extends Controller
        try{
             // $request->validate(["name","url"]);
             $event_id = $id;
+            if($request->has('audio_url')){
+                $event = Event::findOrFail($id);
+                $event->lobby_audio = $request->audio_url;
+                $event->save();
+            }
             Link::where(["page"=>"lobby_".$id])->delete();
             Treasure::where(["owner"=>"lobby_".$id])->delete();
             if($request->has("treasures")){
