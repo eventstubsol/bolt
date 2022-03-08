@@ -6,6 +6,7 @@
         right: 2%;
     }
 </style>
+
 <div class="page initial" id="home">
     <div class="filler" style="padding-bottom: {{ EXTERNAL_VIDEO_ASSETS_ASPECT }}%"></div>
     <div class="video-containers positioned">
@@ -15,7 +16,7 @@
         <video class="full-width-videos" src="{{ assetUrl(getFieldId('exterior_view_video',$event_id)) }}" id="exterior_view" autoplay muted loop poster="{{ assetUrl(getFieldId('exterior_view_image',$event_id)) }}"></video>
     </div>
     <div id="skip_intro" style="display: none">
-        <button class="btn btn-primary">Skip</button>
+        <button class="btn btn-primary" style='background-color: {{ $event->primary_color }}'>Skip</button>
     </div>
 </div>
 <script>
