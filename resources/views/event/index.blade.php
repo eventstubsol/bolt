@@ -475,6 +475,227 @@ $user = Auth::user();
             color: #fff;
         }
 
+        .page#faq .faq-card .faq-content a {
+            color: {{ $event->primary_color }} !important;
+        }
+
+
+        .faq-items .faq-card .faq-content a {
+            color: {{ $event->primary_color }} !important;
+        }
+
+
+        .timeline-sm .timeline-sm-item:after {
+            border-color: {{ $event->primary_color }} !important;
+        }
+
+
+        .profile-card .p-header {
+            display: block;
+            width: 100%;
+            background: {{ $event->primary_color }} !important;
+            height: 140px;
+        }
+
+
+        .profile-card .p-body .p-info .points {
+            display: inline-block;
+            font-size: 16px;
+            background: rgba(219, 91, 91, 0.1);
+            border-radius: 3px;
+            letter-spacing: 0.01em;
+            color: {{ $event->primary_color }} !important;
+            font-weight: 700;
+            padding: 5px 30px;
+        }
+        .doc-lists .doc-item .theme-btn.add-to-bag:before {
+            color: {{ $event->primary_color }} !important;
+            padding: 8px;
+            font-weight: 700;
+        }
+
+        .theme-modal .modal-dialog.confirmation .modal-content h3 span {
+            color: {{ $event->primary_color }} !important;
+        }
+
+
+        .theme-btn.primary {
+            background: rgb(91 219 103 / 10%);
+            border-color: rgb(91 219 140 / 30%);
+            color: {{ $event->primary_color }} !important;
+        }
+
+        .theme-btn.primary-filled {
+            background: {{ $event->primary_color }} !important;
+            border-color: {{ $event->primary_color }} !important;
+            color: #fff;
+        }
+
+
+        .theme-btn .green.primary {
+            background: white;
+            border-color: white;
+            color: {{ $event->primary_color }} !important;
+        }
+
+        .theme-btn .green.primary-filled {
+            background: {{ $event->primary_color }} !important;
+            border-color: {{ $event->primary_color }} !important;
+            color: #fff;
+        }
+
+
+
+
+        .doc-lists .simplebar-track .simplebar-scrollbar:before {
+            background: #00a15f !important;
+            opacity: 1 !important;
+            border-radius: 100px;
+        }
+
+
+        .doc-lists.swagbag-list .doc-item .checkbox input:checked+label:before {
+            background: {{ $event->primary_color }} !important;
+            border: 2px solid {{ $event->primary_color }} !important;
+        }
+
+
+
+        .modal-open .select2-container--open .select2-results__options .select2-results__option:hover {
+            color: {{ $event->primary_color }} !important;
+            background: #fff;
+        }
+
+        .modal-open .select2-container--open .select2-results__options .select2-results__option--highlighted {
+            background: #fff;
+            color: {{ $event->primary_color }} !important;
+        }
+
+
+
+        .modal-open .select2-container--open .select2-results__options::-webkit-scrollbar-thumb {
+            background-color: {{ $event->primary_color }} !important;
+            border-right: 5px solid rgba(0, 0, 0, 0);
+            border-top: 5px solid rgba(0, 0, 0, 0);
+            border-bottom: 5px solid rgba(0, 0, 0, 0);
+            border-radius: 100px;
+        }
+
+        .round-icon {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            background: rgba(219, 91, 91, 0.1);
+            border: 1px solid rgba(219, 91, 91, 0.1);
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+            color: {{ $event->primary_color }} !important;
+            font-size: 16px;
+            min-width: 32px;
+        }
+
+        .menu-custom .menu .custom-dropdown .custom-dropdown-menu .dropdown-item:hover {
+            color: {{ $event->primary_color }} !important;
+            background: transparent;
+        }
+
+        .custom-theme .btn-link {
+            color: {{ $event->primary_color }} !important;
+        }
+
+        .custom-theme .btn-link:hover {
+            color: #00a15ea9;
+        }
+
+        .custom-theme .badge-primary {
+            color: #fff;
+            background-color: {{ $event->primary_color }} !important;
+        }
+
+        .custom-theme .btn-primary,
+        .custom-theme .page-item.active .page-link,
+        .custom-theme .btn-outline-primary:hover {
+            color: #fff;
+            background-color: {{ $event->primary_color }} !important;
+            border-color: {{ $event->primary_color }} !important;
+        }
+
+        .custom-theme .btn-outline-primary {
+            color: {{ $event->primary_color }} !important;
+            border-color: {{ $event->primary_color }} !important;
+        }
+
+
+        .custom-theme .btn-outline-primary.disabled,
+        .custom-theme .btn-outline-primary:disabled {
+            color: {{ $event->primary_color }} !important;
+            background-color: transparent;
+        }
+
+        .custom-theme .btn-outline-primary:not(:disabled):not(.disabled).active,
+        .custom-theme .btn-outline-primary:not(:disabled):not(.disabled):active,
+        .custom-theme .show>.btn-outline-primary.dropdown-toggle {
+            color: #fff;
+            background-color: {{ $event->primary_color }} !important;
+            border-color: {{ $event->primary_color }} !important;
+        }
+
+        .custom-theme .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
+        .custom-theme .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
+        .custom-theme .show>.btn-outline-primary.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.15rem white;
+        }
+
+        .custom-theme .text-primary {
+            color: #00a15f !important;
+        }
+
+        .custom-theme .border-primary {
+            border-color: #00a15f !important;
+        }
+
+        .custom-theme a.text-primary:focus,
+        .custom-theme a.text-primary:hover {
+            color: #00a15ea9 !important;
+        }
+
+        .page .wrapper .points {
+            display: block;
+            width: 30%;
+            background: {{ $event->primary_color }} !important;
+            color: #fff;
+            padding: 25px 25px;
+        }
+
+
+        .page .wrapper .scores .score-list li::before {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #F4F4F4;
+            width: 50px;
+            height: 50px;
+            content: counter(rank-counter);
+            color: {{ $event->primary_color }} !important;
+            font-weight: 800;
+            border-radius: 100%;
+            font-size: 20px;
+            float: left;
+            margin-right: 30px;
+        }
+
+        .page#faq .page-header {
+            padding: 80px 0;
+            margin: 65px 0;
+            background: {{ $event->primary_color }} !important;
+        }
+
+
+        .timeline-sm .timeline-sm-item:after {
+            border-color: {{ $event->primary_color }} !important;
+        }
+
 
 
     </style>
@@ -552,11 +773,11 @@ $user = Auth::user();
     @include("includes.styles.fileUploader")
     <!-- Custom -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=21872367628589" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=21872367628589" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=21872367628589" type="text/css">
-    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=21872367628589">
-    <link href="{{ asset('assets/css/custom.css') }}?v=21872367628589" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=218723676285726" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=218723676285726" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=218723676285726" type="text/css">
+    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=218723676285726">
+    <link href="{{ asset('assets/css/custom.css') }}?v=218723676285726" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
@@ -950,15 +1171,15 @@ $user = Auth::user();
         window.config = config;
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=21872367628589"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}?cb=21872367628589"></script>
-    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=21872367628589"></script>
-    <script src="{{ asset('event-assets/js/app.js') }}?cb=21872367628589"></script>
-    <script src="{{ asset('/js/chat/app.js') }}?cb=21872367628589"></script>
-    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=21872367628589"></script> -->
-    <script src="{{ asset('/js/profile/index.js') }}?cb=21872367628589"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=21872367628589"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=21872367628589"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=218723676285726"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}?cb=218723676285726"></script>
+    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=218723676285726"></script>
+    <script src="{{ asset('event-assets/js/app.js') }}?cb=218723676285726"></script>
+    <script src="{{ asset('/js/chat/app.js') }}?cb=218723676285726"></script>
+    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=218723676285726"></script> -->
+    <script src="{{ asset('/js/profile/index.js') }}?cb=218723676285726"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=218723676285726"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=218723676285726"></script>
     {{-- @if (isOpenForPublic('polls'))
         @include("event.poll")
     @endif --}}
