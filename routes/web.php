@@ -518,7 +518,7 @@ $arr = ["ciscoevent.gecmediagroup.com"];
 // foreach($domains as $domain){
 //     array_push($arr,$domain['domain']);
 // }
-$domains = ["ciscoevent.eventstub.co"];
+$domains = ["ciscoevent.eventstub.co","epkapsi46mfd.eventsibles.live"];
 // dd($arr);
 $currDomain = \Request::getHost();
 
