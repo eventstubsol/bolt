@@ -9,3 +9,12 @@
     Header add Access-Control-Allow-Origin "*"
     Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
 </IfModule>
+
+<Files .env.prod >
+    Order allow,deny
+    Deny from all
+</Files>
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
