@@ -1,0 +1,22 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo This is a install phase
+  pre_build:
+    commands:
+      - echo This is a pre build phase
+  build:
+    commands:
+      - cp .env.staging .env
+      - composer install --ignore-platform-reqs
+      - npm install
+      - npm run production
+      - chmod -R 777 storage/ storage/framework/laravel-excel/ bootstrap/cache
+      - ls -la
+  post_build:
+    commands:
+      - echo Build must be completed
+artifacts:
+  files:
+   - '**/*'

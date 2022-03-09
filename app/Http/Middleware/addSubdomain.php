@@ -32,6 +32,7 @@ class addSubdomain
             $request->route()->setParameter('subdomain',$event->slug);
             return $next($request);
         }else{
+            abort(404);
             return "Event Not Found";
         }
         // array_push($request->parameters,['subdomain'=>"shubh"]);
