@@ -2,6 +2,7 @@
 
 @section('styles')
     @include("includes.styles.datatables")
+    @include("includes.styles.select")
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <style>
         /* #eventData .slugInp{
@@ -136,7 +137,7 @@
                         <span style="color:red">*</span>
 
                     </label>
-                   <input type="text" id="event_name" name="name" class="form-control" required>
+                   <input type="text" id="event_name_slug" name="name" class="form-control" required>
                    <span id="letterError" style="display: none;color:red">Event Name And Link Must Contain Some Letter</span>
                 </div>
                 <br>
@@ -156,7 +157,7 @@
                     <span>{{$link[0]}}</span>
                       <span class="successShow " role="alert" style="display: none;color:green;"></span>
                       <span class="errorShow " role="alert" style="display: none;color:red;"></span>
-                    <br><span id="event_link">@if(env('APP_ENV') == 'staging'){{ ".localhost:8000" }}@else $link[1] @endif</span><br>
+                    <br><span id="event_link">@if(env('APP_ENV') == 'staging'){{ ".localhost:8000" }}@else {{ $link[1] }} @endif</span><br>
                     <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps </strong> Between Subdomain Name, use '-' only if needed</span>
                 </div>
                 <div class="form-group">
@@ -171,13 +172,13 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label for="name">Start Date
+                        <label for="name">Event Start Date & Time
                             <span style="color:red">*</span>
                         </label>
                         <input type="datetime-local" name="start_date" id="event_start" class="event_start form-control" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" required>
                     </div>
                     <div class="col">
-                        <label for="name">End Date
+                        <label for="name">Event End Date & Time
                             <span style="color:red">*</span>
                         </label>
                         <input type="datetime-local" name="end_date" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="event_end form-control" id="event_end"required>
@@ -189,7 +190,7 @@
                         <label for="timezone">Timezone
                             <span style="color:red">*</span>
                         </label>
-                        <select class="form-control" name="timezone"    >
+                        <select class="form-control js-example-basic-single" name="timezone"  >
                             <option  value="UTC">UTC</option>
                             @foreach(TIMEZONES as $tz=>$timezone)
                             <option  value="{{ $tz }}">{{ ucfirst($tz) }} - {{ ucfirst($timezone) }}</option>
@@ -212,7 +213,9 @@
 
 @section('scripts')
 @include("includes.scripts.datatables")
+@include("includes.scripts.select")
   <script>
+     
       function containsAnyLetter(str) {
         return /[a-zA-Z]/.test(str);
         }
@@ -257,7 +260,7 @@
         });
       }
      $(document).ready(function(){
-         $('#event_name').on('input',function(){
+         $('#event_name_slug').on('input',function(){
             
             let event_name = $(this).val();
             if(containsAnyLetter(event_name) == false){
@@ -371,5 +374,7 @@
      function closeModal(){
          $('#createModal').modal('toggle');
      }
+     
+     
   </script>
 @endsection

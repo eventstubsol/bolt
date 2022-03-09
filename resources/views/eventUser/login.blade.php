@@ -33,7 +33,8 @@ if(Auth::user()){
         background: {{ $event->primary_color }}
     } */
     #form .login-btn:hover{
-        background-color: {{ $event->secondary_color }}
+        background-color: "{{ $event->secondary_color }}";
+        padding: 5px 7px;
     }
 </style>
 
