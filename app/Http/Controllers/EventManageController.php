@@ -158,9 +158,9 @@ class EventManageController extends Controller
                $domain=  str_replace('http://','',$domain);
              }
             $event->domain = $domain;
-            if(env("APP_ENV")!=='staging'){
-                whitelistDomain($domain);
-            }
+            // if(env("APP_ENV")!=='staging'){
+            //     whitelistDomain($domain);
+            // }
         }else{
             $event->domain = '';
            

@@ -41,7 +41,7 @@
                     <input type="date" id="end_date" class="form-control">
                 </div>
                
-                    <button type="button" onclick="Report()" class="float-right btn btn-primary">Get Report </button>
+                    <button type="button" onclick="Report()" class="float-right btn btn-primary">Fetch Report </button>
                     <br><br>
                 <div class="row" id="showGraph" style="display: none">
                     <div class="card">
