@@ -516,7 +516,7 @@ Route::get("/clear-leaderboard", function(){
 // });
 
 
-$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' :'{subdomain}.eventstub.co';
+$url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' : (env('APP_ENV')==="prod" ? '{subdomain}.eventstub.co' : '{subdomain}.virturo.io');
 $options = ['domain' => $url];
 // Add Custom Domains here
 $arr = ["ciscoevent.gecmediagroup.com","epkapsi46mfd.eventsibles.live"];
