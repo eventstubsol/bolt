@@ -65,6 +65,13 @@
             color: #fff;
         }
 
+        .alert-danger {
+          color: #e20909;
+          background-color: #4ec7cb;
+          border-color: #d3da2c;
+          font-weight: 600;
+          font-size: 15px;
+        }
         .btn-reg{
             background: #0fb602;
             color: #fff;

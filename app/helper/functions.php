@@ -1690,3 +1690,17 @@ function CreateFeature($event_id){
     }
     return 1;
 }
+
+function CreateRoom($event_id){
+    $room = new sessionRooms;
+    $room->name = 'Demo_Room';
+    $room->event_id = $event_id;
+    $room->save();
+    $images = new Image;
+    $images->owner = $room->id;
+    $images->url = 'uploads/jyOGZXQ3B0ufDjcCJkeiZ8ryNDazvSK02ge6LcNI.jpg';
+    $images->title = $room->name;
+    $images->save();
+    return 1;
+
+}
