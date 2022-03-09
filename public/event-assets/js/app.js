@@ -1385,7 +1385,9 @@ function initSideMenu() {
         sidebar.toggleClass('enabled');
         if (sidebar.hasClass('enabled')) {
             trigger.find('i').removeClass('fa-bars').addClass('fa-times')
+            $(".overLay").addClass("d-block");
         } else {
+            $(".overLay").removeClass("d-block");
             trigger.find('i').removeClass('fa-times').addClass('fa-bars')
         }
     });

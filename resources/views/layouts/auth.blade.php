@@ -11,7 +11,7 @@
     @endif
     <!-- App css -->
     <link href="{{asset("assets/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet">
-    <link href="{{asset("assets/css/app.min.css")}}" rel="stylesheet" type="text/css" id="app-default-stylesheet">
+    <link href="{{asset("assets/css/app.css")}}" rel="stylesheet" type="text/css" id="app-default-stylesheet">
     <link rel="stylesheet" href="{{ asset("assets/css/log.css") }}?xyz=123">
     {{-- <link href="{{asset("assets/css/bootstrap-dark.min.css")}}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" disabled="disabled"> --}}
     {{-- <link href="{{asset("assets/css/app-dark.min.css")}}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" disabled="disabled"> --}}
@@ -91,6 +91,7 @@
         }
         .auth-fluid .auth-fluid-form-box {
             max-width: 50%;
+            width: 50%;
             float: right;
             position: relative;
         }
@@ -112,6 +113,9 @@
         }
         @media (max-width: 991.98px){
             
+            .auth-fluid-image {    
+                max-width: 0;
+            }
             .auth-fluid .auth-fluid-form-box {    
                 max-width: 100%;
                 min-height: 100vh;
