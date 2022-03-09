@@ -520,10 +520,10 @@ $url = env('APP_ENV') ==='staging'? '{subdomain}.localhost' : (env('APP_ENV')===
 $options = ['domain' => $url];
 // Add Custom Domains here
 $arr = ["ciscoevent.gecmediagroup.com","epkapsi46mfd.eventsibles.live","www.mlk2022-pep.eventsibles.live","mlk2022-pep.eventsibles.live"];
-// $domains = Event::whereNotNull("domain")->get("domain")->toArray();
-// foreach($domains as $domain){
-//     array_push($arr,$domain['domain']);
-// }
+$domains = Event::whereNotNull("domain")->get("domain")->toArray();
+foreach($domains as $domain){
+    array_push($arr,$domain['domain']);
+}
 // $domains = ["ciscoevent.eventstub.co","epkapsi46mfd.eventsibles.live"];
 // dd($arr);
 $currDomain = \Request::getHost();
