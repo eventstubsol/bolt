@@ -91,6 +91,7 @@
         }
         .auth-fluid .auth-fluid-form-box {
             max-width: 50%;
+            width: 50%;
             float: right;
             position: relative;
         }
