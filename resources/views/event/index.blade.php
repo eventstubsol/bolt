@@ -693,7 +693,7 @@ $user = Auth::user();
 
 
         .timeline-sm .timeline-sm-item:after {
-            border-color: {{ $event->primary_color }} !important;
+            border-color: "{{ $event->primary_color }}" !important;
         }
 
 

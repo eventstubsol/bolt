@@ -432,6 +432,12 @@
                 </div>
             </li>
             <li>
+                <a href="{{ route("restore.event") }}">
+                    <i class="fa fa-recycle" aria-hidden="true"></i>
+                    <span> Recycle bin </span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route("license.index") }}">
                     <i class="fas fa-id-badge"></i>
                     <span> License </span>

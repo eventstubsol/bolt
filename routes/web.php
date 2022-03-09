@@ -772,7 +772,13 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
             "recaptcha"=>"RecatchaController",
             //            "provisional" => "ProvisionalController",
         ]);
+        
+        //EventRestore
+        Route::get("Event/Restore","EventRestroreController@index")->name("restore.event");
+        Route::get("Event/Restore/data/{id}","EventRestroreController@restore")->name("restore.event.data");
+        
         //Default Creative
+        
         Route::get("Default/Creative","AdminCreativeController@index")->name("default.creative");
         Route::POST("Default/Creative/post","AdminCreativeController@store")->name("default.creative.store");
         // DBManage
