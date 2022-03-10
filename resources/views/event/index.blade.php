@@ -478,6 +478,20 @@ $user = Auth::user();
         .page#faq .faq-card .faq-content a {
             color: {{ $event->primary_color }} !important;
         }
+        .page#faq .faq-card .faq-content a {
+            color: {{ $event->primary_color }} !important;
+        }
+
+        a {
+            color: {{ $event->primary_color }};
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        a:hover {
+            color: {{ $event->secondary_color }} ;
+            text-decoration: underline;
+        }
 
 
         .faq-items .faq-card .faq-content a {

@@ -550,7 +550,8 @@ function sidebar() {
 }
 sidebar();
 function Logout(){
-    event.preventDefault(); document.getElementById('logout-form').submit();
+    // event.preventDefault(); 
+    // document.getElementById('logout-form').submit();
     $('#logoutModal').modal('toggle');
 }
 function CloseModal(){

@@ -2,6 +2,11 @@
 <html lang="en" class="js-focus-visible" data-js-focus-visible=""><head>
     <meta charset="utf-8">
     <title>@yield('title')</title>
+    @php
+        $event = null;
+        if(isset($id))
+            $event = \App\Event::findOrFail($id);
+    @endphp
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
@@ -127,7 +132,19 @@
             body{
                 overflow: auto;
             }
-        }   
+        } 
+        a {
+            color: {{ $event->primary_color }};
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        a:hover {
+            color: {{ $event->secondary_color }} ;
+            text-decoration: underline;
+        }
+
+  
     </style>
 <script>
     $('#flash-overlay-modal').modal();
