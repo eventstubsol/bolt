@@ -51,6 +51,8 @@ Route::get("/Register/EventAdmin","eventeeController@Regiter")->name('Eventee.re
 Route::post('/Register/EventAdmin',"eventeeController@ConfirmRegister")->name('Eventee.confirmRegister');
 Route::get('EventAdmin/Login',"eventeeController@Login")->name('Eventee.login');
 Route::post('EventAdmin/Login/Confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
+Route::get('EventAdmin/Forgot/Password',"ForgotPasswordController@view")->name('Eventee.forgot.password');
+Route::post('EventAdmin/Forgot/Confirm',"ForgotPasswordController@SendPasword")->name('Eventee.forgot.confirm');
 Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
 Route::get("Verify/otp/{user_id}","EventAdminController@OtpView")->name("eventadmin.verify");
 Route::POST("/verify/otp/{user_id}","EventAdminController@VerifyOtp")->name("Eventee.verify");
@@ -81,6 +83,11 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
     Route::get('/adddns','eventeeController@verifyDomain')->name('verifyDomain');
     Route::get('Events','eventeeController@Event')->name('event.index');
+    //profile 
+    Route::get('Events/profile','ProfileController@view')->name('event.profile.admin');
+    Route::POST('Events/profile/post','ProfileController@save')->name('event.profile.post');
+
+
     Route::get('Events/Expiring','eventeeController@Expiring')->name('event.expiring');
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
     Route::post('Events/Save','eventeeController@Save')->name('event.Save');

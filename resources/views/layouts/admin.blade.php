@@ -290,6 +290,9 @@
                                 <a href="{{ route('event.index')}} " class="dropdown-item notify-item">
                                     <i class="fe-user"></i> <span>My Events</span>
                                 </a>
+                                <a href="{{ route('event.profile.admin')}} " class="dropdown-item notify-item">
+                                    <i class="fe-user"></i> <span>My Profile</span>
+                                </a>
                             @endif
                             {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="fe-settings"></i>
