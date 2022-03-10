@@ -354,7 +354,7 @@
                         </form>
                     </div>
                 </div>
-                <a class="dropdown-item notify-item " data-toggle="tooltip" title="Logout" style="font-size: 20px" href="{{ route('attendeeLogout',$event_name) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a class="dropdown-item notify-item " data-toggle="tooltip" title="Logout" style="font-size: 20px" onclick="Logout()">
                     <i class="fe-log-out mr-1"></i>
                     {{-- <span>Logout</span> --}}
                 </a>
@@ -397,6 +397,26 @@
         
     </div>
 </div>
+{{-- Modal --}}
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Logout Confirm</h5>
+          <button type="button" class="close" data-dismiss="modal" onclick="CloseModal()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure, you want to logout?</p>
+        </div>
+        <div class="modal-footer">
+          <a href="{{ route('attendeeLogout',$event_name) }}" class="btn btn-primary">Logout</a>
+          <button type="button" class="btn btn-secondary" onclick="CloseModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
 <script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
@@ -523,4 +543,11 @@ function sidebar() {
     });
 }
 sidebar();
+function Logout(){
+    event.preventDefault(); document.getElementById('logout-form').submit();
+    $('#logoutModal').modal('toggle');
+}
+function CloseModal(){
+    $('#logoutModal').modal('toggle');
+}
 </script>

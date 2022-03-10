@@ -204,7 +204,6 @@ class eventeeController extends Controller
     }
 
     public function Event(Request $req){
-        $req->session()->put('MangeEvent',0);
         $events = Event::where('user_id',Auth::id())->orderBy(DB::raw("date(start_date)"),'desc')->get();
         return view('eventee.events.index',compact('events'));
     }
