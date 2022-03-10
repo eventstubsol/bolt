@@ -14,7 +14,7 @@ Create Menu
 
 @include("includes.styles.fileUploader")
 <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=1611083902568" rel="stylesheet" type="text/css">
-<link href={{ asset('assets/css/icons.min.css') }} rel="stylesheet" type="text/css" />\
+<link href={{ asset('assets/css/icons.min.css') }} rel="stylesheet" type="text/css" />
 
 @endsection
 

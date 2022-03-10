@@ -478,6 +478,20 @@ $user = Auth::user();
         .page#faq .faq-card .faq-content a {
             color: {{ $event->primary_color }} !important;
         }
+        .page#faq .faq-card .faq-content a {
+            color: {{ $event->primary_color }} !important;
+        }
+
+        a {
+            color: {{ $event->primary_color }};
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        a:hover {
+            color: {{ $event->secondary_color }} ;
+            text-decoration: underline;
+        }
 
 
         .faq-items .faq-card .faq-content a {
@@ -1164,7 +1178,8 @@ $user = Auth::user();
             byLawsURL: "{{ route('byLaws.get') }}",
             byLawsSubmissionURL: "{{ route('byLaws.submit') }}",
             byLawsOptionSubmissionURL: "{{ route('byLaws.optionSubmit') }}",
-            roomNames: {!! json_encode(WORKSHOP_ROOM_NAMES) !!}
+            roomNames: {!! json_encode(WORKSHOP_ROOM_NAMES) !!},
+            lobby_audio: {{ $event->lobby_audio ? true : 0}}
         };
         const assetUrl = url => "{{ assetUrl('') }}" + url;
         window.assetUrl = assetUrl;

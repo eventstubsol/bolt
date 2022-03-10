@@ -29,12 +29,12 @@ if(Auth::user()){
 @endphp
 @section('styles')
 <style>
-    /* #form .login-btn{
-        background: {{ $event->primary_color }}
-    } */
+    #form .login-btn{
+        border: none;
+    }
     #form .login-btn:hover{
-        background-color: "{{ $event->secondary_color }}";
-        padding: 5px 7px;
+        background-color: {{ $event->secondary_color }};
+        /* padding: 5px 7px; */
     }
 </style>
 

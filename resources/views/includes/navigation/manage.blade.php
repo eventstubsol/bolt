@@ -14,15 +14,15 @@
 @if(Carbon\Carbon::now() <= $event->end_date)
     {{-- <li class="menu-title">Administration</li>
     <li> --}}
-    {{-- <li>
-        <a href="{{ route('eventee.media',$id) }}">
+ <li>
+        {{--    <a href="{{ route('eventee.media',$id) }}">
             <i class="fa fa-picture-o" aria-hidden="true"></i>
             <span> My Media </span>
         </a>
     </li> --}}
     <a href="#users" data-toggle="collapse">
         <i data-feather="users"></i>
-        <span> Attendees</span>
+       <span> Attendees<span>
     </a>
     <div class="collapse" id="users">
         <ul class="nav-second-level">
@@ -71,16 +71,17 @@
     <div class="collapse" id="sessions">
         <ul class="nav-second-level">
             <li>
-                <a href="{{ route("eventee.sessions.index",$id) }}">Manage</a>
+                <a href="{{ route("eventee.sessions.create",$id) }}">Create</a>
             </li>
             <li>
-                <a href="{{ route("eventee.sessions.create",$id) }}">Create</a>
+                <a href="{{ route("eventee.sessions.index",$id) }}">Manage</a>
             </li>
         </ul>
     </div>
 </li>
 <li>
     <a href="{{ route("eventee.options",$id) }}">
+        <i class="mdi mdi-file-multiple"></i>
         <span> Event Creatives </span>
     </a>
 </li>
@@ -122,34 +123,86 @@
         </ul>
     </div>
 </li>
+
 <li>
-    <a href="#faq" data-toggle="collapse">
-        <i class="fas fa-question-circle"></i>
-        <span> FAQ</span>
+    <a href="#lounge" data-toggle="collapse">
+        <i data-feather="grid"></i>
+        <span>Networking Lounge </span>
     </a>
-    <div class="collapse" id="faq">
+    <div class="collapse" id="lounge">
         <ul class="nav-second-level">
             <li>
-                <a href="{{ route("eventee.faq",['id'=>$id]) }}">Manage</a>
+                <a href="{{ route("eventee.lounge.create",$id) }}">Create</a>
             </li>
             <li>
-                <a href="{{ route("eventee.faq.create",['id'=>$id]) }}">Create</a>
+                <a href="{{ route("eventee.lounge.index",$id) }}">Manage</a>
             </li>
         </ul>
     </div>
 </li>
 <li>
+    <a href="#modals" data-toggle="collapse">
+        <i data-feather="grid"></i>
+        <span> Lightbox/Modals </span>
+    </a>
+    <div class="collapse" id="modals">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.modal.create",$id) }}">Create</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.modal",$id) }}">Manage</a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+<li>
+    <a href="#menu" data-toggle="collapse">
+        <i class="fa fa-bars"></i>
+        <span> Menu</span>
+    </a>
+    <div class="collapse" id="menu">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.menu",$id) }}">Top Menu</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.menu.footer",$id) }}">Bottom</a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+<li>
+    <a href="#notification" data-toggle="collapse" >
+        <i data-feather="bell"></i>
+        <span> Push Notifications</span>
+    </a>
+    <div class="collapse" id="notification">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.notification",$id) }}">Instant</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.schedule",$id) }}">Schedule </a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+<li>
     <a href="#mail" data-toggle="collapse">
         <i class="fa fa-envelope" aria-hidden="true"></i>
-        <span> Mail</span>
+        <span>E-Mail</span>
     </a>
     <div class="collapse" id="mail">
         <ul class="nav-second-level">
             <li>
-                <a href="{{ route("eventee.mail",['id'=>$id]) }}">Manage</a>
+                <a href="{{ route("eventee.mail.create",['id'=>$id]) }}">Create</a>
             </li>
             <li>
-                <a href="{{ route("eventee.mail.create",['id'=>$id]) }}">New Mail</a>
+                <a href="{{ route("eventee.mail",['id'=>$id]) }}">Manage</a>
             </li>
             {{-- <li>
                 <a href="{{ route("eventee.mail.template",['id'=>$id]) }}">Manage Template</a>
@@ -158,6 +211,72 @@
     </div>
 </li>
 
+<li>
+    <a href="#faq" data-toggle="collapse">
+        <i class="fas fa-question-circle"></i>
+        <span> FAQ</span>
+    </a>
+    <div class="collapse" id="faq">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.faq.create",['id'=>$id]) }}">Create</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.faq",['id'=>$id]) }}">Manage</a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+
+
+
+<li>
+    <a href="#settings" data-toggle="collapse">
+        <i class="fa fa-cog"></i>
+        <span> Event Settings</span>
+    </a>
+    <div class="collapse" id="settings">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.settings",$id) }}">
+                    <span> Default  </span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route("settings.chat",$id) }}">
+                    <span> Chat</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.integrations",$id) }}">
+                    <span> Integrations </span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.leaderSetting",$id) }}">
+                    <span> Leaderboard Setting </span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route("landing.settings",$id) }}">
+                    <span> Landing Page Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('eventee.restore',$id) }}">
+                    <span> Recycle Bin </span>
+                </a>
+            </li>
+
+            {{-- <li>
+                <a href="{{ route("onboard.settings",$id) }}">
+                    <span> Onboard Settings</span>
+                </a>
+            </li> --}}
+        </ul>
+    </div>
+</li>
 {{-- <li>
     <a href="#polls" data-toggle="collapse">
         <i data-feather="users"></i>
@@ -175,12 +294,6 @@
         </ul>
     </div>
 </li> --}}
-<li>
-    <a href="{{ route('eventee.restore',$id) }}">
-        <i class="fas fa-trash-restore"></i>
-        <span> Restore Data </span>
-    </a>
-</li>
 {{-- <li>
     <a href="#form" data-toggle="collapse">
         <i class="fas fa-align-justify"></i>
@@ -203,22 +316,6 @@
         <span> Data Entry</span>
     </a>
 </li> --}}
-<li>
-    <a href="#notification" data-toggle="collapse" >
-        <i data-feather="bell"></i>
-        <span> Notifications</span>
-    </a>
-    <div class="collapse" id="notification">
-        <ul class="nav-second-level">
-            <li>
-                <a href="{{ route("eventee.notification",$id) }}">Instant Notification</a>
-            </li>
-            <li>
-                <a href="{{ route("eventee.schedule",$id) }}">Schedule Notification</a>
-            </li>
-        </ul>
-    </div>
-</li>
 
 {{-- <li>
     <a href="#polls" data-toggle="collapse">
@@ -280,97 +377,7 @@
 
 
 
-<li class="menu-title">Site Content</li>
-
-
-<li>
-    <a href="#settings" data-toggle="collapse">
-        <i class="fa fa-cog"></i>
-        <span> Settings</span>
-    </a>
-    <div class="collapse" id="settings">
-        <ul class="nav-second-level">
-            <li>
-                <a href="{{ route("settings.chat",$id) }}">
-                    <span> Chat</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route("eventee.integrations",$id) }}">
-                    <span> Integrations </span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route("eventee.leaderSetting",$id) }}">
-                    <span> Leaderboard Setting </span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route("eventee.settings",$id) }}">
-                    <span> Default Settings </span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route("landing.settings",$id) }}">
-                    <span> Landing Page Settings</span>
-                </a>
-            </li>
-            {{-- <li>
-                <a href="{{ route("onboard.settings",$id) }}">
-                    <span> Onboard Settings</span>
-                </a>
-            </li> --}}
-        </ul>
-    </div>
-</li>
-<li>
-    <a href="#menu" data-toggle="collapse">
-        <i class="fa fa-bars"></i>
-        <span> Menu</span>
-    </a>
-    <div class="collapse" id="menu">
-        <ul class="nav-second-level">
-            <li>
-                <a href="{{ route("eventee.menu",$id) }}">Manage Nav</a>
-            </li>
-            <li>
-                <a href="{{ route("eventee.menu.footer",$id) }}">Manage Footer</a>
-            </li>
-        </ul>
-    </div>
-</li>
-<li>
-    <a href="#modals" data-toggle="collapse">
-        <i data-feather="grid"></i>
-        <span> Modals </span>
-    </a>
-    <div class="collapse" id="modals">
-        <ul class="nav-second-level">
-            <li>
-                <a href="{{ route("eventee.modal",$id) }}">Manage</a>
-            </li>
-            <li>
-                <a href="{{ route("eventee.modal.create",$id) }}">Create</a>
-            </li>
-        </ul>
-    </div>
-</li>
-<li>
-    <a href="#lounge" data-toggle="collapse">
-        <i data-feather="grid"></i>
-        <span> Lounge </span>
-    </a>
-    <div class="collapse" id="lounge">
-        <ul class="nav-second-level">
-            <li>
-                <a href="{{ route("eventee.lounge.index",$id) }}">Manage</a>
-            </li>
-            <li>
-                <a href="{{ route("eventee.lounge.create",$id) }}">Create</a>
-            </li>
-        </ul>
-    </div>
-</li>
+{{-- <li class="menu-title">Site Content</li> --}}
 
 @endif
 <li class="menu-title">Reporting & Analytics</li>

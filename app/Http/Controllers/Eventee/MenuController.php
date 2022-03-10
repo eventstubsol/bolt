@@ -295,7 +295,7 @@ class MenuController extends Controller
     }
     public function updateNav(Request $request,Menu $menu,$id)
     {
-           // dd($request->all());
+        //    dd($request->all());
            $to = '';
            $url = '';
 
@@ -355,11 +355,17 @@ class MenuController extends Controller
            $menu->name = $request->name;
            $menu->link = $to;
            $menu->link_type = $request->type;
-           $menu->iClass = $request->icon;
-           
+           if($request->icon === 'custom'){
+            $menu->iClass =  env("AWS_URL") . $request->c_icon;
+            }else{
+                $menu->iClass = $request->icon;
+            }
            $menu->save();
 
-           // dd($menu);
+        //    dd($menu);
+           if($menu->type=="footer"){
+               return redirect(route("eventee.menu.footer",$id));
+           }
            return redirect(route("eventee.menu",$id));
     }
     public function updateFooter(Request $request,Menu $menu,$id)
@@ -419,9 +425,13 @@ class MenuController extends Controller
            $menu->name = $request->name;
            $menu->link = $to;
            $menu->link_type = $request->type;
-           $menu->iClass = $request->icon;
+           if($request->icon === 'custom'){
+                $menu->iClass =  env("AWS_URL") . $request->c_icon;
+            }else{
+                $menu->iClass = $request->icon;
+            }
            $menu->save();
-           // dd($menu);
+        //    dd($menu);
            return redirect(route("eventee.menu.footer",$id));
     }
 

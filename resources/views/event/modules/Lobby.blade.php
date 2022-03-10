@@ -1,6 +1,9 @@
 <div class="page" id="lobby">
     <div class="video-container positioned">
         <video class="full-width-videos" src="{{ assetUrl(getFieldId('main_lobby_video',$event_id)) }}" id="lobby_view" autoplay muted loop poster="{{ assetUrl(getFieldId('main_lobby_image',$event_id)) }}"></video>
+        @if($event->lobby_audio)
+            <audio id="audio_new"  src="{{assetUrl($event->lobby_audio)}}" ></audio>
+        @endif
         @foreach(getLobbyLinks($event_id) as $link)
 
                 @php

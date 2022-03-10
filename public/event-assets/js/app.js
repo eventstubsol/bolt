@@ -1,6 +1,38 @@
 let loader = $(".loader");
 let setRoom = '';
 function initApp() {
+   
+        const audio = document.getElementById("audio_new");
+    
+        const pause_audio = $("#pause_li");
+        let playing = true;
+        if(window.config.lobby_audio){
+
+            audio.addEventListener('ended', function () {
+                this.currentTime = 0;
+                this.play();
+            }, false);
+            pause_audio.on("click", () => {
+                console.log("clicked1");
+                console.log(playing);
+                if (playing) {
+                    localStorage.setItem("lobbyAudio",false);
+                    audio.pause();
+                    playing = false;
+                    pause_audio.find("i").removeClass('fe-volume-1');
+                    pause_audio.find("i").addClass('fe-volume-x');
+                } else {
+                    audio.play();
+                    playing = true;
+                    localStorage.setItem("lobbyAudio",true);
+
+                    pause_audio.find("i").removeClass('fe-volume-x');
+                    pause_audio.find("i").addClass('fe-volume-1');
+
+                }
+            });
+            localStorage.setItem("lobbyAudio",true);
+        }
 
     //Wait for video load and then hide loader
     loader = $(".loader");
@@ -485,6 +517,12 @@ function initApp() {
     }
 
     function pageChangeActions(changeChat = true) {
+        if(window.config.lobby_audio){
+            audio.pause();
+            playing = false;
+            pause_audio.hide();
+        }
+       
         // $("#cometchat__widget").show();
         // clearInterval(loungeInterval);
         $("#skip_flyin").hide();
@@ -573,17 +611,42 @@ function initApp() {
     });
 
 
-
+    let  reload  = true ;
+   
     routie({
         'lobby': function () {
             pages.hide();
             // if (isMobile()) {
             //     document.querySelector("#lobby_view").src = '';
             // }
+            if(localStorage.getItem("lobbyAudio")=='true' && window.config.lobby_audio){
+                if(reload){
+                    $("body").on("mousemove",()=>{
+                        pause_audio.show();
+                        pause_audio.find("i").removeClass('fe-volume-x');
+                        pause_audio.find("i").addClass('fe-volume-1');
+                        audio.play();
+                        audio.muted = false;
+                        playing = true;    
+                        $("body").unbind("mousemove");
+                    });
+                    // $("body").trigger("mousemove");
+                    reload= false;
+                }
+                audio.play();
+                playing = true;
+                audio.muted = false;
+                pause_audio.find("i").removeClass('fe-volume-x');
+                pause_audio.find("i").addClass('fe-volume-1');
+            }
             createGroup("general");
             pages.filter("#lobby").show();
             pageChangeActions();
             recordPageView("lobby", "lobby","lobby");
+            if(window.config.lobby_audio){
+                pause_audio.show();  
+            }
+
         },
         'room/:id': function (id) {
             let toShow = pages.filter("#room-" + id);

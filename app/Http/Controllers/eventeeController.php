@@ -183,11 +183,12 @@ class eventeeController extends Controller
                 if($userCount->count() > 0){
                     array_push($totaluser,$userCount->count());
                 }
-                $userCountLive = $userCount->where('online_status',1)->where("updated_at",">",Carbon::now("UTC")->subMinutes(1)->toDateTimeString())->where('type','attendee')->get();
+                $userCountLive = $userCount->where('type','attendee')->where('online_status' ,1)->where("updated_at",">",Carbon::now("UTC")->subMinutes(1)->toDateTimeString());
                 if($userCountLive->count()){
-                        array_push($totaluserOn , $userCountLive);
+                    array_push($totaluserOn , $userCountLive->count());
                 }
             }
+            // dd($totaluserOn);
 
           
             for($i = 0 ; $i < count($totaluser) ; $i++){

@@ -19,6 +19,8 @@
             white-space: nowrap;
         }
     </style>
+    @include("includes.styles.select")
+
 @endsection
 
 @section('page_title')
@@ -39,7 +41,7 @@
         <div class="card">
             <div class="card-body">
                 <form action="{{ route('event.Update',$event_id) }}" method="POST">
-                    @csrf
+                    @csrf       
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="name">Event Name
@@ -112,10 +114,11 @@
                             <label for="timezone">Timezone
                                 <span style="color:red">*</span>
                             </label>
-                            <select class="form-control" name="timezone"    >
+                            <select class="form-control icon_select_2  select2" name="timezone">
                                 <option  value="UTC">UTC</option>
                                 @foreach(TIMEZONES as $tz=>$timezone)
-                                <option @if($event->timezone===$tz) selected="true" @endif value="{{ $tz }}">{{ ucfirst($tz) }}</option>
+                                <option  @if($event->timezone===$tz) selected="true" @endif   value="{{ $tz }}">{{ ucfirst($tz) }} - {{ ucfirst($timezone) }}</option>
+                            
                                 @endforeach
                             </select>
                         </div>
@@ -130,9 +133,12 @@
 @endsection
 
 @section('scripts')
+@include("includes.scripts.select")
 
 <script>
     $(document).ready(function(){
+        $(".icon_select_2").select2({});
+
          $('#event_name').on('input',function(){
             let event_name = $(this).val();
             let slug = event_name.toLowerCase().replaceAll(" ","-");

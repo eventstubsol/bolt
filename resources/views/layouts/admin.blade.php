@@ -205,6 +205,13 @@
         .buttons-pdf{
             display: none !important;
         }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+            background: none !important;
+            background-color: none !important;
+        }
+        .card-box,.card{
+            box-shadow: none !important;
+        }
     </style>
     @if(isset($id))
         @php
