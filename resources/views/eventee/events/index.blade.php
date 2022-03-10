@@ -19,6 +19,9 @@
             font-weight: 700;
             white-space: nowrap;
         }
+        .modal-open .select2-container--open .select2-results__options .select2-results__option{
+            color: white !important;
+        }
     </style>
     <style>
 
@@ -190,7 +193,7 @@
                         <label for="timezone">Timezone
                             <span style="color:red">*</span>
                         </label>
-                        <select class="form-control js-example-basic-single" name="timezone"  >
+                        <select class="form-control icon_select_2 select2" name="timezone"  >
                             <option  value="UTC">UTC</option>
                             @foreach(TIMEZONES as $tz=>$timezone)
                             <option  value="{{ $tz }}">{{ ucfirst($tz) }} - {{ ucfirst($timezone) }}</option>
@@ -260,6 +263,9 @@
         });
       }
      $(document).ready(function(){
+        $(".icon_select_2").select2({
+            dropdownParent: $("#createModal")
+        });
          $('#event_name_slug').on('input',function(){
             
             let event_name = $(this).val();

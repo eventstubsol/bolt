@@ -167,11 +167,11 @@ class EventManageController extends Controller
         }
         if($event->save()){
             flash("Event Updated Succesfully")->success();
-            if(isset($domain)){
-                return redirect(route("verifyDomain",['domain'=>$domain]));
-            }else{
+            // if(isset($domain)){
+            //     return redirect(route("verifyDomain",['domain'=>$domain]));
+            // }else{
                 return redirect()->route('event.index',$event_id);
-            }
+            // }
         }
         else{
             flash("Something Went Wrong")->error();
@@ -198,7 +198,7 @@ class EventManageController extends Controller
         $event = Event::findOrFail($req->id); 
         $total = User::where('event_id',$event->id)->count();
         $isOnline = User::where('event_id',$event->id)->where('online_status' ,1)->where("updated_at",">",Carbon::now("UTC")->subMinutes(1)->toDateTimeString())->count();
-        $isOffline = User::where('event_id',$event->id)->where('online_status' ,0)->where("updated_at",">",Carbon::now("UTC")->subMinutes(1)->toDateTimeString())->count();
+        $isOffline = User::where('event_id',$event->id)->where('online_status' ,0)->count();
         $userobj = new \stdClass();
         if($isOnline > 0){
             $userobj->online =$isOnline;

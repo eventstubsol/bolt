@@ -1,6 +1,12 @@
 @extends("layouts.admin")
 @section('styles')
     @include("includes.styles.datatables")
+    <style>
+        .modal-open .select2-container--open .select2-results__options .select2-results__option{
+            color: white !important;
+        }
+        </style>
+@include("includes.styles.select")
    
 @endsection
 
@@ -17,28 +23,28 @@
 @endsection
 
 @section('breadcrumbs')
-    <li class="breadcrumb-item active">Dashboard</li>
+    
+<div class="ml-2">
+    <div class=""><button class="btn btn-success" onclick="CreateEvent()">Create Event</button></div>
+</div>
 @endsection
 
 @section('content')
 <div class="row">
-    <div class="ml-2 float-right">
-        <div class="float-right"><button class="btn btn-success" onclick="CreateEvent()">Create Event</button></div>
-    </div>
     {{-- Event Count --}}
     <div class="col-md-6 col-xl-3">
         <div class="widget-rounded-circle card" >
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
                             <i class="fa fa-calendar font-22 avatar-title text-primary" style="margin-left: 35%;margin-top: 31%;width: 15%;height: 10%;"></i>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-8">
                         <div class="text-end">
                             <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $events }}</span></h3>
-                            <p class="text-muted mb-1 mr-1 text-truncate">Total Events</p>
+                            <p class="text-muted mb-1 mr-1  ">Total Events</p>
                         </div>
                     </div>
                 </div> <!-- end row-->
@@ -50,15 +56,15 @@
         <div class="widget-rounded-circle card" >
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
                             <i class="fas fa-stream font-22 avatar-title text-primary" style="margin-left: 35%;margin-top: 31%;width: 15%;height: 10%;"></i>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-8">
                         <div class="text-end">
                             <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $liveEvent }}</span></h3>
-                            <p class="text-muted mb-1 text-truncate">Total Live Events</p>
+                            <p class="text-muted mb-1  ">Total Live Events</p>
                         </div>
                     </div>
                 </div> <!-- end row-->
@@ -70,15 +76,15 @@
         <div class="widget-rounded-circle card" >
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
                             <i class="fa fa-users font-22 avatar-title text-primary" style="margin-left: 35%;margin-top: 31%;width: 15%;height: 10%;"></i>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-8">
                         <div class="text-end">
                             <h3 class="text-dark mt-1"><span data-plugin="counterup">{{ $alluser }}</span></h3>
-                            <p class="text-muted mb-1 text-truncate">Total Event Users</p>
+                            <p class="text-muted mb-1  ">Total Event Users</p>
                         </div>
                     </div>
                 </div> <!-- end row-->
@@ -92,15 +98,15 @@
         <div class="widget-rounded-circle card" >
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
                             <i class="fa fa-clock-o font-22 avatar-title text-primary" style="margin-left: 35%;margin-top: 31%;width: 15%;height: 10%;"></i>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-8">
                         <div class="text-end">
                             <h3 class="text-dark mt-1"><span data-plugin="counterup">@php echo $totaluserLive @endphp</span></h3>
-                            <p class="text-muted mb-1 text-truncate">Total Online Attendees</p>
+                            <p class="text-muted mb-1  ">Total Online Attendees</p>
                         </div>
                     </div>
                 </div> <!-- end row-->
@@ -116,7 +122,7 @@
             <div class="card-body">
                 
 
-                <h4 class="header-title mb-3">Last 5 Events</h4>
+                <h4 class="header-title mb-3">Recent Events</h4>
                 
                 <div class="table-responsive">
                     <table class="table table-borderless table-hover table-nowrap table-centered m-0">
@@ -214,14 +220,14 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade theme-modal" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade theme-modal" id="create_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Create Event</h5>
         </div>
         <form action="{{ route('event.Save') }}" method="POST">
-            <div class="modal-body " id="eventData">
+            <div class="modal-body">
                 <div class="form-group">
                     <label for="name">Event Name
                         <span style="color:red">*</span>
@@ -244,10 +250,10 @@
                         }
                     @endphp
                       <input type="text" id="event_slug" name="event_slug" class="form-control" required>
-                    <span>{{$link[0]}}</span>
+                    {{-- <span>{{$link[0]}}</span> --}}
                       <span class="successShow " role="alert" style="display: none;color:green;"></span>
                       <span class="errorShow " role="alert" style="display: none;color:red;"></span>
-                    <br><span id="event_link">@if(env('APP_ENV') == 'staging'){{ ".localhost:8000" }}@else {{ $link[1] }} @endif</span><br>
+                    {{-- <br><span id="event_link">@if(env('APP_ENV') == 'staging'){{ ".localhost:8000" }}@else {{ $link[1] }} @endif</span><br> --}}
                     <span style="color:red">**Note : Do Not Use <strong>Spaces Or Caps </strong> Between Subdomain Name, use '-' only if needed</span>
                 </div>
                 <div class="form-group">
@@ -280,7 +286,7 @@
                         <label for="timezone">Timezone
                             <span style="color:red">*</span>
                         </label>
-                        <select class="form-control js-example-basic-single" name="timezone"  >
+                        <select class="form-control icon_select_2  select2" name="timezone"  >
                             <option  value="UTC">UTC</option>
                             @foreach(TIMEZONES as $tz=>$timezone)
                             <option  value="{{ $tz }}">{{ ucfirst($tz) }} - {{ ucfirst($timezone) }}</option>
@@ -301,10 +307,9 @@
 @endsection
 
 @section('scripts')
+@include("includes.scripts.select")
+
 <script>
-     function CreateEvent(){
-          $('#createModal').modal('toggle');
-      }
       $(document).ready(function(){
          $('#event_name_slug').on('input',function(){
             
@@ -418,9 +423,18 @@
      });
 
      function closeModal(){
-         $('#createModal').modal('toggle');
+         $('#create_modal').modal('toggle');
      }
 
-</script>
-
+</script> 
+<script>
+    function CreateEvent(){
+          $('#create_modal').modal('toggle');
+      }
+      $(document).ready(function(){
+        $(".icon_select_2").select2({
+            dropdownParent: $("#create_modal")
+        });
+      });
+    </script>
 @endsection

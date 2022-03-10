@@ -99,7 +99,8 @@
             max-width: 55%;
             float:right;
             position: relative;
-            
+            min-width: 55%;
+            height: 100vh;
         }
         .auth-fluid .auth-fluid-image img{
             /* position: fixed; */
