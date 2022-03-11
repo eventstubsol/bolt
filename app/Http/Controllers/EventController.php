@@ -142,8 +142,9 @@ class EventController extends Controller
             "name"=>$room
         ];
         $chat_app = CometChat::where("event_id",$id)->first();
-
-        createGroup($chat_app,$group);
+        if($chat_app){
+            createGroup($chat_app,$group);
+        }
         // Http::withHeaders([
         //     "apiKey" => env("COMET_CHAT_API_KEY"),
         //     "appId" => env("COMET_CHAT_APP_ID"),

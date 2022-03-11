@@ -1,10 +1,10 @@
 <div class="page  has-padding padding-small pb-0" id="photo-booth-page" style="height: 100vh">
-    <iframe frameborder="0" class="photo-booth" id="photo-gallery"  src="" allow="camera"></iframe>
+    <iframe  loading="lazy" frameborder="0" class="photo-booth" id="photo-gallery"  src="" allow="camera"></iframe>
     <button id="capture" class="pb-button">
         <i class="fe-camera mr-1"></i>
         Capture
     </button>
-    <iframe id="photo-capture" src="" style="border:0px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" class="photo-booth" allowfullscreen allow="camera; autoplay; encrypted-media;"></iframe>
+    <iframe  loading="lazy" id="photo-capture" src="" style="border:0px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" class="photo-booth" allowfullscreen allow="camera; autoplay; encrypted-media;"></iframe>
     <button id="gallery" class="pb-button">
         <i class="fe-image mr-1"></i>
         Gallery

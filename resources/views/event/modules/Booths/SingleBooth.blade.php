@@ -1,4 +1,4 @@
-@if(isOpenForPublic("booths"))
+
 @foreach($booths as $booth)
     <div class="page  booth" data-name="{{ $booth->name }}" id="booth-{{ $booth->id }}">
         <div data-test="{{$booth->vidbg_url}}" class="position-relative" style="height:100vh">
@@ -218,4 +218,3 @@
 </div><!-- /.modal -->
     @endif
 @endforeach
-@endif

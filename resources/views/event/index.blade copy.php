@@ -1,3 +1,6 @@
+@php
+$user = Auth::user();
+@endphp
 <!doctype html>
 <html lang="en">
 
@@ -7,24 +10,713 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ getFieldId('title', $event_id,$event_name) }}</title>
      {{-- App favicon --}}
-    <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}?v=3">
+     <link rel="shortcut icon" href="{{ assetUrl(getFieldId('favicon',$event_id)) }}?v=3">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
     {{-- <link href={{ asset('assets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" /> --}}
     <link rel="stylesheet" href="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
-    @include("event.modules.style")
- 
+    <style>  
+        .loader span,
+        .loader:after {
+        background: #233c77 !important;
+        }
+
+        .loader:before {
+        border-color: #233c77 !important;
+        }
+
+        #photo-capture-2 {
+            width: 100%;
+            height: 100%;
+        }
+        #videosdk-frame{
+              z-index: 39;
+              position: relative;
+            }
+
+        #photo-gallery-2 {
+            width: 100%;
+            height: 100%;
+        }
+
+        .menu-custom .menu li a .menu-icon.courses {
+            background-image: url(/assets/images/menu/final/guide.png);
+        }
+
+        .menu-custom .menu li a:hover .menu-icon.courses {
+            background-image: url(/assets/images/menu/final/guide.png);
+        }
+
+        .full-width-videos {
+            width: 100vw;
+            object-fit: unset;
+            display: block;
+            height: 100vh;
+        }
+
+        .booth-bg {
+            object-fit: unset;
+            height: 100vh;
+        }
+
+        body.auth .container {
+            padding: 0px;
+        }
+
+        .side-navigation__list-item__title {
+            opacity: 0 !important;
+        }
+
+        .app-footer__credit h4 {
+            opacity: 0 !important;
+        }
+
+        @media only screen and (max-device-width: 967px) {
+            .theme-chat.right-bar#chat-container {
+                min-width: 90% !important;
+            }
+            .menu img{
+                display: inline-block;
+            }
+            .YouTubePopUp-Content iframe{
+                height: 243px!important;
+            }
+            .YouTubePopUp-Close {
+                bottom: auto;
+                top: 20px;
+            }
+        }
+
+        .tab-content .nav-justified .nav-item {
+            min-width: max-content;
+            max-width: 25%;
+            margin-top: 15px;
+            color: #fff;
+        }
+
+        /* .tab-content .nav-justified .nav-item:nth-child(1) a {
+            background: #ff7549;
+            color: #fff;
+        } */
+
+        button.pb-button {
+            color: {{ $event->secondary_color }} !important;
+        }
+        .custom-theme a{
+            color: {{ $event->secondary_color }} ;
+        }
+
+        /* .tab-content .nav-justified .nav-item:nth-child(2) a {
+            background: #1b9e84;
+            color: #fff;
+        }
+
+        .tab-content .nav-justified .nav-item:nth-child(3) a {
+            background: #233c77;
+            color: #fff;
+        }
+
+        .tab-content .nav-justified .nav-item:nth-child(4) a {
+            background: #921d1f;
+            color: #fff;
+        }
+
+        .tab-content .nav-justified .nav-item:nth-child(5) a {
+            background: #6d2e5c;
+            color: #fff;
+        }
+
+        .tab-content .nav-justified .nav-item:nth-child(6) a {
+            background: #050708;
+            color: #fff;
+        }
+
+        .tab-content .nav-justified .nav-item:nth-child(7) a {
+            background: #f06031;
+            color: #fff;
+        }
+
+        .tab-content .nav-justified .nav-item:nth-child(8) a {
+            background: #1b7765;
+            color: #fff;
+        }
+
+        .tab-content .nav-justified .nav-item:nth-child(9) a {
+            background: #4763a9;
+            color: #fff;
+        }
+
+        .tab-content .nav-justified .nav-item:nth-child(10) a {
+            background: #563d3d;
+            color: #fff;
+        } */
+
+        /* .tab-content .nav-justified .nav-item a.active {
+            background: none;
+        } */
+
+        .nav-justified .nav-item {
+            min-width: max-content;
+            margin: 4px 0;
+        }
+
+        .schedule-pdf {
+            margin: 7px 0 !important;
+            padding: 5px 13px;
+            border: 1px solid silver;
+            border-radius: 5px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        @media (min-width:992px) {
+
+            .modal-lg,
+            .modal-xl {
+                max-width: 1024px
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .page {
+                padding: 0 !important;
+                min-height: 99% !important;
+            }
+
+            body {
+                padding: 0 !important;
+                min-height: 99% !important;
+            }
+        }
+
+        @media (max-width: 1500px) {
+            .right-bar-enabled .theme-chat.right-bar#chat-container {
+                min-width: 70% !important;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .right-bar-enabled .theme-chat.right-bar#chat-container {
+                min-width: 90% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        .theme-chat.right-bar#chat-container {
+            transform: translateY(200%) !important;
+        }
+
+        .right-bar-enabled .theme-chat.right-bar#chat-container {
+            transform: translateX(0) !important;
+            opacity: 1;
+        }
+
+        @media (max-width: 900px) {
+            .right-bar-enabled .theme-chat.right-bar#chat-container {
+                min-width: 100% !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                right: 0 !important;
+                left: 0 !important;
+                border-radius: 0 !important;
+                transform: translateY(200%) !important;
+            }
+            #skip_flyin{
+                z-index: 7199 !important;
+                top: 15% !important;
+            }
+            
+
+            .right-bar-enabled .theme-chat.right-bar#chat-container {
+                min-width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            .right-bar-enabled .theme-chat.right-bar#chat-container {
+                transform: translateX(0) !important;
+                opacity: 1;
+            }
+
+            .theme-chat.right-bar#chat-container .page-int-wrapper .ccl-left-panel {
+                width: 200px !important;
+                max-width: 200px !important;
+            }
+
+            .theme-chat.right-bar#chat-container .chat-ppl-listitem .chat-ppl-thumbnail-wrap {
+                width: 30px !important;
+                height: 30px !important;
+            }
+
+            .theme-chat.right-bar#chat-container .chat-ppl-listitem .chat-ppl-thumbnail-wrap img {
+                width: 30px !important;
+            }
+
+            .theme-chat.right-bar#chat-container .chat-ppl-listitem .chat-ppl-listitem-dtls .chat-ppl-listitem-name {
+                font-size: 12px !important;
+            }
+
+            .theme-chat.right-bar#chat-container .chat-ppl-listitem .chat-ppl-listitem-dtls .chat-ppl-listitem-txt {
+                font-size: 10px !important;
+            }
+
+            .theme-chat.right-bar#chat-container .chat-ppl-listitem .chat-ppl-listitem-time {
+                display: none !important;
+            }
+
+            .theme-chat.right-bar#chat-container .chat-ppl-listitem {
+                padding: 8px 8px 0 !important;
+            }
+        }
+
+        body.page::after {
+            content: '';
+            position: absolute;
+            background: #000;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.5
+        }
+
+        .device-orentation.disabled {
+            display: none;
+        }
+
+        .device-orentation .inner {
+            position: relative;
+            min-width: 300px;
+            pointer-events: auto;
+        }
+
+        .device-orentation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999999;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            overflow: hidden;
+        }
+
+        .device-orentation.disabled {
+            opacity: 0;
+            display: none;
+            pointer-events: none;
+        }
+
+        .device-orentation.disabled .inner {
+            transform: translateY(10%);
+        }
+
+        .device-orentation .inner {
+            display: inline-flex;
+            padding: 20px 25px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198), 0px 100px 80px rgba(0, 0, 0, 0.07);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: ease all 0.3s;
+            opacity: 1;
+            transform: translateY(0%);
+            pointer-events: none;
+            max-width: 400px;
+            flex-direction: column;
+        }
+
+        .device-orentation .inner p {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #111a348c;
+        }
+
+        .modal {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        #profile-app .mdc-chip-set .mdc-chip,
+        #view-profile-modal .mdc-chip-set .mdc-chip {
+            background: #951e34 !important;
+        }
+
+        .col-md-6 .card-box {
+            max-height: 455px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .col-md-6 .card-box .full-profile {
+            display: block !important;
+        }
+
+        .full-profile {
+            text-align: center;
+            width: 92%;
+            display: none;
+            position: absolute;
+            bottom: 0;
+            left: 13px;
+            cursor: pointer;
+            height: 10%;
+            font-weight: 700;
+            background: white;
+            z-index: 2;
+        }
+
+        .card-box.text-center .main-heading {
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .custom-navpills .nav-link {
+            border-width: 2px;
+            border-style: solid;
+            border-color: #971b23;
+            font-weight: 800;
+            color: #525252;
+            background: none !important;
+        }
+        #skip_flyin{
+            position: absolute;
+            z-index: 9;
+            top: 10%;
+            right: 2%;
+        }
+
+        #chat-toggle {
+            display: none !important;
+        }
+
+        .app__messenger {
+            min-height: 0 !important;
+        }
+
+        .booth_directory_item {
+            color: #6c757d !important;
+            border: 1px solid;
+            padding: 5px;
+        }
+
+        .expo_hall_list {
+            width: 50%;
+        }
+
+        .boothroomlist {
+            display: flex;
+            flex-direction: row;
+            padding: 23px;
+        }
+
+        .booth_directory_item_heading {
+            color: #6c757d !important;
+            font-size: 30px;
+            font-weight: 800;
+            border: 2px solid;
+            padding: 4px;
+
+        }
+
+        .css-1gvrc8 {
+            height: auto !important;
+        }
+        #video_play_area{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 2;
+        }
+        .hidden{
+            display: none !important;
+        }
+        .custom-dropdown a{
+            cursor: pointer;
+        }
+
+        .loader-logo img {
+            width: auto;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .loaderSection {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            flex-direction: column;
+            z-index: 2119;
+            background: #00000085;
+        }
+        .loader-logo{
+            width: 300px;
+        }
+        .theme-modal .nav-pills .nav-link.active,
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+            background-color: {{ $event->primary_color }} !important;
+            color: #fff;
+        }
+
+        .page#faq .faq-card .faq-content a {
+            color: {{ $event->primary_color }} !important;
+        }
+        .page#faq .faq-card .faq-content a {
+            color: {{ $event->primary_color }} !important;
+        }
+
+        a {
+            color: {{ $event->primary_color }};
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        a:hover {
+            color: {{ $event->secondary_color }} ;
+            text-decoration: underline;
+        }
+
+
+        .faq-items .faq-card .faq-content a {
+            color: {{ $event->primary_color }} !important;
+        }
+
+
+        .timeline-sm .timeline-sm-item:after {
+            border-color: {{ $event->primary_color }} !important;
+        }
+
+
+        .profile-card .p-header {
+            display: block;
+            width: 100%;
+            background: {{ $event->primary_color }} !important;
+            height: 140px;
+        }
+
+
+        .profile-card .p-body .p-info .points {
+            display: inline-block;
+            font-size: 16px;
+            background: rgba(219, 91, 91, 0.1);
+            border-radius: 3px;
+            letter-spacing: 0.01em;
+            color: {{ $event->primary_color }} !important;
+            font-weight: 700;
+            padding: 5px 30px;
+        }
+        .doc-lists .doc-item .theme-btn.add-to-bag:before {
+            color: {{ $event->primary_color }} !important;
+            padding: 8px;
+            font-weight: 700;
+        }
+
+        .theme-modal .modal-dialog.confirmation .modal-content h3 span {
+            color: {{ $event->primary_color }} !important;
+        }
+
+
+        .theme-btn.primary {
+            background: rgb(91 219 103 / 10%);
+            border-color: rgb(91 219 140 / 30%);
+            color: {{ $event->primary_color }} !important;
+        }
+
+        .theme-btn.primary-filled {
+            background: {{ $event->primary_color }} !important;
+            border-color: {{ $event->primary_color }} !important;
+            color: #fff;
+        }
+
+
+        .theme-btn .green.primary {
+            background: white;
+            border-color: white;
+            color: {{ $event->primary_color }} !important;
+        }
+
+        .theme-btn .green.primary-filled {
+            background: {{ $event->primary_color }} !important;
+            border-color: {{ $event->primary_color }} !important;
+            color: #fff;
+        }
+
+
+
+
+        .doc-lists .simplebar-track .simplebar-scrollbar:before {
+            background: #00a15f !important;
+            opacity: 1 !important;
+            border-radius: 100px;
+        }
+
+
+        .doc-lists.swagbag-list .doc-item .checkbox input:checked+label:before {
+            background: {{ $event->primary_color }} !important;
+            border: 2px solid {{ $event->primary_color }} !important;
+        }
+
+
+
+        .modal-open .select2-container--open .select2-results__options .select2-results__option:hover {
+            color: {{ $event->primary_color }} !important;
+            background: #fff;
+        }
+
+        .modal-open .select2-container--open .select2-results__options .select2-results__option--highlighted {
+            background: #fff;
+            color: {{ $event->primary_color }} !important;
+        }
+
+
+
+        .modal-open .select2-container--open .select2-results__options::-webkit-scrollbar-thumb {
+            background-color: {{ $event->primary_color }} !important;
+            border-right: 5px solid rgba(0, 0, 0, 0);
+            border-top: 5px solid rgba(0, 0, 0, 0);
+            border-bottom: 5px solid rgba(0, 0, 0, 0);
+            border-radius: 100px;
+        }
+
+        .round-icon {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            background: rgba(219, 91, 91, 0.1);
+            border: 1px solid rgba(219, 91, 91, 0.1);
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+            color: {{ $event->primary_color }} !important;
+            font-size: 16px;
+            min-width: 32px;
+        }
+
+        .menu-custom .menu .custom-dropdown .custom-dropdown-menu .dropdown-item:hover {
+            color: {{ $event->primary_color }} !important;
+            background: transparent;
+        }
+
+        .custom-theme .btn-link {
+            color: {{ $event->primary_color }} !important;
+        }
+
+        .custom-theme .btn-link:hover {
+            color: #00a15ea9;
+        }
+
+        .custom-theme .badge-primary {
+            color: #fff;
+            background-color: {{ $event->primary_color }} !important;
+        }
+
+        .custom-theme .btn-primary,
+        .custom-theme .page-item.active .page-link,
+        .custom-theme .btn-outline-primary:hover {
+            color: #fff;
+            background-color: {{ $event->primary_color }} !important;
+            border-color: {{ $event->primary_color }} !important;
+        }
+
+        .custom-theme .btn-outline-primary {
+            color: {{ $event->primary_color }} !important;
+            border-color: {{ $event->primary_color }} !important;
+        }
+
+
+        .custom-theme .btn-outline-primary.disabled,
+        .custom-theme .btn-outline-primary:disabled {
+            color: {{ $event->primary_color }} !important;
+            background-color: transparent;
+        }
+
+        .custom-theme .btn-outline-primary:not(:disabled):not(.disabled).active,
+        .custom-theme .btn-outline-primary:not(:disabled):not(.disabled):active,
+        .custom-theme .show>.btn-outline-primary.dropdown-toggle {
+            color: #fff;
+            background-color: {{ $event->primary_color }} !important;
+            border-color: {{ $event->primary_color }} !important;
+        }
+
+        .custom-theme .btn-outline-primary:not(:disabled):not(.disabled).active:focus,
+        .custom-theme .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
+        .custom-theme .show>.btn-outline-primary.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.15rem white;
+        }
+
+        .custom-theme .text-primary {
+            color: #00a15f !important;
+        }
+
+        .custom-theme .border-primary {
+            border-color: #00a15f !important;
+        }
+
+        .custom-theme a.text-primary:focus,
+        .custom-theme a.text-primary:hover {
+            color: #00a15ea9 !important;
+        }
+
+        .page .wrapper .points {
+            display: block;
+            width: 30%;
+            background: {{ $event->primary_color }} !important;
+            color: #fff;
+            padding: 25px 25px;
+        }
+
+
+        .page .wrapper .scores .score-list li::before {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #F4F4F4;
+            width: 50px;
+            height: 50px;
+            content: counter(rank-counter);
+            color: {{ $event->primary_color }} !important;
+            font-weight: 800;
+            border-radius: 100%;
+            font-size: 20px;
+            float: left;
+            margin-right: 30px;
+        }
+
+        .page#faq .page-header {
+            padding: 80px 0;
+            margin: 65px 0;
+            background: {{ $event->primary_color }} !important;
+        }
+
+
+        .timeline-sm .timeline-sm-item:after {
+            border-color: "{{ $event->primary_color }}" !important;
+        }
+
+
+
+    </style>
     {{-- Notification Modal --}}
     <!-- Small modal -->
     <div style="z-index:99999" class="notification-smallModal consent-notification hide-on-exterior"  id="notification-smallModal">
-        <h4 id="notification-head"></h4>
-        <p id="notification-body" ></p>
-        <div class="flex">
-            <div class="notification-actions">
+    <h4 id="notification-head"></h4>
+    <p id="notification-body" ></p>
+    <div class="flex">
+        <div class="notification-actions">
 
-            </div>
-            <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true">Close</button>
         </div>
+        <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true">Close</button>
+    </div>
     </div>
       
         
@@ -38,10 +730,56 @@
                 showMessage("For an immersive experience on our platform please use some modern browser like Chrome, Safari or Firefox.",'error');
         }
     </script>
-    
+    <!-- Onesignal -->
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></script>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+    <script>
+        window.OneSignal = window.OneSignal || [];
+        OneSignal.push(function() {
+            // Occurs when the user's subscription changes to a new value.
+            OneSignal.setExternalUserId("{{ Auth::user()->id }}");
+            OneSignal.sendTags({
+                "user_type": "{{ $user->type }}",
+                "name": "{{ $user->name }}",
+            });
+            OneSignal.on('subscriptionChange', function(isSubscribed) {
+                console.log("Subscription changed", isSubscribed)
+                if (isSubscribed) {
+                    OneSignal.getUserId().then(function(userId) {
+                        $.ajax({
+                            url: "{{ route('registerDevice') }}",
+                            method: "POST",
+                            data: {
+                                device_id: userId,
+                                _token: "{{ csrf_token() }}",
+                            },
+                            success: function(response) {
+                                if (response && response.success) {
+                                    console.log("Device Saved");
+                                } else {
+                                    console.log("Could not save device id.");
+                                }
+                            },
+                            error: function() {
+                                console.log("Could not save device id.");
+                            },
+                        });
+                    });
+                }
+            });
+            OneSignal.init({
+                appId: "{{ env('ONESIGNAL_APP_ID') }}",
+                // notifyButton: {
+                //     enable: true,
+                // },
+                allowLocalhostAsSecureOrigin: {{ env('APP_DEBUG', true) ? 'true' : 'false' }}, //Making it false when the app goes into production
+            });
+        });
+    </script>
     @include("includes.styles.sweetalert2")
     @include("includes.styles.fileUploader")
     <!-- Custom -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link href="{{ asset('/dflip/css/dflip.css') }}?cb=218723676285726" rel="stylesheet" type="text/css">
     <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=218723676285726" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=218723676285726" type="text/css">
@@ -118,25 +856,59 @@
             });
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script>
+        (function(h, o, t, j, a, r) {
+            h.hj = h.hj || function() {
+                (h.hj.q = h.hj.q || []).push(arguments)
+            };
+            h._hjSettings = {
+                hjid: 1993421,
+                hjsv: 6
+            };
+            a = o.getElementsByTagName('head')[0];
+            r = o.createElement('script');
+            r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    
+
 </head>
 
 <body class="custom-theme">
-        <div id="skip_flyin" style="display:none">
-            <button class="btn btn-primary">Skip</button>
+    <div id="skip_flyin" style="display:none">
+        <button class="btn btn-primary">Skip</button>
+    </div>
+    <div class="consent-notification hide-on-exterior" >
+
+        <h4 id="notification-head"></h4>
+    
+        <p id="notification-body" >We'll send you  notifications about the event, chats and other cool stuff. Sounds good?</p>
+    
+        <div class="flex">
+    
+            <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true">Close</button>
+    
         </div>
-        <div class="consent-notification hide-on-exterior" >
-            <h4 id="notification-head"></h4>
-            <p id="notification-body" >We'll send you  notifications about the event, chats and other cool stuff. Sounds good?</p>
-            <div class="flex">
-                <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true">Close</button>
-            </div>
+    
         </div>
-    {{-- Event Loader --}}
+    {{-- <div class="loader"></div> --}}
+    
     <div class="loader loaderSection ">
+        <!-- <div class="loader-logo">
+            <img src="{{ assetUrl(getFieldId('logo',$event_id)) }}" alt="">
+        </div> -->
         <img  src="{{ assetUrl($loader->load_class) }}" class="w-25 mt-5" alt="">
     </div>
-   
+    @php
+        $boothConfig = [];
+        foreach ($booths as $booth) {
+            $boothConfig[$booth->id] = $booth->name;
+        }
+        
+    @endphp
     <div class="device-orentation disabled">
         <div class="inner">
             <div class="icon">
@@ -170,61 +942,95 @@
             </p>
         </div>
     </div>
-    {{-- Custom Modals --}}
     @include("event.modules.Modals")
-    
-    {{-- Event Menus --}}
+
     @include("event.modules.Navbar")
     @include("event.modules.Menubar")
     @include("event.modules.Sidebar")
 
-    {{-- Photobooth --}}
-    @include("event.modules.Booths.PhotoBooth")
-    
-    {{-- PDF Library --}}
-    @include("event.modules.Resources")
-   
-   {{-- Exterior and lobby --}}
+
+    @if (isOpenForPublic('photo-booth'))
+        @include("event.modules.Booths.PhotoBooth")
+        @include("event.modules.Booths.PhotoBoothNew")
+    @endif
+
+    @if (isOpenForPublic('library'))
+        @include("event.modules.Resources")
+    @endif
+
     @include("event.modules.Exterior")
     @include("event.modules.Lobby")
 
+    {{-- @include("event.modules.Booths.BoothList") --}}
+
+    {{-- @include("event.modules.Booths.BoothDirectory") --}}
+
+    {{-- @include("event.modules.Booths.ExpoHall") --}}
     {{-- Session Rooms --}}
     @include("event.modules.Sessions")
-   {{-- Pages --}}
     @include("event.modules.Pages")
-    {{-- Booths --}}
+
     @include("event.modules.Booths.SingleBooth")
 
     @include("event.modules.Leaderboard")
-  
-  
-   
+    {{-- @include("event.modules.MuseumList") --}}
+
+    @include("event.modules.MuseumSingle")
+
+    @include("event.modules.VimeoModal")
+
 
     {{-- @if (isOpenForPublic('swagbag'))
         @include("event.modules.Report")
     @endif --}}
 
+    {{-- @if (isOpenForPublic('meet-and-greet'))
+        @include("event.modules.MeetGreet")
+    @endif --}}
 
     @include("event.modules.Faq")
 
-    @include("event.modules.Swagbag")
+    @if (isOpenForPublic('swagbag'))
+        @include("event.modules.Swagbag")
+    @endif
 
 
+    {{-- @if (isOpenForPublic('lounge'))
+        @include("event.modules.Lounge")
+    @endif --}}
 
     @include("event.modules.SchedulePopup")
+    {{-- @include("event.modules.WorkshopPopup") --}}
     @include("event.modules.Personalagenda")
+    {{-- @include("event.poll") --}}
+    {{-- @include("event.qna") --}}
+    {{-- @include("event.announce") --}}
+    {{-- @include("event.toast") --}}
 
     @include("event.modules.Profile")
-
     @if(isset($chat_app))
         @include("event.modules.chat")
     @endif
-
     @include("event.modules.networking")
-    
-    {{-- Swagbag Delete Confirmation --}}
+
     @include("event.modules.Confirmation")
 
+    {{-- @include("event.modules.webinar") --}}
+    {{-- @include("event.modules.workshop") --}}
+
+    {{-- @if (isOpenForPublic('caucus'))
+        @include("event.modules.caucusRoom")
+    @endif --}}
+
+    {{-- @include("event.modules.infodesk") --}}
+
+    {{-- Information Dialog - for opening of booth rooms at specific timings && also for booth enquiry - DO NOT REMOVE --}}
+    {{-- @include("event.modules.Information") --}}
+
+    {{-- @include("event.modules.Delegates") --}}
+    {{-- @include("event.modules.ArchiveVideos") --}}
+
+    {{-- @include("event.modules.ByLaws") --}}
     @include("event.modules.FlyIn")
     {{-- @include("event.modules.Onboarding")  --}}
 
@@ -232,11 +1038,30 @@
 
 
     <div id="chat_div"></div>
-
+    {{-- <div id="announce_div" class="d-flex justify-content-end">
+        <div class="modal fade bd-example-modal-sm" id="myModal" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" style="margin-left: 80%;margin-top:29%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="annouce_head"><i class="fa fa-bullhorn" aria-hidden="true"></i>
+                            &nbsp;Announcement</h4>
+                    </div>
+                    <div class="modal-body" id="announce_body">
+                        
+                    </div>
+                
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal" id="seenAnn"
+                    onclick="AnnouceChecked(this)">Close</button>
+            </div>
+        </div>
+    </div> --}}
     </div>
     </div>
     <script defer src="https://widget-js.cometchat.io/v2/cometchatwidget.js"></script>
-    {{-- Script Checking user Device and orientation --}}
+
     <script>
         // $(document).ready(function(){
         //     $('#notification-smallModal').addClass('enable');
@@ -302,6 +1127,8 @@
             userName: "{{ $user->name }}",
             userEmail: "{{ $user->email }}",
             userCompany: "{{ $user->company_name }}",
+            roomSlidoConfig: {!! json_encode(getSlidoConfig()) !!},
+            booths: {!! json_encode($boothConfig) !!},
             saveprofile: "{{ route('saveprofile') }}",
             cometChat: {
                 appID: "{{ env('COMET_CHAT_APP_ID') }}",
@@ -319,6 +1146,13 @@
             profileUpdateURL: '{{ route('updateProfile') }}',
             suggestedContactsURL: '{{ route('suggestedContacts') }}',
             attendeesURL: '{{ route('attendeesURL') }}',
+            company_sizes: {!! json_encode(getFilters('company_size')) !!},
+            geography: {!! json_encode(getFilters('Geographical Preference')) !!},
+            others: {!! json_encode(getFilters('Top 3  Industries')) !!},
+            practice_areas: {!! json_encode(getFilters('Practice Areas')) !!},
+            cetrifications: {!! json_encode(getFilters('Certifications')) !!},
+            firm_size: {!! json_encode(getFilters('Firm Size')) !!},
+            ownership: {!! json_encode(getFilters('Ownership')) !!},
             mytags: {!! json_encode(getFilters($event_id)) !!},
             sendConnectionURL: '{{ route('sendConnectionRequest') }}',
             updateConnectionURL: '{{ route('updateConnectionRequest') }}',
@@ -337,25 +1171,114 @@
             byLawsURL: "{{ route('byLaws.get') }}",
             byLawsSubmissionURL: "{{ route('byLaws.submit') }}",
             byLawsOptionSubmissionURL: "{{ route('byLaws.optionSubmit') }}",
+            roomNames: {!! json_encode(WORKSHOP_ROOM_NAMES) !!},
             lobby_audio: {{ $event->lobby_audio ? true : 0}}
         };
         const assetUrl = url => "{{ assetUrl('') }}" + url;
         window.assetUrl = assetUrl;
         window.config = config;
     </script>
-    {{-- <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> --}}
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="{{ asset('assets/js/vendor.min.js') }}?cb=218723676285726"></script>
     <script src="{{ asset('assets/js/app.min.js') }}?cb=218723676285726"></script>
     <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=218723676285726"></script>
     <script src="{{ asset('event-assets/js/app.js') }}?cb=218723676285726"></script>
+    <script src="{{ asset('/js/chat/app.js') }}?cb=218723676285726"></script>
+    <!-- <script src="{{ asset('/js/by-laws/App.js') }}?cb=218723676285726"></script> -->
     <script src="{{ asset('/js/profile/index.js') }}?cb=218723676285726"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=218723676285726"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=218723676285726"></script>
+    {{-- @if (isOpenForPublic('polls'))
+        @include("event.poll")
+    @endif --}}
     <style>
-    
+        fieldset.scheduler-border {
+            border: 1px groove #ddd !important;
+            padding: 0 1.4em 1.4em 1.4em !important;
+            margin: 0 0 1.5em 0 !important;
+            -webkit-box-shadow: 0px 0px 0px 0px #000;
+            box-shadow: 0px 0px 0px 0px #000;
+        }
+
+        legend.scheduler-border {
+            font-size: 1.2em !important;
+            font-weight: bold !important;
+            text-align: left !important;
+        }
+        .positionBlock {
+            position: absolute;
+            left: 2%;
+            top: 2%;
+            display: flex;
+            align-items: center;
+            /* background: #fff; */
+            padding: 0px 6px;
+            border-radius: 4px;
+            height: 30px;
+        }
+        
+        .rightTop {
+            right: 2%;
+            left: inherit;
+        }
+        
+        .leftBottom {
+            top: inherit;
+            bottom: 2%;
+        }
+        
+        .rightBottom {
+            top: inherit;
+            bottom: 2%;
+            left: inherit;
+            right: 2%;
+        }
+        
+        .centerBottom {
+            top: 50%;
+            bottom: inherit;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .positionBlock span {
+            line-height: 0;
+            animation: infinite example 1500ms;
+            position: absolute;
+            bottom: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        @keyframes example {
+            0% {
+                bottom: -80%;
+            }
+            33% {
+                bottom: -48%;
+            }
+            100% {
+                bottom: -80%;
+            }
+        }
+        
+        .positionBlock p {
+            line-height: 0;
+            padding: 0;
+            margin: 0 0 0 3px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #515151;
+        }
+
     </style>
     <script>
-    
+        // function oneSignalJsInit() {
+            // OneSignal.push(function() {
+            //     OneSignal.showNativePrompt();
+            // });
+        // }
+
         $(document).ready(function() {
             // setInterval(function() {
             //     $.ajax({
@@ -368,12 +1291,82 @@
             //     });
             // }, 15000);
             var countT = 1;
+            // setInterval(function() {
+            //     $('#announce_body ').empty();
+            //     $.ajax({
+            //         url: "{{ route('announcement.popUp',$event_id) }}",
+            //         success: function(result) {
+            //             if (result != null) {
+                            
+            //                 $.each(result, function(index, value) {
+            //                   $('#announce_body ').append("<fieldset class='scheduler-border'><b>" +value.subject +"</b><legend class='scheduler-border'></legend><ul class='list-group'><li class='list-group-item'>" +value.announce +"</li></ul></fieldset>");
+            //                     $('#myModal').modal('toggle');
+            //                     countT++;
+            //                 });
+            //                 $('#seenAnn').attr('data-id', countT);
+            //             }
+            //             else{
+            //                 alert(0);
+            //                 $('#myModal').modal('hide');
+            //             }
+
+
+            //         },
+            //     });
+            // }, 100000);
+
+
         });
 
-        
+        // function AnnouceChecked(e) {
+        //     var id = e.getAttribute('data-id');
+            
+        //     $.get("{{ route('announcement.Close') }}", {
+        //         'id': id
+        //     }, function(result) {
+        //         if (result.status == 200) {
+        //             console.log(result.message);
+        //         } else {
+        //             console.log(result.message);
+        //         }
+        //     });
+        // }
+
         function initJs() {
             $('body').addClass('loaded');
-        
+            // let consent = localStorage.getItem('notifyConsent');
+            // let consentNotify = $('.consent-notification');
+
+            // if (consent === null || consent === 'skip') {
+            //     // consentNotify.addClass('enable');
+            //     // recordEvent("push_notification_consent", "Push Notifications Consent Box Shown");
+            // } else if (consent === 'allow') {
+            //     // oneSignalJsInit();
+            // }
+
+            // $('.btn[data-consent]').on('click', function() {
+            //     let consent = $(this).data('consent');
+            //     if (consent == "skip") {
+            //         localStorage.setItem('notifyConsent', 'skip');
+            //         recordEvent("push_notification_allow", "Push Notifications Skipped");
+            //     } else if (consent == true) {
+            //         localStorage.setItem('notifyConsent', 'allow');
+            //         recordEvent("push_notification_allow", "Push Notifications Allowed");
+            //         oneSignalJsInit();
+            //     } else {
+            //         recordEvent("push_notification_deny", "Push Notifications Denied");
+            //         localStorage.setItem('notifyConsent', 'dontallow');
+            //     }
+            //     consentNotify.removeClass('enable');
+            // });
+
+            $('#prizes').on('slid.bs.carousel', function() {
+                var $parent = $(this).parents('.d-block');
+                var $prtext = $parent.find('.pr-text');
+                var $cprtext = $(this).find('.active').data('prize-rank');
+                $prtext.text($cprtext);
+            });
+
             $('.faq-card .collapse').on('shown.bs.collapse', function() {
                 $(this).parents('.faq-card').find('.faq-title').addClass('active');
                 $(this).parents('.faq-card').siblings().find('.faq-title').removeClass('active');
@@ -383,13 +1376,11 @@
         }
         $(document).ready(initJs);
     </script>
-    
-    {{-- Swagbag buttons setup script --}}
+
     <script src="{{ asset('event-assets/js/ResourceInit.js') }}"></script>
 
-    {{-- Script and css for scrollbars --}}
-    {{-- <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
-    <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script> --}}
+    <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+    <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
 
     @include("includes.scripts.fileUploaderFrontend")
     @include("includes.scripts.sweetalert2")
@@ -428,7 +1419,7 @@
     </script>
     <script src="{{ asset('dflip/js/dflip.min.js') }}" type="text/javascript"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script> --}}
-    {{-- <script async src="https://app.popkit.club/pixel/3c26bfdb333b6fecd7284b84b0465334"></script> --}}
+    <script async src="https://app.popkit.club/pixel/3c26bfdb333b6fecd7284b84b0465334"></script>
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script>
       
