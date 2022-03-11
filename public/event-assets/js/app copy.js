@@ -522,18 +522,35 @@ function initApp() {
             playing = false;
             pause_audio.hide();
         }
+       
+        // $("#cometchat__widget").show();
+        // clearInterval(loungeInterval);
         $("#skip_flyin").hide();
+
         currentresbtns = null;
         if (changeChat)
             CometChatWidget.chatWithGroup('general');
+        // window.$socket.emit("update_page", window.location.hash.substr(1));
         if ($("#cometchat__widget")) {
             $("#cometchat__widget").show();
 
         }
+        // $('.page_video').hide();
+        // $('.room_video').hide();
+        // $('.booth_video').hide();
         loader.hide();
+        $("#audi-content").empty();
+        $("#caucus-room-content").empty();
+        $("#workshop-content").empty();
         navs.removeClass('hidden');
         clearContentTicker();
         clearLounge();
+        $("#audi-modal").modal("hide");
+        $("#caucus-modal").modal("hide");
+        $("#workshop-modal").modal("hide");
+        // $("#workshop-modal").modal("hide");
+        $("body").removeClass("right-bar-enabled"); //Hide Chat modal
+        $("#chat-toggle").show();
         window.scrollTo(0, 0);
         $('.YouTubePopUp-Wrap, .YouTubePopUp-Close').click();
         if ($('.page:visible').hasClass('menu-filled')) {
@@ -546,13 +563,62 @@ function initApp() {
         }
         $('.modal').modal('hide');
     }
-    
+
+    let lastLoaded = false;
+    const checkContentLoad = (room, callback = false) => (loaded = true) => {
+        // $.ajax({
+        //     url: window.config.checkCurrentSession,
+        //     data: {
+        //         room,
+        //     },
+        //     success: function(response){
+        //         if(loaded && lastLoaded !== response.id && typeof callback === "function"){
+        //             callback();
+        //             trackEvent({
+        //                 type: "sessionView",
+        //                 id: response.id
+        //             });
+        //         }else if(response.id){
+        //             trackEvent({
+        //                 type: "sessionView",
+        //                 id: response.id
+        //             });
+        //         }
+        //         lastLoaded = response.id;
+        //     }
+        // });
+    };
+    const contentRecheckingTime = 25000;
+    $("#workshop-list").unbind().on("hide.bs.modal", function () {
+        if (window.location.hash === "#workshop-list") {
+            window.history.back();
+        }
+    });
+    $("#booth_directory").unbind().on("hide.bs.modal", function () {
+        if (window.location.hash === "#booth_directory") {
+            window.history.back();
+        }
+    });
+    $("#session-list-peek_behind_corporate_veil").unbind().on("hide.bs.modal", function () {
+        if (window.location.hash === "#sessions-list/peek_behind_corporate_veil") {
+            window.history.back();
+        }
+    });
+    $("#session-list-fireside_chat").unbind().on("hide.bs.modal", function () {
+        if (window.location.hash === "#sessions-list/fireside_chat") {
+            window.history.back();
+        }
+    });
+
 
     let  reload  = true ;
    
     routie({
         'lobby': function () {
             pages.hide();
+            // if (isMobile()) {
+            //     document.querySelector("#lobby_view").src = '';
+            // }
             if(localStorage.getItem("lobbyAudio")=='true' && window.config.lobby_audio){
                 if(reload){
                     $("body").on("mousemove",()=>{
@@ -582,6 +648,21 @@ function initApp() {
             }
 
         },
+        'room/:id': function (id) {
+            let toShow = pages.filter("#room-" + id);
+            if (toShow.length) {
+                pages.hide();
+                toShow.show();
+                recordPageView("room-" + id, "Room / " + (toShow.data("name") || id),'Room',id);
+            } else {
+                //alert("The doors will open on friday at 4:00 - 6:00 PM.");
+                $('#information-modal').modal({
+                    backdrop: true
+                });
+                routie("expo-hall");
+            }
+            pageChangeActions();
+        },
         'networking': function () {
             pages.hide();
             pages.filter("#networking").show();
@@ -591,6 +672,58 @@ function initApp() {
                 updateLounge();
             }, 2000);
             recordPageView("networking", "networking","lounge");
+        },
+        "museum": function () {
+            if (checkAuth()) {
+                routie("lobby");
+            } else {
+                pages.hide();
+                let toShow = pages.filter("#museum").show();
+                if (toShow.length) {
+                    toShow.show();
+                    trackEvent({
+                        type: "museumVisit",
+                    });
+                    recordPageView("Museum", "Museum","Museum");
+                } else {
+                    routie(notFoundRoute);
+                }
+                pageChangeActions();
+            }
+        },
+        "museum/:id": function (id) {
+            if (checkAuth()) {
+                routie("lobby");
+            } else {
+                pages.hide();
+                let toShow = pages.filter("#museum-" + id).show();
+                if (toShow.length) {
+                    toShow.show();
+                    trackEvent({
+                        type: "museumVisit",
+                        id,
+                    });
+                    recordPageView("museum/item-" + id, "Museum / " + (toShow.data("name") || id));
+                } else {
+                    routie(notFoundRoute);
+                }
+                pageChangeActions();
+            }
+        },
+        "expo-hall": function () {
+
+            pages.hide().filter("#expo-hall-page").show();
+            pageChangeActions();
+            recordPageView("expo-hall", "Expo Hall");
+        },
+        "past-videos": function () {
+            if (checkAuth()) {
+                routie("lobby");
+            } else {
+                pages.hide().filter("#sessions-archive").show();
+                pageChangeActions();
+                recordPageView("past-videos", "Past Videos");
+            }
         },
         'booth/:id': function (id) {
             pages.hide();
@@ -717,6 +850,26 @@ function initApp() {
             }
             recordPageView("attendees",'attendees','Attendees')
         },
+        'report': function () {
+            if (checkAuth()) {
+                routie("lobby");
+            } else {
+                pages.hide();
+                pages.filter("#reports").show();
+                recordPageView("reports", "Reports");
+                pageChangeActions();
+            }
+        },
+        'provisional': function () {
+            if (checkAuth()) {
+                routie("lobby");
+            } else {
+                pages.hide();
+                pages.filter("#provisionals").show();
+                recordPageView("provisionals", "Provisionals");
+                pageChangeActions();
+            }
+        },
         'exterior': function () {
             // $("#cometchat__widget").hide();
             navs.addClass('hidden');
@@ -741,6 +894,13 @@ function initApp() {
                                 routie("lobby");
                             });
                     });
+            // } else {
+            //     exteriorView
+            //         .on("click", function () {
+
+            //             routie("lobby");
+            //         });
+            // }
             recordPageView("exterior", "Exterior");
         },
         'leaderboard': function () {
@@ -757,6 +917,126 @@ function initApp() {
                 pageChangeActions();
                 recordPageView("leaderboard", "Leaderboard","Leaderboard");
             }
+        },
+        'lounge': function () {
+            if (checkAuth()) {
+                routie("lobby");
+            } else {
+                pages.hide();
+                let page = pages.filter("#lounge-page").show();
+                $("#chat-container").addClass("in-lounge");
+                $("body").addClass("in-lounge").addClass("right-bar-enabled");
+                pageChangeActions(false);
+                CometChatWidget.chatWithGroup("virtual_entertainment");
+                recordPageView("lounge", "Lounge");
+            }
+        },
+        'auditorium': function () {
+            if (checkAuth()) {
+                console.log("yo");
+                routie("lobby");
+            } else {
+
+                pages.hide();
+                let page = pages.filter("#auditorium-room").show();
+                trackEvent({
+                    type: "audi_visit"
+                });
+                pageChangeActions();
+                const loadContent = () => {
+                    $("#audi-content").empty().append(`<iframe frameborder="0"  class="positioned fill" src="${window.config.auditoriumEmbed}"></iframe>`);
+                    $(".cc1-chat-win-inpt-wrap input").unbind("mousedown").on("mousedown", function (e) { e.preventDefault(); e.stopImmediatePropagation(); $(e.target).focus() });
+                };
+                $("#audi-slido-panel").empty().html(getSlidoFrame("AUDITORIUM"));
+                let audiModal = $("#audi-modal");
+                $("#play-audi-btn").unbind().on("click", function () {
+                    // window.open(window.config.auditoriumEmbed+"?t="+Date.now());
+                    audiModal.modal();
+                    loadContent();
+                    checkContentLoad("auditorium")(false);
+                    // contentTicker = setInterval(checkContentLoad("auditorium", loadContent), contentRecheckingTime);
+                    recordEvent("audi_video_played", "Auditorium Video Played");
+                });
+                audiModal.unbind().on("hide.bs.modal", function () {
+                    clearContentTicker();
+                    $("#audi-content").empty();
+                });
+                recordPageView("auditorium", "Auditorium");
+            }
+        },
+        'workshop-list': function () {
+            pageChangeActions();
+            $("#workshop-list").modal();
+            recordPageView("workshop-list", "Workshop List");
+        },
+        'workshop': function () {
+            pages.hide().filter("#workshop-room").show();
+
+            pageChangeActions();
+            const loadContent = () => {
+                $("#workshop-content").empty().append(`<iframe frameborder="0"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=workshop"></iframe>`);
+                $(".cc1-chat-win-inpt-wrap input").unbind("mousedown").on("mousedown", function (e) { e.preventDefault(); e.stopImmediatePropagation(); $(e.target).focus() });
+            };
+            let workshopModal = $("#workshop-modal");
+            $("#play-workshop-btn").unbind().on("click", function () {
+                loadContent();
+                checkContentLoad("workshop")(false);
+                workshopModal.modal();
+                // contentTicker = setInterval(checkContentLoad("workshop", loadContent), contentRecheckingTime);
+            });
+            workshopModal.unbind().on("hide.bs.modal", function () {
+                clearContentTicker();
+                $("#workshop-content").empty();
+            });
+        },
+        'workshop/:room': function (room) {
+            pages.hide().filter("#workshop-room").show();
+            $("#workshop-screen").empty().append(`<span style="font-size: 1.3vw;">${window.config.roomNames[room]} course </span> <br/><span style='font-size: 2vw;margin-top: 20px;'>Click here to join<span>`)
+            $("#workshop-list").modal("hide");
+            trackEvent({
+                type: room + "_visit"
+            });
+            pageChangeActions();
+            const loadContent = () => {
+                $("#workshop-content").empty().append(`<iframe frameborder="0"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=${room}"></iframe>`);
+                $(".cc1-chat-win-inpt-wrap input").unbind("mousedown").on("mousedown", function (e) { e.preventDefault(); e.stopImmediatePropagation(); $(e.target).focus() });
+            };
+            let workshopModal = $("#workshop-modal");
+            $("#slido-panel").empty().html(getSlidoFrame(room));
+            $("#play-workshop-btn").unbind().on("click", function () {
+                loadContent();
+                checkContentLoad("workshop")(false);
+                workshopModal.modal();
+                //TODO: Content ticker to be disabled in case we go with the single streams optino
+                // contentTicker = setInterval(checkContentLoad(room, loadContent), contentRecheckingTime);
+            });
+            workshopModal.unbind().on("hide.bs.modal", function () {
+                clearContentTicker();
+                $("#workshop-content").empty();
+            });
+            recordPageView("workshop/" + room, room + " Room");
+        },
+        'sessions-list/:roomgroup': function (roomgroup) {
+            if (checkAuth()) {
+                routie("lobby");
+            } else {
+                pageChangeActions();
+                $("#session-list-" + roomgroup).modal();
+                // $("#session-list-"+roomgroup).unbind().on("hide.bs.modal", function(){
+                //     console.log(roomgroup);
+                //     if(window.location.hash === "#sessions-list/"+roomgroup){
+                //         window.history.back();
+                //     }
+                // });
+                recordPageView("#session-list-" + roomgroup, "Session List " + roomgroup);
+                active_session_list = $("#session-list-" + roomgroup);
+            }
+        },
+        'booth_directory': function (roomgroup) {
+            console.log("booth");
+            pageChangeActions();
+            $("#booth_directory").modal();
+            recordPageView("#session-list-" + roomgroup, "Session List " + roomgroup);
         },
         'sessionroom/:room': function (room) {
             // alert(room);
@@ -842,6 +1122,42 @@ function initApp() {
             video.prop("currentTime", 0).get(0).play();
 
         },
+        'caucus-room': function () {
+            pages.hide().filter("#caucus-room-page").show();
+            pageChangeActions();
+            const loadContent = () => {
+                $("#caucus-room-content").empty().append(`<iframe frameborder="0"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=caucus"></iframe>`);
+                $(".cc1-chat-win-inpt-wrap input").unbind("mousedown").on("mousedown", function (e) { e.preventDefault(); e.stopImmediatePropagation(); $(e.target).focus() });
+            };
+            let caucusModal = $("#caucus-modal");
+            $("#play-caucus-btn").on("click", function () {
+                loadContent();
+                checkContentLoad("caucus")(false);
+                caucusModal.modal();
+                // contentTicker = setInterval(checkContentLoad("caucus", loadContent), contentRecheckingTime);
+                recordEvent("caucus_video_played", "Caucus Video Played");
+            });
+            caucusModal.unbind().on("hide.bs.modal", function () {
+                clearContentTicker();
+            });
+            recordPageView("caucus", "Caucus");
+        },
+        "infodesk": function () {
+            if (checkAuth()) {
+                routie("lobby");
+            } else {
+                pages.hide();
+                let toShow = pages.filter("#infodesk").show();
+                if (toShow.length) {
+                    toShow.show();
+                } else {
+                    routie(notFoundRoute);
+                }
+                pageChangeActions(false);
+                CometChatWidget.chatWithUser("75899f1b-481a-47e0-961d-422864d8ce98");
+                recordPageView("infodesk", "Infodesk");
+            }
+        },
         'photo-booth': function (id) {
             if (checkAuth()) {
                 routie("lobby");
@@ -859,6 +1175,38 @@ function initApp() {
                 console.log($(this).data("capture"));
                 gallery.attr("src" , $(this).data("gallery"));
                 capture.attr("src" , $(this).data("capture"));
+                capture.hide();
+                gallery.show();
+                galleryBtn.hide();
+                captureBtn.show();
+                captureBtn.unbind().on("click", function () {
+                    capture.show();
+                    gallery.hide();
+                    captureBtn.hide();
+                    galleryBtn.show();
+                });
+                galleryBtn.unbind().on("click", function () {
+                    capture.hide();
+                    gallery.show();
+                    galleryBtn.hide();
+                    captureBtn.show();
+                });
+                setTimeout(function () {
+                    $("#chat-toggle").fadeOut();
+                }, 20);
+            }
+        },
+        'photo-booth-2': function () {
+            if (checkAuth()) {
+                routie("lobby");
+            } else {
+                pages.hide().filter("#photo-booth-page-2").show();
+                pageChangeActions();
+                recordPageView("photobooth", "Photo Booth");
+                let gallery = $("#photo-gallery-2");
+                let galleryBtn = $("#gallery-2");
+                let capture = $("#photo-capture-2");
+                let captureBtn = $("#capture-2");
                 capture.hide();
                 gallery.show();
                 galleryBtn.hide();
@@ -912,9 +1260,34 @@ function initApp() {
         }
     });
 
+    // const meetContent = $("#meet-content");
+    // const meetVideoModal = $("#meet-video");
+    // $(".meet-greet-video").on("click", function(e){
+    //     e.preventDefault();
+    //     let index = $(e.target).closest(".meet-greet-video-row").index();
+    //     recordEvent("meet_n_greet", "Meet & Greet Opened / "+(index));
+    //     recordPageView("meet_n_greet/"+index, "Meet & Greet / "+ index);
+    //     meetContent.empty().html(`<iframe frameborder="0" src="${window.config.meetEmbed}?id=${index}"></iframe>`);
+    //     meetVideoModal.modal();
+    // });
+    // meetVideoModal.on("hide.bs.modal", function(){
+    //     recordPageView("go_back");
+    //     meetContent.empty();
+    // });
     $(".caucus-message").on("click", function () {
         swal("", "Caucus Rooms will open Friday, August 21st at 10pm, EDT (9pm CDT, 8pm MDT, 7pm PDT)")
     });
+}
+
+function getSlidoFrame(room) {
+    return "";
+    const {
+        userName,
+        userEmail,
+        userCompany,
+        roomSlidoConfig,
+    } = window.config;
+    return `<iframe src="https://app.sli.do/event/${roomSlidoConfig[room]}?user_name=${userName}&user_email=${userEmail}&user_company=${userCompany}" height="100%" width="100%" frameBorder="0"></iframe>`
 }
 function saveprofile(e, retries = 0) {
     if (e && typeof e.preventDefault === "function") {

@@ -987,9 +987,9 @@ $user = Auth::user();
     @include("event.modules.VimeoModal")
 
 
-    @if (isOpenForPublic('swagbag'))
+    {{-- @if (isOpenForPublic('swagbag'))
         @include("event.modules.Report")
-    @endif
+    @endif --}}
 
     {{-- @if (isOpenForPublic('meet-and-greet'))
         @include("event.modules.MeetGreet")
@@ -1287,16 +1287,16 @@ $user = Auth::user();
         // }
 
         $(document).ready(function() {
-            setInterval(function() {
-                $.ajax({
-                    url: "{{ route('confirmLogin',['subdomain'=>$event_name]) }}",
-                    success: function(response) {
-                        if (response && !response.loggedIn) {
-                            window.location.reload();
-                        }
-                    },
-                });
-            }, 15000);
+            // setInterval(function() {
+            //     $.ajax({
+            //         url: "{{ route('confirmLogin',['subdomain'=>$event_name]) }}",
+            //         success: function(response) {
+            //             if (response && !response.loggedIn) {
+            //                 window.location.reload();
+            //             }
+            //         },
+            //     });
+            // }, 15000);
             var countT = 1;
             // setInterval(function() {
             //     $('#announce_body ').empty();
