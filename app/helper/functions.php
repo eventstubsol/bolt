@@ -1704,3 +1704,21 @@ function CreateRoom($event_id){
     return 1;
 
 }
+
+function CreateExibitor($event_id){
+    $user = new User;
+    $user->name = 'Exhibiter';
+    $user->last_name = 'User';
+    $user->email = 'exhibiter@eventstub.co';
+    $user->password = password_hash('Eventstub123',PASSWORD_DEFAULT);
+    $user->type = 'exhibiter';
+    $user->event_id = $event_id;
+    $user->email_status = 1;
+    if($user->save()){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+
+}

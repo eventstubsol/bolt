@@ -298,6 +298,7 @@ class eventeeController extends Controller
             CreateTemplate($event->id);
             CreateFeature($event->id);
             CreateRoom($event->id);
+            CreateExibitor($event->id);
             $contents = ContentMaster::all();
             foreach($contents as $content){
                 Content::create([

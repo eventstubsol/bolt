@@ -182,6 +182,7 @@
                     </div>
                 </form>
                 <h6 class="text register_now mt-4">Register As An Event Admin <a href="{{ route('Eventee.register') }}"> Click here</a></h6>
+                <h6 class="text register_now mt-4">Forgot Password? <a href="{{ route('Eventee.forgot.password') }}"> Click here</a></h6>
             </div>
 
         </div>
