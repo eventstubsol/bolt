@@ -1,1231 +1,770 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Landing page</title>
-<meta content="width=device-width" name="viewport" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="shortcut icon" href="https://virturo-bucket.s3.us-east-2.amazonaws.com/uploads/fi1awmsj1YbbTuNQpfKxYJsoflCWrVHBsHV0L7cN.png">
+    <title>MLK Celebrations</title>
+    <meta content="width=device-width" name="viewport" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <style>
+        .bg_image{
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+        }
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            overflow: hidden;
+            background: linear-gradient(-949deg, #d62125, #94181a);
+        }
+        #defaultCountdown{
+            position: absolute;
+            top: 10%;
+            left: 71%;
+            width: 26%;
+            color: white;
+            padding-left: 14px;
+            padding: 6px 1px 6px 7px;
+            background-color: #1313137d;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+        }
+        #defaultCountdown .countdown-section:not(:last-child){
+            border-right: 1px solid white;
+        }
+        #defaultCountdown .countdown-period{
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+        }
+        .register_now{            
+            position: absolute;
+            top: 90%;
+            left: 23%;
+            color: #52009e;
+            background: #ffd900;
+            padding: 18px;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            border-radius: 7px;
+        }
+        @media only screen and (max-width: 680px)  and (min-width: 480px)  {
+            #defaultCountdown{                
+                font-size: 10px;
+                top: 5%;
+                left: 66%;
+                width: 207px;
+            }
+            .register_now{
+                top: 300px;
+                left: 107px;
+                padding: 10px;
+            }
+        }
+        @media only screen and (max-width: 480px) {
+            .bg_image{
+               height: 80vh;
+            }
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+            #defaultCountdown{                
+                top: 24%;
+                left: 1%;
+                width: 352px;
+            }
+            .register_now{
+                top: 440px;
+                left: 109px;
+            }
 
-
+        }
+    </style>
+    
 <style>
-    body{
-        /* font-family: 'MuseoModerno', cursive; */
-        overflow-x: hidden;
+  body{
+      /* font-family: 'MuseoModerno', cursive; */
+      overflow-x: hidden;
+  }
+  img.bigBanner{
+      width: 100%;
+      max-width: 100%;
+      height: 850px;
+  }
+  .banner_block{
+      position: relative;
+  }
+  .banner_block:before{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #00000078;
+  }
+
+  .textSection{
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 50px 80px 80px;
+      width: 100%;
+      height: 100%;
+  }
+
+  .logosection{
+      width: 225px;
+      height: 60px;
+      display: flex;
+      overflow: hidden;
+      justify-content: start;
+  }
+  .logosection img{
+      height: 60px;
+      object-fit: contain;
+      width: 100%;
+  }
+
+  #timer{
+      display: flex;
+      justify-content: center;
+      color: #fff;
+      min-height: 72px;
+      position: absolute;
+      bottom: 30px;
+      right: 35px;
+      margin: 90px 0 30px;
+  }
+
+  .setTime{
+      text-align: center;
+      margin: 0 10px;
+      font-size: 40px;
+      font-weight: 700;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      min-width: 85px;
+      line-height: 1;
+  }
+
+  .setTime span{
+      display: block;
+      font-size: 16px;
+      font-weight: 200;
+      padding: 7px 0;
+  }
+
+  h4{
+      text-align: center;
+      color: #18333c;
+      background: #fff;
+      border-radius: 30px;
+      width: 360px;
+      font-size: 30px;
+      line-height: 50px;
+      margin: 0px auto 30px ;
+      text-transform: uppercase;
+      padding: 25px;
+      font-family: 'Varela Round', sans-serif;
+  }
+
+  h4 span{
+      display: block;
+      font-weight: bold;
+      font-size: 38px;
+  }
+
+  p{
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 30px 0 70px;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+
+  p span{
+    font-weight: bold;
+  }
+
+  .bottom-section{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 200px;
+    flex-wrap: wrap;
+  }
+
+  @media screen and (max-width: 1440px) {
+    .bottom-section{
+      padding: 0;
     }
+    
+  }
+  
+  @media screen and (max-width: 1100px) {
+    .bottom-section{
+      flex-direction: column;
+      align-items: center;
+    }
+
     img.bigBanner{
-        width: 100%;
-        max-width: 100%;
-        height: 850px;
-    }
-    .banner_block{
-        position: relative;
-    }
-    .banner_block:before{
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #00000078;
-    }
-
-    .textSection{
-        position: absolute;
-        top: 0;
-        left: 0;
-        padding: 50px 80px 80px;
-        width: 100%;
-        height: 100%;
-    }
-
-    .logosection{
-        width: 225px;
-        height: 60px;
-        display: flex;
-        overflow: hidden;
-        justify-content: start;
-    }
-    .logosection img{
-        height: 60px;
-        object-fit: contain;
-        width: 100%;
+      height: 1400px;
+      object-fit: cover;
     }
 
     #timer{
-        display: flex;
-        justify-content: center;
-        color: #fff;
-        min-height: 72px;
-        margin: 90px 0 30px;
+      margin: 20px 0;
+    }
+
+    .banner_block::before {
+      background: #000000b5;
+    }
+
+    .textSection{
+      padding: 20px;
+    }
+
+    .regBtn{
+      margin: 20px 0 !important;
+    }
+
+    .speaker_block h5::before {
+      display: none;
+    }
+
+    .speaker_block h5::after {
+      display: none;
+    }
+
+    .scedule h5::before {
+      display: none;
+    }
+
+    .scedule h5::after {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .register_block{
+      min-height: 850px !important;
+    }
+
+    .speaker_block h4 {
+      margin-bottom: 30px !important;
+    }
+    .speaker_block h5 {
+      margin-bottom: 30px !important;
+      font-size: 40px !important;
     }
 
     .setTime{
-        text-align: center;
-        margin: 0 10px;
-        font-size: 40px;
-        font-weight: 700;
-        border: 1px solid #fff;
-        border-radius: 5px;
-        min-width: 85px;
-        line-height: 1;
+      font-size: 22px !important;
+      min-width: 60px;
     }
 
     .setTime span{
-        display: block;
-        font-size: 16px;
-        font-weight: 200;
-        padding: 7px 0;
+      font-size: 13px !important;
+    }
+
+    #timer{
+      min-height: 52px !important;
     }
 
     h4{
-        text-align: center;
-        color: #18333c;
-        background: #fff;
-        border-radius: 30px;
-        width: 360px;
-        font-size: 30px;
-        line-height: 50px;
-        margin: 0px auto 30px ;
-        text-transform: uppercase;
-        padding: 25px;
-        font-family: 'Varela Round', sans-serif;
+      width: 100%;
+      padding: 10px;
+      font-size: 25px;
+      line-height: 30px;
     }
 
-    h4 span{
-        display: block;
-        font-weight: bold;
-        font-size: 38px;
+    h4 span {
+      font-size: 23px;
     }
 
-    p{
-      text-align: center;
-      color: #fff;
-      text-transform: uppercase;
-      padding: 0;
-      margin: 30px 0 70px;
-      font-size: 20px;
-      letter-spacing: 1px;
-    }
-
-    p span{
-      font-weight: bold;
-    }
-
-    .bottom-section{
-      display: flex;
-      justify-content: space-between;
-      padding: 0 200px;
-      flex-wrap: wrap;
-    }
-
-    @media screen and (max-width: 1440px) {
-      .bottom-section{
-        padding: 0;
-      }
-      
-    }
-    
-    @media screen and (max-width: 1100px) {
-      .bottom-section{
-        flex-direction: column;
-        align-items: center;
-      }
-
-      img.bigBanner{
-        height: 1400px;
-        object-fit: cover;
-      }
-
-      #timer{
-        margin: 20px 0;
-      }
-
-      .banner_block::before {
-        background: #000000b5;
-      }
-
-      .textSection{
-        padding: 20px;
-      }
-
-      .regBtn{
-        margin: 20px 0 !important;
-      }
-
-      .speaker_block h5::before {
-        display: none;
-      }
-
-      .speaker_block h5::after {
-        display: none;
-      }
-
-      .scedule h5::before {
-        display: none;
-      }
-
-      .scedule h5::after {
-        display: none;
-      }
-    }
-
-    @media screen and (max-width: 767px) {
-      .register_block{
-        min-height: 850px !important;
-      }
-
-      .speaker_block h4 {
-        margin-bottom: 30px !important;
-      }
-      .speaker_block h5 {
-        margin-bottom: 30px !important;
-        font-size: 40px !important;
-      }
-
-      .setTime{
-        font-size: 22px !important;
-        min-width: 60px;
-      }
-
-      .setTime span{
-        font-size: 13px !important;
-      }
-
-      #timer{
-        min-height: 52px !important;
-      }
-
-      h4{
-        width: 100%;
-        padding: 10px;
-        font-size: 25px;
-        line-height: 30px;
-      }
-
-      h4 span {
-        font-size: 23px;
-      }
-
-      .nav-tabs .nav-link{
-        margin-bottom: 15px;
-      }
-
-      .img_box{
-        display: none;
-      }
-
-      img.bigBanner {
-        height: 650px;
-        object-fit: cover;
-      }
-      
-    }
-
-    @media screen and (max-width: 400px) {
-      .img_box{
-        width: 100% !important;
-      }
-      .regBox{
-        padding: 20px !important;
-      }
-
-      .img_box{
-        display: none;
-        
-      }
-      img.bigBanner {
-        height: 650px;
-      }
-
-      .speakerbox {
-        width: 290px;
-      }
+    .nav-tabs .nav-link{
+      margin-bottom: 15px;
     }
 
     .img_box{
-      overflow: hidden;
-      width: 22%;
-      height: 250px;
-      border-radius: 50px;
-      border: 5px solid #fff;
+      display: none;
     }
 
-    .img_box img{
-      border-radius: 30px;
-      height: 250px;
+    img.bigBanner {
+      height: 650px;
       object-fit: cover;
-      width: 100%;
-    }
-
-    h3{
-      font-weight: bold;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    sup{
-      font-size: 12px;
-      top: -0.9em;
     }
     
-    .regBtn{
-      border-radius: 50px;
-      background: #18333c;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: bold;
-      border: 2px solid #fff;
-      font-size: 20px;
-      padding: 12px 40px;
-      margin-top: 50px;
-    }
-
-    .speaker_block{
-      background: url( {{ asset('assets/images/landing/speaker_bg.jpg') }}) no-repeat left top;
-      background-size: cover;
-      padding: 55px 0;
-    }
-
-    .speaker_block h4{
-      margin-bottom: 100px;
-    }
-
-    .speaker_block h5{
-      text-align: center;
-      color: #fff;
-      text-transform: uppercase;
-      font-weight: 300;
-      font-size: 55px;
-      position: relative;
-      letter-spacing: 3px; 
-      margin-bottom: 80px;
-    }
-
-  .speaker_block h5:before{
-    content: "";
-    background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
-    width: 263px;
-    height: 33px;
-    position: absolute;
-    top: 20px;
-    left: -570px;
-    right: 0;
-    margin: 0 auto;
   }
 
-  .speaker_block h5:after{
-    content: "";
-    background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
-    width: 263px;
-    height: 33px;
-    position: absolute;
-    top: 20px;
-    left: 0;
-    right: -570px;
-    margin: 0 auto;
+  @media screen and (max-width: 400px) {
+    .img_box{
+      width: 100% !important;
+    }
+    .regBox{
+      padding: 20px !important;
+    }
+
+    .img_box{
+      display: none;
+      
+    }
+    img.bigBanner {
+      height: 650px;
+    }
+
+    .speakerbox {
+      width: 290px;
+    }
   }
 
-  .speakerbox{
-    width: 280px;
+  .img_box{
+    overflow: hidden;
+    width: 22%;
+    height: 250px;
+    border-radius: 50px;
+    border: 5px solid #fff;
   }
 
-  .speakerbox h6{
-    font-size: 20px;
+  .img_box img{
+    border-radius: 30px;
+    height: 250px;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  h3{
+    font-weight: bold;
     color: #fff;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
 
-  .speakerbox h6 span{
-    font-weight: 100;
+  sup{
+    font-size: 12px;
+    top: -0.9em;
   }
-
-  .speakerbox .boxBg{
-    height: 250px;
-    background: #d0d0d0;
+  
+  .regBtn{
     border-radius: 50px;
-    margin-bottom: 20px;
-    overflow: hidden;
-    border: 5px solid #fff;
-  }
-
-  .speakerbox .boxBg img{
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-  }
-
-  .justify-content-evenly{
-    justify-content: space-evenly;
-  }
-
-  .register_block{
-    background: url("{{ assetUrl($landing->banner_image) }}") no-repeat left top;
-    background-size: cover;
-    padding: 100px 0 50px;
-    min-height: 780px;
-    position: relative;
-  }
-
-  .register_block:after{
-    content: "";
-    width: 100%;
-    height: 100%;
-    background: url("{{ assetUrl($landing->banner_image) }}") no-repeat left top;
-    background-size: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  .registerLogo{
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  .regBox{
-    border: 1px solid #fff;
-    background: #47474787;
-    padding: 50px;
-    border-radius: 40px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .regBox h2{
-    font-size: 30px;
+    background: #18333c;
     color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    border: 2px solid #fff;
+    font-size: 20px;
+    padding: 12px 40px;
+    margin-top: 50px;
+  }
+
+  .speaker_block{
+    background: url( {{ asset('assets/images/landing/speaker_bg.jpg') }}) no-repeat left top;
+    background-size: cover;
+    padding: 55px 0;
+  }
+
+  .speaker_block h4{
+    margin-bottom: 100px;
+  }
+
+  .speaker_block h5{
     text-align: center;
+    color: #fff;
     text-transform: uppercase;
     font-weight: 300;
-    letter-spacing: 3px;
-    margin-bottom: 50px;
+    font-size: 55px;
+    position: relative;
+    letter-spacing: 3px; 
+    margin-bottom: 80px;
   }
 
-  .form-control{
-    height: 65px;
-    border-radius: 30px;
-    margin-bottom: 40px;
-    font-size: 18px;
+.speaker_block h5:before{
+  content: "";
+  background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
+  width: 263px;
+  height: 33px;
+  position: absolute;
+  top: 20px;
+  left: -570px;
+  right: 0;
+  margin: 0 auto;
+}
+
+.speaker_block h5:after{
+  content: "";
+  background: url(/assets/images/landing/speaker_textBorder.png) no-repeat center;
+  width: 263px;
+  height: 33px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: -570px;
+  margin: 0 auto;
+}
+
+.speakerbox{
+  width: 280px;
+}
+
+.speakerbox h6{
+  font-size: 20px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.speakerbox h6 span{
+  font-weight: 100;
+}
+
+.speakerbox .boxBg{
+  height: 250px;
+  background: #d0d0d0;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  border: 5px solid #fff;
+}
+
+.speakerbox .boxBg img{
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.justify-content-evenly{
+  justify-content: space-evenly;
+}
+
+.register_block{
+  background: url("{{ assetUrl($landing->banner_image) }}") no-repeat left top;
+  background-size: cover;
+  padding: 100px 0 50px;
+  min-height: 780px;
+  position: relative;
+}
+
+.register_block:after{
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: url("{{ assetUrl($landing->banner_image) }}") no-repeat left top;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.registerLogo{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.regBox{
+  border: 1px solid #fff;
+  background: #47474787;
+  padding: 50px;
+  border-radius: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.regBox h2{
+  font-size: 30px;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 3px;
+  margin-bottom: 50px;
+}
+
+.form-control{
+  height: 65px;
+  border-radius: 30px;
+  margin-bottom: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.btn{
+  background: #00a0fc;
+  border: 1px solid #fff;
+  border-radius: 30px;
+  font-size: 20px;
+  color: #fff;
+  width: 160px;
+  padding: 10px 0;
+  margin: 0 auto;
+  display: block;
+}
+
+.scedule{
+  background: url({{ asset("assets/images/landing/scedule_bg.jpg") }} ) no-repeat left top;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0 100px;
+  min-height: 740px;
+}
+
+.scedule h5{
     text-align: center;
-  }
-
-  .btn{
-    background: #00a0fc;
-    border: 1px solid #fff;
-    border-radius: 30px;
-    font-size: 20px;
     color: #fff;
-    width: 160px;
-    padding: 10px 0;
-    margin: 0 auto;
-    display: block;
-  }
-
-  .scedule{
-    background: url({{ asset("assets/images/landing/scedule_bg.jpg") }} ) no-repeat left top;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 0 100px;
-    min-height: 740px;
-  }
-
-  .scedule h5{
-      text-align: center;
-      color: #fff;
-      text-transform: uppercase;
-      font-weight: 600;
-      font-size: 55px;
-      position: relative;
-      letter-spacing: 3px; 
-      margin-bottom: 80px;
-    }
-
-  .scedule h5:before{
-    content: "";
-    background: url({{ asset("/assets/images/landing/speaker_textBorder.png") }} ) no-repeat center;
-    width: 263px;
-    height: 33px;
-    position: absolute;
-    top: 20px;
-    left: -50rem;
-    right: 0;
-    margin: 0 auto;
-  }
-
-  .scedule h5:after{
-    content: "";
-    background: url( {{ asset("/assets/images/landing/speaker_textBorder.png") }} ) no-repeat center;
-    width: 263px;
-    height: 33px;
-    position: absolute;
-    top: 20px;
-    left: 0;
-    right: -50rem;
-    margin: 0 auto;
-  }
-  .nav-tabs{
-    border: inherit;
-  }
-  .nav-tabs .nav-link{
-    border-radius: 50px;
-    border: 4px solid #fff;
-    padding: 10px 40px;
-    text-transform: uppercase;
-    color: #fff;
-    font-weight: 500;
-    margin-right: 20px;
-  }
-  .nav-tabs .nav-item:last-child .nav-link{
-    margin-right: 0px;
-  }
-  .nav-tabs .nav-link.active {
-    color: #18333c;
-    background-color: #fff;
-  }
-  .nav-tabs .nav-link:hover{
-    color: #18333c;
-    background-color: #fff;
-  }
-
-  .tab-pane h2{
-    background: #fff;
-    display: inline-block;
-    font-size: 14px;
     text-transform: uppercase;
     font-weight: 600;
-    border-radius: 20px;
-    padding: 7px 15px;
-    margin: 20px 0;
-  }
-
-  .tabSec .nav-item{
-    margin: 25px 15px 20px 0;
-  }
-
-  .tabSec .nav-item:last-child{
-    margin-right: 0;
-  }
-
-  .tabSec .nav-item .nav-link{
-    margin-right: 0px;
-    display: inline-block;
-    font-size: 13px;
-    text-transform: uppercase;
-    font-weight: 600;
-    border-radius: 20px;
-    padding: 3px 15px;
-    border-color: #fff;
-    border: 2px solid #fff;
-  }
-
-  .tab-pane .descUl{
-    
-  }
-
-  
-
-  .tab-pane .descUl .timeline-sm-date{
-    background: #fff;
-    font-size: 12px;
-    text-transform: uppercase;
-    font-weight: 400;
-    border-radius: 20px;
-    padding: 7px 15px;
-    list-style: none;
-    width: 140px;
-    margin: 20px 30px 0 0;
+    font-size: 55px;
     position: relative;
-    flex-shrink: 0;
+    letter-spacing: 3px; 
+    margin-bottom: 80px;
   }
 
-  .tab-pane .descUl .timeline-sm-date:before{
-    content: "";
-    width: 15px;
-    height: 15px;
-    background: #fff;
-    position: absolute;
-    right: -46px;
-    top: 9px;
-    border-radius: 100%;
-  }
+.scedule h5:before{
+  content: "";
+  background: url({{ asset("/assets/images/landing/speaker_textBorder.png") }} ) no-repeat center;
+  width: 263px;
+  height: 33px;
+  position: absolute;
+  top: 20px;
+  left: -50rem;
+  right: 0;
+  margin: 0 auto;
+}
 
-  .desc_block{
-    background: #fff;
-    border-radius: 25px;
-    color: #18333c;
-    padding: 30px 40px;
-    position: relative;
-    margin-left: 40px;
-  }
+.scedule h5:after{
+  content: "";
+  background: url( {{ asset("/assets/images/landing/speaker_textBorder.png") }} ) no-repeat center;
+  width: 263px;
+  height: 33px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: -50rem;
+  margin: 0 auto;
+}
+.nav-tabs{
+  border: inherit;
+}
+.nav-tabs .nav-link{
+  border-radius: 50px;
+  border: 4px solid #fff;
+  padding: 10px 40px;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 500;
+  margin-right: 20px;
+}
+.nav-tabs .nav-item:last-child .nav-link{
+  margin-right: 0px;
+}
+.nav-tabs .nav-link.active {
+  color: #18333c;
+  background-color: #fff;
+}
+.nav-tabs .nav-link:hover{
+  color: #18333c;
+  background-color: #fff;
+}
 
-  .desc_block:after{
-    content: "";
-    width: 2px;
-    height: 100%;
-    background: #fff;
-    position: absolute;
-    left: -32px;
-    top: 0;
-  }
+.tab-pane h2{
+  background: #fff;
+  display: inline-block;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 7px 15px;
+  margin: 20px 0;
+}
 
-  .desc_block h3{
-    color: #18333c;
-    font-size: 13px;
-  }
-  .desc_block p{
-    color: #18333c;
-    font-size: 13px;
-    text-align: left;
-    margin: 0 0 20px;
-  }
-  .desc_block p:last-child{
-    margin: 0;
-  }
+.tabSec .nav-item{
+  margin: 25px 15px 20px 0;
+}
+
+.tabSec .nav-item:last-child{
+  margin-right: 0;
+}
+
+.tabSec .nav-item .nav-link{
+  margin-right: 0px;
+  display: inline-block;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 3px 15px;
+  border-color: #fff;
+  border: 2px solid #fff;
+}
+
+.tab-pane .descUl{
   
+}
+
+
+
+.tab-pane .descUl .timeline-sm-date{
+  background: #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 400;
+  border-radius: 20px;
+  padding: 7px 15px;
+  list-style: none;
+  width: 140px;
+  margin: 20px 30px 0 0;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.tab-pane .descUl .timeline-sm-date:before{
+  content: "";
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  position: absolute;
+  right: -46px;
+  top: 9px;
+  border-radius: 100%;
+}
+
+.desc_block{
+  background: #fff;
+  border-radius: 25px;
+  color: #18333c;
+  padding: 30px 40px;
+  position: relative;
+  margin-left: 40px;
+}
+
+.desc_block:after{
+  content: "";
+  width: 2px;
+  height: 100%;
+  background: #fff;
+  position: absolute;
+  left: -32px;
+  top: 0;
+}
+
+.desc_block h3{
+  color: #18333c;
+  font-size: 13px;
+}
+.desc_block p{
+  color: #18333c;
+  font-size: 13px;
+  text-align: left;
+  margin: 0 0 20px;
+}
+.desc_block p:last-child{
+  margin: 0;
+}
+
 
 </style>
+    <link rel="shortcut icon" href="./favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.1.0/css/jquery.countdown.min.css" integrity="sha512-3TZ6IiaoL7KEeLwJgOfw+/dEOxOUpb9YhmUokvcFOvNuFJ7t9kvilMNAMqeJ8neRT4iBnCe35TZsPwD2Y1Gl6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+     <img class="bg_image" src="{{ assetUrl($landing->banner_image) }}" alt=""> 
+    {{-- <video class="bg_image" src="./video.mp4" alt="" autoplay loop muted></video> --}}
 
+    {{-- @if(Carbon\Carbon::parse($event->start_date) >=  Carbon\Carbon::now()) --}}
+    <!-- Countdown Start -->
+    <div id="timer" data-endtime="2022-03-19 18:00:00 UTC"></div>
+    <!-- Countdown Start -->
+   {{-- @else --}}
+   {{-- <br><br><br><br><br> --}}
+     {{-- <div class="pt-5">
 
+     </div> --}}
+   {{-- @endif --}}
+    
+    {{-- <a class="register_now" href="https://www.eventsibles.online/mlk2022-pep-register">Register Now</a> --}}
 
-<!-- Home page start -->
-<div class="banner_block">
-    <img src="{{ assetUrl($landing->banner_image) }}" alt="" class="bigBanner" />
-    <div class="textSection">
-      @include('flash::message')
-        <!-- Site Logo Start -->
-        <div class="logosection">
-            <img src="{{ assetUrl(getFieldId('logo',$event->id)) }}" alt="">
-        </div>    
-        <!-- Site Logo End -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+    
 
-       @if(Carbon\Carbon::parse($event->start_date) >=  Carbon\Carbon::now())
-         <!-- Countdown Start -->
-         <div id="timer" data-endtime="{{ $event->start_date }}"></div>
-         <!-- Countdown Start -->
-        @else
-        <br><br><br><br><br>
-          {{-- <div class="pt-5">
-
-          </div> --}}
-        @endif
-
-        <h4>{{ $event->name }}</h4>
-        <p>@if($landing->tagline != null){{ $landing->tagline	 }}@endif</p>
-
-        <!-- Register section Start -->
-        <div class="bottom-section">
-          <div class="img_box">
-            <img src="{{ assetUrl($landing->first_logo) }}" alt="">
-          </div>
-          <div class="text-center mt-4 mx-0 mx-lg-3">
-            <h3 class="mt-4">{{ Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }}</h3>
-            <a href="#regInit" style="text-decoration: none" class="regBtn d-block">Register now</a>
-          </div>
-          <div class="img_box mt-lg-0 mt-4">
-            <img src="{{ assetUrl($landing->second_logo) }}" alt="">
-          </div>
-        </div>
-        <!-- Register section End -->
-
-    </div>
-</div>
-@php
-  $main_event = $event;
-@endphp
-<!-- Home page end -->
-
-@if($landing->speaker_status == 1)
-  <!-- Speaker page Start -->
-<div class="speaker_block">
-  <h4>{{ $event->name }}</h4>
-  <h5>Speakers</h5>
-
-  <div class="d-flex justify-content-evenly flex-wrap">
-    @if(count($speakers) > 0)
-
-    @foreach ($speakers as $speaker)
-      <div class="speakerbox">
-          <div class="boxBg">
-            <img src="{{ assetUrl($speaker->image) }}" alt="">
-          </div>
-          @php
-            $user = App\User::findOrFail($speaker->speaker_id);
-          @endphp
-          <h6 class="text-center">{{ ($user->name).' '.$user->last_name }} <span class="d-block">{{ $speaker->designation }}</span></h6>
-        
-      </div>
-      @endforeach
-
-    @endif  
-  </div>
-  
-</div>
-
-@endif
-<!-- Speaker page End -->
-
-<!-- Scedule page Start -->
-
-@php
-  $lastDate = false;
-  $i = 0;
-  $dates = []; 
-      foreach($schedule as $room => $scheduleForRoom){
-          foreach ($scheduleForRoom as $id => $event){
-              if($lastDate != $event['start_date']['m']){
-                  $lastDate = $event['start_date']['m'];
-              }
-              if($event['type']!=="PRIVATE_SESSION"){
-                  $event['id'] = $id;
-                  $dates[$lastDate][$room][] = $event;
-               }
-
-          }
-      }
-@endphp
-
-<div class="scedule">
-  <div>
-    <h5>Event Schedule</h5>
-
-    <div class="container">
-      {{-- Date Pills --}}
-      <ul class="nav nav-tabs mt-3 " id="myTab" role="tablist">
-        @foreach($dates as $date => $room)
-          @php
-              $i++;
-          @endphp
-          <li class="nav-item" role="presentation">
-            <a class="nav-link @if($i === 1) active @endif"  data-toggle="tab" href="#sch-{{$i}}" role="tab" aria-controls="home"  aria-expanded="{{ $i === 1 ? 'true' : 'false' }}" aria-selected="{{ $i === 1 ? 'true' : 'false' }}">{{ $date }}</a>
-          </li>
-        @endforeach
-      </ul>
-      @php
-          $i = 0;
-      @endphp
-      {{-- Tab For Each Date --}}
-      <div class="tab-content">
-        @foreach($dates as $date => $rooms)
-          @php
-              $i++;
-          @endphp
-          <div class="tab-pane fade {{ $i === 1 ? "active show" : "" }}" id="sch-{{$i}}" role="tabpanel" >
-            @php
-                $j = 0;
-            @endphp
-            {{-- Room Name Pills --}}
-            <ul class="nav nav-tabs tabSec mb-3" id="myTab" role="tablist">
-              @foreach($rooms as $room => $events)
-                @php
-                  $j++;
-                @endphp
-                <li class="nav-item" role="presentation">
-                  <a class="nav-link @if($j === 1) active @endif"  data-toggle="tab" href="#sch-{{$i}}-{{$j}}" role="tab" aria-controls="home" aria-expanded="{{ $j === 1 ? 'true' : 'false' }}" aria-selected="{{ $j === 1 ? 'true' : 'false' }}">{{$room}}</a>
-                </li>
-              @endforeach
-                
-            </ul>
-            
-            @php
-              $j = 0;
-            @endphp
-            {{-- Tab For Each Room --}}
-            <div class="tab-content" >
-              @foreach($rooms as $room => $events)
-                @php
-                    $j++;
-                @endphp
-                <div class="tab-pane fade show @if($j === 1) active @endif" id="sch-{{$i}}-{{$j}}" role="tabpanel" aria-labelledby="chat1-tab">
-                   <!-- Print each event in schedule -->
-                  @foreach($events as $id => $event)
-                    @php 
-                        $id = $event['id'];
-                    @endphp
-                    <div class="d-flex">
-                      <ul class="list-unstyled timeline-sm descUl"> 
-                        <li class="timeline-sm-item d-flex align-items-start">
-                            <div class="d-flex flex-column">
-                              <span class="timeline-sm-date">
-                                  {{ $event['start_date']['dts'] }} - {{ $event['start_date']['dte'] }}
-                              </span>
-                            </div>
-                            <div @if($event['status'] === 1) @endif class="desc_block"> 
-                              <h3 class="">{{ $event['name'] }}</h3>
-                              <p class="">{!! $event['description'] !!}</p>
-                            </div>
-                        </li>
-                      </ul>
-                    </div>
-                  @endforeach
-                </div>
-
-              @endforeach
-            </div>
-          </div>
-        @endforeach
-      </div>
-    </div>
-  </div>
-</div>
-
-@php
-  $event  = $main_event;
-@endphp
-<!-- Scedule page End -->
-
-
-@if (\Session::has('message'))
     <script>
-      showMessage(`User Created Succesfully`,'success');
-    </script>
-@endif
-<!-- Register page Start -->
-<div id="regInit" class="register_block">
-  {{-- <!-- <div class="registerLogo">
-  <img src="{{ assetUrl(getFieldId('logo',$event->id)) }}" alt="">
-  </div> --> --}}
-  <div class="row justify-content-lg-end align-items-center pr-lg-5">
-    <div class="col-lg-5">
-      <div class="regBox">
-        <h2>Registration</h2>
-        @if($form != null)
-        <form method="POST" class="register mt-2" id="customform"  action="{{route('attendee_register.confirmReg.landingSave',$event->slug)}}" enctype="multipart/form-data">
-          @csrf
-          @foreach($form->fields as $field)
-              @php 
-                  $struct = (object) ($field->toArray()["form_struct"]);
-                  // print_r($field)
-              @endphp
-              @switch($struct->type)
-                  @case("text")
-                  @case("email")
-                  @case("tel")
-                          <div class="form-group">
-                              <!-- <label class="text-white" for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label> -->
-                              <input @if($field->required) required @endif class="form-control" type="{{ $struct->type }}" placeholder="{{ $field->placeholder ?? $struct->label
-                              }}" name="{{ $struct->field }}">
-                          </div>
-                          
-                      @break
-                  @case("country")
-                          <div class="form-group">
-                              <!-- <label class="text-white" for="country" >{{ $field->placeholder ?? $struct->label }}</label> -->
-                              <select id="country" class="form-control" name="country">
-                                  <option value="Afganistan">Afghanistan</option>
-                                  <option value="Albania">Albania</option>
-                                  <option value="Algeria">Algeria</option>
-                                  <option value="American Samoa">American Samoa</option>
-                                  <option value="Andorra">Andorra</option>
-                                  <option value="Angola">Angola</option>
-                                  <option value="Anguilla">Anguilla</option>
-                                  <option value="Antigua & Barbuda">Antigua & Barbuda</option>
-                                  <option value="Argentina">Argentina</option>
-                                  <option value="Armenia">Armenia</option>
-                                  <option value="Aruba">Aruba</option>
-                                  <option value="Australia">Australia</option>
-                                  <option value="Austria">Austria</option>
-                                  <option value="Azerbaijan">Azerbaijan</option>
-                                  <option value="Bahamas">Bahamas</option>
-                                  <option value="Bahrain">Bahrain</option>
-                                  <option value="Bangladesh">Bangladesh</option>
-                                  <option value="Barbados">Barbados</option>
-                                  <option value="Belarus">Belarus</option>
-                                  <option value="Belgium">Belgium</option>
-                                  <option value="Belize">Belize</option>
-                                  <option value="Benin">Benin</option>
-                                  <option value="Bermuda">Bermuda</option>
-                                  <option value="Bhutan">Bhutan</option>
-                                  <option value="Bolivia">Bolivia</option>
-                                  <option value="Bonaire">Bonaire</option>
-                                  <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
-                                  <option value="Botswana">Botswana</option>
-                                  <option value="Brazil">Brazil</option>
-                                  <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
-                                  <option value="Brunei">Brunei</option>
-                                  <option value="Bulgaria">Bulgaria</option>
-                                  <option value="Burkina Faso">Burkina Faso</option>
-                                  <option value="Burundi">Burundi</option>
-                                  <option value="Cambodia">Cambodia</option>
-                                  <option value="Cameroon">Cameroon</option>
-                                  <option value="Canada">Canada</option>
-                                  <option value="Canary Islands">Canary Islands</option>
-                                  <option value="Cape Verde">Cape Verde</option>
-                                  <option value="Cayman Islands">Cayman Islands</option>
-                                  <option value="Central African Republic">Central African Republic</option>
-                                  <option value="Chad">Chad</option>
-                                  <option value="Channel Islands">Channel Islands</option>
-                                  <option value="Chile">Chile</option>
-                                  <option value="China">China</option>
-                                  <option value="Christmas Island">Christmas Island</option>
-                                  <option value="Cocos Island">Cocos Island</option>
-                                  <option value="Colombia">Colombia</option>
-                                  <option value="Comoros">Comoros</option>
-                                  <option value="Congo">Congo</option>
-                                  <option value="Cook Islands">Cook Islands</option>
-                                  <option value="Costa Rica">Costa Rica</option>
-                                  <option value="Cote DIvoire">Cote DIvoire</option>
-                                  <option value="Croatia">Croatia</option>
-                                  <option value="Cuba">Cuba</option>
-                                  <option value="Curaco">Curacao</option>
-                                  <option value="Cyprus">Cyprus</option>
-                                  <option value="Czech Republic">Czech Republic</option>
-                                  <option value="Denmark">Denmark</option>
-                                  <option value="Djibouti">Djibouti</option>
-                                  <option value="Dominica">Dominica</option>
-                                  <option value="Dominican Republic">Dominican Republic</option>
-                                  <option value="East Timor">East Timor</option>
-                                  <option value="Ecuador">Ecuador</option>
-                                  <option value="Egypt">Egypt</option>
-                                  <option value="El Salvador">El Salvador</option>
-                                  <option value="Equatorial Guinea">Equatorial Guinea</option>
-                                  <option value="Eritrea">Eritrea</option>
-                                  <option value="Estonia">Estonia</option>
-                                  <option value="Ethiopia">Ethiopia</option>
-                                  <option value="Falkland Islands">Falkland Islands</option>
-                                  <option value="Faroe Islands">Faroe Islands</option>
-                                  <option value="Fiji">Fiji</option>
-                                  <option value="Finland">Finland</option>
-                                  <option value="France">France</option>
-                                  <option value="French Guiana">French Guiana</option>
-                                  <option value="French Polynesia">French Polynesia</option>
-                                  <option value="French Southern Ter">French Southern Ter</option>
-                                  <option value="Gabon">Gabon</option>
-                                  <option value="Gambia">Gambia</option>
-                                  <option value="Georgia">Georgia</option>
-                                  <option value="Germany">Germany</option>
-                                  <option value="Ghana">Ghana</option>
-                                  <option value="Gibraltar">Gibraltar</option>
-                                  <option value="Great Britain">Great Britain</option>
-                                  <option value="Greece">Greece</option>
-                                  <option value="Greenland">Greenland</option>
-                                  <option value="Grenada">Grenada</option>
-                                  <option value="Guadeloupe">Guadeloupe</option>
-                                  <option value="Guam">Guam</option>
-                                  <option value="Guatemala">Guatemala</option>
-                                  <option value="Guinea">Guinea</option>
-                                  <option value="Guyana">Guyana</option>
-                                  <option value="Haiti">Haiti</option>
-                                  <option value="Hawaii">Hawaii</option>
-                                  <option value="Honduras">Honduras</option>
-                                  <option value="Hong Kong">Hong Kong</option>
-                                  <option value="Hungary">Hungary</option>
-                                  <option value="Iceland">Iceland</option>
-                                  <option value="Indonesia">Indonesia</option>
-                                  <option value="India" selected>India</option>
-                                  <option value="Iran">Iran</option>
-                                  <option value="Iraq">Iraq</option>
-                                  <option value="Ireland">Ireland</option>
-                                  <option value="Isle of Man">Isle of Man</option>
-                                  <option value="Israel">Israel</option>
-                                  <option value="Italy">Italy</option>
-                                  <option value="Jamaica">Jamaica</option>
-                                  <option value="Japan">Japan</option>
-                                  <option value="Jordan">Jordan</option>
-                                  <option value="Kazakhstan">Kazakhstan</option>
-                                  <option value="Kenya">Kenya</option>
-                                  <option value="Kiribati">Kiribati</option>
-                                  <option value="Korea North">Korea North</option>
-                                  <option value="Korea Sout">Korea South</option>
-                                  <option value="Kuwait">Kuwait</option>
-                                  <option value="Kyrgyzstan">Kyrgyzstan</option>
-                                  <option value="Laos">Laos</option>
-                                  <option value="Latvia">Latvia</option>
-                                  <option value="Lebanon">Lebanon</option>
-                                  <option value="Lesotho">Lesotho</option>
-                                  <option value="Liberia">Liberia</option>
-                                  <option value="Libya">Libya</option>
-                                  <option value="Liechtenstein">Liechtenstein</option>
-                                  <option value="Lithuania">Lithuania</option>
-                                  <option value="Luxembourg">Luxembourg</option>
-                                  <option value="Macau">Macau</option>
-                                  <option value="Macedonia">Macedonia</option>
-                                  <option value="Madagascar">Madagascar</option>
-                                  <option value="Malaysia">Malaysia</option>
-                                  <option value="Malawi">Malawi</option>
-                                  <option value="Maldives">Maldives</option>
-                                  <option value="Mali">Mali</option>
-                                  <option value="Malta">Malta</option>
-                                  <option value="Marshall Islands">Marshall Islands</option>
-                                  <option value="Martinique">Martinique</option>
-                                  <option value="Mauritania">Mauritania</option>
-                                  <option value="Mauritius">Mauritius</option>
-                                  <option value="Mayotte">Mayotte</option>
-                                  <option value="Mexico">Mexico</option>
-                                  <option value="Midway Islands">Midway Islands</option>
-                                  <option value="Moldova">Moldova</option>
-                                  <option value="Monaco">Monaco</option>
-                                  <option value="Mongolia">Mongolia</option>
-                                  <option value="Montserrat">Montserrat</option>
-                                  <option value="Morocco">Morocco</option>
-                                  <option value="Mozambique">Mozambique</option>
-                                  <option value="Myanmar">Myanmar</option>
-                                  <option value="Nambia">Nambia</option>
-                                  <option value="Nauru">Nauru</option>
-                                  <option value="Nepal">Nepal</option>
-                                  <option value="Netherland Antilles">Netherland Antilles</option>
-                                  <option value="Netherlands">Netherlands (Holland, Europe)</option>
-                                  <option value="Nevis">Nevis</option>
-                                  <option value="New Caledonia">New Caledonia</option>
-                                  <option value="New Zealand">New Zealand</option>
-                                  <option value="Nicaragua">Nicaragua</option>
-                                  <option value="Niger">Niger</option>
-                                  <option value="Nigeria">Nigeria</option>
-                                  <option value="Niue">Niue</option>
-                                  <option value="Norfolk Island">Norfolk Island</option>
-                                  <option value="Norway">Norway</option>
-                                  <option value="Oman">Oman</option>
-                                  <option value="Pakistan">Pakistan</option>
-                                  <option value="Palau Island">Palau Island</option>
-                                  <option value="Palestine">Palestine</option>
-                                  <option value="Panama">Panama</option>
-                                  <option value="Papua New Guinea">Papua New Guinea</option>
-                                  <option value="Paraguay">Paraguay</option>
-                                  <option value="Peru">Peru</option>
-                                  <option value="Phillipines">Philippines</option>
-                                  <option value="Pitcairn Island">Pitcairn Island</option>
-                                  <option value="Poland">Poland</option>
-                                  <option value="Portugal">Portugal</option>
-                                  <option value="Puerto Rico">Puerto Rico</option>
-                                  <option value="Qatar">Qatar</option>
-                                  <option value="Republic of Montenegro">Republic of Montenegro</option>
-                                  <option value="Republic of Serbia">Republic of Serbia</option>
-                                  <option value="Reunion">Reunion</option>
-                                  <option value="Romania">Romania</option>
-                                  <option value="Russia">Russia</option>
-                                  <option value="Rwanda">Rwanda</option>
-                                  <option value="St Barthelemy">St Barthelemy</option>
-                                  <option value="St Eustatius">St Eustatius</option>
-                                  <option value="St Helena">St Helena</option>
-                                  <option value="St Kitts-Nevis">St Kitts-Nevis</option>
-                                  <option value="St Lucia">St Lucia</option>
-                                  <option value="St Maarten">St Maarten</option>
-                                  <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
-                                  <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
-                                  <option value="Saipan">Saipan</option>
-                                  <option value="Samoa">Samoa</option>
-                                  <option value="Samoa American">Samoa American</option>
-                                  <option value="San Marino">San Marino</option>
-                                  <option value="Sao Tome & Principe">Sao Tome & Principe</option>
-                                  <option value="Saudi Arabia">Saudi Arabia</option>
-                                  <option value="Senegal">Senegal</option>
-                                  <option value="Seychelles">Seychelles</option>
-                                  <option value="Sierra Leone">Sierra Leone</option>
-                                  <option value="Singapore">Singapore</option>
-                                  <option value="Slovakia">Slovakia</option>
-                                  <option value="Slovenia">Slovenia</option>
-                                  <option value="Solomon Islands">Solomon Islands</option>
-                                  <option value="Somalia">Somalia</option>
-                                  <option value="South Africa">South Africa</option>
-                                  <option value="Spain">Spain</option>
-                                  <option value="Sri Lanka">Sri Lanka</option>
-                                  <option value="Sudan">Sudan</option>
-                                  <option value="Suriname">Suriname</option>
-                                  <option value="Swaziland">Swaziland</option>
-                                  <option value="Sweden">Sweden</option>
-                                  <option value="Switzerland">Switzerland</option>
-                                  <option value="Syria">Syria</option>
-                                  <option value="Tahiti">Tahiti</option>
-                                  <option value="Taiwan">Taiwan</option>
-                                  <option value="Tajikistan">Tajikistan</option>
-                                  <option value="Tanzania">Tanzania</option>
-                                  <option value="Thailand">Thailand</option>
-                                  <option value="Togo">Togo</option>
-                                  <option value="Tokelau">Tokelau</option>
-                                  <option value="Tonga">Tonga</option>
-                                  <option value="Trinidad & Tobago">Trinidad & Tobago</option>
-                                  <option value="Tunisia">Tunisia</option>
-                                  <option value="Turkey">Turkey</option>
-                                  <option value="Turkmenistan">Turkmenistan</option>
-                                  <option value="Turks & Caicos Is">Turks & Caicos Is</option>
-                                  <option value="Tuvalu">Tuvalu</option>
-                                  <option value="Uganda">Uganda</option>
-                                  <option value="United Kingdom">United Kingdom</option>
-                                  <option value="Ukraine">Ukraine</option>
-                                  <option value="United Arab Erimates">United Arab Emirates</option>
-                                  <option value="United States of America">United States of America</option>
-                                  <option value="Uraguay">Uruguay</option>
-                                  <option value="Uzbekistan">Uzbekistan</option>
-                                  <option value="Vanuatu">Vanuatu</option>
-                                  <option value="Vatican City State">Vatican City State</option>
-                                  <option value="Venezuela">Venezuela</option>
-                                  <option value="Vietnam">Vietnam</option>
-                                  <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
-                                  <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
-                                  <option value="Wake Island">Wake Island</option>
-                                  <option value="Wallis & Futana Is">Wallis & Futana Is</option>
-                                  <option value="Yemen">Yemen</option>
-                                  <option value="Zaire">Zaire</option>
-                                  <option value="Zambia">Zambia</option>
-                                  <option value="Zimbabwe">Zimbabwe</option>
-                              </select>
-                          </div>
-                      @break
-  
-                  @case("image")
-                      <div class="image-uploader profilepic">
-                          <!-- <label class="mb-3 text-white" for="images">{{ $field->placeholder }}</label> -->
-                          <input type="hidden" name="profileImage" class="upload_input"  >
-                          <input type="file" data-name="profileImage" data-plugins="dropify" data-type="image" />
-                      </div>
-                      {{-- <div className="image-uploader profilepic">
-                          <input type="hidden" id="profileurl"  className="upload_input" name="profileImage" />
-                          <input accept="images/*" type="file" data-name="imageurl" data-plugins="dropify" data-type="image" />
-                      </div> --}}
-                      @break
-                  @case("subtype")
-                          @php
-                              $options = $subtypes;
-                          @endphp
-                          @if(count($options))
-                              <div class="form-group mb-3 ">
-                                  <!-- <label for="type">{{ $field->placeholder }}</label> -->
-                                  <select  @if($field->required && count($options)) required @endif  class="form-control"  name="subtype">
-                                      <option value="">Select {{$field->placeholder}}</option>
-                                      @foreach($options  as $type)
-                                      <option value="{{ $type->name }}">{{ ucfirst($type->name) }}</option>
-                                      @endforeach
-                                  </select>
-                              </div>
-                          @endif
-  
-                      @break
-                  @case("select")
-                          @php
-                              $options = explode(",",$struct->options);
-                          @endphp
-                          <div class="form-group mb-3 ">
-                              <!-- <label for="type">{{ $struct->label }}</label> -->
-                              <select  @if($field->required) required @endif  class="form-control"  name="{{$struct->field}}">
-                                  <option value="">Select {{$struct->label}}</option>
-                                  @foreach($options  as $type)
-                                  <option value="{{ $type }}">{{ ucfirst($type) }}</option>
-                                  @endforeach
-                              </select>
-                          </div>
-  
-                      @break
-                  @default
-                      
-              @endswitch
-                  @error('email')
-                      <span class="invalid-feedback" role="alert">{{ print_r($message)  }}</span>
-                  @enderror
-          @endforeach    
-          <input type="hidden" name="event_id" value="{{$event->id}}">
-          <input type="hidden" name="type" value="{{$form->user_type}}">
-  
-          <div class="input-group form-group">
-              <div class="col-md-12 mb-2">
-                  <button type="submit" class="theme-btn btn primary-filled">{{ __('Register') }}</button>
-              </div>
-          </div>
-      </form>
-        @else
-          <form action="{{ route('attendee_register.confirmReg.defaultsave',$event->slug) }}" method="POST">
-            <input type="text" class="form-control" placeholder="Name" name="name">
-            <input type="text" class="form-control" placeholder="Mobile no." name="phone" min="10" max="13">
-            <input type="text" class="form-control mb-5" placeholder="Email address" name="email">
-            <button type="submit" class="theme-btn btn primary-filled">{{ __('Register') }}</button>
-          </form>
-        @endif
-      </div>
-    </div>
-  </div>  
-</div>
-<!-- Register page End -->
-
-<!-- Script All -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-
-<script>
 
  
 
-//Countdown jquery Start //
-function myTimer() {
-  var ending = jQuery("#timer").attr("data-endtime"),
-  endTime = new Date(ending);
-  endTime = Date.parse(endTime) / 1000;
-
-  var now = new Date();
-  now = Date.parse(now) / 1000;
-
-  var timeLeft = endTime - now;
-
-  var days = Math.floor(timeLeft / 86400);
-  var hours = Math.floor((timeLeft - days * 86400) / 3600);
-  var minutes = Math.floor((timeLeft - days * 86400 - hours * 3600) / 60);
-  var seconds = Math.floor(
-    timeLeft - days * 86400 - hours * 3600 - minutes * 60
-  );
-
-//   if (days < "10") {
-//     days = "0" + days;
-//   }
-  if (days < "1") {
-    days = "0";
-  }
-//   if (hours < "10") {
-//     hours = "0" + hours;
-//   }
-  if (hours < "1") {
-    hours = "0";
-  }
-//   if (minutes < "10") {
-//     minutes = "0" + minutes;
-//   }
-  if (minutes < "1") {
-    minutes = "0";
-  }
-//   if (seconds < "10") {
-//     seconds = "0" + seconds;
-//   }
-  if (seconds < "1") {
-    seconds = "0";
-  }
-
-  $("#timer").html(
-    "<span id='days' class='setTime'>" +
-    days +
-    "<span>Days</span></span>" +
-    "<span id='hours' class='setTime'>" +
-    hours +
-    "<span>Hours</span></span>" +
-    "<span id='minutes' class='setTime'>" +
-    minutes +
-    "<span>Minutes</span></span>" +
-    "<span id='seconds' class='setTime'>" +
-    seconds +
-    "<span>Seconds</span></span>"
-  );
-}
-setInterval(function() {
-  myTimer();
-}, 1000);
-//Countdown jquery End //
-
-
-
-</script>
-<script>
-  $('#flash-overlay-modal').modal();
-</script>
+      //Countdown jquery Start //
+       function myTimer() {
+         var ending = jQuery("#timer").attr("data-endtime"),
+         endTime = new Date(ending);
+         endTime = Date.parse(endTime) / 1000;
+     
+         var now = new Date();
+         now = Date.parse(now) / 1000;
+     
+         var timeLeft = endTime - now;
+     
+         var days = Math.floor(timeLeft / 86400);
+         var hours = Math.floor((timeLeft - days * 86400) / 3600);
+         var minutes = Math.floor((timeLeft - days * 86400 - hours * 3600) / 60);
+         var seconds = Math.floor(
+           timeLeft - days * 86400 - hours * 3600 - minutes * 60
+         );
+     
+       //   if (days < "10") {
+       //     days = "0" + days;
+       //   }
+         if (days < "1") {
+           days = "0";
+         }
+       //   if (hours < "10") {
+       //     hours = "0" + hours;
+       //   }
+         if (hours < "1") {
+           hours = "0";
+         }
+       //   if (minutes < "10") {
+       //     minutes = "0" + minutes;
+       //   }
+         if (minutes < "1") {
+           minutes = "0";
+         }
+       //   if (seconds < "10") {
+       //     seconds = "0" + seconds;
+       //   }
+         if (seconds < "1") {
+           seconds = "0";
+         }
+     
+         $("#timer").html(
+           "<span id='days' class='setTime'>" +
+           days +
+           "<span>Days</span></span>" +
+           "<span id='hours' class='setTime'>" +
+           hours +
+           "<span>Hours</span></span>" +
+           "<span id='minutes' class='setTime'>" +
+           minutes +
+           "<span>Minutes</span></span>" +
+           "<span id='seconds' class='setTime'>" +
+           seconds +
+           "<span>Seconds</span></span>"
+         );
+       }
+       setInterval(function() {
+         myTimer();
+       }, 1000);
+       //Countdown jquery End //
+     
+     
+     
+     </script>
 </body>
 </html>
