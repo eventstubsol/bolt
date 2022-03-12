@@ -26,8 +26,10 @@
         <h5 class="card-title">{{$booth->name}}</h5>
         <p>Created At: {{$booth->created_at}}</p>
         <p>
+            @if(isset($id))
             <a href="{{ route("exhibiter.edit", ["booth"=> $booth->id,"id"=>$id] ) }}" class="btn btn-primary mr-2 waves-effect waves-light">Edit Booth</a>
             <a href="{{ route("exhibiter.enquiries", ["booth"=> $booth->id,"id"=>$id] ) }}" class="btn btn-primary waves-effect waves-light">Enquiries</a>
+            @endif
         </p>
     </div>
   @endforeach

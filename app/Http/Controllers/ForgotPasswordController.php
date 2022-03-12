@@ -19,14 +19,19 @@ class ForgotPasswordController extends Controller
     public function SendPasword(ForgotRequest $req){
         $email = $req->email;
         $user = User::where('email',$email)->first();
-        $password = mt_rand(111111,999999);
-        Mail::to($user->email)->send(new ForgotPassword($password,$user));
-       
-        $user->password = password_hash($password,PASSWORD_DEFAULT);
-        if($user->save()){
-            flash("Password is generated and sent to registered email")->success();
-            return redirect()->route('Eventee.login');
+        if($user){
+            $password = mt_rand(111111,999999);
+            Mail::to($user->email)->send(new ForgotPassword($password,$user));
+        
+            $user->password = password_hash($password,PASSWORD_DEFAULT);
+            if($user->save()){
+                flash("Password is generated and sent to registered email")->success();
+                return redirect()->route('Eventee.login');
+            }
         }
+        flash("Email Address Is Not Registered")->error();
+        return redirect()->back();
+        
         
         
     }

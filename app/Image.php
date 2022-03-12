@@ -48,4 +48,8 @@ class Image extends Model
             
         });
     }
+
+    public function section(){
+        return $this->belongsTo('\App\Section');
+    }
 }

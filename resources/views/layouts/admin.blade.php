@@ -13,7 +13,6 @@
 
     <!-- App css -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-dark.min.css') }}" type="text/css">
-    {{-- <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css"> --}}
 	<link rel="stylesheet" href="{{ asset('assets/css/form.css') }}" type="text/css">
     {{-- <link rel="stylesheet"  href="{{ asset('assets/css/app.min.css') }}" type="text/css"> --}}
     <link rel="stylesheet" href="{{ asset('assets/css/app-dark.min.css') }}" type="text/css">

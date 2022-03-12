@@ -110,6 +110,10 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::POST('/Landing/Setting/Post/{id}','LandingController@LandingStore')->name('landing.settings.store');
     Route::POST('/Landing/Setting/Speaker/{id}/{page_id}','LandingController@SpeakerStore')->name('landing.settings.speaker');
     Route::get('/set/speaker/status','LandingController@setStatus')->name('landing.settings.setStatus');
+    Route::get('/set/schedule/status','LandingController@schduleStatus')->name('landing.settings.schedule');
+    Route::get('/set/reg/status','LandingController@regStatus')->name('landing.settings.reg');
+    Route::get('/set/section/status','LandingController@sectionStatus')->name('landing.settings.section');
+    Route::POST('/Landing/Setting/Sponsor/{id}','LandingController@SponsorStore')->name('landing.settings.sponsor');
 
     //Mail Template
     Route::get('/template/{id}','Eventee\TemplateController@index')->name('eventee.mail.template');

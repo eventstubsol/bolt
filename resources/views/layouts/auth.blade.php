@@ -133,18 +133,20 @@
                 overflow: auto;
             }
         } 
-        a {
+       @if(isset($event))
+       a {
             color: {{ $event->primary_color }};
             text-decoration: none;
             background-color: transparent;
         }
+   
 
         a:hover {
             color: {{ $event->secondary_color }} ;
             text-decoration: underline;
         }
 
-  
+        @endif
     </style>
 <script>
     $('#flash-overlay-modal').modal();

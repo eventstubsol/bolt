@@ -11,6 +11,7 @@
     <link href="https://coderthemes.com/ubold/layouts/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
     <link href="https://coderthemes.com/ubold/layouts/assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
     <link href="https://coderthemes.com/ubold/layouts/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+   
 @endsection
 
 {{-- @section("page_title")
@@ -116,6 +117,101 @@
         </div>
     </div>
 </div>
+
+<div class="row" >
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body form-check form-switch ml-3">
+                <div class="schedule">
+                    @if($landingPage->schedule_status == 1)
+                        <input type="checkbox" value="1" class="setoption form-check-input" onchange="setschedule(this)" checked>
+                        <label class="form-check-label" for="checkbox_id">Do You Want Schedule Section?</label>
+                    @else
+                        <input type="checkbox" value="0" class="setoption form-check-input" onchange="setschedule(this)">
+                        <label class="form-check-label" for="checkbox_id">Do You Want Schedule Section?</label>
+                    @endif
+                </div>
+                <div class="registration mt-2">
+                    @if($landingPage->registration_status == 1)
+                        <input type="checkbox" value="1" class="setoption form-check-input" onchange="setreg(this)" checked>
+                        <label class="form-check-label" for="checkbox_id">Do You Want Registration Section?</label>
+                    @else
+                        <input type="checkbox" value="0" class="setoption form-check-input" onchange="setreg(this)">
+                        <label class="form-check-label" for="checkbox_id">Do You Want Registration Section?</label>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" >
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body form-check form-switch ml-3">
+                
+                @if($landingPage->section_status == 1)
+                    <input type="checkbox" value="1" class="setoption form-check-input" onchange="setsection(this)" checked>
+                    <label class="form-check-label" for="checkbox_id">Do You Want Sponsor Section?</label>
+                @else
+                    <input type="checkbox" value="0" class="setoption form-check-input" onchange="setsection(this)">
+                    <label class="form-check-label" for="checkbox_id">Do You Want Sponsor Section?</label>
+                @endif
+                
+            </div>
+            <div class="card-body"  @if($landingPage->section_status == 0) style="display: none" @endif>
+                <form action="{{ route('landing.settings.sponsor',$landingPage->id) }}" method="POST">
+
+                    @if(count($sections) > 0)
+                    
+                    @foreach ($sections as  $n => $section)
+                        <div class="form-group">
+                            <label for="">Title</label>
+                            <input type="text" class="form-control" name="title[]" value="{{ $section->section }}">
+                        </div>
+                        @if(($section->images()->count()) > 0)
+                        <div class="imageAppend im-{{ $n }} row">
+                            @foreach($section->images()->get() as $image)
+                            
+                                <div class="image-uploader col-md-4">
+                                    <label class="mb-3" for="images">Sponsor Image
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <input type="hidden" class="upload_input" name="url[{{ $n }}][]"  value="{{$image->url}}">
+                                    <input accept="images/*"
+                                        type="file"
+                                        data-name="background"
+                                        data-plugins="dropify"
+                                        data-default-file={{assetUrl($image->url)}}
+                                        data-type="image"/>
+                              
+                                </div>
+                        
+                            
+                           @endforeach
+                        </div>
+                        <button type="button" class="btn btn-success mt-2" onclick="AddImage(this)" data-id="{{ $n }}">Add Image</button>
+                        @endif
+                    @endforeach
+
+                @endif
+                <div id="sponsor">
+
+                </div>
+                
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary mt-4" onclick="AddSponsor()">Add Sponsor</button>
+                    <button type="submit" class="btn btn-success mt-4">Save</button>
+                </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    
+</div>
 @endsection
 
 @section("scripts")
@@ -126,6 +222,32 @@
     <script src="https://coderthemes.com/ubold/layouts/assets/libs/selectize/js/standalone/selectize.min.js"></script>
     <script src="https://coderthemes.com/ubold/layouts/assets/libs/select2/js/select2.min.js"></script>
 <script>
+    // $(document).ready(function(){
+    let sections = {!!  json_encode($sections) !!};
+    let n = (sections.length) - 1;
+    function AddImage(e){
+        let id = e.getAttribute('data-id');
+        let appened = `<div class="image-uploader col-md-4" id="imgBg" >
+                      <label class="mb-3" for="images">Sponsor Image
+                        <span style="color:red">*</span>
+                      </label>
+                      <input type="hidden" name="url[${id}][]" class="upload_input" >
+                      <input type="file" data-name="url" data-plugins="dropify" data-type="image"  />
+                    </div>`;
+        $('.im-'+id).append(appened);
+        initializeFileUploads();
+    }
+    function AddSponsor(){
+        n += 1;
+        let appended = `<div class="parent2"><div class="form-group"><label for="">Title</label><input type="text" class="form-control" name="title[]"></div><div class="imageAppend im-${n} row"></div><button type="button" class="btn btn-success mt-2" onclick="AddImage(this)" data-id="${n}">Add Image</button></div>`;
+        $('#sponsor').append(appended);
+        
+    }
+   
+    // });
+    
+</script>
+<script>
     $(document).ready(function(){
         if($('.setoption').val() == 1){
             $('.SetSpeakers').show();
@@ -135,7 +257,6 @@
         }
         
     });
-
 
 </script>
 <script>
@@ -153,6 +274,58 @@
                 console.log("updated successfully");
             });
             $('.SetSpeakers').hide();
+        }
+    }
+
+    function setschedule(e){
+        if(e.value == 0){
+            e.value = 1;
+            $.get("{{ route('landing.settings.schedule') }}",{'id':"{{ $landingPage->id }}",'status':1},function(res){
+                showMessage("Enabled Successfully",'success');
+            });
+           
+        }
+        else{
+            e.value = 0;
+            $.get("{{ route('landing.settings.schedule') }}",{'id':"{{ $landingPage->id }}",'status':0},function(res){
+                showMessage("Disabled Successfully",'success');
+            });
+           
+        }
+    }
+
+    function setreg(e){
+        if(e.value == 0){
+            e.value = 1;
+            $.get("{{ route('landing.settings.reg') }}",{'id':"{{ $landingPage->id }}",'status':1},function(res){
+                showMessage("Enabled Successfully",'success');
+            });
+           
+        }
+        else{
+            e.value = 0;
+            $.get("{{ route('landing.settings.reg') }}",{'id':"{{ $landingPage->id }}",'status':0},function(res){
+                showMessage("Disabled Successfully",'success');
+            });
+           
+        }
+    }
+
+    function setsection(e){
+        if(e.value == 0){
+            e.value = 1;
+            $.get("{{ route('landing.settings.section') }}",{'id':"{{ $landingPage->id }}",'status':1},function(res){
+                showMessage("Enabled Successfully",'success');
+            });
+            $('#sponsor').show();
+           
+        }
+        else{
+            e.value = 0;
+            $.get("{{ route('landing.settings.section') }}",{'id':"{{ $landingPage->id }}",'status':0},function(res){
+                showMessage("Disabled Successfully",'success');
+            });
+            $('#sponsor').hide();
         }
     }
     
