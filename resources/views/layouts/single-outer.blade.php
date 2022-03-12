@@ -12,7 +12,7 @@
     <link href={{ asset("assets/libs/select2/css/select2.min.css" )}} rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{asset("event-assets/YouTubePopUp/YouTubePopUp.css")}}">
     {{-- App favicon--}}
-    <link rel="shortcut icon" href="{{assetUrl(getField("favicon"))}}">
+    <link rel="shortcut icon" href="{{assetUrl(getFieldId("favicon",$event_id))}}">
     <!-- Icons -->
     <link href={{asset("assets/css/icons.min.css")}} rel="stylesheet" type="text/css" />
     <script>
@@ -39,7 +39,7 @@
         <div class="col-9 col-md-9 fluid-col logo-col">
             <div class="logo-box" style="min-height: 70px;">
                 <a class="logo area" href="/" >
-                <img src="{{ assetUrl(getField('logo')) }}" style="max-height: 50px;border-radius: 10px;padding: 0px;">
+                <img src="{{ assetUrl(getFieldId('logo',$event_id)) }}" style="max-height: 50px;border-radius: 10px;padding: 0px;">
                 </a>
             </div>
         </div>

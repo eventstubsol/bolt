@@ -56,21 +56,13 @@ class EventController extends Controller
         
         $event = Event::where("slug",$event_name)->first();
         $loader = Loader::findOrFail($event->def_loader);
-        // dd("schedule");
-        
         $event_id = $event->id;
-        // $onboards = Onboard::where("event_id",$event_id)->get();
-        // dd(json_encode($onboards));
         $leaderboard =Leaderboard::where('event_id',$event_id)->first();
         $chat_app = CometChat::where("event_id",$event->id)->first();
-        // dd(Image::where('owner',$leaderboard->id)->get()); 
-        // dd($event_id);
-        // $event_id =  ($id);
         $booths = Booth::where("event_id",$event_id)->orderBy("name")->with([
             "images",
             "videos",
             "resources",
-            "room",
         ])->get([
             "id",
             "name",
@@ -81,31 +73,12 @@ class EventController extends Controller
             "vidbg_url"
         ]);
         $tables = NetworkingTable::where("event_id",$event_id)->orderBy('seats', 'asc')->get();
-        // dd($tables);
-        $boothrooms = Room::where("event_id",$event_id)->orderBy("position")->get()->load("booths");
-
-        $reports = Report::all()->load(["resources", "video"]);
         $FAQs = FAQ::where("event_id",$event_id)->get();
-        //        $provisionals = ProvisionalGroup::with(["resource", "video"])->get();
-        $prizes = Prize::where("event_id",$event_id)->with("images")->orderBy("criteria_low")->get();
         $schedule = getSchedule($event_id);
         $user = Auth::user();
         $pages = Page::where("event_id",$event_id)->with(["links.flyin","images"])->get();
         $sessionrooms = sessionRooms::where("event_id",$event_id)->get()->groupBy("master_room");
-        $sessionroomnames = [];
-        foreach($sessionrooms as $master_room=>$rooms){
-            // if(isset($sessionroomids[$master_room]))
-            // {
-            //     array_push($sessionroomids[$master_room],[$room]);
-            // }else{
-                $roomnames = [];
-                foreach($rooms as $room ){
-                    array_push($roomnames,$room->name);
-                }
-                $sessionroomnames[$master_room] = $roomnames;
-
-            // }
-        }
+     
 
         $access_specifiers = AccessSpecifiers::where("event_id",$event_id)->get()->groupBy("page_id");
        
@@ -121,12 +94,13 @@ class EventController extends Controller
         // dd($sessionroomids);
         $sessions = EventSession::where("event_id",$event_id)->get()->load(["parentroom"]);
         
-        $user->load("subscriptions");
+        // $user->load("subscriptions");
         // dd($user);
         $subscriptions = [];
         foreach ($user->subscriptions as $subscription) {
             $subscriptions[] = $subscription->session_id;
         }
+        // dd($subscriptions);
         $modals=Modal::where("event_id",$event_id)->get();
         $modals->load(["items"]);
         // return ($modals);
@@ -139,15 +113,15 @@ class EventController extends Controller
                     "modals",
                     "FAQs",
                     "pages",
-                    "reports",
-                    //                    "provisionals",
-                    "boothrooms",
+                    // "reports",
+                    //"provisionals",
+                    // "boothrooms",
                     "schedule",
                     "subscriptions",
-                    "prizes",
+                    // "prizes",
                     "sessions",
                     "sessionrooms",
-                    "sessionroomnames",
+                    // "sessionroomnames",
                     "event_id",
                     "loader",
                     "tables",
@@ -168,8 +142,9 @@ class EventController extends Controller
             "name"=>$room
         ];
         $chat_app = CometChat::where("event_id",$id)->first();
-
-        createGroup($chat_app,$group);
+        if($chat_app){
+            createGroup($chat_app,$group);
+        }
         // Http::withHeaders([
         //     "apiKey" => env("COMET_CHAT_API_KEY"),
         //     "appId" => env("COMET_CHAT_APP_ID"),

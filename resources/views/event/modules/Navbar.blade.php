@@ -27,7 +27,6 @@
         
     }
 @endphp
-<link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/css/config/default/app-dark.min.css">
 <style>
     /* ul{
         list-style:none;

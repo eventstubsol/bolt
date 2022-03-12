@@ -4,12 +4,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="resourceslistLabel"><span class="image-icon resources"></span>{{$modal->name}}</h4>
-                    {{-- <div class="form-group filters search-box">
-                        <label class="search has-icon search" for="resourcesearch">
-                            <input type="text" placeholder="Search items ..." name="resourcessearch" id="resourcesearch" data-action="resourcesearch">
-                        </label>
-                    </div>
-     --}}
                     <button  type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     
                 </div>

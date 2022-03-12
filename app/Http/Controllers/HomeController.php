@@ -111,8 +111,9 @@ class HomeController extends Controller
     }
 
     public function privacyPolicy($subdomain=''){
+        $event_id = Event::where("slug",$subdomain)->first()->id;
         $tos = Event::where("slug",$subdomain)->first()->privacypolicy;
-        return view("event.tos")->with(compact("tos"));
+        return view("event.tos")->with(compact("tos","event_id"));
     }
 
     public function confirmLogin($subdomain=''){
