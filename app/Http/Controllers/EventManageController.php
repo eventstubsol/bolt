@@ -181,6 +181,35 @@ class EventManageController extends Controller
 
     public function destroy(Request $req){
         $event = Event::findOrFail($req->id);
+        if($event->users()->count() > 0){
+            $event->users()->delete();
+        }
+       if($event->modals()->count() > 0){
+            $event->modals()->delete();
+        }
+       if($event->faqs()->count() > 0){
+            $event->faqs()->delete();
+        }
+      if($event->booths()->count() > 0){
+            $event->booths()->delete();
+        }
+      if($event->loader()->count() > 0){
+            $event->loader()->delete();
+        }
+      if($event->pages()->count() > 0){
+        $event->pages()->delete();
+      }
+      if($event->session()->count() > 0){
+        $event->session()->delete();
+      }
+      if($event->sessionroom()->count() > 0){
+        $event->sessionroom()->delete();
+      }
+      if($event->access()->count() > 0){
+        $event->access()->delete();
+      }
+        
+        
         
        if($event->delete()){
         return response()->json(['code'=>200,'message'=>"Event Deleted Succesfully"]);

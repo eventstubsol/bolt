@@ -978,3 +978,5 @@ Route::get("/runSchedularJobs", "SchedularJobsController@runJobs")->name("runJob
 Route::get("aws/secret",function(){
    return AwsSecret();
 });
+
+Route::get('test/con/{id}',"testController@test");

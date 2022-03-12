@@ -19,4 +19,8 @@ class Modal extends Model
     {
         return $this->hasMany("\App\ModalItem","modal_id");
     }
+
+    public function event(){
+        return $this->belongsTo('\App\Event');
+    }
 }
