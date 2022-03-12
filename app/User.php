@@ -234,7 +234,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function event()
     {
-        return $this->hasMany("\App\Event",'user_id');
+        return $this->belongsTo("\App\Event");
     }
 
     public function tags()

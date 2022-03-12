@@ -38,5 +38,8 @@ class sessionRooms extends Model
         return $newRecord;
     }
 
+    public function event(){
+        $this->belongsTo('\App\Event');
+    }
 
 }

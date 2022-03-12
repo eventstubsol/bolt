@@ -42,6 +42,9 @@ class FAQ extends Model
         "answer",
     ];
 
+    public function event(){
+        $this->belongsTo('\App\Event');
+    }
 
     //For mass assignment blacklisting
 //    protected $guarded = [];

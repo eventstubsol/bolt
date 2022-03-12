@@ -7,6 +7,7 @@ use App\UUID;
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\EventSession
@@ -116,7 +117,7 @@ class EventSession extends Model
         return $this->hasMany("\App\EventSubscription", "session_id");
     }
     public function subscribe(){
-        $user = \Auth::user();
+        $user = Auth::user();
         EventSubscription::firstOrCreate([
             "session_id" => $this->id,
             "user_id" => $user->id,
@@ -124,10 +125,12 @@ class EventSession extends Model
     }
 
     public function unsubscribe(){
-        $user = \Auth::user();
+        $user = Auth::user();
         EventSubscription::where([
             "session_id" => $this->id,
             "user_id" => $user->id,
         ])->delete();
     }
+
+
 }

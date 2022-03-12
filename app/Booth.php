@@ -151,4 +151,8 @@ class Booth extends Model
         $this->save();
         return $this;
     }
+
+    public function event(){
+        $this->belongsTo('\App\Event');
+    }
 }
