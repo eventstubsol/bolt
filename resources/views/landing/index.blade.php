@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>MLK Celebrations</title>
+    <title>{{ $event->name }}</title>
     <meta content="width=device-width" name="viewport" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
