@@ -148,9 +148,7 @@
 
         @endif
     </style>
-<script>
-    $('#flash-overlay-modal').modal();
-</script>
+
 </head>
 
 <body class="auth-fluid-pages pb-0" data-sidebar-size="condensed" data-layout-width="fluid" data-layout-menu-position="fixed" data-sidebar-color="light" data-sidebar-showuser="false" data-topbar-color="dark" style="visibility: visible; opacity: 1;">

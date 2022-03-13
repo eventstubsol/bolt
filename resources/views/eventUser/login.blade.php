@@ -76,14 +76,14 @@ if(Auth::user()){
 
 @section('scripts_after')
 <script>
-    (function onSubmit() {
-        grecaptcha.ready(function () {
-            grecaptcha.execute('{{ env("RECAPTCHA_SITE_KEY") }}', {
-                action: 'homepage'
-            }).then(function (token) {
-                document.querySelector("#token").value = token
-            });
-        });
-    })()
+    // (function onSubmit() {
+    //     grecaptcha.ready(function () {
+    //         grecaptcha.execute('{{ env("RECAPTCHA_SITE_KEY") }}', {
+    //             action: 'homepage'
+    //         }).then(function (token) {
+    //             document.querySelector("#token").value = token
+    //         });
+    //     });
+    // })()
 </script>
 @endsection
