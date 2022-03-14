@@ -61,10 +61,10 @@
 </style>
 @endsection
 
-@section("breadcrumbs")
-    <li class="breadcrumb-item"><a href="/">Booths</a></li>
+{{-- @section("breadcrumbs")
+    <li class="breadcrumb-item"><a href="">Booths</a></li>
     <li class="breadcrumb-item active">Edit</li>
-@endsection
+@endsection --}}
 
 @section("content")
     <form action="{{ route("exhibiter.update", [ "booth" => $booth->id ,"id"=>$id]) }}" method="POST">
