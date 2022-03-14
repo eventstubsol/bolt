@@ -427,13 +427,14 @@ class EventSessionsController extends Controller
         $schedule = getSchedule();
         $subscriptions = [];
         $user = Auth::user();
+        $event = Event::where("id",$user->event_id)->first();
         if($user){
             $user->load("subscriptions");
             foreach ($user->subscriptions as $subscription) {
                 $subscriptions[] = $subscription->session_id;
             }    
         }
-        return view("event.schedule")->with(compact(["schedule", "subscriptions"]));
+        return view("event.schedule")->with(compact(["schedule", "subscriptions","event"]));
     }
 
     
@@ -441,13 +442,14 @@ class EventSessionsController extends Controller
         $schedule = getSchedule();
         $subscriptions = [];
         $user = Auth::user();
+        $event = Event::where("id",$user->event_id)->first();
         if($user){
             $user->load("subscriptions");
             foreach ($user->subscriptions as $subscription) {
                 $subscriptions[] = $subscription->session_id;
             }    
         }
-        return view("event.modules.schedule")->with(compact(["schedule", "subscriptions"]));
+        return view("event.modules.schedule")->with(compact(["schedule", "subscriptions","event"]));
     }
     public function subscription_raw($subdomain){
         $id = Event::where("slug",$subdomain)->first()->id;
