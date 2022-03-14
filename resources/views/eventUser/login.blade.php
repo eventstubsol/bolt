@@ -36,6 +36,13 @@ if(Auth::user()){
         background-color: {{ $event->secondary_color }};
         /* padding: 5px 7px; */
     }
+    #form .fieldInput:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: {{ $event->primary_color }};
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(136, 194, 50, 0.25);
+        }
 </style>
 
 @endsection
@@ -45,7 +52,7 @@ if(Auth::user()){
     <div class="">
         <label for="{{ $login["field"] }}">{{ $login["label"] }}</label>
         
-        <input value="{{ old($login["field"]) ?? $email }}" class="form-control mb-3 @error($login["field"]) is-invalid @enderror"
+        <input value="{{ old($login["field"]) ?? $email }}" class="fieldInput form-control mb-3 @error($login["field"]) is-invalid @enderror"
             type="{{ $login["field"] == 'email' ? 'email' : 'text' }}" id="" name="{{ $login["field"] }}"
             placeholder="{{ $login["placeholder"] }}" />
         @error($login["field"])
