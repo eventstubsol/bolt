@@ -195,7 +195,7 @@
     {{-- Booths --}}
     @include("event.modules.Booths.SingleBooth")
 
-    {{-- @include("event.modules.Leaderboard") --}}
+    @include("event.modules.Leaderboard")
   
   
    

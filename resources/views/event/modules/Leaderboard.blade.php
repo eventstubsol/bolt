@@ -23,7 +23,7 @@ if(isset($leaderboard)){
                         </ul> --}}
                        @if(isset($leaderboard))
                        <ul>
-                            @foreach(App\Leadpoint::where('owner',$leaderboard->id)->where('status',1)->get() as $point)
+                            @foreach(App\LeadPoint::where('owner',$leaderboard->id)->where('status',1)->get() as $point)
                             
                                 <li>{{ $point->point }}</li>
                                 
