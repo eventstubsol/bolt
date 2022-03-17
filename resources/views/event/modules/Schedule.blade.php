@@ -152,7 +152,7 @@
                                                                         </div>
                                                                     </div>
                                                                 @endforeach
-                                                                @if($event['status'] !== -1)
+                                                                @if(false)
                                                                     <a href="javascript: void(0);" data-id="{{ $id }}" class="btn agenda subscribe-to-event sa-{{$id}} btn-sm btn-link text-muted font-14 {{ in_array($id, $subscriptions) ? "hidden" : "" }}">
                                                                         <!-- <i class="mdi mdi-bell-ring mr-1"></i>  -->
                                                                         + Add to Personal Agenda
