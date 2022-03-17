@@ -139,7 +139,7 @@ class EventController extends Controller
         $id = $request->get("id");
         $group = (object)[
             "id"=>$room,
-            "name"=>$room
+            "name"=>ucfirst(str_replace("_"," ",$room))
         ];
         $chat_app = CometChat::where("event_id",$id)->first();
         if($chat_app){

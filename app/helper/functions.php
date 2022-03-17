@@ -578,7 +578,7 @@ function getMenuLink($menu){
     case("none"):
         return <<<HTML
         <a   href="javascript:void(0);" >      
-        <img src="$icon" width="26" alt="">
+        <img src="$icon" width="23" alt="">
 
         <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                  $menu->name 
@@ -590,7 +590,7 @@ HTML;
     case("custom_page"):
             return <<<HTML
                     <a  target="_blank" href="$menu->link" >      
-                    <img src="$icon" width="26" alt="">
+                    <img src="$icon" width="23" alt="">
    
                     <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                              $menu->name 
@@ -602,7 +602,7 @@ HTML;
     case("chat_user"):
         return <<<HTML
                 <a  class="chat_user" data-link="$menu->link" >    
-                <img src="$icon" width="26" alt="">
+                <img src="$icon" width="23" alt="">
    
                 <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                          $menu->name 
@@ -614,7 +614,7 @@ HTML;
         return <<<HTML
                 <a   class="chat_group" data-link="$menu->link" > 
                         <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
-                        <img src="$icon" width="26" alt="">
+                        <img src="$icon" width="23" alt="">
                         $menu->name 
                 </a>
 HTML;
@@ -623,7 +623,7 @@ HTML;
         return <<<HTML
             <a  style="border:none !important;" class="_df_button" source=" assetUrl($menu->link) " >
                 <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
-                <img src="$icon" width="26" alt="">
+                <img src="$icon" width="23" alt="">
     
                 $menu->name 
             </a>
@@ -633,7 +633,7 @@ HTML;
         return <<<HTML
             <a data-link="booth/$menu->link" class="area">
                 <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
-                <img src="$icon" width="26" alt="">
+                <img src="$icon" width="23" alt="">
     
                 $menu->name 
             </a>
@@ -642,7 +642,7 @@ HTML;
     case("session_room"):
         return  <<<HTML
             <a data-link="sessionroom/$menu->link" class="area">
-               <img src="$icon" width="26" alt="">
+               <img src="$icon" width="23" alt="">
  
             <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                 $menu->name 
@@ -652,7 +652,7 @@ HTML;
     case("page"):
         return <<<HTML
                 <a data-link="page/$menu->link" class="area">
-                    <img src="$icon" width="26" alt="">
+                    <img src="$icon" width="23" alt="">
                          
                     <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                      $menu->name 
@@ -662,7 +662,7 @@ break;
     case("lobby"):
         return <<<HTML
                 <a data-link="lobby" class="area">
-                    <img src="$icon" width="26" alt="">
+                    <img src="$icon" width="23" alt="">
 
                     <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                      $menu->name 
@@ -672,7 +672,7 @@ HTML;
     case("SwagBag"):
         return <<<HTML
                 <a data-toggle="modal" data-target="#swagbag-modal">
-                    <img src="$icon" width="26" alt="">
+                    <img src="$icon" width="23" alt="">
 
                     <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                      $menu->name 
@@ -682,7 +682,7 @@ HTML;
     case("Leaderboard"):
         return <<<HTML
                 <a class="area" data-link="leaderboard">
-                    <img src="$icon" width="26" alt="">
+                    <img src="$icon" width="23" alt="">
 
                     <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                      $menu->name 
@@ -692,7 +692,7 @@ HTML;
     case("Schedule"):
         return <<<HTML
                 <a  data-toggle="modal" data-target="#schedule-modal">
-                    <img src="$icon" width="26" alt="">
+                    <img src="$icon" width="23" alt="">
 
                     <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                      $menu->name 
@@ -701,7 +701,7 @@ HTML;
     case("Library"):
         return <<<HTML
                 <a  data-toggle="modal" data-target="#resources-modal">
-                    <img src="$icon" width="26" alt="">
+                    <img src="$icon" width="23" alt="">
 
                     <!-- <i style="font-size:24px;" class="$menu->iClass"></i> -->
                      $menu->name 
@@ -711,7 +711,7 @@ HTML;
     case("social_wall"):
         return <<<HTML
              <a class="area" data-link="attendees">
-             <img src="$icon" width="26" alt="">
+             <img src="$icon" width="23" alt="">
                  
              <!-- <i class="fe-users"></i> -->
              $menu->name</a>
@@ -721,7 +721,7 @@ HTML;
     case("modal"):
         return <<<HTML
              <a data-toggle="modal" data-target="#$menu->link" class="_custom_modal">
-             <img src="$icon" width="26" alt="">
+             <img src="$icon" width="23" alt="">
                  
              <!-- <i class="fe-users"></i> -->
                  $menu->name</a>
@@ -731,7 +731,7 @@ HTML;
     case("photobooth"):
             return <<<HTML
              <a class="photobooth area"  data-link="photo-booth"  data-capture="$menu->link" data-gallery="$menu->url" >
-             <img src="$icon" width="26" alt="">
+             <img src="$icon" width="23" alt="">
                  
              <!-- <i class="fe-users"></i> -->
                  $menu->name</a>
@@ -741,7 +741,7 @@ HTML;
     case("faq"):
         return <<<HTML
              <a   data-toggle="modal" data-target="#faqs-modal" >
-             <img src="$icon" width="26" alt="">            
+             <img src="$icon" width="23" alt="">            
                  $menu->name</a>
 HTML;
 

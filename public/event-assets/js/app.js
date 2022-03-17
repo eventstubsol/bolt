@@ -567,6 +567,9 @@ function initApp() {
                     // $("body").trigger("mousemove");
                     reload= false;
                 }
+                if(isMobile()){
+                    $("#lobby_view").src = "";
+                }
                 audio.play();
                 playing = true;
                 audio.muted = false;
@@ -723,7 +726,7 @@ function initApp() {
             $("body").click()
             pages.hide();
             pages.filter(".initial").show();
-            // if (!isMobile()) {
+            if (!isMobile()) {
                 exteriorView.prop("currentTime", 0).get(0).play();
                 setTimeout(function () {
                     loader.hide();
@@ -741,6 +744,9 @@ function initApp() {
                                 routie("lobby");
                             });
                     });
+            }else{
+                routie("lobby");
+            }
             recordPageView("exterior", "Exterior");
         },
         'leaderboard': function () {
@@ -886,6 +892,9 @@ function initApp() {
         }
     });
     if (window.location.hash === "") {
+        if(!isMobile()){
+            routie("lobby");
+        }
         if(window.config.homepage){
             routie(window.config.homepage);
         }else{

@@ -1,5 +1,7 @@
+   @php
+       $color = $event->primary_color;
+   @endphp
 <div class="mb-3" >
-   
     <!-- List of Dates in Event -->
     <ul class="nav nav-pills navtab-bg nav-justified" style="margin: 0px -5px;">
         
@@ -97,7 +99,7 @@
                                                             <span class="timeline-sm-date">
                                                                 {{ $event['start_date']['dts'] }} - <br> {{ $event['start_date']['dte'] }}
                                                             </span>
-                                                            <div @if($event['status'] === 1) style="border: 3px solid {{ $event->primary_color }}!important; border-radius: 5px;" @endif class="border border-heavy p-2 mb-3 bg-white hover-shadow "> 
+                                                            <div @if($event['status'] === 1) style="border: 3px solid {{ $color }}!important; border-radius: 5px;" @endif class="border border-heavy p-2 mb-3 bg-white hover-shadow "> 
                                                                 <div class="avatar-group mb-2">
 
                                                                     @foreach($event['speakers'] as $speaker)

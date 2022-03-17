@@ -44,7 +44,6 @@ Route::get("/testenv", function(){myenv();})->name("envveri");
 Route::group(['domain' => $appurl], function () {
 
 
-Route::post("/leaderboard", "EventManageController@leaderboard")->name("leaderboard");
 Route::Post("admin/logout","HomeController@logout")->name('admin.logout');
 Auth::routes();
 Route::get("/Register/EventAdmin","eventeeController@Regiter")->name('Eventee.register');
@@ -581,6 +580,8 @@ Route::group($options, function () use ($options) {
         // return "This will respond to requests for 'admin.localhost/'";
         
     });
+  
+    Route::post("/leaderboard", "EventManageController@leaderboard")->name("leaderboard");
     Route::get("/landing", "EventController@landingPage")->name('event.landpage');
     Route::post("/event/register/landing", "EventRegController@CustomFormSave")->name("attendee_register.confirmReg.landingSave");
     Route::post("/event/register/landing/default", "EventRegController@BasicForm")->name("attendee_register.confirmReg.defaultsave");
