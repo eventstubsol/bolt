@@ -21,5 +21,11 @@
 </head>
 <body>
 <iframe src="https://player.vimeo.com/video/{{ $videoId }}?autoplay=1" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<script type="text/javascript">
+    let isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if(isIOS){
+        document.querySelector('body').classList.add('buggy');
+    }
+</script>
 </body>
 </html>

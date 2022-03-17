@@ -520,7 +520,17 @@
             color: {{ $event->primary_color }} !important;
         }
 
+        .df-ui-btn.df-ui-next.ti-angle-right {
+            display: none !important;
+        }
+        .df-ui-btn.df-ui-prev.ti-angle-left {
+            display: none !important;
+        }
+        
 
+        .btn:focus, .btn.focus {
+            box-shadow: none !important;
+        }
         .theme-btn.primary {
             background: rgb(91 219 103 / 10%);
             border-color: rgb(91 219 140 / 30%);
