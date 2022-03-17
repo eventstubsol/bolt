@@ -56,7 +56,7 @@ if(Auth::user()){
             type="{{ $login["field"] == 'email' ? 'email' : 'text' }}" id="" name="{{ $login["field"] }}"
             placeholder="{{ $login["placeholder"] }}" />
         @error($login["field"])
-        <span class="invalid-feedback" role="alert">{{ print_r($message)  }}</span>
+        <span class="invalid-feedback" role="alert">{{ ($message)  }}</span>
         @enderror
         @if ($notFound)
         <span class="invalid-feedback" role="alert">Please check your login details</span>
