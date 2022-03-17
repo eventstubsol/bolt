@@ -56,7 +56,7 @@ if(Auth::user()){
             type="{{ $login["field"] == 'email' ? 'email' : 'text' }}" id="" name="{{ $login["field"] }}"
             placeholder="{{ $login["placeholder"] }}" />
         @error($login["field"])
-        <span class="invalid-feedback" role="alert">{{ print_r($message)  }}</span>
+        <span class="invalid-feedback" role="alert">{{ ($message)  }}</span>
         @enderror
         @if ($notFound)
         <span class="invalid-feedback" role="alert">Please check your login details</span>
@@ -75,6 +75,10 @@ if(Auth::user()){
         <button class="login-btn theme-btn btn primary-filled" onclick="onSubmit" style="background-color: {{ $event->primary_color }}">Login</button>
     </div>
     <p class="text mt-3">By logging in and using the platform, you hereby accept our  <a href="{{ route('privacyPolicy',['subdomain'=>$subdomain]) }}" >Privacy Policy</a> {{--  <a data-toggle="modal" data-target="#privacyPolicy" >Privacy Policy</a>--}}. For more details <a href="{{ route("faq",['subdomain'=>$subdomain]) }}">read the FAQs</a></p>
+    <div class="disclaimer" style="line-height: 1.2rem;">
+        <p> <strong> Disclaimer: </strong>  By entering the Baltimore Alumnae Chapter's Centennial Matinee, you affirm that you are a ticketed guest and will not share your viewing access to the program with those without a paid ticket. Anyone who violates this trust may be subject to suspension of program access without refund and disciplinary action per Delta Sigma Theta's Code of Conduct policies.</p>
+        <p></p>
+    </div>
 
     <div class="clearfix"></div>
     <div class="clearfix"></div>
