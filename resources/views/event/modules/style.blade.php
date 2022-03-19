@@ -526,7 +526,9 @@
         .df-ui-btn.df-ui-prev.ti-angle-left {
             display: none !important;
         }
-        
+        .custom_ios #menu_items_right{
+            margin-right: 15%;
+        }
 
         .btn:focus, .btn.focus {
             box-shadow: none !important;

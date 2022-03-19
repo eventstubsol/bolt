@@ -549,7 +549,10 @@ function initApp() {
     
 
     let  reload  = true ;
-   
+   function isios(){
+        let isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        return isIOS;
+   }
     routie({
         'lobby': function () {
             pages.hide();
@@ -568,6 +571,9 @@ function initApp() {
                     reload= false;
                 }
                 if(isMobile()){
+                    $("#lobby_view").src = "";
+                }
+                if(isios()){
                     $("#lobby_view").src = "";
                 }
                 audio.play();
@@ -844,8 +850,10 @@ function initApp() {
                 
                recordPageView("page/" + page, page + " page", "page",page);
             }
-            video.show();
-            video.prop("currentTime", 0).get(0).play();
+            if(!isios()){
+                video.show();
+                video.prop("currentTime", 0).get(0).play();
+            }
 
         },
         'photo-booth': function (id) {

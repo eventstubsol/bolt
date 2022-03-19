@@ -26,6 +26,12 @@
             <button class="btn theme-btn primary mr-2" onclick="offNotification()" style="float:right" data-consent="true">Close</button>
         </div>
     </div>
+    <script>
+        let isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        if(isIOS){
+            document.querySelector('body').classList.add('custom_ios');
+        }
+    </script>
       
         
      <!-- Icons -->

@@ -328,7 +328,7 @@
                   
                </div>
             </div>
-            <div class="extra" style="margin-right: 30px">
+            <div id="menu_items_right" class="extra" style="margin-right: 30px">
                 @auth
                 {{-- <div class="custom-dropdown profile area" data-link="attendees"> --}}
                 <div class="custom-dropdown profile">
