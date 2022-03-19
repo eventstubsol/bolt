@@ -574,7 +574,7 @@ function initApp() {
                     $("#lobby_view").src = "";
                 }
                 if(isios()){
-                    $("#lobby_view").src = "";
+                    document.getElementById("lobby_view").setAttribute("src","")
                 }
                 audio.play();
                 playing = true;
@@ -732,7 +732,7 @@ function initApp() {
             $("body").click()
             pages.hide();
             pages.filter(".initial").show();
-            if (!isMobile()) {
+            if (!isMobile() && !isios()) {
                 exteriorView.prop("currentTime", 0).get(0).play();
                 setTimeout(function () {
                     loader.hide();
@@ -820,8 +820,10 @@ function initApp() {
                 });
                 recordPageView("workshop/" + room, room + " Room",'Sessionroom',room);
             }
-            video.show();
-            video.prop("currentTime", 0).get(0).play();
+            if(!isios()){
+                video.show();
+                video.prop("currentTime", 0).get(0).play();
+            }
         },
         'page/:page': function (page) {
             // if(page === "auditorium"){
