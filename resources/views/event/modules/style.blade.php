@@ -529,6 +529,9 @@
         .custom_ios #menu_items_right{
             margin-right: 15%;
         }
+        .custom_ios [class*=col-].fluid-col.profile-col{
+            max-width: 270px;
+        }
 
         .btn:focus, .btn.focus {
             box-shadow: none !important;
