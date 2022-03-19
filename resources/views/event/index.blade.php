@@ -48,11 +48,11 @@
     @include("includes.styles.sweetalert2")
     @include("includes.styles.fileUploader")
     <!-- Custom -->
-    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=218723676285726" rel="stylesheet" type="text/css">
-    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=218723676285726" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=218723676285726" type="text/css">
-    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=218723676285726">
-    <link href="{{ asset('assets/css/custom.css') }}?v=218723676285726" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/dflip/css/dflip.css') }}?cb=218723676285798" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/dflip/css/themify-icons.css') }}?cb=218723676285798" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=218723676285798" type="text/css">
+    <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=218723676285798">
+    <link href="{{ asset('assets/css/custom.css') }}?v=218723676285798" rel="stylesheet" type="text/css" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ api('GA_TRACKING_ID',$event_id) }}"></script>
     @php
@@ -350,13 +350,13 @@
         window.config = config;
     </script>
     {{-- <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> --}}
-    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=218723676285726"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}?cb=218723676285726"></script>
-    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=218723676285726"></script>
-    <script src="{{ asset('event-assets/js/app.js') }}?cb=218723676285726"></script>
-    <script src="{{ asset('/js/profile/index.js') }}?cb=218723676285726"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=218723676285726"></script>
-    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=218723676285726"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}?cb=218723676285798"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}?cb=218723676285798"></script>
+    <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=218723676285798"></script>
+    <script src="{{ asset('event-assets/js/app.js') }}?cb=218723676285798"></script>
+    <script src="{{ asset('/js/profile/index.js') }}?cb=218723676285798"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=218723676285798"></script>
+    <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=218723676285798"></script>
     <style>
     
     </style>
