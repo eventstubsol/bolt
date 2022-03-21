@@ -549,7 +549,10 @@ function initApp() {
     
 
     let  reload  = true ;
-   
+   function isios(){
+        let isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        return isIOS;
+   }
     routie({
         'lobby': function () {
             pages.hide();
@@ -569,6 +572,9 @@ function initApp() {
                 }
                 if(isMobile()){
                     $("#lobby_view").src = "";
+                }
+                if(isios()){
+                    document.getElementById("lobby_view").setAttribute("src","")
                 }
                 audio.play();
                 playing = true;
@@ -726,7 +732,7 @@ function initApp() {
             $("body").click()
             pages.hide();
             pages.filter(".initial").show();
-            if (!isMobile()) {
+            if (!isMobile() && !isios()) {
                 exteriorView.prop("currentTime", 0).get(0).play();
                 setTimeout(function () {
                     loader.hide();
@@ -814,8 +820,10 @@ function initApp() {
                 });
                 recordPageView("workshop/" + room, room + " Room",'Sessionroom',room);
             }
-            video.show();
-            video.prop("currentTime", 0).get(0).play();
+            if(!isios()){
+                video.show();
+                video.prop("currentTime", 0).get(0).play();
+            }
         },
         'page/:page': function (page) {
             // if(page === "auditorium"){
@@ -844,8 +852,10 @@ function initApp() {
                 
                recordPageView("page/" + page, page + " page", "page",page);
             }
-            video.show();
-            video.prop("currentTime", 0).get(0).play();
+            if(!isios()){
+                video.show();
+                video.prop("currentTime", 0).get(0).play();
+            }
 
         },
         'photo-booth': function (id) {

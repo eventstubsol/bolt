@@ -328,9 +328,10 @@
                   
                </div>
             </div>
-            <div class="extra">
+            <div id="menu_items_right" class="extra" style="margin-right: 30px">
                 @auth
-                <div class="custom-dropdown profile area" data-link="attendees">
+                {{-- <div class="custom-dropdown profile area" data-link="attendees"> --}}
+                <div class="custom-dropdown profile">
                     <a href="javascript:void(0);" class="menu-trigger">
                         <p class="pro-user-name m-0 mr-1">
                             <span>{{ Auth::user()->name }}</span>

@@ -10,7 +10,7 @@
             <button class="btn theme-btn primary-filled mr-3" type="button" data-dismiss="modal">No, Keep the Items</button>
             <button class="btn theme-btn danger" type="button" id="remove-multiple-confirm">Yes, Remove the Items</button>
           </div>
-          <p>Please Note that, You can always add the removed items to your swagbag by visiting the reosources section.</p>
+          <p>Please Note that, You can always add the removed items to your swagbag by visiting the library section.</p>
         </div>
       </div>
     </div>

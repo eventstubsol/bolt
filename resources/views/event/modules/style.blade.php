@@ -59,8 +59,16 @@
         }
 
         @media only screen and (max-device-width: 967px) {
+            .pb-button{
+                right: 112px;
+            }
             .theme-chat.right-bar#chat-container {
                 min-width: 90% !important;
+            }
+            .app__messenger{
+
+                bottom: 24px !important;
+                right: 90px !important;
             }
             .menu img{
                 display: inline-block;
@@ -504,7 +512,7 @@
         }
         .doc-lists .doc-item .theme-btn.add-to-bag:before {
             color: {{ $event->primary_color }} !important;
-            padding: 8px;
+            /* padding: 8px; */
             font-weight: 700;
         }
 
@@ -512,7 +520,22 @@
             color: {{ $event->primary_color }} !important;
         }
 
+        .df-ui-btn.df-ui-next.ti-angle-right {
+            display: none !important;
+        }
+        .df-ui-btn.df-ui-prev.ti-angle-left {
+            display: none !important;
+        }
+        .custom_ios #menu_items_right{
+            margin-right: 15%;
+        }
+        .custom_ios [class*=col-].fluid-col.profile-col{
+            max-width: 270px;
+        }
 
+        .btn:focus, .btn.focus {
+            box-shadow: none !important;
+        }
         .theme-btn.primary {
             background: rgb(91 219 103 / 10%);
             border-color: rgb(91 219 140 / 30%);
@@ -610,7 +633,7 @@
         .custom-theme .btn-primary,
         .custom-theme .page-item.active .page-link,
         .custom-theme .btn-outline-primary:hover {
-            color: #fff;
+            color: #fff !important;
             background-color: {{ $event->primary_color }} !important;
             border-color: {{ $event->primary_color }} !important;
         }
@@ -619,8 +642,8 @@
             color: {{ $event->primary_color }} !important;
             border-color: {{ $event->primary_color }} !important;
         }
-
-
+        
+      
         .custom-theme .btn-outline-primary.disabled,
         .custom-theme .btn-outline-primary:disabled {
             color: {{ $event->primary_color }} !important;

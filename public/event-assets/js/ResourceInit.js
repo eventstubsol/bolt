@@ -349,8 +349,8 @@ $(document).ready(function(){
             success: function(response){
                 if(response.success){
                     swagBag = response.bag;
-                    $("#allswags").prop('checked',false).trigger('change');
                     $('#confirm-modal').modal('hide');
+                    $("#allswags").prop('checked',false).trigger('change');
                     setupSwagBag();
                 }
             }

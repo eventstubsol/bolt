@@ -104,7 +104,7 @@
                                 @if($link->type === "vimeo")
                                 <a class="video-play positioned fill" href="{{ $link->to }}">
                                     <div class="d-flex  positioned h-100 w-100">
-                                        <i class="mdi mdi-play-circle" style="z-index: 2;font-size: 3vw; margin: auto;"></i>
+                                        {{-- <i class="mdi mdi-play-circle" style="z-index: 2;font-size: 3vw; margin: auto;"></i> --}}
                                     </div>
                                 </a>
                                 @endif

@@ -41,8 +41,11 @@ if(Auth::user()){
         background-color: #fff;
         border-color: {{ $event->primary_color }};
         outline: 0;
-        box-shadow: 0 0 0 0.2rem rgba(136, 194, 50, 0.25);
-        }
+    }
+        
+    .btn:focus, .btn.focus {
+        box-shadow: none !important;
+    }
 </style>
 
 @endsection
