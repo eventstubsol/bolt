@@ -350,7 +350,7 @@ a[x-apple-data-detectors] {
                              <tr style="border-collapse:collapse"> 
                               <td align="left" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
                               {{-- resource name --}}
-                              {{ $resource['title'] }}
+                              <center>{{ $resource['title'] }}</center>
                               </p></td> 
                              </tr> 
                            </table></td> 
@@ -363,7 +363,7 @@ a[x-apple-data-detectors] {
                              <tr style="border-collapse:collapse"> 
                               {{-- resource link --}}
                               
-                                <td align="center" style="padding:0;Margin:0;font-size:0px"><a href="{{ $resource['link'] }}" download="download"><img class="adapt-img" src="{{ assetUrl('uploads/IsZgFqFq5R7TCOpN9mILHFKDYDynYK6gQRO6WtZR.png') }}" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="34"></a></td> 
+                                <td align="center" style="padding:0;Margin:0;font-size:0px"> <center><a href="{{ $resource['link'] }}" download="download"><img class="adapt-img" src="{{ assetUrl('uploads/IsZgFqFq5R7TCOpN9mILHFKDYDynYK6gQRO6WtZR.png') }}" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="34"></a></center></td> 
                               
                             
                             </tr> 
