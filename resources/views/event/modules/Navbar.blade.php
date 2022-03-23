@@ -520,8 +520,8 @@
                     spanCount = 0;
                     $('#count').empty();
                     $('#count').html(0);
-                    $('#notificationBody').empty();
-                    $('#notificationBody').html('<h6><center>No Notification Available</center></h6>');
+                    // $('#notificationBody').empty();
+                    // $('#notificationBody').html('<h6><center>No Notification Available</center></h6>');
                 }
             });
         });

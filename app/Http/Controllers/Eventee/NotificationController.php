@@ -180,11 +180,11 @@ class NotificationController extends Controller
         $notify->location = $note->location;  
         $event = Event::findOrFail($id); 
         if($note->location != 'lobby'){
-            event(new NotificationEvent($note->message,$note->title,$event->slug,$notify->id,$note->role,$note->url,$note->location,$note->location_type));
+            event(new NotificationEvent($note->message,$note->title,$event->slug,$notify->id,$note->roles,$note->url,$note->location,$note->location_type));
       
         }
         else{
-            event(new NotificationEvent($note->message,$note->title,$event->slug,$notify->id,$note->role,$note->url,$note->location,$note->location_type));
+            event(new NotificationEvent($note->message,$note->title,$event->slug,$notify->id,$note->roles,$note->url,$note->location,$note->location_type));
         }
         if($notify->save()){
             
