@@ -226,7 +226,7 @@ class EventManageController extends Controller
 
         $event = Event::findOrFail($req->id); 
         $total = User::where('event_id',$event->id)->count();
-        $isOnline = User::where('event_id',$event->id)->where('online_status' ,1)->where("updated_at",">",Carbon::now("UTC")->subMinutes(1)->toDateTimeString())->count();
+        $isOnline = User::where('event_id',$event->id)->where('online_status' ,1)->count();
         $isOffline = User::where('event_id',$event->id)->where('online_status' ,0)->count();
         $userobj = new \stdClass();
         if($isOnline > 0){
