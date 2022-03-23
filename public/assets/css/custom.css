@@ -1827,6 +1827,11 @@ button.pb-button {
     }
 }
 
+@media (max-width: 1400px) {
+    .navbar-custom.theme-nav ul.menu li a{
+        font-size: 73%;
+    }
+}
 @media (max-width: 1300px) {
     .navbar-custom.theme-nav .logo-box {
         width: 120px !important;
