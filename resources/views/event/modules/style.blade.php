@@ -520,12 +520,12 @@
             color: {{ $event->primary_color }} !important;
         }
 
-        .df-ui-btn.df-ui-next.ti-angle-right {
+        /* .df-ui-btn.df-ui-next.ti-angle-right {
             display: none !important;
         }
         .df-ui-btn.df-ui-prev.ti-angle-left {
             display: none !important;
-        }
+        } */
         .custom_ios #menu_items_right{
             margin-right: 15%;
         }

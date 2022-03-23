@@ -857,15 +857,19 @@ function getField($name,$default = "")
 }
 function getFieldId($name,$id=null, $default = "")
 {
-    if(Content::where("name", $name)->where('event_id',null)->count()>0){
-        $default = Content::where("name", $name)->where('event_id',null)->first()->value;
-    }
-   
+    
+    
     $content = Content::where("name", $name)->where('event_id',$id);
     if($content->count()>0 &&  $content->first()->value){
          return $content->first()->value;
     }
     else{
+        if($name==="main_lobby_video" && !Content::where("name", "main_lobby_video")->where('event_id',$id)->count()  && Content::where("name", "main_lobby_video")->where('event_id',$id)->count()){
+            return "";
+        }
+        if(Content::where("name", $name)->where('event_id',null)->count()>0){
+            $default = Content::where("name", $name)->where('event_id',null)->first()->value;
+        }
        return $default;    
     }
    
@@ -959,7 +963,7 @@ function getTreasureItems($treasures,$page_name)
     $toReturn = "";
     foreach ($treasures as $index => $treasure) {
         $toReturn .= "
-        <div class='scavenger-item positioned' data-page='".$page_name."' data-index='$index' style='" . areaStyles([$treasure->top,$treasure->left,$treasure->width,$treasure->height]) . "' data-name='treasure_hunt_item' title='treasure_hunt_item' >
+        <div class='scavenger-item positioned' data-page='".$page_name."' data-index='$index' style='" . areaStyles([$treasure->top,$treasure->left,$treasure->width,$treasure->height]) . "' data-name='".$page_name."-".$index." ' title='".$page_name."-".$index."' >
             <img async class='fill positioned' src='" . assetUrl($treasure->url) . "' style='object-fit:contain;' alt='' />
         </div>
         ";
