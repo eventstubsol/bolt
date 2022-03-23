@@ -559,12 +559,12 @@ class EventController extends Controller
                 $page = $request->get("page");
                 $index = $request->get("index");
                 $name = $request->get("name");
-                if (
-                    isset(SCAVENGER_HUNT[$page]) &&
-                    isset(SCAVENGER_HUNT[$page][$index]) &&
-                    isset(SCAVENGER_HUNT[$page][$index]['name']) &&
-                    SCAVENGER_HUNT[$page][$index]['name'] == $name
-                ) {
+                // if (
+                //     isset(SCAVENGER_HUNT[$page]) &&
+                //     isset(SCAVENGER_HUNT[$page][$index]) &&
+                //     isset(SCAVENGER_HUNT[$page][$index]['name']) &&
+                //     SCAVENGER_HUNT[$page][$index]['name'] == $name
+                // ) {
                     //Verified item, now saving to database
                     $pointsDetails["points"] = SCAVENGER_HUNT_POINTS;
                     $pointsDetails["details"] = $page . "|" . $index . "|" . $name;
@@ -574,7 +574,7 @@ class EventController extends Controller
                             "points" => DB::raw('points+' . $pointsDetails["points"]),
                         ]);
                     }
-                }
+                // }
                 break;
 
             case "boothVisit":
