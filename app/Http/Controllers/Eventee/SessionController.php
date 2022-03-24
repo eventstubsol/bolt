@@ -696,9 +696,9 @@ class SessionController extends Controller
         $ids = $req->ids;
         $totalcount = 0;
         for($i = 0 ; $i < count($ids); $i++){
-            $session = SessionPoll::findOrFail($ids[$i]);
+            $session = EventSession::findOrFail($ids[$i]);
             $session->delete();
-            $sessionCount = SessionPoll::where('id',$ids[$i])->count();
+            $sessionCount = EventSession::where('id',$ids[$i])->count();
             if($sessionCount > 0){
                 $totalcount++;
             }
@@ -712,7 +712,7 @@ class SessionController extends Controller
         }
     }
     public function DeleteAll(Request $req){
-        $sessions = SessionPoll::where('event_id',$req->id)->get();
+        $sessions = EventSession::where('event_id',$req->id)->get();
         foreach($sessions as $session){
             $session->delete();
         }

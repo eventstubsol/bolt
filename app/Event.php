@@ -52,5 +52,8 @@ class Event extends Model
         return $this->hasMany('\App\AccessSpecifiers','event_id');
     }
 
+    public function posts(){
+        return $this->hasMany('\App\Post','event_id');
+    }
    
 }

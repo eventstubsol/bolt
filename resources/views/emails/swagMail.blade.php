@@ -350,7 +350,7 @@ a[x-apple-data-detectors] {
                              <tr style="border-collapse:collapse"> 
                               <td align="left" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
                               {{-- resource name --}}
-                              <center>{{ $resource['title'] }}</center>
+                              &nbsp; &nbsp;{{ $resource['title'] }}
                               </p></td> 
                              </tr> 
                            </table></td> 
@@ -393,13 +393,13 @@ a[x-apple-data-detectors] {
                               @php
                                 $eventAdmin = App\User::findOrfail($event->user_id);
                               @endphp
-                              <td align="left" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px">Be on the lookout for our e-mails as we’ll keep you updated on the<strong> {{ $event->name }}</strong> activities. If need any assistance or looking for more information please us an email at <strong>{{ $eventAdmin->email }}<br><br>Thank you for attending {{ $event->name }}<br></strong></p></td> 
+                              <td align="left" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px">Be on the lookout for our e-mails as we’ll keep you updated on the<strong> {{ $event->name }}</strong> activities. If need any assistance or looking for more information please us an email at <strong>{{ $eventAdmin->email }}<br><br>Thank you for attending {{ $event->name }}<br><br></strong></p></td> 
                              </tr> 
                              <tr style="border-collapse:collapse"> 
-                              <td align="left" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0;padding-bottom:35px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px"><b>Thanks &amp; Regards,<br>Event Support Team<br>{{ $event->name }}</b></p></td> 
+                              <td align="left" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0;padding-bottom:35px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px"><br><b>Thanks &amp; Regards,<br>Event Support Team<br>{{ $event->name }}</b></p></td> 
                              </tr> 
                              <tr style="border-collapse:collapse"> 
-                              <td esdev-links-color="#777777" align="left" class="es-m-txt-c" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0;padding-bottom:5px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:15px;color:#777777;font-size:10px">The information contained in this email is intended only for its addressee and may contain confidential and/or privileged information. If the reader of this email is not the intended recipient, you are hereby notified that reading, saving, readiness or use of the content of this email in any way is prohibited. If you have received this email in error, please notify the sender and delete the email.</p></td> 
+                              <td esdev-links-color="#777777" align="left" class="es-m-txt-c" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0;padding-bottom:5px"><br><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:15px;color:#777777;font-size:10px">The information contained in this email is intended only for its addressee and may contain confidential and/or privileged information. If the reader of this email is not the intended recipient, you are hereby notified that reading, saving, readiness or use of the content of this email in any way is prohibited. If you have received this email in error, please notify the sender and delete the email.</p></td> 
                              </tr> 
                            </table></td> 
                          </tr> 

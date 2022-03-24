@@ -192,6 +192,23 @@
 </li>
 
 <li>
+    <a href="#posts" data-toggle="collapse" >
+        <i data-feather="bell"></i>
+        <span> Post</span>
+    </a>
+    <div class="collapse" id="posts">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route("eventee.post",$id) }}">Sent Post</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.post.create",$id) }}">Create Post </a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+<li>
     <a href="#mail" data-toggle="collapse">
         <i class="fa fa-envelope" aria-hidden="true"></i>
         <span>E-Mail</span>
