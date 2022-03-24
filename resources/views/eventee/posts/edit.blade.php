@@ -8,6 +8,7 @@
 @include("includes.styles.select")
     @include("includes.styles.datatables")
     @include("includes.styles.wyswyg")
+    @include("includes.styles.fileUploader")
 @endsection
 
 @section("page_title")
@@ -51,6 +52,13 @@
                         </span>
                         @enderror
                     </div>
+                    <div class="image-uploader" id="imgBg" >
+                        <label class="mb-3" for="images">Post Image
+                          <span style="color:red">*</span>
+                        </label>
+                        <input type="hidden" name="image_url" class="upload_input" value="{{ $post->image_url }}">
+                        <input type="file" data-name="image_url" data-plugins="dropify" data-type="image" data-default-file="{{assetUrl($post->image_url)}}"  />
+                    </div>
                     <div class="form-group mb-3">
                         <label for="url">Vimeo Link (<em>Optional</em> )</label>
                         <input id="url" name="url" type="url" value="{{ $post->vimeo_link }}" class="form-control @error('url') is-invalid @enderror" />
@@ -76,32 +84,7 @@
 @section('scripts')
 @include("includes.scripts.select")
 @include("includes.scripts.wyswyg")
-<script>
-    function checkLocation(e){
-        var location = e.value;
-        switch(location){
-            case 'lobby':
-                $('#sessionRoom').hide();
-                $('#page').hide();
-                $('#booth').hide();
-                break;
-            case 'session_room':
-                $('#sessionRoom').show();
-                $('#page').hide();
-                $('#booth').hide();
-                break;
-            case 'page':
-                $('#sessionRoom').hide();
-                $('#page').show();
-                $('#booth').hide();
-                break;
-            case 'booth':
-                $('#sessionRoom').hide();
-                $('#page').hide();
-                $('#booth').show();
-                break;
-        }
-    }
-</script>
+@include("includes.scripts.fileUploader")
+
 
 @endsection

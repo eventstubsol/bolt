@@ -25,6 +25,7 @@ class PostController extends Controller
         $post->event_id = $id;
         $post->body = $req->body;
         $post->vimeo_link = $req->url;
+        $post->image_url = $req->image_url;
         if($post->save()){
             flash("New Post Created")->success();
             return redirect()->route('eventee.post',$id);
@@ -64,12 +65,13 @@ class PostController extends Controller
         return view("eventee.posts.edit",compact('id','post'));
     }
 
-    public function update($id,$post_id, Request $req){
+    public function update($id,$post_id, PostRequest $req){
         $post = Post::findOrFail($post_id);
         $post->title = $req->title;
         $post->event_id = $id;
         $post->body = $req->body;
         $post->vimeo_link = $req->url;
+        $post->image_url = $req->image_url;
         if($post->save()){
             flash("Post Updated Successfully")->success();
             return redirect()->route('eventee.post',$id);

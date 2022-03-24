@@ -321,7 +321,7 @@ a[x-apple-data-detectors] {
                               <td bgcolor="#eeeeee" align="left" spellcheck="false" data-ms-editor="true" style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px"> 
                                <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:500px" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left" role="presentation"> 
                                  <tr style="border-collapse:collapse"> 
-                                  <td width="80%" style="padding:0;Margin:0"><center><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">Document Name</h4></center></td> 
+                                  <td width="80%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">Document Name</h4></td> 
                                   <td width="20%" style="padding:0;Margin:0"><h4 style="Margin:0;line-height:120%;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif">Download</h4></td> 
                                  </tr> 
                                </table></td> 
@@ -350,7 +350,7 @@ a[x-apple-data-detectors] {
                              <tr style="border-collapse:collapse"> 
                               <td align="left" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:24px;color:#333333;font-size:16px">
                               {{-- resource name --}}
-                              <center>{{ $resource['title'] }}</center>
+                              &nbsp; &nbsp;{{ $resource['title'] }}
                               </p></td> 
                              </tr> 
                            </table></td> 
