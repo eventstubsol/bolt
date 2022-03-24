@@ -187,7 +187,7 @@
 </div>
 <div class="navbar-custom navs hidden theme-nav">
     <div class="container-fluid row">
-        <div class="col-5 col-md-2 fluid-col logo-col">
+        <div class="col-5 col-md-3 fluid-col logo-col">
             <div class="logo-box">
                 <a class="logo area" data-link="lobby">
                     <img async src="{{ assetUrl(getFieldId('logo',$event_id)) }}" style="max-height: 50px;border-radius: 10px;padding: 0px;">
@@ -198,7 +198,7 @@
             $menus = App\Menu::where('type','nav')->where('event_id',$event_id)->where('parent_id','0')->where('status','1')->orderBy('position','asc')->get();
             
         @endphp
-        <div class="col-2 col-md-8 fluid-col menu-col">
+        <div class="col-2 col-md-6 fluid-col menu-col">
            <ul class="menu">
                @foreach($menus as $menu)
                 @if($menu->name === 'lounge')      
@@ -271,7 +271,7 @@
         {{-- <div class=" col-md-2 fluid-col ">
             
         </div> --}}
-        <div style="display:flex; align-items:center;justify-content: end;" class="col-5 col-md-2 fluid-col profile-col">
+        <div style="display:flex; align-items:center;justify-content: end;" class="col-5 col-md-3 fluid-col profile-col">
             @if($event->lobby_audio)
             
                 <div id="pause_li" >
