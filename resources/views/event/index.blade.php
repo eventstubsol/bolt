@@ -186,6 +186,9 @@
 
     {{-- Photobooth --}}
     @include("event.modules.Booths.PhotoBooth")
+
+    {{-- Post --}}
+    @include("event.modules.Posts.Single")
     
     {{-- PDF Library --}}
     @include("event.modules.Resources")

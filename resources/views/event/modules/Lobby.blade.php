@@ -94,6 +94,8 @@
 
 
                 @endforeach
+                <a title="test-post" data-toggle="modal"  data-target="#post-1" class=" positioned "  style="top: 10%;left: 5%;width: 80%;height: 80%;">    
+                </a>
         {!! getLobbyItems($event_id) !!}
     </div>
 </div>
