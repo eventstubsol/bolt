@@ -65,6 +65,15 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
 
+
+    //Posts
+    Route::get("posts/{id}",'PostController@index')->name("eventee.post");
+    Route::get("posts/create/{id}",'PostController@create')->name("eventee.post.create");
+    Route::POST("posts/store/{id}",'PostController@store')->name("eventee.post.store");
+    Route::post("update/post/status","PostController@updateStatus")->name("update.post.status");
+    Route::get("posts/edit/{id}/{post_id}",'PostController@edit')->name("eventee.post.edit");
+    Route::POST("posts/update/{id}/{post_id}",'PostController@update')->name("eventee.post.update");
+    Route::POST("posts/delete",'PostController@delete')->name("eventee.post.delete");
     //Media
     Route::get("/mdeia/{id}","MediaController@index")->name("eventee.media");
     Route::get("media/create/{id}","MediaController@create")->name("eventee.media.create");
