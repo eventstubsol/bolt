@@ -580,6 +580,7 @@ $event = App\Event::findOrFail($id);
                 break;
             case "post":
                 $(".post-"+index).show();
+                break;
             case "booth":
                 $(".booth-"+index).show();
                 break;

@@ -178,28 +178,30 @@
                                 <h3>Comments</h3>
                                 <div class="post_comments_cont">
                                     <div class="comments_inner_container">
-                                        @foreach ($post->comments as $comment)
-                                            @if($comment->approved === 1)
-                                                <div class="post_comment">       
-                                                    <div class="post_comment_message">
-                                                        <div class="post_by">
-                                                            @if(isset($comment->user->profileImage))
-                                                                <img async class="post_comment_image" width="10" src="{{assetUrl(Auth::user()->profileImage)}}" alt="">
-                                                            @else
-                                                                <span class="round-icon"><i class="fa fa-user"></i></span>
-                                                            @endif
-                                                            <div class="comment_by_details">
-                                                                <span class="post_by_name">{{ $comment->user->getFullName() }}</span>
-                                                                <span class="post_time" >{{ $comment->created_at }} </span>
+                                        @if(count($post->comments))
+                                            @foreach ($post->comments as $comment)
+                                                @if($comment->approved === 1)
+                                                    <div class="post_comment">       
+                                                        <div class="post_comment_message">
+                                                            <div class="post_by">
+                                                                @if(isset($comment->user->profileImage))
+                                                                    <img async class="post_comment_image" width="10" src="{{assetUrl(Auth::user()->profileImage)}}" alt="">
+                                                                @else
+                                                                    <span class="round-icon"><i class="fa fa-user"></i></span>
+                                                                @endif
+                                                                <div class="comment_by_details">
+                                                                    <span class="post_by_name">{{ $comment->user->getFullName() }}</span>
+                                                                    <span class="post_time" >{{ $comment->created_at }} </span>
+                                                                </div>
+                                                            </div> 
+                                                            <div class="message">
+                                                                {{$comment->comment}}
                                                             </div>
-                                                        </div> 
-                                                        <div class="message">
-                                                            {{$comment->comment}}
                                                         </div>
                                                     </div>
-                                                </div>
-                                            @endif
-                                        @endforeach
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     </div>
                                     <div class="comment_input">
                                         <input type="text" id="comment_{{$post->id}}" placeholder="Write your comment here...">
