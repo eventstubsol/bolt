@@ -33,7 +33,7 @@ class Event extends Model
         return $this->hasMany('\App\Modal','event_id');
     }
     public function faqs(){
-        return $this->hasMany('\App\Faq','event_id');
+        return $this->hasMany('\App\FAQ','event_id');
     }
 
     public function booths(){
