@@ -66,6 +66,18 @@
                         </span>
                         @enderror
                     </div>
+
+                    <div class="room form-group mb-3 col-md-4">
+                        <label for="to">Post Reaction Type
+                            <span style="color:red">*</span>
+                        </label>
+                        <select class="form-control" name="type">
+                            <option selected value="like">Likes/Emojis</option>
+                            <option  value="vote">Votes</option>
+                            <option  value="rate">Ratings</option>
+                           
+                        </select>
+                    </div>
                     
                     <div>
                         <button class="btn btn-primary" type="submit">Create</button>

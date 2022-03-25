@@ -41,6 +41,9 @@
                         case "page":
                             $to = "page/".$link->to;
                             break;
+                        case "post":
+                            $to = "post_".$link->to;
+                            break;
 
                     }
 
@@ -77,6 +80,9 @@
                     @elseif($link->type === "videosdk")
                         <div title="{{ $link->name  }}" data-toggle="modal"  data-target="#videosdk_modal" class="videosdk positioned " data-link="videosdk" data-meeting="{{$link->to}}" style="{{ areaStyles($area) }}">    
                         </div>
+                    @elseif($link->type === "post")
+                        <a title="{{ $link->name  }}" data-toggle="modal"  data-target="#{{$to}}" class="_custom_modal positioned "  style="{{ areaStyles($area) }}">    
+                        </a>
                     @elseif($link->type === "modal")
                         <a title="{{ $link->name  }}" data-toggle="modal"  data-target="#{{$to}}" class="_custom_modal positioned "  style="{{ areaStyles($area) }}">    
                         </a>

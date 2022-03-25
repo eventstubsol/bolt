@@ -199,10 +199,13 @@
     <div class="collapse" id="posts">
         <ul class="nav-second-level">
             <li>
-                <a href="{{ route("eventee.post",$id) }}">Sent Post</a>
+                <a href="{{ route("eventee.post.create",$id) }}">Create Post </a>
             </li>
             <li>
-                <a href="{{ route("eventee.post.create",$id) }}">Create Post </a>
+                <a href="{{ route("eventee.post",$id) }}">Manage</a>
+            </li>
+            <li>
+                <a href="{{ route("eventee.post.allComments",$id) }}">Comments</a>
             </li>
         </ul>
     </div>
