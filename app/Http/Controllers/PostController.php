@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Event;
 use App\Post;
+use App\Comment;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
     //
     public function index($id){
-        $event = Event::findOrFail($id);;
+        $event = Event::findOrFail($id);
         return view('eventee.posts.index',compact('id','event'));
     }
     
@@ -26,6 +29,23 @@ class PostController extends Controller
         $post->body = $req->body;
         $post->vimeo_link = $req->url;
         $post->image_url = $req->image_url;
+        switch($req->type){
+            case 'vote':
+                $post->vote_status = true;
+                $post->like_status = false;
+                $post->rate_stat = false;
+                break;
+            case 'like':
+                $post->vote_status = false;
+                $post->like_status = true;
+                $post->rate_stat = false;
+                break;
+            case 'rate':
+                $post->vote_status = false;
+                $post->like_status = false;
+                $post->rate_stat = true;
+                break;
+        }
         if($post->save()){
             flash("New Post Created")->success();
             return redirect()->route('eventee.post',$id);
@@ -72,6 +92,23 @@ class PostController extends Controller
         $post->body = $req->body;
         $post->vimeo_link = $req->url;
         $post->image_url = $req->image_url;
+        switch($req->type){
+            case 'vote':
+                $post->vote_status = true;
+                $post->like_status = false;
+                $post->rate_stat = false;
+                break;
+            case 'like':
+                $post->vote_status = false;
+                $post->like_status = true;
+                $post->rate_stat = false;
+                break;
+            case 'rate':
+                $post->vote_status = false;
+                $post->like_status = false;
+                $post->rate_stat = true;
+                break;
+        }
         if($post->save()){
             flash("Post Updated Successfully")->success();
             return redirect()->route('eventee.post',$id);
@@ -83,6 +120,45 @@ class PostController extends Controller
             ]);
         }
 
+    }
+
+    public function addComment($id,Post $post, Request $req){
+        $user_id = Auth::user()->id;
+        // return $post->id;
+        $post->comments()->create([
+            // "post_id"=>$post->id,
+            "comment"=>$req->message,
+            "user_id"=>$user_id,
+            "event_id"=>$id
+        ]);
+        return true;
+    }
+    public function approveComment($id,Comment $comment,Request $req){
+        if( Auth::user()->type === 'eventee')
+        {
+            $comment->approved = 1;
+            $comment->save();
+            flash("Comment Approved")->success();
+            return redirect()->back(); 
+        }else{
+            return ["success"=>false,"message"=>"Unauthorized"];
+        }
+    }
+    public function rejectComment($id,Comment $comment,Request $req){
+        if( Auth::user()->type === 'eventee')
+        {
+            $comment->approved = -1;
+            $comment->save();
+            flash("Comment Rejected")->success();
+            return redirect()->back(); 
+        }else{
+            return ["success"=>false,"message"=>"Unauthorized"];
+        }
+    }
+
+    public function allComments($id){
+       $comments =  Comment::where("event_id",$id)->where("approved",0)->with(["post","user"])->get();
+       return view("eventee.posts.comments",compact('id','comments'));
     }
 
     public function delete(Request $req){

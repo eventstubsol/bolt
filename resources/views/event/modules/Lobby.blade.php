@@ -21,6 +21,7 @@
                     case "booth":
                     case "lobby":
                     case "faq":
+                    case "modal":
                     case "photobooth":
                         $to = $link->to;
                         $url = $link->url;
@@ -30,6 +31,9 @@
                         break;
                     case "page":
                         $to = "page/".$link->to;
+                        break;
+                    case "post":
+                        $to = "post_".$link->to;
                         break;
 
                 }
@@ -65,6 +69,9 @@
                 @elseif($link->type === "modal")
                     <a title="{{ $link->name  }}" data-toggle="modal"  data-target="#{{$to}}" class="_custom_modal positioned "  style="{{ areaStyles($area) }}">    
                     </a>
+                @elseif($link->type === "post")
+                    <a title="{{ $link->name  }}" data-toggle="modal"  data-target="#{{$to}}" class="_custom_modal positioned "  style="{{ areaStyles($area) }}">    
+                    </a>
                 @elseif($to ==="FAQ")
                     <a class="positioned" data-toggle="modal" data-target="#faqs-modal"
                         title="FAQs"
@@ -94,8 +101,6 @@
 
 
                 @endforeach
-                <a title="test-post" data-toggle="modal"  data-target="#post-1" class=" positioned "  style="top: 10%;left: 5%;width: 80%;height: 80%;">    
-                </a>
         {!! getLobbyItems($event_id) !!}
     </div>
 </div>

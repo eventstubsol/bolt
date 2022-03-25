@@ -72,8 +72,12 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::POST("posts/store/{id}",'PostController@store')->name("eventee.post.store");
     Route::post("update/post/status","PostController@updateStatus")->name("update.post.status");
     Route::get("posts/edit/{id}/{post_id}",'PostController@edit')->name("eventee.post.edit");
+    Route::get("posts/comments/{id}",'PostController@allComments')->name("eventee.post.allComments");
+    Route::get("posts/comments/approve/{id}/{comment}",'PostController@approveComment')->name("eventee.post.approveComment");
+    Route::get("posts/comments/reject/{id}/{comment}",'PostController@rejectComment')->name("eventee.post.rejectComment");
     Route::POST("posts/update/{id}/{post_id}",'PostController@update')->name("eventee.post.update");
     Route::POST("posts/delete",'PostController@delete')->name("eventee.post.delete");
+    
     //Media
     Route::get("/mdeia/{id}","MediaController@index")->name("eventee.media");
     Route::get("media/create/{id}","MediaController@create")->name("eventee.media.create");
@@ -653,6 +657,9 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::get("/notifications/send", "NotificationController@send")->name("sendNotifications");
     Route::get("/me", "EventController@profileInfo")->name("event.profile");
     Route::get('/testS','testController@index');
+ 
+    //  Posts
+    Route::POST("posts/comment/{id}/{post}",'PostController@addComment')->name("post.addComment");
 
     // Route::get("/event/{id}", "EventController@index")->name("eventee.event");
     //Event Availability

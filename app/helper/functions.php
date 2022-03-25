@@ -90,6 +90,7 @@ define('LINK_TYPES', [
     "photobooth",
     "videosdk",
     "modal",
+    "post",
     "lounge"
 ]);
 define('MENU_LINK_TYPES', [

@@ -383,6 +383,16 @@ input[type="range"]:disabled::-moz-range-thumb {
                                         </select>
                                     </div>
 
+                                    <div @if($link->type !== "post") style="display: none;" @endif  class="post-{{$ids}} posts form-group mb-3 col-md-4">
+                                        <label for="to">to(post)</label>
+                                        <select     class="form-control" name="posts[]">
+                                            @foreach($posts as $post)
+                                                <option @if($link->to === $post->id) selected @endif value="{{$post->id}}">{{$post->title}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
                                     {{-- Modal --}}
                                     <div @if($link->type !== "modal") style="display: none;" @endif  class="modal-{{$ids}} modals form-group mb-3 col-md-4">
                                         <label for="to">to(modal)</label>
@@ -919,6 +929,7 @@ input[type="range"]:disabled::-moz-range-thumb {
         $(".pages-"+index).hide();
         $(".zoom-"+index).hide();
         $(".booth-"+index).hide();
+        $(".post-"+index).hide();
         $(".modal-"+index).hide();
         $(".vimeo-"+index).hide();
         $(".pdf-"+index).hide();
@@ -939,6 +950,9 @@ input[type="range"]:disabled::-moz-range-thumb {
                 break;
             case "booth":
                 $(".booth-"+index).show();
+                break;
+            case "post":
+                $(".post-"+index).show();
                 break;
             case "modal":
                 $(".modal-"+index).show();
@@ -1046,6 +1060,15 @@ input[type="range"]:disabled::-moz-range-thumb {
                                         <select     class="form-control" name="booths[]">
                                             @foreach($booths as $booth)
                                                 <option value="{{$booth->id}}">{{$booth->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                    <div style="display: none;" class="post-${n} posts form-group mb-3 col-md-4">
+                                        <label for="to">to(post)</label>
+                                        <select     class="form-control" name="posts[]">
+                                            @foreach($posts as $post)
+                                                <option value="{{$post->id}}">{{$post->title}}</option>
                                             @endforeach
 
                                         </select>
