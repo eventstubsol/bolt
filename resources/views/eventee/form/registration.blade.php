@@ -8,6 +8,8 @@
         form{
             overflow-y: auto;
             max-height: 20rem;
+            display: flex;
+            flex-wrap: wrap;
         }
         
         
@@ -32,9 +34,25 @@
             background-color: #00a15f;
             border: 2px solid #00a15f;
         }
-        form *{
-            margin-right: 30px;
+        .form-group{
+            min-width: 49%;
+            margin-right: 1%;
         }
+        .form-group:last-child {
+            width: 100%;
+        }
+        .form-group:nth-last-child(2){
+            width: 100%;
+        }
+        .form-control{
+            background-color: #f0f8ff00;
+            border: none;
+            border-bottom: 1px solid #ced4da;
+            border-radius: 0;
+        }
+        /* form *{
+            margin-right: 30px;
+        } */
 
     </style>
      
@@ -59,7 +77,7 @@
                 @case("email")
                 @case("tel")
                         <div class="form-group">
-                            <label for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label>
+                            {{-- <label for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label> --}}
                             <input @if($field->required) required @endif class="form-control" type="{{ $struct->type }}" placeholder="{{ $field->placeholder ?? $struct->label
                             }}" name="{{ $struct->field }}">
                         </div>
@@ -67,7 +85,7 @@
                     @break
                 @case("country")
                         <div class="form-group">
-                            <label for="country" >{{ $field->placeholder ?? $struct->label }}</label>
+                            {{-- <label for="country" >{{ $field->placeholder ?? $struct->label }}</label> --}}
                             <select id="country" class="form-control" name="country">
                                 <option value="Afganistan">Afghanistan</option>
                                 <option value="Albania">Albania</option>
@@ -321,7 +339,7 @@
 
                 @case("image")
                     <div class="image-uploader profilepic">
-                        <label class="mb-3" for="images">{{ $field->placeholder }}</label>
+                        {{-- <label class="mb-3" for="images">{{ $field->placeholder }}</label> --}}
                         <input type="hidden" name="profileImage" class="upload_input"  >
                         <input type="file" data-name="profileImage" data-plugins="dropify" data-type="image" />
                     </div>
@@ -336,7 +354,7 @@
                         @endphp
                         @if(count($options))
                             <div class="form-group mb-3 ">
-                                <label for="type">{{ $field->placeholder }}</label>
+                                {{-- <label for="type">{{ $field->placeholder }}</label> --}}
                                 <select  @if($field->required && count($options)) required @endif  class="form-control"  name="subtype">
                                     <option value="">Select {{$field->placeholder}}</option>
                                     @foreach($options  as $type)
@@ -352,7 +370,7 @@
                             $options = explode(",",$struct->options);
                         @endphp
                         <div class="form-group mb-3 ">
-                            <label for="type">{{ $struct->label }}</label>
+                            {{-- <label for="type">{{ $struct->label }}</label> --}}
                             <select  @if($field->required) required @endif  class="form-control"  name="{{$struct->field}}">
                                 <option value="">Select {{$struct->label}}</option>
                                 @foreach($options  as $type)
