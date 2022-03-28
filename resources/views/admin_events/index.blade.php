@@ -86,7 +86,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{-- <a href="{{ route('event.Edit',['id'=>( $event->id )]) }}" class="btn btn-info"><i class="fas fa-edit"></i></a> --}}
+                                    <a href="{{ route('admin.event.Edit',$event->id ) }}" class="btn btn-info"><i class="fas fa-edit"></i></a>
                                     <a href="{{ route('admin.event.feature',['id'=>( $event->id )]) }}" class="btn btn-info"><i class="fa fa-shield" aria-hidden="true"></i></a>
                                     <a href="{{ route('event.Dashboard',['id'=>( $event->id )]) }}" class="btn btn-warning"><i class="fas fa-tasks"></i></a>
                                     <button onclick="deleteEvent(this)" data-id="{{ $event->id }}" class="btn btn-danger"><i class="fa fa-trash"></i></button>

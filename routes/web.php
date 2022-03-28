@@ -853,6 +853,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
         // Route::get('details/create','menuDetailsController@index')->('details.create');
         //Event List
         Route::get('event/list','AdminEventController@eventList')->name('admin.event.list');
+        Route::get('event/edit/{id}','AdminEventController@edit')->name('admin.event.Edit');
+        Route::POST('event/update/{id}','AdminEventController@update')->name('admin.event.update');
         Route::get('event/feature/{id}',"FeatureController@index")->name('admin.event.feature');
         Route::get('event/feature/options/permision','FeatureController@options')->name('admin.event.options');
         /**
