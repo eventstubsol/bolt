@@ -270,6 +270,12 @@ class AttendeeAuthController extends Controller
 
     public function confirmReg(Request $request,$subdomain){
         // dd($request->all());
+        $event = Event::where('slug',$subdomain)->first();
+        $userCount = User::where('event_id',$event->id)->count();
+        if( $userCount >= $event->total_attendees){
+            flash("Total Number Of User Creation Exceeded! Please Contact Admin To Upgrade")->error();
+            return redirect()->back();
+        }
         $request->validate([
             'email' => 'required|email',
             'name' => 'required',

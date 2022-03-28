@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Mail;
+use App\Event;
 use App\UserData;
 use App\UserSubtype;
 use App\Imports\UserImport;
@@ -192,7 +193,12 @@ class UserController extends Controller
                     flash("Same Email ID Already Exist In the Trash Please Restore")->error();
                     return redirect()->back();
                 }
-                
+                $event = Event::find($id);
+                $totalusersCount = User::where('event_id',$id)->count();
+                if($totalusersCount >= $event->total_attendees){
+                    flash("Total Number Of User Creation Exceeded! Please Contact Admin To Upgrade");
+                    return redirect()->back();
+                }
                 $user = new User;
                 $user->name = $request->name;
                 $user->last_name = $request->last_name;
