@@ -70,6 +70,10 @@ class ModalController extends Controller
                         $to = $request->booths[$id];
                         break;
                     case "vimeo":
+                        if(empty($request->vimeo[$id])){
+                            flash("Please Fill The Vimeo Url Field")->error();
+                            return redirect()->back();
+                        }
                         $to = $request->vimeo[$id];
                         break;
                     case "pdf":
