@@ -132,11 +132,15 @@ class PageController extends Controller
 
             $session_rooms = sessionRooms::where('event_id',$id)->get();
 
+            
+            $event = Event::findOrFail($id);
+            $posts = $event->posts()->get();
+
             $pag =  Page::where('event_id',$id)->first();
 
             $page->load(["images","links.flyin","videoBg"]);
             // return $page;
-            return view("eventee.pages.edit")->with(compact(["modals","page","session_rooms","pages","booths","id","pag"]));
+            return view("eventee.pages.edit")->with(compact(["modals","page","session_rooms","pages","booths","id","pag","posts"]));
       }
       catch(\Exception $e){
             if(Auth::user()->type === 'admin'){
@@ -195,6 +199,8 @@ class PageController extends Controller
             $links = Link::where(["page"=>$page_name])->get()->load("background");
             // dd($links);
             $treasures = Treasure::where(["owner"=>$page_name])->get();
+            // $event = Event::findOrFail($event_id);
+            $posts = $event->posts()->get();
             $page = (object) [
                 "id"=>$id,
                 "name"=>$page_name,
@@ -205,7 +211,7 @@ class PageController extends Controller
             // dd($id);
 
 
-            return view("eventee.pages.lobby")->with(compact(["page","session_rooms","pages","booths","id","pag",'event']));
+            return view("eventee.pages.lobby")->with(compact(["page","session_rooms","pages","booths","id","pag",'event',"posts"]));
         }
         catch(\Exception $e){
             if(Auth::user()->type === 'admin'){
@@ -262,6 +268,9 @@ class PageController extends Controller
                             break;
                         case "booth":
                             $to = $request->booths[$id];
+                            break;
+                        case "post":
+                            $to = $request->posts[$id];
                             break;
                         case "vimeo":
                             $to = $request->vimeo[$id];
@@ -369,10 +378,13 @@ class PageController extends Controller
 
             $session_rooms = sessionRooms::where("event_id",$event_id)->get();
             $page->load(["images","links.background"]);
-            $id = $event_id;
-        $modals =  Modal::where("event_id",$id)->get();
+            $event = Event::findOrFail($event_id);
+            $posts = $event->posts()->get();
 
-            return view("eventee.pages.edit")->with(compact(["modals","page","session_rooms","pages","booths",'id','pag']));
+            $id = $event_id;
+            $modals =  Modal::where("event_id",$id)->get();
+
+            return view("eventee.pages.edit")->with(compact(["modals","page","session_rooms","pages","booths",'id','pag',"posts"]));
        }
        catch(\Exception $e){
             if(Auth::user()->type === 'admin'){
@@ -441,6 +453,9 @@ class PageController extends Controller
                             break;
                         case "lounge":
                             $to = "lounge";
+                            break;
+                        case "post":
+                            $to = $request->posts[$id];
                             break;
                     }
                     $link = Link::create([

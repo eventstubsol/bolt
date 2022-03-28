@@ -119,6 +119,17 @@ $event = App\Event::findOrFail($id);
                                         </select>
                                     </div>
 
+                                    
+                                    <div @if($link->type !== "post") style="display: none;" @endif  class="post-{{$ids}} posts form-group mb-3 col-md-4">
+                                        <label for="to">to(post)</label>
+                                        <select     class="form-control" name="posts[]">
+                                            @foreach($posts as $post)
+                                                <option @if($link->to === $post->id) selected @endif value="{{$post->id}}">{{$post->title}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
                                     <div @if($link->type!=="session_room") style="display: none;" @endif class="room-{{$ids}} room form-group mb-3 col-md-4">
                                         <label for="to">to(Session Room)</label>
                                         <select class="form-control" name="rooms[]" >
@@ -549,6 +560,7 @@ $event = App\Event::findOrFail($id);
         $(".pages-"+index).hide();
         $(".zoom-"+index).hide();
         $(".booth-"+index).hide();
+        $(".post-"+index).hide();
         $(".vimeo-"+index).hide();
         $(".pdf-"+index).hide();
         $(".chat_user-"+index).hide();
@@ -565,6 +577,9 @@ $event = App\Event::findOrFail($id);
                 break;
             case "zoom":
                 $(".zoom-"+index).show();
+                break;
+            case "post":
+                $(".post-"+index).show();
                 break;
             case "booth":
                 $(".booth-"+index).show();
@@ -685,6 +700,15 @@ $event = App\Event::findOrFail($id);
                                             @foreach($session_rooms as $room)
                                                 <option value="{{$room->name}}">{{$room->name}}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                    <div style="display: none;" class="post-${n} posts form-group mb-3 col-md-4">
+                                        <label for="to">to(post)</label>
+                                        <select     class="form-control" name="posts[]">
+                                            @foreach($posts as $post)
+                                                <option value="{{$post->id}}">{{$post->title}}</option>
+                                            @endforeach
+
                                         </select>
                                     </div>
 

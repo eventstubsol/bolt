@@ -292,6 +292,7 @@ function initApp() {
             });
         }
     });
+    
     $(".subscribe-to-event").on("click", function (e) {
         // console.log("hello")
         e.preventDefault();

@@ -11,4 +11,7 @@ class Post extends Model
     public function event(){
         return $this->belongsTo("\App\Event");
     }
+    public function comments(){
+        return $this->hasMany('\App\Comment','post_id');
+    }
 }
