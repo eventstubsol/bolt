@@ -12,6 +12,14 @@ use App\Image;
 use App\Http\Requests\RoomFormRequest;
 use Illuminate\Support\Facades\Log;
 
+use App\Booth;
+use App\Link;
+use App\Page;
+
+use App\Event;
+use App\Modal;
+use App\Treasure;
+
 class SessionRoomController extends Controller
 {
     public function index($id){
@@ -115,9 +123,21 @@ class SessionRoomController extends Controller
 
     public function edit(sessionRooms $sessionroom,$id){
        try{
-        $sessionroom->load("background");
+           $event_id = $id;
+            
+        $pages = Page::where("event_id",$event_id)->get();
+
+        $booths = Booth::where("event_id",$event_id)->get();
+
+        $session_rooms = sessionRooms::where("event_id",$event_id)->get();
+       
+        $event = Event::findOrFail($id);
+        $posts = $event->posts()->get();;
+        $modals =  Modal::where("event_id",$id)->get();
+        // dd($id);
+        $sessionroom->load(["background","links.flyin"]);
             return view("eventee.sessionrooms.edit")
-            ->with(compact("sessionroom","id"));
+            ->with(compact(["modals","sessionroom","session_rooms","pages","booths","id","posts"]));
         }
        catch(\Exception $e){
             if(Auth::user()->type === 'admin'){
@@ -132,15 +152,16 @@ class SessionRoomController extends Controller
     public function update(Request $request, sessionRooms $sessionroom,$id){
         // $request->validate(["name"=>"required","background"=>"required"]);
         // dd($sessionroom->load("background")->background);
+        $event_id = $id;
         try{
             $name = str_replace(" ","_",$request->name);
             $sessionroom->update([
                 "name"=>$name,
                 "master_room"=>isset($request->master_room)?$request->master_room:"",
-                "top"=> $request->top,
-                "left"=> $request->left,
-                "width"=> $request->width,
-                "height"=> $request->height,
+                "top"=> $request->stop,
+                "left"=> $request->sleft,
+                "width"=> $request->swidth,
+                "height"=> $request->sheight,
             ]);       
             if(isset($request->background)){
                 Image::where("owner",$sessionroom->id)->update([
@@ -155,7 +176,109 @@ class SessionRoomController extends Controller
                     "title"=>$sessionroom->name
                 ]);
             }
-            return redirect()->to(route("eventee.sessionrooms.index",['id'=>$id]));
+            $sessionroom->links()->delete();
+            if($request->has("linknames")){
+                foreach($request->linknames as $id => $linkname){
+
+                    $to = "";
+                    $url = "";
+                    // dd($request->type);
+                    switch($request->type[$id]){
+                        case "session_room": 
+                            $to = $request->rooms[$id];
+                            break;
+                        case "page":
+                            $to = $request->pages[$id];
+                            break;
+                        case "zoom":
+                            $to = $request->zoom[$id];
+                            break;
+                        case "booth":
+                            $to = $request->booths[$id];
+                            break;
+                        case "post":
+                            $to = $request->posts[$id];
+                            break;
+                        case "vimeo":
+                            $to = $request->vimeo[$id];
+                            break;
+                        case "pdf":
+                            $to = $request->pdf[$id];
+                            break;
+                        case "chat_user":
+                            $to = $request->chatuser[$id];
+                            break;
+                        case "chat_group":
+                            $to = $request->chatgroup[$id];
+                            break;
+                        case "custom_page":
+                            $to = $request->custom_page[$id];
+                            break;
+                        case "lobby":
+                            $to = "lobby";
+                            break;
+                        case "faq":
+                            $to = "FAQ";
+                            break;
+                        case "photobooth":
+                            $to = $request->capture_link[$id];
+                            $url = $request->gallery_link[$id];
+                            break;
+                        case "videosdk":
+                            $to = uniqid();
+                            break;
+                        case "modal":
+                            $to = $request->modals[$id];
+                            break;
+                        case "lounge":
+                            $to = "lounge";
+                            break;
+                    }
+                    
+                    $link = Link::create([
+                        "page"=>$sessionroom->id,
+                        "name"=> $linkname,
+                        "type"=>$request->type[$id],
+                        "to"=> $to,
+                        "url"=> $url,
+                        "top"=> $request->top[$id],
+                        "left"=> $request->left[$id],
+                        "width"=> $request->width[$id],
+                        "height"=> $request->height[$id],
+                        "perspective"=>isset($request->perspective[$id])?$request->perspective[$id]:'',
+                        "rotationtype"=>isset($request->rotationtype[$id])?$request->rotationtype[$id]:'',
+                        "rotation"=>isset($request->rotation[$id])?$request->rotation[$id]:'',
+                        "location_status"=>$request->set_location[$id]
+                    ]);
+                    // dd($link);
+                    if($request->has("bgimages") && isset($request->bgimages[$id]) ){
+                        if(count($request->bgimages[$id])>0 ){
+                        foreach($request->bgimages[$id] as $bgimage){
+                            if($bgimage){ //check if not null
+                            $link->background()->create([
+                                "owner"=>$link->id,
+                                "url" => $bgimage,
+                                "title" => "link",
+                                "event_id" => $id,
+                            ]);
+                            }
+            
+                        }
+                        }
+                    }
+                    if($request->has("flyin") && isset($request->flyin[$id])){
+                        $link->flyin()->create([
+                            "url"=>$request->flyin[$id],
+                            "title"=>$link->name
+                        ]);
+                    }
+
+                }
+            }
+            $id = $event_id;
+            return redirect()->to(route("eventee.sessionrooms.edit", [
+                                        "sessionroom" => $sessionroom->id,'id'=>$id
+                                    ]));
         }
         catch(\Exception $e){
             if(Auth::user()->type === 'admin'){
