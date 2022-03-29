@@ -130,8 +130,22 @@
         border-radius: 10px;
         background-color: #cceeff;
     }
+    .ups{
+        justify-content: center;
+       
+    }
+    .down{
+        justify-content: center;
+    }
 </style>
 @foreach ($posts as $post)
+@php
+    $postlike = App\PostEmote::where('emote','like')->where('post_id',$post->id)->count();
+    $postLove = App\PostEmote::where('emote','love')->where('post_id',$post->id)->count();
+    $upvotes = App\PostEmote::where('vote','upvote')->where('post_id',$post->id)->count();
+    $downvote = App\PostEmote::where('vote','downvote')->where('post_id',$post->id)->count();
+    $userEmote = App\PostEmote::where('user_id',Auth::id())->where('post_id',$post->id)->first();
+@endphp
     <div class="modal fade theme-modal" id="post_{{$post->id}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm" style="max-width: 590px">
             <div class="modal-content">
@@ -160,18 +174,44 @@
                                 @if ($post->like_status)
                                     <div class="post_actions reactions">
                                         {{-- <h3>React</h3> --}}
-                                        <img class="post_action like_icon" data-toggle="tooltip" title="Like" data-action="like" src="{{ assetUrl('uploads/vrRVMSZp7Ew0mpBR7L76xJXe1kA0C9D7dFSfmscX.gif') }}" width="30" alt="">
-                                        <img class="post_action " data-toggle="tooltip" title="Love" data-action="like" src="{{ assetUrl('uploads/wHlXHSK5haFfFOgvs2JDnZWA6k8ZfNDyvQHwQAb1.gif') }}" width="70" alt="">
-            
+                                        @if(isset($userEmote))
+                                            <img data-id="{{ $post->id }}" class="post_action like_{{ $post->id }} like_icon" data-toggle="tooltip" title="Like" data-action="like" @if($userEmote->emote == 'like')src="{{ assetUrl('uploads/KUXTFrcr6pM53XApd0UcF0AHvHOGGo6L3RIy2JMz.png') }}"@else src="{{ assetUrl('uploads/vrRVMSZp7Ew0mpBR7L76xJXe1kA0C9D7dFSfmscX.gif') }}"@endif width="30" alt="">
+                                            <span class="mainLikes">
+                                                {{ $postlike.' Likes' }}
+                                            </span>
+                                            <img data-id="{{ $post->id }}" class="post_action love_{{ $post->id }} lo  ve_icon" data-toggle="tooltip" title="Love" data-action="love"  @if($userEmote->emote == 'love')src="{{ assetUrl('uploads/qkvoAt3HIorjcwaGePf2DLeLHu4YsYhnJHgf86NW.png') }}"@else src="{{ assetUrl('uploads/wHlXHSK5haFfFOgvs2JDnZWA6k8ZfNDyvQHwQAb1.gif') }}"@endif width="70" alt="">
+                                            <span class="mainLoves">
+                                                {{ $postLove.' Loves' }}
+                                            </span>
+                                        @else
+                                            <img data-id="{{ $post->id }}" class="post_action like_{{ $post->id }} like_icon" data-toggle="tooltip" title="Like" data-action="like" src="{{ assetUrl('uploads/vrRVMSZp7Ew0mpBR7L76xJXe1kA0C9D7dFSfmscX.gif') }}" width="30" alt="">
+                                            <span class="mainLikes">
+                                                {{ $postlike.' Likes' }}
+                                            </span>
+                                            <img data-id="{{ $post->id }}" class="post_action love_{{ $post->id }} love_icon" data-toggle="tooltip" title="Love" data-action="love" src="{{ assetUrl('uploads/wHlXHSK5haFfFOgvs2JDnZWA6k8ZfNDyvQHwQAb1.gif') }}" width="70" alt="">
+                                            <span class="mainLoves">
+                                                {{ $postLove.' Loves' }}
+                                            </span>
+                                        @endif
+                                        
                                     </div>
                                 @endif
                                 @if ($post->vote_status)
                                     <div class="post_actions mt-3">
                                         {{-- <h3 class="vote" >Vote</h3> --}}
-            
-                                        <img class="post_action" data-toggle="tooltip" title="Up Vote" data-action="like" src="https://freepikpsd.com/file/2019/10/up-icon-png-7-Transparent-Images.png" width="30" alt="">
-                                        <img class="post_action down_icon" data-toggle="tooltip" title="Down Vote" data-action="like" src="https://freepikpsd.com/file/2019/10/up-icon-png-7-Transparent-Images.png" width="30" alt="">
-            
+                                        
+                                        <div class="ups">
+                                            <img data-id="{{ $post->id }}" class="voting up_{{ $post->id }} " data-toggle="tooltip" title="Up Vote" data-action="upvote" src="https://freepikpsd.com/file/2019/10/up-icon-png-7-Transparent-Images.png" width="30" alt="">
+                                            <span class="mainups">
+                                                {{ $upvotes. ' Upvotes' }}
+                                            </span>
+                                        </div>
+                                        <div class="down">
+                                            <img data-id="{{ $post->id }}" class="voting  down_{{ $post->id }} down_icon" data-toggle="tooltip" title="Down Vote" data-action="downvote" src="https://freepikpsd.com/file/2019/10/up-icon-png-7-Transparent-Images.png" width="30" alt="">
+                                            <span class="maindowns">
+                                                {{ $downvote. ' Downvotes' }}
+                                            </span>
+                                        </div>
                                     </div>    
                                 @endif
                                 
@@ -249,5 +289,53 @@
                 }
             })
         })
+
+        $('.post_action').on('click',function(){
+            var emote = $(this).attr('data-action');
+            var id = $(this).attr('data-id');
+            var post_action = $(this);
+            $.post("{{ route('add.emote') }}",{'emote':emote,'id':id},function(res){
+                if(res.code == 200){
+                    if(emote == 'like'){
+                        post_action.attr('src','{{ assetUrl("uploads/KUXTFrcr6pM53XApd0UcF0AHvHOGGo6L3RIy2JMz.png") }}');
+                        $(`.love_${id}`).attr('src','{{ assetUrl("uploads/wHlXHSK5haFfFOgvs2JDnZWA6k8ZfNDyvQHwQAb1.gif") }}');
+                    }
+                    else{
+                        post_action.attr('src','{{ assetUrl("uploads/qkvoAt3HIorjcwaGePf2DLeLHu4YsYhnJHgf86NW.png") }}');
+                        $(`.like_${id}`).attr('src','{{ assetUrl("uploads/vrRVMSZp7Ew0mpBR7L76xJXe1kA0C9D7dFSfmscX.gif") }}');
+                    }
+                    $('.mainLikes').empty();
+                    $('.mainLikes').html(res.likes + ' Likes');
+                    $('.mainLoves').empty();
+                    $('.mainLoves').html(res.loves + ' Loves');
+
+                }
+            });
+        });
+
+        $('.voting').on('click',function(){
+            var vote =  $(this).attr('data-action');
+            var id = $(this).attr('data-id');
+            var vote_action = $(this);
+            $.post("{{ route('add.vote') }}",{'vote':vote,'id':id},function(res){
+                if(res.code == 200){
+                    if(vote == 'upvote'){
+                        // vote_action.attr('src','{{ assetUrl("uploads/KUXTFrcr6pM53XApd0UcF0AHvHOGGo6L3RIy2JMz.png") }}');
+                        // $(`.down_${id}`).attr('src','{{ assetUrl("uploads/wHlXHSK5haFfFOgvs2JDnZWA6k8ZfNDyvQHwQAb1.gif") }}');
+                       console.log(vote);
+                    }
+                    else{
+                        // vote_action.attr('src','{{ assetUrl("uploads/qkvoAt3HIorjcwaGePf2DLeLHu4YsYhnJHgf86NW.png") }}');
+                        // $(`.up_${id}`).attr('src','{{ assetUrl("uploads/vrRVMSZp7Ew0mpBR7L76xJXe1kA0C9D7dFSfmscX.gif") }}');
+                        console.log(vote);
+                    }
+                    $('.mainups').empty();
+                    $('.mainups').html(res.upvote + ' Upvotes');
+                    $('.maindowns').empty();
+                    $('.maindowns').html(res.downvote + ' Downvote');
+
+                }
+            });
+        });
     });
 </script>
