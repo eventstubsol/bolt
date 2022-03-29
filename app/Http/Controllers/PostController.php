@@ -7,6 +7,7 @@ use App\Event;
 use App\Post;
 use App\Comment;
 use Illuminate\Support\Facades\Auth;
+use App\PostEmote;
 
 use App\Http\Requests\PostRequest;
 
@@ -168,6 +169,41 @@ class PostController extends Controller
         }
         else{
             return response()->json(['code'=>500,'message'=>"Something Went Wrong"]);
+        }
+    }
+
+    public function addEmote(Request $req){
+        $id = $req->id;
+        $emote = $req->emote;
+        $user_id = Auth::id();
+        $post = PostEmote::updateOrCreate(['post_id'=>$id,'user_id'=>$user_id],['emote'=>$emote,'rate'=>null]);
+        // $post = new PostEmote;
+        // $post->post_id = $id;
+        // $post->user_id = $user_id;
+        // $post->emote = $emote;
+        // $post->rate = null;
+        if($post->save()){
+            $postLikes = PostEmote::where('emote','like')->where('post_id',$id)->count();
+            $postLoves = PostEmote::where('emote','love')->where('post_id',$id)->count();
+            return response()->json(['code'=>200,"message"=> "Your Emote is Saved",'likes'=>$postLikes,'loves'=>$postLoves]);
+        }
+        else{
+            return response()->json(['code'=>500,"message"=> "Something Went wrong"]);
+        }
+    }
+
+    public function addVote(Request $req){
+        $id = $req->id;
+        $vote = $req->vote;
+        $user_id = Auth::id();
+        $post = PostEmote::updateOrCreate(['post_id'=>$id,'user_id'=>$user_id],['vote'=>$vote,'rate'=>null]);
+        if($post->save()){
+            $postup = PostEmote::where('vote','upvote')->where('post_id',$id)->count();
+            $postdown = PostEmote::where('vote','downvote')->where('post_id',$id)->count();
+            return response()->json(['code'=>200,"message"=> "Your Emote is Saved",'upvote'=>$postup,'downvote'=>$postdown]);
+        }
+        else{
+            return response()->json(['code'=>500,"message"=> "Something Went wrong"]);
         }
     }
 }

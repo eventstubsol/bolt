@@ -628,6 +628,7 @@ Route::group($options, function () use ($options) {
         Route::post('lounge/event/addp/{table}/{user}',"Eventee\LoungeController@appParticipant")->name('addParticipant');
         Route::post('lounge/event/rmp/{table}/{user}',"Eventee\LoungeController@removeParticipant")->name('removeParticipant');
         Route::get('/updatelounge',"Eventee\LoungeController@updateLounge")->name('updateLounge');
+        //Post Emote
         
         
         Route::get("subscriptions-raw", "EventSessionsController@subscription_raw")->name("subscription_raw");
@@ -646,8 +647,13 @@ Route::group($options, function () use ($options) {
 Route::middleware(["auth"])->group(function () { //All Routes here would need authentication to access
     Route::post('notification/seen','UerNotifiicationController@seen')->name('notification.user.seen');
     Route::get('notification/seen/all','UerNotifiicationController@seenAll')->name('notification.user.seenAll');
-   
+    
     Route::post("/Event/Location","LocationController@setLocation")->name("set.Location");
+
+    //Post 
+
+    Route::post('/emote/status','PostController@addEmote')->name('add.emote');
+    Route::post('/vote/status','PostController@addVote')->name('add.vote');
     
     Route::get("/event/session-notifications", "EventController@sendSessionNotifications");
     
@@ -943,6 +949,8 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
   
 });
+
+
 
 
 Route::get("/updateevents",function(){
