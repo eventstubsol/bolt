@@ -36,7 +36,7 @@
                             <input type="file" data-name="bannerImagelogo" data-plugins="dropify" data-type="image" data-default-file={{  assetUrl($landingPage->banner_image) }} />
                         </div>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <div class="image-uploader" id="imgBg" >
                             <label class="mb-3" for="images">First Overview Image</label>
                             <input type="hidden" name="first_logo[]" class="upload_input"  value="{{ $landingPage->first_logo }}" >
@@ -49,10 +49,14 @@
                             <input type="hidden" name="second_logo[]" class="upload_input"  value="{{ $landingPage->second_logo }}" >
                             <input type="file" data-name="second_logo_img" data-plugins="dropify" data-type="image" data-default-file={{  assetUrl($landingPage->second_logo) }} />
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="">Tagline</label>
                         <input type="text" class="form-control" name="tagline" @if($landingPage->tagline !== null) value="{{ $landingPage->tagline }}"  @endif>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Register Now Link(Optional)</label>
+                        <input type="url" class="form-control" name="cta" @if($landingPage->cta !== null) value="{{ $landingPage->cta }}"  @endif>
                     </div>
                     <button type="submit" class="btn btn-success ml-2">Save</button>
                </form>

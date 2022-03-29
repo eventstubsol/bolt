@@ -78,7 +78,7 @@
                 @case("tel")
                         <div class="form-group">
                             {{-- <label for="{{ $field->placeholder ?? $struct->label }}">{{ $field->placeholder ?? $struct->label }}</label> --}}
-                            <input @if($field->required) required @endif class="form-control" type="{{ $struct->type }}" placeholder="{{ $field->placeholder ?? $struct->label
+                            <input @if($field->required) required @endif class="form-control" @if($struct->type === "email") pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" @endif type="{{ $struct->type }}" placeholder="{{ $field->placeholder ?? $struct->label
                             }}" name="{{ $struct->field }}">
                         </div>
                         
