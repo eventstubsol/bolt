@@ -135,6 +135,11 @@ class EventManageController extends Controller
         //  }
         $except = ["'" , '"' ,"/","'\'","."," "];
         $slug = str_ireplace($except,"-",strtolower($req->slug));
+        $checkslugEvent = Event::where('slug',$slug)->count();
+        if($checkslugEvent > 0){
+            flash("Link Already Exists")->error();
+            return redirect()->back();
+        }
         $name = trim($req->name);
         if(empty($name) || empty($slug)){
             flash("Plase Fill In Event Name")->error();
@@ -142,6 +147,7 @@ class EventManageController extends Controller
         }
         $event = Event::findOrFail( ($event_id));
         $event->name = trim($req->name);
+        $event->expected_attendees = $req->expected_attendees;
         // $slug =  str_replace(" ","-",strtolower($req->slug));
         // return  $slug.'.'.str_replace('https://','',$baseurl).'';
         if($req->has('slug')){
@@ -150,6 +156,10 @@ class EventManageController extends Controller
         }
         if($req->has('start_date')){
             $event->start_date = $req->start_date;
+        }
+        if(Carbon::parse($req->start_date)->format('Y-m-d H:i:s') >= Carbon::parse($req->end_date)->format('Y-m-d H:i:s')){
+            flash("Start Datetime Not After The End Datetime")->error();
+            return redirect()->back();
         }
         $event->end_date = $req->end_date;
         $event->timezone = $req->timezone;
