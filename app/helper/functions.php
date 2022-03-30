@@ -865,13 +865,13 @@ function getFieldId($name,$id=null, $default = "")
          return $content->first()->value;
     }
     else{
-        if($name==="main_lobby_video" && !Content::where("name", "main_lobby_video")->where('event_id',$id)->count()  && Content::where("name", "main_lobby_video")->where('event_id',$id)->count()){
-            return "";
-        }
+        // if($name==="main_lobby_video" && !Content::where("name", "main_lobby_video")->where('event_id',$id)->count()  && Content::where("name", "main_lobby_video")->where('event_id',$id)->count()){
+        //     return "";
+        // }
         if(Content::where("name", $name)->where('event_id',null)->count()>0){
             $default = Content::where("name", $name)->where('event_id',null)->first()->value;
+            return $default;    
         }
-       return $default;    
     }
    
 }

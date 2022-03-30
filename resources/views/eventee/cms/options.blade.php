@@ -47,7 +47,7 @@ $fields = getAllFields($id);
                         @case("pdf")
                         <div class="image-uploader">
                             <input type="hidden" class="upload_input" name="{{ $field->id }}" value="{{ $field->value }}">
-                            <input type="file" data-name="{{ $field->id }}" data-plugins="dropify" data-type="{{ $field->type }}"ata-type="{{ $field->type }}" @if(!empty(trim($field->value)))
+                            <input type="file" data-name="{{ $field->id }}" data-plugins="dropify" data-type="{{ $field->type }}"  @if(!empty(trim($field->value)))
                             data-default-file="{{ assetUrl($field->value) }}"
                             @endif 
                             
