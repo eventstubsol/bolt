@@ -69,7 +69,7 @@
 
                         <div class="form-group col-md-6">
                             <label for="number">Number Of Attendess</label><br>
-                            <input type="number" id="domain" name="total_attendees" class="form-control" value="{{ $event->total_attendees }}">
+                            <input type="number" id="domain" name="expected_attendees" class="form-control" value="{{ $event->expected_attendees }}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="name">Custom Domain (Optional)</label><br>

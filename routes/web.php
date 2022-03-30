@@ -46,24 +46,24 @@ Route::group(['domain' => $appurl], function () {
 
 Route::Post("admin/logout","HomeController@logout")->name('admin.logout');
 Auth::routes();
-Route::get("/Register/EventAdmin","eventeeController@Regiter")->name('Eventee.register');
-Route::post('/Register/EventAdmin',"eventeeController@ConfirmRegister")->name('Eventee.confirmRegister');
-Route::get('EventAdmin/Login',"eventeeController@Login")->name('Eventee.login');
-Route::post('EventAdmin/Login/Confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
-Route::get('EventAdmin/Forgot/Password',"ForgotPasswordController@view")->name('Eventee.forgot.password');
-Route::post('EventAdmin/Forgot/Confirm',"ForgotPasswordController@SendPasword")->name('Eventee.forgot.confirm');
-Route::get('/Event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
+Route::get("/register/eventadmin","eventeeController@Regiter")->name('Eventee.register');
+Route::post('/register/eventadmin',"eventeeController@ConfirmRegister")->name('Eventee.confirmRegister');
+Route::get('eventadmin/login',"eventeeController@Login")->name('Eventee.login');
+Route::post('eventadmin/login/confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
+Route::get('eventAdmin/forgot/password',"ForgotPasswordController@view")->name('Eventee.forgot.password');
+Route::post('eventAdmin/forgot/confirm',"ForgotPasswordController@SendPasword")->name('Eventee.forgot.confirm');
+Route::get('/event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
 Route::get("Verify/otp/{user_id}","EventAdminController@OtpView")->name("eventadmin.verify");
 Route::POST("/verify/otp/{user_id}","EventAdminController@VerifyOtp")->name("Eventee.verify");
 
 Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::get('dashboard','eventeeController@Dashboard')->name('teacher.dashboard');
     Route::post('liveChart',"EventManageController@ChartJs")->name('eventee.chartJs');
-    Route::post('SessionRoomChart',"EventManageController@SessionChartJs")->name('eventee.sessionChart');
+    Route::post('sessionRoomChart',"EventManageController@SessionChartJs")->name('eventee.sessionChart');
     Route::post('pageChart',"EventManageController@PageChartJs")->name('eventee.pageChart');
-    Route::post('BoothChart',"EventManageController@BoothChartJs")->name('eventee.boothChart');
-    Route::post('LobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
-    Route::post('LoungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
+    Route::post('boothChart',"EventManageController@BoothChartJs")->name('eventee.boothChart');
+    Route::post('lobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
+    Route::post('loungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
 
 
     //Posts
@@ -94,18 +94,18 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
 
     Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
     Route::get('/adddns','eventeeController@verifyDomain')->name('verifyDomain');
-    Route::get('Events','eventeeController@Event')->name('event.index');
+    Route::get('events','eventeeController@Event')->name('event.index');
     //profile 
     Route::get('Events/profile','ProfileController@view')->name('event.profile.admin');
     Route::POST('Events/profile/post','ProfileController@save')->name('event.profile.post');
 
 
-    Route::get('Events/Expiring','eventeeController@Expiring')->name('event.expiring');
+    Route::get('events/expiring','eventeeController@Expiring')->name('event.expiring');
     Route::post('eventSlug','eventeeController@SlugLink')->name('event.slug');
-    Route::post('Events/Save','eventeeController@Save')->name('event.Save');
-    Route::get('Event/Manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
-    Route::get('Event/edit/{event_id}','EventManageController@Edit')->name('event.Edit');
-    Route::post('Event/update/{event_id}','EventManageController@update')->name('event.Update');
+    Route::post('events/save','eventeeController@Save')->name('event.Save');
+    Route::get('event/manage/{id}',"EventManageController@Dashboard")->name('event.Dashboard');
+    Route::get('event/edit/{event_id}','EventManageController@Edit')->name('event.Edit');
+    Route::post('event/update/{event_id}','EventManageController@update')->name('event.Update');
     Route::post('event/delete',"EventManageController@destroy")->name('event.delete');
 
     Route::get('settings/chat/{id}','ChatController@ChatSettings')->name('settings.chat');
@@ -117,15 +117,15 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
 
 
     //Landing Page Setting
-    Route::get('/Landing/Setting/{id}',"LandingController@index")->name('landing.settings');
-    Route::get('/Landing/Speaker/Delete',"LandingController@deleteSpeaker")->name('landing.speaker.delete');
-    Route::POST('/Landing/Setting/Post/{id}','LandingController@LandingStore')->name('landing.settings.store');
-    Route::POST('/Landing/Setting/Speaker/{id}/{page_id}','LandingController@SpeakerStore')->name('landing.settings.speaker');
+    Route::get('/landing/Setting/{id}',"LandingController@index")->name('landing.settings');
+    Route::get('/landing/Speaker/Delete',"LandingController@deleteSpeaker")->name('landing.speaker.delete');
+    Route::POST('/landing/Setting/Post/{id}','LandingController@LandingStore')->name('landing.settings.store');
+    Route::POST('/landing/Setting/Speaker/{id}/{page_id}','LandingController@SpeakerStore')->name('landing.settings.speaker');
     Route::get('/set/speaker/status','LandingController@setStatus')->name('landing.settings.setStatus');
     Route::get('/set/schedule/status','LandingController@schduleStatus')->name('landing.settings.schedule');
     Route::get('/set/reg/status','LandingController@regStatus')->name('landing.settings.reg');
     Route::get('/set/section/status','LandingController@sectionStatus')->name('landing.settings.section');
-    Route::POST('/Landing/Setting/Sponsor/{id}','LandingController@SponsorStore')->name('landing.settings.sponsor');
+    Route::POST('/landing/Setting/Sponsor/{id}','LandingController@SponsorStore')->name('landing.settings.sponsor');
 
     //Mail Template
     Route::get('/template/{id}','Eventee\TemplateController@index')->name('eventee.mail.template');
@@ -133,14 +133,14 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
 
 
     //User Wise Report
-    Route::get("User_Report/{id}","Eventee\UserReportController@index")->name('eventee.user.report');
-    Route::post("User_Report/Graph","Eventee\UserReportController@graph")->name('eventee.user.report.graph');
-    Route::post("Excel/Report/Data/{id}","Eventee\UserReportController@ExcelReport")->name('eventee.excel.report');
+    Route::get("user_report/{id}","Eventee\UserReportController@index")->name('eventee.user.report');
+    Route::post("user_report/Graph","Eventee\UserReportController@graph")->name('eventee.user.report.graph');
+    Route::post("excel/report/data/{id}","Eventee\UserReportController@ExcelReport")->name('eventee.excel.report');
 
     //Room Wise Report
-    Route::get("Room_Report/{id}","Eventee\UserReportController@RoomReport")->name('eventee.room.report');
-    Route::post("Room_wise_report","Eventee\UserReportController@RoomReportGet")->name('eventee.room.report.get');
-    Route::post("Excel/Report/Room/Data/{id}","Eventee\UserReportController@ExcelRoomReport")->name('eventee.excel.room.report');
+    Route::get("room_report/{id}","Eventee\UserReportController@RoomReport")->name('eventee.room.report');
+    Route::post("room_wise_report","Eventee\UserReportController@RoomReportGet")->name('eventee.room.report.get');
+    Route::post("excel/report/room/data/{id}","Eventee\UserReportController@ExcelRoomReport")->name('eventee.excel.room.report');
 
     //FAQS Section
     Route::get("faq/{id}", "Eventee\FaqController@index")->name("eventee.faq");
@@ -167,21 +167,21 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::get("/chat-group/sync/{id}", "Eventee\UserController@syncGroupChat")->name("sync-groups");
     
     //Onboard settings
-    Route::get("Onboard/Setting/{id}","OnboardController@index")->name("onboard.settings");
-    Route::POST("Onboard/Setting/SetCharacter/{id}","OnboardController@setCharacter")->name("onboard.setCharacter");
+    Route::get("onboard/setting/{id}","OnboardController@index")->name("onboard.settings");
+    Route::POST("onboard/setting/SetCharacter/{id}","OnboardController@setCharacter")->name("onboard.setCharacter");
     Route::POST("onboard/search/link","OnboardController@SearchLink")->name("onboard.search");
     Route::POST("onboard/save/setting/{id}","OnboardController@SaveSetting")->name("onboard.save");
 
 
 	Route::get('icons',"EventController@getIcons")->name('icons');
-	Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
-    Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
-    Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
-    Route::post('/Form/preview/',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
-    Route::get('/Form/edit/{id}/{form_id}',"Eventee\FormController@edit")->name('eventee.form.edit');
-    Route::post('/Form/SaveField',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
-    Route::post('Form/CustomFields',"Eventee\FormController@CustomField")->name('eventee.form.custom');
-    Route::post('Form/SaveCustomFields',"Eventee\FormController@CustomFieldSave")->name('eventee.form.customSave');
+	Route::get('/form/{id}',"Eventee\FormController@index")->name('eventee.form');
+    Route::get('/form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
+    Route::post('/form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
+    Route::post('/form/preview/',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
+    Route::get('/form/edit/{id}/{form_id}',"Eventee\FormController@edit")->name('eventee.form.edit');
+    Route::post('/form/SaveField',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
+    Route::post('form/CustomFields',"Eventee\FormController@CustomField")->name('eventee.form.custom');
+    Route::post('form/SaveCustomFields',"Eventee\FormController@CustomFieldSave")->name('eventee.form.customSave');
     // Route::post('/Form/Delete',"Eventee\FormController@Destroy")->name('form.destroy');
 
 
@@ -269,8 +269,8 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::post("link/location","Eventee\PageController@UpdateLocationStatus")->name('eventee.pages.updatelocation');
 
     //Restore Route
-    Route::get("Event/Restore/{id}","RestoreController@index")->name("eventee.restore");
-    Route::post("Event/Restore/Post","RestoreController@restore")->name("eventee.restore.post");
+    Route::get("event/restore/{id}","RestoreController@index")->name("eventee.restore");
+    Route::post("rvent/restore/Post","RestoreController@restore")->name("eventee.restore.post");
 
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");
@@ -340,21 +340,21 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::get('/leaderboard/download/{id}','Eventee\LeaderboardController@FileExcel')->name('excel.download');
 
     //Prize
-    Route::get('/Prize/{id}',"Eventee\PrizeController@index")->name('eventee.prize.list');
-    Route::get('/Prize/create/{id}',"Eventee\PrizeController@create")->name('eventee.prize.create');
-    Route::post('/Prize/store/{id}',"Eventee\PrizeController@store")->name('eventee.prize.store');
-    Route::get('/Prize/edit/{id}/{prize_id}',"Eventee\PrizeController@edit")->name('eventee.prize.edit');
-    Route::post('/Prize/update/{id}/{prize_id}',"Eventee\PrizeController@update")->name('eventee.prize.update');
+    Route::get('/prize/{id}',"Eventee\PrizeController@index")->name('eventee.prize.list');
+    Route::get('/prize/create/{id}',"Eventee\PrizeController@create")->name('eventee.prize.create');
+    Route::post('/prize/store/{id}',"Eventee\PrizeController@store")->name('eventee.prize.store');
+    Route::get('/prize/edit/{id}/{prize_id}',"Eventee\PrizeController@edit")->name('eventee.prize.edit');
+    Route::post('/prize/update/{id}/{prize_id}',"Eventee\PrizeController@update")->name('eventee.prize.update');
 
 
     //Booth
-    Route::get('/Booths/{id}',"Eventee\BoothController@index")->name('eventee.booth');
-    Route::get('/Booths/create/{id}',"Eventee\BoothController@create")->name('eventee.booth.create');
-    Route::post('/Booths/store/{id}',"Eventee\BoothController@store")->name('eventee.booth.store');
-    Route::get('/Booths/edit/{id}/{booth_id}',"Eventee\BoothController@edit")->name('eventee.booth.edit');
-    Route::put('/Booths/update/{id}/{booth_id}',"Eventee\BoothController@update")->name('eventee.booth.update');
-    Route::delete('/Booths/delete/{booth}/{id}',"Eventee\BoothController@destroy")->name('eventee.booth.destroy');
-    Route::post('/Booths/Bulkdelete',"Eventee\BoothController@BulkDelete")->name('eventee.booth.bulkDelete');
+    Route::get('/booths/{id}',"Eventee\BoothController@index")->name('eventee.booth');
+    Route::get('/booths/create/{id}',"Eventee\BoothController@create")->name('eventee.booth.create');
+    Route::post('/booths/store/{id}',"Eventee\BoothController@store")->name('eventee.booth.store');
+    Route::get('/booths/edit/{id}/{booth_id}',"Eventee\BoothController@edit")->name('eventee.booth.edit');
+    Route::put('/booths/update/{id}/{booth_id}',"Eventee\BoothController@update")->name('eventee.booth.update');
+    Route::delete('/booths/delete/{booth}/{id}',"Eventee\BoothController@destroy")->name('eventee.booth.destroy');
+    Route::post('/booths/bulkdelete',"Eventee\BoothController@BulkDelete")->name('eventee.booth.bulkDelete');
 
     //Leaderboard Setting
     Route::get('/leaderboard/setting/{id}',"Eventee\LeaderboardController@index")->name('eventee.leaderSetting');
@@ -362,12 +362,12 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::POST('/leaderboard/setting/update/{id}/{lead_id}',"Eventee\LeaderboardController@update")->name('eventee.leaderSetting.update');
     Route::POST('/leaderboard/points/delete',"Eventee\LeaderboardController@DeletePoint")->name('eventee.leaderboard.points.delete');
     //Room Setup
-    Route::get('/Rooms/{id}',"Eventee\RoomController@index")->name('eventee.room');
-    Route::get('/Rooms/create/{id}',"Eventee\RoomController@create")->name('eventee.room.create');
-    Route::post('/Rooms/store/{id}',"Eventee\RoomController@store")->name('eventee.room.store');
-    Route::get('/Rooms/edit/{id}/{room_id}',"Eventee\RoomController@edit")->name('eventee.room.edit');
-    Route::post('/Rooms/update/{id}/{room_id}',"Eventee\RoomController@update")->name('eventee.room.update');
-    Route::get('/Rooms/sort/{id}',"Eventee\RoomController@sort")->name('eventee.room.sort');
+    Route::get('/rooms/{id}',"Eventee\RoomController@index")->name('eventee.room');
+    Route::get('/rooms/create/{id}',"Eventee\RoomController@create")->name('eventee.room.create');
+    Route::post('/rooms/store/{id}',"Eventee\RoomController@store")->name('eventee.room.store');
+    Route::get('/rooms/edit/{id}/{room_id}',"Eventee\RoomController@edit")->name('eventee.room.edit');
+    Route::post('/rooms/update/{id}/{room_id}',"Eventee\RoomController@update")->name('eventee.room.update');
+    Route::get('/rooms/sort/{id}',"Eventee\RoomController@sort")->name('eventee.room.sort');
 
 
     Route::get("/reports/leaderboard/{id}", "EventManageController@leaderboardView")->name("event.leaderboard");
@@ -398,7 +398,7 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::post("/notification/delete","Eventee\NotificationController@delete")->name("eventee.notification.delete");
 
 
-    Route::get('/Poll/{id}',"Eventee\PollController@index")->name('eventee.poll');
+    Route::get('/poll/{id}',"Eventee\PollController@index")->name('eventee.poll');
     Route::get('qna/{id}',"Eventee\QnaController@index")->name('eventee.qna');
     Route::get("/polls", "PollController@index")->name("poll.manage"); // list all polls
     Route::get("/polls/multipleChoice", "PollController@MultipleChoice")->name("poll.multiple"); //multiple choice
