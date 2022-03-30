@@ -130,7 +130,7 @@ class AttendeeAuthController extends Controller
             // ]);
         } 
         // else {
-            if ($user->type !== 'attendee' && $user->type !== 'delegate' ) {
+            if ($user->type !== 'attendee' && $user->type !== 'speaker' && $user->type !== 'delegate' ) {
                 return redirect( route("exhibitorLogin",['subdomain'=>$subdomain,'email'=>$user->email]));
             }
             if($event->active_option == 1 && $user->email_status == 0){
