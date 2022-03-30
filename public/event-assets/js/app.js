@@ -814,6 +814,10 @@ function initApp() {
                 $("#play-session-" + room).unbind().on("click", function () {
                     loadContent();
                     sessionModal.modal();
+                    trackEvent({
+                        type:"sessionView",
+                        id:room
+                    });
                 });
                 sessionModal.unbind().on("hide.bs.modal", function () {
                     console.log("opened")
