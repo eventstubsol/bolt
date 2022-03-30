@@ -68,6 +68,10 @@ class SessionRoomController extends Controller
                 flash("Same Session Room Already Exist")->error();
                 return redirect()->back();
             } 
+            if(empty($request->background)){
+                flash("Background Image Cannot Be Left Blank")->error();
+                return redirect()->back();
+            }
             $room = new sessionRooms([
                 "name"=>$name,
                 // "master_room"=>isset($request->master_room)?$request->master_room:"",
