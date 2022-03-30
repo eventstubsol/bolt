@@ -519,6 +519,14 @@
         .theme-modal .modal-dialog.confirmation .modal-content h3 span {
             color: {{ $event->primary_color }} !important;
         }
+        .custom-dropdown-menu a img{
+            margin-right: 0.6rem;
+        }
+
+
+        .custom-dropdown-menu a:not(:last-child){
+            border-bottom: 1px solid  {{ $event->primary_color }} !important;
+        }
 
         /* .df-ui-btn.df-ui-next.ti-angle-right {
             display: none !important;

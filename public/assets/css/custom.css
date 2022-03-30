@@ -616,7 +616,7 @@ table.dataTable tbody tr {
 .custom-dropdown .custom-dropdown-menu {
     position: absolute;
     right: 12px;
-    background: #fff;
+    background: #ffffffde;
     border-radius: 3px;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.1);
