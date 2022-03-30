@@ -696,10 +696,15 @@ class EventController extends Controller
                 $pointsDetails["details"] = $request->get("id");
                 Points::create($pointsDetails);
                 break;
-            case "LoungeSessionAttended":
-                $pointsDetails["points"] = 0;
+            case "zoom_video_view":
+                $pointsDetails["points"] = EXTERIOR_ZOOM_POINTS;
                 $pointsDetails["details"] = $request->get("name");
-                Points::create($pointsDetails);
+                if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
+                    Points::create($pointsDetails);
+                    User::where("id", $userId)->update([
+                        "points" => DB::raw('points+' . $pointsDetails["points"]),
+                    ]);
+                }
                 break;
 
 

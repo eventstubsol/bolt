@@ -237,6 +237,7 @@ class PageController extends Controller
             $event_id = $id;
             $page->name = $request->name;
             $page->chat_name =  $request->chat_name;
+            $page->hide_menu = $request->hide_menu;
             $page->save();
 
             $page->treasures()->delete();

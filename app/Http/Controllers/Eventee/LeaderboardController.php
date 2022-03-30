@@ -52,6 +52,7 @@ class LeaderboardController extends Controller
         $color = $request->color;
         $img = $request->leaderboardUrl;
         $points = $request->points;
+        $pointsstatus = $request->pointsstatus;
         // return $img;
         $leaderBoard = Leaderboard::findOrFail($lead_id);
        
@@ -70,7 +71,8 @@ class LeaderboardController extends Controller
             }
             if($points !== null){
                 for($j = 0; $j < count($points) ; $j++){
-                    LeadPoint::where('id',$points[$j])->update([
+                    LeadPoint::where('id',$pointsstatus[$j])->update([
+                        "point"=>$points[$j],
                         "status"=>1
                     ]);       
                 }

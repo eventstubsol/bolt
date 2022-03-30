@@ -83,9 +83,9 @@ $fields = getAllFields($id);
                         <div class="form-group point-group">
                             <label for="points">Point {{ $key + 1  }}</label>
                             <div class="input-group-append form-check form-switch ml-4">
-                            {{-- <input type="text" name="points[]" class="form-control" value="{{ $loadpoint->point }}"> --}}
-                            <input type="checkbox" name="points[]" @if($loadpoint->status) checked @endif class="form-check-input" value="{{ $loadpoint->id }}" >
-                             {{$loadpoint->point}} 
+                            <input type="text" name="points[]" class="form-control" value="{{ $loadpoint->point }}">
+                            <input type="checkbox" name="pointsstatus[]" @if($loadpoint->status) checked @endif class="form-check-input" value="{{ $loadpoint->id }}" >
+                             {{-- {{$loadpoint->point}}  --}}
                                {{-- <button type="button" data-id="{{ $loadpoint->id }}" onclick="DeletePoint(this)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button> --}}
                             </div>
                         </div>

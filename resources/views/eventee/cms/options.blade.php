@@ -65,7 +65,7 @@ $fields = getAllFields($id);
                         @case("video")
                         <div class="image-uploader">
                             <input type="hidden" class="upload_input" name="{{ $field->id }}" value="{{ $field->value }}">
-                            <input accept="images/*" type="file" data-name="{{ $field->id }}" data-plugins="dropify" data-type="{{ $field->type }}" data-default-file="{{ assetUrl(getFieldId($field->value,$id)) }}"
+                            <input accept="images/*" type="file" data-name="{{ $field->id }}" data-plugins="dropify" data-type="{{ $field->type }}" data-default-file="{{ assetUrl($field->value) }}"
                             />
                         </div>
                         @break
