@@ -68,6 +68,10 @@ class PageController extends Controller
                 flash("Same Page Already Exist")->error();
                 return redirect()->back();
             } 
+            if(!$request->has("url") || $request->url === null){
+                flash("Background Image Cannot Be Left Blank")->error();
+                return redirect()->back();
+            }
             $page = new Page([
                 "name" => $name,
                 'event_id'=>$id,

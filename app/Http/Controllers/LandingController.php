@@ -32,13 +32,14 @@ class LandingController extends Controller
         $landing->banner_image = $req->bannerImage[0];
     
         
-        $landing->first_logo = $req->first_logo[0];
+        // $landing->first_logo = $req->first_logo[0];
         
-        
-        $landing->second_logo = $req->second_logo[0];
+        // 
+        // $landing->second_logo = $req->second_logo[0];
         
        
         $landing->tagline = $req->tagline;
+        $landing->cta = $req->cta;
         
         if($landing->save()){
             flash("Landing Page Details Updated Successfully")->success();

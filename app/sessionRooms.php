@@ -20,6 +20,15 @@ class sessionRooms extends Model
     public function videoBg(){
         return $this->hasOne("\App\Video", "owner");
     }
+    
+    public function links()
+    {
+        return $this->hasMany("\App\Link","page");
+    }
+
+    public function treasures(){
+        return $this->hasMany("\App\Treasure","owner");
+    }
 
     public function replicateWR(){
         $newRecord = $this->replicate();

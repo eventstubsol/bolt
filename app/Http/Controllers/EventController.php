@@ -9,6 +9,7 @@ use App\BoothInterest;
 use App\Form;
 use App\Loader;
 use App\CometChat;
+use App\Section;
 use App\Event;
 use App\LandingPage;
 use App\LandingSpeaker;
@@ -946,14 +947,17 @@ class EventController extends Controller
         $speakers = LandingSpeaker::where('page_id',$landing->id)->get();
         $form = Form::where('event_id',$event->id)->where('user_type','attendee')->first();
         $schedule =  getSchedule($event->id);
-        // dd($event->id);
+        $sections = Section::where('landing_id',$landing->id)->get()->load("images");
+        // dd($landing->cta);
+      
+        // return ($event);
         if(isset($form)){
             $form->load("fields.formStruct");
-            return view("landing.index",compact(['event','landing','speakers','form','schedule']));
+            return view("landing.index",compact(['event','landing','speakers','form','schedule',"sections"]));
         }
         else{
             $form = null;
-            return view("landing.index",compact(['event','landing','speakers','form','schedule']));
+            return view("landing.index",compact(['event','landing','speakers','form','schedule',"sections"]));
         }
     }
     public function sendSessionNotifications()
