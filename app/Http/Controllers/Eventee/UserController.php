@@ -891,7 +891,22 @@ class UserController extends Controller
         if($req->hasFile('excel_file')){
             $file = $req->file('excel_file');
             // $file->event_id = $id;
-            Excel::import(new UserImport($id),$file);
+            // Excel::import(new UserImport($id),$file);
+            $eventCap = Event::find($id);
+            $userCap = User::where('event_id',$id)->count();
+            $import = Excel::toArray(new UserImport($id),$file);
+            $count = count($import) + $userCap;
+            if($count < $eventCap->total_attendee){
+                Excel::import(new UserImport($id),$file);
+            }
+            else{
+                flash("User Limit Exceeded")->error();
+                return redirect()->back();
+            }
+            // $import = Excel::toArray(new UserImport($id),$file);
+            // $count = count($import);
+            // dd($import);
+            
             $this->syncUserChat($id);
             flash("Data Updated Successfully")->success();
             return redirect()->route('eventee.user',$id);
