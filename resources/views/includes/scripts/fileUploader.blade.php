@@ -68,6 +68,7 @@
             },
             error: function (error) {
                 // handle error
+                showMessage("File Size Should not be greater than 12 MB", "error");
                 that.unlockForm(that);
                 callback(false);
                 console.log(error)
