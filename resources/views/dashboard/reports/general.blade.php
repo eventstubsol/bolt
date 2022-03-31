@@ -254,31 +254,7 @@
             $("#piechart4").hide();
             // fetchData();
             // setInterval(fetchData, 15000);
-            let downloadButton = $("#download-login-logs");
-            downloadButton.on("click", function () {
-                downloadButton.addClass("loading").prop("disabled", true).html("Building Logs...");
-                $.ajax({
-                    url: "{{ route("reports.export.loginLogs",['id'=>$id]) }}",
-                    method: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function (data) {
-                        exportToCsv("Login Logs "+Date.now()+".csv", data);
-                        downloadButton.prop("disabled", false).html("Downloaded");
-                        setTimeout(() => {
-                            if(downloadButton.html() === "Downloaded"){
-                                downloadButton.html("Download Logs");
-                            }
-                        }, 2000);
-                    },
-                    error: function (e) {
-                        console.log(e);
-                        alert("Some error occurred while downloading report. Please try again later");
-                        downloadButton.prop("disabled",false).html("Download Logs");
-                    }
-                });
-            });
+            
         });
     </script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
