@@ -872,12 +872,9 @@ function getFieldId($name,$id=null, $default = "")
             return "";
         }
         if(Content::where("name", $name)->where('event_id',null)->count()>0){
-            $default = Content::where("name", $name)->where('event_id',null)->first()->value;
-           
-            return "abv";    
-            return $default;    
+            $default = Content::where("name", $name)->where('event_id',null)->first()->value;    
         }
-        return "here";
+        return $default;
     }
    
 }
