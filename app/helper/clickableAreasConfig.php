@@ -356,6 +356,7 @@ define("SESSION_ATTENDING_POINTS", 100);
 define("VIDEO_VIEWING_POINTS", 150);
 define("MUSEUM_VISIT_POINTS", 200);
 define("WORKSHOP_VISIT_POINTS", 200);
+define("EXTERIOR_ZOOM_POINTS", 100);
 
 define("SCAVENGER_HUNT", [
     "lobby" => [

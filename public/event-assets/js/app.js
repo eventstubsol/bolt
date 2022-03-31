@@ -411,7 +411,12 @@ function initApp() {
     });
 
     pages.hide();
-    pages.filter(".initial").show();
+    if(window.config.homepage){
+        pages.hide().filter("#"+window.config.homepage.replace("/","-")).show();
+        // routie(window.config.homepage);
+    }else{
+        pages.filter(".initial").show();
+    }
 
     $("#audi-content").empty();
     const notFoundRoute = "lobby";
@@ -434,7 +439,7 @@ function initApp() {
     $(".zoom_urls").on("click", function () {
         t = $(this);
         trackEvent({
-            type: "LoungeSessionAttended",
+            type: "zoom_video_view",
             name: t.attr("title")
         });
     })
@@ -845,6 +850,8 @@ function initApp() {
                 }
                 pages.hide().filter("#page-" + page).show();
                 let chatname = pages.filter("#page-" + page).data("chat");
+                let menu_hidden = pages.filter("#page-" + page).data("menu");
+               
                 if(page==="Program-Workshop-2"||page==="Program-Workshop-1"){
                     trackEvent({
                         type:"workshopVisit",
@@ -852,6 +859,9 @@ function initApp() {
                     });
                 }
                 pageChangeActions(false);
+                if(menu_hidden === "1" || menu_hidden == 1){
+                    navs.addClass('hidden');
+                }
                 createGroup(chatname);
                 CometChatWidget.chatWithGroup(chatname);
                 

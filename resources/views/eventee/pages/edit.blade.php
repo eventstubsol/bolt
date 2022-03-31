@@ -582,6 +582,13 @@ input[type="range"]:disabled::-moz-range-thumb {
                         @enderror
                     </div>
                     <div class="form-group mb-3">
+                        <label for="#landPage" class="mr-1 mb-0">Menu</label>
+                        <select name="hide_menu" class="form-control">
+                            <option value="0" @if($page->hide_menu == 0) selected @endif>Visible</option>
+                            <option value="1" @if($page->hide_menu == 1) selected @endif>Hidden</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
                         <label for="name">Chat Name
                             <span style="color:red">*</span>
                         </label>

@@ -696,10 +696,15 @@ class EventController extends Controller
                 $pointsDetails["details"] = $request->get("id");
                 Points::create($pointsDetails);
                 break;
-            case "LoungeSessionAttended":
-                $pointsDetails["points"] = 0;
+            case "zoom_video_view":
+                $pointsDetails["points"] = EXTERIOR_ZOOM_POINTS;
                 $pointsDetails["details"] = $request->get("name");
-                Points::create($pointsDetails);
+                if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
+                    Points::create($pointsDetails);
+                    User::where("id", $userId)->update([
+                        "points" => DB::raw('points+' . $pointsDetails["points"]),
+                    ]);
+                }
                 break;
 
 
@@ -999,18 +1004,21 @@ class EventController extends Controller
     public function generalReports(){
         return view("dashboard.reports.general");
     }
+    public function loginReports($id){
+        return view("dashboard.reports.login")->with(compact(['id']));
+    }
 
-    public function generalReportsData(){
-        $loginIdList = \App\LoginLog::orderBy("created_at", "DESC")->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("user_id")->get(["user_id", "created_at"]);
+    public function generalReportsData($id){
+        $loginIdList = \App\LoginLog::where("event_id",$id)->orderBy("created_at", "DESC")->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("user_id")->get(["user_id", "created_at"]);
         $ids = [];
         foreach ($loginIdList as $loginLog){
             $ids[] = $loginLog->user_id;
         }
         $lastLoginList = \App\User::whereIn("id",$ids)->limit(50)->get(["name", "email"]);
         return [
-            'login_total' => \App\LoginLog::distinct("user_id")->count(),
-            'login_last_1h' => \App\LoginLog::where("created_at", ">=", Carbon::now("UTC")->subtract("hour", 1))->distinct("user_id")->count(),
-            'unique_login_count' => \App\LoginLog::where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("user_id")->count(),
+            'login_total' => \App\LoginLog::where("event_id",$id)->distinct("user_id")->count(),
+            'login_last_1h' => \App\LoginLog::where("event_id",$id)->where("created_at", ">=", Carbon::now("UTC")->subtract("hour", 1))->distinct("user_id")->count(),
+            'unique_login_count' => \App\LoginLog::where("event_id",$id)->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("user_id")->count(),
             'last_login_list' => $lastLoginList,
         ];
     }
@@ -1096,8 +1104,8 @@ class EventController extends Controller
         ];
     }
 
-    public function exportLoginLogs(){
-        $log = LoginLog::orderBy("created_at", "DESC")->distinct("user_id")->with("user")->get([
+    public function exportLoginLogs($id){
+        $log = LoginLog::where("event_id",$id)->orderBy("created_at", "DESC")->distinct("user_id")->with("user")->get([
             "user_id",
             "created_at",
         ]);

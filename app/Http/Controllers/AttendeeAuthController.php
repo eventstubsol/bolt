@@ -144,7 +144,7 @@ class AttendeeAuthController extends Controller
                 // Concurrent sessions enable 
                 DB::table("sessions")->where("user_id", $user->id)->whereNotIn("id", [session()->getId()])->delete();
                 Auth::login($user);
-                LoginLog::create(["ip" => $request->ip(), "user_id" => $user->id]);
+                LoginLog::create(["ip" => $request->ip(), "user_id" => $user->id,"event_id"=>$event->id]);
                 // UserLocation::create(['user_id'=>$user->id,'event_id'=>$user->event_id,'type'=>"exterior"]);
                 $pointsDetails = [
                     "points_to" => $user->id,
@@ -197,7 +197,7 @@ class AttendeeAuthController extends Controller
             // dd($user);
             Auth::login($user);
                 // return $user->type;
-            LoginLog::create(["ip" => $req->ip(), "user_id" => $user->id]);
+            LoginLog::create(["ip" => $req->ip(), "user_id" => $user->id,"event_id"=>$event->id]);
            
             if($user->type === "exhibiter"){
                 return redirect(route("exhibiterhome",$subdomain));

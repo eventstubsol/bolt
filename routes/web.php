@@ -64,6 +64,10 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::post('boothChart',"EventManageController@BoothChartJs")->name('eventee.boothChart');
     Route::post('lobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('loungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
+    Route::post("reports/login-logs/export/{id}", "EventController@exportLoginLogs")->name("reports.export.loginLogs");
+    Route::post("reports/login/{id}", "EventController@generalReportsData")->name("reports.general.api");
+    Route::get("loginreports/{id}","EventController@loginReports")->name('eventee.loginLogs');
+       
 
 
     //Posts
@@ -174,14 +178,14 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
 
 
 	Route::get('icons',"EventController@getIcons")->name('icons');
-	Route::get('/form/{id}',"Eventee\FormController@index")->name('eventee.form');
-    Route::get('/form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
-    Route::post('/form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
-    Route::post('/form/preview/',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
-    Route::get('/form/edit/{id}/{form_id}',"Eventee\FormController@edit")->name('eventee.form.edit');
-    Route::post('/form/SaveField',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
-    Route::post('form/CustomFields',"Eventee\FormController@CustomField")->name('eventee.form.custom');
-    Route::post('form/SaveCustomFields',"Eventee\FormController@CustomFieldSave")->name('eventee.form.customSave');
+	Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
+    Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
+    Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
+    Route::post('/Form/preview/',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
+    Route::get('/Form/edit/{id}/{form_id}',"Eventee\FormController@edit")->name('eventee.form.edit');
+    Route::post('/Form/SaveField',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
+    Route::post('Form/CustomFields',"Eventee\FormController@CustomField")->name('eventee.form.custom');
+    Route::post('Form/SaveCustomFields',"Eventee\FormController@CustomFieldSave")->name('eventee.form.customSave');
     // Route::post('/Form/Delete',"Eventee\FormController@Destroy")->name('form.destroy');
 
 
@@ -914,8 +918,6 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
          * Reports and Analytics
          */
         Route::get("/reports/general", "EventController@generalReports")->name("reports.general");
-        Route::post("/reports/general", "EventController@generalReportsData")->name("reports.general.api");
-        Route::post("/reports/login-logs/export", "EventController@exportLoginLogs")->name("reports.export.loginLogs");
         Route::get("/reports/auditorium", "EventController@auditoriumReports")->name("reports.auditorium");
         Route::post("/reports/auditorium", "EventController@auditoriumReportsData")->name("reports.auditorium.api");
         Route::post("/reports/audi-logs/export", "EventController@exportAuditoriumLogs")->name("reports.export.audiLogs");
