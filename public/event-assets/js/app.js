@@ -412,7 +412,6 @@ function initApp() {
 
     pages.hide();
     if(window.config.homepage){
-        alert(window.config.homepage);
         pages.hide().filter("#"+window.config.homepage.replace("/","-")).show();
         // routie(window.config.homepage);
     }else{
