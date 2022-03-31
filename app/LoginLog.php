@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class LoginLog extends Model
 {
-    protected $fillable = ["ip", "user_id"];
+    protected $fillable = ["ip", "user_id","event_id"];
 
     public function user(){
         return $this->belongsTo("\App\User")->select([

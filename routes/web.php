@@ -64,6 +64,10 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::post('boothChart',"EventManageController@BoothChartJs")->name('eventee.boothChart');
     Route::post('lobbyUser',"EventManageController@LobbyUser")->name('eventee.lobbyUser');
     Route::post('loungeUser',"EventManageController@LoungeUser")->name('eventee.loungeUser');
+    Route::post("reports/login-logs/export/{id}", "EventController@exportLoginLogs")->name("reports.export.loginLogs");
+    Route::post("reports/login/{id}", "EventController@generalReportsData")->name("reports.general.api");
+    Route::get("loginreports/{id}","EventController@loginReports")->name('eventee.loginLogs');
+       
 
 
     //Posts
@@ -914,8 +918,6 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
          * Reports and Analytics
          */
         Route::get("/reports/general", "EventController@generalReports")->name("reports.general");
-        Route::post("/reports/general", "EventController@generalReportsData")->name("reports.general.api");
-        Route::post("/reports/login-logs/export", "EventController@exportLoginLogs")->name("reports.export.loginLogs");
         Route::get("/reports/auditorium", "EventController@auditoriumReports")->name("reports.auditorium");
         Route::post("/reports/auditorium", "EventController@auditoriumReportsData")->name("reports.auditorium.api");
         Route::post("/reports/audi-logs/export", "EventController@exportAuditoriumLogs")->name("reports.export.audiLogs");

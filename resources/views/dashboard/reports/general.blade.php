@@ -61,16 +61,17 @@
                     </div>
                 </div>
             </div> <!-- end row-->
-            <button class="btn btn-primary mt-3 mx-auto btn-block" id="download-login-logs">Download Logs</button>
         </div> <!-- end widget-rounded-circle-->
     </div>
 </div> --}}
 <div class="row">
     
-<div class="col-md-6 col-xl-4  mb-3">
-    <div class="widget-rounded-circle card-box h-100">
-        <div class="row">
-            <div class="card-header">User Status</div>
+    <div class="col-md-6 col-xl-4  mb-3">
+        <div class="widget-rounded-circle card-box h-100">
+            <div class="row">
+                <div class="card-header">
+                    User Status
+               </div>
             <div class="loader"><img src="{{ asset("/assets/images/loader/loader.gif") }}" alt=""></div>
             <div id="piechart" style="left:0;width: 50rem; height: 20rem;"></div>
         </div> <!-- end row-->
@@ -283,7 +284,7 @@
             downloadButton.on("click", function () {
                 downloadButton.addClass("loading").prop("disabled", true).html("Building Logs...");
                 $.ajax({
-                    url: "{{ route("reports.export.loginLogs") }}",
+                    url: "{{ route("reports.export.loginLogs",['id'=>$id]) }}",
                     method: "POST",
                     data: {
                         _token: "{{ csrf_token() }}"

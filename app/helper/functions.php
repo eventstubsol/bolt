@@ -1325,7 +1325,7 @@ function getLoginVars(){
         "field" => "email",
         "placeholder" => "Email",
         "text" => "Enter email address",
-        "label" => "Enter your email to login "
+        "label" => "Enter your registered email to login "
     ];
 }
 

@@ -411,7 +411,13 @@ function initApp() {
     });
 
     pages.hide();
-    pages.filter(".initial").show();
+    if(window.config.homepage){
+        alert(window.config.homepage);
+        pages.hide().filter("#"+window.config.homepage.replace("/","-")).show();
+        // routie(window.config.homepage);
+    }else{
+        pages.filter(".initial").show();
+    }
 
     $("#audi-content").empty();
     const notFoundRoute = "lobby";
