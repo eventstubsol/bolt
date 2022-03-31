@@ -11,7 +11,7 @@
         </span>  
     </a>
 </li>
-@if(Carbon\Carbon::now() <= $event->end_date)
+@if(Carbon\Carbon::now($event->timezone) <= $event->end_date)
     {{-- <li class="menu-title">Administration</li>
     <li> --}}
  <li>

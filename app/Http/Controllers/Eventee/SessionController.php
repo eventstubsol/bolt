@@ -216,7 +216,7 @@ class SessionController extends Controller
 
 
         $rooms = sessionRooms::where('event_id',$id)->get();
-        $speakers = User::where("type", USER_TYPE_SPEAKER)->get([
+        $speakers = User::where("type", USER_TYPE_SPEAKER)->where('event_id',$id)->get([
             "id",
             "name",
             "email"
