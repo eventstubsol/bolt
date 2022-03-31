@@ -178,14 +178,14 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
 
 
 	Route::get('icons',"EventController@getIcons")->name('icons');
-	Route::get('/form/{id}',"Eventee\FormController@index")->name('eventee.form');
-    Route::get('/form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
-    Route::post('/form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
-    Route::post('/form/preview/',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
-    Route::get('/form/edit/{id}/{form_id}',"Eventee\FormController@edit")->name('eventee.form.edit');
-    Route::post('/form/SaveField',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
-    Route::post('form/CustomFields',"Eventee\FormController@CustomField")->name('eventee.form.custom');
-    Route::post('form/SaveCustomFields',"Eventee\FormController@CustomFieldSave")->name('eventee.form.customSave');
+	Route::get('/Form/{id}',"Eventee\FormController@index")->name('eventee.form');
+    Route::get('/Form/create/{id}',"Eventee\FormController@create")->name('eventee.form.create');
+    Route::post('/Form/Save',"Eventee\FormController@SaveForm")->name('eventee.form.save');
+    Route::post('/Form/preview/',"Eventee\FormController@ShowPreview")->name('eventee.form.preview');
+    Route::get('/Form/edit/{id}/{form_id}',"Eventee\FormController@edit")->name('eventee.form.edit');
+    Route::post('/Form/SaveField',"Eventee\FormController@SaveField")->name('eventee.form.saveField');
+    Route::post('Form/CustomFields',"Eventee\FormController@CustomField")->name('eventee.form.custom');
+    Route::post('Form/SaveCustomFields',"Eventee\FormController@CustomFieldSave")->name('eventee.form.customSave');
     // Route::post('/Form/Delete',"Eventee\FormController@Destroy")->name('form.destroy');
 
 
