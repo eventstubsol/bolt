@@ -135,7 +135,7 @@ class EventManageController extends Controller
         //  }
         $except = ["'" , '"' ,"/","'\'","."," "];
         $slug = str_ireplace($except,"-",strtolower($req->slug));
-        $checkslugEvent = Event::where('slug',$slug)->whereNotIn("event_id",[$event_id])->count();
+        $checkslugEvent = Event::where('slug',$slug)->whereNotIn("id",[$event_id])->count();
         if($checkslugEvent > 0){
             flash("Link Already Exists")->error();
             return redirect()->back();
