@@ -8,6 +8,11 @@
     
                 </div>
                 <div class="modal-body" >
+                    @if($modal->embed_status)
+
+                    {!! $modal->embed_code !!}
+
+                    @else
                     @foreach($modal->items as $item)
                         @php
                             $type = $item->type;
@@ -53,6 +58,7 @@
                             </div>           
                         </div>           
                     @endforeach
+                    @endif
                 </div>
             </div>
         </div>

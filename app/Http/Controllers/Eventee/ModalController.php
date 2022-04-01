@@ -34,11 +34,12 @@ class ModalController extends Controller
    
     }
     public function store($id,ModalFormRequest $request){
-        // dd($req->all());
+        // dd($request->all());
         // if(empty($request->name)){
         //     flash("Name Field Cannot Be Left Blank")->error();
         //     return redirect()->back();
         // }
+        
         $count = Modal::where("name",$request->name)->where('event_id',$id)->count();
         if($count > 0){
             flash("Same Modal Already Exist")->error();
@@ -46,11 +47,21 @@ class ModalController extends Controller
         } 
         $event_id = $id;
         $name = $request->name;
-        $modal = new Modal([
-            "name" => $name,
-            'event_id'=>$id,
-            // "bg_type" =>$request->bg_type,
-        ]);
+        if($request->type == 0){
+            $modal = new Modal([
+                "name" => $name,
+                'event_id'=>$id,
+                // "bg_type" =>$request->bg_type,
+            ]);
+        }
+        else{
+            $modal = new Modal([
+                "name" => $name,
+                'event_id'=>$id,
+                'embed_code'=>$request->code,
+                'embed_status'=>1
+            ]);
+        }
         $modal->save();
         // dd($modal->id);
         if($request->has("linknames")){
@@ -117,6 +128,14 @@ class ModalController extends Controller
         //     // "bg_type" =>$request->bg_type,
         // ]);
         $modal->name = $name;
+        if($request->type == 1){
+            $modal->embed_status = 1;
+            $modal->embed_code = $request->code;
+        }
+        else{
+            $modal->embed_status = 0;
+            $modal->embed_code = null;
+        }
         $modal->save();
         $modal->items()->delete();
         if($request->has("linknames")){

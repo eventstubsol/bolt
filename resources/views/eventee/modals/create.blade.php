@@ -38,7 +38,19 @@
                             @enderror
                         </div>
 
-                        <div class="card">
+                        <div class="form-group mb-3">
+                            <label for="name">Modal Type
+                                <span style="color:red">*</span>
+                            </label>
+                            <select name="type"  onchange="modalType(this)" class="form-control">
+                                <option value=0>List</option>
+                                <option value=1>Embeded Code</option>
+                            </select>
+                            
+                    
+                        </div>
+
+                        <div class="card list">
                             <div class="card-body">
                                 <h4 class="header-title mb-3">Modal Items
                                     <span style="color:red">*</span>
@@ -52,6 +64,27 @@
                                     <button class="btn btn-primary">Save</button>
                                     <button class="btn btn-primary" id="add-link">Add Item</button>
                                 </div>
+    
+                            </div>
+                        </div>
+
+                        <div class="card embed" style="display: none">
+                            <div class="card-body">
+                               
+                                <div class="embed-content">
+                                    <div class="form-group">
+                                        <label for="answer">Embeded Code
+                                            <span style="color:red">*</span>
+                                        </label>
+                                        <textarea  name="code"  id="summernote-basic" class="form-control @error('answer') is-invalid @enderror" cols="500" rows="1000" >{{ old('answer') }}</textarea>
+                                        @error('answer')
+                                                <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <button class="btn btn-primary">Save</button>
+                                </div>
+                                <br><br>
+    
     
                             </div>
                         </div>
@@ -70,12 +103,28 @@
 @include("includes.scripts.fileUploader")
 @include("includes.scripts.wyswyg")
 
+
 <script>
     let n=0;
 
     $(document).ready(function() {    
         $("#add-link").on("click", addlink);
     });
+
+
+    function modalType(e){
+        let val = e.value;
+        let lis = $('.list');
+        let embed = $('.embed');
+        if(val == 0){
+            lis.show();
+            embed.hide();
+        }
+        else{
+            lis.hide();
+            embed.show();
+        }
+    }
 
     function toggleVisibility(e){
         
