@@ -283,6 +283,7 @@ class AttendeeAuthController extends Controller
         $event = Event::where("slug",$subdomain)->first();
         $checkuser = User::where("email",$request->email)->where("event_id",$event->id)->get();
         if($checkuser->count()){
+            flash("User Already Exist")->error();
             return back()->with(["email"=>"Email Already Taken"]);
         }
         $user = new User($request->all());
@@ -296,7 +297,7 @@ class AttendeeAuthController extends Controller
             $userData->save();
         }
        if($event->active_option == 1){
-            flash("A Verification link is sent to your account, Please check your email an activate your account")->info();
+            flash("A Verification link is sent to your account, Please check your email and activate your account")->info();
             GenerateLinkAttendee($user,$subdomain);
             return redirect()->route('attendeeLogin',$subdomain);
        }
