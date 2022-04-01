@@ -81,7 +81,7 @@
                         <tr>
                             <th>#</th>
                             <th>Event Name</th>
-                            <th>Url</th>
+                            {{-- <th>Url</th> --}}
                             <th>Total Users</th>
                             <th>Start Date</th>
                             <th>End Date</th>
@@ -95,7 +95,7 @@
                             <tr>
                                 <td>{{ $key+1 }}</td>
                                 <td>{{ $event->name }}</td>
-                                <td id="copyTarget" style="cursor: pointer" data-id="{{ $event->link }}" ondblclick="openPage(this)" onclick="copyclip(this)" data-des="{{ $event->link }}">{{ Str::limit($event->link,50) }}</td>
+                                {{-- <td id="copyTarget" style="cursor: pointer" data-id="{{ $event->link }}" ondblclick="openPage(this)" onclick="copyclip(this)" data-des="{{ $event->link }}">{{ Str::limit($event->link,50) }}</td> --}}
                                 <td>{{ App\User::where("event_id",$event->id)->count() }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->start_date)->format('d-m-Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($event->end_date)->format('d-m-Y') }}</td>
@@ -110,6 +110,7 @@
                                     <a href="{{ route('event.Edit',['event_id'=>( $event->id )]) }}" class="btn btn-info" data-toggle="tooltip" title="Edit"><i class="fas fa-edit"></i></a>
                                     <a href="{{ route('event.Dashboard',['id'=>( $event->id )]) }}" class="btn btn-warning" data-toggle="tooltip" title="Manage"><i class="fas fa-tasks"></i></a>
                                     <button onclick="deleteEvent(this)" data-id="{{ $event->id }}" class="btn btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></button>
+                                    <button onclick="copyclip(this)" data-des="{{ $event->link }}" class="btn btn-primary" data-toggle="tooltip" title="Copy Link"><i class="fa fa-link"></i></button>
                                 </td>
                             </tr>
                             @endforeach
@@ -185,7 +186,7 @@
                             <span style="color:red">*</span>
                         </label>
                         <input type="datetime-local" name="end_date" min="{{ Carbon\Carbon::today()->format('Y-m-d\TH:i:s') }}" class="event_end form-control" id="event_end"required>
-                        <span id="erroshowEndDate"  style="color:red;display:none">Event end date and time cannot be before the start date and time</span>
+                        <span id="erroshowEndDate"  style="color:red;display:none">The event should be at least 30 mins long</span>
                         <span id="erroshowEnd"  style="color:red;display:none">Event Start Time and End Time Cannot Be The Same</span>
                     </div>
                 </div><br>
@@ -283,12 +284,14 @@
                     $('.successShow').hide();
                     $('.errorShow').show();
                     $('.errorShow').empty();
+                    $('#sameType').attr('disabled', true);
                     $('.errorShow').html(res.message);
                 }
                 else if(res.code == 202){
                     $('.successShow').hide();
                     $('.errorShow').show();
                     $('.errorShow').empty();
+                    $('#sameType').attr('disabled', true);
                     $('.errorShow').html(res.message);
                    
                 }

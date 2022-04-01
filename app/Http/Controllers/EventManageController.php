@@ -424,7 +424,7 @@ class EventManageController extends Controller
         if (strlen($event_name) < 5) {
             return response()->json(['code' => 203, 'message' => "Event Name Must Be Greater Than 3 Characters"]);
         }
-        $event = Event::where('slug', $event_name)->count();
+        $event = Event::where('slug', $event_name)->withTrashed()->count();
         if ($event > 0) {
             return response()->json(['code' => 202, 'message' => "Event Already Exists"]);
         } else {
