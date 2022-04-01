@@ -1,7 +1,16 @@
+@php
+$event = App\Event::findOrFail($id);
+
+$email = "";
+if(Auth::user()){
+    $email = Auth::user()->email;
+}
+@endphp
+
 @extends('layouts.auth')
 
 @section('title')
-Event Login
+{{ $event->name }}
 @endsection
 
 @section('title-text')
@@ -19,14 +28,7 @@ Hello there!
 @endsection
 
 @section('form')
-@php
-$event = App\Event::findOrFail($id);
 
-$email = "";
-if(Auth::user()){
-    $email = Auth::user()->email;
-}
-@endphp
 @section('styles')
 <style>
     #form .login-btn{
