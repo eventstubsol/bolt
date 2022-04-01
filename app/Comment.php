@@ -15,15 +15,18 @@ class Comment extends Model
     use SoftDeletes;
 
     protected $guarded = [];
-    public function post(){
+    public function post()
+    {
         return $this->belongsTo("\App\Post");
     }
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo("\App\User");
     }
-    public function getCreatedAtAttribute($value){
+    public function getCreatedAtAttribute($value)
+    {
         $tz = Event::findorfail($this->event_id)->timezone;
-        $time = (new Carbon($value,"UTC"))->setTimezone(new CarbonTimeZone($tz))->diffForHumans('UTC');
+        $time = (new Carbon($value, "UTC"))->setTimezone(new CarbonTimeZone($tz))->diffForHumans('UTC');
         return $time;
     }
 }

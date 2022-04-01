@@ -33,14 +33,15 @@
     .post_comments_cont{
         width: 100%;
         height: 72%;
-        border: 2px solid #89898991;
+        border: 2px solid #cceeff;
         border-radius: 10px;
     }
     .comments_inner_container{
         width: 100%;
         height: 83%;
+        max-height: 391px;
         overflow-y: scroll;  
-        border-bottom: 2px solid #89898991;
+        border-bottom: 2px solid #cceeff;
     }
     .comment_by_details .post_by_name{
         font-size: 16px;

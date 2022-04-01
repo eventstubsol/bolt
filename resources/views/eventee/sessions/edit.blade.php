@@ -14,7 +14,7 @@ Create Session
 
 
 @section("title")
-Create Update
+Edit Session
 @endsection
 
 @section("breadcrumbs")
@@ -200,6 +200,47 @@ Create Update
                         </div>
                     </div>
 
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title mb-3">Speakers</h4>
+                            <div class="speaker-section">
+                               @if($session->eventSpeaker()->count() > 0)
+                                    @foreach ($session->eventSpeaker()->get() as $speaker)
+                                        <div class="row">
+                                            <div class="image-uploader mb-3 col-md-4">
+                                            <input type="hidden" name="speakerurl[]" class="upload_input" value="{{ $speaker->url }}">
+                                            <input type="file" data-name="speakerurl" data-plugins="dropify" data-type="/" data-default-file="{{ assetUrl($speaker->url) }}"/>
+                                            </div>
+                                            <div class="form-group mb-3 col-md-8">
+                                            <label for="resourcetitles">Speker Name</label>
+                                            <select name="users[]" class="form-control">
+                                                
+                                                @foreach($users as $user)
+                                                    <option value="{{ $user->id }}" @if($speaker->user_id == $user->id) {{ 'selected' }}  @endif>{{ $user->name }} ({{ $user->email }})</option>
+                                                @endforeach
+                                            </select>
+                                                
+                                            </div>
+                                            <div class="form-group mb-3 col-md-8">
+                                                <label for="resourcetitles">Designation</label>
+                                                <input type="text"  id="resourcetitles" name="designation[]" class="form-control" value="{{ $speaker->designation }}">
+                                                
+                                            </div>
+                                            <button class="btn btn-danger remove-resource mt-2">Remove</button>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
+
+                            <div>
+                                <!-- <button class="btn btn-primary">Save</button> -->
+                                <button type="button" class="btn btn-primary" onclick="addSpeaker()">Add Speaker</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div>
                         <input class="sameType btn btn-primary" id="create_session" type="submit" value="Save" />
                     </div>
@@ -251,6 +292,35 @@ Create Update
         bindRemoveButton();
         initializeFileUploads();
     }
+
+    function addSpeaker(){
+            $(".speaker-section").append(`
+                <div class="row">
+                  <div class="image-uploader mb-3 col-md-4">
+                    <input type="hidden" name="speakerurl[]" class="upload_input">
+                    <input type="file" data-name="speakerurl" data-plugins="dropify" data-type="/" />
+                  </div>
+                  <div class="form-group mb-3 col-md-8">
+                    <label for="resourcetitles">Speker Name</label>
+                    <select name="users[]" class="form-control">
+                        
+                        @foreach($speakers as $speaker)
+                            <option value="{{ $speaker->id }}">{{ $speaker->name }} ({{ $speaker->email }})</option>
+                        @endforeach
+                    </select>
+                       
+                  </div>
+                  <div class="form-group mb-3 col-md-8">
+                      <label for="resourcetitles">Designation</label>
+                      <input type="text"  id="resourcetitles" name="designation[]" class="form-control" >
+                        
+                  </div>
+                  <button class="btn btn-danger remove-resource mt-2">Remove</button>
+                </div>
+          `);
+          bindRemoveButton();
+            initializeFileUploads();
+        }
     $(document).ready(function() {
         $("#add-resource").on("click", addresource);
         bindRemoveButton();

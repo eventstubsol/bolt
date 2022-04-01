@@ -54,14 +54,14 @@ class EventController extends Controller
 {
     public function index($event_name)
     {
-        
-        $event = Event::where("slug",$event_name)->first();
+
+        $event = Event::where("slug", $event_name)->first();
         $loader = Loader::findOrFail($event->def_loader);
         $event_id = $event->id;
-        $leaderboard =Leaderboard::where('event_id',$event_id)->first();
-        $chat_app = CometChat::where("event_id",$event->id)->first();
+        $leaderboard = Leaderboard::where('event_id', $event_id)->first();
+        $chat_app = CometChat::where("event_id", $event->id)->first();
         $posts = $event->posts()->with("comments")->get();
-        $booths = Booth::where("event_id",$event_id)->orderBy("name")->with([
+        $booths = Booth::where("event_id", $event_id)->orderBy("name")->with([
             "images",
             "videos",
             "resources",
@@ -74,28 +74,29 @@ class EventController extends Controller
             "boothurl",
             "vidbg_url"
         ]);
-        $tables = NetworkingTable::where("event_id",$event_id)->orderBy('seats', 'asc')->get();
-        $FAQs = FAQ::where("event_id",$event_id)->get();
+        $tables = NetworkingTable::where("event_id", $event_id)->orderBy('seats', 'asc')->get();
+        $FAQs = FAQ::where("event_id", $event_id)->get();
         $schedule = getSchedule($event_id);
+        // return $schedule;
         $user = Auth::user();
-        $pages = Page::where("event_id",$event_id)->with(["links.flyin","images"])->get();
-        $sessionrooms = sessionRooms::where("event_id",$event_id)->get()->groupBy("master_room");
-     
+        $pages = Page::where("event_id", $event_id)->with(["links.flyin", "images"])->get();
+        $sessionrooms = sessionRooms::where("event_id", $event_id)->get()->groupBy("master_room");
 
-        $access_specifiers = AccessSpecifiers::where("event_id",$event_id)->get()->groupBy("page_id");
-       
-        foreach($access_specifiers as $id=> $access ){
+
+        $access_specifiers = AccessSpecifiers::where("event_id", $event_id)->get()->groupBy("page_id");
+
+        foreach ($access_specifiers as $id => $access) {
             $arr = [];
-            foreach($access as $accessTo){
-                array_push($arr,$accessTo->user_type);
+            foreach ($access as $accessTo) {
+                array_push($arr, $accessTo->user_type);
             }
             $access_specifiers[$id] = $arr;
         }
 
 
         // dd($sessionroomids);
-        $sessions = EventSession::where("event_id",$event_id)->get()->load(["parentroom"]);
-        
+        $sessions = EventSession::where("event_id", $event_id)->get()->load(["parentroom"]);
+
         // $user->load("subscriptions");
         // dd($user);
         $subscriptions = [];
@@ -103,7 +104,7 @@ class EventController extends Controller
             $subscriptions[] = $subscription->session_id;
         }
         // dd($subscriptions);
-        $modals=Modal::where("event_id",$event_id)->get();
+        $modals = Modal::where("event_id", $event_id)->get();
         $modals->load(["items"]);
         // return ($modals);
         // $event_id = $id;
@@ -141,12 +142,12 @@ class EventController extends Controller
         $room = $request->get("room");
         $id = $request->get("id");
         $group = (object)[
-            "id"=>$room,
-            "name"=>ucfirst(str_replace("_"," ",$room))
+            "id" => $room,
+            "name" => ucfirst(str_replace("_", " ", $room))
         ];
-        $chat_app = CometChat::where("event_id",$id)->first();
-        if($chat_app){
-            createGroup($chat_app,$group);
+        $chat_app = CometChat::where("event_id", $id)->first();
+        if ($chat_app) {
+            createGroup($chat_app, $group);
         }
         // Http::withHeaders([
         //     "apiKey" => env("COMET_CHAT_API_KEY"),
@@ -158,80 +159,83 @@ class EventController extends Controller
         //         "name" =>  str_replace("Inc","Inc.",ucfirst(str_replace("_"," ",$room))) ,
         //         "type" => "public"
         //     ]);
-            return true;
+        return true;
     }
 
-    public function getIcons(){
+    public function getIcons()
+    {
         // $files = File::allFiles("./icons/");
         // dd($files);
     }
 
     public function integrations($id)
     {
-        $apis = Api::where("event_id",$id)->get();
+        $apis = Api::where("event_id", $id)->get();
         $envs = [];
-        foreach($apis as $api){
+        foreach ($apis as $api) {
             $envs[$api->variable] = $api->key;
         }
         // dd($envs);
-        return view("eventee.integrations.list")->with(compact("id","envs"));
+        return view("eventee.integrations.list")->with(compact("id", "envs"));
     }
     public function settings($id)
     {
-        $event = Event::where("id",$id)->first();
-        $loaders = Loader::where('event_id',0)->orWhere('event_id',$id)->get();
-        $pages = Page::where("event_id",$id)->get();
-        $session_rooms = sessionRooms::where("event_id",$id)->get();
-        return view("eventee.settings.default")->with(compact("id","pages","session_rooms","event",'loaders'));
+        $event = Event::where("id", $id)->first();
+        $loaders = Loader::where('event_id', 0)->orWhere('event_id', $id)->get();
+        $pages = Page::where("event_id", $id)->get();
+        $session_rooms = sessionRooms::where("event_id", $id)->get();
+        return view("eventee.settings.default")->with(compact("id", "pages", "session_rooms", "event", 'loaders'));
     }
-    public function settingsUpdate(Request $request,$id)
+    public function settingsUpdate(Request $request, $id)
     {
         // dd($request->all());
-        $event = Event::where("id",$id)->first();
-        if($request->tos){
+        $event = Event::where("id", $id)->first();
+        if ($request->tos) {
             $event->privacypolicy = $request->tos;
             $event->save();
-            return redirect(route("eventee.settings",$id));
+            return redirect(route("eventee.settings", $id));
         }
-     
+
         $type = "exterior";
         $page = "exterior";
-        switch($request->type){
+        switch ($request->type) {
             case "page":
-                $type="page";
-                $page="page/".$request->pages;
+                $type = "page";
+                $page = "page/" . $request->pages;
                 break;
             case "session_room":
-                $type="sessionroom";
-                $page="sessionroom/".$request->rooms;
+                $type = "sessionroom";
+                $page = "sessionroom/" . $request->rooms;
                 break;
-            case "lobby": 
-                $type="lobby";
-                $page="lobby";
-                break; 
-            case "exterior": 
-                $type="exterior";
-                $page="exterior";
-                break; 
+            case "lobby":
+                $type = "lobby";
+                $page = "lobby";
+                break;
+            case "exterior":
+                $type = "exterior";
+                $page = "exterior";
+                break;
         }
-        $event->home_page=$page;
-        $event->home_type=$type;
+        $event->home_page = $page;
+        $event->home_type = $type;
         $event->save();
-        return redirect(route("eventee.settings",$id));
+        return redirect(route("eventee.settings", $id));
     }
-    public function integrationsUpdate(Request $request,$id)
+    public function integrationsUpdate(Request $request, $id)
     {
         // if($request->RECAPTCHA_SITE_KEY || $request->RECAPTCHA_SECRET_KEY){
-            foreach($request->except("_token") as $var => $key){
-                Api::updateOrCreate([
-                            "variable"=> $var,
-                            "event_id"=>$id
-                        ],[
-                                "key"=>$key
-                            ]
-                        );
-            }
-            return redirect(route("eventee.integrations",$id));
+        foreach ($request->except("_token") as $var => $key) {
+            Api::updateOrCreate(
+                [
+                    "variable" => $var,
+                    "event_id" => $id
+                ],
+                [
+                    "key" => $key
+                ]
+            );
+        }
+        return redirect(route("eventee.integrations", $id));
         // dd($request->except("_token"));
     }
 
@@ -310,15 +314,16 @@ class EventController extends Controller
     /**
      * View for Admin Leaderboard
      */
-    public function leaderboardView(){
+    public function leaderboardView()
+    {
         return view("dashboard.reports.leader");
     }
 
-    public function leaderboard($subdomain,$id)
+    public function leaderboard($subdomain, $id)
     {
         // return $id;
         return User::orderBy("points", "desc")
-            ->where("event_id",$id)
+            ->where("event_id", $id)
             ->where("points", ">", 0)
             ->limit(env("LEADERBOARD_LIMIT", 50))
             ->get(["name", "points", "last_name"])
@@ -357,140 +362,137 @@ class EventController extends Controller
             "success" => true,
         ];
     }
-    public function saveTags(Request $request){
+    public function saveTags(Request $request)
+    {
         $data = $request->except("_token");
         $taglist =  $data["data"];
         $email = '';
-        foreach($taglist as $tags){
-             foreach ($tags as $index => $tag)
-            {
-                if($index==="email"){
-                   continue;
-                 }else{
+        foreach ($taglist as $tags) {
+            foreach ($tags as $index => $tag) {
+                if ($index === "email") {
+                    continue;
+                } else {
                     $email = $tags['email'];
-                    $user = User::where('email',$email)->first();
+                    $user = User::where('email', $email)->first();
                     // return ["success"=>true ,"index"=>$index];
-                    if(isset($user->id)){
-                        if(strpos($index,"*"))
-                        {
+                    if (isset($user->id)) {
+                        if (strpos($index, "*")) {
                             // $multipletags = explode(",", $tag);
-                            $multipletags = explode(",",$tag);
-                            foreach($multipletags as $innertag){
-                                if($innertag && $innertag !=="" && $innertag !==" "){
+                            $multipletags = explode(",", $tag);
+                            foreach ($multipletags as $innertag) {
+                                if ($innertag && $innertag !== "" && $innertag !== " ") {
 
-                                    $existingTag = UserTag::where("tag", "like", str_replace(".",",",$innertag))->first();
+                                    $existingTag = UserTag::where("tag", "like", str_replace(".", ",", $innertag))->first();
                                     if (!$existingTag) {
                                         $user->tags()->create([
-                                            "tag" =>  str_replace(".",",",$innertag),
-                                            "tag_group" => str_replace("*","",$index) 
-                                            ]);
+                                            "tag" =>  str_replace(".", ",", $innertag),
+                                            "tag_group" => str_replace("*", "", $index)
+                                        ]);
                                     } else {
-                                            if(!UserTagLinks::where([
+                                        if (!UserTagLinks::where([
+                                            'tag_id' => $existingTag->id,
+                                            'user_id' => $user->id
+                                        ])->first()) {
+                                            UserTagLinks::create([
                                                 'tag_id' => $existingTag->id,
                                                 'user_id' => $user->id
-                                                ])->first()){
-                                                UserTagLinks::create([
-                                                    'tag_id' => $existingTag->id,
-                                                    'user_id' => $user->id
-                                                    ]);
-                                            }
+                                            ]);
                                         }
+                                    }
                                 }
                             }
-                        }else{
-                            if($tag && $tag !=="" && $tag !==" "){
-                              
-                                    $existingTag = UserTag::where("tag", "like", str_replace(".",",",$tag))->first();
-                                    if (!$existingTag) {
-                                        $user->tags()->create([
-                                            "tag" =>  str_replace(".",",",$tag),
-                                            "tag_group" => str_replace("*","",$index) 
-                                            ]);
-                                    } else {
-                                            if(!UserTagLinks::where([
-                                                'tag_id' => $existingTag->id,
-                                                'user_id' => $user->id
-                                                ])->first()){
-                                                UserTagLinks::create([
-                                                    'tag_id' => $existingTag->id,
-                                                    'user_id' => $user->id
-                                                    ]);
-                                            }
-                                        }
+                        } else {
+                            if ($tag && $tag !== "" && $tag !== " ") {
+
+                                $existingTag = UserTag::where("tag", "like", str_replace(".", ",", $tag))->first();
+                                if (!$existingTag) {
+                                    $user->tags()->create([
+                                        "tag" =>  str_replace(".", ",", $tag),
+                                        "tag_group" => str_replace("*", "", $index)
+                                    ]);
+                                } else {
+                                    if (!UserTagLinks::where([
+                                        'tag_id' => $existingTag->id,
+                                        'user_id' => $user->id
+                                    ])->first()) {
+                                        UserTagLinks::create([
+                                            'tag_id' => $existingTag->id,
+                                            'user_id' => $user->id
+                                        ]);
+                                    }
                                 }
+                            }
                         }
                     }
                 }
             }
         }
-        return ['success'=> True ];
+        return ['success' => True];
     }
-    public function saveLookingfor(Request $request){
+    public function saveLookingfor(Request $request)
+    {
         $data = $request->except("_token");
         $taglist =  $data["data"];
         $email = '';
-        foreach($taglist as $tags){
-             foreach ($tags as $index => $tag)
-            {
-                if($index==="email"){
-                   continue;
-                 }else{
+        foreach ($taglist as $tags) {
+            foreach ($tags as $index => $tag) {
+                if ($index === "email") {
+                    continue;
+                } else {
                     $email = $tags['email'];
-                    $user = User::where('email',$email)->first();
-                    if($tag && $tag !=="" && $tag !==" "){
+                    $user = User::where('email', $email)->first();
+                    if ($tag && $tag !== "" && $tag !== " ") {
 
-                    // return ["success"=>true ,"index"=>$index];
-                        if(isset($user->id)){
-                            if(strpos($index,"*"))
-                            {
+                        // return ["success"=>true ,"index"=>$index];
+                        if (isset($user->id)) {
+                            if (strpos($index, "*")) {
                                 // $multipletags = explode(",", $tag);
-                                $multipletags = explode(",",$tag);
-                                foreach($multipletags as $innertag){
-                                    $existingTag = UserTag::where("tag", "like", str_replace(".",",",$innertag))->first();
-                                       if (!$existingTag) {
-                                            $user->looking_for_tags()->create([
-                                                "tag" =>  str_replace(".",",",$innertag),
-                                                "tag_group" => str_replace("*","",$index) 
-                                                ]);
-                                        } else {
-                                                if(!UserLookingTagLinks::where([
-                                                    'tag_id' => $existingTag->id,
-                                                    'user_id' => $user->id
-                                                    ])->first()){
-                                                    UserLookingTagLinks::create([
-                                                        'tag_id' => $existingTag->id,
-                                                        'user_id' => $user->id
-                                                        ]);
-                                                }
-                                            }
-                                }
-                            }else{
-                                $existingTag = UserTag::where("tag", "like", $tag)->first();
-                                  $existingTag = UserTag::where("tag", "like", str_replace(".",",",$tag))->first();
+                                $multipletags = explode(",", $tag);
+                                foreach ($multipletags as $innertag) {
+                                    $existingTag = UserTag::where("tag", "like", str_replace(".", ",", $innertag))->first();
                                     if (!$existingTag) {
                                         $user->looking_for_tags()->create([
-                                            "tag" =>  str_replace(".",",",$tag),
-                                            "tag_group" => str_replace("*","",$index) 
-                                            ]);
+                                            "tag" =>  str_replace(".", ",", $innertag),
+                                            "tag_group" => str_replace("*", "", $index)
+                                        ]);
                                     } else {
-                                            if(!UserLookingTagLinks::where([
+                                        if (!UserLookingTagLinks::where([
+                                            'tag_id' => $existingTag->id,
+                                            'user_id' => $user->id
+                                        ])->first()) {
+                                            UserLookingTagLinks::create([
                                                 'tag_id' => $existingTag->id,
                                                 'user_id' => $user->id
-                                                ])->first()){
-                                                UserLookingTagLinks::create([
-                                                    'tag_id' => $existingTag->id,
-                                                    'user_id' => $user->id
-                                                    ]);
-                                            }
+                                            ]);
                                         }
-                            }  
+                                    }
+                                }
+                            } else {
+                                $existingTag = UserTag::where("tag", "like", $tag)->first();
+                                $existingTag = UserTag::where("tag", "like", str_replace(".", ",", $tag))->first();
+                                if (!$existingTag) {
+                                    $user->looking_for_tags()->create([
+                                        "tag" =>  str_replace(".", ",", $tag),
+                                        "tag_group" => str_replace("*", "", $index)
+                                    ]);
+                                } else {
+                                    if (!UserLookingTagLinks::where([
+                                        'tag_id' => $existingTag->id,
+                                        'user_id' => $user->id
+                                    ])->first()) {
+                                        UserLookingTagLinks::create([
+                                            'tag_id' => $existingTag->id,
+                                            'user_id' => $user->id
+                                        ]);
+                                    }
+                                }
+                            }
                         }
                     }
-
                 }
             }
         }
-        return ['success'=> True ];
+        return ['success' => True];
     }
 
 
@@ -498,8 +500,8 @@ class EventController extends Controller
     {
         $currentUser = Auth::user();
         $currentUser->update($request->except(["email", "tags"]));
-        $chat_app = CometChat::where("event_id",$currentUser->event_id)->first();
-        updateChatProfile($chat_app,$currentUser);
+        $chat_app = CometChat::where("event_id", $currentUser->event_id)->first();
+        updateChatProfile($chat_app, $currentUser);
         $tags = $request->get("tags", false);
         $looking_for_tags = $request->get("looking_for_tags", false);
         $interests = $request->get("interests", false);
@@ -568,15 +570,15 @@ class EventController extends Controller
                 //     isset(SCAVENGER_HUNT[$page][$index]['name']) &&
                 //     SCAVENGER_HUNT[$page][$index]['name'] == $name
                 // ) {
-                    //Verified item, now saving to database
-                    $pointsDetails["points"] = SCAVENGER_HUNT_POINTS;
-                    $pointsDetails["details"] = $page . "|" . $index . "|" . $name;
-                    if (!Points::where($pointsDetails)->count()) {
-                        Points::create($pointsDetails);
-                        User::where("id", $userId)->update([
-                            "points" => DB::raw('points+' . $pointsDetails["points"]),
-                        ]);
-                    }
+                //Verified item, now saving to database
+                $pointsDetails["points"] = SCAVENGER_HUNT_POINTS;
+                $pointsDetails["details"] = $page . "|" . $index . "|" . $name;
+                if (!Points::where($pointsDetails)->count()) {
+                    Points::create($pointsDetails);
+                    User::where("id", $userId)->update([
+                        "points" => DB::raw('points+' . $pointsDetails["points"]),
+                    ]);
+                }
                 // }
                 break;
 
@@ -740,7 +742,7 @@ class EventController extends Controller
             }
         }
         // dd($resources);
-        Mail::to($user->email)->send(new swagbagMail($event,$resources,$user));
+        Mail::to($user->email)->send(new swagbagMail($event, $resources, $user));
 
         return ["success" => TRUE];
     }
@@ -761,45 +763,44 @@ class EventController extends Controller
             //room name
             $type = $request->get("type", EVENT_ROOM_AUDI);
             $event_id = $request->get("event_id");
-            
+
             //Fetch Current Session
             $session = $this->getCurrentRunningSession($type);
-           
-            
+
+
             if (!$session) {
                 //No Session Going On 
                 return view("event.noSession");
             }
 
-         
-            if($session->type === "VIDEO_SDK"){
+
+            if ($session->type === "VIDEO_SDK") {
                 // dd($session);
-                return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id,"containerId"=>$type]));
+                return redirect(route("videosdk", ["meetingId" => $session->zoom_webinar_id, "containerId" => $type]));
             }
 
             //Direct Zoom Redirect
-            if($session->type == "ZOOM_EXTERNAL" && strlen($session->zoom_url)){
+            if ($session->type == "ZOOM_EXTERNAL" && strlen($session->zoom_url)) {
                 return redirect($session->zoom_url);
             }
-            if($session->type == "VIMEO_ZOOM_EX" && strlen($session->zoom_url)){
-                if($user->type === USER_TYPE_DELEGATE)
-                {
+            if ($session->type == "VIMEO_ZOOM_EX" && strlen($session->zoom_url)) {
+                if ($user->type === USER_TYPE_DELEGATE) {
                     return redirect($session->zoom_url);
                 }
             }
-    
+
             //Setup for normal days
             //To make it visible only for delegates add && $user->type === USER_TYPE_DELEGATE
-            if ($session->type == "ZOOM_SDK" && strlen($session->zoom_webinar_id)) { 
+            if ($session->type == "ZOOM_SDK" && strlen($session->zoom_webinar_id)) {
                 return redirect(route("webinar", getZoomParameters($session->zoom_webinar_id, $session->zoom_password && strlen($session->zoom_password) ? $session->zoom_password : "")));
             }
 
-            if ($session->type == "VIMEO_VIDEO_SDK" && strlen($session->zoom_webinar_id)) { 
-                if($user->type === USER_TYPE_DELEGATE)
-                    return redirect(route("videosdk",["meetingId"=>$session->zoom_webinar_id,"containerId"=>$type]));
+            if ($session->type == "VIMEO_VIDEO_SDK" && strlen($session->zoom_webinar_id)) {
+                if ($user->type === USER_TYPE_DELEGATE)
+                    return redirect(route("videosdk", ["meetingId" => $session->zoom_webinar_id, "containerId" => $type]));
             }
-            if ($session->type == "VIMEO_ZOOM_SDK" && strlen($session->zoom_webinar_id)) { 
-                if($user->type === USER_TYPE_DELEGATE)
+            if ($session->type == "VIMEO_ZOOM_SDK" && strlen($session->zoom_webinar_id)) {
+                if ($user->type === USER_TYPE_DELEGATE)
                     return redirect(route("webinar", getZoomParameters($session->zoom_webinar_id, $session->zoom_password && strlen($session->zoom_password) ? $session->zoom_password : "")));
             }
             //Get Vimeo Video ID
@@ -837,11 +838,11 @@ class EventController extends Controller
     {
         return view("event.webinar");
     }
-    
-    public function videosdk(Request $request,$meetingId,$containerId)
+
+    public function videosdk(Request $request, $meetingId, $containerId)
     {
         // dd($meetingId);
-        return view("event.videosdk")->with(compact(["meetingId","containerId"]));
+        return view("event.videosdk")->with(compact(["meetingId", "containerId"]));
     }
 
 
@@ -862,7 +863,7 @@ class EventController extends Controller
     private function getCurrentRunningSession($room)
     {
         $user = Auth::user();
-        $session = getCurrentSession(strtoupper($room),$user->event_id);
+        $session = getCurrentSession(strtoupper($room), $user->event_id);
         if ($session && $session->id) {
             return $session;
         }
@@ -885,7 +886,7 @@ class EventController extends Controller
 
     public function getBoothDetails(Booth $booth)
     {
-        return [$booth->description,$booth->description_two];
+        return [$booth->description, $booth->description_two];
     }
 
     public function getDelegatesList()
@@ -943,26 +944,26 @@ class EventController extends Controller
         return ["success" => true];
     }
 
-    public function landingPage($subdomain){
-        $event = Event::where('slug',$subdomain)->first();
-        if($landing = LandingPage::where('event_id',$event->id)->count() < 1){
+    public function landingPage($subdomain)
+    {
+        $event = Event::where('slug', $subdomain)->first();
+        if ($landing = LandingPage::where('event_id', $event->id)->count() < 1) {
             LandPage($event->id);
         }
-        $landing = LandingPage::where('event_id',$event->id)->first();
-        $speakers = LandingSpeaker::where('page_id',$landing->id)->get();
-        $form = Form::where('event_id',$event->id)->where('user_type','attendee')->first();
+        $landing = LandingPage::where('event_id', $event->id)->first();
+        $speakers = LandingSpeaker::where('page_id', $landing->id)->get();
+        $form = Form::where('event_id', $event->id)->where('user_type', 'attendee')->first();
         $schedule =  getSchedule($event->id);
-        $sections = Section::where('landing_id',$landing->id)->get()->load("images");
+        $sections = Section::where('landing_id', $landing->id)->get()->load("images");
         // dd($landing->cta);
-      
+
         // return ($event);
-        if(isset($form)){
+        if (isset($form)) {
             $form->load("fields.formStruct");
-            return view("landing.index",compact(['event','landing','speakers','form','schedule',"sections"]));
-        }
-        else{
+            return view("landing.index", compact(['event', 'landing', 'speakers', 'form', 'schedule', "sections"]));
+        } else {
             $form = null;
-            return view("landing.index",compact(['event','landing','speakers','form','schedule',"sections"]));
+            return view("landing.index", compact(['event', 'landing', 'speakers', 'form', 'schedule', "sections"]));
         }
     }
     public function sendSessionNotifications()
@@ -1001,29 +1002,33 @@ class EventController extends Controller
         return $sent;
     }
 
-    public function generalReports(){
+    public function generalReports()
+    {
         return view("dashboard.reports.general");
     }
-    public function loginReports($id){
+    public function loginReports($id)
+    {
         return view("dashboard.reports.login")->with(compact(['id']));
     }
 
-    public function generalReportsData($id){
-        $loginIdList = \App\LoginLog::where("event_id",$id)->orderBy("created_at", "DESC")->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("user_id")->get(["user_id", "created_at"]);
+    public function generalReportsData($id)
+    {
+        $loginIdList = \App\LoginLog::where("event_id", $id)->orderBy("created_at", "DESC")->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("user_id")->get(["user_id", "created_at"]);
         $ids = [];
-        foreach ($loginIdList as $loginLog){
+        foreach ($loginIdList as $loginLog) {
             $ids[] = $loginLog->user_id;
         }
-        $lastLoginList = \App\User::whereIn("id",$ids)->limit(50)->get(["name", "email"]);
+        $lastLoginList = \App\User::whereIn("id", $ids)->limit(50)->get(["name", "email"]);
         return [
-            'login_total' => \App\LoginLog::where("event_id",$id)->distinct("user_id")->count(),
-            'login_last_1h' => \App\LoginLog::where("event_id",$id)->where("created_at", ">=", Carbon::now("UTC")->subtract("hour", 1))->distinct("user_id")->count(),
-            'unique_login_count' => \App\LoginLog::where("event_id",$id)->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("user_id")->count(),
+            'login_total' => \App\LoginLog::where("event_id", $id)->distinct("user_id")->count(),
+            'login_last_1h' => \App\LoginLog::where("event_id", $id)->where("created_at", ">=", Carbon::now("UTC")->subtract("hour", 1))->distinct("user_id")->count(),
+            'unique_login_count' => \App\LoginLog::where("event_id", $id)->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("user_id")->count(),
             'last_login_list' => $lastLoginList,
         ];
     }
 
-    public function auditoriumReports(){
+    public function auditoriumReports()
+    {
         $apiRoute = route("reports.auditorium.api");
         $logsRoute = route("reports.export.audiLogs");
         $logName = "Auditorium ";
@@ -1033,9 +1038,10 @@ class EventController extends Controller
             'logName',
         ]));
     }
-    public function workshopReports($name){
+    public function workshopReports($name)
+    {
         $apiRoute = route("reports.workshop.api", ['name' => $name]);
-        $logsRoute = route("reports.export.workshopLogs",['name' => $name]);
+        $logsRoute = route("reports.export.workshopLogs", ['name' => $name]);
         $logName = $name;
         return view("dashboard.reports.auditorium")->with(compact([
             'apiRoute',
@@ -1044,10 +1050,11 @@ class EventController extends Controller
         ]));
     }
 
-    public function boothReports(Booth $id,$event_id, Request $req){
-        $req->session()->put('MangeEvent',1);
+    public function boothReports(Booth $id, $event_id, Request $req)
+    {
+        $req->session()->put('MangeEvent', 1);
         $apiRoute = route("reports.booth.api", ['id' => $id->id]);
-        $logsRoute = route("reports.export.boothLogs",['id' => $id->id]);
+        $logsRoute = route("reports.export.boothLogs", ['id' => $id->id]);
         $logName = $id->name;
         $id = $event_id;
         return view("dashboard.reports.auditorium")->with(compact([
@@ -1058,14 +1065,15 @@ class EventController extends Controller
         ]));
     }
 
-    public function auditoriumReportsData(){
+    public function auditoriumReportsData()
+    {
         $eventName = "audi_visit";
         $loginIdList = \App\Points::where("points_for", $eventName)->orderBy("created_at", "DESC")->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("points_to")->get(["points_to", "created_at"]);
         $ids = [];
-        foreach ($loginIdList as $loginLog){
+        foreach ($loginIdList as $loginLog) {
             $ids[] = $loginLog->points_to;
         }
-        $lastLoginList = \App\User::whereIn("id",$ids)->limit(50)->get(["name", "email"]);
+        $lastLoginList = \App\User::whereIn("id", $ids)->limit(50)->get(["name", "email"]);
         return [
             'login_total' => \App\Points::where("points_for", $eventName)->distinct("points_to")->count(),
             'login_last_1h' => \App\Points::where("points_for", $eventName)->where("created_at", ">=", Carbon::now("UTC")->subtract("hour", 1))->distinct("points_to")->count(),
@@ -1073,14 +1081,15 @@ class EventController extends Controller
             'last_login_list' => $lastLoginList,
         ];
     }
-    public function workshopReportsData($name){
-        $eventName = $name."_visit";
+    public function workshopReportsData($name)
+    {
+        $eventName = $name . "_visit";
         $loginIdList = \App\Points::where("points_for", $eventName)->orderBy("created_at", "DESC")->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("points_to")->get(["points_to", "created_at"]);
         $ids = [];
-        foreach ($loginIdList as $loginLog){
+        foreach ($loginIdList as $loginLog) {
             $ids[] = $loginLog->points_to;
         }
-        $lastLoginList = \App\User::whereIn("id",$ids)->limit(50)->get(["name", "email"]);
+        $lastLoginList = \App\User::whereIn("id", $ids)->limit(50)->get(["name", "email"]);
         return [
             'login_total' => \App\Points::where("points_for", $eventName)->distinct("points_to")->count(),
             'login_last_1h' => \App\Points::where("points_for", $eventName)->where("created_at", ">=", Carbon::now("UTC")->subtract("hour", 1))->distinct("points_to")->count(),
@@ -1088,14 +1097,15 @@ class EventController extends Controller
             'last_login_list' => $lastLoginList,
         ];
     }
-    public function boothReportsData($id){
+    public function boothReportsData($id)
+    {
         $eventName = "boothVisit";
         $loginIdList = \App\Points::where("points_for", $eventName)->where("details", $id)->orderBy("created_at", "DESC")->where("created_at", ">=", Carbon::now("UTC")->startOf("day"))->distinct("points_to")->get(["points_to", "created_at"]);
         $ids = [];
-        foreach ($loginIdList as $loginLog){
+        foreach ($loginIdList as $loginLog) {
             $ids[] = $loginLog->points_to;
         }
-        $lastLoginList = \App\User::whereIn("id",$ids)->limit(50)->get(["name", "email"]);
+        $lastLoginList = \App\User::whereIn("id", $ids)->limit(50)->get(["name", "email"]);
         return [
             'login_total' => \App\Points::where("points_for", $eventName)->where("details", $id)->distinct("points_to")->count(),
             'login_last_1h' => \App\Points::where("points_for", $eventName)->where("details", $id)->where("created_at", ">=", Carbon::now("UTC")->subtract("hour", 1))->distinct("points_to")->count(),
@@ -1104,19 +1114,20 @@ class EventController extends Controller
         ];
     }
 
-    public function exportLoginLogs($id){
-        $log = LoginLog::where("event_id",$id)->orderBy("created_at", "DESC")->distinct("user_id")->with("user")->get([
+    public function exportLoginLogs($id)
+    {
+        $log = LoginLog::where("event_id", $id)->orderBy("created_at", "DESC")->distinct("user_id")->with("user")->get([
             "user_id",
             "created_at",
         ]);
         $toSend = [];
         $uniqIds = [];
-        foreach ($log as $item){
-            if(!in_array($item->user_id,$uniqIds)){
+        foreach ($log as $item) {
+            if (!in_array($item->user_id, $uniqIds)) {
                 $uniqIds[] = $item->user_id;
-                if($item->user){
+                if ($item->user) {
                     $u = $item->user->toArray();
-                    array_push($u,$item->created_at->format('j M Y H:i:s A'));
+                    array_push($u, $item->created_at->format('j M Y H:i:s A'));
                     unset($u['id']);
                     $toSend[] = $u;
                 }
@@ -1125,11 +1136,12 @@ class EventController extends Controller
         return $toSend;
     }
 
-    public function exportAuditoriumLogs(){
+    public function exportAuditoriumLogs()
+    {
         $loginIdList = \App\Points::where("points_for", "audi_visit")->orderBy("created_at", "DESC")->distinct("points_to")->with("User")->get();
         $ids = [];
-        foreach ($loginIdList as $loginLog){
-            if($loginLog->user){
+        foreach ($loginIdList as $loginLog) {
+            if ($loginLog->user) {
                 $ids[] = [
                     "Email" => $loginLog->user->email,
                     "Name" => $loginLog->user->name,
@@ -1141,12 +1153,13 @@ class EventController extends Controller
         return $ids;
     }
 
-    public function exportWorkshopLogs($name){
-        $eventName = $name."_visit";
+    public function exportWorkshopLogs($name)
+    {
+        $eventName = $name . "_visit";
         $loginIdList = \App\Points::where("points_for", $eventName)->orderBy("created_at", "DESC")->distinct("points_to")->with("User")->get();
         $ids = [];
-        foreach ($loginIdList as $loginLog){
-            if($loginLog->user){
+        foreach ($loginIdList as $loginLog) {
+            if ($loginLog->user) {
                 $ids[] = [
                     "Email" => $loginLog->user->email,
                     "Name" => $loginLog->user->name,
@@ -1158,12 +1171,13 @@ class EventController extends Controller
         return $ids;
     }
 
-    public function exportBoothLogs($id){
+    public function exportBoothLogs($id)
+    {
         $eventName = "boothVisit";
         $loginIdList = \App\Points::where("points_for", $eventName)->where("details", $id)->orderBy("created_at", "DESC")->distinct("points_to")->with("User")->get();
         $ids = [];
-        foreach ($loginIdList as $loginLog){
-            if($loginLog->user){
+        foreach ($loginIdList as $loginLog) {
+            if ($loginLog->user) {
                 $ids[] = [
                     "Email" => $loginLog->user->email,
                     "Name" => $loginLog->user->name,
@@ -1177,32 +1191,31 @@ class EventController extends Controller
         return $ids;
     }
 
-    public function settingsColorUpdate($id,Request $req){
+    public function settingsColorUpdate($id, Request $req)
+    {
         $event = Event::findOrFail($id);
         $event->primary_color = $req->primary_color;
         $event->secondary_color = $req->secondary_color;
-        if($event->save()){
+        if ($event->save()) {
             flash("Color Save Successfully")->success();
             return redirect()->back();
-        }
-        else{
+        } else {
             flash("Couldnot Save The Color Try Again")->error();
             return redirect()->back();
         }
     }
 
 
-    public function LoaderUpdate(Request $req){
+    public function LoaderUpdate(Request $req)
+    {
         $loader = $req->loader_id;
         $id = $req->event_id;
         $event = Event::findOrFail($id);
         $event->def_loader = $loader;
-        if($event->save()){
-            return response()->json(['code'=>200,'message'=>"Loader Changed Successfully"]);
+        if ($event->save()) {
+            return response()->json(['code' => 200, 'message' => "Loader Changed Successfully"]);
+        } else {
+            return response()->json(['code' => 500, 'message' => "Something Went Wrong"]);
         }
-        else{
-            return response()->json(['code'=>500,'message'=>"Something Went Wrong"]);
-        }
-        
     }
 }

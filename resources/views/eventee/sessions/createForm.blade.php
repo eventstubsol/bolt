@@ -195,6 +195,21 @@
                             </div>
                         </div>
 
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title mb-3">Speakers</h4>
+                                <div class="speaker-section">
+
+                                </div>
+
+                                <div>
+                                    <!-- <button class="btn btn-primary">Save</button> -->
+                                    <button type="button" class="btn btn-primary" onclick="addSpeaker()">Add Speaker</button>
+
+                                </div>
+                            </div>
+                        </div>
+
                         <div>
                             <input class="btn btn-primary sameType" type="submit" id="create_session" value="Create" />
                         </div>
@@ -204,6 +219,7 @@
         </div>
     </div>
 @endsection
+
 
 @section('scripts')
     @include("includes.scripts.select")
@@ -242,6 +258,35 @@
                 </div>
           `);
             bindRemoveButton();
+            initializeFileUploads();
+        }
+
+        function addSpeaker(){
+            $(".speaker-section").append(`
+                <div class="row">
+                  <div class="image-uploader mb-3 col-md-4">
+                    <input type="hidden" name="speakerurl[]" class="upload_input">
+                    <input type="file" data-name="speakerurl" data-plugins="dropify" data-type="/" />
+                  </div>
+                  <div class="form-group mb-3 col-md-8">
+                    <label for="resourcetitles">Speker Name</label>
+                    <select name="users[]" class="form-control">
+                        
+                        @foreach($speakers as $speaker)
+                            <option value="{{ $speaker->id }}">{{ $speaker->name }} ({{ $speaker->email }})</option>
+                        @endforeach
+                    </select>
+                       
+                  </div>
+                  <div class="form-group mb-3 col-md-8">
+                      <label for="resourcetitles">Designation</label>
+                      <input type="text"  id="resourcetitles" name="designation[]" class="form-control" >
+                        
+                  </div>
+                  <button class="btn btn-danger remove-resource mt-2">Remove</button>
+                </div>
+          `);
+          bindRemoveButton();
             initializeFileUploads();
         }
         $(document).ready(function() {
