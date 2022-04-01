@@ -133,7 +133,7 @@ class EventSession extends Model
     }
 
     public function eventSpeaker(){
-        return $this->hasMany('App\EventSpeaker');
+        return $this->hasMany('App\EventSpeaker','session_id');
     }
 
 

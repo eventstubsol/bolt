@@ -25,6 +25,8 @@ use App\Http\Requests\SessionFormRequest;
 use Carbon\CarbonTimeZone;
 use DateTime;
 use DateTimeZone;
+use App\EventSpeaker;
+
 
 class SessionController extends Controller
 {
@@ -131,11 +133,24 @@ class SessionController extends Controller
         if($request->has("meetingId") && $request->meetingId){
             $session->zoom_webinar_id = $request->meetingId;
             $session->save();
-
         }
         // $session->room = $room->name;
         // $session->master_room = $room->master_room;
         // $session->event_id = $event_id;
+
+        if($request->has('speakerurl')){
+            
+            for($i=0; $i<count($request->speakerurl);$i++){
+                $speaks = new EventSpeaker;
+                $speaks->user_id = $request->users[$i];
+                $speaks->session_id = $session->id;
+                $speaks->url= $request->speakerurl[$i];
+                $speaks->designation = $request->designation[$i];
+                $speaks->save();
+            }
+
+
+        }
 
         //Old Resoiu
         $oldResources = Resource::where("booth_id", $session->id)->get();
@@ -221,8 +236,9 @@ class SessionController extends Controller
             "name",
             "email"
         ]);
+        $users = $speakers;
 
-        return view('eventee.sessions.edit')->with(compact(["session", "rooms", "speakers","id"]));
+        return view('eventee.sessions.edit')->with(compact(["session", "rooms", "speakers","id",'users']));
     }
 
 
