@@ -318,6 +318,7 @@ Edit Session
                   <button class="btn btn-danger remove-resource mt-2">Remove</button>
                 </div>
           `);
+          bindRemoveButton();
             initializeFileUploads();
         }
     $(document).ready(function() {

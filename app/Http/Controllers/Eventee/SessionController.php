@@ -231,7 +231,7 @@ class SessionController extends Controller
 
 
         $rooms = sessionRooms::where('event_id',$id)->get();
-        $speakers = User::where("type", USER_TYPE_SPEAKER)->get([
+        $speakers = User::where("type", USER_TYPE_SPEAKER)->where('event_id',$id)->get([
             "id",
             "name",
             "email"
@@ -293,6 +293,20 @@ class SessionController extends Controller
                     "speaker_id" => $speaker,
                 ]);
             }
+        }
+
+        if($request->has('speakerurl')){
+            $session->eventSpeaker()->delete();
+            for($i=0; $i<count($request->speakerurl);$i++){
+                $speaks = new EventSpeaker;
+                $speaks->user_id = $request->users[$i];
+                $speaks->session_id = $session->id;
+                $speaks->url= $request->speakerurl[$i];
+                $speaks->designation = $request->designation[$i];
+                $speaks->save();
+            }
+
+
         }
         return redirect()->to(route("eventee.sessions.index",['id'=>$event_id]));
     }
