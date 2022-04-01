@@ -43,9 +43,9 @@
                                     @if($type==="session_room" || $type==="page" || $type==="booth")
                                         <a data-link="{{$to}}"  class="area shubh btn theme-btn primary"> {{ $item->button_text}} </a>
                                     @elseif($type==="pdf")
-                                        <a class="btn theme-btn primary  mr-2 _df_button" source="{{assetUrl($to)}}"> {{ $item->button_text}} </a>
+                                        <a class="btn theme-btn primary   _df_button" source="{{assetUrl($to)}}"> {{ $item->button_text}} </a>
                                     @elseif($type==="vimeo")
-                                        <a class="btn video-play theme-btn primary  mr-2 " href="{{$to}}"> {{ $item->button_text}} </a>
+                                        <a class="btn video-play theme-btn primary   " href="{{$to}}"> {{ $item->button_text}} </a>
                                     @endif
                                     {{-- <button class="btn primary-filled theme-btn text-white add-to-bag add" data-resource="{{ $resource->id }}" type="button" name="button"> + SwagBag</button> --}}
                                     {{-- <button class="btn danger theme-btn has-icon delete add-to-bag remove hidden" data-resource="{{ $resource->id }}" type="button" name="button"> SwagBag</button> --}}

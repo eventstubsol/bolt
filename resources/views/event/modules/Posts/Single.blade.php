@@ -165,7 +165,14 @@
                             </div>
                         
                         </div>
-                        <div class="post_image">
+                        <div class="post_image position-relative">
+                            @if($post->vimeo_link)
+                                <a class="video-play positioned  fill" href="{{ $post->vimeo_link }}">
+                                    <div class="d-flex  positioned h-100 w-100">
+                                        <i class="mdi mdi-play-circle" style="z-index: 2;font-size: 3vw; margin: auto;"></i>
+                                    </div>
+                                </a>
+                            @endif 
                             <img src="{{assetUrl($post->image_url)}}" width="100%" alt="">
                         </div>
                         <div class="post_details">
@@ -201,7 +208,7 @@
                                         {{-- <h3 class="vote" >Vote</h3> --}}
                                         
                                         <div class="ups">
-                                            <img data-id="{{ $post->id }}" class="voting up_{{ $post->id }} " data-toggle="tooltip" title="Up Vote" data-action="upvote" src="https://freepikpsd.com/file/2019/10/up-icon-png-7-Transparent-Images.png" width="30" alt="">
+                                            <img data-id="{{ $post->id }}" class="voting up_{{ $post->id }} " data-toggle="tooltip" title="Up Vote" data-action="upvote" src="https://freepikpsd.com/file/2019/10/up-icon-png-7-Transparent-Images.png" width="30" alt="">    
                                             <span class="mainups">
                                                 {{ $upvotes. ' Upvotes' }}
                                             </span>

@@ -689,7 +689,7 @@ table.dataTable tbody tr {
 
 .menu-custom .menu li a {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     flex-direction: column;
     color: #111a34;
     align-items: center;

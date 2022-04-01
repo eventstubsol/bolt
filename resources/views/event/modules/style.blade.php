@@ -525,7 +525,7 @@
 
 
         .custom-dropdown-menu a:not(:last-child){
-            border-bottom: 1px solid  {{ $event->primary_color }} !important;
+            border-bottom: 1px solid  {{ $event->primary_color }}21 !important;
         }
 
         /* .df-ui-btn.df-ui-next.ti-angle-right {

@@ -42,7 +42,7 @@
                         @enderror
                     </div>
                     <div class="form-group mb-3">
-                        <label for="message">Body
+                        <label for="message">Description
                             <span style="color:red">*</span>
                         </label>
                         <textarea  id="summernote-basic" required name="body" class="form-control @error('message') is-invalid @enderror" maxlength="255">{{ $post->body }}</textarea>
