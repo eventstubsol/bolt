@@ -12,6 +12,7 @@
     {{-- <link href={{ asset('assets/libs/select2/css/select2.min.css') }} rel="stylesheet" type="text/css" /> --}}
     <link rel="stylesheet" href="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
+    <link rel="stylesheet" href="https://onesignal.github.io/emoji-picker/lib/css/emoji.css">
     @include("event.modules.style")
  
     {{-- Notification Modal --}}
@@ -360,6 +361,10 @@
     <script src="{{ asset('/js/profile/index.js') }}?cb=2187236762899"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=2187236762899"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=2187236762899"></script>
+    <script src="https://onesignal.github.io/emoji-picker/lib/js/config.js"></script>
+    <script src="https://onesignal.github.io/emoji-picker/lib/js/util.js"></script>
+    <script src="https://onesignal.github.io/emoji-picker/lib/js/jquery.emojiarea.js"></script>
+    <script src="https://onesignal.github.io/emoji-picker/lib/js/emoji-picker.js"></script>
     <style>
     
     </style>
