@@ -132,5 +132,10 @@ class EventSession extends Model
         ])->delete();
     }
 
+    public function eventSpeaker(){
+        return $this->hasMany('App\EventSpeaker');
+    }
+
+
 
 }
