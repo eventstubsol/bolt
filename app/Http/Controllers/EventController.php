@@ -77,6 +77,7 @@ class EventController extends Controller
         $tables = NetworkingTable::where("event_id", $event_id)->orderBy('seats', 'asc')->get();
         $FAQs = FAQ::where("event_id", $event_id)->get();
         $schedule = getSchedule($event_id);
+        // return $schedule;
         $user = Auth::user();
         $pages = Page::where("event_id", $event_id)->with(["links.flyin", "images"])->get();
         $sessionrooms = sessionRooms::where("event_id", $event_id)->get()->groupBy("master_room");

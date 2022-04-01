@@ -519,8 +519,18 @@
         .theme-modal .modal-dialog.confirmation .modal-content h3 span {
             color: {{ $event->primary_color }} !important;
         }
+        .justify-content-between.align-items-center.schedule-speaker{
+            display: flex;
+            gap: 19px;
+        }
         .custom-dropdown-menu a img{
             margin-right: 0.6rem;
+        }
+        .event_speakers img {
+            width: 88px;
+            height: 88px;
+            object-fit: cover;
+            border-radius: 33%;
         }
 
 
