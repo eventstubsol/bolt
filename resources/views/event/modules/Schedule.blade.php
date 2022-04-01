@@ -123,6 +123,17 @@
                                                                 </div>
                                                                 <h5 class="mt-0 mb-1">{{ $event['name'] }}</h5>
                                                                 <p class="text-dark mt-2">{!! $event['description'] !!}</p>
+                                                                <div class="event_speakers d-flex" style="gap: 19px"> 
+                                                                    @foreach($event['eventSpeaker'] as $eventSpeaker)
+                                                                        <div class="justify-content-between align-items-center schedule-speaker">
+                                                                            <img src="{{assetUrl($eventSpeaker->url)}}" width="10%" alt="">
+                                                                            <div class="speaker_details ">
+                                                                                    <h4>{{$eventSpeaker->user->name}} {{$eventSpeaker->user->last_name}}</span>
+                                                                                    <h5>{{$eventSpeaker->designation}}</h5>        
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+                                                                </div>
                                                               
                                                                 @if($event['status'] === 1 || $event['status'] === 3)
                                                                     <span style="color: #00A166 !important;" class="btn btn-sm btn-link text-muted font-14 " >
@@ -140,6 +151,7 @@
                                                                             <i class="mdi mdi-video mr-1"></i> View Recording
                                                                         </a>
                                                                 @endif
+                                                             
                                                                 @foreach($event['resources'] as $resource)
                                                                     <div class="doc-item justify-content-between align-items-center resource r-{{$resource->id}} resource-{{$event['id']}} schedule-pdf">
                                                                         <div class="d-inline-flex align-items-center flex-grow-1">

@@ -52,7 +52,7 @@ Route::get('eventadmin/login',"eventeeController@Login")->name('Eventee.login');
 Route::post('eventadmin/login/confirm',"eventeeController@ConfirmLogin")->name('Eventee.login.confirm');
 Route::get('eventAdmin/forgot/password',"ForgotPasswordController@view")->name('Eventee.forgot.password');
 Route::post('eventAdmin/forgot/confirm',"ForgotPasswordController@SendPasword")->name('Eventee.forgot.confirm');
-Route::get('login/event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
+Route::get('/login/event/{id}',"EventUser\LoginController@login")->name('eventuser.login');
 Route::get("Verify/otp/{user_id}","EventAdminController@OtpView")->name("eventadmin.verify");
 Route::POST("/verify/otp/{user_id}","EventAdminController@VerifyOtp")->name("Eventee.verify");
 

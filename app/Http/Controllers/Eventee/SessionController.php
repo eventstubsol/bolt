@@ -308,7 +308,7 @@ class SessionController extends Controller
 
 
         }
-        return redirect()->to(route("eventee.sessions.index",['id'=>$event_id]));
+    return redirect()->to(route("eventee.sessions.index",['id'=>$event_id]));
     }
 
 

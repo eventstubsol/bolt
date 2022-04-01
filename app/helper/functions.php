@@ -1449,7 +1449,7 @@ function getSuggestedTags(){
 
 function getSchedule($event_id){
     $schedule = [];
-    $eventsLineup = EventSession::where("event_id",$event_id)->orderBy("start_time")->with("speakers.speaker")->get()->load(["parentroom","resources"]);
+    $eventsLineup = EventSession::where("event_id",$event_id)->orderBy("start_time")->with("speakers.speaker")->get()->load(["parentroom","resources","eventSpeaker.user"]);
     foreach ($eventsLineup as $event){
         if(!isset($schedule[$event->room])){
             $schedule[$event->room] = [];
@@ -1475,6 +1475,7 @@ function getSchedule($event_id){
                 "status" => $status,
                 "name" => $event->name,
                 "resources" => $event->resources,
+                "eventSpeaker" => $event->eventSpeaker,
                 "description" => $event->description,
                 "speakers" => $event->speakers,
                 "recording" => $event->past_video ? $event->past_video : false,
