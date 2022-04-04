@@ -15,8 +15,9 @@ use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
-use Log;
-use Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
 use Carbon\Carbon;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
@@ -87,11 +88,14 @@ class UserController extends Controller
         $data = $request->except("_token");
         if (isset($data["users"]) && count($data["users"]) > 0) {
             $users = $data["users"];
+
             
             foreach ($users as $user) {
                
-                $existingUser = User::where(env('ATTENDEE_LOGIN_FIELD'), $user[env('ATTENDEE_LOGIN_FIELD')])->first();
+                $existingUser = User::where(env('ATTENDEE_LOGIN_FIELD'), $user[env('ATTENDEE_LOGIN_FIELD')])->where("event_id",$id)->first();
+                // dd($existingUser);
                 if (!$existingUser) {
+
                     $user["event_id"] = $id;
                     if(!isset($user["type"])){
                         $user["type"] = 'attendee';
@@ -100,13 +104,14 @@ class UserController extends Controller
                         $user["password"] = password_hash($user["password"]);
                     }
                     
+                    // dd($user["welcome"]);
+                    $welcomeMail = $user["welcome"];
                     $user = User::create($user);
-                    createUser($chat_app,$user);
-                    $user->markEmailAsVerified();
-                    if($user["welcome"] === "true" ){
-                        dd($user["welcome"]);
-                        // Mail::to($user->email)->send(new WelcomeEmail($event, $resources, $user));
+                    if($welcomeMail){
+                        Mail::to($user->email)->send(new WelcomeMail($eventCap, $user));
                     }
+                    $user->markEmailAsVerified();
+                   
                     
                 } else {
                     $existingUser->update($user);
@@ -115,6 +120,7 @@ class UserController extends Controller
             return ["success" => TRUE];
         }
         return ["success" => FALSE, "message" => "Please upload some file containing user details"];
+       
     }
 
     /**

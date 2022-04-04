@@ -50,6 +50,12 @@
             border-bottom: 1px solid #ced4da;
             border-radius: 0;
         }
+        h4{
+            font-family: "Nunito", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 800;
+            padding-left: 15px;
+        }
         /* form *{
             margin-right: 30px;
         } */
