@@ -102,13 +102,14 @@ class UserController extends Controller
                         $user["password"] = password_hash($user["password"]);
                     }
                     
+                    // dd($user["welcome"]);
+                    $welcomeMail = $user["welcome"];
                     $user = User::create($user);
-
-                    $user->markEmailAsVerified();
-                    if($user["welcome"] === "true" ){
-                        dd($user["welcome"]);
+                    if($welcomeMail){
                         Mail::to($user->email)->send(new WelcomeMail($eventCap, $user));
                     }
+                    $user->markEmailAsVerified();
+                   
                     
                 } else {
                     $existingUser->update($user);

@@ -31,7 +31,7 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.welcome')->with([
+        return $this->from('event-admin@eventstub.co', $this->event->name)->markdown('emails.welcome')->with([
             'event'=>$this->event,
             'user' => $this->user
         ]);
