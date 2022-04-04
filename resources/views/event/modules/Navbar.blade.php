@@ -210,7 +210,7 @@
                 @elseif($menu->name == 'schedule')
                     <li><a class="modalToggle" data-toggle="modal" data-target="#schedule-modal"><i class="fe-calendar"></i>Schedule</a></li>
                 @elseif($menu->name == 'swagbag')
-                    <li><a class="modalToggle" data-toggle="modal" data-target="#swagbag-modal"><i class="fe-shopping-bag"></i>SwagBag</a></li>
+                    <li><a class="modalToggle" data-toggle="modal" data-target="#swagbag-modal"><i class="fe-shopping-bag"></i>Briefcase</a></li>
                 @elseif($menu->name == 'leaderboard')
                     <li><a class="area" data-link="leaderboard"><i class="fe-bar-chart"></i>Leaderboard</a></li>
                 @elseif($menu->name == 'personalagenda')

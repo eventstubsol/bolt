@@ -12,8 +12,8 @@
                         <a class="btn primary theme-btn video-play mr-2" href="{{ $provisional->video->url }}" >Play Video</a>
                         <a class="btn primary theme-btn mr-2  _df_button" title="{{$provisional->resource[0]->title}}" source="{{assetUrl($provisional->resource[0]->url)}}" type="button" name="button">View PDF</a>
                         <a class="btn primary theme-btn mr-2  _df_button" title="{{$provisional->resource[1]->title}}" source="{{assetUrl($provisional->resource[1]->url)}}" type="button" name="button">View PDF</a>
-                        <button class="btn primary theme-btn add-to-bag add" data-resource="{{ $provisional->id }}" type="button" name="button"> + SwagBag</button>
-                        <button class="btn danger theme-btn has-icon remove add-to-bag remove hidden delete" data-resource="{{ $provisional->id }}" type="button" name="button">SwagBag</button>
+                        <button class="btn primary theme-btn add-to-bag add" data-resource="{{ $provisional->id }}" type="button" name="button"> + Briefcase</button>
+                        <button class="btn danger theme-btn has-icon remove add-to-bag remove hidden delete" data-resource="{{ $provisional->id }}" type="button" name="button">Briefcase</button>
                     </div>                    
                 </div>
             </div>

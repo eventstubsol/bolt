@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="resourceslistLabel"><span class="image-icon swagbag"></span>SwagBag</h4>
+                <h4 class="modal-title" id="resourceslistLabel"><span class="image-icon swagbag"></span>Briefcase</h4>
                 <div class="form-group filters search-box">
                     <label class="search has-icon search" for="swagsearch">
                         <input type="text" placeholder="Search items ..." name="swagsearch" id="swagsearch" data-action="swagsearch">

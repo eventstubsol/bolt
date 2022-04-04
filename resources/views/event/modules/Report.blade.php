@@ -15,8 +15,8 @@
                         @if(isset($report->video) && isset($report->video->title))
                             <a class="btn primary theme-btn  video-play mr-2" title="{{$report->video->title}}" href="{{$report->video->url}}" type="button" name="button">Play Video</a>
                         @endif
-                        <button class="btn primary-filled theme-btn text-white add-to-bag add" data-resource="{{ $report->id }}" type="button" name="button"> + Swagbag</button>
-                        <button class="btn danger theme-btn has-icon delete add-to-bag remove hidden" data-resource="{{ $report->id }}" type="button" name="button"> Swagbag</button>
+                        <button class="btn primary-filled theme-btn text-white add-to-bag add" data-resource="{{ $report->id }}" type="button" name="button"> + Briefcase</button>
+                        <button class="btn danger theme-btn has-icon delete add-to-bag remove hidden" data-resource="{{ $report->id }}" type="button" name="button"> Briefcase</button>
                     </div>
                 </div>
         @endforeach
