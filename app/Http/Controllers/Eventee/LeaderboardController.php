@@ -15,6 +15,9 @@ class LeaderboardController extends Controller
     //
     public function index($id){
         $leaderSettings = Leaderboard::where('event_id',$id)->first();
+        if(!$leaderSettings){
+            createLeaderboard($id);
+        }
         return view('eventee.leaderboard.index',compact('id','leaderSettings'));
     }
 

@@ -398,7 +398,7 @@
 
         <div class="input-group form-group">
             <div class="col-md-12 mb-2">
-                <button type="submit" class="theme-btn btn primary-filled">{{ __('Register') }}</button>
+                <button type="submit" style="background-color: {{ $event->primary_color }}" class="theme-btn btn primary-filled">{{ __('Register') }}</button>
             </div>
         </div>
     </form>

@@ -1179,7 +1179,7 @@ table.dataTable tbody tr {
 .page .wrapper .scores .score-list li:nth-child(1):before,
 .page .wrapper .scores .score-list li:nth-child(2):before,
 .page .wrapper .scores .score-list li:nth-child(3):before {
-    opacity: 0;
+    /* opacity: 0; */
 }
 
 .page .wrapper .scores .score-list li:nth-child(1):after,

@@ -648,6 +648,16 @@ function initApp() {
                         callBookingButton.hide();
                     }
                     boothMenus.find('.modal-toggle').unbind().on("click", function () {
+                        var trigger = $(".mob-menu a");
+                        var sidebar = $(".sidebar-custom");
+                    
+                        if (sidebar.hasClass('enabled')) {
+                            // $(".sidebar-custom").removeClass("enabled");
+                            $(".overLay").removeClass("d-block");
+                            $(".fa").removeClass("fa-times").addClass("fa-bars");
+                            sidebar.removeClass('enabled')
+                            trigger.find('i').removeClass('fa-times').addClass('fa-bars')
+                        }
                         let modalId = $(this).data("modal") + id;
                         let modalEl = $("#" + modalId);
                         if ($(this).data("modal") === "book-a-call-modal-") {
@@ -666,6 +676,16 @@ function initApp() {
                         modalEl.modal();
                     });
                     boothMenus.find('.show-interest').unbind().on("click", function () {
+                        var trigger = $(".mob-menu a");
+                        var sidebar = $(".sidebar-custom");
+                    
+                        if (sidebar.hasClass('enabled')) {
+                            // $(".sidebar-custom").removeClass("enabled");
+                            $(".overLay").removeClass("d-block");
+                            $(".fa").removeClass("fa-times").addClass("fa-bars");
+                            sidebar.removeClass('enabled')
+                            trigger.find('i').removeClass('fa-times').addClass('fa-bars')
+                        }
                         trackEvent({
                             type: "boothShowInterestButtonClicked",
                             id,
@@ -880,6 +900,10 @@ function initApp() {
                 pages.hide().filter("#photo-booth-page").show();
                 pageChangeActions();
                 recordPageView("photobooth", "Photo Booth");
+                trackEvent({
+                    type:"PHOTOBOOTH_VISIT",
+                    id:'PHOTOBOOTH_VISIT',
+                });
                 let gallery = $("#photo-gallery");
                 let galleryBtn = $("#gallery");
                 let capture = $("#photo-capture");

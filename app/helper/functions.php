@@ -817,9 +817,10 @@ function createLeaderboard($event_id){
     $leaderboard->color = #64D709;
     $leaderboard->event_id = $event_id;
     if($leaderboard->save()){
-        $defaultpoints = ['Event Login','Viewing an On-demand Video','Viewing a document in the library','Viewing a live streaming','Visiting a booth'];
+        $defaultpoints = ['LOGIN_POINTS','RESOURCE_VIEW_POINTS','PROFILE_PICTURE_UPDATE','SESSION_ATTENDING_POINTS','BOOTH_VISIT_POINTS','SCAVENGER_HUNT_POINTS','VIDEO_VIEWING_POINTS','PHOTOBOOTH_POINTS'];
+        $defaultpointsFor = [100,50,50,100,150,50,100,100];
         for($i = 0 ; $i < count($defaultpoints) ; $i++){
-            LeadPoint::create(['owner'=>$leaderboard->id,'point'=>$defaultpoints[$i]]);
+            LeadPoint::create(['owner'=>$leaderboard->id,'point'=>$defaultpoints[$i], 'user_points'=>$defaultpointsFor[$i],'point_label'=>$defaultpoints[$i] ]);
         }
         return True;
     }

@@ -603,6 +603,19 @@ class EventController extends Controller
                     }
                 }
                 break;
+            case "boothVisit":
+                $id = $request->get("id");
+                     //Verified booth, now saving to database
+                    $pointsDetails["points"] = PHOTOBOOTH_VISIT;
+                    $pointsDetails["details"] = $id;
+
+                    if (!Points::where($pointsDetails)->count()) {
+                        Points::create($pointsDetails);
+                        User::where("id", $userId)->update([
+                            "points" => DB::raw('points+' . $pointsDetails["points"]),
+                        ]);
+                    }
+                break;
 
             case "BoothChat":
                 $id = $request->get("id");

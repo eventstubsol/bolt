@@ -297,6 +297,7 @@ class BoothController extends Controller
       $booths = Booth::where("event_id",$booth->event_id)->get();
       $modals = Modal::where("event_id",$booth->event_id)->get();
   
+      $event_name = Event::where("id",$booth->event_id)->first()->slug;
       $session_rooms = sessionRooms::where("event_id",$booth->event_id)->get();
   
       $booth->load(["images", "videos", "resources","links.background"]);
@@ -306,7 +307,7 @@ class BoothController extends Controller
         // dd("test");
         // $id=null;
         // dd(isset($id));
-      return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms","id","modals"));
+      return view("exhibitor.edit")->with(compact("booth","pages","booths","session_rooms","id","modals","event_name"));
     }  
     catch(\Exception $e){
       if(Auth::user()->type === 'admin'){

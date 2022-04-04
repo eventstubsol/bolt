@@ -81,7 +81,7 @@ $fields = getAllFields($id);
                     @if(App\LeadPoint::where('owner',$leaderSettings->id)->count() > 0)
                     @foreach (App\LeadPoint::where('owner',$leaderSettings->id)->get() as $key =>$loadpoint)
                         <div class="form-group point-group">
-                            <label for="points">Point {{ $key + 1  }}</label>
+                            <label for="points">Point {{ $loadpoint->point }}</label>
                             <div class="input-group-append form-check form-switch ml-4">
                             <input type="text" name="points[]" class="form-control" value="{{ $loadpoint->point }}">
                             <input type="checkbox" name="pointsstatus[]" @if($loadpoint->status) checked @endif class="form-check-input" value="{{ $loadpoint->id }}" >
