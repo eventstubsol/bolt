@@ -75,51 +75,36 @@ class UserController extends Controller
         return redirect()->to(route("user.index"));
     }
 
-    public function bulk_create(Request $request)
+    public function bulk_create(Request $request,$id)
     {
+        $eventCap = Event::find($id);
+        $current_users = User::where('event_id',$id)->count();
+        if($current_users + 10 > $eventCap->total_attendees){
+            return ["success" => FALSE, "message" => "User Limit Exceeded"];
+        }
         $data = $request->except("_token");
         if (isset($data["users"]) && count($data["users"]) > 0) {
             $users = $data["users"];
+            
             foreach ($users as $user) {
+               
                 $existingUser = User::where(env('ATTENDEE_LOGIN_FIELD'), $user[env('ATTENDEE_LOGIN_FIELD')])->first();
                 if (!$existingUser) {
+                    $user["event_id"] = $id;
+                    if(!isset($user["type"])){
+                        $user["type"] = 'attendee';
+                    }
+                    if(isset($user["password"])){
+                        $user["password"] = password_hash($user["password"]);
+                    }
+                    
                     $user = User::create($user);
                     $user->markEmailAsVerified();
-
-                    Http::withHeaders(
-                        [
-                            "appId" => env("COMET_CHAT_APP_ID"),
-                            "apiKey" => env("COMET_CHAT_API_KEY"),
-                            "Accept-Encoding"=> "deflate, gzip",
-                            "Content-Encoding"=> "gzip"
-                        ]
-                    )
-                        ->post(
-                            env('COMET_CHAT_BASE_URL') . "/v2.0/users",
-                            [
-                                "uid" => $user->id,
-                                "name" => $user->name
-                            ]
-                        );
-
-                //     $resp  = Mail::send([], [], function (Message $message) use ($user) {
-                //        $message
-                //            ->to($user->email)
-                //            ->from(env("MAIL_FROM_ADDRESS"), env("MAIL_FROM_NAME"))
-                //            ->replyTo(env('MAIL_TO_ADDRESS'), env('MAIL_TO_NAME'))
-                //            ->embedData([
-                //                'personalizations' => [
-                //                    [
-                //                        'dynamic_template_data' => [
-                //                            'user' => "{$user->name} {$user->last_name}",
-                //                            'email'  => strtolower($user->email),
-                //                        ],
-                //                    ],
-                //                ],
-                //                'template_id' => config("services.sendgrid.templates.register"),
-                //            ], SendgridTransport::SMTP_API_NAME);
-                //    });
-                   
+                    if($user["welcome"] === "true" ){
+                        dd($user["welcome"]);
+                        // Mail::to($user->email)->send(new WelcomeEmail($event, $resources, $user));
+                    }
+                    
                 } else {
                     $existingUser->update($user);
                 }

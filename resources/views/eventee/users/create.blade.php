@@ -18,7 +18,12 @@ Create Users
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <a style="float: right" class="btn btn-primary" href="{{ route("eventee.user.showpage",$id) }}">Bulk Upload</a> <br><hr>        
+                <p class="text-right mb-3">
+                    <input accept=".json" type="file" hidden id="fileUpload">
+                    <button class="btn btn-primary" id="btnFileUpload"><i class="fe-upload-cloud mr-1"></i> Bulk
+                        Upload</button>
+                </p>
+                {{-- <a style="float: right" class="btn btn-primary" href="{{ route("eventee.user.showpage",$id) }}">Bulk Upload</a> <br><hr>         --}}
                 <form action="{{ route("eventee.user.store",$id) }}" method="post" id="userForm">
                     @csrf
                     <input type="hidden" name="event_id" value="{{ ($id) }}">
@@ -82,6 +87,15 @@ Create Users
                                     <option value="{{ $type }}">{{ ucfirst($type) }}</option>
                                 @endif
                             @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="type">Welcome Email ( Also Valid for Bulk Upload )
+                            <span style="color:red">*</span>
+                        </label>
+                        <select class="form-control" name="welcome" id="welcome" >   
+                            <option value=false>Don't Send</option>
+                            <option value=true>Send</option>
                         </select>
                     </div>
                     @if(count($subtypes))
@@ -184,6 +198,8 @@ Create Users
             
             $("#uploader-progress").html('')
             $("#uploader-progress").append('<h3>Creating Users</h3>')
+            let welcome = $("#welcome").val();
+            // alert(welcome);
             $("#userForm").hide()
             $("#uploader-progress").show()
 
@@ -196,6 +212,7 @@ Create Users
                     .map(function(user){
                         return {
                             ...user,
+                            welcome,
                             email: user.email.split(/\//gmi)[0].trim().toLowerCase()
                         }
 
@@ -221,7 +238,7 @@ Create Users
                     }
                     let x = await new Promise(function(resolve) {
                         $.ajax({
-                            url: '{{ route("users.bulk_upload") }}',
+                            url: '{{ route("users.bulk_upload",$id) }}',
                             method: "POST",
                             data,
                             success: function(e) {

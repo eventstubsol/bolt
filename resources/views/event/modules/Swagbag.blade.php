@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="message hidden text-center">No items in Swag Bag checkout the Library section to add resources</p>
+                <p class="message hidden text-center">No items in Briefcase checkout the Library section to add resources</p>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

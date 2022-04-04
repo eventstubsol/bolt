@@ -68,7 +68,8 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::post("reports/login/{id}", "EventController@generalReportsData")->name("reports.general.api");
     Route::get("loginreports/{id}","EventController@loginReports")->name('eventee.loginLogs');
        
-
+    Route::post("/user-bulk-upload/{id}", "UserController@bulk_create")->name("users.bulk_upload");
+        
 
     //Posts
     Route::get("posts/{id}",'PostController@index')->name("eventee.post");
@@ -896,7 +897,6 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
         //        Route::get("/prizes/distribute", "PrizeController@distributePrize")->name("distribute_prizes");
 
-        Route::post("/user-bulk-upload", "UserController@bulk_create")->name("users.bulk_upload");
         Route::post("/subscriptions-bulk-upload", "EventSubscriptionController@bulk_create")->name("subscriptions.bulk_upload");
 
         Route::post("/booth/{booth}/publish", "BoothController@publish")->name("booth.publish");
