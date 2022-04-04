@@ -895,14 +895,20 @@ class UserController extends Controller
             $eventCap = Event::find($id);
             $userCap = User::where('event_id',$id)->count();
             $import = Excel::toArray(new UserImport($id),$file);
-            $count = count($import) + $userCap;
-            if($count < $eventCap->total_attendee){
-                Excel::import(new UserImport($id),$file);
-            }
-            else{
-                flash("User Limit Exceeded")->error();
+            if(isset($import[0])){
+                $count = count($import[0]) + $userCap;
+                if($count < $eventCap->total_attendees){
+                    Excel::import(new UserImport($id),$file);
+                }else{
+                    flash("User Limit Exceeded")->error();
+                    return redirect()->back();
+                }
+            }else{
+                flash("Empty Sheet Uploaded")->error();
                 return redirect()->back();
             }
+            
+           
             // $import = Excel::toArray(new UserImport($id),$file);
             // $count = count($import);
             // dd($import);
