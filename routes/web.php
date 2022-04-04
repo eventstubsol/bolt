@@ -935,7 +935,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::prefix("exhibiter")->middleware("checkAccess:exhibiter")->group(function () {
         Route::get("/booth/edit/{booth}/{id}", "Eventee\BoothController@adminEdit")->name("exhibiter.edit");
         Route::post("/booth/edit/{booth}/{id}", "Eventee\BoothController@adminUpdate")->name("exhibiter.update");
-        Route::get("/booth/{booth}/enquiries/{id}", "BoothController@boothEnquiries")->name("exhibiter.enquiries");
+        Route::get("/booth/{booth}/enquiries/{id}", "Eventee\BoothController@boothEnquiries")->name("exhibiter.enquiries");
         Route::get("/booth/{booth}/enquiry/raw/", "BoothController@boothEnquiriesRaw")->name("exhibiter.enquiries.raw");
         // Route::POST('booth/video/delete','Eventee\BoothController@deleteVideo')->name('booth.video.delete');
         // Route::post("/booth/edit/{booth}","BoothController@adminUpdateImages")->name("exhibiter.updateimages");

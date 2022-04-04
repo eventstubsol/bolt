@@ -296,6 +296,7 @@ class BoothController extends Controller
 
   public function boothEnquiries(Booth $booth,$id){
       $booth->load("interests.user");
+      
 //      return $booth;
       return view("exhibitor.enquiries")->with(compact(["booth","id"]));
   }

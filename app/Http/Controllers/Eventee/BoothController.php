@@ -480,9 +480,10 @@ class BoothController extends Controller
       try{
         $booth->load("interests.user");
         $event_name = Event::where("id",$booth->event_id)->first()->slug;
+        $id = $booth->event_id;
   
 //      return $booth;
-        return view("exhibitor.enquiries")->with(compact("booth","event_name"));
+        return view("exhibitor.enquiries")->with(compact("booth","event_name","id"));
       }
       catch(\Exception $e){
         if(Auth::user()->type === 'admin'){
