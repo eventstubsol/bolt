@@ -195,6 +195,11 @@ class EventController extends Controller
             $event->save();
             return redirect(route("eventee.settings", $id));
         }
+        if ($request->login_disc) {
+            $event->login_disc = $request->login_disc;
+            $event->save();
+            return redirect(route("eventee.settings", $id));
+        }
 
         $type = "exterior";
         $page = "exterior";

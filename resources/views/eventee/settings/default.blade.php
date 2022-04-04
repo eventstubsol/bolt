@@ -108,6 +108,16 @@
             </div>
         </div>
         <div class="card">
+            <div class="card-header">  Login Disclaimer    </div>
+            <div class="card-body">
+                <form method="POST" action="{{ route("eventee.settingsUpdate",['id'=>$id]) }}">
+                    <label for="summernote-basic-2">Login Disclaimer</label>
+                    <textarea id="summernote-basic-2" name="login_disc">{{$event->login_disc}}</textarea>
+                    <button type="submit"  class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
             <div class="card-header">  
                 
                 <div class="d-flex" >
