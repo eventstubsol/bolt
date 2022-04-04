@@ -362,7 +362,8 @@ class AttendeeAuthController extends Controller
     public function thankPage($subdomain){
         
          $event = Event::where('slug',$subdomain)->first();
-         return view('thanks.index',compact('subdomain','event'));
+         $id = $event->id;
+         return view('thanks.index',compact('subdomain','event','id'));
     }
 
 }

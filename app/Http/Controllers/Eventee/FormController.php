@@ -27,9 +27,14 @@ class FormController extends Controller
     public function create($id){
         $subdomain = Event::where("id",$id)->first()->slug;
         $structsDefault = FormStruct::Where('event_id',0)->orWhere('event_id',-1)->get();
+        $form_slug = Form::where('event_id',$id)->get();
+        $slugs = [];
+        foreach($form_slug as $slug){
+            array_push($slugs,$slug->slug);
+        }
         // $structsMandats = FormStruct::Where('event_id',-1)->get();
             // dd($structsDefault);
-        return view("eventee.form.createForm")->with(compact("id","structsDefault","subdomain"));
+        return view("eventee.form.createForm")->with(compact("id","structsDefault","subdomain",'slugs'));
     }
     public function edit($id,Form $form){
         $structsDefault = FormStruct::Where('event_id',0)
@@ -101,12 +106,13 @@ class FormController extends Controller
 
     public function CheckUrl(Request $req){
         $slug =  $req->event_name;
-        $count = Form::where('slug',$slug)->count();
+        $id = $req->id;
+        $count = Form::where('slug',$slug)->where('event_id',$id)->count();
         if($count > 0){
-            return response()->json(['code'=>203,'message'=>"Link Is not Available"]);
+            return response()->json(['code'=>203,'message'=>"Link Is not Available","count"=>$count]);
         }
         else{
-            return response()->json(['code'=>200,'message'=>"Link Is Available"]);
+            return response()->json(['code'=>200,'message'=>"Link Is Available","count"=>$count]);
         }
 
     }

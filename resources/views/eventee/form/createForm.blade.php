@@ -205,56 +205,80 @@
             $("#name").on("input",(e)=>{
                 let formname = e.target.value;
                 $("#slug").val(formname.replaceAll(" ","_"));
-                $.get("{{ route('form.link') }}",{'event_name':formname.replaceAll(" ","_")},function(res){
-                if(res.code == 203){
+                var slugs = {!! json_encode($slugs) !!};
+            
+                if(slugs.indexOf(formname.replaceAll(" ","_")) > -1){
                     $('.successShow').hide();
                     $('.errorShow').show();
                     $('.errorShow').empty();
-                    $('.errorShow').html(res.message);
+                    $('.errorShow').html("Link Is not Available");
                     $(".submit").attr("disabled",true);
                 }
-                else if(res.code == 202){
-                    $('.successShow').hide();
-                    $('.errorShow').show();
-                    $('.errorShow').empty();
-                    $('.errorShow').html(res.message);
-                   
-                }
-                else if(res.code == 200){
+                else{
                     $('.errorShow').hide();
                     $('.successShow').show();
                     $('.successShow').empty();
-                    $('.successShow').html(res.message);
+                    $('.successShow').html("Link Is Available");
                     $(".submit").attr("disabled",false);
                 }
-            });
+            //     $.get("{{ route('form.link') }}",{'event_name':formname.replaceAll(" ","_")},function(res){
+            //     if(res.code == 203){
+            //         $('.successShow').hide();
+            //         $('.errorShow').show();
+            //         $('.errorShow').empty();
+            //         $('.errorShow').html(res.message);
+            //         $(".submit").attr("disabled",true);
+            //     }
+            //     else if(res.code == 202){
+            //         $('.successShow').hide();
+            //         $('.errorShow').show();
+            //         $('.errorShow').empty();
+            //         $('.errorShow').html(res.message);
+                   
+            //     }
+            //     else if(res.code == 200){
+            //         $('.errorShow').hide();
+            //         $('.successShow').show();
+            //         $('.successShow').empty();
+            //         $('.successShow').html(res.message);
+            //         $(".submit").attr("disabled",false);
+            //     }
+            // });
             });
             $("#slug").on("input",(e)=>{
+                var slugs = {!! json_encode($slugs) !!};
                 let formname = e.target.value;
                 $("#slug").val(formname.replaceAll(" ","_"));
-                $.get("{{ route('form.link') }}",{'event_name':formname.replaceAll(" ","_")},function(res){
-                    if(res.code == 203){
-                        $('.successShow').hide();
-                        $('.errorShow').show();
-                        $('.errorShow').empty();
-                        $('.errorShow').html(res.message);
-                        $(".submit").attr("disabled",true);
-                    }
-                    else if(res.code == 202){
-                        $('.successShow').hide();
-                        $('.errorShow').show();
-                        $('.errorShow').empty();
-                        $('.errorShow').html(res.message);
+                if(slugs.indexOf(formname.replaceAll(" ","_")) > -1){
+                    $('.successShow').hide();
+                    $('.errorShow').show();
+                    $('.errorShow').empty();
+                    $('.errorShow').html("Link Is not Available");
+                    $(".submit").attr("disabled",true);
+                }
+                else{
+                    $('.errorShow').hide();
+                    $('.successShow').show();
+                    $('.successShow').empty();
+                    $('.successShow').html("Link Is Available");
+                    $(".submit").attr("disabled",false);
+                }
+                // $.get("{{ route('form.link') }}",{'event_name':formname.replaceAll(" ","_"),'id':"{{ $id }}"},function(res){
+                //     console.log(res.count);
+                //     if(res.code == 203){
+                        
+                //     }
+                //     else if(res.code == 202){
+                //         $('.successShow').hide();
+                //         $('.errorShow').show();
+                //         $('.errorShow').empty();
+                //         $('.errorShow').html(res.message);
                     
-                    }
-                    else if(res.code == 200){
-                        $('.errorShow').hide();
-                        $('.successShow').show();
-                        $('.successShow').empty();
-                        $('.successShow').html(res.message);
-                        $(".submit").attr("disabled",false);
-                    }
-                });
+                //     }
+                //     else if(res.code == 200){
+                       
+                //     }
+                // });
             });
         });
         function bindDelete(){
