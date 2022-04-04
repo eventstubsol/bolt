@@ -297,7 +297,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
-                <button type="submit" class="btn btn-primary" id="sameType">Save</button>
+                <button type="submit" class="btn btn-primary" id="sameType">Create Event</button>
             </form>
             </div>
         
