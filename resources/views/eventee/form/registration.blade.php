@@ -1,5 +1,9 @@
 @extends('layouts.auth')
 
+@php
+$event = App\Event::findOrFail($id);
+@endphp
+
 @section("styles_after")
     <style>
         /* body.auth .login-container .form .register label{
