@@ -479,8 +479,10 @@ class BoothController extends Controller
   public function boothEnquiries(Booth $booth){
       try{
         $booth->load("interests.user");
+        $event_name = Event::where("id",$booth->event_id)->first()->slug;
+  
 //      return $booth;
-        return view("exhibitor.enquiries")->with(compact("booth"));
+        return view("exhibitor.enquiries")->with(compact("booth","event_name"));
       }
       catch(\Exception $e){
         if(Auth::user()->type === 'admin'){
