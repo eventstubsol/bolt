@@ -79,6 +79,8 @@ class UserController extends Controller
     {
         $eventCap = Event::find($id);
         $current_users = User::where('event_id',$id)->count();
+        $chat_app = CometChat::where("event_id",$id)->first();
+       
         if($current_users + 10 > $eventCap->total_attendees){
             return ["success" => FALSE, "message" => "User Limit Exceeded"];
         }
@@ -99,6 +101,7 @@ class UserController extends Controller
                     }
                     
                     $user = User::create($user);
+                    createUser($chat_app,$user);
                     $user->markEmailAsVerified();
                     if($user["welcome"] === "true" ){
                         dd($user["welcome"]);
