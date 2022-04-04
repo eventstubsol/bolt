@@ -380,6 +380,7 @@
          });
 
 
+
          $('.event_end').on('input',function(){
             let start_date =new Date($('.event_start').val());
             let end_date = new Date($(this).val());
@@ -425,6 +426,9 @@
      function closeModal(){
          $('#create_modal').modal('toggle');
      }
+     function containsAnyLetter(str) {
+        return /[a-zA-Z]/.test(str);
+        }
 
 </script> 
 <script>
