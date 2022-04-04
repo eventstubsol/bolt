@@ -176,20 +176,33 @@ class PostController extends Controller
         $id = $req->id;
         $emote = $req->emote;
         $user_id = Auth::id();
-        $post = PostEmote::updateOrCreate(['post_id'=>$id,'user_id'=>$user_id],['emote'=>$emote,'rate'=>null]);
+        if($emote == 'unlike' || $emote == 'unlove'){
+            if(PostEmote::where('post_id',$id)->where('user_id',$user_id)->delete()){
+                $postLikes = PostEmote::where('emote','like')->where('post_id',$id)->count();
+                $postLoves = PostEmote::where('emote','love')->where('post_id',$id)->count();
+                return response()->json(['code'=>200,"message"=> "Your Emote is Saved",'likes'=>$postLikes,'loves'=>$postLoves]);
+            }
+            else{
+                return response()->json(['code'=>500,"message"=> "Something Went wrong"]);
+            }
+        }
+        else{
+            $post = PostEmote::updateOrCreate(['post_id'=>$id,'user_id'=>$user_id],['emote'=>$emote,'rate'=>null]);
+            if($post->save()){
+                $postLikes = PostEmote::where('emote','like')->where('post_id',$id)->count();
+                $postLoves = PostEmote::where('emote','love')->where('post_id',$id)->count();
+                return response()->json(['code'=>200,"message"=> "Your Emote is Saved",'likes'=>$postLikes,'loves'=>$postLoves]);
+            }
+            else{
+                return response()->json(['code'=>500,"message"=> "Something Went wrong"]);
+            }
+        }
         // $post = new PostEmote;
         // $post->post_id = $id;
         // $post->user_id = $user_id;
         // $post->emote = $emote;
         // $post->rate = null;
-        if($post->save()){
-            $postLikes = PostEmote::where('emote','like')->where('post_id',$id)->count();
-            $postLoves = PostEmote::where('emote','love')->where('post_id',$id)->count();
-            return response()->json(['code'=>200,"message"=> "Your Emote is Saved",'likes'=>$postLikes,'loves'=>$postLoves]);
-        }
-        else{
-            return response()->json(['code'=>500,"message"=> "Something Went wrong"]);
-        }
+       
     }
 
     public function addVote(Request $req){

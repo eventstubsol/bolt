@@ -183,11 +183,11 @@
                                     <div class="post_actions reactions">
                                         {{-- <h3>React</h3> --}}
                                         @if(isset($userEmote))
-                                            <img data-id="{{ $post->id }}" style="margin-top:2px" class="post_action like_{{ $post->id }} like_icon" data-toggle="tooltip" title="Like" data-action="like" @if($userEmote->emote == 'like')src="{{ assetUrl('uploads/0rVg1MJ0445jOGXp60LYT28emk0SqYtusu01eVXX.png') }}"@else src="{{ assetUrl('uploads/8f6wOAv1aCjZ6KYZi1NnOKgeBuBFE1YiEBm1RtUK.png') }}"@endif width="30" alt="">
+                                            <img data-id="{{ $post->id }}" style="margin-top:2px" class="post_action like_{{ $post->id }} like_icon" data-toggle="tooltip" title="Like" data-action="like" @if($userEmote->emote == 'like')src="{{ assetUrl('uploads/0rVg1MJ0445jOGXp60LYT28emk0SqYtusu01eVXX.png') }}" data-action="unlike" @else src="{{ assetUrl('uploads/8f6wOAv1aCjZ6KYZi1NnOKgeBuBFE1YiEBm1RtUK.png') }}" data-action="like" @endif width="30" alt="">
                                             <span class="mainLikes">
                                                 {{ $postlike.' Likes' }}
                                             </span>
-                                            <img data-id="{{ $post->id }}" style="margin-top:2px;margin-left: 5px;" class="post_action love_{{ $post->id }} lo  ve_icon" data-toggle="tooltip" title="Love" data-action="love"  @if($userEmote->emote == 'love')src="{{ assetUrl('uploads/bt85iaeO1WtztXCTii05arVPgiXYYZC0VAbagjS2.png') }}"@else src="{{ assetUrl('uploads/sJTqjO4GGR2xLm0mIZNlFOJG21QGgxoE11ipwy6d.png') }}"@endif width="30" alt="">
+                                            <img data-id="{{ $post->id }}" style="margin-top:2px;margin-left: 5px;" class="post_action love_{{ $post->id }} lo  ve_icon" data-toggle="tooltip" title="Love"  @if($userEmote->emote == 'love')src="{{ assetUrl('uploads/bt85iaeO1WtztXCTii05arVPgiXYYZC0VAbagjS2.png') }}" data-action="unlove" @else src="{{ assetUrl('uploads/sJTqjO4GGR2xLm0mIZNlFOJG21QGgxoE11ipwy6d.png') }}"  data-action="love" @endif width="30" alt="">
                                             <span class="mainLoves">
                                                 {{ $postLove.' Loves' }}
                                             </span>
@@ -314,14 +314,23 @@
             var emote = $(this).attr('data-action');
             var id = $(this).attr('data-id');
             var post_action = $(this);
+            console.log(emote);
             $.post("{{ route('add.emote') }}",{'emote':emote,'id':id},function(res){
                 if(res.code == 200){
                     if(emote == 'like'){
                         post_action.attr('src','{{ assetUrl("uploads/0rVg1MJ0445jOGXp60LYT28emk0SqYtusu01eVXX.png") }}');
                         $(`.love_${id}`).attr('src','{{ assetUrl("uploads/sJTqjO4GGR2xLm0mIZNlFOJG21QGgxoE11ipwy6d.png") }}');
+                        post_action.attr("data-action",'unlike');
+                    }
+                    else if(emote == 'unlike' || emote == 'unlove'){
+                        $(`.like_${id}`).attr('src','{{ assetUrl("uploads/8f6wOAv1aCjZ6KYZi1NnOKgeBuBFE1YiEBm1RtUK.png") }}');
+                        $(`.love_${id}`).attr('src','{{ assetUrl("uploads/sJTqjO4GGR2xLm0mIZNlFOJG21QGgxoE11ipwy6d.png") }}');
+                        $(`.like_${id}`).attr("data-action",'like');
+                        $(`.love_${id}`).attr("data-action",'love');
                     }
                     else{
                         post_action.attr('src','{{ assetUrl("uploads/bt85iaeO1WtztXCTii05arVPgiXYYZC0VAbagjS2.png") }}');
+                        post_action.attr("data-action",'unlove');
                         $(`.like_${id}`).attr('src','{{ assetUrl("uploads/8f6wOAv1aCjZ6KYZi1NnOKgeBuBFE1YiEBm1RtUK.png") }}');
                     }
                     $('.mainLikes').empty();
