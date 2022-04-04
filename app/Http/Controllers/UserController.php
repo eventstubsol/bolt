@@ -15,8 +15,9 @@ use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
-use Log;
-use Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
 use Carbon\Carbon;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
@@ -77,7 +78,8 @@ class UserController extends Controller
 
     public function bulk_create(Request $request,$id)
     {
-        $eventCap = Event::find($id);
+        try{
+            $eventCap = Event::find($id);
         $current_users = User::where('event_id',$id)->count();
         if($current_users + 10 > $eventCap->total_attendees){
             return ["success" => FALSE, "message" => "User Limit Exceeded"];
@@ -99,10 +101,11 @@ class UserController extends Controller
                     }
                     
                     $user = User::create($user);
+
                     $user->markEmailAsVerified();
                     if($user["welcome"] === "true" ){
-                        dd($user["welcome"]);
-                        // Mail::to($user->email)->send(new WelcomeEmail($event, $resources, $user));
+                        // dd($user["welcome"]);
+                        Mail::to($user->email)->send(new WelcomeMail($eventCap, $user));
                     }
                     
                 } else {
@@ -112,6 +115,10 @@ class UserController extends Controller
             return ["success" => TRUE];
         }
         return ["success" => FALSE, "message" => "Please upload some file containing user details"];
+        }
+        catch(\Exception $e){
+            Log::error($e->getMessage());
+        }
     }
 
     /**

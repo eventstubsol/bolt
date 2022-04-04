@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
-use Mail;
 use App\Event;
 use App\UserData;
 use App\UserSubtype;
@@ -25,6 +24,8 @@ use App\Http\Requests\UserFormRequest;
 use App\Http\Requests\SubTypeFormRequest;
 use stdClass;
 use App\CometChat;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
