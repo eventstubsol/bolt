@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Points;
-
+use App\CometChat;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\DB;
