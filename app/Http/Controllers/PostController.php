@@ -227,7 +227,7 @@ class PostController extends Controller
         $saveRate = PostEmote::updateOrCreate(['post_id'=>$post_id,'user_id'=>$user_id],['rate'=>$rate]);
         if($saveRate->save()){
             $post = Post::find($post_id);
-            $avg = PostEmote::where('post_id',$post_id)->where('user_id',$user_id)->avg('rate');
+            $avg = PostEmote::where('post_id',$post_id)->avg('rate');
             $post->rating = $avg;
             $post->save();
             return response()->json(['code'=>200,'avg'=>$avg]);

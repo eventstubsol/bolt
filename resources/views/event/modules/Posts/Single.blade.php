@@ -376,13 +376,13 @@
                                     <div id="stars_rating">
                                         {{-- <p class="heading">Please rate this title.</p> --}}
                                         <div class="stars">
-                                        <div class="star">★</div>
-                                        <div class="star">★</div>
-                                        <div class="star">★</div>
-                                        <div class="star">★</div>
-                                        <div class="star">★</div>
+                                        <div class="star" data-id="{{ $post->id }}">★</div>
+                                        <div class="star" data-id="{{ $post->id }}">★</div>
+                                        <div class="star" data-id="{{ $post->id }}">★</div>
+                                        <div class="star" data-id="{{ $post->id }}">★</div>
+                                        <div class="star" data-id="{{ $post->id }}">★</div>
                                         </div>
-                                        <p class="rates"> <span class="avg"> </span> | Your Rating: <span class="rate"> </span></p>
+                                        <p class="rates"> <span class="avg">{{$post->rating ?? 0}} </span> | Your Rating: <span class="rate"> </span></p>
                                     </div>
                                 @endif
                                 <h3>Comments</h3>
@@ -437,12 +437,13 @@
 <script>
     $(document).ready(function(){
         let _rating = 0; // [0..5]
-        const setRating = (num) => {
+        const setRating = (num,post_id) => {
             _rating = num;
+            save_rating(post_id);
         }
 
         // For example: out of 5 existing reviews, the average is 3.2
-        let avg = 3.2;
+        let avg = {{ $post->rating ?? 0}};
         let count = 5.0;
 
         // Round a floating point number to n decimal places.
@@ -463,6 +464,13 @@
         }
         return "(unrated)";
         }
+        function  save_rating(post_id){ 
+            $.post("{{ route('add.rate') }}",{'rate':_rating,'post_id':post_id},function(res){
+                if(res.code == 200){
+                    document.querySelector('span.avg').innerHTML = res.avg;
+                }
+            });
+        }
         const getRate = () => {
             if (_rating) {
                 return _rating * 1.0;
@@ -471,8 +479,8 @@
         }
 
         const updateDOM = () => {
-        document.querySelector('span.avg').innerHTML = getAvg();
-        document.querySelector('span.rate').innerHTML = getRate();
+            // document.querySelector('span.avg').innerHTML = getAvg();
+            document.querySelector('span.rate').innerHTML = getRate();
         }
 
         $(function(){ // onload
@@ -482,9 +490,11 @@
         const stars = document.querySelectorAll('.star');
 
         $('.star').on('click', function(e){
+            let post_id = $(this).data("id")
+            
             stars.forEach((star,i) => {
                 if (star === e.currentTarget) {
-                setRating(i+1);
+                setRating(i+1,post_id);
                 // $('#game_rating').addClass('rated');
                 if ($('.star.rated').length) {
                     $('.star.rated').removeClass('rated');
@@ -497,11 +507,7 @@
         });
 
 
-        $('#clear').click(function(){
-            setRating(0);
-            $('.rated').removeClass('rated');
-            updateDOM();
-        });
+        
 
         setTimeout(() => {
             window.emojiPicker = new EmojiPicker({
@@ -570,6 +576,7 @@
                 }
             });
         });
+        
 
         $('.voting').on('click',function(){
             var vote =  $(this).attr('data-action');
