@@ -237,6 +237,7 @@ class UserController extends Controller
                 $user->last_name = $request->last_name;
                 $user->event_id = $id;
                 $user->type = $request->type;
+                $user->email_status = 1;
                 if($request->has('password')){
                     $user->password = password_hash($request->password, PASSWORD_DEFAULT);
                 }
@@ -302,6 +303,7 @@ class UserController extends Controller
                     if(!isset($user->type)){
                         $user->type = 'attendee';
                     }
+                    $user->email_status = 1;
 
                     $user = User::create($user);
                     $user->markEmailAsVerified();
