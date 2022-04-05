@@ -559,179 +559,181 @@ class EventController extends Controller
     {
         $type = $request->get("type", "login");
         $userId = Auth::user()->id;
-        $pointsDetails = [
-            "points_to" => $userId,
-            "points_for" => $type,
-            "details" => $request->get("details", ""),
-        ];
-        switch ($type) {
-            case "scavengerHunt":
-                $page = $request->get("page");
-                $index = $request->get("index");
-                $name = $request->get("name");
-                // if (
-                //     isset(SCAVENGER_HUNT[$page]) &&
-                //     isset(SCAVENGER_HUNT[$page][$index]) &&
-                //     isset(SCAVENGER_HUNT[$page][$index]['name']) &&
-                //     SCAVENGER_HUNT[$page][$index]['name'] == $name
-                // ) {
-                //Verified item, now saving to database
-                $pointsDetails["points"] = SCAVENGER_HUNT_POINTS;
-                $pointsDetails["details"] = $page . "|" . $index . "|" . $name;
-                if (!Points::where($pointsDetails)->count()) {
-                    Points::create($pointsDetails);
-                    User::where("id", $userId)->update([
-                        "points" => DB::raw('points+' . $pointsDetails["points"]),
-                    ]);
-                }
-                // }
-                break;
-
-            case "boothVisit":
-                $id = $request->get("id");
-                $booth = Booth::find($id);
-                if ($booth) {
-                    //Verified booth, now saving to database
-                    $pointsDetails["points"] = BOOTH_VISIT_POINTS;
-                    $pointsDetails["details"] = $id;
-
+        if(! strpos(Auth::user()->email, 'eventstub.co') ){
+            $pointsDetails = [
+                "points_to" => $userId,
+                "points_for" => $type,
+                "details" => $request->get("details", ""),
+            ];
+            switch ($type) {
+                case "scavengerHunt":
+                    $page = $request->get("page");
+                    $index = $request->get("index");
+                    $name = $request->get("name");
+                    // if (
+                    //     isset(SCAVENGER_HUNT[$page]) &&
+                    //     isset(SCAVENGER_HUNT[$page][$index]) &&
+                    //     isset(SCAVENGER_HUNT[$page][$index]['name']) &&
+                    //     SCAVENGER_HUNT[$page][$index]['name'] == $name
+                    // ) {
+                    //Verified item, now saving to database
+                    $pointsDetails["points"] = SCAVENGER_HUNT_POINTS;
+                    $pointsDetails["details"] = $page . "|" . $index . "|" . $name;
                     if (!Points::where($pointsDetails)->count()) {
                         Points::create($pointsDetails);
                         User::where("id", $userId)->update([
                             "points" => DB::raw('points+' . $pointsDetails["points"]),
                         ]);
                     }
-                }
-                break;
-            case "boothVisit":
-                $id = $request->get("id");
-                     //Verified booth, now saving to database
-                    $pointsDetails["points"] = PHOTOBOOTH_VISIT;
-                    $pointsDetails["details"] = $id;
+                    // }
+                    break;
 
-                    if (!Points::where($pointsDetails)->count()) {
+                case "boothVisit":
+                    $id = $request->get("id");
+                    $booth = Booth::find($id);
+                    if ($booth) {
+                        //Verified booth, now saving to database
+                        $pointsDetails["points"] = BOOTH_VISIT_POINTS;
+                        $pointsDetails["details"] = $id;
+
+                        if (!Points::where($pointsDetails)->count()) {
+                            Points::create($pointsDetails);
+                            User::where("id", $userId)->update([
+                                "points" => DB::raw('points+' . $pointsDetails["points"]),
+                            ]);
+                        }
+                    }
+                    break;
+                case "boothVisit":
+                    $id = $request->get("id");
+                        //Verified booth, now saving to database
+                        $pointsDetails["points"] = PHOTOBOOTH_VISIT;
+                        $pointsDetails["details"] = $id;
+
+                        if (!Points::where($pointsDetails)->count()) {
+                            Points::create($pointsDetails);
+                            User::where("id", $userId)->update([
+                                "points" => DB::raw('points+' . $pointsDetails["points"]),
+                            ]);
+                        }
+                    break;
+
+                case "BoothChat":
+                    $id = $request->get("id");
+                    $booth = Booth::find($id);
+                    if ($booth) {
+                        //Verified booth, now saving to database
+                        $pointsDetails["points"] = BOOTH_CHAT_POINTS;
+                        $pointsDetails["details"] = $id;
+                        if (!Points::where($pointsDetails)->count()) {
+                            Points::create($pointsDetails);
+                            User::where("id", $userId)->update([
+                                "points" => DB::raw('points+' . $pointsDetails["points"]),
+                            ]);
+                        }
+                    }
+                    break;
+
+                case "boothContentTab":
+                    $id = $request->get("id");
+                    $tab = $request->get("tab", false);
+                    $validTabs = ["description-modal-" . $id, "videolist-modal-" . $id, "resourcelist-modal-" . $id];
+                    $booth = Booth::find($id);
+                    if (
+                        $booth && $tab && in_array($tab, $validTabs)
+                    ) {
+                        //Verified booth and tab, now saving to database
+                        $pointsDetails["points"] = BOOTH_RESOURCES_VIEW_POINTS;
+                        $pointsDetails["details"] = $id . "|" . $tab;
+
+                        if (!Points::where($pointsDetails)->count()) {
+                            Points::create($pointsDetails);
+                            User::where("id", $userId)->update([
+                                "points" => DB::raw('points+' . $pointsDetails["points"]),
+                            ]);
+                        }
+                    }
+                    break;
+
+                case "resourceView":
+                    $pointsDetails["points"] = RESOURCE_VIEW_POINTS;
+                    $pointsDetails["details"] = request()->get("url", false);
+                    if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
                         Points::create($pointsDetails);
                         User::where("id", $userId)->update([
                             "points" => DB::raw('points+' . $pointsDetails["points"]),
                         ]);
                     }
-                break;
-
-            case "BoothChat":
-                $id = $request->get("id");
-                $booth = Booth::find($id);
-                if ($booth) {
-                    //Verified booth, now saving to database
-                    $pointsDetails["points"] = BOOTH_CHAT_POINTS;
-                    $pointsDetails["details"] = $id;
-                    if (!Points::where($pointsDetails)->count()) {
+                    break;
+                case "museumVisit":
+                    $pointsDetails["points"] = MUSEUM_VISIT_POINTS;
+                    $pointsDetails["details"] = request()->get("id", false);
+                    if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
                         Points::create($pointsDetails);
                         User::where("id", $userId)->update([
                             "points" => DB::raw('points+' . $pointsDetails["points"]),
                         ]);
                     }
-                }
-                break;
-
-            case "boothContentTab":
-                $id = $request->get("id");
-                $tab = $request->get("tab", false);
-                $validTabs = ["description-modal-" . $id, "videolist-modal-" . $id, "resourcelist-modal-" . $id];
-                $booth = Booth::find($id);
-                if (
-                    $booth && $tab && in_array($tab, $validTabs)
-                ) {
-                    //Verified booth and tab, now saving to database
-                    $pointsDetails["points"] = BOOTH_RESOURCES_VIEW_POINTS;
-                    $pointsDetails["details"] = $id . "|" . $tab;
-
-                    if (!Points::where($pointsDetails)->count()) {
+                    break;
+                case "workshopVisit":
+                    $pointsDetails["points"] = MUSEUM_VISIT_POINTS;
+                    $pointsDetails["details"] = request()->get("id", false);
+                    if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
                         Points::create($pointsDetails);
                         User::where("id", $userId)->update([
                             "points" => DB::raw('points+' . $pointsDetails["points"]),
                         ]);
                     }
-                }
-                break;
+                    break;
 
-            case "resourceView":
-                $pointsDetails["points"] = RESOURCE_VIEW_POINTS;
-                $pointsDetails["details"] = request()->get("url", false);
-                if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
-                    Points::create($pointsDetails);
-                    User::where("id", $userId)->update([
-                        "points" => DB::raw('points+' . $pointsDetails["points"]),
-                    ]);
-                }
-                break;
-            case "museumVisit":
-                $pointsDetails["points"] = MUSEUM_VISIT_POINTS;
-                $pointsDetails["details"] = request()->get("id", false);
-                if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
-                    Points::create($pointsDetails);
-                    User::where("id", $userId)->update([
-                        "points" => DB::raw('points+' . $pointsDetails["points"]),
-                    ]);
-                }
-                break;
-            case "workshopVisit":
-                $pointsDetails["points"] = MUSEUM_VISIT_POINTS;
-                $pointsDetails["details"] = request()->get("id", false);
-                if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
-                    Points::create($pointsDetails);
-                    User::where("id", $userId)->update([
-                        "points" => DB::raw('points+' . $pointsDetails["points"]),
-                    ]);
-                }
-                break;
+                case "sessionView":
+                    $pointsDetails["points"] = SESSION_ATTENDING_POINTS;
+                    $pointsDetails["details"] = request()->get("id", false);
+                    if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
+                        Points::create($pointsDetails);
+                        User::where("id", $userId)->update([
+                            "points" => DB::raw('points+' . $pointsDetails["points"]),
+                        ]);
+                    }
+                    break;
 
-            case "sessionView":
-                $pointsDetails["points"] = SESSION_ATTENDING_POINTS;
-                $pointsDetails["details"] = request()->get("id", false);
-                if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
-                    Points::create($pointsDetails);
-                    User::where("id", $userId)->update([
-                        "points" => DB::raw('points+' . $pointsDetails["points"]),
-                    ]);
-                }
-                break;
+                case "videoView":
+                    $pointsDetails["points"] = VIDEO_VIEWING_POINTS;
+                    $pointsDetails["details"] = request()->get("video", false);
+                    if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
+                        Points::create($pointsDetails);
+                        User::where("id", $userId)->update([
+                            "points" => DB::raw('points+' . $pointsDetails["points"]),
+                        ]);
+                    }
+                    break;
 
-            case "videoView":
-                $pointsDetails["points"] = VIDEO_VIEWING_POINTS;
-                $pointsDetails["details"] = request()->get("video", false);
-                if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
+                case "boothBookingModalOpened":
+                case "boothBookingSlotSelected":
+                case "boothBookingCallScheduled":
+                case "boothShowInterestButtonClicked":
+                    //This it is just for analytics - keep on recording without giving points
+                    $pointsDetails["points"] = 0;
+                    $pointsDetails["details"] = $request->get("id");
                     Points::create($pointsDetails);
-                    User::where("id", $userId)->update([
-                        "points" => DB::raw('points+' . $pointsDetails["points"]),
-                    ]);
-                }
-                break;
-
-            case "boothBookingModalOpened":
-            case "boothBookingSlotSelected":
-            case "boothBookingCallScheduled":
-            case "boothShowInterestButtonClicked":
-                //This it is just for analytics - keep on recording without giving points
-                $pointsDetails["points"] = 0;
-                $pointsDetails["details"] = $request->get("id");
-                Points::create($pointsDetails);
-                break;
-            case "zoom_video_view":
-                $pointsDetails["points"] = EXTERIOR_ZOOM_POINTS;
-                $pointsDetails["details"] = $request->get("name");
-                if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
-                    Points::create($pointsDetails);
-                    User::where("id", $userId)->update([
-                        "points" => DB::raw('points+' . $pointsDetails["points"]),
-                    ]);
-                }
-                break;
+                    break;
+                case "zoom_video_view":
+                    $pointsDetails["points"] = EXTERIOR_ZOOM_POINTS;
+                    $pointsDetails["details"] = $request->get("name");
+                    if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
+                        Points::create($pointsDetails);
+                        User::where("id", $userId)->update([
+                            "points" => DB::raw('points+' . $pointsDetails["points"]),
+                        ]);
+                    }
+                    break;
 
 
-            default:
-                //By Default it is just for analytics - keep on recording without giving points
-                $pointsDetails["points"] = 0;
-                Points::create($pointsDetails);
+                default:
+                    //By Default it is just for analytics - keep on recording without giving points
+                    $pointsDetails["points"] = 0;
+                    Points::create($pointsDetails);
+            }
         }
         return "OK";
     }
