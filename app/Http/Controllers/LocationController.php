@@ -15,11 +15,11 @@ class LocationController extends Controller
     public function setLocation(Request $req){
         $type = $req->type;
         $typeloc = $req->typeloc;
-        if((bool)Auth::user()){
-            $user = User::find(Auth::id());
-            $user->online_status = true;
-            $user->save();
-        }
+        // if((bool)Auth::user()){
+        //     $user = User::find(Auth::id());
+        //     $user->online_status = true;
+        //     $user->save();
+        // }
         
         // return($type);
         switch($type){
@@ -62,9 +62,10 @@ class LocationController extends Controller
                 $user = UserLocation::create(['type'=>$type,'type_location'=>null,'user_id'=>Auth::id(),'current_status'=>1,'event_id'=>Auth::user()->event_id]);
                 // return response()->json(['code'=>200]);
                 break;
-        }
-        return [
-            "loggedIn" => (bool) Auth::user()
-        ];
+            }
+            return response()->json(['code'=>200]);
+        // return [
+        //     "loggedIn" => (bool) Auth::user()
+        // ];
     }
 }

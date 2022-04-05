@@ -101,10 +101,10 @@
                 $.post("{{ route('set.Location') }}",{'add':0,"type":type,"typeloc":typeloc},function(response){
                     console.log(response);
                     if (response && !response.loggedIn) {
-                        window.location.reload();
+                        // window.location.reload();
                     }
                 }).fail(function(response) {
-                    window.location.reload();
+                    // window.location.reload();
                 });
             }
             gtag('config', GA_MEASUREMENT_ID, {
