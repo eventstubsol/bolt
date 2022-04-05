@@ -663,6 +663,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
     Route::post('/emote/status','PostController@addEmote')->name('add.emote');
     Route::post('/vote/status','PostController@addVote')->name('add.vote');
+    Route::post('/rate/status','PostController@addRate')->name('add.rate');
     
     Route::get("/event/session-notifications", "EventController@sendSessionNotifications");
     
