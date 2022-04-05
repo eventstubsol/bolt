@@ -78,8 +78,7 @@ class UserController extends Controller
 
     public function bulk_create(Request $request,$id)
     {
-        try{
-            $eventCap = Event::find($id);
+        $eventCap = Event::find($id);
         $current_users = User::where('event_id',$id)->count();
         if($current_users + 10 > $eventCap->total_attendees){
             return ["success" => FALSE, "message" => "User Limit Exceeded"];
@@ -87,11 +86,14 @@ class UserController extends Controller
         $data = $request->except("_token");
         if (isset($data["users"]) && count($data["users"]) > 0) {
             $users = $data["users"];
+
             
             foreach ($users as $user) {
                
-                $existingUser = User::where(env('ATTENDEE_LOGIN_FIELD'), $user[env('ATTENDEE_LOGIN_FIELD')])->first();
+                $existingUser = User::where(env('ATTENDEE_LOGIN_FIELD'), $user[env('ATTENDEE_LOGIN_FIELD')])->where("event_id",$id)->first();
+                // dd($existingUser);
                 if (!$existingUser) {
+
                     $user["event_id"] = $id;
                     if(!isset($user["type"])){
                         $user["type"] = 'attendee';
@@ -100,13 +102,14 @@ class UserController extends Controller
                         $user["password"] = password_hash($user["password"]);
                     }
                     
+                    // dd($user["welcome"]);
+                    $welcomeMail = $user["welcome"];
                     $user = User::create($user);
-
-                    $user->markEmailAsVerified();
-                    if($user["welcome"] === "true" ){
-                        // dd($user["welcome"]);
+                    if($welcomeMail){
                         Mail::to($user->email)->send(new WelcomeMail($eventCap, $user));
                     }
+                    $user->markEmailAsVerified();
+                   
                     
                 } else {
                     $existingUser->update($user);
@@ -115,10 +118,7 @@ class UserController extends Controller
             return ["success" => TRUE];
         }
         return ["success" => FALSE, "message" => "Please upload some file containing user details"];
-        }
-        catch(\Exception $e){
-            Log::error($e->getMessage());
-        }
+       
     }
 
     /**

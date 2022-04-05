@@ -442,6 +442,7 @@ class UserController extends Controller
         
         $user = User::findOrFail($req->id);
         $chat_app = CometChat::where("event_id",$user->event_id)->first();
+        if($chat_app)
         deleteUser($chat_app,$user);
         
         $user->delete();

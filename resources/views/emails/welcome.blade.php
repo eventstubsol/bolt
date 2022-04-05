@@ -205,7 +205,6 @@ a[x-apple-data-detectors] {
                   <td align="left" style="padding:0;Margin:0;width:278px"> 
                    <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
                      <tr style="border-collapse:collapse"> 
-                      <td align="right" class="es-infoblock es-m-txt-c" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:14px;color:#CCCCCC;font-size:12px"><a href="https://viewstripo.email" class="view" target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;color:#CCCCCC;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif">View in browser</a></p></td> 
                      </tr> 
                    </table></td> 
                  </tr> 
@@ -225,7 +224,7 @@ a[x-apple-data-detectors] {
                   <td valign="top" align="center" style="padding:0;Margin:0;width:530px"> 
                    <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
                      <tr style="border-collapse:collapse"> 
-                      <td align="center" style="padding:0;Margin:0;font-size:0px"><img class="adapt-img" src="images/eventstub02_1.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="350"></td> 
+                      <td align="center" style="padding:0;Margin:0;font-size:0px"><img class="adapt-img" src="{{ assetUrl(getFieldId('logo',$event->id)) }}" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="350"></td> 
                      </tr> 
                    </table></td> 
                  </tr> 
@@ -270,7 +269,7 @@ a[x-apple-data-detectors] {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:600px"> 
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
                      <tr style="border-collapse:collapse"> 
-                      <td align="center" style="padding:0;Margin:0;font-size:0px"><img src="images/emailtop.jpg" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="600"></td> 
+                      <td align="center" style="padding:0;Margin:0;font-size:0px"><img src="" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="600"></td> 
                      </tr> 
                    </table></td> 
                  </tr> 
@@ -287,7 +286,7 @@ a[x-apple-data-detectors] {
                    </editor-squiggler> 
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
                      <tr style="border-collapse:collapse"> 
-                      <td align="left" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"><strong>{{ $event->name }}</strong><br><strong>Event Start Date and Time:&nbsp;</strong>{{ Carbon\Carbon::parse($event->start_date)->format('d-m-Y H:i:s')->setTimezone($event->timezone) }} {{ $event->timezone }}<br><strong>Event End Date and Time: </strong>{{ Carbon\Carbon::parse($event->end_date)->format('d-m-Y H:i:s')->setTimezone($event->timezone) }} {{ $event->timezone }}<br><strong>Event Login Link:&nbsp;</strong>{{ $event->link }}<br><strong>Username: </strong>{{ $user->name }}<br><strong>Attendee Type:</strong> {{ uc_first($user->type) }}<br><br><strong>Add to my calendar: </strong> <a href="https://www.google.com/calendar/render?action=TEMPLATE&text={{ $event->name }}&dates=20140127T224000Z/20140320T221500Z&details=For+details,+link+here:+http://www.example.com&location={{ $event->link }}">Google</a> <br><br><strong>Event Schedule: </strong>@if($event->land_page == 1){{ $event->link.'/landing' }}@else None @endif<br><strong>FAQs about the Event:</strong> {{ $event->link."/faq" }}<br><br></p></td> 
+                      <td align="left" spellcheck="false" data-ms-editor="true" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"><strong>{{ $event->name }}</strong><br><strong>Event Start Date and Time:&nbsp;</strong>{{ (Carbon\Carbon::parse($event->start_date,$event->timezone)->format('d-m-Y H:i:s') )  }} {{ $event->timezone }}<br><strong>Event End Date and Time: </strong>{{ Carbon\Carbon::parse($event->end_date,$event->timezone)->format('d-m-Y H:i:s') }} {{ $event->timezone }}<br><strong>Event Login Link:&nbsp;</strong> <a href="{{ $event->link }}" target="_blank">{{ $event->link }}</a><br><strong>Username: </strong>{{ $user->name }}<br><strong>Attendee Type:</strong> {{ ucfirst($user->type) }}<br><br><strong>Add to my calendar: </strong> <a href="https://www.google.com/calendar/render?action=TEMPLATE&text={{ $event->name }}&dates=20140127T224000Z/20140320T221500Z&details=For+details,+link+here:+http://www.example.com&location={{ $event->link }}">Google</a> <br><br>@if($event->land_page == 1)<strong>Event Schedule: </strong>@if($event->land_page == 1){{ $event->link.'/landing' }}@else None @endif @endif<br><strong>  FAQs about the Event:</strong> <a href="{{ $event->link."/faq" }}" target="_blank" >FAQ's</a><br><br></p></td> 
                      </tr> 
                    </table></td> 
                  </tr> 
@@ -352,7 +351,7 @@ a[x-apple-data-detectors] {
                   <td valign="top" align="center" style="padding:0;Margin:0;width:560px"> 
                    <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
                      <tr style="border-collapse:collapse"> 
-                      <td class="es-infoblock made_with" align="center" style="padding:0;Margin:0;line-height:0px;font-size:0px;color:#CCCCCC"><a target="_blank" href="https://eventloginpage" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;color:#CCCCCC;font-size:12px"><img src="images/eventstub02_1.png" alt width="125" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a></td> 
+                      <td class="es-infoblock made_with" align="center" style="padding:0;Margin:0;line-height:0px;font-size:0px;color:#CCCCCC"><a target="_blank" href="https://eventloginpage" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;color:#CCCCCC;font-size:12px"><img src="{{ assetUrl(getFieldId('logo',$event->id)) }}" alt width="125" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic"></a></td> 
                      </tr> 
                    </table></td> 
                  </tr> 
