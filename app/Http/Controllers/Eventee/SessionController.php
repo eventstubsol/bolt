@@ -102,6 +102,10 @@ class SessionController extends Controller
         // $data = $request->except('meetingId',"_token");
         $start =  (new Carbon($request->start_time,$event->timezone))->setTimezone(new CarbonTimeZone("UTC"));
         $end =  (new Carbon($request->end_time,$event->timezone))->setTimezone(new CarbonTimeZone("UTC"));
+        if($start < (Carbon::now($event->timezone))){
+            flash("Start time should be atleat greater than or equal to ".$event->timezone." time now")->error();
+            return redirect()->back();
+        }
         // $start_check =  (new Carbon($request->start_time,$event->timezone))->setTimezone(new CarbonTimeZone($event->timezone));
         // $end_check =  (new Carbon($request->end_time,$event->timezone))->setTimezone(new CarbonTimeZone($event->timezone));
         // dd($start);

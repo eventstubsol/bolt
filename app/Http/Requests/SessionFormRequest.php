@@ -29,7 +29,7 @@ class SessionFormRequest extends FormRequest
             'description' => 'required|max:1000',
             'type' => 'required',
             'room_id' => 'required',
-            'start_time' => ['required','after_or_equal:today'],
+            'start_time' => ['required'],
             'end_time' => ['required',new dataCheck(\Request()->start_time)]
 
         ];
