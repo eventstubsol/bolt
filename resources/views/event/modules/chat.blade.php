@@ -38,7 +38,7 @@
                     "roundedCorners": "true",
                     "height": "74vh",
                     "width": "51vw",
-                    "defaultID": 'public-chat', //default UID (user) or GUID (group) to show,
+                    "defaultID": 'general', //default UID (user) or GUID (group) to show,
                     "defaultType": 'group' //user or group
                 });
             }, error => {
