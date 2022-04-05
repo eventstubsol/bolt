@@ -1,7 +1,7 @@
 @extends("layouts.admin")
 
 @section('title')
-Veify Users
+Verify Users
 @endsection
 
 @section("styles")
@@ -9,11 +9,11 @@ Veify Users
 @endsection
 
 @section("page_title")
-Veify Users
+Verify Users
 @endsection
 
 @section("breadcrumbs")
-<li class="breadcrumb-item active"><a href="{{ route("eventee.user",['id'=>$id]) }}">Veify Users</a></li>
+<li class="breadcrumb-item active"><a href="{{ route("eventee.user",['id'=>$id]) }}">Verify Users</a></li>
 @endsection
 
 @section('content')
