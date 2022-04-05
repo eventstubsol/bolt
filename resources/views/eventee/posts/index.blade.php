@@ -37,28 +37,23 @@ Posts
                     </thead>
                     <tbody>
                       @foreach($event->posts()->get() as $key => $post)
+                      @php
+                          $postEmote = App\PostEmote::where('emote','!=',null)->where('post_id',$post->id)->count();
+                          $postVote = App\PostEmote::where('vote','!=',null)->where('post_id',$post->id)->count();
+                      @endphp
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td>{{$post->title}}</td>
                           <td>{!! $post->body !!}</td>
                           <td>{{($post->vimeo_link != null) ? $post->vimeo_link : "None"}}</td>    
                           <td>
-                            <div class="likeStat">
-                                <input type="hidden" value="like" class="Valuety">
-                                <input type="radio" data-value="like"  data-id="{{ $post->id }}" class="form=control" value="0" @if($post->like_status == 1) checked @endif onclick="changeStatus(this)">
-                            </div>
+                           {{ $postEmote }}
                           </td>
                           <td>
-                            <div class="voteStat">
-                                <input type="hidden"  class="Valuety">
-                                <input type="radio" data-value="vote" data-id="{{ $post->id }}" class="form=control" value="0" @if($post->vote_status == 1) checked @endif onclick="changeStatus(this)">
-                            </div>
+                            {{ $postVote }}
                           </td>
                           <td>
-                            <div class="rateStat">
-                                <input type="hidden" value="rate" class="Valuety">
-                                <input type="radio" data-value="rate" data-id="{{ $post->id }}" class="form=control" value="0" @if($post->rate_stat == 1) checked @endif onclick="changeStatus(this)">
-                            </div>
+                           {{ $post->rating }}
                           </td>
 
                             <td class="text-right" >
