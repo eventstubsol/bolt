@@ -47,6 +47,38 @@ class UserController extends Controller
             }
           } 
     }
+    public function verifications($id)
+    {
+
+        try{
+            $users = User::orderBy("created_at", "DESC")->where('event_id', ($id))->where('email_status',0)->get();
+            return view("eventee.users.verifications", compact("id", "users"));
+        }
+        catch(\Exception $e){
+            if(Auth::user()->type === 'admin'){
+                dd($e->getMessage());
+            }
+            else{
+                Log::error($e->getMessage());
+            }
+          } 
+    }
+    public function verifyUser(Request $req){
+        $user = User::findOrFail($req->id);
+        $user->email_status = 1;
+        $user->save();
+        return ["success"=>true,"message"=>"User Verified Successfully"];
+    }
+    public function verifyAllUser(Request $req){
+        // dd($req->all);
+        $event = Event::find($req->id);
+        $users = User::orderBy("created_at", "DESC")->where('event_id', ($event->id))->where('email_status',0)->get();
+        foreach($users as $user){
+            $user->email_status = 1;
+            $user->save();
+        }
+        return ["success"=>true,"message"=>"Users Verified Successfully"];
+    }
 
     /**
      * Show the form for creating a new resource.

@@ -602,6 +602,23 @@
                 </label>
             </div>
         @endif
+        @if($event->m_active_option == 0)
+            <div class="form-check form-switch ml-0 pl-0">
+                <label for="#landPage" class="mr-1 mb-0">Set Manual Activation Option</label>
+                <label class="switch">
+                    <input type="checkbox" value="0" onchange="ManualOption(this)">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        @else
+            <div class="form-check form-switch ml-0 pl-0">
+                <label for="#landPage" class="mr-1 mb-0">Set Manual Activation Option</label>
+                <label class="switch">
+                    <input type="checkbox" value="1" onchange="ManualOption(this)" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        @endif
        </div>
     @endif    
 </div>
@@ -649,6 +666,24 @@ $(document).ready(function(){
         else{
             e.value = 0;
             $.get("{{ route('update.otp.status') }}",{'status':0,'id':"{{ $id }}"},function(res){
+                showMessage(res.message,'success');
+                console.log(res);
+            }); 
+        }
+    } 
+    function ManualOption(e){
+        let status = e.value;
+        
+        if(status == 0){
+            e.value = 1;
+            $.get("{{ route('update.manual.status') }}",{'status':1,'id':"{{ $id }}"},function(res){
+                showMessage(res.message,'success');
+                console.log(res);
+            });
+        }
+        else{
+            e.value = 0;
+            $.get("{{ route('update.manual.status') }}",{'status':0,'id':"{{ $id }}"},function(res){
                 showMessage(res.message,'success');
                 console.log(res);
             }); 

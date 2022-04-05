@@ -138,6 +138,11 @@ class AttendeeAuthController extends Controller
                 flash("A Verification link is sent to your account, Please check your email an activate your account")->info();
                 return redirect()->route("attendeeLogin",['subdomain'=>$subdomain]);
             }
+            if($event->m_active_option == 1 && $user->email_status == 0){
+                // GenerateLinkAttendee($user,$subdomain);
+                flash("Your Account has been sent for Verification. You will recieve a confirmation mail soon.")->info();
+                return redirect()->route("attendeeLogin",['subdomain'=>$subdomain]);
+            }
             else{
                 $user->online_status = 1;
                 $user->save();
@@ -301,6 +306,11 @@ class AttendeeAuthController extends Controller
             GenerateLinkAttendee($user,$subdomain);
             return redirect()->route('attendeeLogin',$subdomain);
        }
+       if($event->m_active_option == 1 && $user->email_status == 0){
+            // GenerateLinkAttendee($user,$subdomain);
+            flash("Your Account has been sent for Verification. You will recieve a confirmation mail soon.")->info();
+            return redirect()->route("attendeeLogin",['subdomain'=>$subdomain]);
+        }
        else{
         flash("Registration Successful")->success();
         return redirect()->route('thank.page',$subdomain);

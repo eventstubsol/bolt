@@ -95,6 +95,7 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     
     //otp setup
     Route::get('otp/update/status','OTPController@updateStatus')->name('update.otp.status');
+    Route::get('manual/update/status','OTPController@updateManualStatus')->name('update.manual.status');
 
 
     Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
@@ -382,6 +383,9 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
 
     //Eventee User
     Route::get("/user/{id}","Eventee\UserController@index")->name('eventee.user');
+    Route::get("/verifications/user/{id}","Eventee\UserController@verifications")->name('eventee.verifications');
+    Route::post("/verify/user","Eventee\UserController@verifyUser")->name('eventee.verifyUser');
+    Route::post("/verify/all","Eventee\UserController@verifyAllUser")->name('eventee.verifyAllUser');
     Route::get("/user/create/{id}","Eventee\UserController@create")->name('eventee.user.create');
     Route::post("/user/store/{id}","Eventee\UserController@store")->name('eventee.user.store');
     Route::get('user/{id}/{user_id}/edit',"Eventee\UserController@edit")->name('eventee.user.edit');
