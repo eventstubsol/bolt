@@ -293,6 +293,10 @@ class AttendeeAuthController extends Controller
         }
         $user = new User($request->all());
         $user->save();
+        $chat_app = CometChat::where("event_id",$event->id)->first();
+        if($chat_app){
+            createUser($chat_app,$user);    
+        }
         $userdatas = $request->except("name","email","phone","country","job_title","event_id","_token","type","subtype","profileImage");
         foreach($userdatas as $feild => $userdata){
             $userData = new UserData;
