@@ -65,7 +65,10 @@ class UserController extends Controller
     }
     public function verifyUser(Request $req){
         $user = User::findOrFail($req->id);
+        $event = Event::find($user->event_id);
         $user->email_status = 1;
+        Mail::to($user->email)->send(new WelcomeMail($event, $user));
+                   
         $user->save();
         return ["success"=>true,"message"=>"User Verified Successfully"];
     }

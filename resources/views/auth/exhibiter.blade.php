@@ -1,5 +1,14 @@
 @extends('layouts.auth')
 
+@php
+$event = App\Event::where('slug',$subdomain)->first();
+
+$email = "";
+if(Auth::user()){
+    $email = Auth::user()->email;
+}
+@endphp
+
 @section('title')
     Eventee Login
 @endsection
@@ -51,7 +60,7 @@
     </div>
     <br>
 
-    <button class="log-btn theme-btn btn primary-filled" type="submit">Login</button>
+    <button class="log-btn theme-btn btn primary-filled" style="background-color: {{ $event->primary_color }}" type="submit">Login</button>
 
 
     

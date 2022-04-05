@@ -349,8 +349,8 @@ border-color: rgb(91 219 140 / 30%);
 }
 
 .theme-btn.primary-filled:hover {
-  /* background: #00a15f;
-  border-color: #00a15f; */
+  background: #00a15f;
+   /* border-color: #00a15f; */
 }
 
 .theme-btn.danger {
