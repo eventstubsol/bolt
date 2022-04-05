@@ -138,6 +138,156 @@
     .down{
         justify-content: center;
     }
+    @charset "UTF-8";
+    #clear {
+    display: inline;
+    }
+
+    #stars_rating {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    }
+    #stars_rating p {
+    text-align: center;
+    font-size: 20px;
+    margin: 0;
+    }
+    @media (max-width: 479px) {
+    #stars_rating p {
+        font-size: 15px;
+    }
+    #stars_rating p.heading {
+        font-size: 18px;
+    }
+    }
+    #stars_rating .stars {
+    display: inline-flex;
+    flex-flow: row nowrap;
+    max-width: 360px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0;
+    margin-top: -8px;
+    }
+    #stars_rating .stars .star {
+    position: relative;
+    color: #ccf;
+    font-size: 48px;
+    cursor: pointer;
+    padding: 0 5px;
+    }
+    #stars_rating .stars .star:after {
+    content: "★";
+    position: absolute;
+    transform: translateX(-100%);
+    top: 0px;
+    font-size: 48px;
+    }
+    @media (min-width: 768px) {
+    #stars_rating .stars .star {
+        padding: 0 7px;
+        font-size: 50px;
+    }
+    #stars_rating .stars .star:after {
+        font-size: 50px;
+    }
+    }
+    @media (max-width: 479px) {
+    #stars_rating .stars .star {
+        padding: 0 3px;
+        font-size: 36px;
+    }
+    #stars_rating .stars .star:after {
+        font-size: 36px;
+    }
+    }
+    #stars_rating .stars .star.rated {
+    color: royalblue;
+    }
+    /* #stars_rating .stars .star.rated:before {
+    color: darkblue;
+    content: "★";
+    position: absolute;
+    left: -1.5px;
+    top: -13px;
+    font-size: 50px;
+    } */
+    @media (min-width: 768px) {
+    /* #stars_rating .stars .star.rated:before {
+        left: 0px;
+        top: -14.5px;
+        font-size: 80px;
+    } */
+    }
+    @media (max-width: 479px) {
+    /* #stars_rating .stars .star.rated:before {
+        left: -2px;
+        top: -10px;
+        font-size: 48px;
+    } */
+    }
+    #stars_rating .stars:hover .star {
+    color: royalblue;
+    }
+    #stars_rating .stars:hover .star:hover ~ * {
+    color: #ccf;
+    }
+    /* #stars_rating .stars.rated .star:before {
+    color: darkblue;
+    content: "★";
+    position: absolute;
+    left: -1.5px;
+    top: -13px;
+    font-size: 50px;
+    } */
+    @media (min-width: 768px) {
+    /* #stars_rating .stars.rated .star:before {
+        left: 0px;
+        top: -14.5px;
+        font-size: 80px;
+    } */
+    }
+    @media (max-width: 479px) {
+    /* #stars_rating .stars.rated .star:before {
+        left: -2px;
+        top: -10px;
+        font-size: 48px;
+    } */
+    }
+    #stars_rating .stars.rated .star:after {
+    color: royalblue;
+    }
+    /* #stars_rating .stars.rated .star.rated ~ *:before {
+    display: none;
+    } */
+    #stars_rating .stars.rated .star.rated ~ *:after {
+    color: #ccf;
+    }
+    #stars_rating .stars.rated:hover .star {
+    color: royalblue;
+    }
+    #stars_rating .stars.rated:hover .star:after {
+    color: royalblue;
+    }
+    #stars_rating .stars.rated:hover .star:hover ~ * {
+    color: #ccf;
+    }
+    #stars_rating .stars.rated:hover .star:hover ~ *:after {
+    color: #ccf;
+    }
+    #stars_rating .rates span.avg:before {
+    content: "Average: ";
+    }
+    @media (max-width: 479px) {
+    #stars_rating .rates span.avg:before {
+        content: "Avg: ";
+    }
+    }
 </style>
 @foreach ($posts as $post)
 @php
@@ -222,7 +372,19 @@
                                         </div>
                                     </div>    
                                 @endif
-                                
+                                @if ($post->rate_stat)
+                                    <div id="stars_rating">
+                                        {{-- <p class="heading">Please rate this title.</p> --}}
+                                        <div class="stars">
+                                        <div class="star">★</div>
+                                        <div class="star">★</div>
+                                        <div class="star">★</div>
+                                        <div class="star">★</div>
+                                        <div class="star">★</div>
+                                        </div>
+                                        <p class="rates"> <span class="avg"> </span> | Your Rating: <span class="rate"> </span></p>
+                                    </div>
+                                @endif
                                 <h3>Comments</h3>
                                 <div class="post_comments_cont">
                                     <div class="comments_inner_container">
@@ -274,6 +436,73 @@
 
 <script>
     $(document).ready(function(){
+        let _rating = 0; // [0..5]
+        const setRating = (num) => {
+            _rating = num;
+        }
+
+        // For example: out of 5 existing reviews, the average is 3.2
+        let avg = 3.2;
+        let count = 5.0;
+
+        // Round a floating point number to n decimal places.
+        const rounded = (f, n=2) => {
+            let i = 0;
+            if (n > 0) {
+                i = Math.round(f * Math.pow(10,n));
+                return i / (Math.pow(10,n));
+            }
+            return f;
+        }
+
+        const getAvg = () => {
+        if (avg + _rating) {
+            if (_rating === 0) return 1.0 * avg;
+            if (avg === 0) return 1.0 * _rating;
+            return rounded( (count * avg  + 1.0 * _rating) / (1+count) );
+        }
+        return "(unrated)";
+        }
+        const getRate = () => {
+            if (_rating) {
+                return _rating * 1.0;
+            }
+            return "(unrated)";
+        }
+
+        const updateDOM = () => {
+        document.querySelector('span.avg').innerHTML = getAvg();
+        document.querySelector('span.rate').innerHTML = getRate();
+        }
+
+        $(function(){ // onload
+            updateDOM();
+        });
+
+        const stars = document.querySelectorAll('.star');
+
+        $('.star').on('click', function(e){
+            stars.forEach((star,i) => {
+                if (star === e.currentTarget) {
+                setRating(i+1);
+                // $('#game_rating').addClass('rated');
+                if ($('.star.rated').length) {
+                    $('.star.rated').removeClass('rated');
+                }
+                e.currentTarget.classList.add('rated');
+                $('.stars').addClass('rated');
+                updateDOM();
+                }
+            });
+        });
+
+
+        $('#clear').click(function(){
+            setRating(0);
+            $('.rated').removeClass('rated');
+            updateDOM();
+        });
+
         setTimeout(() => {
             window.emojiPicker = new EmojiPicker({
             emojiable_selector: '[data-emojiable=true]',

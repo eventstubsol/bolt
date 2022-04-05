@@ -7,6 +7,7 @@ use App\UserLocation;
 use Illuminate\Support\Facades\DB;
 use App\Booth;
 use Carbon\Carbon;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class LocationController extends Controller
@@ -15,11 +16,11 @@ class LocationController extends Controller
     public function setLocation(Request $req){
         $type = $req->type;
         $typeloc = $req->typeloc;
-        // if((bool)Auth::user()){
-        //     $user = User::find(Auth::id());
-        //     $user->online_status = true;
-        //     $user->save();
-        // }
+        if((bool)Auth::user()){
+            $user = User::find(Auth::id());
+            $user->online_status = true;
+            $user->save();
+        }
         
         // return($type);
         switch($type){
@@ -63,9 +64,9 @@ class LocationController extends Controller
                 // return response()->json(['code'=>200]);
                 break;
             }
-            return response()->json(['code'=>200]);
-        // return [
-        //     "loggedIn" => (bool) Auth::user()
-        // ];
+            // return response()->json(['code'=>200]);
+        return [
+            "loggedIn" => (bool) Auth::user()
+        ];
     }
 }
