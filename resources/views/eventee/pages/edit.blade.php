@@ -387,7 +387,7 @@ input[type="range"]:disabled::-moz-range-thumb {
                                         <label for="to">to(post)</label>
                                         <select     class="form-control" name="posts[]">
                                             @foreach($posts as $post)
-                                                <option @if($link->to === $post->id) selected @endif value="{{$post->id}}">{{$post->title}}</option>
+                                                <option @if($link->to == $post->id) selected @endif value="{{$post->id}}">{{$post->title}}</option>
                                             @endforeach
 
                                         </select>
