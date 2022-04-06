@@ -376,16 +376,19 @@
     <script>
     
         $(document).ready(function() {
-            setInterval(function() {
-                $.ajax({
-                    url: "{{ route('confirmLogin',['subdomain'=>$event_name]) }}",
-                    success: function(response) {
-                        if (response && !response.loggedIn) {
-                            window.location.reload();
-                        }
-                    },
-                });
-            }, 30000);
+            @if($event->confirm_login)  
+                setInterval(function() {
+                    $.ajax({
+                        url: "{{ route('confirmLogin',['subdomain'=>$event_name]) }}",
+                        success: function(response) {
+                            if (response && !response.loggedIn) {
+                                window.location.reload();
+                            }
+                        },
+                    });
+                }, 30000);
+            @endif
+
             var countT = 1;
         });
         // function confirmOnline(){

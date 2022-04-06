@@ -41,4 +41,21 @@ class OTPController extends Controller
         }
        
     }
+    public function cLogin(Request $req){
+        $id = $req->id;
+        
+        $event = Event::findOrFail($id);
+        $event->confirm_login = $req->status;
+        if($event->save()){
+            if($req->status == 1){
+                
+                return response()->json(["code"=>200,"message"=>"Confirm Login System is turned On"]);
+            }
+            else{
+               
+                return response()->json(["code"=>200,"message"=>"Confirm Login System is turned Off"]);
+            }
+        }
+       
+    }
 }

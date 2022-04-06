@@ -96,6 +96,7 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     //otp setup
     Route::get('otp/update/status','OTPController@updateStatus')->name('update.otp.status');
     Route::get('manual/update/status','OTPController@updateManualStatus')->name('update.manual.status');
+    Route::get('cLogin/update/status','OTPController@cLogin')->name('update.cLogin.status');
 
 
     Route::get('/confirmDomain','eventeeController@confirmDomain')->name('confirmDomain');
