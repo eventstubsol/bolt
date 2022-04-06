@@ -373,17 +373,29 @@
                                     </div>    
                                 @endif
                                 @if ($post->rate_stat)
-                                    <div id="stars_rating">
-                                        {{-- <p class="heading">Please rate this title.</p> --}}
-                                        <div class="stars">
-                                        <div class="star " data-index='1' data-id="{{ $post->id }}">★</div>
-                                        <div class="star " data-index='2' data-id="{{ $post->id }}">★</div>
-                                        <div class="star " data-index='3' data-id="{{ $post->id }}">★</div>
-                                        <div class="star " data-index='4' data-id="{{ $post->id }}">★</div>
-                                        <div class="star " data-index='5' data-id="{{ $post->id }}">★</div>
-                                        </div>
-                                        <p class="rates"> <span class="avg avg_{{$post->id}}">{{$post->rating ?? 0}} </span> | Your Rating: <span class="rate rate_{{$post->id}}"> </span></p>
-                                    </div>
+                                    @if(isset($userEmote->rate))
+                                        <div id="stars_rating">
+                                            {{-- <p class="heading">Please rate this title.</p> --}}
+                                            <div class="stars">
+                                                <div class="star {{$userEmote->rate>0?'rated':''}} " data-index='1' data-id="{{ $post->id }}">★</div>
+                                                <div class="star {{$userEmote->rate>1?'rated':''}} " data-index='2' data-id="{{ $post->id }}">★</div>
+                                                <div class="star {{$userEmote->rate>2?'rated':''}} " data-index='3' data-id="{{ $post->id }}">★</div>
+                                                <div class="star {{$userEmote->rate>3?'rated':''}} " data-index='4' data-id="{{ $post->id }}">★</div>
+                                                <div class="star {{$userEmote->rate>4?'rated':''}} " data-index='5' data-id="{{ $post->id }}">★</div>
+                                                </div>
+                                                <p class="rates"> <span class="avg avg_{{$post->id}}">{{$post->rating ?? 0}} </span> | Your Rating: <span class="rate rate_{{$post->id}}"> {{$userEmote->rate}} </span></p>
+                                            </div>
+                                        @else
+                                            <div class="stars">
+                                                <div class="star " data-index='1' data-id="{{ $post->id }}">★</div>
+                                                <div class="star " data-index='2' data-id="{{ $post->id }}">★</div>
+                                                <div class="star " data-index='3' data-id="{{ $post->id }}">★</div>
+                                                <div class="star " data-index='4' data-id="{{ $post->id }}">★</div>
+                                                <div class="star " data-index='5' data-id="{{ $post->id }}">★</div>
+                                                </div>
+                                                <p class="rates"> <span class="avg avg_{{$post->id}}">{{$post->rating ?? 0}} </span> | Your Rating: <span class="rate rate_{{$post->id}}"> (Unrated)</span></p>
+                                            </div>
+                                        @endif  
                                 @endif
                                 <h3>Comments</h3>
                                 <div class="post_comments_cont">
