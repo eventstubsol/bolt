@@ -5,11 +5,11 @@
 @endsection
 
 @section("page_title")
-    Posts
+    Post
 @endsection
 
 @section("title")
-Posts
+Post
 @endsection
 
 @section("breadcrumbs")
@@ -35,7 +35,7 @@ Posts
                       @foreach($comments as $key => $comment)
                         <tr>
                           <td>{{$comment->post->title}}</td>
-                          <td>{{ $comment->user->email }}</td>
+                          <td>{{ $comment->user ? $comment->user->email : 'Deleted Attendee' }}</td>
                           <td>{{ $comment->comment }}</td>
                           
                             <td class="text-right" >

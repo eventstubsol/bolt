@@ -80,6 +80,7 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::get("posts/comments/{id}",'PostController@allComments')->name("eventee.post.allComments");
     Route::get("posts/comments/approve/{id}/{comment}",'PostController@approveComment')->name("eventee.post.approveComment");
     Route::get("posts/comments/reject/{id}/{comment}",'PostController@rejectComment')->name("eventee.post.rejectComment");
+    Route::get("posts/analytics/{id}/{post}",'PostController@analytics')->name("eventee.post.analytics");
     Route::POST("posts/update/{id}/{post_id}",'PostController@update')->name("eventee.post.update");
     Route::POST("posts/delete",'PostController@delete')->name("eventee.post.delete");
     

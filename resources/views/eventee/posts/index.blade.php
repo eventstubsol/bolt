@@ -57,6 +57,9 @@ Posts
                           </td>
 
                             <td class="text-right" >
+                                <a href="{{ route("eventee.post.analytics", [
+                                        "post" => $post->id,"id"=>$id
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Analytics"><i class="fe-bar-chart-line" ></i></a>
                                 <a href="{{ route("eventee.post.edit", [
                                         "post_id" => $post->id,"id"=>$id
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
