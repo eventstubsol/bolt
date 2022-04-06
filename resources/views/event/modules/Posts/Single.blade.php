@@ -376,11 +376,11 @@
                                     <div id="stars_rating">
                                         {{-- <p class="heading">Please rate this title.</p> --}}
                                         <div class="stars">
-                                        <div class="star" data-id="{{ $post->id }}">★</div>
-                                        <div class="star" data-id="{{ $post->id }}">★</div>
-                                        <div class="star" data-id="{{ $post->id }}">★</div>
-                                        <div class="star" data-id="{{ $post->id }}">★</div>
-                                        <div class="star" data-id="{{ $post->id }}">★</div>
+                                        <div class="star" data-index='1' data-id="{{ $post->id }}">★</div>
+                                        <div class="star" data-index='2' data-id="{{ $post->id }}">★</div>
+                                        <div class="star" data-index='3' data-id="{{ $post->id }}">★</div>
+                                        <div class="star" data-index='4' data-id="{{ $post->id }}">★</div>
+                                        <div class="star" data-index='5' data-id="{{ $post->id }}">★</div>
                                         </div>
                                         <p class="rates"> <span class="avg">{{$post->rating ?? 0}} </span> | Your Rating: <span class="rate"> </span></p>
                                     </div>
@@ -447,23 +447,7 @@
         let count = 5.0;
 
         // Round a floating point number to n decimal places.
-        const rounded = (f, n=2) => {
-            let i = 0;
-            if (n > 0) {
-                i = Math.round(f * Math.pow(10,n));
-                return i / (Math.pow(10,n));
-            }
-            return f;
-        }
-
-        const getAvg = () => {
-        if (avg + _rating) {
-            if (_rating === 0) return 1.0 * avg;
-            if (avg === 0) return 1.0 * _rating;
-            return rounded( (count * avg  + 1.0 * _rating) / (1+count) );
-        }
-        return "(unrated)";
-        }
+        
         function  save_rating(post_id){ 
             $.post("{{ route('add.rate') }}",{'rate':_rating,'post_id':post_id},function(res){
                 if(res.code == 200){
@@ -479,7 +463,6 @@
         }
 
         const updateDOM = () => {
-            // document.querySelector('span.avg').innerHTML = getAvg();
             document.querySelector('span.rate').innerHTML = getRate();
         }
 
@@ -491,10 +474,11 @@
 
         $('.star').on('click', function(e){
             let post_id = $(this).data("id")
+            let star_index = $(this).data("index")
             
             stars.forEach((star,i) => {
                 if (star === e.currentTarget) {
-                setRating(i+1,post_id);
+                setRating(star_index,post_id);
                 // $('#game_rating').addClass('rated');
                 if ($('.star.rated').length) {
                     $('.star.rated').removeClass('rated');
