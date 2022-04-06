@@ -376,28 +376,28 @@
     <script>
     
         $(document).ready(function() {
-            // setInterval(function() {
-            //     $.ajax({
-            //         url: "{{ route('confirmLogin',['subdomain'=>$event_name]) }}",
-            //         success: function(response) {
-            //             if (response && !response.loggedIn) {
-            //                 window.location.reload();
-            //             }
-            //         },
-            //     });
-            // }, 30000);
+            setInterval(function() {
+                $.ajax({
+                    url: "{{ route('confirmLogin',['subdomain'=>$event_name]) }}",
+                    success: function(response) {
+                        if (response && !response.loggedIn) {
+                            window.location.reload();
+                        }
+                    },
+                });
+            }, 30000);
             var countT = 1;
         });
-        function confirmOnline(){
-            $.ajax({
-                url: "{{ route('confirmLogin',['subdomain'=>$event_name]) }}",
-                success: function(response) {
-                    if (response && !response.loggedIn) {
-                        window.location.reload();
-                    }
-                },
-            });
-        }
+        // function confirmOnline(){
+        //     $.ajax({
+        //         url: "{{ route('confirmLogin',['subdomain'=>$event_name]) }}",
+        //         success: function(response) {
+        //             if (response && !response.loggedIn) {
+        //                 window.location.reload();
+        //             }
+        //         },
+        //     });
+        // }
         
         function initJs() {
             $('body').addClass('loaded');
