@@ -78,8 +78,11 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::post("update/post/status","PostController@updateStatus")->name("update.post.status");
     Route::get("posts/edit/{id}/{post_id}",'PostController@edit')->name("eventee.post.edit");
     Route::get("posts/comments/{id}",'PostController@allComments')->name("eventee.post.allComments");
+    Route::get("posts/approved/comments/{id}",'PostController@approvedComments')->name("eventee.post.approved");
+    Route::get("posts/rejected/comments/{id}",'PostController@rejectedComments')->name("eventee.post.rejected");
     Route::get("posts/comments/approve/{id}/{comment}",'PostController@approveComment')->name("eventee.post.approveComment");
     Route::get("posts/comments/reject/{id}/{comment}",'PostController@rejectComment')->name("eventee.post.rejectComment");
+    Route::get("posts/analytics/{id}/{post}",'PostController@analytics')->name("eventee.post.analytics");
     Route::POST("posts/update/{id}/{post_id}",'PostController@update')->name("eventee.post.update");
     Route::POST("posts/delete",'PostController@delete')->name("eventee.post.delete");
     

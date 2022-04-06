@@ -161,6 +161,24 @@ class PostController extends Controller
        $comments =  Comment::where("event_id",$id)->where("approved",0)->with(["post","user"])->get();
        return view("eventee.posts.comments",compact('id','comments'));
     }
+    public function approvedComments($id){
+       $comments =  Comment::where("event_id",$id)->where("approved",1)->with(["post","user"])->get();
+       return view("eventee.posts.approved",compact('id','comments'));
+    }
+    public function rejectedComments($id){
+       $comments =  Comment::where("event_id",$id)->where("approved",-1)->with(["post","user"])->get();
+       return view("eventee.posts.rejected",compact('id','comments'));
+    }
+    public function analytics($id,Post $post){
+       $comments =  Comment::where("event_id",$id)->where("approved",0)->with(["post","user"])->get();
+       $postEmotes = PostEmote::where('post_id',$post->id)->get()->load("user");
+       $totalLikes = PostEmote::where('emote','like')->where('post_id',$post->id)->count();
+       $totalhearts = PostEmote::where('emote','love')->where('post_id',$post->id)->count();
+       $totalUpvotes = PostEmote::where('vote','upvote')->where('post_id',$post->id)->count();
+       $totalDvotes = PostEmote::where('vote','downvote')->where('post_id',$post->id)->count();
+       
+       return view("eventee.posts.analytics",compact('id','comments','post','postEmotes','totalLikes','totalhearts','totalUpvotes','totalDvotes'));
+    }
 
     public function delete(Request $req){
         $post = Post::findOrFail($req->id);

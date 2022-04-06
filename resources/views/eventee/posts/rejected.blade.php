@@ -5,11 +5,11 @@
 @endsection
 
 @section("page_title")
-    Posts
+ Rejected Comments
 @endsection
 
 @section("title")
-Posts
+ Rejected Comments
 @endsection
 
 @section("breadcrumbs")
@@ -21,49 +21,35 @@ Posts
 <div class="row">
     <div class="col-12">
         <div class="card">
+            <div class="card-header">
+                <a class="btn btn-primary" href="{{ route("eventee.post.allComments",$id) }}">Pending Comments</a>
+                <a class="btn btn-primary" href="{{ route("eventee.post.approved",$id) }}">Approved Comments</a>
+           </div>
             <div class="card-body">
                 <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Post</th>
-                            <th>Vimeo Url</th>
-                            <th>Likes/Emotes</th>
-                            <th>Votes</th>
-                            <th>Ratings</th>
+                            <th>Post Title</th>
+                            <th>Attendee</th>
+                            <th>Message</th>
                             <th class="text-right mr-2">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                      @foreach($event->posts()->get() as $key => $post)
-                      @php
-                          $postEmote = App\PostEmote::where('emote','!=',null)->where('post_id',$post->id)->count();
-                          $postVote = App\PostEmote::where('vote','!=',null)->where('post_id',$post->id)->count();
-                      @endphp
+                      @foreach($comments as $key => $comment)
                         <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{$post->title}}</td>
-                          <td>{!! $post->body !!}</td>
-                          <td>{{($post->vimeo_link != null) ? $post->vimeo_link : "None"}}</td>    
-                          <td>
-                           {{ $postEmote }}
-                          </td>
-                          <td>
-                            {{ $postVote }}
-                          </td>
-                          <td>
-                           {{ $post->rating }}
-                          </td>
-
+                          <td>{{$comment->post->title}}</td>
+                          <td>{{ $comment->user ? $comment->user->email : 'Deleted Attendee' }}</td>
+                          <td>{{ $comment->comment }}</td>
+                          
                             <td class="text-right" >
-                                <a href="{{ route("eventee.post.analytics", [
-                                        "post" => $post->id,"id"=>$id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Analytics"><i class="fe-bar-chart-line" ></i></a>
-                                <a href="{{ route("eventee.post.edit", [
-                                        "post_id" => $post->id,"id"=>$id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"><i class="fe-edit-2" ></i></a>
-                                <a href="javascript:void(0)" data-id="{{ $post->id }}" onclick="DeletePost(this)" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fe-trash" ></i></a>
+                                <a href="{{ route("eventee.post.approveComment", [
+                                        "comment" => $comment->id,"id"=>$id
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Approve"><i class="fe-check-circle" ></i></a>
+                                {{-- <a href="{{ route("eventee.post.rejectComment", [
+                                        "comment" => $comment->id,"id"=>$id
+                                    ]) }}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reject"><i class="fe-x-circle" ></i></a> --}}
+                                {{-- <a href="javascript:void(0)" data-id="{{ $post->id }}" onclick="DeletePost(this)" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fe-trash" ></i></a> --}}
                             </td>
                         </tr>
                       @endforeach
@@ -82,9 +68,9 @@ Posts
     @include("includes.scripts.datatables")
 
     <script>
-         $(document).ready(function(){
-            $("#buttons-container").append('<span><a class="btn btn-primary mr-1" href="{{ route("eventee.post.create",$id) }}">Create New</a>');
-         });
+        //  $(document).ready(function(){
+        //     $("#buttons-container").append('<span><a class="btn btn-primary mr-1" href="{{ route("eventee.post.create",$id) }}">Create New</a>');
+        //  });
 
          function changeStatus(e){
              let current_value = e.value;

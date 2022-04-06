@@ -14,4 +14,8 @@ class Post extends Model
     public function comments(){
         return $this->hasMany('\App\Comment','post_id');
     }
+
+    public function postEmote(){
+        return $this->hasMany('\App\PostEmote','post_id');
+    }
 }

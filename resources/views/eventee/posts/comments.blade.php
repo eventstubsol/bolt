@@ -5,11 +5,11 @@
 @endsection
 
 @section("page_title")
-    Posts
+    Post
 @endsection
 
 @section("title")
-Posts
+Post
 @endsection
 
 @section("breadcrumbs")
@@ -21,6 +21,10 @@ Posts
 <div class="row">
     <div class="col-12">
         <div class="card">
+            <div class="card-header">
+                <a class="btn btn-primary" href="{{ route("eventee.post.approved",$id) }}">Approved Comments</a>
+                <a class="btn btn-primary" href="{{ route("eventee.post.rejected",$id) }}">Rejected Comments</a>
+            </div>
             <div class="card-body">
                 <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
                     <thead>
@@ -35,7 +39,7 @@ Posts
                       @foreach($comments as $key => $comment)
                         <tr>
                           <td>{{$comment->post->title}}</td>
-                          <td>{{ $comment->user->email }}</td>
+                          <td>{{ $comment->user ? $comment->user->email : 'Deleted Attendee' }}</td>
                           <td>{{ $comment->comment }}</td>
                           
                             <td class="text-right" >
