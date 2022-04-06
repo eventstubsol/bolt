@@ -376,13 +376,13 @@
                                     <div id="stars_rating">
                                         {{-- <p class="heading">Please rate this title.</p> --}}
                                         <div class="stars">
-                                        <div class="star" data-index='1' data-id="{{ $post->id }}">★</div>
-                                        <div class="star" data-index='2' data-id="{{ $post->id }}">★</div>
-                                        <div class="star" data-index='3' data-id="{{ $post->id }}">★</div>
-                                        <div class="star" data-index='4' data-id="{{ $post->id }}">★</div>
-                                        <div class="star" data-index='5' data-id="{{ $post->id }}">★</div>
+                                        <div class="star " data-index='1' data-id="{{ $post->id }}">★</div>
+                                        <div class="star " data-index='2' data-id="{{ $post->id }}">★</div>
+                                        <div class="star " data-index='3' data-id="{{ $post->id }}">★</div>
+                                        <div class="star " data-index='4' data-id="{{ $post->id }}">★</div>
+                                        <div class="star " data-index='5' data-id="{{ $post->id }}">★</div>
                                         </div>
-                                        <p class="rates"> <span class="avg">{{$post->rating ?? 0}} </span> | Your Rating: <span class="rate"> </span></p>
+                                        <p class="rates"> <span class="avg avg_{{$post->id}}">{{$post->rating ?? 0}} </span> | Your Rating: <span class="rate rate_{{$post->id}}"> </span></p>
                                     </div>
                                 @endif
                                 <h3>Comments</h3>
@@ -451,7 +451,7 @@
         function  save_rating(post_id){ 
             $.post("{{ route('add.rate') }}",{'rate':_rating,'post_id':post_id},function(res){
                 if(res.code == 200){
-                    document.querySelector('span.avg').innerHTML = res.avg;
+                    document.querySelector('span.avg.avg_'+post_id).innerHTML = res.avg;
                 }
             });
         }
@@ -462,13 +462,9 @@
             return "(unrated)";
         }
 
-        const updateDOM = () => {
-            document.querySelector('span.rate').innerHTML = getRate();
+        const updateDOM = (post_id) => {
+            document.querySelector('span.rate.rate_'+post_id).innerHTML = getRate();
         }
-
-        $(function(){ // onload
-            updateDOM();
-        });
 
         const stars = document.querySelectorAll('.star');
 
@@ -485,7 +481,7 @@
                 }
                 e.currentTarget.classList.add('rated');
                 $('.stars').addClass('rated');
-                updateDOM();
+                updateDOM(post_id);
                 }
             });
         });
