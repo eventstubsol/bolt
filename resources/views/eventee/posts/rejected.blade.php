@@ -5,11 +5,11 @@
 @endsection
 
 @section("page_title")
-    Post
+ Rejected Comments
 @endsection
 
 @section("title")
-Post
+ Rejected Comments
 @endsection
 
 @section("breadcrumbs")
@@ -22,9 +22,9 @@ Post
     <div class="col-12">
         <div class="card">
             <div class="card-header">
+                <a class="btn btn-primary" href="{{ route("eventee.post.allComments",$id) }}">Pending Comments</a>
                 <a class="btn btn-primary" href="{{ route("eventee.post.approved",$id) }}">Approved Comments</a>
-                <a class="btn btn-primary" href="{{ route("eventee.post.rejected",$id) }}">Rejected Comments</a>
-            </div>
+           </div>
             <div class="card-body">
                 <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
                     <thead>
@@ -46,9 +46,9 @@ Post
                                 <a href="{{ route("eventee.post.approveComment", [
                                         "comment" => $comment->id,"id"=>$id
                                     ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Approve"><i class="fe-check-circle" ></i></a>
-                                <a href="{{ route("eventee.post.rejectComment", [
+                                {{-- <a href="{{ route("eventee.post.rejectComment", [
                                         "comment" => $comment->id,"id"=>$id
-                                    ]) }}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reject"><i class="fe-x-circle" ></i></a>
+                                    ]) }}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reject"><i class="fe-x-circle" ></i></a> --}}
                                 {{-- <a href="javascript:void(0)" data-id="{{ $post->id }}" onclick="DeletePost(this)" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><i class="fe-trash" ></i></a> --}}
                             </td>
                         </tr>

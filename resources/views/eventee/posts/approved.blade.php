@@ -5,11 +5,11 @@
 @endsection
 
 @section("page_title")
-    Post
+ Approved Comments
 @endsection
 
 @section("title")
-Post
+ Approved Comments
 @endsection
 
 @section("breadcrumbs")
@@ -22,7 +22,7 @@ Post
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a class="btn btn-primary" href="{{ route("eventee.post.approved",$id) }}">Approved Comments</a>
+                <a class="btn btn-primary" href="{{ route("eventee.post.allComments",$id) }}">Pending Comments</a>
                 <a class="btn btn-primary" href="{{ route("eventee.post.rejected",$id) }}">Rejected Comments</a>
             </div>
             <div class="card-body">
@@ -43,9 +43,9 @@ Post
                           <td>{{ $comment->comment }}</td>
                           
                             <td class="text-right" >
-                                <a href="{{ route("eventee.post.approveComment", [
+                                {{-- <a href="{{ route("eventee.post.approveComment", [
                                         "comment" => $comment->id,"id"=>$id
-                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Approve"><i class="fe-check-circle" ></i></a>
+                                    ]) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Approve"><i class="fe-check-circle" ></i></a> --}}
                                 <a href="{{ route("eventee.post.rejectComment", [
                                         "comment" => $comment->id,"id"=>$id
                                     ]) }}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reject"><i class="fe-x-circle" ></i></a>
