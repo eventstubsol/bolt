@@ -818,7 +818,7 @@ function initApp() {
                 trackEvent({
                     type: room + "_visit"
                 });
-                createGroup(room);
+                // createGroup(room);
                 CometChatWidget.chatWithGroup(room);
                 pageChangeActions(false);
 
@@ -882,7 +882,7 @@ function initApp() {
                 if(menu_hidden === "1" || menu_hidden == 1){
                     navs.addClass('hidden');
                 }
-                createGroup(chatname);
+                // createGroup(chatname);
                 CometChatWidget.chatWithGroup(chatname);
                 
                recordPageView("page/" + page, page + " page", "page",page);
