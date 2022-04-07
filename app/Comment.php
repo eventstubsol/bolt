@@ -26,7 +26,7 @@ class Comment extends Model
     public function getCreatedAtAttribute($value)
     {
         $tz = Event::findorfail($this->event_id)->timezone;
-        $time = (new Carbon($value, "UTC"))->setTimezone(new CarbonTimeZone($tz))->diffForHumans('UTC');
+        $time = (new Carbon($value, "UTC"))->setTimezone(new CarbonTimeZone($tz))->format('m-d-Y h:i');
         return $time;
     }
 }

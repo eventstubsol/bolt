@@ -293,6 +293,21 @@
         margin-bottom: 6px;
         width: 90%;
     }
+    @keyframes rotate {
+
+        from {transform: rotate(0deg)}
+        to {transform: rotate(360deg)}
+
+    }
+
+
+    .refreshing {
+        animation-name: rotate;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-play-state: running;
+    }
 </style>
 @foreach ($posts as $post)
 @php
@@ -405,7 +420,7 @@
                                 @endif
                                 <br/>
                                 <h3 style="display: inline-block;">Comments</h3>
-                                <span  data-id="{{$post->id}}" class="ml-2 refresh_comments "><i class="fe-refresh-cw"></i></span>
+                                <button  data-id="{{$post->id}}" class="btn ml-2 refresh_comments "><i class="fe-refresh-cw"></i></button>
                                 <div class="post_comments_cont">
                                     <div class="comments_inner_container c_i_c_{{$post->id}}">
                                         @if(count($post->comments))
@@ -435,7 +450,7 @@
                                     </div>
                                     <div class="comment_input">
                                         {{-- <textarea type="textbox" style="width: 80%" data-emoji-input="unicode" class="form-control" id="comment_{{$post->id}}" placeholder="Write your comment here..." data-emojiable="true"></textarea> --}}
-                                        <input type="text" class="comment_input_text"  id="comment_{{$post->id}}" placeholder="Write your comment here...">
+                                        <input type="text"  data-id="{{$post->id}}"  class="comment_input_text"  id="comment_{{$post->id}}" placeholder="Write your comment here...">
                                         <button data-id="{{$post->id}}"  style="width:25%" class="btn send_comment send_comment_{{$post->id}}" >
                                             <img class="" src="{{ assetUrl('uploads/R58jLvFt7sI5WzBMqgpul4PulNUGaasUff2lBR4I.png') }}" width="20%" alt="">
 
@@ -541,9 +556,36 @@
                 }
             })
         })
+        $('.comment_input_text').keypress(function (e) {
+            var key = e.which;
+            if(key == 13){
+                let btn = $(this);
+                $(this).attr("disabled", true);
+                let post_id = $(this).data("id")
+                let message = $(`#comment_${post_id}`).val();
+                console.log(message);
+                $.ajax({
+                    url: url.replace(":id",post_id),
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        message: message,
+                    },
+                    success: function () {
+                        btn.removeAttr("disabled");
+                        $(`#comment_${post_id}`).val('');
+                        showMessage("Your Comment has been sent for approval.", "success");
+                    },
+                    error: function () {
+                        showMessage("Error occurred while commenting. Please try again later or refresh page.", "error");
+                    }
+                })
+            }
+        })
         $(".refresh_comments").on("click",function(){
             let refreshUrl = "{{route('post.refreshComments', [ 'post'=>':id','id'=>$event->id ] )}}";
             let btn = $(this);
+            btn.addClass("refreshing");
             $(this).attr("disabled", true);
             let post_id = $(this).data("id")
             let message = $(`#comment_${post_id}`).val();
@@ -556,6 +598,8 @@
                     message: message,
                 },
                 success: function (res) {
+                    btn.removeClass("refreshing");
+                    
                     // alert(res);
                     comments = JSON.parse(res);
                     console.log(comments);
@@ -604,7 +648,7 @@
                         })
                     }
                     // console.log(res.body);
-                    // btn.removeAttr("disabled");
+                    btn.removeAttr("disabled");
                     // $(`#comment_${post_id}`).val('');
                     // showMessage("Your Comment has been sent for approval.", "success");
                 },
