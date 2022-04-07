@@ -32,6 +32,6 @@ Thank You
         @if(Carbon\Carbon::now() < Carbon\Carbon::parse($event->start_date))
             <h5>Event Starts At : {{ Carbon\Carbon::parse($event->start)->format('H:i').  ' On '  .Carbon\Carbon::parse($event->start)->format('d-m-Y')}}</h5>
         @endif
-        <a href="{{ route('attendeeLogin',$subdomain) }}" class="btn btn-primary mt-2">Login Here</a>
+        <a href="{{ route('attendeeLogin',$subdomain) }}" style="background-color: {{ $event->primary_color }}; color:white;" class="btn btn-primary mt-2">Login Here</a>
     </div>
 @endsection

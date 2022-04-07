@@ -15,7 +15,9 @@ use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Hash;
-use Mail;
+// use Mail;
+
+use Illuminate\Support\Facades\Mail;
 use App\FormStruct;
 use App\Form;
 use App\FormField;
@@ -24,6 +26,7 @@ use App\UserSubtype;
 use Aws\Api\Validator;
 use App\UserLocation;
 use Dotenv\Exception\ValidationException;
+use App\Mail\WelcomeMail;
 use Sichikawa\LaravelSendgridDriver\Transport\SendgridTransport;
 
 class AttendeeAuthController extends Controller
@@ -305,18 +308,20 @@ class AttendeeAuthController extends Controller
             $userData->field_value = $userdata;
             $userData->save();
         }
+        Mail::to($user->email)->send(new WelcomeMail($event, $user));
+        
        if($event->active_option == 1){
             flash("A Verification link is sent to your account, Please check your email and activate your account")->info();
             GenerateLinkAttendee($user,$subdomain);
             return redirect()->route('attendeeLogin',$subdomain);
        }
-       if($event->m_active_option == 1 && $user->email_status == 0){
+       else if($event->m_active_option == 1 && $user->email_status == 0){
             // GenerateLinkAttendee($user,$subdomain);
             flash("Your Account has been sent for Verification. You will recieve a confirmation mail soon.")->info();
             return redirect()->route("attendeeLogin",['subdomain'=>$subdomain]);
         }
        else{
-        flash("Registration Successful")->success();
+        flash("Registration Successful")->success(); 
         return redirect()->route('thank.page',$subdomain);
        }
     }
