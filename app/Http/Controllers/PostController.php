@@ -134,6 +134,22 @@ class PostController extends Controller
         ]);
         return true;
     }
+    public function refreshComments($id,Post $post, Request $req){
+        $user_id = Auth::user()->id;
+        // return $post->id;
+        // $post->comments()->create([
+        //     // "post_id"=>$post->id,
+        //     "comment"=>$req->message,
+        //     "user_id"=>$user_id,
+        //     "event_id"=>$id
+        // ]);
+        $comments =  Comment::where("event_id",$id)->where("approved",1)->where("post_id",$post->id)->with(["user"])->get();
+     
+        // $comments = $post->comments();
+        // dd($comments);
+        return json_encode($comments);
+        // return true;
+    }
     public function approveComment($id,Comment $comment,Request $req){
         if( Auth::user()->type === 'eventee')
         {

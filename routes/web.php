@@ -680,6 +680,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
  
     //  Posts
     Route::POST("posts/comment/{id}/{post}",'PostController@addComment')->name("post.addComment");
+    Route::post("posts/refreshComments/{id}/{post}",'PostController@refreshComments')->name("post.refreshComments");
 
     // Route::get("/event/{id}", "EventController@index")->name("eventee.event");
     //Event Availability
