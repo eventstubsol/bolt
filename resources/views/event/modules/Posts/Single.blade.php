@@ -403,6 +403,7 @@
                                             </div>
                                         @endif  
                                 @endif
+                                <br/>
                                 <h3 style="display: inline-block;">Comments</h3>
                                 <span  data-id="{{$post->id}}" class="ml-2 refresh_comments "><i class="fe-refresh-cw"></i></span>
                                 <div class="post_comments_cont">
