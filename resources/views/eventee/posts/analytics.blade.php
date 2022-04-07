@@ -39,7 +39,7 @@
                     <tbody>
                       @foreach($postEmotes as $key => $postEmote)
                         <tr>
-                          <td>{{ $postEmote->user ? $postEmote->user->email : 'Attendee Deleted'}}</td>
+                          <td>{{ $postEmote->user ? ($postEmote->user->name . $postEmote->user->last_name . " - "  . $postEmote->user->email) : 'Attendee Deleted'}}</td>
                           <td>{{ $postEmote->emote ?? '-' }}</td>
                           <td>{{ $postEmote->vote  ?? '-' }}</td>
                           <td>{{ $postEmote->rate  ?? '-' }}</td>

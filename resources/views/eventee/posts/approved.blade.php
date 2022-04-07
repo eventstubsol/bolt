@@ -39,7 +39,7 @@
                       @foreach($comments as $key => $comment)
                         <tr>
                           <td>{{$comment->post->title}}</td>
-                          <td>{{ $comment->user ? $comment->user->email : 'Deleted Attendee' }}</td>
+                          <td>{{ $comment->user ?($comment->user->name . $comment->user->last_name . " - "  . $comment->user->email): 'Deleted Attendee' }}</td>
                           <td>{{ $comment->comment }}</td>
                           
                             <td class="text-right" >

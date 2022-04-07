@@ -345,7 +345,7 @@ define("EXTERNAL_VIDEO_ASSETS_ASPECT", 56.15);
 define("polls", 56.15);
 
 //Points definition for Gamification
-define("SCAVENGER_HUNT_POINTS", 10);
+define("SCAVENGER_HUNT_POINTS", 50);
 define("BOOTH_VISIT_POINTS", 50);
 define("BOOTH_RESOURCES_VIEW_POINTS", 100);
 define("BOOTH_CHAT_POINTS", 0);

@@ -25,6 +25,9 @@
             width: 100%;
             height: 100%;
         }
+        ._custom_modal{
+            cursor: pointer;
+        }
 
         .menu-custom .menu li a .menu-icon.courses {
             background-image: url(/assets/images/menu/final/guide.png);

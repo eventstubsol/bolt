@@ -37,7 +37,7 @@ if(isset($leaderboard)){
 
                 <div class="d-block">
                 <div class="wrap-title">
-                    <h2>Play for your chance to win gift cards to the SouthCentral Region Swag Shoppe!</h2>
+                    {{-- <h2>Prizes - To be announced at a later date</h2> --}}
                     <p class="pr-text"></p>
                 </div>
                 <div class="carousel slide h-100" id="prizes" data-ride="carousel">

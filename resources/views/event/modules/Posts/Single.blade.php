@@ -300,7 +300,7 @@
         <div class="modal-dialog modal-sm" style="max-width: 590px">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="resourceslistLabel"><span class="image-icon resources"></span>{{$post->title}}</h4>
+                    <h4 class="modal-title" id="resourceslistLabel">{{$post->title}}</h4>
                     <button  type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
                 </div>
