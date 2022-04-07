@@ -138,12 +138,11 @@
     .down{
         justify-content: center;
     }
-    @charset "UTF-8";
     #clear {
     display: inline;
     }
 
-    #stars_rating {
+    .stars_rating {
     margin: 0;
     padding: 0;
     display: flex;
@@ -151,20 +150,20 @@
     justify-content: center;
     align-items: center;
     }
-    #stars_rating p {
+    .stars_rating p {
     text-align: center;
     font-size: 20px;
     margin: 0;
     }
     @media (max-width: 479px) {
-    #stars_rating p {
+    .stars_rating p {
         font-size: 15px;
     }
-    #stars_rating p.heading {
+    .stars_rating p.heading {
         font-size: 18px;
     }
     }
-    #stars_rating .stars {
+    .stars_rating .stars {
     display: inline-flex;
     flex-flow: row nowrap;
     max-width: 360px;
@@ -174,14 +173,14 @@
     padding: 0;
     margin-top: -8px;
     }
-    #stars_rating .stars .star {
+    .stars_rating .stars .star {
     position: relative;
     color: #ccf;
     font-size: 48px;
     cursor: pointer;
     padding: 0 5px;
     }
-    #stars_rating .stars .star:after {
+    .stars_rating .stars .star:after {
     content: "★";
     position: absolute;
     transform: translateX(-100%);
@@ -189,55 +188,55 @@
     font-size: 48px;
     }
     @media (min-width: 768px) {
-    #stars_rating .stars .star {
+    .stars_rating .stars .star {
         padding: 0 7px;
         font-size: 50px;
     }
-    #stars_rating .stars .star:after {
+    .stars_rating .stars .star:after {
         font-size: 50px;
     }
     }
     @media (max-width: 479px) {
-    #stars_rating .stars .star {
+    .stars_rating .stars .star {
         padding: 0 3px;
         font-size: 36px;
     }
-    #stars_rating .stars .star:after {
+    .stars_rating .stars .star:after {
         font-size: 36px;
     }
     }
-    #stars_rating .stars .star.rated {
+    .stars_rating .stars .star.rated {
     color: royalblue;
     }
-    /* #stars_rating .stars .star.rated:before {
-    color: darkblue;
-    content: "★";
-    position: absolute;
-    left: -1.5px;
-    top: -13px;
-    font-size: 50px;
+    /* .stars_rating .stars .star.rated:before {
+        color: darkblue;
+        content: "★";
+        position: absolute;
+        left: -1.5px;
+        top: -13px;
+        font-size: 50px;
     } */
     @media (min-width: 768px) {
-    /* #stars_rating .stars .star.rated:before {
+    /* .stars_rating .stars .star.rated:before {
         left: 0px;
         top: -14.5px;
         font-size: 80px;
     } */
     }
     @media (max-width: 479px) {
-    /* #stars_rating .stars .star.rated:before {
+    /* .stars_rating .stars .star.rated:before {
         left: -2px;
         top: -10px;
         font-size: 48px;
     } */
     }
-    #stars_rating .stars:hover .star {
+    .stars_rating .stars:hover .star {
     color: royalblue;
     }
-    #stars_rating .stars:hover .star:hover ~ * {
+    .stars_rating .stars:hover .star:hover ~ * {
     color: #ccf;
     }
-    /* #stars_rating .stars.rated .star:before {
+    /* .stars_rating .stars.rated .star:before {
     color: darkblue;
     content: "★";
     position: absolute;
@@ -246,45 +245,45 @@
     font-size: 50px;
     } */
     @media (min-width: 768px) {
-    /* #stars_rating .stars.rated .star:before {
+    /* .stars_rating .stars.rated .star:before {
         left: 0px;
         top: -14.5px;
         font-size: 80px;
     } */
     }
     @media (max-width: 479px) {
-    /* #stars_rating .stars.rated .star:before {
+    /* .stars_rating .stars.rated .star:before {
         left: -2px;
         top: -10px;
         font-size: 48px;
     } */
     }
-    #stars_rating .stars.rated .star:after {
+    .stars_rating .stars.rated .star:after {
     color: royalblue;
     }
-    /* #stars_rating .stars.rated .star.rated ~ *:before {
+    /* .stars_rating .stars.rated .star.rated ~ *:before {
     display: none;
     } */
-    #stars_rating .stars.rated .star.rated ~ *:after {
+    .stars_rating .stars.rated .star.rated ~ *:after {
     color: #ccf;
     }
-    #stars_rating .stars.rated:hover .star {
+    .stars_rating .stars.rated:hover .star {
     color: royalblue;
     }
-    #stars_rating .stars.rated:hover .star:after {
+    .stars_rating .stars.rated:hover .star:after {
     color: royalblue;
     }
-    #stars_rating .stars.rated:hover .star:hover ~ * {
+    .stars_rating .stars.rated:hover .star:hover ~ * {
     color: #ccf;
     }
-    #stars_rating .stars.rated:hover .star:hover ~ *:after {
+    .stars_rating .stars.rated:hover .star:hover ~ *:after {
     color: #ccf;
     }
-    #stars_rating .rates span.avg:before {
+    .stars_rating .rates span.avg:before {
     content: "Average: ";
     }
     @media (max-width: 479px) {
-    #stars_rating .rates span.avg:before {
+    .stars_rating .rates span.avg:before {
         content: "Avg: ";
     }
     }
@@ -374,24 +373,25 @@
                                 @endif
                                 @if ($post->rate_stat)
                                     @if(isset($userEmote->rate))
-                                        <div id="stars_rating">
-                                            {{-- <p class="heading">Please rate this title.</p> --}}
-                                            <div class="stars">
-                                                <div class="star {{$userEmote->rate>0?'rated':''}} " data-index='1' data-id="{{ $post->id }}">★</div>
-                                                <div class="star {{$userEmote->rate>1?'rated':''}} " data-index='2' data-id="{{ $post->id }}">★</div>
-                                                <div class="star {{$userEmote->rate>2?'rated':''}} " data-index='3' data-id="{{ $post->id }}">★</div>
-                                                <div class="star {{$userEmote->rate>3?'rated':''}} " data-index='4' data-id="{{ $post->id }}">★</div>
-                                                <div class="star {{$userEmote->rate>4?'rated':''}} " data-index='5' data-id="{{ $post->id }}">★</div>
+                                            <div class="stars_rating">
+                                                {{-- <p class="heading">Please rate this title.</p> --}}
+                                                <div class="stars">
+                                                    <div class="star {{$userEmote->rate>0?'rated':''}} " data-index='1' data-id="{{ $post->id }}">★</div>
+                                                    <div class="star {{$userEmote->rate>1?'rated':''}} " data-index='2' data-id="{{ $post->id }}">★</div>
+                                                    <div class="star {{$userEmote->rate>2?'rated':''}} " data-index='3' data-id="{{ $post->id }}">★</div>
+                                                    <div class="star {{$userEmote->rate>3?'rated':''}} " data-index='4' data-id="{{ $post->id }}">★</div>
+                                                    <div class="star {{$userEmote->rate>4?'rated':''}} " data-index='5' data-id="{{ $post->id }}">★</div>
                                                 </div>
-                                                <p class="rates"> <span class="avg avg_{{$post->id}}">{{$post->rating ?? 0}} </span> | Your Rating: <span class="rate rate_{{$post->id}}"> {{$userEmote->rate}} </span></p>
+                                                    <p class="rates"> <span class="avg avg_{{$post->id}}">{{$post->rating ?? 0}} </span> | Your Rating: <span class="rate rate_{{$post->id}}"> {{$userEmote->rate}} </span></p>
                                             </div>
                                         @else
-                                            <div class="stars">
-                                                <div class="star " data-index='1' data-id="{{ $post->id }}">★</div>
-                                                <div class="star " data-index='2' data-id="{{ $post->id }}">★</div>
-                                                <div class="star " data-index='3' data-id="{{ $post->id }}">★</div>
-                                                <div class="star " data-index='4' data-id="{{ $post->id }}">★</div>
-                                                <div class="star " data-index='5' data-id="{{ $post->id }}">★</div>
+                                            <div class="stars_rating">
+                                                <div class="stars">
+                                                    <div class="star " data-index='1' data-id="{{ $post->id }}">★</div>
+                                                    <div class="star " data-index='2' data-id="{{ $post->id }}">★</div>
+                                                    <div class="star " data-index='3' data-id="{{ $post->id }}">★</div>
+                                                    <div class="star " data-index='4' data-id="{{ $post->id }}">★</div>
+                                                    <div class="star " data-index='5' data-id="{{ $post->id }}">★</div>
                                                 </div>
                                                 <p class="rates"> <span class="avg avg_{{$post->id}}">{{$post->rating ?? 0}} </span> | Your Rating: <span class="rate rate_{{$post->id}}"> (Unrated)</span></p>
                                             </div>
@@ -435,10 +435,7 @@
                                     </div>
                                 </div>
                             </div>
-                
                         </div>
-
-
                     </div>
                 </div>
             </div>

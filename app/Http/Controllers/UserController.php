@@ -107,6 +107,9 @@ class UserController extends Controller
                     // dd($user["welcome"]);
                     $welcomeMail = $user["welcome"];
                     $user = User::create($user);
+                    if($chat_app){
+                        createUser($chat_app,$user);
+                    }
                     if($welcomeMail){
                         Mail::to($user->email)->send(new WelcomeMail($eventCap, $user));
                     }
