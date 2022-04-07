@@ -110,7 +110,8 @@ class UserController extends Controller
                     if($chat_app){
                         createUser($chat_app,$user);
                     }
-                    if($welcomeMail){
+                    if($welcomeMail === "true"){
+                        // dd("test");
                         Mail::to($user->email)->send(new WelcomeMail($eventCap, $user));
                     }
                     $user->markEmailAsVerified();
