@@ -139,8 +139,9 @@ class EventController extends Controller
     public function leaderBoardReports($id)
     {   
         $event = Event::where("id", $id)->first();
-        $users = User::where("event_id",$id)->get(["id","name","last_name","email","points"])->load("points_details");
-        return $users;
+        $users = User::where("event_id",$id)->where("points",">",0)->orderBy("points","desc")->get(["id","name","last_name","email","points"])->load("points_details");
+        // return $users;
+        return view("eventee.user_report.leaderboard")->with(compact(["users","id"]));
         
     }
 
