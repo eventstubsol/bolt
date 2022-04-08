@@ -199,9 +199,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function points()
+    public function points_details()
     {
-        return $this->hasMany("\App\Points", "to");
+        return $this->hasMany("\App\Points", "points_to");
     }
     public function subtype()
     {

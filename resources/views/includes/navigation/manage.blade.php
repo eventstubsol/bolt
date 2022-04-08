@@ -416,6 +416,7 @@
                 <a href="{{ route("event.Dashboard",['id'=>$id]) }}">General</a>
             </li> --}}
             <li><a href="{{ route('eventee.loginLogs',$id) }}">Login Logs</a></li>
+            <li><a href="{{ route('eventee.leaderBoardReports',$id) }}">Leaderboard Logs</a></li>
             <li><a href="{{ route('eventee.room.report',$id) }}">Room Wise Report</a></li>
             <li><a href="{{ route("eventee.user.report",['id'=>$id]) }}">User Wise Report</a></li>
         </ul>

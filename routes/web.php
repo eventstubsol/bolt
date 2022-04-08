@@ -67,6 +67,7 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::post("reports/login-logs/export/{id}", "EventController@exportLoginLogs")->name("reports.export.loginLogs");
     Route::post("reports/login/{id}", "EventController@generalReportsData")->name("reports.general.api");
     Route::get("loginreports/{id}","EventController@loginReports")->name('eventee.loginLogs');
+    Route::get("leaderboardreports/{id}","EventController@leaderBoardReports")->name('eventee.leaderBoardReports');
        
     Route::post("/user-bulk-upload/{id}", "UserController@bulk_create")->name("users.bulk_upload");
         

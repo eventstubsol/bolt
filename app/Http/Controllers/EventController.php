@@ -136,6 +136,14 @@ class EventController extends Controller
             );
     }
 
+    public function leaderBoardReports($id)
+    {   
+        $event = Event::where("id", $id)->first();
+        $users = User::where("event_id",$id)->get(["id","name","last_name","email","points"])->load("points_details");
+        return $users;
+        
+    }
+
     public function createRoomGroup(Request $request)
     {
 
