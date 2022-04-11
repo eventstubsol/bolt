@@ -46,6 +46,9 @@
             color: white;
 
             }
+            .theme-modal .modal-content {
+                background: #050505d9 !important;
+            }
     </style>
 @endsection
 

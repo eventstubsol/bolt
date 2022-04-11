@@ -191,6 +191,7 @@ class PageController extends Controller
 
             $session_rooms = sessionRooms::where("event_id", $ids)->get();
             $page_name = "lobby_" . $ids;
+            $modals =  Modal::where("event_id", $id)->get();
 
             $links = Link::where(["page" => $page_name])->get()->load("background");
             // dd($links);
@@ -207,7 +208,7 @@ class PageController extends Controller
             // dd($id);
 
 
-            return view("eventee.pages.lobby")->with(compact(["page", "session_rooms", "pages", "booths", "id", "pag", 'event', "posts"]));
+            return view("eventee.pages.lobby")->with(compact(["page", "modals","session_rooms", "pages", "booths", "id", "pag", 'event', "posts"]));
         } catch (\Exception $e) {
             if (Auth::user()->type === 'admin') {
                 dd($e->getMessage());
@@ -447,6 +448,9 @@ class PageController extends Controller
                             break;
                         case "post":
                             $to = $request->posts[$id];
+                            break;
+                        case "modal":
+                            $to = $request->modals[$id];
                             break;
                     }
                     $link = Link::create([

@@ -31,6 +31,12 @@
 
 @section('content')
 <div class="row">
+    <style>
+        .theme-modal .modal-content {
+            background: #050505d9 !important;
+        }
+    </style>
+    
     {{-- Event Count --}}
     <div class="col-md-6 col-xl-3">
         <div class="widget-rounded-circle card" >

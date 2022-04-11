@@ -178,6 +178,16 @@ $event = App\Event::findOrFail($id);
                                         <label for="phb">Photobooth Gallery Link</label>
                                         <input @if($link->type==="photobooth") value="{{$link->url}}" @endif type="text"   name="gallery_link[]" class="form-control">
                                     </div>
+                                    {{-- Modal --}}
+                                    <div @if($link->type !== "modal") style="display: none;" @endif  class="modal-{{$ids}} modals form-group mb-3 col-md-4">
+                                        <label for="to">to(modal)</label>
+                                        <select     class="form-control" name="modals[]">
+                                            @foreach($modals as $modal)
+                                                <option @if($link->to === $modal->id) selected @endif value="{{$modal->id}}">{{$modal->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
                                     
 
                                     
@@ -562,6 +572,7 @@ $event = App\Event::findOrFail($id);
         $(".booth-"+index).hide();
         $(".post-"+index).hide();
         $(".vimeo-"+index).hide();
+        $(".modal-"+index).hide();
         $(".pdf-"+index).hide();
         $(".chat_user-"+index).hide();
         $(".chat_group-"+index).hide();
@@ -601,6 +612,9 @@ $event = App\Event::findOrFail($id);
                 break;
             case "photobooth":
                 $(".ph-"+index).show();
+                break;
+            case "modal":
+                $(".modal-"+index).show();
                 break;
         }
         // console.log(val);
@@ -682,6 +696,16 @@ $event = App\Event::findOrFail($id);
 
                                         </select>
                                     </div>
+                                    <div style="display: none;" class="modal-${n} modals form-group mb-3 col-md-4">
+                                        <label for="to">to(modal)</label>
+                                        <select     class="form-control" name="modals[]">
+                                            @foreach($modals as $modal)
+                                                <option value="{{$modal->id}}">{{$modal->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
 
                                     <div style="display: none;" class="booth-${n} booths form-group mb-3 col-md-4">
                                         <label for="to">to(Booth)</label>
