@@ -96,11 +96,10 @@
     }
     .menu-col .menu a:hover {
         color: {{ $event->secondary_color }};
+        text-decoration: underline;
         
     }
-    .menu-col .menu .modalToggle:hover{
-        color: {{ $event->secondary_color }};
-    }
+   
     /* .menu-col .menu{
         background:{{ $event->primary_color }};
     } */

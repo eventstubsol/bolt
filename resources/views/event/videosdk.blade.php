@@ -70,8 +70,8 @@
           },
         permissions: {
           askToJoin: false, // Ask joined participants for entry in meeting
-          toggleParticipantMic: true, // Can toggle other participant's mic
-          toggleParticipantWebcam: true, // Can toggle other participant's webcam
+          toggleParticipantMic: false, // Can toggle other participant's mic
+          toggleParticipantWebcam: false, // Can toggle other participant's webcam
         },
  
         joinScreen: {

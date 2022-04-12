@@ -100,8 +100,11 @@
         button.pb-button {
             color: {{ $event->secondary_color }} !important;
         }
+        .custom-theme a i{
+            color: black !important;
+        }
         .custom-theme a{
-            color: {{ $event->secondary_color }} ;
+            color: {{ $event->secondary_color }};
         }
 
         /* .tab-content .nav-justified .nav-item:nth-child(2) a {
