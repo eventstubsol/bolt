@@ -494,7 +494,8 @@ table.dataTable tbody tr {
 
 .navbar-custom.theme-nav {
     position: fixed;
-    background: #ffffffb5;
+    /* background: #ffffffb5; */
+    background: #fff;
     padding: 0px 20px;
     margin: 0;
     top: 0;
