@@ -16,8 +16,8 @@
         cursor: pointer;
     }
     .TableBlock{
-        width: 150px;
-        height: 160px;
+        width: 204px;
+        height: 203px;
         border-radius: 5px;
         border: 1px solid #d1864f;
         background: #e9ba84;
@@ -51,7 +51,7 @@
 
     .tob_Chair{
         position: absolute;
-        top: 6%;
+        top: 0%;
         left: 0;
         display: flex;
         justify-content: center;
@@ -60,7 +60,7 @@
     .right_Chair{
         position: absolute;
         top: 0;
-        right: 7%;
+        right: 3px;
         display: flex;
         justify-content: center;
         width: 100%;
@@ -69,7 +69,7 @@
     }
     .bottom_Chair{
         position: absolute;
-        bottom: 6%;
+        bottom: 0%;
         left: 0;
         display: flex;
         justify-content: center;
@@ -80,7 +80,7 @@
     .left_Chair{
         position: absolute;
         top: 0;
-        left: 7%;
+        left: 3px;
         display: flex;
         justify-content: center;
         width: 100%;
@@ -151,7 +151,7 @@
 
     .for-checking{
         width: 100%;
-        height: 50%;
+        height: 100%;
         justify-content: center;
         display: flex;
         overflow: hidden;
@@ -310,17 +310,17 @@
         @endphp
             @if($table->seats == 16)
             
-                <div class="table_Box BigTableBox lounge_meeting " data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}" >
+                <div class="table_Box BigTableBox lounge_meeting " data-seats="" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}" >
                     <div class="TableBlock bigTable d-flex justify-content-between align-items-center">
                         <div>
-                            <h2>Seats: <span>{{ $avs }} Available<span></span></span></h2>
+                            <h2 style="text-align: center;margin-top: -10px;">Seats: <span>{{ $avs }} Available<span></span></span></h2>
                         </div>
                         @if($table->logo !== null)
                             <div class="for-checking">
                                 <img src="{{ assetUrl($table->logo) }}" alt="">
                             </div>
                         @endif
-                        <div class="mt-0">
+                        {{-- <div class="mt-0">
                             <h3 class="d-flex align-items-center"> 
                                 <span class="mr-2 d-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#fff" class="bi bi-person-check" viewBox="0 0 16 16">
@@ -328,9 +328,9 @@
                                     <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
                                     </svg>
                                 </span> 
-                                {{ $table->name }}
+                                {{-- {{ $table->name ?? '' }}
                             </h3>
-                        </div>
+                        </div> --}}
                     </div>
                     <ul class="tob_Chair bigTopchair">
                         <li><img src="{{asset("/assets/images/chair-svg.svg")}}"></li>
@@ -359,11 +359,11 @@
                 </div>
             
             @else
-            <div class="table_Box lounge_meeting table" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
+            <div class="table_Box lounge_meeting table" data-limit="{{$avs}}" data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
                
                 <div class="TableBlock d-flex justify-content-between flex-column" >
                     <div>
-                        <h2>Seats: <span>{{$avs}} Available<span></h2>
+                        <h2 style="text-align: center;margin-top: -10px;">Seats: <span>{{$avs}} Available<span></h2>
                         {{-- <h2 class="mt-3">Seats: <span>2<span></h2> --}}
                     </div>
                     @if($table->logo != null)
@@ -371,7 +371,7 @@
                             <img src="{{ assetUrl($table->logo) }}" alt="">
                         </div>
                     @endif
-                    <div class="mt-0">
+                    {{-- <div class="mt-0">
                         <h3 class="d-flex align-items-center"> 
                             <span class="mr-2 d-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#fff" class="bi bi-person-check" viewBox="0 0 16 16">
@@ -379,9 +379,9 @@
                                 <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
                                 </svg>
                             </span> 
-                            {{$table->name}}
+                            {{$table->name ?? ''}}
                         </h3>
-                    </div>
+                    </div> --}}
                 </div>
                 @for($i = 0;$i< 4;$i++)
                    

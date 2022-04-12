@@ -449,19 +449,27 @@ function initApp() {
             // e.stopPropagation();
             let meetingId= $(e.currentTarget).data("meeting");
             let tableId= $(e.currentTarget).data("table");
+            let limit= $(e.currentTarget).data("limit");
             console.log(e);
             console.log(tableId);
-            let participant_interval = setInterval(addParticipant,30000,tableId);
-            addParticipant(tableId);
-            
-            $("#lounge-session-content").empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.videoSDK.replace(":id",meetingId)}"></iframe>`);
-            $("#lounge-session-content").append(`<div id="video_play_area"></div>`);
-            $("#lounge_modal").unbind().on("hide.bs.modal", function () {
-                console.log("opened")
-                clearInterval(participant_interval);
-                removeParticipant(tableId);
-                $("#lounge-session-content").empty();
-            });
+            if(limit>0){
+                let participant_interval = setInterval(addParticipant,30000,tableId);
+                addParticipant(tableId);
+                
+                $("#lounge-session-content").empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.videoSDK.replace(":id",meetingId)}"></iframe>`);
+                $("#lounge-session-content").append(`<div id="video_play_area"></div>`);
+                $("#lounge_modal").unbind().on("hide.bs.modal", function () {
+                    console.log("opened")
+                    clearInterval(participant_interval);
+                    removeParticipant(tableId);
+                    $("#lounge-session-content").empty();
+                });
+            }else{
+                $("#lounge-session-content").empty().append(`<h1>Table Seats Full</h1>`);
+                // $("#lounge-session-content").append(`<div id="video_play_area"></div>`);
+              
+            }
+
         })
     }
 
