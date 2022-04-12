@@ -719,6 +719,16 @@ HTML;
 HTML;
 
         break; 
+    case("lounge"):
+        return <<<HTML
+             <a data-link="networking" class="area">
+             <img src="$icon" width="23" alt="">
+                 
+             <!-- <i class="fe-users"></i> -->
+             $menu->name</a>
+HTML;
+
+        break; 
     case("modal"):
         return <<<HTML
              <a data-toggle="modal" data-target="#$menu->link" class="_custom_modal">

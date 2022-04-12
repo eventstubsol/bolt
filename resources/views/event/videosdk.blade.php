@@ -14,6 +14,7 @@
 </head>
 <body>
     <div id="video"></div>
+    
     <script>
     window.addEventListener('DOMContentLoaded', (event) => {
       var script = document.createElement("script");
@@ -87,7 +88,7 @@
     //   let doc = document.getElementById("frame").contentDocument;
       
       script.src =
-        "https://sdk.videosdk.live/rtc-js-prebuilt/0.1.5/rtc-js-prebuilt.js";
+        "https://sdk.videosdk.live/rtc-js-prebuilt/0.3.1/rtc-js-prebuilt.js";
       document.getElementsByTagName("head")[0].appendChild(script);
     })
     //   doc.getElementById("inner_head").appendChild(script);
