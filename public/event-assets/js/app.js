@@ -451,8 +451,8 @@ function initApp() {
             let tableId= $(e.currentTarget).data("table");
             console.log(e);
             console.log(tableId);
-            // let participant_interval = setInterval(addParticipant,25000,tableId);
-            // addParticipant(tableId);
+            let participant_interval = setInterval(addParticipant,30000,tableId);
+            addParticipant(tableId);
             
             $("#lounge-session-content").empty().append(`<iframe frameborder="0" id="frame"  class="positioned fill" src="${window.config.videoSDK.replace(":id",meetingId)}"></iframe>`);
             $("#lounge-session-content").append(`<div id="video_play_area"></div>`);
@@ -471,22 +471,22 @@ function initApp() {
         console.log(window.config.updateLounge);
         let addingParticipant = false;
         let last_add = 0;
-        // loungeInterval = setInterval(function(){
-        //     console.log("test interval")
-        //         let now = Date.now();
-        //         if (!addingParticipant && last_add + 5000 > now) { return false; } //If already requesting and last request was less than 5 seconds ago, then dont refresh again
-        //         last_add = false;
-        //         $.ajax({
-        //             url: window.config.updateLounge,
-        //             success: function (html) {
-        //                 addingParticipant = true;
-        //                 // console.log(html);
-        //                 $("#lounge_tables").html(html);
-        //                 setAreas();
-        //                 setLoungeLinks();
-        //             }
-        //         });
-        // },30000);
+        loungeInterval = setInterval(function(){
+            console.log("test interval")
+                let now = Date.now();
+                if (!addingParticipant && last_add + 5000 > now) { return false; } //If already requesting and last request was less than 5 seconds ago, then dont refresh again
+                last_add = false;
+                $.ajax({
+                    url: window.config.updateLounge,
+                    success: function (html) {
+                        addingParticipant = true;
+                        // console.log(html);
+                        $("#lounge_tables").html(html);
+                        setAreas();
+                        setLoungeLinks();
+                    }
+                });
+        },30000);
     }
     let addingParticipant = false;
     let last_add = 0;
