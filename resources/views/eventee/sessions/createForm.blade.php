@@ -300,6 +300,10 @@
                         $("#create_session").attr("disabled", true);
                         getMeetingId();
                     }
+                    if (value === "DYTE" ) {
+                        $("#create_session").attr("disabled", true);
+                        createDyteMeeting();
+                    }
                 });
 
 
@@ -351,6 +355,9 @@
                         return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
                     });
                     return uuid;
+                }
+                function createDyteMeeting() {
+                    
                 }
 
                 function getMeetingId() {

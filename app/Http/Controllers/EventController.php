@@ -49,6 +49,7 @@ use File;
 use Illuminate\Support\Facades\Storage as Storage;
 use App\Onboard;
 
+use Carbon\CarbonTimeZone;
 
 class EventController extends Controller
 {
@@ -1151,12 +1152,15 @@ class EventController extends Controller
         ]);
         $toSend = [];
         $uniqIds = [];
+        $tz = Event::findorfail($id)->timezone;
+           
         foreach ($log as $item) {
             if (!in_array($item->user_id, $uniqIds)) {
                 $uniqIds[] = $item->user_id;
                 if ($item->user) {
                     $u = $item->user->toArray();
-                    array_push($u, $item->created_at->format('j M Y H:i:s A'));
+                    $time = (new Carbon($item->created_at, "UTC"))->setTimezone(new CarbonTimeZone($tz))->format('j M Y H:i:s A');
+                    array_push($u,  $time);
                     unset($u['id']);
                     $toSend[] = $u;
                 }

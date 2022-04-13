@@ -3,7 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Event;
 
+use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 /**
  * App\LoginLog
  *
@@ -37,5 +40,17 @@ class LoginLog extends Model
             'company_name as Company Name',
         ]);
     }
+    // public function getCreatedAtAttribute($value)
+    // {
+    //     // dd($this);
+    //     if($this->event_id){
+
+    //         $tz = Event::findorfail($this->event_id)->timezone;
+    //         $time = (new Carbon($value, "UTC"))->setTimezone(new CarbonTimeZone($tz));
+    //         return $time;
+    //     }else{
+    //         return $value;
+    //     }
+    // }
 }
 
