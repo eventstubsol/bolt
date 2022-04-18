@@ -16,6 +16,8 @@ use App\Contact;
 use App\Template;
 use App\Event;
 use App\Link;
+use App\Page;
+use App\AccessSpecifiers;
 use Illuminate\Support\Facades\Mail as Mailing;
 use App\Leaderboard;
 use App\LeadPoint;
@@ -806,7 +808,7 @@ function getFilters($event_id)
 }
 
 function createMenus($event_id){
-    $delfaultMenus =   ["lobby","library","schedule","swagbag","leaderboard","personalagenda","lounge","attendees"];
+    $delfaultMenus =   ["Lobby","library","schedule","swagbag","leaderboard","personalagenda","lounge","attendees"];
     foreach($delfaultMenus as $id=> $menu){
         // dd($menu);
         $menuitem = new Menu();
@@ -876,10 +878,10 @@ function getFieldId($name,$id=null, $default = "")
          return $content->first()->value;
     }
     else{
-        if($name==="main_lobby_video" && !(Content::where("name", "main_lobby_video")->where('event_id',$id)->first() ?? Content::where("name", "main_lobby_video")->where('event_id',$id)->first()->value) &&  (Content::where("name", "main_lobby_image")->where('event_id',$id)->first() ?? Content::where("name", "main_lobby_image")->where('event_id',$id)->first()->value)){
+        if($name==="main_lobby_video" && !(Content::where("name", "main_lobby_video")->where('event_id',$id)->first() ? Content::where("name", "main_lobby_video")->where('event_id',$id)->first()->value: true )&&  (Content::where("name", "main_lobby_image")->where('event_id',$id)->first() ? Content::where("name", "main_lobby_image")->where('event_id',$id)->first()->value : false)){
             return "";
         }
-        if($name==="exterior_view_video" && !(Content::where("name", "exterior_view_video")->where('event_id',$id)->first() ?? Content::where("name", "exterior_view_video")->where('event_id',$id)->first()->value) &&  (Content::where("name", "exterior_view_image")->where('event_id',$id)->first() ?? Content::where("name", "exterior_view_image")->where('event_id',$id)->first()->value)){
+        if($name==="exterior_view_video" && !(Content::where("name", "exterior_view_video")->where('event_id',$id)->first() ? Content::where("name", "exterior_view_video")->where('event_id',$id)->first()->value: true )&&  (Content::where("name", "exterior_view_image")->where('event_id',$id)->first() ? Content::where("name", "exterior_view_image")->where('event_id',$id)->first()->value : false)){
             return "";
         }
         if(Content::where("name", $name)->where('event_id',null)->count()>0){
@@ -1721,6 +1723,116 @@ function CreateRoom($event_id){
     $images->url = 'uploads/jyOGZXQ3B0ufDjcCJkeiZ8ryNDazvSK02ge6LcNI.jpg';
     $images->title = $room->name;
     $images->save();
+    return 1;
+
+}
+function CreateDefaultRooms($event_id){
+    $room = new sessionRooms;
+    $room->name = 'Auditorium';
+    $room->event_id = $event_id;
+    $room->save();
+    $images = new Image;
+    $images->owner = $room->id;
+    $images->url = 'uploads/jyOGZXQ3B0ufDjcCJkeiZ8ryNDazvSK02ge6LcNI.jpg';
+    $images->title = $room->name;
+    $images->save();
+
+    foreach(USER_TYPES as $user_type){
+        AccessSpecifiers::create([
+            "page_id"=>$room->id,
+            "user_type"=>$user_type,
+            "event_id"=>$event_id
+        ]);
+    }
+    $pages = [
+                [
+                    "name"=>"Exterior",
+                    "image"=>"exterior_view_image",
+                    "hide_menu"=>true,
+                    "cms_field"=>true,
+                    "video"=>"exterior_view_video",
+                    "links"=>[ "lobby" => ["page","Lobby",0,0,90,90] ]
+                ],
+                [
+                    "name"=>"InfoDesk",
+                    "image"=>"uploads/HPETs4uKX37vVW6alT0bYWkWp5SIvvlOjSyGykzs.jpg",
+                    "hide_menu"=>false,
+                    "cms_field"=>false,
+                    "video"=>null,
+                    "links"=>[  ]
+                ],
+                [
+                    "name"=>"Lobby",
+                    "image"=>"main_lobby_image",
+                    "hide_menu"=>false,
+                    "cms_field"=>true,
+                    "video"=>"main_lobby_video",
+                    "links"=>[ "Auditorium" => ["session_room","Auditorium",39,29,15,20],'InfoDesk'=> ["page","InfoDesk",39,54,21,26] ]
+                ]
+            ];
+    foreach($pages as $_page){
+        
+        $page = new Page;
+        $page->name = $_page["name"];
+        $page->event_id = $event_id;
+        $page->hide_menu = $_page["hide_menu"];
+        $page->save();
+        // Give access to all users 
+        foreach (USER_TYPES as $user_type) {
+            AccessSpecifiers::create([
+                "page_id" => $page->id,
+                "user_type" => $user_type,
+                "event_id" => $event_id
+            ]);
+        }
+
+        if($_page["name"]==="Exterior"){
+            $event = Event::find($event_id);
+            $event->home_type = "page";
+            $event->home_page = "page/" .  $page->name;
+            $event->save();
+
+        }
+        if($_page["image"]){
+            $page->images()->create([
+                "url" =>  $_page["cms_field"] ? getFieldId($_page["image"],$event_id): $_page["image"] ,
+                "link" => "",
+                "title" => $page->name,
+                "event_id" => $event_id,
+            ]);
+        }
+        if($_page["video"]){
+            $page->videoBg()->create([
+                "url" =>$_page["cms_field"] ? getFieldId($_page["video"],$event_id): $_page["video"],
+                "title" => $page->name,
+                "event_id" => $event_id
+            ]);
+        }
+        foreach($_page["links"] as $linkname=>$data){
+            // if($data[0]==="page"){
+            //     $p = Page::where("name",$data[1])->where("event_id",$event_id)->first();
+            //     if($p){
+            //         $data[1]= $p->id;
+            //     }
+            // }
+            $link = Link::create([
+                "page" => $page->id,
+                "name" => $linkname,
+                "type" => $data[0],
+                "to" =>  $data[1],
+                "url" => null,
+                "top" =>  $data[2],
+                "left" =>  $data[3],
+                "width" =>  $data[4],
+                "height" =>  $data[5],
+                "perspective" =>'',
+                "rotationtype" =>  '',
+                "rotation" => '',
+                "location_status" => false
+
+            ]);
+        }
+    }
     return 1;
 
 }

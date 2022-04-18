@@ -296,7 +296,7 @@ class eventeeController extends Controller
             LandPage($event->id);
             CreateTemplate($event->id);
             CreateFeature($event->id);
-            CreateRoom($event->id);
+            CreateDefaultRooms($event->id);
             CreateExibitor($event->id);
             $contents = ContentMaster::all();
             foreach ($contents as $content) {

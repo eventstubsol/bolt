@@ -685,7 +685,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
 
     // Route::get("/event/{id}", "EventController@index")->name("eventee.event");
     //Event Availability
-    Route::get('event/available',"EventManageController@EventAvailable")->name('event.available');
+    Route::get('events/check/available_domain',"EventManageController@EventAvailable")->name('event.available');
 
     Route::post("/contacts/suggested", "UserController@suggestedContacts")->name("suggestedContacts");
     Route::post("/contacts/attendees", "UserController@allEventAttendees")->name("attendeesURL");
