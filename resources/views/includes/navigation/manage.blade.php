@@ -187,9 +187,9 @@
             <li>
                 <a href="{{ route("eventee.notification",$id) }}">Instant</a>
             </li>
-            {{-- <li>
+            <li>
                 <a href="{{ route("eventee.schedule",$id) }}">Schedule </a>
-            </li> --}}
+            </li>
         </ul>
     </div>
 </li>
