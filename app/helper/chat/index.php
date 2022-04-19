@@ -35,7 +35,7 @@ function createApp($event){
     $app = json_decode($r->body())->data;
     //id, accessKey, restAPI key =  apiKeys[0], auth key =  apiKeys[1] 
     $app_id =  $app->id;
-    $access_key =  $app->accessKey;
+    $access_key =  null;
     $apikey = "";
     $authkey = "";
     foreach($app->apiKeys as $key => $keydetails){
@@ -49,7 +49,7 @@ function createApp($event){
         "appid"=>$app->id,
         "name"=>$name,
         "state"=>"active",
-        "accessKey"=>$app->accessKey,
+        "accessKey"=>null,
         "authKey"=>$authkey,
         "apiKey"=>$apikey,
         "event_id"=>$event_id,
