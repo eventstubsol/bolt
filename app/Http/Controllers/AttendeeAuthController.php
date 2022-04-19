@@ -308,8 +308,9 @@ class AttendeeAuthController extends Controller
             $userData->field_value = $userdata;
             $userData->save();
         }
-        Mail::to($user->email)->send(new WelcomeMail($event, $user));
-        
+        if($event->m_active_option != 1 && $event->active_option != 1){
+            Mail::to($user->email)->send(new WelcomeMail($event, $user));
+        }
        if($event->active_option == 1){
             flash("A Verification link is sent to your account, Please check your email and activate your account")->info();
             GenerateLinkAttendee($user,$subdomain);
