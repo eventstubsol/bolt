@@ -51,22 +51,22 @@ class sendNote extends Command
         // print_r($schedules);
        if(count($schedules) > 0){
           
-            foreach($schedules as $schedule){
-                $event = Event::findOrFail($schedule->event_id);
-                $notify = new PushNotification;
-                $notify->title = $schedule->title;
-                $notify->url = $schedule->url;
-                $notify->message = $schedule->message;
-                $notify->roles =$schedule->role;
-                $notify->event_id = $event->id;
-                if($notify->save()){
-                    event(new NotificationEvent($schedule->message,$schedule->title,$event->slug,$notify->id,$schedule->role,$schedule->url));
-                    $schedule->status = 1;
-                    $schedule->save();
-                }
-                Log::channel('custom')->info(Carbon::now("UTC"));
-                echo 1;
-            }
+            // foreach($schedules as $schedule){
+            //     $event = Event::findOrFail($schedule->event_id);
+            //     $notify = new PushNotification;
+            //     $notify->title = $schedule->title;
+            //     $notify->url = $schedule->url;
+            //     $notify->message = $schedule->message;
+            //     $notify->roles =$schedule->role;
+            //     $notify->event_id = $event->id;
+            //     if($notify->save()){
+            //         event(new NotificationEvent($schedule->message,$schedule->title,$event->slug,$notify->id,$schedule->role,$schedule->url));
+            //         $schedule->status = 1;
+            //         $schedule->save();
+            //     }
+            //     Log::channel('custom')->info(Carbon::now("UTC"));
+            //     echo 1;
+            // }
        }
        else{
         Log::channel('custom')->error("Something went wrong");
