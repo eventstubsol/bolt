@@ -74,6 +74,10 @@ $event = App\Event::findOrFail($id);
     {{$form->name}}
 @endsection
 
+@section("form_desc")
+    {{$form->description}}
+@endsection
+
 @section('form')
     <form method="POST" class="register mt-2"  action="{{route('attendee_register.confirmReg',$subdomain)}}" enctype="multipart/form-data">
         @csrf
@@ -406,6 +410,10 @@ $event = App\Event::findOrFail($id);
             </div>
         </div>
     </form>
+@endsection
+
+@section("form_footer")
+    {!! $form->disclaimer  !!}
 @endsection
 
 @section("scripts_after")

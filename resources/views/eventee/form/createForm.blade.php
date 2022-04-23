@@ -2,7 +2,8 @@
 
 @section("styles")
     @include("includes.styles.datatables")
-    
+    @include("includes.styles.wyswyg")
+
     <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet">
     <link href="{{asset('/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet">
     <link href="https://coderthemes.com/ubold/layouts/assets/css/config/default/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -43,6 +44,17 @@
                         </label>
                         <input  autofocus type="text"  id="name" value="{{old('question')}}" name="name" class="form-control   @error('name') is-invalid @enderror">
                         @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="name">Description
+                            <span style="color:red">*</span>
+                        </label>
+                        <input  autofocus type="text"  id="desc" value="{{old('question')}}" name="desc" class="form-control   @error('desc') is-invalid @enderror">
+                        @error('desc')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -169,6 +181,12 @@
 
                     <button class="btn btn-primary" id="add_feild">Add Field</button>
                     <button class="submit btn btn-primary"  type="submit">Create</button>
+
+                    <div class="mt-3">
+                        <label for="summernote-basic-2">Disclaimer</label>
+                        <textarea id="summernote-basic-2" name="disclaimer"><p class="text mt-3">By registering and using the platform, you hereby accept our  <a href="{{ route('privacyPolicy',['subdomain'=>$subdomain]) }}" ><b>Privacy Policy</b></a>. For more details <a href="{{ route("faq",['subdomain'=>$subdomain]) }}"><b>read the FAQs</b></a></p></textarea>
+                        <button type="submit"  class="submit btn btn-primary">Save</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -178,6 +196,7 @@
 @endsection
 
 @section("scripts")
+    @include("includes.scripts.wyswyg")
 
     <script src="https://coderthemes.com/ubold/layouts/assets/libs/mohithg-switchery/switchery.min.js"></script>
     <script src="https://coderthemes.com/ubold/layouts/assets/js/vendor.min.js"></script>

@@ -188,6 +188,9 @@
                      <h4 class="mt-0 ml-2 mb-3">
                          @yield("form_title")
                      </h4>
+                     <p style="padding-left: 20px" class="text-muted mb-4 mt-0 ml-2 mb-3">
+                         @yield("form_desc")
+                     </p>
                     {{-- <p class="text-muted mb-4">Enter your email address and password to access account.</p> --}} 
 
                     <div class="auth">
@@ -207,7 +210,7 @@
                     <!-- end form-->
 
                     <!-- Footer-->
-                    <footer class="footer footer-alt">
+                    <footer class="footer ml-4 footer-alt">
                         @yield("form_footer")
                     </footer>
 

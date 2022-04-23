@@ -55,7 +55,9 @@ class FormController extends Controller
             "name"=>$request->name,
             "event_id"=>$id,
             "user_type"=>$request->usertype,
-            "slug"=>$slug
+            "slug"=>$slug,
+            "description"=>$request->desc,
+            "disclaimer"=>$request->disclaimer
         ]);
 
         //Create Form Field for Enabled Default Fields

@@ -138,7 +138,7 @@ class AttendeeAuthController extends Controller
             }
             if($event->active_option == 1 && $user->email_status == 0){
                 GenerateLinkAttendee($user,$subdomain);
-                flash("A Verification link is sent to your account, Please check your email an activate your account")->info();
+                flash("Please click on the verification link sent to your email id. Check your spam folder if the mail is not visible on your inbox")->info();
                 return redirect()->route("attendeeLogin",['subdomain'=>$subdomain]);
             }
             if($event->m_active_option == 1 && $user->email_status == 0){
