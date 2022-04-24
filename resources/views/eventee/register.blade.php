@@ -177,7 +177,7 @@
 
                     <label>Country <span class="text-danger">*</span></label>
                     <select class="form-control" placeholder ="Last Name*" id="phone-number-country" name="country" autocomplete="off"></select>
-                    {{-- <label>Phone Number <span class="text-danger">*</span></label>
+                    <label>Phone Number <span class="text-danger">*</span></label>
                     <div class="phone-number mb-3 d-flex">
                         <div class="phone-number-prefix"></div>
                         <input class="form-control mb-0 @error('phone') is-invalid @enderror" id="phone-number" name="phone"  type="tel" autocomplete="off">
@@ -185,7 +185,7 @@
                         @error('phone')
                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                         @enderror
-                    </div> --}}
+                    </div>
 
                     {{-- <label>Job Title <span class="text-danger">*</span></label>
                     <input type="text" class="form-control @error('job_title') is-invalid @enderror" name="job_title" placeholder ="Job Title *">
