@@ -14,7 +14,7 @@ CMS Fields Manager
 
 @section("content")
 @php
-$fields = getAllFields();
+$fields = getAllDefaultFields();
 @endphp
 <div class="progress progress-sm upload mb-2">
     <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -37,17 +37,17 @@ $fields = getAllFields();
                         @case("text")
                         @case("url")
                         @case("number")
-                        <input class="form-control" name="{{ $field->id }}" type="{{ $field->type }}" value="{{ $field->value }}" />
+                        <input class="form-control" name="{{ $field->name }}" type="{{ $field->type }}" value="{{ $field->value }}" />
                         @break
 
                         @case("youtube")
-                        <input class="form-control" name="{{ $field->id }}" type="url" value="{{ $field->value }}" />
+                        <input class="form-control" name="{{ $field->name }}" type="url" value="{{ $field->value }}" />
                         @break
 
                         @case("pdf")
                         <div class="image-uploader">
-                            <input type="hidden" class="upload_input" name="{{ $field->id }}" value="{{ $field->value }}">
-                            <input type="file" data-name="{{ $field->id }}" data-plugins="dropify" data-type="{{ $field->type }}" @if(!empty(trim($field->value)))
+                            <input type="hidden" class="upload_input" name="{{ $field->name }}" value="{{ $field->value }}">
+                            <input type="file" data-name="{{ $field->name }}" data-plugins="dropify" data-type="{{ $field->type }}" @if(!empty(trim($field->value)))
                             data-default-file="{{ assetUrl($field->value) }}"
                             @endif
                             />
@@ -55,7 +55,7 @@ $fields = getAllFields();
                         @break
 
                         @case("textarea")
-                        <textarea class="form-control" name="{{ $field->id }}" rows="10">
+                        <textarea class="form-control" name="{{ $field->name }}" rows="10">
                         {{$field->value}}
                         </textarea>
                         @break
@@ -63,8 +63,8 @@ $fields = getAllFields();
                         @case("image")
                         @case("video")
                         <div class="image-uploader">
-                            <input type="hidden" class="upload_input" name="{{ $field->id }}" value="{{ $field->value }}">
-                            <input accept="images/*" type="file" data-name="{{ $field->id }}" data-plugins="dropify" data-type="{{ $field->type }}" @if(!empty(trim($field->value)))
+                            <input type="hidden" class="upload_input" name="{{ $field->name }}" value="{{ $field->value }}">
+                            <input accept="images/*" type="file" data-name="{{ $field->name }}" data-plugins="dropify" data-type="{{ $field->type }}" @if(!empty(trim($field->value)))
                             data-default-file="{{ assetUrl($field->value) }}"
                             @endif
                             />

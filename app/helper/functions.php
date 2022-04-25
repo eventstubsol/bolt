@@ -863,6 +863,16 @@ function getAllFields($id = null)
     }
     return ContentMaster::all();
 }
+function getAllDefaultFields($id = null)
+{
+    $contents = ContentMaster::all();
+    $contents_final= [];
+        foreach($contents as $cms){
+            $content = Content::where("event_id",null)->where("name",$cms->name)->first();
+            array_push($contents_final,$content);
+        }
+        return $contents_final;
+}
 
 function getField($name,$default = "")
 {
