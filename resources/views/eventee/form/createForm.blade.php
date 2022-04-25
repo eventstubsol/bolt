@@ -184,7 +184,7 @@
 
                     <div class="mt-3">
                         <label for="summernote-basic-2">Disclaimer</label>
-                        <textarea id="summernote-basic-2" name="disclaimer"><p class="text mt-3">By registering and using the platform, you hereby accept our  <a href="{{ route('privacyPolicy',['subdomain'=>$subdomain]) }}" ><b>Privacy Policy</b></a>. For more details <a href="{{ route("faq",['subdomain'=>$subdomain]) }}"><b>read the FAQs</b></a></p></textarea>
+                        <textarea id="summernote-basic-2" name="disclaimer"><p class="text mt-3">By registering and using the platform, you hereby accept our  <a href="{{ route('privacyPolicy',['subdomain'=>$subdomain]) }}" ><b>Privacy Policy</b></a>. For more details <a href="{{ route("faq",['subdomain'=>$subdomain]) }}"><strong> the FAQs </strong> . </a></p></textarea>
                         <button type="submit"  class="submit btn btn-primary">Save</button>
                     </div>
                 </form>
