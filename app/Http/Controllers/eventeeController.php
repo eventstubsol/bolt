@@ -73,7 +73,6 @@ class eventeeController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = password_hash($request->password, PASSWORD_DEFAULT);
-        $user->job_title = $request->job_title;
         $user->type = 'eventee';
         $user->country = $request->country;
         if ($user->save()) {
