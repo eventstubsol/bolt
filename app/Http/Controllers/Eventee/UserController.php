@@ -241,6 +241,7 @@ class UserController extends Controller
                 $user->event_id = $id;
                 $user->type = $request->type;
                 $user->email_status = 1;
+                
                 if($request->has('password')){
                     $user->password = password_hash($request->password, PASSWORD_DEFAULT);
                 }
@@ -265,6 +266,9 @@ class UserController extends Controller
                 //         'name' => $user->name
                 //     ]);
                 if ($user->save()) {
+                    if($request->welcome === "true"){
+                        Mail::to($user->email)->send(new WelcomeMail($event, $user));
+                    }
                     flash("New User Added")->success();
                     $chat_app = CometChat::where("event_id",$id)->first();
                     if($chat_app){

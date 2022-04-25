@@ -86,7 +86,7 @@
                             @foreach ($speakers as $speaker)
                             <div class="speakers">
                                 <div class="form-group">
-                                    <label for="text">Speakers</label>
+                                    <label for="text">Select Speakers</label>
                                     <select name="speaker[]" class="form-control">
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}" <?php if($speaker->speaker_id == $user->id) echo 'selected'?>>{{ ($user->name).' ' .($user->last_name) }}</option>
