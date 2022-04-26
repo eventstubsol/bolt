@@ -28,7 +28,7 @@ class registerEventeeRequest extends FormRequest
             'last_name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
-            'password' => 'required|min:6',
+            'password' => 'required|confirmed|min:6',
             'country' => 'required',
         ];
     }

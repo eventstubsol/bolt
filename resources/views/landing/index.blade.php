@@ -115,11 +115,12 @@ left: 0;
     }
 
         #defaultCountdown{
-            position: absolute;
-            top: 90%;
-            left: 71%;
-            width: 26%;
+            /* position: absolute; */
+            /* top: 90%; */
+            /* left: 71%; */
+            /* width: 26%; */
             color: white;
+            margin-top: 40px;
             padding-left: 14px;
             padding: 6px 1px 6px 7px;
             background-color: #1313137d;
@@ -155,9 +156,9 @@ left: 0;
         @media only screen and (max-width: 880px)  and (min-width: 480px)  {
             #defaultCountdown{                
                 font-size: 10px;
-                top: 5%;
+                /* top: 5%;
                 left: 66%;
-                width: 207px;
+                width: 207px; */
             }
             .register_now{
                 top: 280px;
@@ -219,6 +220,15 @@ left: 0;
             border-bottom: 1px solid #ced4da;
             border-radius: 0;
         }
+        .event_desc{
+            position: absolute;
+            right: 73px;
+            background: #131313c2;
+            height: 69vh;
+            /* margin: auto 0; */
+            top: 50%;
+            transform: translateY(-50%);
+        }
     </style>
      <!-- Bootstrap Icons-->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -255,21 +265,25 @@ left: 0;
                     @elseif($landing->registration_status == 1)
                         <li class="nav-item register"><a class="nav-link" href="#registration">Register Now</a></li>
                     @endif 
+
+                    
                 </ul>
+                
             </div>
         </div>
     </nav>
    
-    @if(isset($landing->banner_image))
+    {{-- @if(isset($landing->banner_image)) --}}
+        {{-- <header class="masthead" id="home"> --}}
+          
+        {{-- </header> --}}
+    {{-- @else --}}
         <header class="masthead" id="home">
             <div class="banner_block">
                 <img src="{{ assetUrl($landing->banner_image) }}" alt="" class="bigBanner" />
             </div>
-        </header>
-    @else
-        <header class="masthead" id="home">
             <div class="container px-4 px-lg-5 h-100">
-                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                <div class="row gx-4 gx-lg-5 event_desc align-items-center justify-content-center text-center">
                     <div class="col-lg-8 align-self-end">
                         <h1 class="text-white font-weight-bold">{{ $event->name }}</h1>
                         <hr class="divider" />
@@ -282,11 +296,12 @@ left: 0;
                             <a class="btn btn-primary btn-xl" href="#registration">Register now</a>
                         @endif 
                          
+                    <div id="defaultCountdown"></div>
                     </div>
                 </div>
             </div>
         </header>
-    @endif
+    {{-- @endif --}}
     
 @php
 $main_event = $event;
@@ -473,7 +488,8 @@ $dates = [];
         <div class="regBox">
             <h5>Register Now</h5>
             <hr class="divider" />
-            
+         
+            @include('flash::message')
             @if($form != null)
             <form method="POST" class="register mt-2" id="customform"  action="{{route('attendee_register.confirmReg.landingSave',$event->slug)}}" enctype="multipart/form-data">
             @csrf
@@ -797,7 +813,7 @@ $dates = [];
             </div>
         </form>
             @else
-            <form action="{{ route('attendee_register.confirmReg.defaultsave',$event->slug) }}" method="POST">
+            <form action="{{ route('attendee_register.confirmReg',$event->slug) }}" method="POST">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Name" name="name">
                 </div>
@@ -811,6 +827,7 @@ $dates = [];
 
                     <input type="text" class="form-control mb-5" placeholder="Email address" name="email">
                 </div>
+                <input type="hidden" class="form-control mb-5" placeholder="Email address" name="event_id" value="{{$event->id}}">
 
                 <div class="submit">
                     <button type="submit" class="theme-btn btn primary-filled">{{ __('Register') }}</button>
@@ -828,7 +845,6 @@ $dates = [];
    
     {{-- <img class="bg_image" src="{{ assetUrl($landing->banner_image) }}" alt="">  --}}
   
-    <div id="defaultCountdown"></div>
 
     {{-- <a class="register_now" href="https://www.eventsibles.online/mlk2022-pep-register">Register Now</a> --}}
 

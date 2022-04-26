@@ -174,6 +174,11 @@
                     @error('password')
                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                     @enderror
+                    <label>Confirm Password <span class="text-danger">*</span></label>
+                    <input type="password" name="password_confirmation" class="form-control @error('password') is-invalid @enderror" placeholder ="ConfirmPassword *">
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                    @enderror
 
                     <label>Country <span class="text-danger">*</span></label>
                     <select class="form-control" placeholder ="Last Name*" id="phone-number-country" name="country" autocomplete="off"></select>

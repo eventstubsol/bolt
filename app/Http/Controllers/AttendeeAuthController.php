@@ -277,11 +277,11 @@ class AttendeeAuthController extends Controller
     }
 
     public function confirmReg(Request $request,$subdomain){
-        // dd($request->all());
         $event = Event::where('slug',$subdomain)->first();
         $userCount = User::where('event_id',$event->id)->count();
+        // dd([$event->total_a])
         if( $userCount >= $event->total_attendees){
-            flash("Total Number Of User Creation Exceeded! Please Contact Admin To Upgrade")->error();
+            flash("Registration Closed")->error();
             return redirect()->back();
         }
         $request->validate([
@@ -290,12 +290,14 @@ class AttendeeAuthController extends Controller
         ]);
         $event = Event::where("slug",$subdomain)->first();
         $checkuser = User::where("email",$request->email)->where("event_id",$event->id)->get();
+
         if($checkuser->count()){
             flash("User Already Exist")->error();
             return back()->with(["email"=>"Email Already Taken"]);
         }
         $user = new User($request->all());
         $user->save();
+        // dd($user);
         $chat_app = CometChat::where("event_id",$event->id)->first();
         if($chat_app){
             createUser($chat_app,$user);    
@@ -322,6 +324,8 @@ class AttendeeAuthController extends Controller
             return redirect()->route("attendeeLogin",['subdomain'=>$subdomain]);
         }
        else{
+        // dd($request->all());
+      
         flash("Registration Successful")->success(); 
         return redirect()->route('thank.page',$subdomain);
        }
