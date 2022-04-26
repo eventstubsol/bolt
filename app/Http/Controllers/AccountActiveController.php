@@ -36,7 +36,8 @@ class AccountActiveController extends Controller
         $template->message = str_replace('{user.name}',$user->name,$template->message);
         $template->message = str_replace('{user.email}',$user->email,$template->message);
         $event= Event::where('slug',$subdomain)->first();
-        Mailing::to($user->email)->send(new RegistrationMail($user,$template,$event));
+        // Mailing::to($user->email)->send(new RegistrationMail($user,$template,$event));
+        // Mailing::to($user->email)->send(new WelcomeMail($user,$template,$event));
         if(Carbon::now()->setTimezone($event->timezone) < Carbon::parse($event->start_date)->setTimezone($event->timezone)){
             flash("Registration Successful")->success();
             return redirect()->route('thank.page',$subdomain);
