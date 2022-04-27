@@ -114,7 +114,7 @@ class App extends React.Component{
 }
 
 if (document.getElementById('chat-container')) {
-    ReactDOM.render(<App />, document.getElementById('chat-container'));
+    // ReactDOM.render(<App />, document.getElementById('chat-container'));
 }
 
 export default App;

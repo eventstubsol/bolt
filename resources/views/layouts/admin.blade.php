@@ -553,11 +553,11 @@
 </div>
 <!-- END wrapper -->
 
-<div id="chat-container" class="right-bar theme-chat"></div>
-<a href="javascript:void(0);" id="chat-toggle" class="nav-link right-bar-toggle theme-chat chat-bubble">
+{{-- <div id="chat-container" class="right-bar theme-chat"></div> --}}
+{{-- <a href="javascript:void(0);" id="chat-toggle" class="nav-link right-bar-toggle theme-chat chat-bubble">
     <i class="fe-message-square" />
     <span id="chat-unread-count" class="badge badge-danger font-15  badge-pill hidden" />
-</a>
+</a> --}}
 <div class="rightbar-overlay"></div>
 
 <div class="rightSection">
@@ -724,9 +724,10 @@ $(document).ready(function(){
             }); 
         }
     } 
+
 </script>
 @endif
-
+<script type="text/javascript">var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode:"de4518ab3ab6ab3a02c0a195e14eafa01ed9a22dab8e3424e594cdc761a7ffe939fa8ea6a992a51f35413c7ef4a665d66390ffeaea7256cb4dab0fa9b699837c", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.in/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);d.write("<div id='zsiqwidget'></div>");</script>
 <script>
     window.config = {
         ...(window.config || {}),
