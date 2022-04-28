@@ -134,6 +134,11 @@ left: 0;
         background-color:  {{$event->secondary_color}} !important;
         border-color:  {{$event->secondary_color}} !important;
         }
+        .btn-reg:hover {
+        color: #fff;
+        background-color:  {{$event->secondary_color}} !important;
+        border-color:  {{$event->secondary_color}} !important;
+        }
         #defaultCountdown .countdown-section:not(:last-child){
             border-right: 1px solid white;
         }
@@ -261,9 +266,9 @@ left: 0;
                         <li class="nav-item"><a class="nav-link" href="#sponsers">Sponsers</a></li>
                     @endif 
                     @if(isset($landing->cta))
-                        <li class="nav-item register"><a class="nav-link" href="{{ $landing->cta }}">Register Now</a></li>
+                        <li class="nav-item register btn-reg"><a class="nav-link" href="{{ $landing->cta }}">Register Now</a></li>
                     @elseif($landing->registration_status == 1)
-                        <li class="nav-item register"><a class="nav-link" href="#registration">Register Now</a></li>
+                        <li class="nav-item register btn-reg"><a class="nav-link" href="#registration">Register Now</a></li>
                     @endif 
 
                     
