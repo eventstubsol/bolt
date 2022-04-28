@@ -2,10 +2,10 @@
     @foreach($access_specifiers as $page_id => $page_access)
         @if((in_array(Auth::user()->type,$page_access)  &&  (Auth::user()->subtype ?  in_array(Auth::user()->subtype,$page_access) : true )  && ($page_id === $page->id)))
         
-            <div class="page" data-menu="{{$page->hide_menu}}" data-chat="{{ $page->chat_name ? $page->chat_name : $page->name }}" id="page-{{$page->name}}">
+            <div class="page @if($page->name === 'Exterior') initial @endif " data-menu="{{$page->hide_menu}}" data-chat="{{ $page->chat_name ? $page->chat_name : $page->name }}" id="page-{{$page->name}}">
                 <div class="position-relative" style="height:100vh;">
                     @if($page->videoBg)
-                        <video muted class="full-width-videos page_video video-{{ $page->name }}" src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" loop ></video>
+                        <video autoplay muted class="full-width-videos page_video video-{{ $page->name }}" src="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" loop ></video>
                     @elseif(isset($page->images[0]->url))
                         <img async src="{{ assetUrl($page->images[0]->url??'') }}" class=" positioned booth-bg" alt="">
                     @endif

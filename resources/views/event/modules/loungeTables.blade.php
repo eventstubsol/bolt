@@ -7,7 +7,7 @@ $participants = $table->participants;
 @endphp
 @if($table->seats == 16)
             
-                <div class="table_Box BigTableBox lounge_meeting"  data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
+                <div class="table_Box BigTableBox lounge_meeting" data-limit="{{$avs}}"   data-toggle="modal" data-table="{{$table->id}}" data-target="#lounge_modal" data-meeting="{{$table->meeting_id}}">
                     <div class="TableBlock bigTable d-flex justify-content-between align-items-center">
                         <div>
                             <h2 style="text-align: center;margin-top: -10px;">Seats: <span>{{ $avs }} Available<span></span></span></h2>

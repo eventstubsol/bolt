@@ -410,11 +410,13 @@ function initApp() {
         }
     });
 
-    pages.hide();
+    // pages.hide();
     if(window.config.homepage){
         pages.hide().filter("#"+window.config.homepage.replace("/","-")).show();
         // routie(window.config.homepage);
     }else{
+        // pages.hide().filter("#"+window.config.homepage.replace("/","-")).show();
+
         pages.filter(".initial").show();
     }
 
@@ -531,6 +533,7 @@ function initApp() {
     }
 
     function pageChangeActions(changeChat = true) {
+        navs.removeClass('hidden');
         if(window.config.lobby_audio){
             audio.pause();
             playing = false;
@@ -545,7 +548,6 @@ function initApp() {
 
         }
         loader.hide();
-        navs.removeClass('hidden');
         clearContentTicker();
         clearLounge();
         window.scrollTo(0, 0);
@@ -746,7 +748,7 @@ function initApp() {
         },
         'attendees': function () {
             if (checkAuth()) {
-                routie("lobby");
+                routie("page/Lobby");
             } else {
                 pages.hide();
                 let toShow = pages.filter("#profile").show();
@@ -781,17 +783,17 @@ function initApp() {
                             .off("click")
                             .on("ended", function () {
                                 enteringView.fadeOut();
-                                routie("lobby");
+                                routie("page/Lobby");
                             });
                     });
             }else{
-                routie("lobby");
+                routie("page/Lobby");
             }
             recordPageView("exterior", "Exterior");
         },
         'leaderboard': function () {
             if (checkAuth()) {
-                routie("lobby");
+                routie("page/Lobby");
             } else {
                 pages.hide();
                 let page = pages.filter("#leaderboard").show();
@@ -810,10 +812,10 @@ function initApp() {
             let video = $('.video-'+room);
             let whitelist_for_all = ["Health_Pavilion_Stage","Sponsor_Stage"]
             if ((!whitelist_for_all.includes(room)) && checkAuth() && room != "Sponsor_Stage") {
-                routie("lobby");
+                routie("page/Lobby");
             } else {
                 if($("#sessionroom-" + room).length===0){
-                    routie("lobby");
+                    routie("page/Lobby");
                 }
                 pages.hide().filter("#sessionroom-" + room).show();
                 if(room==="Program-Workshop-2"||room==="Program-Workshop-1"){
@@ -871,10 +873,10 @@ function initApp() {
             
             let whitelist_for_all = ["expo_lobby","sponsor_floor","Vendor_Floor"]
             if ((!whitelist_for_all.includes(page)) && checkAuth()) {
-                routie("lobby");
+                routie("page/Lobby");
             } else {
                 if($("#page-" + page).length===0){
-                    routie("lobby");
+                    routie("page/Lobby");
                 }
                 pages.hide().filter("#page-" + page).show();
                 let chatname = pages.filter("#page-" + page).data("chat");
@@ -887,13 +889,13 @@ function initApp() {
                     });
                 }
                 pageChangeActions(false);
-                if(menu_hidden === "1" || menu_hidden == 1){
-                    navs.addClass('hidden');
-                }
                 // createGroup(chatname);
                 CometChatWidget.chatWithGroup(chatname);
                 
                recordPageView("page/" + page, page + " page", "page",page);
+               if(menu_hidden === "1" || menu_hidden == 1){
+                    navs.addClass('hidden');
+                }
             }
             if(!isios()){
                 video.show();
@@ -903,7 +905,7 @@ function initApp() {
         },
         'photo-booth': function (id) {
             if (checkAuth()) {
-                routie("lobby");
+                routie("page/Lobby");
             } else {
                 pages.hide().filter("#photo-booth-page").show();
                 pageChangeActions();
@@ -950,7 +952,7 @@ function initApp() {
     });
     if (window.location.hash === "") {
         if(!isMobile()){
-            routie("lobby");
+            routie("page/Lobby");
         }
         if(window.config.homepage){
             routie(window.config.homepage);
@@ -958,7 +960,7 @@ function initApp() {
             routie("exterior");
         }
     } else if (window.location.hash.indexOf("#exterior") === -1) {
-        pageChangeActions();
+        // pageChangeActions();
     }
     setupGamification();
     $("#saveprofile").on("click", saveprofile);

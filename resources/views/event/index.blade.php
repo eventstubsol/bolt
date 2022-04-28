@@ -17,7 +17,7 @@
  
     {{-- Notification Modal --}}
     <!-- Small modal -->
-    <div style="z-index:99999" class="notification-smallModal consent-notification hide-on-exterior"  id="notification-smallModal">
+    <div style="z-index:99999; display:none" class="notification-smallModal consent-notification hide-on-exterior"  id="notification-smallModal">
         <h4 id="notification-head"></h4>
         <p id="notification-body" ></p>
         <div class="d-flex">

@@ -484,7 +484,6 @@
 
         a:hover {
             color: {{ $event->secondary_color }} ;
-            text-decoration: underline;
         }
 
 

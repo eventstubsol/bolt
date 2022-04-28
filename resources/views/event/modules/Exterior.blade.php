@@ -7,7 +7,7 @@
     }
 </style>
 
-<div class="page initial" id="home">
+<div class="page  " id="home">
     <div class="filler" style="padding-bottom: {{ EXTERNAL_VIDEO_ASSETS_ASPECT }}%"></div>
     <div class="video-containers positioned">
         <video class="full-width-videos" src="{{ assetUrl(getFieldId('entering_video',$event_id)) }}" id="entering_view" autoplay muted></video>

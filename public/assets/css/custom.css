@@ -492,6 +492,10 @@ table.dataTable tbody tr {
     min-height: calc( 100vh - 100px - 3.5rem);
 }
 
+.videosdk{
+    cursor: pointer;
+}
+
 .navbar-custom.theme-nav {
     position: fixed;
     /* background: #ffffffb5; */
