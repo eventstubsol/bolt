@@ -410,7 +410,7 @@ function initApp() {
         }
     });
 
-    // pages.hide();
+    pages.hide();
     if(window.config.homepage){
         pages.hide().filter("#"+window.config.homepage.replace("/","-")).show();
         // routie(window.config.homepage);
@@ -418,6 +418,7 @@ function initApp() {
         // pages.hide().filter("#"+window.config.homepage.replace("/","-")).show();
 
         pages.filter(".initial").show();
+        
     }
 
     $("#audi-content").empty();

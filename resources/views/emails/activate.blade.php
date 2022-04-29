@@ -173,6 +173,7 @@ a[x-apple-data-detectors] {
 </style> 
 
 @php
+$event = App\Event::find($user->event_id);
 $eventUser= App\User::find($event->user_id);
 @endphp
  </head> 
