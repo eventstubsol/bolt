@@ -93,10 +93,13 @@ left: 0;
         color: #fff;
         text-transform: uppercase;
         letter-spacing: 1px;
+        
+        font-family: 'Open Sans';
     }
 
     .speakerbox h6 span{
         font-weight: 100;
+        font-size: 14px;
     }
 
     .speakerbox .boxBg{
@@ -287,7 +290,7 @@ left: 0;
             <div class="banner_block">
                 <img src="{{ assetUrl($landing->banner_image) }}" alt="" class="bigBanner" />
             </div>
-            <div class="container px-4 px-lg-5 h-100">
+            <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 event_desc align-items-center justify-content-center text-center">
                     <div class="col-lg-8 align-self-end">
                         <h1 class="text-white font-weight-bold">{{ $event->name }}</h1>

@@ -43,7 +43,9 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use Aws\SecretsManager\SecretsManagerClient; 
 use Aws\Exception\AwsException;
 use App\Mail\OtpSetup;
+use App\Mail\AdmSignupNotification;
 use App\Mail\ActiveMail;
+use App\Mail\ActiveAdminMail;
 use App\Mail\ActiveMailAttendee;
 use App\EventFeature;
 
@@ -1691,6 +1693,27 @@ function GenerateOtp($user_id){
     return 1;
 }
 
+function sendAdminNotification($user,$type){
+    $admin_ids = ["shubh@eventstub.co","richard@eventstub.co","amartya@eventstub.co","ronit@eventstub.co","shubhpalan@gmail.com"];
+    // $admin_ids = ["shubhpalan@gmail.com","eventstubsol@gmail.com"];
+    $template = null;
+    switch($type){
+        case "account_signup":
+            $template = new AdmSignupNotification($user);
+            break;
+        default:
+            break;
+    }
+    if($template){
+        foreach($admin_ids as $admin){
+            Mailing::to($admin)->send($template);
+        }
+    }
+}
+function GenerateAdminLink($user){
+    Mailing::to($user->email)->send(new ActiveAdminMail($user));
+    return 1;
+}
 function GenerateLink($user){
     Mailing::to($user->email)->send(new ActiveMail($user));
     return 1;

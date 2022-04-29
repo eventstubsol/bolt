@@ -76,7 +76,8 @@ class eventeeController extends Controller
         $user->type = 'eventee';
         $user->country = $request->country;
         if ($user->save()) {
-            GenerateLink($user);
+            GenerateAdminLink($user);
+            sendAdminNotification($user,"account_signup");
             flash("A Verification link is sent to your account, Please check your email an activate your account")->info();
             return redirect()->route("Eventee.login");
             // $request->Session()->put('eventee-register', 'Registration Successful');
