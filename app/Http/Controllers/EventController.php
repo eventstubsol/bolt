@@ -218,7 +218,7 @@ class EventController extends Controller
                 $type = "page";
                 $page = "page/" . $request->pages;
                 break;
-            case "session_room":
+            case "sessionroom":
                 $type = "sessionroom";
                 $page = "sessionroom/" . $request->rooms;
                 break;

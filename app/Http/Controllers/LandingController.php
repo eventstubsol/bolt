@@ -123,21 +123,23 @@ class LandingController extends Controller
             }
         }
         for($i = 0; $i < count($req->title) ; $i++){
-            $section = new Section;
-            $section->section = $req->title[$i];
-            $section->landing_id = $id;
-            $section->save();
-            if(isset($req->url[$i])){
-                foreach($req->url[$i] as $image){
-               
-                    // foreach($images as $image){
-                       if($image){
-                        $section->images()->create([
-                            'url' => $image,
-                            'title' => $req->title[$i]
-                        ]);
-                       }
-                    // }
+            if(isset($req->title[$i]) && $req->title[$i] !== ''){
+                $section = new Section;
+                $section->section = $req->title[$i];
+                $section->landing_id = $id;
+                $section->save();
+                if(isset($req->url[$i])){
+                    foreach($req->url[$i] as $image){
+                
+                        // foreach($images as $image){
+                        if($image){
+                            $section->images()->create([
+                                'url' => $image,
+                                'title' => $req->title[$i]
+                            ]);
+                        }
+                        // }
+                    }
                 }
             }
         }

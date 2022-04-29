@@ -263,7 +263,7 @@ left: 0;
                         <li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
                     @endif 
                     @if($landing->section_status == 1)
-                        <li class="nav-item"><a class="nav-link" href="#sponsers">Sponsers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#sponsers">Sponsors</a></li>
                     @endif 
                     @if(isset($landing->cta))
                         <li class="nav-item register btn-reg"><a class="nav-link" href="{{ $landing->cta }}">Register Now</a></li>

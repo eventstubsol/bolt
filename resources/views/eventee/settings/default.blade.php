@@ -65,7 +65,7 @@
                     </div>
 
                     
-                    <div @if($event->home_type !=="session_room") style="display: none;" @endif class="room- room form-group mb-3 col-md-4">
+                    <div @if($event->home_type != "sessionroom") style="display: none;" @endif class="room- room form-group mb-3 col-md-4">
                         <label for="to">to(Session Room)</label>
                         <select class="form-control" name="rooms" >
                             @foreach($session_rooms as $room)
@@ -181,7 +181,7 @@
         $(".pages").hide();
 
         switch(selectbox.val()){
-            case "session_room":
+            case "sessionroom":
                 $(".room").show();
                 break;
             case "page":

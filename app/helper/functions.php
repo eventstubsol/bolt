@@ -128,7 +128,7 @@ define('MODAL_TYPES', [
 
 define('HOME_PAGE_TYPES', [
     'page',
-    'session_room',
+    'sessionroom',
     'lobby',
     'exterior'
 ]);

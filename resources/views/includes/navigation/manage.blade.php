@@ -300,7 +300,7 @@
         </ul>
     </div>
 </li>
-{{-- <li>
+<li>
     <a href="#polls" data-toggle="collapse">
         <i data-feather="users"></i>
         <span> Polls</span>
@@ -316,7 +316,7 @@
            
         </ul>
     </div>
-</li> --}}
+</li>
 {{-- <li>
     <a href="#form" data-toggle="collapse">
         <i class="fas fa-align-justify"></i>

@@ -211,6 +211,12 @@
         .card-box,.card{
             box-shadow: none !important;
         }
+        button.note-btn.btn.btn-light.btn-sm[title="Picture"] {
+            display: none;
+        }
+        button.note-btn.btn.btn-light.btn-sm[title="Video"] {
+            display: none;
+        }
     </style>
     @if(isset($id))
         @php

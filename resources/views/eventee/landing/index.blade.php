@@ -204,7 +204,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary mt-4" onclick="AddSponsor()">Add Sponsor</button>
+                    <button type="button" class="btn btn-primary mt-4" onclick="AddSponsor()">Add Sponsor Category</button>
                     <button type="submit" class="btn btn-success mt-4">Save</button>
                 </div>
 
