@@ -418,7 +418,7 @@ function initApp() {
         // pages.hide().filter("#"+window.config.homepage.replace("/","-")).show();
 
         pages.filter(".initial").show();
-        
+
     }
 
     $("#audi-content").empty();
@@ -784,11 +784,11 @@ function initApp() {
                             .off("click")
                             .on("ended", function () {
                                 enteringView.fadeOut();
-                                routie("page/Lobby");
+                                routie("lobby");
                             });
                     });
             }else{
-                routie("page/Lobby");
+                routie("lobby");
             }
             recordPageView("exterior", "Exterior");
         },
