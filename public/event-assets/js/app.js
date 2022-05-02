@@ -239,17 +239,19 @@ function initApp() {
 
         if(flyin && checkDestination(link)){
             flyIn.show();
+            let skipped = false;
             navs.addClass('hidden');
             $("#skip_flyin").show();
             $("#skip_flyin").unbind().on("click",()=>{
                 routie(link);
+                skipped=true;
                 $("#skip_flyin").hide();
                 flyIn.hide();
             })
             flyIn.attr('src', flyin);
             // loader.fadeOut()
             flyIn.prop("currentTime", 0).get(0).play();
-            flyIn
+            flyIn.unbind()
                 .on("canplaythrough", () =>{
                       pages.hide();
                       pages.filter("#flyin").show();        
@@ -258,7 +260,10 @@ function initApp() {
                 .off("click")
                 .on("ended", function () {
                     flyIn.fadeOut();
-                    routie(link);
+                    console.log({skipped});
+                    if(!skipped){
+                        routie(link);
+                    }
                     // loader.fadeOut();
             });
             // waitForVideosLoad(flyin)
