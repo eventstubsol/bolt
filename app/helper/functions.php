@@ -1753,7 +1753,7 @@ function CreateRoom($event_id){
     $room->save();
     $images = new Image;
     $images->owner = $room->id;
-    $images->url = 'uploads/jyOGZXQ3B0ufDjcCJkeiZ8ryNDazvSK02ge6LcNI.jpg';
+    $images->url = 'uploads/sw5TPJVRi1XuIj74UYsg9SyKgL8QpHN5cwIeRfvy.jpg';
     $images->title = $room->name;
     $images->save();
     return 1;
@@ -1766,7 +1766,7 @@ function CreateDefaultRooms($event_id){
     $room->save();
     $images = new Image;
     $images->owner = $room->id;
-    $images->url = 'uploads/jyOGZXQ3B0ufDjcCJkeiZ8ryNDazvSK02ge6LcNI.jpg';
+    $images->url = 'uploads/sw5TPJVRi1XuIj74UYsg9SyKgL8QpHN5cwIeRfvy.jpg';
     $images->title = $room->name;
     $images->save();
 
@@ -1788,7 +1788,7 @@ function CreateDefaultRooms($event_id){
                 ],
                 [
                     "name"=>"InfoDesk",
-                    "image"=>"uploads/HPETs4uKX37vVW6alT0bYWkWp5SIvvlOjSyGykzs.jpg",
+                    "image"=>"uploads/12AJnWqBaLnmDHCVyVqRAd2A4EahBlb3Kue882P6.jpg",
                     "hide_menu"=>false,
                     "cms_field"=>false,
                     "video"=>null,

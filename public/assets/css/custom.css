@@ -960,7 +960,7 @@ table.dataTable tbody tr {
     border-radius: 4px;
     box-shadow: 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275);
 }
-
+/* 
 .page#leaderboard .carousel .carousel-item:after {
     content: "";
     position: absolute;
@@ -972,7 +972,7 @@ table.dataTable tbody tr {
     border-radius: 4px;
     transition: ease all 0.3s;
     opacity: 0.5;
-}
+} */
 
 .page#leaderboard .carousel:hover .carousel-item:after {
     opacity: 0.7;
