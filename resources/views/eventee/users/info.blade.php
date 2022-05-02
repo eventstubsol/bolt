@@ -36,6 +36,10 @@ Manage Users
                     <li class="list-group-item">Email:<b> {{ $user->email }}</b></li>
                     <li class="list-group-item">Role:<b> {{ $user->type }}</b></li>
                     <li class="list-group-item">User Type:<b> {{ $user->type }} </b></li>
+                    <li class="list-group-item">Job Title:<b> {{ $user->job_title }} </b></li>
+                    <li class="list-group-item">Phone:<b> {{ $user->phone }} </b></li>
+                    <li class="list-group-item">Country:<b> {{ $user->country }} </b></li>
+                    <li class="list-group-item">Company:<b> {{ $user->company_name }} </b></li>
                     @if($user->subtype != null)
                     <li class="list-group-item">User Sub Category:<b> {{ $user->subtype }} </b></li>
                     @endif
