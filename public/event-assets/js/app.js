@@ -835,6 +835,7 @@ function initApp() {
                     type: room + "_visit"
                 });
                 // createGroup(room);
+                console.log({room})
                 CometChatWidget.chatWithGroup(room);
                 pageChangeActions(false);
 

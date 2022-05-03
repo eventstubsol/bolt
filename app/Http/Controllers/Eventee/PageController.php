@@ -50,6 +50,28 @@ class PageController extends Controller
         }
     }
 
+    public function syncChatGroups(Request $request,$id,$type)
+    {
+        if($type === "Pages"){
+
+            $pages = Page::where('event_id', $id)->get();
+            foreach ($pages as  $page) {
+                $chat_name =  $page->chat_name;
+                createGroupInChat($chat_name,$id);
+            }
+        }
+        if($type === "SessionRooms"){
+            $session_rooms = sessionRooms::where('event_id', $id)->get();
+            foreach ($session_rooms as  $session_room) {
+                $chat_name =($session_room->name);
+                createGroupInChat($chat_name,$id);
+            }
+        }
+        flash("Sync Successful")->success();
+        return redirect()->back();
+
+    }
+
     public function store(PageFormRequest $request, $id)
     {
         // dd($request->all());

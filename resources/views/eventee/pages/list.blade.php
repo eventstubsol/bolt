@@ -76,6 +76,7 @@ Manage Page
         });
         $(document).ready(function(){
             $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.pages.create",$id) }}">Create New</a>')
+            $("#buttons-container").append('<a class="btn btn-primary" href="{{ route("eventee.pages.syncChat",[$id,"Pages"]) }}">Sync With Chat</a>')
             $("#buttons-container").append('<button type="button" onclick="AddCheckBox(this)" class="addbox btn btn-info" >Bulk Delete</button>');
             $("#buttons-container").append('<button class="deleteBulk btn btn-danger float-right" onclick="BulkDelete()" style="display: none">Delete</button>');
             $("body").on("click",".delete",function(e){

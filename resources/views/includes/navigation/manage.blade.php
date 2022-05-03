@@ -93,7 +93,7 @@
 <li>
     <a href="#pages" data-toggle="collapse">
         <i class="mdi mdi-file-multiple"></i>
-        <span> Event Rooms</span>
+        <span> Event Rooms/Pages</span>
     </a>
     <div class="collapse" id="pages">
         <ul class="nav-second-level">

@@ -152,7 +152,7 @@ class EventController extends Controller
         $room = $request->get("room");
         $id = $request->get("id");
         $group = (object)[
-            "id" => $room,
+            "id" => str_replace(" ", "_", $room),
             "name" => ucfirst(str_replace("_", " ", $room))
         ];
         $chat_app = CometChat::where("event_id", $id)->first();

@@ -270,6 +270,7 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     //pages routes
     Route::get("/page/event/{id}","Eventee\PageController@index")->name('eventee.pages.index');
     Route::get("/page/event/create/{id}","Eventee\PageController@create")->name('eventee.pages.create'); 
+    Route::get("/page/event/sync/{id}/{type}","Eventee\PageController@syncChatGroups")->name('eventee.pages.syncChat'); 
     Route::post("/page/event/store/{id}","Eventee\PageController@store")->name('eventee.pages.store');
     Route::get('page/event/{page}/{id}/edit',"Eventee\PageController@edit")->name('eventee.pages.edit');
     Route::put('page/{page}/{id}/update',"Eventee\PageController@update")->name('eventee.pages.updates');

@@ -48,6 +48,7 @@ use App\Mail\ActiveMail;
 use App\Mail\ActiveAdminMail;
 use App\Mail\ActiveMailAttendee;
 use App\EventFeature;
+use App\CometChat;
 
 include_once "clickableAreasConfig.php";
 include_once "chat/index.php";
@@ -73,7 +74,6 @@ define("FORMTYPES",[
 "Email"=>"email",
 "Phone"=>"tel",
 "Select Box/Dropdown"=>"select",
-"Image"=>"image",
 "Country"=>"country",
 "User Subtype"=>"subtype"
 ]);
@@ -807,6 +807,20 @@ function getFilters($event_id)
     //         return UserTag::select("tag")->where("tag_group",$filter)->distinct()->get()->toArray();
     //         break;
     // }
+}
+
+function createGroupInChat($name,$id)
+{
+    $group = (object)[
+        "id" => str_replace(" ", "_", $name),
+        "name" => ucfirst(str_replace("_", " ", $name))
+    ];
+    $chat_app = CometChat::where("event_id", $id)->first();
+    // dd($id);
+    if ($chat_app) {
+        createGroup($chat_app, $group);
+    }
+    return true;
 }
 
 function createMenus($event_id){
