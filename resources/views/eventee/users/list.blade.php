@@ -148,7 +148,7 @@ Manage Users
                     let body = await(await fetch("{{ route('sync-users',['id'=>$id]) }}", {credentials: "include"})).json();
                     if(body.success) {
                         showMessage("Chats Succesfully Synced", "success");
-                        // location.reload(true)
+                        location.reload(true)
                     } else {
                         showMessage("Chats Sync Failed. Please Configure Chat Settings First.", "error");
                         // $("#sync-account").text("Syncing " + body.left + " / " + body.total)

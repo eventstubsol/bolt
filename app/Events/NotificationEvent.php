@@ -27,7 +27,7 @@ class NotificationEvent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($message,$title,$slug,$notify_id,$role,$url,$location,$location_type = null)
+    public function __construct($message,$title,$slug,$notify_id,$role,$url,$location=null,$location_type = null)
     {
         //
         $this->title = $title;
