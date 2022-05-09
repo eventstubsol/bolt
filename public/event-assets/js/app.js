@@ -773,7 +773,7 @@ function initApp() {
             navs.addClass('hidden');
             $("body").click()
             pages.hide();
-            pages.filter(".initial").show();
+            pages.filter(".initials").show();
             if (!isMobile() && !isios()) {
                 exteriorView.prop("currentTime", 0).get(0).play();
                 setTimeout(function () {

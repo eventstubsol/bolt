@@ -51,7 +51,7 @@
                     @endphp
                         @if(isset($link->background[0]))
                                 <div class="positioned" style="{{ areaStyles($area) }}  perspective:{{$link->perspective}}px;" >
-                                    <div style="@if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif" class="carousel slide h-100" data-ride="carousel" data-interval="3000" data-pause="false">
+                                    <div style="@if($link->rotationtype === 'X') transform: rotatex({{$link->rotation}}deg); @elseif($link->rotationtype === 'R') transform: rotate({{$link->rotation}}deg); @else transform: rotatey({{$link->rotation}}deg); @endif" class="carousel slide h-100" data-ride="carousel" data-interval="3000" data-pause="false">
                                         <div class="carousel-inner h-100" >
                                             @foreach($link->background as $id => $bgimage)
                                                 <div class="carousel-item h-100 @if($id==0) active @endif">
