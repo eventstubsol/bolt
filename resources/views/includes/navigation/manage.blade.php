@@ -103,9 +103,9 @@
             <li>
                 <a href="{{ route("eventee.pages.index",$id) }}">Manage</a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ route("elobby",$id) }}">Lobby</a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </li>
