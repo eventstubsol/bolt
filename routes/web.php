@@ -39,7 +39,9 @@ $appurl = env('APP_ENV') ==='staging'? 'localhost' :  env('APP_URL');
 
 // to get request domain  dd(\Request::getHost());
 Route::get("/verifydomain", "EventManageController@verifyDomain")->name("verify");
-Route::get("/testenv", function(){myenv();})->name("envveri");
+Route::get("/testenv", function(){
+    dd(createWhereRoom('2022-05-14T14:15:22Z'));
+})->name("envveri");
 
 Route::group(['domain' => $appurl], function () {
 
@@ -708,6 +710,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::get("/event/current-session", "EventController@getCurrentSession")->name("currentSession");
     Route::get("/event/webinar", "EventController@webinar")->name("webinar");
     Route::get("/event/videosdk/{meetingId}/{containerId}", "EventController@videosdk")->name("videosdk");
+    Route::get("/event/where", "EventController@where")->name("where");
     Route::get("/event/ended", "EventController@webinarEnded")->name("webinarEnded");
     Route::post("/event/{event}/subscribe", "EventSessionsController@subscribe")->name("event.subscribe");
     Route::post("/event/{event}/unsubscribe", "EventSessionsController@unsubscribe")->name("event.unsubscribe");

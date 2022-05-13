@@ -446,6 +446,7 @@ define('VIMEO_ZOOM_EX', "VIMEO_ZOOM_EX");
 define('VIMEO_ZOOM_SDK', "VIMEO_ZOOM_SDK");
 define('VIMEO_VIDEO_SDK', "VIMEO_VIDEO_SDK");
 define('VIDEO_SDK', "VIDEO_SDK");
+define('WHERE', "WHERE");
 
 define("EVENT_SESSION_TYPES", [
     ZOOM_SDK,
@@ -454,7 +455,8 @@ define("EVENT_SESSION_TYPES", [
     VIMEO_ZOOM_EX,
     VIMEO_ZOOM_SDK,
     VIDEO_SDK,
-    VIMEO_VIDEO_SDK
+    VIMEO_VIDEO_SDK,
+    WHERE
 ]);
 
 
@@ -1058,6 +1060,26 @@ function sendMail($templateId, $email, $content)
     } catch (Exception $th) {
         return FALSE;
     }
+}
+
+function createWhereRoom($endDate)
+{
+    $response = Http::withHeaders([
+        "Authorization" => "Bearer " . env("WHERE_API"),
+        "Content-Type"=>"application/json",
+    ])->post('https://api.whereby.dev/v1/meetings', [
+            "endDate"=> $endDate,
+            "templateType"=> "viewerMode",
+            "isLocked"=> false,
+            "roomNamePrefix"=> "example-prefix",
+            "roomNamePattern"=> "uuid",
+            "roomMode"=> "group",
+            "fields"=> [
+              "hostRoomUrl",
+              "viewerRoomUrl"
+            ]
+    ]);
+    return json_decode($response->body());
 }
 
 function sendNotifications()

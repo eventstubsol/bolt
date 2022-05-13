@@ -118,6 +118,12 @@ class SessionController extends Controller
         $data["end_time"] = $end;
         // dd($start);
         // dd($event_id);
+        if($request->type==="WHERE"){
+            $where_room = createWhereRoom($data["end_time"]);
+            $request->zoom_url = $where_room->roomUrl ;
+            $request->zoom_webinar_id = $where_room->viewerRoomUrl;
+
+        }
         $session = EventSession::create([
             "name"=>$request->name,
             "description"=>$request->description,

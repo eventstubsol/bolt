@@ -808,6 +808,15 @@ class EventController extends Controller
                 // dd($session);
                 return redirect(route("videosdk", ["meetingId" => $session->zoom_webinar_id, "containerId" => $type]));
             }
+            if ($session->type === "WHERE") {
+                if($user->type === USER_TYPE_SPEAKER){
+                    return redirect(route("where", ["roomUrl" => $session->zoom_webinar_id ]));
+                }else{
+                    return redirect(route("where", ["roomUrl" => $session->zoom_url ]));
+                    // dd($session);
+
+                }
+            }
 
             //Direct Zoom Redirect
             if ($session->type == "ZOOM_EXTERNAL" && strlen($session->zoom_url)) {
@@ -844,6 +853,7 @@ class EventController extends Controller
             }
             return view("event.noSession");
         } catch (\Exception $e) {
+            dd($e);
             return view("event.noSession");
         }
     }
@@ -873,6 +883,13 @@ class EventController extends Controller
     {
         // dd($meetingId);
         return view("event.videosdk")->with(compact(["meetingId", "containerId"]));
+    }
+
+    public function where(Request $request)
+    {
+        $roomUrl = $request->roomUrl;
+        // dd($request->all());   
+        return view("event.where")->with(compact(["roomUrl"]));
     }
 
 
