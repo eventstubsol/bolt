@@ -2,13 +2,15 @@ let loader = $(".loader");
 let setRoom = '';
 function initApp() {
    
+    var pause_audio = $("#pause_li");
+    function audioSetup(page){
+        
         const audio = document.getElementById("audio_new");
     
-        const pause_audio = $("#pause_li");
         let playing = true;
         if(window.config.lobby_audio){
 
-            audio.addEventListener('ended', function () {
+            audio.unbind().on('ended', function () {
                 this.currentTime = 0;
                 this.play();
             }, false);
@@ -33,6 +35,7 @@ function initApp() {
             });
             localStorage.setItem("lobbyAudio",true);
         }
+    }
 
     //Wait for video load and then hide loader
     loader = $(".loader");
@@ -539,11 +542,13 @@ function initApp() {
     }
 
     function pageChangeActions(changeChat = true) {
+        // muteAllAudios
+        $(".page_audio").trigger("pause")
         navs.removeClass('hidden');
+        pause_audio.hide();
         if(window.config.lobby_audio){
             audio.pause();
             playing = false;
-            pause_audio.hide();
         }
         $("#skip_flyin").hide();
         currentresbtns = null;
@@ -873,11 +878,15 @@ function initApp() {
             }
         },
         'page/:page': function (page) {
+            
+            let pause_audio = $("#pause_li");
             // if(page === "auditorium"){
             // }
             // alert(page);
             let video = $('.video-'+page);
-            
+            let pageAudio = $("#audio_"+page);
+           
+            console.log(pageAudio);
             let whitelist_for_all = ["expo_lobby","sponsor_floor","Vendor_Floor"]
             if ((!whitelist_for_all.includes(page)) && checkAuth()) {
                 routie("page/Lobby");
@@ -896,6 +905,47 @@ function initApp() {
                     });
                 }
                 pageChangeActions(false);
+                
+
+                if(pageAudio){
+                    if(reload){
+                        console.log("reload")
+                        $("body").on("mousemove",()=>{
+                            if(localStorage.getItem("audio_mute")==="false"){
+                                console.log("reload")
+                            
+                                pageAudio.trigger("play");
+                                pause_audio.find("i").removeClass('fe-volume-1');
+                                pause_audio.find("i").addClass('fe-volume-x');
+                                $("body").unbind("mousemove");
+                            }   
+                        });
+                        // $("body").trigger("mousemove");
+                        reload= false;
+                    }else{
+                        if(localStorage.getItem("audio_mute")==="false"){
+                            pageAudio.trigger("play");   
+                        }
+                    }
+                    pause_audio.show();
+                    
+                    
+                    pause_audio.unbind().on("click",()=>{
+                        if(pageAudio[0].paused){
+                            pageAudio.trigger("play");
+                            localStorage.setItem("audio_mute","false");
+                            pause_audio.find("i").removeClass('fe-volume-1');
+                            pause_audio.find("i").addClass('fe-volume-x');
+                        }else{
+                            pageAudio.trigger("pause");
+                            localStorage.setItem("audio_mute","true");
+                            pause_audio.find("i").addClass('fe-volume-1');
+                            pause_audio.find("i").removeClass('fe-volume-x');
+                        }
+                    })
+                }else{
+                    pause_audio.hide();
+                }
                 // createGroup(chatname);
                 CometChatWidget.chatWithGroup(chatname);
                 

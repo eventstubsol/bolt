@@ -272,12 +272,10 @@
             
         </div> --}}
         <div style="display:flex; align-items:center;justify-content: end;" class="col-5 col-md-3 fluid-col profile-col">
-            @if($event->lobby_audio)
             
-                <div id="pause_li" >
-                    <a id="pause"><i id="mute" style="font-size: 22px" class="fe-volume-x"></i></a>
-                </div>
-            @endif
+            <div id="pause_li" style="display: none" >
+                <a id="pause"><i id="mute" style="font-size: 22px" class="fe-volume-x"></i></a>
+            </div>
             <div class="dropdown notification-list topbar-dropdown">
                <a onclick="clearNoteAll()" class="nav-link dropdown-toggle waves-effect waves-light" id="dropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                    <i class="fe-bell noti-icon" ></i>

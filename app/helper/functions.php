@@ -1836,7 +1836,7 @@ function CreateDefaultRooms($event_id){
                     "hide_menu"=>false,
                     "cms_field"=>true,
                     "video"=>"main_lobby_video",
-                    "links"=>[ "Auditorium" => ["session_room","Auditorium",39,29,15,20],'InfoDesk'=> ["page","InfoDesk",39,54,21,26] ]
+                    "links"=>[ "Auditorium" => ["session_room","Auditorium",51,25,19,21],'InfoDesk'=> ["page","InfoDesk",51,55,22,22] ]
                 ]
             ];
     foreach($pages as $_page){

@@ -252,6 +252,7 @@ class PageController extends Controller
             $page->name = $request->name;
             $page->chat_name =  $request->chat_name;
             $page->hide_menu = $request->hide_menu;
+            $page->bg_music = $request->bg_audio;
             $page->save();
 
             $page->treasures()->delete();

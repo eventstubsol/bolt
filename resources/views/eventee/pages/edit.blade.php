@@ -454,6 +454,11 @@ Edit Page
                         <input type="hidden" name="video_url" class="upload_input" value="{{$page->videoBg?$page->videoBg->url:''}}">
                         <input type="file" data-name="video_url" data-plugins="dropify" data-type="video" data-default-file="{{$page->videoBg?assetUrl($page->videoBg->url):''}}" />
                     </div>
+                    <div class="image-uploader mt-2">
+                        <label class="mb-3" for="images">Background Audio</label>
+                        <input type="hidden" name="bg_audio" class="upload_input" value="@if($page->bg_music != null) {{ $page->bg_music }} @endif">
+                        <input  type="file" data-name="bg_audio" data-plugins="dropify" data-type="audio/mpeg" data-default-file="@if($page->bg_music != null) {{ $page->bg_music }} @endif" />
+                    </div>
                    
 
                     <!-- Treasure Hunt Items Start -->

@@ -9,6 +9,9 @@
                     @elseif(isset($page->images[0]->url))
                         <img async src="{{ assetUrl($page->images[0]->url??'') }}" class=" positioned booth-bg" alt="">
                     @endif
+                    @if($page->bg_music)
+                        <audio id="audio_{{$page->name}}" class="page_audio"  src="{{assetUrl($page->bg_music)}}" ></audio>
+                    @endif
                     @foreach($page->links as $link)
 
                     @php
