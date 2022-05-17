@@ -10,7 +10,7 @@ function initApp() {
         let playing = true;
         if(window.config.lobby_audio){
 
-            audio.unbind().on('ended', function () {
+            audio.on('ended', function () {
                 this.currentTime = 0;
                 this.play();
             }, false);
