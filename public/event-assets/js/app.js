@@ -3,7 +3,7 @@ let setRoom = '';
 function initApp() {
    
     var pause_audio = $("#pause_li");
-    function audioSetup(page){
+    // function audioSetup(page){
         
         const audio = document.getElementById("audio_new");
     
@@ -35,7 +35,7 @@ function initApp() {
             });
             localStorage.setItem("lobbyAudio",true);
         }
-    }
+    // }
 
     //Wait for video load and then hide loader
     loader = $(".loader");
