@@ -586,9 +586,9 @@ function initApp() {
             if(localStorage.getItem("lobbyAudio")=='true' && window.config.lobby_audio){
                 if(reload){
                     $("body").on("mousemove",()=>{
-                        pause_audio.show();
-                        pause_audio.find("i").removeClass('fe-volume-x');
-                        pause_audio.find("i").addClass('fe-volume-1');
+                        // pause_audio.show();
+                        // pause_audio.find("i").removeClass('fe-volume-x');
+                        // pause_audio.find("i").addClass('fe-volume-1');
                         // audio.play();
                         // audio.muted = false;
                         playing = true;    
@@ -606,16 +606,16 @@ function initApp() {
                 // audio.play();
                 playing = true;
                 // audio.muted = false;
-                pause_audio.find("i").removeClass('fe-volume-x');
-                pause_audio.find("i").addClass('fe-volume-1');
+                // pause_audio.find("i").removeClass('fe-volume-x');
+                // pause_audio.find("i").addClass('fe-volume-1');
             }
             // createGroup("general");
             pages.filter("#lobby").show();
             pageChangeActions();
             recordPageView("lobby", "lobby","lobby");
-            if(window.config.lobby_audio){
-                pause_audio.show();  
-            }
+            // if(window.config.lobby_audio){
+            //     pause_audio.show();  
+            // }
 
         },
         'networking': function () {
@@ -934,13 +934,13 @@ function initApp() {
                         if(pageAudio[0].paused){
                             pageAudio.trigger("play");
                             localStorage.setItem("audio_mute","false");
-                            pause_audio.find("i").removeClass('fe-volume-1');
-                            pause_audio.find("i").addClass('fe-volume-x');
-                        }else{
-                            pageAudio.trigger("pause");
-                            localStorage.setItem("audio_mute","true");
                             pause_audio.find("i").addClass('fe-volume-1');
                             pause_audio.find("i").removeClass('fe-volume-x');
+                        }else{
+                            pause_audio.find("i").removeClass('fe-volume-1');
+                            pause_audio.find("i").addClass('fe-volume-x');
+                            pageAudio.trigger("pause");
+                            localStorage.setItem("audio_mute","true");
                         }
                     })
                 }else{
