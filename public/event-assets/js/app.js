@@ -5,36 +5,36 @@ function initApp() {
     var pause_audio = $("#pause_li");
     // function audioSetup(page){
         
-        const audio = document.getElementById("audio_new");
+        // const audio = document.getElementById("audio_new");
     
-        let playing = true;
-        if(window.config.lobby_audio){
+        // let playing = true;
+        // if(window.config.lobby_audio){
 
-            audio.on('ended', function () {
-                this.currentTime = 0;
-                this.play();
-            }, false);
-            pause_audio.on("click", () => {
-                console.log("clicked1");
-                console.log(playing);
-                if (playing) {
-                    localStorage.setItem("lobbyAudio",false);
-                    audio.pause();
-                    playing = false;
-                    pause_audio.find("i").removeClass('fe-volume-1');
-                    pause_audio.find("i").addClass('fe-volume-x');
-                } else {
-                    audio.play();
-                    playing = true;
-                    localStorage.setItem("lobbyAudio",true);
+        //     audio.on('ended', function () {
+        //         this.currentTime = 0;
+        //         this.play();
+        //     }, false);
+        //     pause_audio.on("click", () => {
+        //         console.log("clicked1");
+        //         console.log(playing);
+        //         if (playing) {
+        //             localStorage.setItem("lobbyAudio",false);
+        //             audio.pause();
+        //             playing = false;
+        //             pause_audio.find("i").removeClass('fe-volume-1');
+        //             pause_audio.find("i").addClass('fe-volume-x');
+        //         } else {
+        //             audio.play();
+        //             playing = true;
+        //             localStorage.setItem("lobbyAudio",true);
 
-                    pause_audio.find("i").removeClass('fe-volume-x');
-                    pause_audio.find("i").addClass('fe-volume-1');
+        //             pause_audio.find("i").removeClass('fe-volume-x');
+        //             pause_audio.find("i").addClass('fe-volume-1');
 
-                }
-            });
-            localStorage.setItem("lobbyAudio",true);
-        }
+        //         }
+        //     });
+        //     localStorage.setItem("lobbyAudio",true);
+        // }
     // }
 
     //Wait for video load and then hide loader
@@ -546,10 +546,10 @@ function initApp() {
         $(".page_audio").trigger("pause")
         navs.removeClass('hidden');
         pause_audio.hide();
-        if(window.config.lobby_audio){
-            audio.pause();
-            playing = false;
-        }
+        // if(window.config.lobby_audio){
+        //     audio.pause();
+        //     playing = false;
+        // }
         $("#skip_flyin").hide();
         currentresbtns = null;
         if (changeChat)
@@ -589,8 +589,8 @@ function initApp() {
                         pause_audio.show();
                         pause_audio.find("i").removeClass('fe-volume-x');
                         pause_audio.find("i").addClass('fe-volume-1');
-                        audio.play();
-                        audio.muted = false;
+                        // audio.play();
+                        // audio.muted = false;
                         playing = true;    
                         $("body").unbind("mousemove");
                     });
@@ -603,9 +603,9 @@ function initApp() {
                 if(isios()){
                     document.getElementById("lobby_view").setAttribute("src","")
                 }
-                audio.play();
+                // audio.play();
                 playing = true;
-                audio.muted = false;
+                // audio.muted = false;
                 pause_audio.find("i").removeClass('fe-volume-x');
                 pause_audio.find("i").addClass('fe-volume-1');
             }
