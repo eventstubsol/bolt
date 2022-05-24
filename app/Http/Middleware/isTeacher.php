@@ -19,6 +19,9 @@ class isTeacher
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
+        if(!$user){
+            abort(403);
+        }
         if($request->route('id')){
            $event_user = Event::find($request->route('id')) ? Event::find($request->route('id'))->user_id :'';
            if($event_user===''){

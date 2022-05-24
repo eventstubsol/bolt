@@ -582,6 +582,10 @@ function initApp() {
    }
     routie({
         'lobby': function () {
+            trackEvent({
+                type: "resourceView",
+                url:""
+            });
             pages.hide();
             if(localStorage.getItem("lobbyAudio")=='true' && window.config.lobby_audio){
                 if(reload){

@@ -44,26 +44,14 @@ class Poll extends Model
     use SoftDeletes;
 
     //
-    protected $fillable = ["name", "end_date", "start_date", "time", "status"];
+    protected $fillable = ["name", "end_date", "start_date", "time", "status","event_id","location_type","location"];
 
     protected $dates = ["end_date", "start_date"];
 
-    public function user(){
-        return $this->belongsTo(App\User::class);
-    }
-
     public function questions()
     {
-        return $this->hasMany("App\Question")->orderBy("sort_order", "ASC");
+        return $this->hasMany("App\EventQuestion");
     }
 
-    public function votes()
-    {
-        return $this->hasMany("App\Vote")->where("status", 1);
-    }
-
-    public function session_poll()
-    {
-        return $this->hasOne("\App\SessionPoll");
-    }
+    
 }

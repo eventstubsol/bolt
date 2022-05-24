@@ -750,26 +750,35 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     /**
      * POLL ROUTE START
      */
-    Route::get("/polls", "PollController@index")->name("poll.manage"); // list all polls
-    Route::get("/polls/multipleChoice", "PollController@MultipleChoice")->name("poll.multiple"); //multiple choice
-    Route::post("/polls/multipleChoice", "PollController@MultipleChoicePost");
-    Route::get("/polls/create", "PollController@create")->name("poll.create.get"); // get create form
-    Route::post("/polls/create", "PollController@save")->name("poll.create.post"); // create in db
-    Route::get("/polls/edit", "PollController@requestEdit")->name("poll.edit");
-    Route::post("/polls/update", "PollController@pollUpdate")->name("poll.update.post"); // Update db
-    Route::get("/polls/{poll}/edit", "PollController@update")->name("poll.update.get");
-    Route::put("/polls/{poll}/edit", "PollController@update")->name("poll.update.put");
-    Route::delete("/polls/{poll}", "PollController@destroy")->name("poll.delete");
-    Route::get("/polls/{poll}/results", "PollController@resultsView")->name("poll.results"); // View results of poll
-    Route::post("/polls/{poll}/results", "PollController@resultsView")->name("poll.results.api"); // View results of poll
-    Route::get('/poll/total-data','PollController@Polls')->name('polls.data');
-    Route::get('/poll/question','PollController@Questions')->name('poll.question');
-    Route::get('poll/delete/confirm','PollController@confirmData')->name('poll.delete.confirm');
-    Route::post('poll/delete','PollController@Delete')->name('poll.destroy');
-    Route::get('poll/update/status','PollController@updateStatus')->name('poll.status');
-    Route::get("by-laws", "PollController@getByLaws")->name("byLaws.get");
-    Route::post("by-laws", "PollController@submitByLaws")->name("byLaws.submit");
-    Route::post("by-laws/option-select", "PollController@submitByLawsOption")->name("byLaws.optionSubmit");
+    Route::get("/polls/{id}", "Eventee\PollController@index")->name("polls.manage"); // list all polls
+    Route::get("/polls/create/{id}", "Eventee\PollController@create")->name("eventee.polls.create"); // get create form
+    Route::get("/polls/delete", "Eventee\PollController@destroy")->name("eventee.polls.destroy"); // get create form
+    Route::get("/polls/bulkDelete", "Eventee\PollController@destroy")->name("eventee.polls.bulkDelete"); // get create form
+    Route::get("/polls/deleteAll", "Eventee\PollController@destroy")->name("eventee.polls.deleteAll"); // get create form
+    Route::post("/polls/store/{id}", "Eventee\PollController@store")->name("eventee.polls.store"); // get create form
+    Route::get("/polls/edit/{id}/{poll}", "Eventee\PollController@edit")->name("eventee.polls.edit"); // get create form
+    Route::get("/poll/{id}/{poll}", "Eventee\PollController@poll")->name("eventee.poll"); // get create form
+    Route::post("/vote/{id}/{poll}", "Eventee\PollController@vote")->name("eventee.vote"); // get create form
+    
+
+    // Route::get("/polls/multipleChoice", "PollController@MultipleChoice")->name("poll.multiple"); //multiple choice
+    // Route::post("/polls/multipleChoice", "PollController@MultipleChoicePost");
+    // Route::post("/polls/create", "PollController@save")->name("poll.create.post"); // create in db
+    // Route::get("/polls/edit", "PollController@requestEdit")->name("poll.edit");
+    // Route::post("/polls/update", "PollController@pollUpdate")->name("poll.update.post"); // Update db
+    // Route::get("/polls/{poll}/edit", "PollController@update")->name("poll.update.get");
+    // Route::put("/polls/{poll}/edit", "PollController@update")->name("poll.update.put");
+    // Route::delete("/polls/{poll}", "PollController@destroy")->name("poll.delete");
+    // Route::get("/polls/{poll}/results", "PollController@resultsView")->name("poll.results"); // View results of poll
+    // Route::post("/polls/{poll}/results", "PollController@resultsView")->name("poll.results.api"); // View results of poll
+    // Route::get('/poll/total-data','PollController@Polls')->name('polls.data');
+    // Route::get('/poll/question','PollController@Questions')->name('poll.question');
+    // Route::get('poll/delete/confirm','PollController@confirmData')->name('poll.delete.confirm');
+    // Route::post('poll/delete','PollController@Delete')->name('poll.destroy');
+    // Route::get('poll/update/status','PollController@updateStatus')->name('poll.status');
+    // Route::get("by-laws", "PollController@getByLaws")->name("byLaws.get");
+    // Route::post("by-laws", "PollController@submitByLaws")->name("byLaws.submit");
+    // Route::post("by-laws/option-select", "PollController@submitByLawsOption")->name("byLaws.optionSubmit");
     
 
     Route::POST('/poll/question/edit',"QuestionController@Edit")->name('poll.question.edit');
