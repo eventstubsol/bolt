@@ -907,7 +907,7 @@ function initApp() {
                 pageChangeActions(false);
                 
 
-                if(pageAudio){
+                if(Object.keys(pageAudio).length){
                     if(reload){
                         console.log("reload")
                         $("body").on("mousemove",()=>{
