@@ -802,7 +802,9 @@ class EventController extends Controller
                 //No Session Going On 
                 return view("event.noSession");
             }
-
+            if ($session->type == "BBB") {
+                return redirect(getBBBJoinURL($session->name,$user));
+            }
 
             if ($session->type === "VIDEO_SDK") {
                 // dd($session);

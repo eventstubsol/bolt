@@ -447,6 +447,7 @@ define('VIMEO_ZOOM_SDK', "VIMEO_ZOOM_SDK");
 define('VIMEO_VIDEO_SDK', "VIMEO_VIDEO_SDK");
 define('VIDEO_SDK', "VIDEO_SDK");
 define('WHERE', "WHERE");
+define('BBB', "BBB");
 
 define("EVENT_SESSION_TYPES", [
     ZOOM_SDK,
@@ -456,7 +457,7 @@ define("EVENT_SESSION_TYPES", [
     VIMEO_ZOOM_SDK,
     VIDEO_SDK,
     VIMEO_VIDEO_SDK,
-    WHERE
+    BBB
 ]);
 
 
@@ -1061,7 +1062,39 @@ function sendMail($templateId, $email, $content)
         return FALSE;
     }
 }
+function getBBBJoinURL($meetingId,$user)
+{
+    $secret = 'gjelamnir5NXJxgJfTSkcZrHs0ZiDdq3KC7CmkIW4cY';
+    $name = str_replace(" ","", $user->getFullName());
+    $session_name = str_replace(" ","_",$meetingId);
+    if($user->type === 'attendee'){
+        $role = "VIEWER";
+    }else{
+        $role = "MODERATOR";
+    }
+    $query = 'fullName='.$name.'&meetingID='.$session_name.'&role='.$role;
+    $checksum =  sha1('join'.$query.$secret);
+    $url = 'https://bbb.eventstub.co/bigbluebutton/api/join?'.$query.'&checksum='.$checksum;
+    // dd($url);
+    return $url;
+    
+}
 
+function sendBBBReq($url,$call_name,$name,$meetingID)
+{
+    $secret = 'gjelamnir5NXJxgJfTSkcZrHs0ZiDdq3KC7CmkIW4cY';
+    $attendeePW = 'attendPW';
+    $moderatorPW = 'moderatPW';
+    $query = 'name='.$name.'&meetingID='.$meetingID.'&attendeePW='.$attendeePW.'&moderatorPW='.$moderatorPW.'&allowRequestsWithoutSession=true&meetingExpireIfNoUserJoinedInMinutes=72000';
+    $checksum =  sha1($call_name.$query.$secret);
+    // return $call_name.$query.$secret;//$checksum;
+    $response = Http::get($url.'?'.$query.'&checksum='.$checksum);
+    $xmlstring = $response->body();
+    $xml = simplexml_load_string($xmlstring, "SimpleXMLElement", LIBXML_NOCDATA);
+    $json = json_encode($xml);
+    $array = json_decode($json,TRUE);
+    return $array;
+}
 function createWhereRoom($endDate)
 {
     $response = Http::withHeaders([

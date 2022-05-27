@@ -124,6 +124,14 @@ class SessionController extends Controller
             $request->zoom_webinar_id = $where_room->viewerRoomUrl;
 
         }
+        if($request->type ==="BBB"){
+            $name = str_replace(" ","_",$request->name);
+            $bbb = sendBBBReq('https://bbb.eventstub.co/bigbluebutton/api/create','create',$name,$name);
+            if($bbb["returncode"]==="FAILED"){
+                flash("Error Creating BBB meeting Id already exists")->error();
+                return redirect()->back();
+            }
+        }
         $session = EventSession::create([
             "name"=>$request->name,
             "description"=>$request->description,
