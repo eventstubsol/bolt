@@ -852,7 +852,7 @@ function initApp() {
                 const loadContent = () => {
                     // if(window.config.auditoriumEmbed.startsWith(""))
                     // console.log(window.config.auditoriumEmbed)
-                    $("#session-content-" + room).empty().append(`<iframe frameborder="0" id="frame" allow="camera;microphone"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=${room}"></iframe>`);
+                    $("#session-content-" + room).empty().append(`<iframe frameborder="0" id="frame" allowusermedia allow="camera https://bbb.eventstub.co;  microphone https://bbb.eventstub.co"  class="positioned fill" src="${window.config.auditoriumEmbed}?type=${room}"></iframe>`);
                     // $("#session-content-" + room).append(`<div id="video_play_area"></div>`);
                     $(".cc1-chat-win-inpt-wrap input").unbind("mousedown").on("mousedown", function (e) { e.preventDefault(); e.stopImmediatePropagation(); $(e.target).focus() });
                 };
@@ -915,8 +915,8 @@ function initApp() {
                                 console.log("reload")
                             
                                 pageAudio.trigger("play");
-                                pause_audio.find("i").removeClass('fe-volume-1');
-                                pause_audio.find("i").addClass('fe-volume-x');
+                                pause_audio.find("i").addClass('fe-volume-1');
+                                pause_audio.find("i").removeClass('fe-volume-x');
                                 $("body").unbind("mousemove");
                             }   
                         });
@@ -925,6 +925,8 @@ function initApp() {
                     }else{
                         if(localStorage.getItem("audio_mute")==="false"){
                             pageAudio.trigger("play");   
+                            pause_audio.find("i").addClass('fe-volume-1');
+                            pause_audio.find("i").removeClass('fe-volume-x');
                         }
                     }
                     pause_audio.show();
