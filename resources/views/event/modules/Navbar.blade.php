@@ -187,7 +187,7 @@
     <div class="container-fluid row">
         <div class="col-5 col-md-3 fluid-col logo-col">
             <div class="logo-box">
-                <a class="logo area" data-link="lobby">
+                <a class="logo area" data-link="page/Lobby">
                     <img async src="{{ assetUrl(getFieldId('logo',$event_id)) }}" style="max-height: 50px;border-radius: 10px;padding: 0px;">
                 </a>
             </div>
