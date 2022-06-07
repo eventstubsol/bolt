@@ -10,6 +10,8 @@ $menus = App\Menu::where('type','nav')->where('event_id',$event_id)->where('pare
                  <li><a data-link="networking" class="area"><i class="fe-home"></i>Lounge</a></li>
              @elseif($menu->name === 'lobby')      
                  <li><a data-link="lobby" class="area"><i class="fe-home"></i>Lobby</a></li>
+             @elseif($menu->name === 'Lobby')      
+                 <li><a data-link="page/Lobby" class="area"><i class="fe-home"></i>Lobby</a></li>
              @elseif($menu->name === 'library')
                  <li><a data-toggle="modal" data-target="#resources-modal"><i class="fe-folder"></i>Library</a></li>
              @elseif($menu->name == 'schedule')
