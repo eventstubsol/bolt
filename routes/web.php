@@ -40,11 +40,15 @@ $appurl = env('APP_ENV') ==='staging'? 'localhost' :  env('APP_URL');
 // to get request domain  dd(\Request::getHost());
 Route::get("/verifydomain", "EventManageController@verifyDomain")->name("verify");
 Route::get("/testenv", function(){
+    dd(createStream());
+    // dd(getLiveStream('li1y5dVFxUxPnxCVFdfybpS'));
     // dd(sendBBBReq('https://bbb.eventstub.co/bigbluebutton/api/create','create','meeting2','meeting2'));
-    dd(getBBBJoinURL('meeting2',Auth::user()));
+    // dd(getBBBJoinURL('meeting2',Auth::user()));
     // dd(createWhereRoom('2022-05-14T14:15:22Z'));
 })->name("envveri");
-
+Route::get("/picpicgallery",function(){
+    return view("event.modules.picpicph");
+});
 Route::group(['domain' => $appurl], function () {
 
 

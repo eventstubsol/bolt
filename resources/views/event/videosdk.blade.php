@@ -63,15 +63,26 @@
             autoStart: true,
             outputs: [
               // {
-              //   url: "rtmp://x.rtmp.youtube.com/live2",
-              //   streamKey: "<STREAM KEY FROM YOUTUBE>",
+              //   url: "rtmp://broadcast.api.video/s",
+              //   streamKey: "5a7b8009-e0fb-45fa-9e5a-9105ac4efc99",
               // },
+              // {
+              //   url:"rtmps://rtmp-global.cloud.vimeo.com:443/live",
+              //   streamKey:"084545eb-1fed-41a3-8aaa-f406079a117c",
+              // }
             ],
           },
         permissions: {
           askToJoin: false, // Ask joined participants for entry in meeting
           toggleParticipantMic: false, // Can toggle other participant's mic
           toggleParticipantWebcam: false, // Can toggle other participant's webcam
+          cantoggleLivestream: true,
+          changeLayout: true,
+          drawOnWhiteboard: true,
+          toggleWhiteboard: true,
+          toggleRecording: true,
+          pin: true,
+          removeParticipant: true,
         },
  
         joinScreen: {
@@ -88,7 +99,7 @@
     //   let doc = document.getElementById("frame").contentDocument;
       
       script.src =
-        "https://sdk.videosdk.live/rtc-js-prebuilt/0.3.1/rtc-js-prebuilt.js";
+        "https://sdk.videosdk.live/rtc-js-prebuilt/0.3.3/rtc-js-prebuilt.js";
       document.getElementsByTagName("head")[0].appendChild(script);
     })
     //   doc.getElementById("inner_head").appendChild(script);
