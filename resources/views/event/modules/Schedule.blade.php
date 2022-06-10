@@ -22,6 +22,16 @@
 
                     }
                 }
+                
+            foreach($dates as $date=>$room){
+                foreach($dates as $datei =>$roomi ){
+                    if($date>$datei){
+                        $temp = $date;
+                        $date = $datei;
+                        $datei = $temp;
+                    }
+                }
+            }
         @endphp
 
         <!-- Create Pills for Dates -->
