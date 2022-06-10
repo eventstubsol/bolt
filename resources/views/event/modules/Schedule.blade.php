@@ -9,33 +9,24 @@
         @php
             $lastDate = false;
             $i = 0;
-            $dates = []; 
-                foreach($schedule as $room => $scheduleForRoom){
-                    foreach ($scheduleForRoom as $id => $event){
-                        if($lastDate != $event['start_date']['m']){
-                            $lastDate = $event['start_date']['m'];
-                        }
-                        if($event['type']!=="PRIVATE_SESSION"){
-                            $event['id'] = $id;
-                            $dates[$lastDate][$room][] = $event;
-                         }
+            // $dates = []; 
+            //     foreach($schedule as $room => $scheduleForRoom){
+            //         foreach ($scheduleForRoom as $id => $event){
+            //             if($lastDate != $event['start_date']['m']){
+            //                 $lastDate = $event['start_date']['m'];
+            //             }
+            //             if($event['type']!=="PRIVATE_SESSION"){
+            //                 $event['id'] = $id;
+            //                 $dates[$lastDate][$room][] = $event;
+            //              }
 
-                    }
-                }
+            //         }
+            //     }
                 
-            foreach($dates as $date=>$room){
-                foreach($dates as $datei =>$roomi ){
-                    if($date>$datei){
-                        $temp = $date;
-                        $date = $datei;
-                        $datei = $temp;
-                    }
-                }
-            }
         @endphp
 
         <!-- Create Pills for Dates -->
-        @foreach($dates as $date => $room)
+        @foreach($schedule as $date => $room)
             @php
                 $i++;
             @endphp
@@ -52,7 +43,7 @@
         <!-- Tabs Content Start -->
         <div class="tab-content">
             <!-- Loop for Each Date  -->
-            @foreach($dates as $date => $rooms)
+            @foreach($schedule as $date => $rooms)
                 @php
                     $i++;
                 @endphp

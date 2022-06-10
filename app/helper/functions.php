@@ -1095,6 +1095,38 @@ function sendBBBReq($url,$call_name,$name,$meetingID)
     $array = json_decode($json,TRUE);
     return $array;
 }
+function createStream(){
+    // $response = Http::withHeaders([
+    //     'Accept' => 'application/json',
+    //     "Authorization" => "Basic SFNnZmJQZUdQcXFMck9vUEJUUmloUnBsdmJFYXJ3VU5PUzdMTW1weURyTTpIU2dmYlBlR1BxcUxyT29QQlRSaWhScGx2YkVhcndVTk9TN0xNbXB5RHJN",
+    //     "Content-Type"=>"application/json",
+    // ])->post('https://ws.api.video/live-streams', [
+    //         "name"=>"Test Stream"
+    // ]);
+    $base_string = base64_encode("lhFmbcdEhDmh:vnvNWWjHcb6CwadlHvZIoCsQBuwpMOCfRu2w");
+    $response = Http::withHeaders([
+        'Accept' => 'application/json',
+        // 'username'=>'lhFmbcdEhDmh',
+        // 'password'=>'vnvNWWjHcb6CwadlHvZIoCsQBuwpMOCfRu2w',
+        "Authorization" => "Basic ".$base_string,
+        "Content-Type"=>"application/json",
+    ])->post('https://api.liveapi.com/live_streams', []);
+
+        return json_decode($response->body());
+        # code...
+}
+function getLiveStream($stream_id){
+    
+    $response = Http::withHeaders([
+        'Accept' => 'application/json',
+        "Authorization" => "Basic SFNnZmJQZUdQcXFMck9vUEJUUmloUnBsdmJFYXJ3VU5PUzdMTW1weURyTTpIU2dmYlBlR1BxcUxyT29QQlRSaWhScGx2YkVhcndVTk9TN0xNbXB5RHJN",
+        "Content-Type"=>"application/json",
+    ])->get('https://ws.api.video/live-streams/'.$stream_id);
+
+    return json_decode($response->body());
+}
+
+
 function createWhereRoom($endDate)
 {
     $response = Http::withHeaders([
@@ -1544,7 +1576,9 @@ function getSuggestedTags(){
 function getSchedule($event_id){
     $schedule = [];
     $eventsLineup = EventSession::where("event_id",$event_id)->orderBy("start_time")->with("speakers.speaker")->get()->load(["parentroom","resources","eventSpeaker.user"]);
-    foreach ($eventsLineup as $event){
+    $scheuleForDates = []; 
+    $lastDate = false;
+    foreach ($eventsLineup as $ids => $event){
         if(!isset($schedule[$event->room])){
             $schedule[$event->room] = [];
         }
@@ -1557,8 +1591,9 @@ function getSchedule($event_id){
         }else if($now->clone()->add(15, "minutes")->isAfter($event->start_time)){
             $status = 3; //Starting soon
         }
+
         if($event->start_time && $event->end_time){
-            $schedule[$event->room][$event->id] = [
+            $session = [
                 "start_time" => $event->start_time->utc()->toString(),
                 "start_date" => [
                     "m" => $event->start_time->format("l, M dS"),
@@ -1577,9 +1612,41 @@ function getSchedule($event_id){
                 "type" => $event->type,
                 "zoom_url"=>$event->zoom_url??'',
             ];
+
+            if($lastDate != $session['start_date']['m']){
+                $lastDate = $session['start_date']['m'];
+            }
+
+            $session['id'] = $ids;
+            if(!isset($scheuleForDates[$lastDate])){
+                $scheuleForDates[$lastDate] = [];
+            }
+            if(!isset($scheuleForDates[$lastDate][$event->room])){
+                $scheuleForDates[$lastDate][$event->room] = [];
+            }
+            $scheuleForDates[$lastDate][$event->room][] = $session;
+            $schedule[$event->room][$event->id] = $session;
         }
     }
-    return $schedule;
+    // $lastDate = false;
+    // $i = 0;
+    // $dates = []; 
+    //     foreach($schedule as $room => $scheduleForRoom){
+    //         foreach ($scheduleForRoom as $id => $event){
+    //             if($lastDate != $event['start_date']['m']){
+    //                 $lastDate = $event['start_date']['m'];
+    //             }
+    //             if($event['type']!=="PRIVATE_SESSION"){
+    //                 $event['id'] = $id;
+    //                 $dates[$lastDate][$room][] = $event;
+    //              }
+
+    //         }
+    //     }
+        // array_multisort($dates,SORT_ASC);
+        // dd($dates);
+        // dd($schedule);
+    return $scheuleForDates;
 }
 // function getSchedule(){
 //     $schedule = [];

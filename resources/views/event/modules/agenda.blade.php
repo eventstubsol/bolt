@@ -8,32 +8,24 @@
             $lastDate = false;
             $i = 0;
             $dates = []; 
-                foreach($schedule as $room => $scheduleForRoom){
-                    foreach ($scheduleForRoom as $id => $event){
-                        if($lastDate != $event['start_date']['m']){
-                            $lastDate = $event['start_date']['m'];
-                        }
-                        if(  in_array($id,  $subscriptions))
-                        {
-                            $event['id'] = $id;
-                            $dates[$lastDate][$room][] = $event;
-                        }
+                // foreach($schedule as $room => $scheduleForRoom){
+                //     foreach ($scheduleForRoom as $id => $event){
+                //         if($lastDate != $event['start_date']['m']){
+                //             $lastDate = $event['start_date']['m'];
+                //         }
+                //         if(  in_array($id,  $subscriptions))
+                //         {
+                //             $event['id'] = $id;
+                //             $dates[$lastDate][$room][] = $event;
+                //         }
 
-                    }
-                }
-                foreach($dates as $date=>$room){
-                    foreach($dates as $datei =>$roomi ){
-                        if($date>$datei){
-                            $temp = $date;
-                            $date = $datei;
-                            $datei = $temp;
-                        }
-                    }
-                }
+                //     }
+                // }
+
         @endphp
 
         <!-- Create Pills for Dates -->
-        @foreach($dates as $date => $master_room)
+        @foreach($schedule as $date => $master_room)
             @php
                 $i++;
             @endphp
@@ -50,7 +42,7 @@
         <!-- Tabs Content Start -->
         <div class="tab-content">
             <!-- Loop for Each Date  -->
-            @foreach($dates as $date => $rooms)
+            @foreach($schedule as $date => $rooms)
                 @php
                     $i++;
                 @endphp
