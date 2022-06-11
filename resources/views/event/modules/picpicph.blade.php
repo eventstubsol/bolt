@@ -11,6 +11,7 @@
     <!-- <iframe src="https://events.picpicsocial.com/340334776/booth" frameborder="0"></iframe> -->
     <!-- <script src='https://events.picpicsocial.com/test1b.js'></script> -->
     <!-- <script src='https://events.picpicsocial.com/test1b.js'></script> -->
-    <script src='https://events.picpicsocial.com/509120634.js'></script>
+    {{-- <script src='https://events.picpicsocial.com/509120634.js'></script> --}}
+    <script src='https://events.picpicsocial.com/229762065.js'></script>
 </body>
 </html>
