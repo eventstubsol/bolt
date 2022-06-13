@@ -167,7 +167,7 @@
     .overLay{
         background: #000c;
         width: 100%;
-        height: 100%;
+        height: 85%;
         z-index: 9999;
         position: absolute;
         top: 56px;
