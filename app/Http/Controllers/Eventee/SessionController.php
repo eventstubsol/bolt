@@ -284,7 +284,7 @@ class SessionController extends Controller
 
 
         //updating resources
-
+        Resource::where("booth_id",$session->id)->delete();
         $requesturls = $request->resources; //Recieved from form
         if ($requesturls) {
             foreach ($requesturls as $id => $requrl) {
