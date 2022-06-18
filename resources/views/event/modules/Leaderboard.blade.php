@@ -32,6 +32,9 @@ if(isset($leaderboard)){
                             @endforeach
                         </ul>
                         @endif
+                        <div>
+                            Your Points : {{$user->points}}
+                        </div>
                     </div>
                 </div>
 
