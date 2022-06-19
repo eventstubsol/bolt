@@ -473,7 +473,7 @@
         Pusher.logToConsole = true;
     
         var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
-          cluster: 'ap2'
+          cluster: 'us2'
         });
         
         var channel = pusher.subscribe(slug);
@@ -481,9 +481,9 @@
             let fullLocation = window.location.hash;
             console.log({data});
             // fullLocation = data.location;
-            let hashlocation =fullLocation.split("/")[0];
-            let location = hashlocation.split('#')[1];
-            let location_type = fullLocation.split("/")[1];
+            let hashlocation =fullLocation.split("/")[0]; //#sessionroom
+            let location = hashlocation.split('#')[1];  //sessionroom
+            let location_type = fullLocation.split("/")[1];//Auditorium
             // let location_type = data.location_type;
             console.log(location);
             let consentNotify = $('.consent-notification');

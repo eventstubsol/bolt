@@ -1556,6 +1556,7 @@ table.dataTable tbody tr {
     opacity: 1;
     pointer-events: all;
     transform: none;
+    display: block !important;
 }
 
 

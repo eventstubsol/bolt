@@ -62,9 +62,8 @@
                             <span style="color:red">*</span>
                         </label>
                         <select id="user-location" name="location" required class="form-control " onchange="checkLocation(this)">
-                            <option value="lobby">Lobby</option>
-                            <option value="session_room">Session Room</option>
                             <option value="page">Page</option>
+                            <option value="session_room">Session Room</option>
                             <option value="booth">Booth</option>
 {{--                            <option>Active Users</option>--}}
 {{--                            <option>Inactive Users</option>--}}
@@ -75,7 +74,6 @@
                             <span style="color:red">*</span>
                         </label>
                         <select id="user-location" name="sessionRoom" required class="form-control ">
-                            <option value=" ">None</option>
                            @foreach ($rooms as $room)
                                 <option value="{{ $room->name }}">{{ __($room->name) }}</option>
                            @endforeach
@@ -83,7 +81,7 @@
 {{--                            <option>Inactive Users</option>--}}
                         </select>
                     </div>
-                    <div class="form-group mb-3" id="page" style="display: none">
+                    <div class="form-group mb-3" id="page" >
                         <label for="user-type">Select Page
                             <span style="color:red">*</span>
                         </label>

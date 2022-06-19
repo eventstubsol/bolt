@@ -48,13 +48,13 @@ class NotificationController extends Controller
 
         // $resp = sendGeneralNotification($request->post("title"), $request->post("message"), $request->post("url", NULL), $request->post("roles"));
         
-        if($request->has("sessionRoom")){
+        if($request->has("sessionRoom") && $request->sessionRoom !==null){
           $location_type = $request->sessionRoom;
         }
-        else if($request->has("pages")){
+        else if($request->has("pages") && $request->pages !== null){
             $location_type = $request->pages;
         }
-        else if($request->has("booths")){
+        else if($request->has("booths") && $request->booths!==null){
             $location_type = $request->booths;
         }
         else{
@@ -76,17 +76,20 @@ class NotificationController extends Controller
         $notify->event_id = $id;
         $notify->location = $request->location;
         if($request->location != 'lobby'){
-           if($request->has("sessionRoom")){
+           if($request->has("sessionRoom")  && $request->sessionRoom !==null){
                 $notify->location_type = $request->sessionRoom;
            }
-           elseif($request->has("pages")){
+           elseif($request->has("pages") && $request->pages !== null){
                 $notify->location_type = $request->pages;
             }
-            elseif($request->has("booths")){
+            elseif($request->has("booths") && $request->booths!==null){
                 $notify->location_type = $request->booths;
             }
         }
         $role = implode(", ", $request->post("roles"));
+        $test = [$request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location,$location_type];
+        // dd($test);
+        // dd($request->all());
         if($request->location != 'lobby'){
                 event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location,$location_type));
           
