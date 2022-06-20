@@ -74,6 +74,7 @@
                             <span style="color:red">*</span>
                         </label>
                         <select id="user-location" name="sessionRoom" required class="form-control ">
+                            <option value=" ">None</option>
                            @foreach ($rooms as $room)
                                 <option value="{{ $room->name }}">{{ __($room->name) }}</option>
                            @endforeach

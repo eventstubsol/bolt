@@ -87,9 +87,9 @@ class NotificationController extends Controller
             }
         }
         $role = implode(", ", $request->post("roles"));
-        $test = [$request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location,$location_type];
-        // dd($test);
+        // $test = [$request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location,$location_type];
         // dd($request->all());
+        // dd($test);
         if($request->location != 'lobby'){
                 event(new NotificationEvent($request->message,$request->title,$event->slug,$notify->id,$role,$request->post("url", NULL),$request->location,$location_type));
           
