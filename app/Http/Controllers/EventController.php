@@ -1005,14 +1005,14 @@ class EventController extends Controller
         $schedule =  getSchedule($event->id);
         $sections = Section::where('landing_id', $landing->id)->get()->load("images");
         // dd($landing->cta);
-
-        // return ($event);
+        $hasStarted = $event->start_date <= Carbon::now("UTC");
+        // return ($hasStarted);
         if (isset($form)) {
             $form->load("fields.formStruct");
-            return view("landing.index", compact(['event', 'landing', 'speakers', 'form', 'schedule', "sections"]));
+            return view("landing.index", compact(['event', 'landing', 'speakers', 'form', 'schedule', "sections","hasStarted"]));
         } else {
             $form = null;
-            return view("landing.index", compact(['event', 'landing', 'speakers', 'form', 'schedule', "sections"]));
+            return view("landing.index", compact(['event', 'landing', 'speakers', 'form', 'schedule', "sections","hasStarted"]));
         }
     }
     public function sendSessionNotifications()

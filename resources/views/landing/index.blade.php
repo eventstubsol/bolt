@@ -288,11 +288,13 @@ left: 0;
     {{-- @else --}}
         <header class="masthead" id="home">
             <div class="banner_block">
+                @if(isset($landing->banner_image))
                 <img src="{{ assetUrl($landing->banner_image) }}" alt="" class="bigBanner" />
+                @endif
             </div>
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 event_desc align-items-center justify-content-center text-center">
-                    <div class="col-lg-8 align-self-end">
+                    <div class="col-lg-8 w-100 align-self-end">
                         <h1 class="text-white font-weight-bold">{{ $event->name }}</h1>
                         <hr class="divider" />
                     </div>
@@ -303,9 +305,10 @@ left: 0;
                         @elseif($landing->registration_status == 1)
                             <a class="btn btn-primary btn-xl" href="#registration">Register now</a>
                         @endif 
-                         
-                    <div id="defaultCountdown"></div>
-                    </div>
+                       @if(!$hasStarted)  
+                        <div id="defaultCountdown"></div>
+                        </div>
+                       @endif
                 </div>
             </div>
         </header>
@@ -348,19 +351,19 @@ $main_event = $event;
 @php
 $lastDate = false;
 $i = 0;
-$dates = []; 
-    foreach($schedule as $room => $scheduleForRoom){
-        foreach ($scheduleForRoom as $id => $event){
-            if($lastDate != $event['start_date']['m']){
-                $lastDate = $event['start_date']['m'];
-            }
-            if($event['type']!=="PRIVATE_SESSION"){
-                $event['id'] = $id;
-                $dates[$lastDate][$room][] = $event;
-             }
+// $dates = []; 
+    // foreach($schedule as $room => $scheduleForRoom){
+    //     foreach ($scheduleForRoom as $id => $event){
+    //         if($lastDate != $event['start_date']['m']){
+    //             $lastDate = $event['start_date']['m'];
+    //         }
+    //         if($event['type']!=="PRIVATE_SESSION"){
+    //             $event['id'] = $id;
+    //             $dates[$lastDate][$room][] = $event;
+    //          }
 
-        }
-    }
+    //     }
+    // }
 @endphp
 
 
@@ -375,7 +378,7 @@ $dates = [];
             <div class="container">
                 {{-- Date Pills --}}
                 <ul class="nav nav-tabs mt-3 " id="myTab" role="tablist">
-                @foreach($dates as $date => $room)
+                @foreach($schedule as $date => $room)
                     @php
                         $i++;
                     @endphp
@@ -389,7 +392,7 @@ $dates = [];
                 @endphp
                 {{-- Tab For Each Date --}}
                 <div class="tab-content">
-                @foreach($dates as $date => $rooms)
+                @foreach($schedule as $date => $rooms)
                     @php
                         $i++;
                     @endphp
@@ -875,11 +878,6 @@ $dates = [];
             // var newYear = new Date("Thu Apr 13 2023");
             $('#defaultCountdown').countdown({until: newYear}); 
             
-            $('#removeCountdown').click(function() { 
-                var destroy = $(this).text() === 'Remove'; 
-                $(this).text(destroy ? 'Re-attach' : 'Remove'); 
-                $('#defaultCountdown').countdown(destroy ? 'destroy' : {until: newYear}); 
-            });
             // document.querySelector("video").play()
 
         });
