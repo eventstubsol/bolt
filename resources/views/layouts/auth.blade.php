@@ -120,7 +120,8 @@
         @media (max-width: 991.98px){
             
             .auth-fluid-image {    
-                max-width: 0;
+                max-width: 0 !important;
+                min-width: 0 !important;
             }
             .auth-fluid .auth-fluid-form-box {    
                 max-width: 100%;
