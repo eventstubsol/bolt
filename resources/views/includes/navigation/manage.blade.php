@@ -311,7 +311,7 @@
                 <a href="{{ route("eventee.polls.create",['id'=>$id]) }}">Create</a>
             </li>
             <li>
-                <a href="{{ route("polls.manage",['id'=>$id]) }}">Results</a>
+                <a href="{{ route("polls.manage",['id'=>$id]) }}">Manage</a>
             </li>
            
         </ul>

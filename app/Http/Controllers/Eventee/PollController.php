@@ -11,7 +11,12 @@ use App\UserAnswer;
 use Illuminate\Support\Facades\Log;
 use DB;
 use App\Page;
+use App\Event;
+use App\UserSubtype;
+
 use App\sessionRooms;
+use App\Events\PollEvent;
+use App\Events\pollResult;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -57,6 +62,7 @@ class PollController extends Controller
             if($question!==null && (count($request->ans[$ids])>=2) ){
                 $question = $poll->questions()->create([
                     "question"=>$request->question[$ids],
+                    "pos"=>$ids
                 ]);
                 // dd($question);
                 // Create Options For Each Question 
@@ -75,9 +81,91 @@ class PollController extends Controller
     }
     public function poll(Request $request,$id,Poll $poll)
     {
-        // dd($poll->load("questions.options"));
+        
+        $poll->load(['questions' => function ($q){
+
+            $q->orderBy('pos');
+
+        }]);
         // dd($poll);
         return view("eventee.polls.poll")->with(compact("poll","id"));
+    }
+    public function userAnalytics(Request $request,$id,Poll $poll)
+    {
+        
+        $poll->load(['questions' => function ($q){
+
+            $q->orderBy('pos');
+
+        }]);
+        // dd($poll);
+        return view("eventee.polls.userAnalytics")->with(compact("poll","id"));
+    }
+    public function analytics(Request $request,$id,Poll $poll)
+    {
+        
+        $poll->load(['questions' => function ($q){
+            $q->orderBy('pos');
+        }]);
+        return view("eventee.polls.analytics")->with(compact("poll","id"));
+    }
+    public function publishPoll(Request $request,$id,Poll $poll)
+    {
+        $subtypes = UserSubtype::where('event_id',$id)->get();
+
+        return view("eventee.polls.publish")->with(compact("poll","id","subtypes"));
+    }
+    public function publishPollResults(Request $request,$id,Poll $poll)
+    {
+        $subtypes = UserSubtype::where('event_id',$id)->get();
+
+        return view("eventee.polls.publishResult")->with(compact("poll","id","subtypes"));
+    }
+    public function publish(Request $request,$id,Poll $poll)
+    {
+        $types = $request->type;
+        $subtypes = $request->subtype;
+        // dd($types);
+        if(isset($subtypes)){
+
+            $poll->for = implode(",",$types).implode(",",$subtypes);
+        }else{
+
+            $poll->for = implode(",",$types);
+        }
+        $poll->status = 1;
+        $poll->save();
+        $slug = Event::find($id)->slug;
+        event(new PollEvent($poll->id,$slug));
+        $poll->load(['questions' => function ($q){
+            $q->orderBy('pos');
+        }]);
+        flash("Poll Published Successfully");
+        return redirect(route("eventee.polls.analytics",["poll"=>$poll,"id"=>$id]));
+        // return view("eventee.polls.analytics")->with(compact("poll","id"));
+    }
+    public function publishResults(Request $request,$id,Poll $poll)
+    {
+        $types = $request->type;
+        $subtypes = $request->subtype;
+        // dd($types);
+        if(isset($subtypes)){
+
+            $poll->for = implode(",",$types).implode(",",$subtypes);
+        }else{
+
+            $poll->for = implode(",",$types);
+        }
+        $poll->status = -1;
+        $poll->save();
+        $slug = Event::find($id)->slug;
+        event(new pollResult($poll->id,$slug));
+        $poll->load(['questions' => function ($q){
+            $q->orderBy('pos');
+        }]);
+        flash("Poll Results Published Successfully");
+        return redirect(route("eventee.polls.analytics",["poll"=>$poll,"id"=>$id]));
+        // return view("eventee.polls.analytics")->with(compact("poll","id"));
     }
     public function getPollQuestionResults($poll,$questionId)
     {
@@ -85,11 +173,12 @@ class PollController extends Controller
         $options = EventAnswer::where("question_id",$questionId)->get();
         $totalVotes = $options->sum("voteCount");
         // dd($totalVotes);
-        $answers = UserAnswer::where("question_id",$questionId)->get();
         $answerResults = [];
 
         foreach ($options as $n => $option) {
             $percent = ($option->voteCount/$totalVotes) * 100;
+            $option->percent = $percent;
+            $option->save();
             $answerResults["$option->id"] = ["percent"=>$percent,"voteCount"=>$option->voteCount];
         }
         // dd($answerResults);
@@ -110,7 +199,8 @@ class PollController extends Controller
             return json_encode([
                 "success"=>false,
                 "message"=>"Already Voted",
-                "results"=>$results
+                "results"=>$results,
+                "yourVote"=>$existingVote->answer_id
             ]);
         } 
         $question->userAnswer()->create([
@@ -124,7 +214,8 @@ class PollController extends Controller
         return json_encode([
             "success"=>true,
             "message"=>"Voted SuccessFully",
-            "results"=>$results
+            "results"=>$results,
+            "yourVote"=>$request->option
         ]);
         // return view("eventee.polls.poll")->with(compact("poll","id"));
     }

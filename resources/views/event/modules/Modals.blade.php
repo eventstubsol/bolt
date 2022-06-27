@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="resourceslistLabel"><span class="image-icon resources"></span>{{$modal->name}}</h4>
+                    <h4 class="modal-title" id="resourceslistLabel">{{$modal->name}}</h4>
                     <button  type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     
                 </div>

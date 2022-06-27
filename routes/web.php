@@ -758,7 +758,13 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::post("/polls/store/{id}", "Eventee\PollController@store")->name("eventee.polls.store"); // get create form
     Route::get("/polls/edit/{id}/{poll}", "Eventee\PollController@edit")->name("eventee.polls.edit"); // get create form
     Route::get("/poll/{id}/{poll}", "Eventee\PollController@poll")->name("eventee.poll"); // get create form
+    Route::get("/analytic/{id}/{poll}", "Eventee\PollController@userAnalytics")->name("eventee.poll.userAnalytics"); // get create form
     Route::post("/vote/{id}/{poll}", "Eventee\PollController@vote")->name("eventee.vote"); // get create form
+    Route::get("/poll/analytics/{id}/{poll}", "Eventee\PollController@analytics")->name("eventee.polls.analytics"); // get create form
+    Route::post("/poll/publish/{id}/{poll}", "Eventee\PollController@publish")->name("eventee.polls.publish"); // get create form
+    Route::post("/poll/publishResults/{id}/{poll}", "Eventee\PollController@publishResults")->name("eventee.polls.publishResults"); // get create form
+    Route::get("/poll/publishpoll/{id}/{poll}", "Eventee\PollController@publishPoll")->name("eventee.polls.publishpoll"); // get create form
+    Route::get("/poll/publishPollResults/{id}/{poll}", "Eventee\PollController@publishPollResults")->name("eventee.polls.publishPollResults"); // get create form
     
 
     // Route::get("/polls/multipleChoice", "PollController@MultipleChoice")->name("poll.multiple"); //multiple choice

@@ -67,6 +67,7 @@ function initApp() {
         return check;
     }
     //initMenu();
+    initPolls();
     initSideMenu();
 
     function setAreas(){
@@ -1195,6 +1196,30 @@ function initMenu() {
     });
 }
 
+function initPolls() {
+    let trigger = $(".polls-menu a");
+    let sidebar = $(".pollbar-custom");
+console.log("triggering")
+    trigger.on('click', function (e) {
+        e.preventDefault();
+        console.log("tr");
+        // sidebar.toggleClass('hidden');
+        sidebar.toggleClass('enabled');
+        if (sidebar.hasClass('enabled')) {
+            $(".overLay").addClass("d-block");
+        } else {
+            $(".overLay").removeClass("d-block");
+        }
+    });
+    sidebar.find('.menu a').on('click', function () {
+        if (sidebar.hasClass('enabled')) {
+            // $(".sidebar-custom").removeClass("enabled");
+            $(".overLay").removeClass("d-block");
+            // sidebar.toggleClass('hidden');
+            sidebar.removeClass('enabled')
+        }
+    });
+}
 function initSideMenu() {
     let trigger = $(".mob-menu a");
     let sidebar = $(".sidebar-custom");

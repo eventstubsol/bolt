@@ -49,6 +49,8 @@ use App\Leaderboard;
 use File;
 use Illuminate\Support\Facades\Storage as Storage;
 use App\Onboard;
+use App\Poll;
+
 
 use Carbon\CarbonTimeZone;
 
@@ -56,8 +58,12 @@ class EventController extends Controller
 {
     public function index($event_name)
     {
-
         $event = Event::where("slug", $event_name)->first();
+        $poll = Poll::where("event_id",$event->id)->where("status",1)->first();
+        $pollResult = Poll::where("event_id",$event->id)->where("status",-1)->first();
+        // dd($poll);
+        
+
         $loader = Loader::findOrFail($event->def_loader);
         $event_id = $event->id;
         $leaderboard = Leaderboard::where('event_id', $event_id)->first();
@@ -81,6 +87,25 @@ class EventController extends Controller
         $schedule = getSchedule($event_id);
         // return $schedule;
         $user = Auth::user();
+        // dd(str_contains($poll->for,'attendee'));
+        if(isset($poll)){
+
+            if(!str_contains($poll->for,$user->type)){
+                $poll = null;
+            }
+            if(isset($user->subtype) && !str_contains($poll->for,$user->subtype) ){
+                $poll = null;
+            }
+        }
+        if(isset($pollResult)){
+            if(!str_contains($pollResult->for,$user->type)){
+                $pollResult = null;
+            }
+            if(isset($user->subtype) && !str_contains($pollResult->for,$user->subtype) ){
+                $pollResult = null;
+            }
+        }
+        // dd($pollResult);
         $pages = Page::where("event_id", $event_id)->with(["links.flyin", "images"])->get();
         $sessionrooms = sessionRooms::where("event_id", $event_id)->get()->groupBy("master_room");
 
@@ -119,6 +144,8 @@ class EventController extends Controller
                     "FAQs",
                     "posts",
                     "pages",
+                    "poll",
+                    "pollResult",
                     // "reports",
                     //"provisionals",
                     // "boothrooms",

@@ -1516,6 +1516,100 @@ table.dataTable tbody tr {
     transform: none;
 }
 
+.pollbar-custom {
+    position: fixed;
+    right: 0;
+    top: 56px;
+    width: 380px;
+    background: #fff;
+    z-index: 99999;
+    bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    transition: ease all 0.3s;
+    transform: translateX(100%);
+}
+
+.pollbar-custom .scroller {
+    max-height: calc( 100vh - 60px);
+    overflow-y: auto;
+}
+
+.pollbar-custom .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0px 25px;
+}
+
+.pollbar-custom .menu a {
+    color: black;
+    font-size: 16px;
+    line-height: 1.5;
+    display: block;
+    padding: 10px 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.pollbar-custom .menu a i {
+    margin-right: 10px;
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.pollbar-custom .menu a i.live {
+    background-image: url("/assets/images/menu/final/live-hover.png");
+}
+
+.pollbar-custom .menu a i.caucus {
+    background-image: url("/assets/images/menu/final/caucus-hover.png");
+}
+
+.pollbar-custom .menu a i.expo {
+    background-image: url("/assets/images/menu/final/expo-hover.png");
+}
+
+.pollbar-custom .menu a i.candidates {
+    background-image: url("/assets/images/menu/final/candidates-hover.png");
+}
+
+.pollbar-custom .menu a i.lounge {
+    background-image: url("/assets/images/menu/final/lounge-hover.png");
+}
+
+.pollbar-custom .menu a i.delegates {
+    background-image: url("/assets/images/menu/final/delegates-hover.png");
+}
+
+.pollbar-custom .menu li {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.pollbar-custom .menu li ul {
+    padding-left: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.pollbar-custom .menu li ul li {
+    margin-bottom: 0;
+}
+
+.pollbar-custom .menu li ul li a {
+    padding-left: 10px;
+}
+
+.pollbar-custom .menu ul li:last-child a {
+    border: 0;
+}
+
+.pollbar-custom.enabled {
+    transform: none;
+}
+
 .consent-notification {
     position: fixed;
     right: 20px;

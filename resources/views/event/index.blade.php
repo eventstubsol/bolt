@@ -187,6 +187,7 @@
     
     {{-- Event Menus --}}
     @include("event.modules.Navbar")
+    @include("event.modules.PollBar")
     @include("event.modules.Menubar")
     @include("event.modules.Sidebar")
 
@@ -297,6 +298,7 @@
         // console.log( {!! json_encode(getSuggestedTags()) !!} );
         const config = {
             homepage: "{{ $event->home_page }}",
+            eventId:"{{$event->id}}",
             baseRoute: "{{ url('/') }}",
             videoSDK: "{{route('videosdk',['meetingId'=>':id','containerId'=>'video_play_area'])}}",
             addParticipant: "{{route('addParticipant',['subdomain'=>$event_name,'table'=>':id','user'=>$user->id])}}",
@@ -473,7 +475,7 @@
         Pusher.logToConsole = true;
     
         var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
-          cluster: 'ap2'
+          cluster: 'us2'
         });
         
         var channel = pusher.subscribe(slug);
@@ -564,6 +566,8 @@
             $('#notification-smallModal').removeClass('enable');
         }
       </script>
+    @include("event.polls")
+
 </body>
 
 </html>
