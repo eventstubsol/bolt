@@ -7,10 +7,10 @@
 @section("styles")
     @include("includes.styles.datatables")
     @include("includes.styles.fileUploader")
-    <link href="https://coderthemes.com/ubold/layouts/assets/css/config/default/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://coderthemes.com/ubold/layouts/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
-    <link href="https://coderthemes.com/ubold/layouts/assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://coderthemes.com/ubold/layouts/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://coderthemes.com/ubold/layouts/default/assets/css/config/default/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://coderthemes.com/ubold/layouts/default/assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+    <link href="https://coderthemes.com/ubold/layouts/default/assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://coderthemes.com/ubold/layouts/default/assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
    
 @endsection
 
@@ -220,11 +220,11 @@
 
 @section("scripts")
 @include("includes.scripts.fileUploader")
-<script src="https://coderthemes.com/ubold/layouts/assets/libs/mohithg-switchery/switchery.min.js"></script>
-    <script src="https://coderthemes.com/ubold/layouts/assets/js/vendor.min.js"></script>
-    <script src="https://coderthemes.com/ubold/layouts/assets/libs/multiselect/js/jquery.multi-select.js"></script>
-    <script src="https://coderthemes.com/ubold/layouts/assets/libs/selectize/js/standalone/selectize.min.js"></script>
-    <script src="https://coderthemes.com/ubold/layouts/assets/libs/select2/js/select2.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/default/assets/libs/mohithg-switchery/switchery.min.js"></script>
+    <script src="https://coderthemes.com/ubold/layouts/default/assets/js/vendor.min.js"></script>
+    <script src="https://coderthemes.com/ubold/layouts/default/assets/libs/multiselect/js/jquery.multi-select.js"></script>
+    <script src="https://coderthemes.com/ubold/layouts/default/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+    <script src="https://coderthemes.com/ubold/layouts/default/assets/libs/select2/js/select2.min.js"></script>
 <script>
     // $(document).ready(function(){
     let sections = {!!  json_encode($sections) !!};

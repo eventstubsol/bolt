@@ -12,7 +12,7 @@
 
 @section("styles")
     @include("includes.styles.wyswyg")
-    <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.css">
+    <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/default/assets/libs/spectrum-colorpicker2/spectrum.min.css">
     <style>
         .bg-white{
             height: 150px;
@@ -158,8 +158,8 @@
 
 @section("scripts")
     @include("includes.scripts.wyswyg")
-    <script src="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
-    <script src="https://coderthemes.com/ubold/layouts/assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
+    <script src="https://coderthemes.com/ubold/layouts/default/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+    <script src="https://coderthemes.com/ubold/layouts/default/assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
     <script >
         $(document).ready(function(){
             $(".colorpicker-default").spectrum();

@@ -21,7 +21,7 @@
             text-align: center;
         }
     </style>
-    {{-- <link href="https://coderthemes.com/ubold/layouts/assets/css/config/default/app.min.css" rel="stylesheet" type="text/css" id="app-style"/> --}}
+    {{-- <link href="https://coderthemes.com/ubold/layouts/default/assets/css/config/default/app.min.css" rel="stylesheet" type="text/css" id="app-style"/> --}}
 </head>
 
 <body class="p-0">

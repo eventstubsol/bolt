@@ -429,8 +429,8 @@
     </div>
   </div>
 
-{{-- <script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
-<script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script> --}}
+{{-- <script src="https://coderthemes.com/ubold/layouts/default/assets/js/app.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/default/assets/js/app.min.js"></script> --}}
 <!-- end Topbar -->
 
    

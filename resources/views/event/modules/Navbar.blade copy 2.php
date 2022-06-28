@@ -78,8 +78,8 @@
         left:0;
     }
 </style> 
-<script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
-<script src="https://coderthemes.com/ubold/layouts/assets/js/app.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/default/assets/js/app.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/default/assets/js/app.min.js"></script>
 <div class="navbar-custom navs hidden theme-nav">
     <div class="container-fluid row">
         <div class="col-5 col-md-2 fluid-col logo-col">

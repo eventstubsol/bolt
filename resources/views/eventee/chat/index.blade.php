@@ -4,7 +4,7 @@
 @section('styles')
 @include("includes.styles.fileUploader")
 
-    <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.css">
+    <link rel="stylesheet" href="https://coderthemes.com/ubold/layouts/default/assets/libs/spectrum-colorpicker2/spectrum.min.css">
 @endsection
 @section('page_title')
    Chat Settings 
@@ -68,8 +68,8 @@
 @section('scripts')
 @include("includes.scripts.fileUploader")
 
-<script src="https://coderthemes.com/ubold/layouts/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
-<script src="https://coderthemes.com/ubold/layouts/assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/default/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
+<script src="https://coderthemes.com/ubold/layouts/default/assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
 <script >
     $(document).ready(function(){
         $("#colorpicker-default").spectrum();

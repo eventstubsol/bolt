@@ -111,8 +111,8 @@
 @endsection
 @section("scripts")
 
-<script src="https://coderthemes.com/ubold/layouts/assets/libs/nestable2/jquery.nestable.min.js"></script>
-{{-- <script src="https://coderthemes.com/ubold/layouts/assets/js/pages/nestable.init.js"></script> --}}
+<script src="https://coderthemes.com/ubold/layouts/default/assets/libs/nestable2/jquery.nestable.min.js"></script>
+{{-- <script src="https://coderthemes.com/ubold/layouts/default/assets/js/pages/nestable.init.js"></script> --}}
 
 <script type="text/javascript">
 
