@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="tab-pane " id="results">
-                <div class="poll_results_container "   data-test="{{$pollResult->id}}">
+                <div class="poll_results_container " >
                     <iframe class="w-100 h-100" src="@if(isset($pollResult)) {{ route('eventee.poll.userAnalytics',["poll"=>$pollResult->id,"id"=>$event->id]) }} @endif" id="pollResultframe" frameborder="0"></iframe>
                 </div>
             </div>
