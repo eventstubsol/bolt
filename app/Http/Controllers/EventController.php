@@ -16,6 +16,7 @@ use App\LandingSpeaker;
 use App\EventSession;
 use App\LoginLog;
 use App\Notification;
+use App\LeadPoint;
 use App\Points;
 use App\Mail\swagbagMail;
 use App\Prize;
@@ -48,6 +49,8 @@ use App\Leaderboard;
 use File;
 use Illuminate\Support\Facades\Storage as Storage;
 use App\Onboard;
+use App\Poll;
+
 
 use Carbon\CarbonTimeZone;
 
@@ -55,8 +58,12 @@ class EventController extends Controller
 {
     public function index($event_name)
     {
-
         $event = Event::where("slug", $event_name)->first();
+        $poll = Poll::where("event_id",$event->id)->where("status",1)->first();
+        $pollResult = Poll::where("event_id",$event->id)->where("status",-1)->first();
+        // dd($poll);
+        
+
         $loader = Loader::findOrFail($event->def_loader);
         $event_id = $event->id;
         $leaderboard = Leaderboard::where('event_id', $event_id)->first();
@@ -80,6 +87,25 @@ class EventController extends Controller
         $schedule = getSchedule($event_id);
         // return $schedule;
         $user = Auth::user();
+        // dd(str_contains($poll->for,'attendee'));
+        if(isset($poll)){
+
+            if(!str_contains($poll->for,$user->type)){
+                $poll = null;
+            }
+            if(isset($user->subtype) && !str_contains($poll->for,$user->subtype) ){
+                $poll = null;
+            }
+        }
+        if(isset($pollResult)){
+            if(!str_contains($pollResult->for,$user->type)){
+                $pollResult = null;
+            }
+            if(isset($user->subtype) && !str_contains($pollResult->for,$user->subtype) ){
+                $pollResult = null;
+            }
+        }
+        // dd($pollResult);
         $pages = Page::where("event_id", $event_id)->with(["links.flyin", "images"])->get();
         $sessionrooms = sessionRooms::where("event_id", $event_id)->get()->groupBy("master_room");
 
@@ -118,6 +144,8 @@ class EventController extends Controller
                     "FAQs",
                     "posts",
                     "pages",
+                    "poll",
+                    "pollResult",
                     // "reports",
                     //"provisionals",
                     // "boothrooms",
@@ -568,7 +596,13 @@ class EventController extends Controller
     public function trackEvent(Request $request)
     {
         $type = $request->get("type", "login");
-        $userId = Auth::user()->id;
+        $user = Auth::user();
+        $userId = $user->id;
+        $event_id = $user->event_id;
+        $leaderBoard = Leaderboard::where('event_id',$event_id)->first();
+        $leadPoints = LeadPoint::where("owner",$leaderBoard->id)->get()->groupBy("point_label");
+        // dd($leadPoints);
+        // $points = 
         if(! strpos(Auth::user()->email, 'eventstub.co') ){
             $pointsDetails = [
                 "points_to" => $userId,
@@ -587,7 +621,7 @@ class EventController extends Controller
                     //     SCAVENGER_HUNT[$page][$index]['name'] == $name
                     // ) {
                     //Verified item, now saving to database
-                    $pointsDetails["points"] = SCAVENGER_HUNT_POINTS;
+                    $pointsDetails["points"] = $leadPoints["SCAVENGER_HUNT_POINTS"][0]->user_points; //SCAVENGER_HUNT_POINTS;
                     $pointsDetails["details"] = $page . "|" . $index . "|" . $name;
                     if (!Points::where($pointsDetails)->count()) {
                         Points::create($pointsDetails);
@@ -603,7 +637,7 @@ class EventController extends Controller
                     $booth = Booth::find($id);
                     if ($booth) {
                         //Verified booth, now saving to database
-                        $pointsDetails["points"] = BOOTH_VISIT_POINTS;
+                        $pointsDetails["points"] = $leadPoints["BOOTH_VISIT_POINTS"][0]->user_points;//BOOTH_VISIT_POINTS;
                         $pointsDetails["details"] = $id;
 
                         if (!Points::where($pointsDetails)->count()) {
@@ -614,10 +648,10 @@ class EventController extends Controller
                         }
                     }
                     break;
-                case "boothVisit":
+                case "PHOTOBOOTH_VISIT":
                     $id = $request->get("id");
                         //Verified booth, now saving to database
-                        $pointsDetails["points"] = PHOTOBOOTH_VISIT;
+                        $pointsDetails["points"] = $leadPoints["PHOTOBOOTH_POINTS"][0]->user_points;//PHOTOBOOTH_VISIT;PHOTOBOOTH_POINTS
                         $pointsDetails["details"] = $id;
 
                         if (!Points::where($pointsDetails)->count()) {
@@ -666,7 +700,8 @@ class EventController extends Controller
                     break;
 
                 case "resourceView":
-                    $pointsDetails["points"] = RESOURCE_VIEW_POINTS;
+                    
+                    $pointsDetails["points"] = $leadPoints["RESOURCE_VIEW_POINTS"][0]->user_points;// RESOURCE_VIEW_POINTS;
                     $pointsDetails["details"] = request()->get("url", false);
                     if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
                         Points::create($pointsDetails);
@@ -697,7 +732,8 @@ class EventController extends Controller
                     break;
 
                 case "sessionView":
-                    $pointsDetails["points"] = SESSION_ATTENDING_POINTS;
+                    
+                    $pointsDetails["points"] =  $leadPoints["SESSION_ATTENDING_POINTS"][0]->user_points;//SESSION_ATTENDING_POINTS;
                     $pointsDetails["details"] = request()->get("id", false);
                     if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
                         Points::create($pointsDetails);

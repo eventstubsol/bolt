@@ -379,13 +379,13 @@
                                         {{-- <h3 class="vote" >Vote</h3> --}}
                                         
                                         <div class="ups">
-                                            <img data-id="{{ $post->id }}" class="voting up_{{ $post->id }} " data-toggle="tooltip" title="Up Vote" data-action="upvote" src="https://freepikpsd.com/file/2019/10/up-icon-png-7-Transparent-Images.png" width="30" alt="">    
+                                            <img data-id="{{ $post->id }}" class="voting up_{{ $post->id }} " data-toggle="tooltip" title="Up Vote" data-action="upvote" src="https://dfnvrl6dq2wfj.cloudfront.net/uploads/ZIL9cQC9LWQmbx7989St2tA2c2SKbaiPoR3Scgm1.png" width="30" alt="">    
                                             <span class="mainups">
                                                 {{ $upvotes. ' Upvotes' }}
                                             </span>
                                         </div>
                                         <div class="down">
-                                            <img data-id="{{ $post->id }}" class="voting  down_{{ $post->id }} down_icon" data-toggle="tooltip" title="Down Vote" data-action="downvote" src="https://freepikpsd.com/file/2019/10/up-icon-png-7-Transparent-Images.png" width="30" alt="">
+                                            <img data-id="{{ $post->id }}" class="voting  down_{{ $post->id }} down_icon" data-toggle="tooltip" title="Down Vote" data-action="downvote" src="https://dfnvrl6dq2wfj.cloudfront.net/uploads/ZIL9cQC9LWQmbx7989St2tA2c2SKbaiPoR3Scgm1.png" width="30" alt="">
                                             <span class="maindowns">
                                                 {{ $downvote. ' Downvotes' }}
                                             </span>

@@ -308,10 +308,10 @@
     <div class="collapse" id="polls">
         <ul class="nav-second-level">
             <li>
-                <a href="{{ route("polls.createpoll",['id'=>$id]) }}">Create</a>
+                <a href="{{ route("eventee.polls.create",['id'=>$id]) }}">Create</a>
             </li>
             <li>
-                <a href="{{ route("polls.pollResults",['id'=>$id]) }}">Results</a>
+                <a href="{{ route("polls.manage",['id'=>$id]) }}">Manage</a>
             </li>
            
         </ul>

@@ -4,155 +4,231 @@ namespace App\Http\Controllers\Eventee;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Question;
+use App\EventQuestion;
 use App\Poll;
-use App\Answer;
+use App\EventAnswer;
+use App\UserAnswer;
 use Illuminate\Support\Facades\Log;
 use DB;
+use App\Page;
+use App\Event;
+use App\UserSubtype;
+
+use App\sessionRooms;
+use App\Events\PollEvent;
+use App\Events\pollResult;
+use Illuminate\Support\Facades\Auth;
+
+
 
 
 class PollController extends Controller
 {
-    //
-    public function index($id){
-        $poll  = Poll::where('id', '039f3918-e5b1-4189-82b1-3d3aa737ff7f')->first();
-        $questions = Question::where('event_id', $id)->orderBy('status', 'DESC')->paginate(8);
-        $answers = [];
-        return view('eventee.poll.question', compact('poll', 'questions','id'));
-        // return $questions;
-
-    }
-
-    public function createMcq(Poll $poll,Request $request)
+    public function index($id)
     {
-        try {
-            $data = (request()->all());
-            $alphabety = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K');
-            // dd($data);
-            $question = new Question;
-            $question->poll_id = request()->poll_id;
-            $question->type = request()->type;
-            $question->sroom_id = request()->sroom_id;
-            $question->event_id = request()->event_id;
-            $question->question = request()->question;
-            
-            // return "error";
-            $answer = $data['answers'];
-            $correct = request()->correct;
-            if ($question->save()) {
-                for ($i = 0; $i < count($answer); $i++) {
-
-
-                    if ($i == $correct) {
-                        $answers = new Answer;
-                        $answers->question_id = $question->id;
-                        $answers->answer = $answer[$i];
-                        $answers->correct = 1;
-                        $answers->alpha = $alphabety[$i];
-                        $answers->save();
-                    } else {
-                        $answers = new Answer;
-                        $answers->question_id = $question->id;
-                        $answers->answer = $answer[$i];
-                        $answers->alpha = $alphabety[$i];
-                        $answers->save();
+       $polls = Poll::where("event_id",$id)->get();
+    //    dd($polls);
+        return view("eventee.polls.list")->with(compact("polls","id"));
+    }
+    public function create($id)
+    {
+        $pages = Page::where("event_id",$id)->get();
+        $session_rooms = sessionRooms::where("event_id",$id)->get();
+        return view("eventee.polls.create")->with(compact("id","pages","session_rooms"));
+        
+    }
+    public function store(Request $request,$id) 
+    {
+        // dd($request->all());
+        // Create Poll 
+        $poll = new Poll;
+        $poll->name=$request->name;
+        $poll->location_type = $request->location;
+        $poll->event_id = $id;
+        switch($request->location){
+            case "page":
+                $poll->location = $request->pages;
+                break;
+            case "sessionroom":
+                $poll->location = $request->rooms;
+                break;
+            default :
+                $poll->location = null;
+        }
+        $poll->status = 0;
+        $poll->save();
+        // Create Questions 
+        foreach ($request->question as $ids => $question) {
+            if($question!==null && (count($request->ans[$ids])>=2) ){
+                $question = $poll->questions()->create([
+                    "question"=>$request->question[$ids],
+                    "pos"=>$ids
+                ]);
+                // dd($question);
+                // Create Options For Each Question 
+                foreach ($request->ans[$ids] as $n => $ans) {
+                    if(isset($request->ans[$ids][$n])){
+                        $question->options()->create([
+                            "answer"=>$request->ans[$ids][$n],
+                            "pos"=>$n
+                        ]);
                     }
                 }
             }
-            flash('Poll Added Successfully')->success();
-            return redirect()->back();
-        } catch (\Exception $e) {
-            Log::info($e->getMessage());
         }
+        return redirect(route("polls.manage",$id));
+
     }
-    public function wordCloud(Request $request,$id)
+    public function poll(Request $request,$id,Poll $poll)
     {
-        try {
-            $poll_id = $request->poll_id;
-            $questions = $request->question;
-            
-            $type = $request->type;
-            $question = new Question;
-            $question->poll_id = $poll_id;
-            
-            $question->question = $questions;
-            $question->type = $type;
-            $question->event_id = $request->wc_event_id;
-            $question->sroom_id = $request->sroom_id;
-            if ($question->save()) {
-                \DB::UPDATE("UPDATE questions SET event_id = ? Where id = ?",[$id,$question->id]);
-                flash('Poll Added Successfully')->success();
-                return redirect()->back();
-            } else {
-                flash('Oops!Something Went Wrong')->error();
-                return redirect()->back();
-            }
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
+        
+        $poll->load(['questions' => function ($q){
+
+            $q->orderBy('pos');
+
+        }]);
+        // dd($poll);
+        return view("eventee.polls.poll")->with(compact("poll","id"));
     }
-
-    public function rating(Request $request,$id)
+    public function userAnalytics(Request $request,$id,Poll $poll)
     {
-        try {
-            $poll_id = $request->poll_id;
-            $questions = $request->question;
-            $type = $request->type;
-            $rating = 4;
+        
+        $poll->load(['questions' => function ($q){
 
-            $question = new Question;
-            $question->poll_id = $poll_id;
-            $question->type = $type;
-            // $question->event_id = $id;
-            $question->question = $questions;
-            $question->rate = $rating;
-            $question->sroom_id = $request->sroom_id;
-            $question->event_id = $request->rate_event_id;
-            if ($question->save()) {
-                \DB::UPDATE("UPDATE questions SET event_id = ? Where id = ?",[$id,$question->id]);
-                flash('Poll Added Successfully')->success();
-                return redirect()->back();
-            }
-            else{
-                flash('Oops!Something Went Wrong')->error();
-                return redirect()->back();
-            }
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
+            $q->orderBy('pos');
+
+        }]);
+        // dd($poll);
+        return view("eventee.polls.userAnalytics")->with(compact("poll","id"));
     }
-
-    public function Survey(Request $request,$id)
+    public function analytics(Request $request,$id,Poll $poll)
     {
-        try {
-            
-            $type = $request->type;
-            $poll_id = $request->poll_id;
-            $questions = $request->question;
-            $answer = $request->answers;
+        
+        $poll->load(['questions' => function ($q){
+            $q->orderBy('pos');
+        }]);
+        return view("eventee.polls.analytics")->with(compact("poll","id"));
+    }
+    public function publishPoll(Request $request,$id,Poll $poll)
+    {
+        $subtypes = UserSubtype::where('event_id',$id)->get();
 
-            $question = new Question;
-            $question->poll_id = request()->poll_id;
-            $question->type = request()->type;
-            $question->question = request()->question;
-            $question->event_id = request()->surv_event_id;
-            $question->sroom_id = request()->sroom_id;
-            // return "error";
-            if ($question->save()) {
-                \DB::UPDATE("UPDATE questions SET event_id = ? Where id = ?",[$id,$question->id]);
-                for ($i = 0; $i < count($answer); $i++) {
-                    $answers = new Answer;
-                    $answers->question_id = $question->id;
-                    $answers->answer = $answer[$i];
-                    $answers->save();
-                }
-            }
-            flash('Poll Added Successfully')->success();
-            return redirect()->back();
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            flash('Oops!Something Went Wrong')->error();
-            return redirect()->back();
+        return view("eventee.polls.publish")->with(compact("poll","id","subtypes"));
+    }
+    public function publishPollResults(Request $request,$id,Poll $poll)
+    {
+        $subtypes = UserSubtype::where('event_id',$id)->get();
+
+        return view("eventee.polls.publishResult")->with(compact("poll","id","subtypes"));
+    }
+    public function publish(Request $request,$id,Poll $poll)
+    {
+        $types = $request->type;
+        $subtypes = $request->subtype;
+        // dd($types);
+        if(isset($subtypes)){
+
+            $poll->for = implode(",",$types).implode(",",$subtypes);
+        }else{
+
+            $poll->for = implode(",",$types);
         }
+        $poll->status = 1;
+        $poll->save();
+        $slug = Event::find($id)->slug;
+        event(new PollEvent($poll->id,$slug));
+        $poll->load(['questions' => function ($q){
+            $q->orderBy('pos');
+        }]);
+        flash("Poll Published Successfully");
+        return redirect(route("eventee.polls.analytics",["poll"=>$poll,"id"=>$id]));
+        // return view("eventee.polls.analytics")->with(compact("poll","id"));
+    }
+    public function publishResults(Request $request,$id,Poll $poll)
+    {
+        $types = $request->type;
+        $subtypes = $request->subtype;
+        // dd($types);
+        if(isset($subtypes)){
+
+            $poll->for = implode(",",$types).implode(",",$subtypes);
+        }else{
+
+            $poll->for = implode(",",$types);
+        }
+        $poll->status = -1;
+        $poll->save();
+        $slug = Event::find($id)->slug;
+        event(new pollResult($poll->id,$slug));
+        $poll->load(['questions' => function ($q){
+            $q->orderBy('pos');
+        }]);
+        flash("Poll Results Published Successfully");
+        return redirect(route("eventee.polls.analytics",["poll"=>$poll,"id"=>$id]));
+        // return view("eventee.polls.analytics")->with(compact("poll","id"));
+    }
+    public function getPollQuestionResults($poll,$questionId)
+    {
+        $question = EventQuestion::find($questionId);
+        $options = EventAnswer::where("question_id",$questionId)->get();
+        $totalVotes = $options->sum("voteCount");
+        // dd($totalVotes);
+        $answerResults = [];
+
+        foreach ($options as $n => $option) {
+            $percent = ($option->voteCount/$totalVotes) * 100;
+            $option->percent = $percent;
+            $option->save();
+            $answerResults["$option->id"] = ["percent"=>$percent,"voteCount"=>$option->voteCount];
+        }
+        // dd($answerResults);
+        return $answerResults;
+        // dd($question->load("options"));
+        
+    }
+    public function vote(Request $request,$id,Poll $poll)
+    {
+        // dd($request->all());
+
+        $user = Auth::user();
+        $question =  EventQuestion::find($request->question);
+        $answer= EventAnswer::find($request->option);
+        $existingVote = UserAnswer::where("user_id",$user->id)->where("question_id",$request->question)->first();
+        if($existingVote){
+            $results = $this->getPollQuestionResults($poll,$request->question);
+            return json_encode([
+                "success"=>false,
+                "message"=>"Already Voted",
+                "results"=>$results,
+                "yourVote"=>$existingVote->answer_id
+            ]);
+        } 
+        $question->userAnswer()->create([
+            "user_id"=>$user->id,
+            "answer_id"=>$request->option
+        ]);
+        
+        $answer->voteCount = $answer->voteCount + 1;
+        $answer->save();
+        $results = $this->getPollQuestionResults($poll,$request->question);
+        return json_encode([
+            "success"=>true,
+            "message"=>"Voted SuccessFully",
+            "results"=>$results,
+            "yourVote"=>$request->option
+        ]);
+        // return view("eventee.polls.poll")->with(compact("poll","id"));
+    }
+    public function edit(Request $request,$id,$poll)
+    {
+        dd("hello");
+        // $pages = Page::where("event_id",$id)->get();
+        // $session_rooms = sessionRooms::where("event_id",$id)->get();
+        // return view("eventee.polls.create")->with(compact("id","pages","session_rooms"));
+        
+    }
+    public function destroy()
+    {
+        
     }
 }
