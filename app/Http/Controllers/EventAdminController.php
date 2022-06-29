@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use App\Points;
 use App\Event;
 
+use App\Leaderboard;
+use App\LeadPoint;
 class EventAdminController extends Controller
 {
     //
@@ -56,18 +58,38 @@ class EventAdminController extends Controller
             Auth::login($user);
             LoginLog::create(["ip" => $req->ip(), "user_id" => $user->id]);
             // UserLocation::create(['user_id'=>$user->id,'event_id'=>$user->event_id,'type'=>"exterior"]);
-            $pointsDetails = [
-                "points_to" => $user->id,
-                "points_for" => "login",
-                "details" => "",
-                "points" => LOGIN_POINTS,
-            ];
-            if (!Points::where($pointsDetails)->count()) {
-                Points::create($pointsDetails);
-                $user->update([
-                    "points" => DB::raw('points+' . LOGIN_POINTS),
-                ]);
+                // UserLocation::create(['user_id'=>$user->id,'event_id'=>$user->event_id,'type'=>"exterior"]);
+                $pointsDetails = [
+                    "points_to" => $user->id,
+                    "points_for" => "login",
+                    "details" => "",
+                ];
+                $leaderBoard = Leaderboard::where('event_id',$event_id)->first();
+
+
+                $leadPoints = LeadPoint::where("owner",$leaderBoard->id)->where("status",1)->get()->groupBy("point_label");
+                if(isset($leadPoints["LOGIN_POINTS"])){
+                $pointsDetails["points"] = $leadPoints["LOGIN_POINTS"][0]->user_points; //SCAVENGER_HUNT_POINTS;
+                
+                if (!Points::where($pointsDetails)->count()) {
+                    Points::create($pointsDetails);
+                    $user->update([
+                        "points" => DB::raw('points+' .  $leadPoints["LOGIN_POINTS"][0]->user_points),
+                    ]);
+                }
             }
+            // $pointsDetails = [
+            //     "points_to" => $user->id,
+            //     "points_for" => "login",
+            //     "details" => "",
+            //     "points" => LOGIN_POINTS,
+            // ];
+            // if (!Points::where($pointsDetails)->count()) {
+            //     Points::create($pointsDetails);
+            //     $user->update([
+            //         "points" => DB::raw('points+' . LOGIN_POINTS),
+            //     ]);
+            // }
             //Users to whoom we have to notify about the recent login of current user
             foreach ($user->tags as $tag) {
                 foreach ($tag->looking_users as $looking_user) {

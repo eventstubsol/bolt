@@ -12,6 +12,8 @@ use App\LoginLog;
 use App\Points;
 use App\Template;
 use Illuminate\Support\Facades\Mail as Mailing;
+use App\Leaderboard;
+use App\LeadPoint;
 use Carbon\Carbon;
 
 class AccountActiveController extends Controller
@@ -48,19 +50,29 @@ class AccountActiveController extends Controller
                 DB::table("sessions")->where("user_id", $user->id)->whereNotIn("id", [session()->getId()])->delete();
                 Auth::login($user);
                 LoginLog::create(["ip" => $req->ip(), "user_id" => $user->id]);
+        
+               
                 // UserLocation::create(['user_id'=>$user->id,'event_id'=>$user->event_id,'type'=>"exterior"]);
                 $pointsDetails = [
                     "points_to" => $user->id,
                     "points_for" => "login",
                     "details" => "",
-                    "points" => LOGIN_POINTS,
                 ];
+                $leaderBoard = Leaderboard::where('event_id',$event_id)->first();
+
+
+                $leadPoints = LeadPoint::where("owner",$leaderBoard->id)->where("status",1)->get()->groupBy("point_label");
+                if(isset($leadPoints["LOGIN_POINTS"])){
+                $pointsDetails["points"] = $leadPoints["LOGIN_POINTS"][0]->user_points; //SCAVENGER_HUNT_POINTS;
+                
                 if (!Points::where($pointsDetails)->count()) {
                     Points::create($pointsDetails);
                     $user->update([
-                        "points" => DB::raw('points+' . LOGIN_POINTS),
+                        "points" => DB::raw('points+' .  $leadPoints["LOGIN_POINTS"][0]->user_points),
                     ]);
                 }
+            }
+
                 //Users to whoom we have to notify about the recent login of current user
                 foreach ($user->tags as $tag) {
                     foreach ($tag->looking_users as $looking_user) {

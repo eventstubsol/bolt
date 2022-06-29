@@ -90,18 +90,12 @@ class EventController extends Controller
         // dd(str_contains($poll->for,'attendee'));
         if(isset($poll)){
 
-            if(!str_contains($poll->for,$user->type)){
-                $poll = null;
-            }
-            if(isset($user->subtype) && !str_contains($poll->for,$user->subtype) ){
+            if((!str_contains($poll->for,$user->type)) || (isset($user->subtype) && !str_contains($poll->for,$user->subtype) )){
                 $poll = null;
             }
         }
         if(isset($pollResult)){
-            if(!str_contains($pollResult->for,$user->type)){
-                $pollResult = null;
-            }
-            if(isset($user->subtype) && !str_contains($pollResult->for,$user->subtype) ){
+            if((!str_contains($pollResult->for,$user->type)) || (isset($user->subtype) && !str_contains($pollResult->for,$user->subtype) )){
                 $pollResult = null;
             }
         }
@@ -390,6 +384,8 @@ class EventController extends Controller
                 "message" => "Null URL"
             ];
         }
+        $leaderBoard = Leaderboard::where('event_id',$currentUser->event_id)->first();
+       
         $leadPoints = LeadPoint::where("owner",$leaderBoard->id)->where("status",1)->get()->groupBy("point_label");
         
         $pointsDetails = [
@@ -401,7 +397,7 @@ class EventController extends Controller
             if (!Points::where($pointsDetails)->count()) {
                 Points::create($pointsDetails);
                 User::where("id", $currentUser->id)->update([
-                    "points" => DB::raw('points+' . $pointsDetails["PROFILE_PICTURE_UPDATE"]),
+                    "points" => DB::raw('points+' . $pointsDetails["points"]),
                 ]);
             }
         }
