@@ -42,6 +42,8 @@ Restore Data
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Restore Users</div>
+                <div><button class="btn btn-success" data-type="user" onclick="Empty(this)">Permanently Empty</button></div>
+
             </div>
             <div class="card-body">
                 <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
@@ -73,6 +75,8 @@ Restore Data
             <div class="card-header">
                 <div class="card-title">Restore Pages</div>
             </div>
+            <div><button class="btn btn-success"  data-type="page" onclick="Empty(this)">Permanently Empty</button></div>
+
             <div class="card-body">
                 <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
                     <thead>
@@ -100,6 +104,8 @@ Restore Data
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Restore Session Rooms</div>
+            <div><button class="btn btn-success"  data-type="room" onclick="Empty(this)">Permanently Empty</button></div>
+
             </div>
             <div class="card-body">
                 <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
@@ -128,6 +134,8 @@ Restore Data
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Restore Booth</div>
+            <div><button class="btn btn-success"  data-type="booth" onclick="Empty(this)">Permanently Empty</button></div>
+
             </div>
             <div class="card-body">
                 <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
@@ -156,6 +164,8 @@ Restore Data
         <div class="card">
             <div class="card-header">
                 <div class="card-title">Restore Session</div>
+                <div><button class="btn btn-success"  data-type="session" onclick="Empty(this)">Permanently Empty</button></div>
+                
             </div>
             <div class="card-body">
                 <table id="datatable-buttons" class="table datatable   dt-responsive nowrap w-100">
@@ -193,6 +203,24 @@ Restore Data
                 else{
                     showMessage(res.message,'error');
                 }
+            });
+       }
+
+       function Empty(e){
+            confirmDelete("Are you sure you want to DELETE the below Entries Permanently?","These Cannot be restored ").then(confirmation=>{
+                if(confirmation){
+                    let type = e.getAttribute("data-type");
+                        $.post("{{ route('eventee.delete.permanent',$id) }}",{type:type},function(res){
+                            if(res.code == 200){
+                                // e.closest('table').remove();
+                                showMessage(res.message,'success');
+                                location.reload();
+                            }
+                            else{
+                                showMessage(res.message,'error');
+                            }
+                        });
+                } 
             });
        }
 

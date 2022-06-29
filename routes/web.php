@@ -290,7 +290,8 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
 
     //Restore Route
     Route::get("event/restore/{id}","RestoreController@index")->name("eventee.restore");
-    Route::post("rvent/restore/Post","RestoreController@restore")->name("eventee.restore.post");
+    Route::post("event/restore/Post","RestoreController@restore")->name("eventee.restore.post");
+    Route::post("event/delete/permanent/{id}","RestoreController@delete")->name("eventee.delete.permanent");
 
     Route::get("/lobby/{id}", "Eventee\PageController@lobby")->name("elobby");
     Route::put("/lobbyupdate/{id}","Eventee\PageController@Lobbyupdate")->name("elobbyupdate");

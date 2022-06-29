@@ -74,4 +74,32 @@ class RestoreController extends Controller
                 
         }
     }
+    public function delete(Request $req,$id){
+        $type = $req->type;
+        switch($type){
+            case "user":
+                $user = User::where("event_id",$id)->onlyTrashed()->forcedelete();
+                break;
+            case "page":
+                $page = Page::where("event_id",$id)->onlyTrashed()->forcedelete();
+                break;
+                
+            case "room":
+                $room = sessionRooms::where("event_id",$id)->onlyTrashed()->forcedelete();
+               
+                break;
+            case "booth":
+                $booth = Booth::where("event_id",$id)->onlyTrashed()->forcedelete();
+               
+                break;
+            default:
+                $session = EventSession::where("event_id",$id)->onlyTrashed()->forcedelete();
+                
+                break;
+            
+                
+        }
+        return response()->json(['code'=>200,"message"=>"Successfully Emptied Trash"]);
+
+    }
 }
