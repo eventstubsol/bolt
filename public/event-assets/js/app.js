@@ -1207,16 +1207,16 @@ console.log("triggering")
         console.log("tr");
         // sidebar.toggleClass('hidden');
         sidebar.toggleClass('enabled');
-        if (sidebar.hasClass('enabled')) {
-            $(".overLay").addClass("d-block");
-        } else {
-            $(".overLay").removeClass("d-block");
-        }
+        // if (sidebar.hasClass('enabled')) {
+        //     // $(".overLay").addClass("d-block");
+        // } else {
+        //     // $(".overLay").removeClass("d-block");
+        // }
     });
     sidebar.find('.menu a').on('click', function () {
         if (sidebar.hasClass('enabled')) {
             // $(".sidebar-custom").removeClass("enabled");
-            $(".overLay").removeClass("d-block");
+            // $(".overLay").removeClass("d-block");
             // sidebar.toggleClass('hidden');
             sidebar.removeClass('enabled')
         }
