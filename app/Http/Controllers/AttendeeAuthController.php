@@ -164,7 +164,7 @@ class AttendeeAuthController extends Controller
                     "points_for" => "login",
                     "details" => "",
                 ];
-                $leaderBoard = Leaderboard::where('event_id',$event_id)->first();
+                $leaderBoard = Leaderboard::where('event_id',$event->id)->first();
 
 
                 $leadPoints = LeadPoint::where("owner",$leaderBoard->id)->where("status",1)->get()->groupBy("point_label");
