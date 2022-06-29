@@ -772,6 +772,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
     Route::post("/poll/publishResults/{id}/{poll}", "Eventee\PollController@publishResults")->name("eventee.polls.publishResults"); // get create form
     Route::get("/poll/publishpoll/{id}/{poll}", "Eventee\PollController@publishPoll")->name("eventee.polls.publishpoll"); // get create form
     Route::get("/poll/publishPollResults/{id}/{poll}", "Eventee\PollController@publishPollResults")->name("eventee.polls.publishPollResults"); // get create form
+    Route::get("/poll/unpublishPoll/{id}/{poll}", "Eventee\PollController@unpublishPoll")->name("eventee.polls.unpublishPoll"); // get create form
     
 
     // Route::get("/polls/multipleChoice", "PollController@MultipleChoice")->name("poll.multiple"); //multiple choice

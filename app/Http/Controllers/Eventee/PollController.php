@@ -121,6 +121,14 @@ class PollController extends Controller
 
         return view("eventee.polls.publishResult")->with(compact("poll","id","subtypes"));
     }
+    public function unpublishPoll(Request $request,$id,Poll $poll)
+    {
+        $poll->status =0;
+        $poll->save();
+        return redirect(route("polls.manage",["id"=>$id]));
+
+
+    }
     public function publish(Request $request,$id,Poll $poll)
     {
         $types = $request->type;

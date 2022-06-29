@@ -44,7 +44,7 @@
                                 <tr class="checkedbox" data-id="{{ $poll->id }}">
                                     <td width="5%" class="incheck" style="display: none"><input type="checkbox"
                                             onclick="checkedValue(this)" class="inchecked"></td>
-                                    <td>{{ $poll->name }}</td>
+                                    <td>{{ $poll->name }} @if($poll->status===1)- Poll Live @endif @if($poll->status===-1)- Results Live @endif </td>
                                     {{-- <th>{{$poll->location_type}}</th> --}}
                                     {{-- <th>{{$poll->}}</th> --}}
 
@@ -76,6 +76,13 @@
                                             class="btn btn-primary" data-toggle="tooltip" data-placement="bottom"
                                             title="" data-original-title="PublishResult"><i
                                                 class="fa fa-check"></i></a>
+                                        <a href="{{ route('eventee.polls.unpublishPoll', [
+                                            'poll' => $poll->id,
+                                            'id' => $id,
+                                        ]) }}"
+                                            class="btn btn-primary" data-toggle="tooltip" data-placement="bottom"
+                                            title="" data-original-title="Unpublish"><i
+                                                class="fa fa-close"></i></a>
                                         <a href="{{ route('eventee.poll', [
                                             'poll' => $poll->id,
                                             'id' => $id,
