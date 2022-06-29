@@ -90,7 +90,7 @@
                                             class="btn btn-primary" data-toggle="tooltip" title="Poll"><i
                                                 class="fe-eye"></i></a>
                                         <button data-toggle="tooltip" data-placement="bottom" data-id="{{ $poll->id }}"
-                                            onclick="DeleteRoom(this)" data-toggle="tooltip" title="Delete"
+                                            onclick="DeletePoll(this)" data-toggle="tooltip" title="Delete"
                                             class="delete btn btn-danger ml-1 " type="submit"><i
                                                 class="fas fa-trash-alt"></i></button>
                                     </td>
@@ -131,7 +131,7 @@
     </script>
 
     <script>
-        function DeleteRoom(e) {
+        function DeletePoll(e) {
             let id = e.getAttribute("data-id");
             let deleteUrl = '{{ route('eventee.polls.destroy') }}';
 

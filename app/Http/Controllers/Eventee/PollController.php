@@ -235,8 +235,15 @@ class PollController extends Controller
         // return view("eventee.polls.create")->with(compact("id","pages","session_rooms"));
         
     }
-    public function destroy()
+    public function destroy(Request $request)
     {
+        $poll = Poll::find($request->id);
+        if($poll){
+            $poll->delete();
+            
+        }
+        return true;
+        // dd($request->all());
         
     }
 }

@@ -759,7 +759,7 @@ Route::middleware(["auth"])->group(function () { //All Routes here would need au
      */
     Route::get("/polls/{id}", "Eventee\PollController@index")->name("polls.manage"); // list all polls
     Route::get("/polls/create/{id}", "Eventee\PollController@create")->name("eventee.polls.create"); // get create form
-    Route::get("/polls/delete", "Eventee\PollController@destroy")->name("eventee.polls.destroy"); // get create form
+    Route::delete("/polls/delete", "Eventee\PollController@destroy")->name("eventee.polls.destroy"); // get create form
     Route::get("/polls/bulkDelete", "Eventee\PollController@destroy")->name("eventee.polls.bulkDelete"); // get create form
     Route::get("/polls/deleteAll", "Eventee\PollController@destroy")->name("eventee.polls.deleteAll"); // get create form
     Route::post("/polls/store/{id}", "Eventee\PollController@store")->name("eventee.polls.store"); // get create form
