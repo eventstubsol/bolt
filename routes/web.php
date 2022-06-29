@@ -381,6 +381,7 @@ Route::prefix("eventadmin")->middleware("eventee")->group(function(){
     Route::POST('/leaderboard/setting/store/{id}',"Eventee\LeaderboardController@store")->name('eventee.leaderSetting.store');
     Route::POST('/leaderboard/setting/update/{id}/{lead_id}',"Eventee\LeaderboardController@update")->name('eventee.leaderSetting.update');
     Route::POST('/leaderboard/points/delete',"Eventee\LeaderboardController@DeletePoint")->name('eventee.leaderboard.points.delete');
+    Route::POST('/leaderboard/points/clear/{id}',"Eventee\LeaderboardController@clearleaderboard")->name('eventee.leaderboard.clearleaderboard');
     //Room Setup
     Route::get('/rooms/{id}',"Eventee\RoomController@index")->name('eventee.room');
     Route::get('/rooms/create/{id}',"Eventee\RoomController@create")->name('eventee.room.create');

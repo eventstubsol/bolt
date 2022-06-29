@@ -31,6 +31,8 @@ $fields = getAllFields($id);
 </div>
 <div class="card">
     <div class="card-body">
+        <button type="button" data-id="{{ $id }}" onclick="ClearLeaderBoard(this)" class="btn btn-danger">Clear Leaderboard <i class="fa fa-trash" aria-hidden="true"></i></button>
+
         @if(App\Leaderboard::where('event_id',$id)->count() < 1)
             <form action="{{ route("eventee.leaderSetting.store",['id'=>$id]) }}" method="POST">
                 @csrf
@@ -81,12 +83,19 @@ $fields = getAllFields($id);
                     @if(App\LeadPoint::where('owner',$leaderSettings->id)->count() > 0)
                     @foreach (App\LeadPoint::where('owner',$leaderSettings->id)->get() as $key =>$loadpoint)
                         <div class="form-group point-group">
-                            <label for="points">Point {{ $loadpoint->point }}</label>
-                            <div class="input-group-append form-check form-switch ml-4">
-                            <input type="text" name="points[]" class="form-control" value="{{ $loadpoint->point }}">
-                            <input type="text" name="user_points[]" class="form-control" value="{{ $loadpoint->user_points }}">
-                            <input type="checkbox" name="pointsstatus[]" @if($loadpoint->status) checked @endif class="form-check-input" value="{{ $loadpoint->id }}" >
-                             {{-- {{$loadpoint->point}}  --}}
+                            <label for="points">Point {{ $loadpoint->point_label }}</label>
+                            <div class="row">
+                                <select class="form-control col-md-3 " name="pointsstatus[]" id="">
+                                    <option  value="0">Disabled</option>
+                                    <option @if($loadpoint->status) selected @endif  value="{{ $loadpoint->id }}">Enabled</option>
+                                </select>
+                            <input type="text" name="points[]" class="form-control col-md-4" value="{{ $loadpoint->point }}">
+                            <input type="text" name="user_points[]" class="form-control col-md-4" value="{{ $loadpoint->user_points }}">
+                           
+                            {{-- <div class="form-group">
+                            <input type="checkbox" id="chk_1" name="pointsstatus[]" @if($loadpoint->status) checked @endif class="form-check-input js-switch" value="{{ $loadpoint->id }}" >
+                            </div>  --}}
+                            {{-- {{$loadpoint->point}}  --}}
                                {{-- <button type="button" data-id="{{ $loadpoint->id }}" onclick="DeletePoint(this)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button> --}}
                             </div>
                         </div>
@@ -116,8 +125,15 @@ $fields = getAllFields($id);
 <script src="https://coderthemes.com/ubold/layouts/default/assets/libs/spectrum-colorpicker2/spectrum.min.js"></script>
 <script src="https://coderthemes.com/ubold/layouts/default/assets/libs/clockpicker/bootstrap-clockpicker.min.js"></script>
 <script >
+    var switchery = {};
     $(document).ready(function(){
         $("#colorpicker-default").spectrum();
+        var searchBy = ".js-switch";
+        $(this).find(searchBy).each(function (i, html) {
+            if (!$(html).next().hasClass("switchery")) {
+                switchery[html.getAttribute('id')] = new Switchery(html, $(html).data());
+            }
+        });
     })
 </script>
 <script>
@@ -143,6 +159,22 @@ $fields = getAllFields($id);
     });
 </script>
 <script>
+    function ClearLeaderBoard(e){
+       
+        confirmDelete("Are you sure you want to Clear Leaderboard?","Confirm Clearing Leaderboard").then(confirmation=>{
+                if(confirmation){
+                    $.post('{{ route("eventee.leaderboard.clearleaderboard",["id"=>$id]) }}',function(response){
+                        if(response){
+                            showMessage("Leaderboard Cleared",'success');
+                        }
+                        else{
+                            showMessage(response.message,'error');
+                        }
+                        
+                    });
+                }
+            });
+    }
     function DeletePoint(e){
        
         var id = e.getAttribute('data-id');

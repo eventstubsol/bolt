@@ -390,17 +390,21 @@ class EventController extends Controller
                 "message" => "Null URL"
             ];
         }
-        // $pointsDetails = [
-        //     "points_to" => $currentUser->id,
-        //     "points_for" => "Profile-Picture-Update",
-        //     "points" => PROFILE_PICTURE_UPDATE
-        // ];
-        // if (!Points::where($pointsDetails)->count()) {
-        //     Points::create($pointsDetails);
-        //     User::where("id", $currentUser->id)->update([
-        //         "points" => DB::raw('points+' . $pointsDetails["points"]),
-        //     ]);
-        // }
+        $leadPoints = LeadPoint::where("owner",$leaderBoard->id)->where("status",1)->get()->groupBy("point_label");
+        
+        $pointsDetails = [
+            "points_to" => $currentUser->id,
+            "points_for" => "Profile-Picture-Update",
+        ];
+        if(isset($leadPoints["PROFILE_PICTURE_UPDATE"])){
+            $pointsDetails["points"] = $leadPoints["PROFILE_PICTURE_UPDATE"][0]->user_points; //SCAVENGER_HUNT_POINTS;
+            if (!Points::where($pointsDetails)->count()) {
+                Points::create($pointsDetails);
+                User::where("id", $currentUser->id)->update([
+                    "points" => DB::raw('points+' . $pointsDetails["PROFILE_PICTURE_UPDATE"]),
+                ]);
+            }
+        }
         return [
             "success" => true,
         ];
@@ -600,7 +604,7 @@ class EventController extends Controller
         $userId = $user->id;
         $event_id = $user->event_id;
         $leaderBoard = Leaderboard::where('event_id',$event_id)->first();
-        $leadPoints = LeadPoint::where("owner",$leaderBoard->id)->get()->groupBy("point_label");
+        $leadPoints = LeadPoint::where("owner",$leaderBoard->id)->where("status",1)->get()->groupBy("point_label");
         // dd($leadPoints);
         // $points = 
         if(! strpos(Auth::user()->email, 'eventstub.co') ){
@@ -621,19 +625,24 @@ class EventController extends Controller
                     //     SCAVENGER_HUNT[$page][$index]['name'] == $name
                     // ) {
                     //Verified item, now saving to database
-                    $pointsDetails["points"] = $leadPoints["SCAVENGER_HUNT_POINTS"][0]->user_points; //SCAVENGER_HUNT_POINTS;
-                    $pointsDetails["details"] = $page . "|" . $index . "|" . $name;
-                    if (!Points::where($pointsDetails)->count()) {
-                        Points::create($pointsDetails);
-                        User::where("id", $userId)->update([
-                            "points" => DB::raw('points+' . $pointsDetails["points"]),
-                        ]);
+                    if(isset( $leadPoints["SCAVENGER_HUNT_POINTS"])){
+
+                        $pointsDetails["points"] = $leadPoints["SCAVENGER_HUNT_POINTS"][0]->user_points; //SCAVENGER_HUNT_POINTS;
+                        $pointsDetails["details"] = $page . "|" . $index . "|" . $name;
+                        if (!Points::where($pointsDetails)->count()) {
+                            Points::create($pointsDetails);
+                            User::where("id", $userId)->update([
+                                "points" => DB::raw('points+' . $pointsDetails["points"]),
+                            ]);
+                        }
                     }
                     // }
                     break;
 
                 case "boothVisit":
                     $id = $request->get("id");
+                    if(isset( $leadPoints["BOOTH_VISIT_POINTS"])){
+
                     $booth = Booth::find($id);
                     if ($booth) {
                         //Verified booth, now saving to database
@@ -647,9 +656,12 @@ class EventController extends Controller
                             ]);
                         }
                     }
+                    }
                     break;
                 case "PHOTOBOOTH_VISIT":
                     $id = $request->get("id");
+                    if(isset( $leadPoints["PHOTOBOOTH_POINTS"])){
+
                         //Verified booth, now saving to database
                         $pointsDetails["points"] = $leadPoints["PHOTOBOOTH_POINTS"][0]->user_points;//PHOTOBOOTH_VISIT;PHOTOBOOTH_POINTS
                         $pointsDetails["details"] = $id;
@@ -659,6 +671,7 @@ class EventController extends Controller
                             User::where("id", $userId)->update([
                                 "points" => DB::raw('points+' . $pointsDetails["points"]),
                             ]);
+                        }
                         }
                     break;
 
@@ -683,6 +696,7 @@ class EventController extends Controller
                     $tab = $request->get("tab", false);
                     $validTabs = ["description-modal-" . $id, "videolist-modal-" . $id, "resourcelist-modal-" . $id];
                     $booth = Booth::find($id);
+                   
                     if (
                         $booth && $tab && in_array($tab, $validTabs)
                     ) {
@@ -700,6 +714,7 @@ class EventController extends Controller
                     break;
 
                 case "resourceView":
+                    if(isset( $leadPoints["RESOURCE_VIEW_POINTS"])){
                     
                     $pointsDetails["points"] = $leadPoints["RESOURCE_VIEW_POINTS"][0]->user_points;// RESOURCE_VIEW_POINTS;
                     $pointsDetails["details"] = request()->get("url", false);
@@ -709,8 +724,10 @@ class EventController extends Controller
                             "points" => DB::raw('points+' . $pointsDetails["points"]),
                         ]);
                     }
+                    }
                     break;
                 case "museumVisit":
+                 
                     $pointsDetails["points"] = MUSEUM_VISIT_POINTS;
                     $pointsDetails["details"] = request()->get("id", false);
                     if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
@@ -723,15 +740,20 @@ class EventController extends Controller
                 case "workshopVisit":
                     $pointsDetails["points"] = MUSEUM_VISIT_POINTS;
                     $pointsDetails["details"] = request()->get("id", false);
+                    if(isset( $leadPoints["BOOTH_VISIT_POINTS"])){
+
                     if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
                         Points::create($pointsDetails);
                         User::where("id", $userId)->update([
                             "points" => DB::raw('points+' . $pointsDetails["points"]),
                         ]);
                     }
+                    }
                     break;
+                    
 
                 case "sessionView":
+                    if(isset( $leadPoints["SESSION_ATTENDING_POINTS"])){
                     
                     $pointsDetails["points"] =  $leadPoints["SESSION_ATTENDING_POINTS"][0]->user_points;//SESSION_ATTENDING_POINTS;
                     $pointsDetails["details"] = request()->get("id", false);
@@ -741,16 +763,20 @@ class EventController extends Controller
                             "points" => DB::raw('points+' . $pointsDetails["points"]),
                         ]);
                     }
+                    }
                     break;
 
                 case "videoView":
-                    $pointsDetails["points"] = VIDEO_VIEWING_POINTS;
+                    if(isset( $leadPoints["VIDEO_VIEWING_POINTS"])){
+
+                    $pointsDetails["points"] =   $leadPoints["VIDEO_VIEWING_POINTS"][0]->user_points;// VIDEO_VIEWING_POINTS;
                     $pointsDetails["details"] = request()->get("video", false);
                     if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
                         Points::create($pointsDetails);
                         User::where("id", $userId)->update([
                             "points" => DB::raw('points+' . $pointsDetails["points"]),
                         ]);
+                    }
                     }
                     break;
 
@@ -764,7 +790,9 @@ class EventController extends Controller
                     Points::create($pointsDetails);
                     break;
                 case "zoom_video_view":
-                    $pointsDetails["points"] = EXTERIOR_ZOOM_POINTS;
+                    if(isset( $leadPoints["SESSION_ATTENDING_POINTS"])){
+
+                    $pointsDetails["points"] =  $leadPoints["SESSION_ATTENDING_POINTS"][0]->user_points;// EXTERIOR_ZOOM_POINTS;
                     $pointsDetails["details"] = $request->get("name");
                     if ($pointsDetails["details"] && !Points::where($pointsDetails)->count()) {
                         Points::create($pointsDetails);
@@ -772,6 +800,8 @@ class EventController extends Controller
                             "points" => DB::raw('points+' . $pointsDetails["points"]),
                         ]);
                     }
+                    }
+                    
                     break;
 
 
