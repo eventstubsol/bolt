@@ -88,6 +88,12 @@
         <span> Event Creatives </span>
     </a>
 </li>
+<li>
+    <a href="{{ route("library",$id) }}">
+        <i class="mdi mdi-file-multiple"></i>
+        <span> Event Library </span>
+    </a>
+</li>
 
 
 <li>

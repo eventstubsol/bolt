@@ -29,6 +29,18 @@
                             </div>
                         @endforeach
                     @endforeach
+                    @foreach($event->pdfs as $resource)
+                            <div class="doc-item row justify-content-between align-items-center resource r-{{$resource->id}} resource-{{$resource->id}}">
+                                <div class="d-inline-flex align-items-center flex-grow-1">
+                                    <div class="doc-title flex-grow-1"><span class="image-icon pdf"></span><h4 class="searchresource"> {{$resource->title}}</h4></div>
+                                </div>
+                                <div class="d-inline-flex">
+                                    <a class="btn theme-btn primary  mr-2 _df_button" title="{{$resource->title}}" source="{{assetUrl($resource->url)}}">View</a>
+                                    <button class="btn primary-filled theme-btn text-white add-to-bag add" data-resource="{{ $resource->id }}" type="button" name="button"> + Briefcase</button>
+                                    <button class="btn danger theme-btn has-icon delete add-to-bag remove hidden" data-resource="{{ $resource->id }}" type="button" name="button"> Briefcase</button>
+                                </div>
+                            </div>
+                    @endforeach
                 </div>
             </div>
         </div><!-- /.modal-content -->

@@ -15,6 +15,9 @@ class Event extends Model
     public function pages(){
         return $this->hasMany("\App\Page","event_id");
     }
+    public function pdfs(){
+        return $this->hasMany("\App\Resource","booth_id");
+    }
 
     public function licese(){
         return $this->hasOne(License::class);

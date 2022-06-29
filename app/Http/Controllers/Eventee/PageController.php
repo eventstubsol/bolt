@@ -18,6 +18,7 @@ use App\Treasure;
 use Carbon\Carbon;
 use App\Http\Requests\PageFormRequest;
 use PDO;
+use App\Resource;
 
 class PageController extends Controller
 {
@@ -29,6 +30,48 @@ class PageController extends Controller
             // $pages->load(['images','links']);
             return view("eventee.pages.list")->with(compact("pages", "id"));
         } catch (\Exception $e) {
+            if (Auth::user()->type === 'admin') {
+                dd($e->getMessage());
+            } else {
+                Log::error($e->getMessage());
+            }
+        }
+    }
+    public function library($id){
+        try {
+            $event = Event::find($id)->load("pdfs");
+            $pdfs =   $event->pdfs;
+            // dd($pdfs);
+            return view("eventee.library.index")->with(compact(["id","pdfs"]));
+        }catch (\Exception $e) {
+            if (Auth::user()->type === 'admin') {
+                dd($e->getMessage());
+            } else {
+                Log::error($e->getMessage());
+            }
+        }
+    }
+    public function updateLibrary(Request $request,$id){
+        try {
+            $event = Event::find($id)->load("pdfs");
+            $pdfs = $event->pdfs;
+            Resource::where("booth_id",$event->id)->delete();
+            // dd($request->all());
+            $requesturls = $request->resources; //Recieved from form
+            if ($requesturls) {
+                foreach ($requesturls as $ids => $requrl) {
+                    if (!empty(trim($requrl))) {
+                        Resource::create([
+                            "booth_id" => $event->id,
+                            "url" => $requrl,
+                            "title" => $request->resourcetitles[$ids],
+                        ]);
+                    }
+                }
+            }
+            // dd($pdfs);
+            return redirect(route("library",$id));
+        }catch (\Exception $e) {
             if (Auth::user()->type === 'admin') {
                 dd($e->getMessage());
             } else {
