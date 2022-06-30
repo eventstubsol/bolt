@@ -51,11 +51,34 @@
         $('.poll_container').hide();
         @endif
         channel2.bind('poll',function(data){
-            // console.log(data);
+            const {location_type,location,poll,types} = data;
+            let sidebar = $(".pollbar-custom");
+
             
-            url = window.config.baseRoute+`/poll/${window.config.eventId}/${data.poll}`;
-            $("#pollframe").attr("src",url);
-            $('.poll_container').show();
+            let fullLocation = window.location.hash;
+            let hashlocation =fullLocation.split("/")[0]; //#sessionroom
+            let user_location_type = hashlocation.split('#')[1];  //sessionroom
+            let user_location = fullLocation.split("/")[1];//Auditorium
+            let user_type = '{{Auth::user()->type}}';//Auditorium
+            let user_subtype = '{{Auth::user()->subtype}}';//Auditorium
+            console.log({user_location,user_location_type,user_type,user_subtype,location,location_type,types})
+            publish = false;
+            if(location_type=="all"){
+                publish = true;
+            }else if(location_type == user_location_type && location == location_type){
+                publish = true;
+            }
+            if(!types.includes(user_type)){
+                publish = false;
+            }
+            if(user_subtype && user_subtype!=='' && !types.includes(user_subtype)){
+                publish = false;
+            }
+            if(publish){
+                url = window.config.baseRoute+`/poll/${window.config.eventId}/${data.poll}`;
+                $("#pollframe").attr("src",url);
+                sidebar.addClass('enabled');
+            }
 
 
         })

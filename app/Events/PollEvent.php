@@ -15,18 +15,23 @@ class PollEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
     
     public $poll;
+    public $location_type;
+    public $location;
+    public $types;
     public $slug;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($poll,$slug)
+    public function __construct($poll,$slug,$location,$location_type,$types)
     {
         //
         $this->poll = $poll;
         $this->slug = $slug;
-       
+        $this->location_type = $location_type;
+        $this->location = $location;
+        $this->types = $types;
     }
 
     /**
@@ -42,6 +47,9 @@ class PollEvent implements ShouldBroadcast
     public function broadcastWith () {
         return [
             'poll' => $this->poll,
+            'location_type'=>$this->location_type,
+            'location'=>$this->location,
+            'types'=>$this->types
         ];
     }
 

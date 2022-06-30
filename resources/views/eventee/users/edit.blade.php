@@ -78,7 +78,7 @@
                     <div class="form-group mb-3">
                         <label for="type">Subtype of User</label>
                         <select class="form-control" name="subtype">
-                            <option value="0">None</option>
+                            <option value="">None</option>
                             @foreach($subtypes as $type)
                             <option @if($user->subtype === $type->name) selected @endif value="{{ $type->name }}">{{ ucfirst($type->name) }}</option>
                             @endforeach

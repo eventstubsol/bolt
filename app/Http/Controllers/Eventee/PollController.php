@@ -144,7 +144,7 @@ class PollController extends Controller
         $poll->status = 1;
         $poll->save();
         $slug = Event::find($id)->slug;
-        event(new PollEvent($poll->id,$slug));
+        event(new PollEvent($poll->id,$slug,$poll->location,$poll->location_type,$poll->for));
         $poll->load(['questions' => function ($q){
             $q->orderBy('pos');
         }]);
