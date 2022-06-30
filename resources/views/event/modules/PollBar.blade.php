@@ -65,7 +65,7 @@
             publish = false;
             if(location_type=="all"){
                 publish = true;
-            }else if(location_type == user_location_type && location == location_type){
+            }else if(location_type == user_location_type && location == user_location){
                 publish = true;
             }
             if(!types.includes(user_type)){

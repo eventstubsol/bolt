@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}?cb=2187236762822" type="text/css">
     <link rel="stylesheet" href="{{ asset('event-assets/css/app.css') }}?cb=2187236762822">
+    <link href="{{ asset('assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+
     <style>
-        .custom_card{
+        .custom_card {
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -61,6 +63,7 @@
                                             <button
                                                 class="btn w-100 btn-primary option optionButton-{{ $option->id }} option-{{ $n }}"
                                                 data-id="{{ $option->id }}"
+                                                data-ismcq="{{ $question->correct_ans ? 'true' : 'false' }}"
                                                 data-question="{{ $question->id }}">{{ $option->answer }}</button>
                                             <div class="progress option_progress mb-2 mt-2 w-100 hidden">
                                                 <div class="progress-bar  progress-{{ $option->id }} progress-bar-striped"
@@ -95,6 +98,7 @@
 
     <script src="{{ asset('assets/js/vendor.min.js') }}?cb=2187236762822"></script>
     <script src="{{ asset('assets/js/app.min.js') }}?cb=2187236762822"></script>
+    <script src="{{ asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 
     <script
         src="https://coderthemes.com/ubold/layouts/default/assets/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js">
@@ -102,15 +106,50 @@
     <script src="https://coderthemes.com/ubold/layouts/default/assets/js/pages/form-wizard.init.js"></script>
 
     <script>
+        
         $(document).ready(function() {
+            function confirmDelete(message = false, title = false, options = {}){
+                if(!message){
+                message = "Are you sure you want to proceed?";
+                }
+                return new Promise((resolve) => {
+                    Swal.fire({
+                        title: title || "Confirm",
+                        text: message,
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes",
+                        ...options,
+                    }).then((result) => resolve(result.value));
+                });
+            }
+            var totalQuestions = {{count($poll->questions)}} 
+            var currQuestion = 0;
+            $(".next").click(function(){
+                currQuestion++;
+                console.log({currQuestion,totalQuestions})
+                if(currQuestion+1 >=totalQuestions){
+                    $(".next").hide();
+                }
+            })
             $(".option").on("click", function() {
-                var id = $(this).data("id");
-                var n = $(this).data("n");
-                var question = $(this).data("question");
-                console.log("hello")
-                console.log($(this).data("id"))
-                console.log($(this).data("question"))
-                vote(id, question, n)
+                confirmDelete().then(confirmation=>{
+                    var ismcq = $(this).data("ismcq");
+                    console.log(ismcq);
+
+                    if (confirmation) {
+                        var id = $(this).data("id");
+                        var n = $(this).data("n");
+                        var question = $(this).data("question");
+                        console.log("hello")
+                        console.log($(this).data("id"))
+                        console.log($(this).data("question"))
+                        vote(id, question, n,ismcq)
+                    }
+                });
+                
             })
             $(".next").on("click", () => {
                 $(".option_progress").addClass("hidden");
@@ -119,7 +158,7 @@
                 $(".option").attr("disabled", false);;
             })
 
-            function vote(id, question, n) {
+            function vote(id, question, n,ismcq=false) {
                 window.n = n;
                 var poll = "{{ $poll->id }}";
                 $.ajax({
@@ -131,39 +170,55 @@
                     },
                     success: (response) => {
                         // if(response)
-                        console.log(JSON.parse(response))
                         $(".option").addClass("disabled");
                         $(".option").attr("disabled", true);;
-                        $(".option_progress").removeClass("hidden");
                         let res = JSON.parse(response);
-                        let results = res.results;
-                        let vote = res.yourVote;
-                        let options = $(".options");
 
-                        options.each((index, option) => {
-                            option = $(option);
-                            let opId = option.data("id");
-                            if (results[opId]) {
-
+                     
+                        // console.log(JSON.parse(response))
+                        if(res.results){
+                            let results = res.results;
+                            let vote = res.yourVote;
+                            let options = $(".options");
+                            options.each((index, option) => {
+                                option = $(option);
+                                let opId = option.data("id");
                                 let button = $(".optionButton-" + opId);
                                 let percent = $(".progress-" + opId);
-                                // console.log(opId);
-                                if (opId == vote) {
+                                if (results[opId]) {
+                                    $(".option_progress").removeClass("hidden");
+                                    // console.log(opId);
+                                    if (opId == vote) {
+                                        button.removeClass('btn-primary');
+                                        button.addClass('btn-success');
+                                    }
+                                    let result = results[opId];
+                                    // percent.attr("aria-valuenow",result.percent);
+                                    percent.css({
+                                        width: `${result.percent}%`
+                                    })
+                                    button.parent().append(`<span>${result.voteCount}</span>`)
+                                }
+                            });
+                        }else{
+                            let correct_ans = res.correct_ans;
+                            let options = $(".options");
+                            let userVote = res.yourVote;
+                            options.each((index, option) => {
+                                option = $(option);
+                                let opId = option.data("id");
+                                let button = $(".optionButton-" + opId);
+                                if (correct_ans === opId) {
                                     button.removeClass('btn-primary');
                                     button.addClass('btn-success');
                                 }
-                                let result = results[opId];
-                                console.log({
-                                    result,
-                                    percent
-                                })
-                                // percent.attr("aria-valuenow",result.percent);
-                                percent.css({
-                                    width: `${result.percent}%`
-                                })
-                                button.parent().append(`<span>${result.voteCount}</span>`)
-                            }
-                        });
+                                if(userVote === opId && userVote !== correct_ans){
+                                    button.removeClass('btn-primary');
+                                    button.addClass('btn-danger');
+                                }
+                            });
+                        }
+                        
 
                         // console.log({response,test:this})
                     }

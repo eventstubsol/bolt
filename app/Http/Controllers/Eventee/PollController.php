@@ -60,18 +60,74 @@ class PollController extends Controller
         // Create Questions 
         foreach ($request->question as $ids => $question) {
             if($question!==null && (count($request->ans[$ids])>=2) ){
+                $correctans =  isset($request->correct_ans[$ids])?$request->correct_ans[$ids]:null;
                 $question = $poll->questions()->create([
                     "question"=>$request->question[$ids],
-                    "pos"=>$ids
+                    "pos"=>$ids,
                 ]);
                 // dd($question);
                 // Create Options For Each Question 
                 foreach ($request->ans[$ids] as $n => $ans) {
                     if(isset($request->ans[$ids][$n])){
-                        $question->options()->create([
+                        $option = $question->options()->create([
                             "answer"=>$request->ans[$ids][$n],
                             "pos"=>$n
                         ]);
+                        if($correctans==$n){
+                            $question->correct_ans = $option->id;
+                            $question->save();
+                        }
+                    }
+                }
+            }
+        }
+        return redirect(route("polls.manage",$id));
+
+    }
+    public function update(Request $request,$id,Poll $poll) 
+    {
+        // dd($request->all());
+        // Create Poll 
+        $poll->name=$request->name;
+        $poll->location_type = $request->location;
+        $poll->event_id = $id;
+        switch($request->location){
+            case "page":
+                $poll->location = $request->pages;
+                break;
+            case "sessionroom":
+                $poll->location = $request->rooms;
+                break;
+            default :
+                $poll->location = null;
+        }
+        // $poll->status = 0;
+        $poll->save();
+        $poll->questions()->delete();
+        // Create Questions 
+        foreach ($request->question as $ids => $question) {
+            if($question!==null && (count($request->ans[$ids])>=2) ){
+                $correctans =  ($request->question_type[$ids]==="mcq" && isset($request->correct_ans[$ids]))?$request->correct_ans[$ids]:null;
+                // dd($correctans);
+                $question = $poll->questions()->create([
+                    "question"=>$request->question[$ids],
+                    "pos"=>$ids,
+                    "correct_ans"=>null
+                ]);
+                // dd($question);
+                // Create Options For Each Question 
+                foreach ($request->ans[$ids] as $n => $ans) {
+                    if(isset($request->ans[$ids][$n])){
+                        $option = $question->options()->create([
+                            "answer"=>$request->ans[$ids][$n],
+                            "pos"=>$n
+                        ]);
+                        // dd($n);
+                        if($correctans !==null && $correctans==$n){
+                            // dd($n);
+                            $question->correct_ans = $option->id;
+                            $question->save();
+                        }
                     }
                 }
             }
@@ -136,7 +192,7 @@ class PollController extends Controller
         // dd($types);
         if(isset($subtypes)){
 
-            $poll->for = implode(",",$types).implode(",",$subtypes);
+            $poll->for = implode(",",$types).",".implode(",",$subtypes);
         }else{
 
             $poll->for = implode(",",$types);
@@ -203,13 +259,25 @@ class PollController extends Controller
         $answer= EventAnswer::find($request->option);
         $existingVote = UserAnswer::where("user_id",$user->id)->where("question_id",$request->question)->first();
         if($existingVote){
-            $results = $this->getPollQuestionResults($poll,$request->question);
-            return json_encode([
-                "success"=>false,
-                "message"=>"Already Voted",
-                "results"=>$results,
-                "yourVote"=>$existingVote->answer_id
-            ]);
+            if(isset($question->correct_ans)){
+
+                return json_encode([
+                    "success"=>false,
+                    "message"=>"Already Voted",
+                    "correct_ans"=>$question->correct_ans,
+                    "yourVote"=>$existingVote->answer_id
+
+                ]);
+            }else{
+                $results = $this->getPollQuestionResults($poll,$request->question);
+                return json_encode([
+                    "success"=>false,
+                    "message"=>"Already Voted",
+                    "results"=>$results,
+                    "yourVote"=>$existingVote->answer_id
+                ]);
+            }
+            
         } 
         $question->userAnswer()->create([
             "user_id"=>$user->id,
@@ -218,21 +286,30 @@ class PollController extends Controller
         
         $answer->voteCount = $answer->voteCount + 1;
         $answer->save();
-        $results = $this->getPollQuestionResults($poll,$request->question);
-        return json_encode([
-            "success"=>true,
-            "message"=>"Voted SuccessFully",
-            "results"=>$results,
-            "yourVote"=>$request->option
-        ]);
+        if(isset($question->correct_ans)){
+            return json_encode([
+                "success"=>true,
+                "message"=>"Voted Succefully",
+                "correct_ans"=>$question->correct_ans,
+                "yourVote"=>$request->option
+            ]);
+        }else{
+
+            $results = $this->getPollQuestionResults($poll,$request->question);
+            return json_encode([
+                "success"=>true,
+                "message"=>"Voted SuccessFully",
+                "results"=>$results,
+                "yourVote"=>$request->option
+            ]);
+        }
         // return view("eventee.polls.poll")->with(compact("poll","id"));
     }
-    public function edit(Request $request,$id,$poll)
+    public function edit(Request $request,$id,Poll $poll)
     {
-        dd("hello");
-        // $pages = Page::where("event_id",$id)->get();
-        // $session_rooms = sessionRooms::where("event_id",$id)->get();
-        // return view("eventee.polls.create")->with(compact("id","pages","session_rooms"));
+        $pages = Page::where("event_id",$id)->get();
+        $session_rooms = sessionRooms::where("event_id",$id)->get();
+        return view("eventee.polls.edit")->with(compact("id","poll","pages","session_rooms"));
         
     }
     public function destroy(Request $request)
