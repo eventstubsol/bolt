@@ -487,6 +487,9 @@
         }
 
 
+        .custom-theme a i.mdi.mdi-play-circle {
+            color: {{ $event->primary_color }} !important;
+        }
         .faq-items .faq-card .faq-content a {
             color: {{ $event->primary_color }} !important;
         }

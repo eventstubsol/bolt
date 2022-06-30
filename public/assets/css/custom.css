@@ -1254,6 +1254,10 @@ table.dataTable tbody tr {
     line-height: 1.5;
 }
 
+.page#faq .faq-card a[aria-expanded="true"] .faq-title:before {
+    transform: rotate(90deg);
+
+}
 .page#faq .faq-card .faq-title:before {
     content: "";
     width: 0;

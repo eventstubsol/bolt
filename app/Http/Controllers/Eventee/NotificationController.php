@@ -203,7 +203,7 @@ class NotificationController extends Controller
     public function delete(Request $req){
         $id = $req->id;
         $note = PushNotification::findOrFail($id);
-        if($note->delete()){
+        if($note->forcedelete()){
             return response()->json(['code'=>200,'message'=>'Notification Deleted Successfully']);
         }
         else{
