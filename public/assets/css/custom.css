@@ -1872,9 +1872,6 @@ button.pb-button {
     .navbar-custom.theme-nav .container-fluid.row {
         width: auto;
     }
-    .navbar-custom.theme-nav .logo-box {
-        width: 110px !important;
-    }
     .navbar-custom.theme-nav ul.menu li a {
         text-align: center;
     }
@@ -1937,9 +1934,7 @@ button.pb-button {
     }
 }
 @media (max-width: 1300px) {
-    .navbar-custom.theme-nav .logo-box {
-        width: 120px !important;
-    }
+   
     .navbar-custom.theme-nav ul.menu {
         display: none;
     }

@@ -82,7 +82,7 @@ class UserController extends Controller
         $current_users = User::where('event_id',$id)->count();
         $chat_app = CometChat::where("event_id",$id)->first();
        
-        if($current_users + 10 > $eventCap->total_attendees){
+        if($current_users + count($data["users"]) > $eventCap->total_attendees){
             return ["success" => FALSE, "message" => "User Limit Exceeded"];
         }
         $data = $request->except("_token");
