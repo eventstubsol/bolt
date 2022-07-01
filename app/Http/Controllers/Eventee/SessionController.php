@@ -313,8 +313,8 @@ class SessionController extends Controller
             }
         }
 
+        $session->eventSpeaker()->delete();
         if($request->has('speakerurl')){
-            $session->eventSpeaker()->delete();
             for($i=0; $i<count($request->speakerurl);$i++){
                 $speaks = new EventSpeaker;
                 $speaks->user_id = $request->users[$i];
