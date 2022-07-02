@@ -491,7 +491,7 @@
             let consentNotify = $('.consent-notification');
             $('#notification-head').empty();
             $('#notification-body').empty();
-            if(data.role == 'Attendee' || data.role == 'All'){
+            if(data.role == '{{Auth::user()->type}}' || data.role == 'All'){
                if(data.location == location  && location === 'lobby'){
                    console.log("lobby");
                     $('#notification-head').html('Subject:&nbsp;'+data.title);

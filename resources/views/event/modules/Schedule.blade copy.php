@@ -132,7 +132,7 @@
 
                                                                         data-original-title="{{ isset($speaker->speaker->name) ?  $speaker->speaker->name .' '. $speaker->speaker->last_name: "" }}">
 
-                                                                            <img async src="{{ isset($speaker->speaker) ? $speaker->speaker->profileImage ? assetUrl($speaker->speaker->profileImage) : "https://congress2021web.fra1.digitaloceanspaces.com/uploads/default-profile.jpeg" : "" }}"
+                                                                            <img async src="{{ isset($speaker->speaker) ? $speaker->speaker->profileImage ? assetUrl($speaker->speaker->profileImage) : "https://dfnvrl6dq2wfj.cloudfront.net/uploads/default-profile.jpeg" : "" }}"
 
                                                                                 class="rounded-circle avatar-sm" alt="">
 

@@ -113,9 +113,13 @@
                             <span style="color:red">*</span>
                         </label>
                         <select id="user-type" name="roles[]" required class="form-control  @error('message') is-invalid @enderror" >
-                            <option >All</option>
-                            <option>Attendee</option>
-                            <option>Delegates</option>
+                            @foreach (USER_TYPES as $type)
+                                @if ($type == 'exhibiter')
+                                    <option value="exhibiter">Exhibitor</option>
+                                @else
+                                    <option value="{{ $type }}">{{ ucfirst($type) }}</option>
+                                @endif
+                            @endforeach
 {{--                            <option>Active Users</option>--}}
 {{--                            <option>Inactive Users</option>--}}
                         </select>

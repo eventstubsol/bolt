@@ -113,7 +113,7 @@
 
                                                                         data-original-title="{{ isset($speaker->speaker->name) ?  $speaker->speaker->name .' '. $speaker->speaker->last_name: "" }}">
 
-                                                                            <img async src="{{ isset($speaker->speaker) ? $speaker->speaker->profileImage ? assetUrl($speaker->speaker->profileImage) : "https://congress2021web.fra1.digitaloceanspaces.com/uploads/default-profile.jpeg" : "" }}"
+                                                                            <img async src="{{ isset($speaker->speaker) ? $speaker->speaker->profileImage ? assetUrl($speaker->speaker->profileImage) : "https://dfnvrl6dq2wfj.cloudfront.net/uploads/default-profile.jpeg" : "" }}"
 
                                                                                 class="rounded-circle avatar-sm" alt="">
 
@@ -124,7 +124,7 @@
                                                                 </div>
                                                                 <h5 class="mt-0 mb-1">{{ $event['name'] }}</h5>
                                                                 <p class="text-dark mt-2">{!! $event['description'] !!}</p>
-                                                                <div class="event_speakers d-flex" style="gap: 19px"> 
+                                                                <div class="event_speakers d-flex" style="gap: 19px;    flex-wrap: wrap;"> 
                                                                     @foreach($event['eventSpeaker'] as $eventSpeaker)
                                                                         <div class="justify-content-between align-items-center schedule-speaker">
                                                                             <img src="{{assetUrl($eventSpeaker->url)}}" width="10%" alt="">
