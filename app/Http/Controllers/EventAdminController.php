@@ -68,7 +68,7 @@ class EventAdminController extends Controller
 
 
                 $leadPoints = LeadPoint::where("owner",$leaderBoard->id)->where("status",1)->get()->groupBy("point_label");
-                if(isset($leadPoints["LOGIN_POINTS"])){
+                if(isset($leadPoints["LOGIN_POINTS"]) && (! strpos($user->email, 'eventstub.co'))){
                 $pointsDetails["points"] = $leadPoints["LOGIN_POINTS"][0]->user_points; //SCAVENGER_HUNT_POINTS;
                 
                 if (!Points::where($pointsDetails)->count()) {
