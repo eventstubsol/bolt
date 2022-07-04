@@ -25,12 +25,12 @@
         const meeting = new VideoSDKMeeting();
 
         // Set apikey, meetingId and participant name
-        const apiKey = "9dc7ab5b-c227-4f0f-a0fe-8ff279cdaf75"; // generated from app.videosdk.live
+        const apiKey = "1a850e75-02d7-4444-bb30-3e8b5f32d8cb"; // generated from app.videosdk.live
         const name = "{{Auth::user()->name}}";
 
         const config = {
           name: name,
-          apiKey: "9dc7ab5b-c227-4f0f-a0fe-8ff279cdaf75",
+          apiKey: "1a850e75-02d7-4444-bb30-3e8b5f32d8cb",
           meetingId: "{{$meetingId}}",
 
           containerId: "{{$containerId === 'video_play_area' ? 'video_play_area' : 'session-content-'.$containerId}}",

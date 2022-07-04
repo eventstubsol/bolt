@@ -15,7 +15,7 @@ $faqs = App\Faq::where('event_id',$event_id)->get();
                     @if(count($faqs) > 0)
                         @foreach($faqs as $id => $faq)
                             <div class="faq-card mb-3">
-                                <a class="text-dark" data-toggle="collapse" href="#collapse{{ $faq->id }}" aria-expanded="true">
+                                <a class="text-dark" data-toggle="collapse" href="#collapse{{ $faq->id }}" aria-expanded="false">
                                     <h5 
                                     @if($id == 0)
                                     class="faq-title active"

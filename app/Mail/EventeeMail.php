@@ -32,7 +32,7 @@ class EventeeMail extends Mailable
      */
     public function build()
     {
-        return $this->from('event-admin@eventstub.co', $this->event)->markdown('emails.eventee')->with([
+        return $this->from('event-admin@eventstub.co', $this->event->name)->markdown('emails.eventee')->with([
             'event'=>$this->event,
             'subject'=>$this->subject,
             'message'=>$this->message,

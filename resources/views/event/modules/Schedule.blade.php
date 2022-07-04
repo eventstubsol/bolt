@@ -124,7 +124,7 @@
                                                                 </div>
                                                                 <h5 class="mt-0 mb-1">{{ $event['name'] }}</h5>
                                                                 <p class="text-dark mt-2">{!! $event['description'] !!}</p>
-                                                                <div class="event_speakers d-flex" style="gap: 19px;    flex-wrap: wrap;"> 
+                                                                <div class="event_speakers d-flex" style="gap: 19px;      justify-content: space-between;  flex-wrap: wrap;"> 
                                                                     @foreach($event['eventSpeaker'] as $eventSpeaker)
                                                                         <div class="justify-content-between align-items-center schedule-speaker">
                                                                             <img src="{{assetUrl($eventSpeaker->url)}}" width="10%" alt="">
