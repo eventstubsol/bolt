@@ -126,6 +126,7 @@
             .auth-fluid .auth-fluid-form-box {    
                 max-width: 100%;
                 min-height: 100vh;
+                width: 100% !important;
             }
             .auth-fluid-image img{
                 height: 100% !important;

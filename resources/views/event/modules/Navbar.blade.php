@@ -4,6 +4,15 @@
     $noteCount = 0;
     $event = App\Event::findOrFail($event_id);
     $seenNotes = null;
+    $type = $user->type;
+    switch ($user->type) {
+        case 'attendee':
+            $type = 'Attendee';
+            break;
+        case 'delegate':
+            $type = 'Delegates';
+            break;
+    }
     $noteSeenAll = \DB::table("push_notification")->join("seen_notifications",'seen_notifications.notification_id','=','push_notification.id')
     ->where('push_notification.event_id',$event_id)
     ->where("seen_notifications.user_id",Auth::id())
@@ -22,7 +31,9 @@
         $notes->title = $note->title;
         $notes->url = $note->url;
         $notes->created_at = $note->created_at;
-        array_push($finalnotes,$notes);
+        if($notes->roles == "ALL" || $notes->roles == $type ){
+            array_push($finalnotes,$notes);
+        }
         
         
     }

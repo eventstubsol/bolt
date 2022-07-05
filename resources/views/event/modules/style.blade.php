@@ -591,7 +591,7 @@
 
 
         .doc-lists .simplebar-track .simplebar-scrollbar:before {
-            background: #00a15f !important;
+            background: {{ $event->primary_color }}  !important;
             opacity: 1 !important;
             border-radius: 100px;
         }
