@@ -31,7 +31,7 @@
         $notes->title = $note->title;
         $notes->url = $note->url;
         $notes->created_at = $note->created_at;
-        if($notes->roles == "ALL" || $notes->roles == $type ){
+        if($note->roles == "ALL" || $note->roles == $type ){
             array_push($finalnotes,$notes);
         }
         
