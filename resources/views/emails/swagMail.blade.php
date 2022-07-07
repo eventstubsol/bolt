@@ -219,7 +219,7 @@ a[x-apple-data-detectors] {
             }
         @endphp
 
-            <div class="es-wrapper-color" style="background-color:{{ $event->primary_color }}"><!--[if gte mso 9]>
+            <div class="es-wrapper-color" style="background-color:#f4f4f4"><!--[if gte mso 9]>
               <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
                 <v:fill type="tile" color="#eeeeee"></v:fill>
               </v:background>
