@@ -31,7 +31,7 @@
         $notes->title = $note->title;
         $notes->url = $note->url;
         $notes->created_at = $note->created_at;
-        if($note->roles == "ALL" || $note->roles == $type ){
+        if($note->roles === "All" || $note->roles === $type ){
             array_push($finalnotes,$notes);
         }
         
@@ -373,13 +373,13 @@
                     <i class="fe-log-out mr-1"></i>
                     {{-- <span>Logout</span> --}}
                 </a>
-                <div class="polls-menu ml-2">
+                {{-- <div class="polls-menu ml-2">
                     <a href="void:javascript(0);">
                         <span class="round-icon">
                             <i class="fe-bar-chart-line"></i>
                         </span>
                     </a >
-                </div>
+                </div> --}}
                 <div class="mob-menu ml-2" style="display:none;">
                     <a href="void:javascript(0);" id="OverLayer">
                         <span class="round-icon">

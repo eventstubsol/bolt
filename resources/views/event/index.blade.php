@@ -182,6 +182,8 @@
             </p>
         </div>
     </div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+
     {{-- Custom Modals --}}
     @include("event.modules.Modals")
     
@@ -252,6 +254,7 @@
     </div>
     </div>
     <script defer src="https://widget-js.cometchat.io/v2/cometchatwidget.js"></script>
+
     {{-- Script Checking user Device and orientation --}}
     <script>
         // $(document).ready(function(){
