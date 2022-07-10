@@ -54,8 +54,8 @@
                                         @endif
                                     @endif
                                 </p>
-                                <p class="mb-1"><b>Location:</b> {{ $user->country }}</p>
-                                <p class="mb-0"><b>Industry:</b> {{ $user->industry }}</p>
+                                {{-- <p class="mb-1"><b>Location:</b> {{ $user->country }}</p> --}}
+                                {{-- <p class="mb-0"><b>Industry:</b> {{ $user->industry }}</p> --}}
                                 <p class="mb-0"><b>Enquiry Date:</b> {{ $interest->created_at->format("d-m-Y h:i:s A e (P)")  ?? ""}}</p>
                             </div>
                         </div>

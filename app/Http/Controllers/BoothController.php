@@ -320,10 +320,10 @@ class BoothController extends Controller
                   "Country" => $user->country,
                   // "Industry" => $user->industry,
 
-                  // "Facebook" => $user->facebook_link,
-                  // "Twitter" => $user->twitter_link,
-                  // "Linkedin" => $user->linkedin_link,
-                  // "Website" => $user->website_link,
+                  "Facebook" => $user->facebook_link,
+                  "Twitter" => $user->twitter_link,
+                  "Linkedin" => $user->linkedin_link,
+                  "Website" => $user->website_link,
               ];
           }
       }

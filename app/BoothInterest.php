@@ -3,7 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Event;
+use App\Booth;
 
+use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 /**
  * App\BoothInterest
  *
@@ -30,6 +34,13 @@ class BoothInterest extends Model
 
     public function booth(){
         return $this->belongsTo("App\Booth");
+    }
+
+    public function getCreatedAtAttribute($value){
+        $booth = Booth::find($this->booth_id);
+        $tz = Event::findorfail($booth->event_id)->timezone;
+        $time = (new Carbon($value,"UTC"))->setTimezone(new CarbonTimeZone($tz));
+        return $time;
     }
 
     public function user(){
