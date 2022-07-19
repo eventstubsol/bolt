@@ -29,7 +29,7 @@ class ActiveMail extends Mailable
      */
     public function build()
     {
-        return $this->from('event-admin@eventstub.co', "Eventstub")->subject('Account Activation Email')->markdown('emails.activate')->with([
+        return $this->from('hello@eventstub.co', "Eventstub")->subject('Account Activation Email')->markdown('emails.activate')->with([
             'user' => $this->user,
         ]);
     }

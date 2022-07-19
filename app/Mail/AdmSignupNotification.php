@@ -29,7 +29,7 @@ class AdmSignupNotification extends Mailable
      */
     public function build()
     {
-        return $this->from('event-admin@eventstub.co', "Eventstub")->subject("New Account Signup")->markdown('emails.newSignUp')->with([
+        return $this->from('hello@eventstub.co', "Eventstub")->subject("New Account Signup")->markdown('emails.newSignUp')->with([
             'user' => $this->user,
         ]);
     }

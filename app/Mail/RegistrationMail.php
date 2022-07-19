@@ -30,7 +30,7 @@ class RegistrationMail extends Mailable
      */
     public function build()
     {
-        return $this->from('event-admin@eventstub.co', $this->event->name)->markdown('emails.regSucess')->with([
+        return $this->from('hello@eventstub.co', $this->event->name)->markdown('emails.regSucess')->with([
             'user' => $this->user,
             'template' =>$this->template,
             'event' => $this->event,

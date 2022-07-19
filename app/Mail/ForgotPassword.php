@@ -30,7 +30,7 @@ class ForgotPassword extends Mailable
      */
     public function build()
     {
-        return $this->from('event-admin@eventstub.co', 'Eventstub')->markdown('emails.forgot')->with([
+        return $this->from('hello@eventstub.co', 'Eventstub')->markdown('emails.forgot')->with([
             'password' => $this->password,
             'user' => $this->user
         ]);

@@ -30,7 +30,7 @@ class ActiveMailAttendee extends Mailable
      */
     public function build()
     {
-        return $this->from('event-admin@eventstub.co', "Eventstub")->subject('Verify Your Email')->markdown('emails.activate')->with([
+        return $this->from('hello@eventstub.co', "Eventstub")->subject('Verify Your Email')->markdown('emails.activate')->with([
             'user' => $this->user,
             'subdomain' =>$this->subdomain,
         ]); 
