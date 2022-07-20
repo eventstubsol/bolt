@@ -11,7 +11,7 @@ $event = App\Event::findOrFail($id);
         } */
         form{
             overflow-y: auto;
-            max-height: 20rem;
+            max-height: 22rem;
             display: flex;
             flex-wrap: wrap;
         }
