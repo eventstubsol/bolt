@@ -28,7 +28,7 @@ Thank You
 
 @section('form')
     <div class="d-flex align-items-center flex-column">
-        <h3>Thank you registering for {{ $event->name }}. We look forward to seeing you at the event.</h3>
+        <h3>Thank you registering for {{ $event->name }}. A registration confirmation has been sent to your regsitered email address. Please check your spam/junk email folder in case the email is not visible in your primary inbox. We look forward to seeing you at the event.</h3>
         @if(Carbon\Carbon::now() < Carbon\Carbon::parse($event->start_date))
             <h5>Event Starts At : {{ Carbon\Carbon::parse($event->start)->format('H:i').  ' On '  .Carbon\Carbon::parse($event->start)->format('d-m-Y')}}</h5>
         @endif
