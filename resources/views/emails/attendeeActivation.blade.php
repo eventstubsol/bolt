@@ -298,9 +298,9 @@ a[x-apple-data-detectors] {
                  <tr style="border-collapse:collapse"> 
                   <td align="center" valign="top" style="padding:0;Margin:0;width:600px"> 
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
-                     <tr style="border-collapse:collapse"> 
+                     <!-- <tr style="border-collapse:collapse"> 
                       <td align="center" style="padding:0;Margin:0;font-size:0px"><img class="adapt-img" src="images/emailbottom.jpg" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="600"></td> 
-                     </tr> 
+                     </tr>  -->
                    </table></td> 
                  </tr> 
                </table></td> 
