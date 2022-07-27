@@ -31,7 +31,7 @@ class swagbagMail extends Mailable
      */
     public function build()
     {
-        return $this->from('hello@eventstub.co', $this->event->name)->subject('Briefcase Mail')->markdown('emails.swagMail')->with([
+        return $this->from('no-reply@eventstub.in', $this->event->name)->subject('Briefcase Mail')->markdown('emails.swagMail')->with([
             'user'=>$this->user,
             'resources'=>$this->resource,
             'event'=>$this->event
