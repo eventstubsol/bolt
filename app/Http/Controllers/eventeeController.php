@@ -288,7 +288,7 @@ class eventeeController extends Controller
         if ($event->save()) {
             EventAttendee($event->id);
             if (env('APP_ENV') !== 'staging') {
-                createApp($event);
+                // createApp($event);
             }
 
             createMenus($event->id);

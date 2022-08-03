@@ -260,6 +260,13 @@ class EventController extends Controller
     }
     public function integrationsUpdate(Request $request, $id)
     {
+        $event = Event::find($id);
+        $appId = $request->COMET_CHAT_APP_ID;
+        $appRegion = $request->COMET_CHAT_REGION;
+        $authkey = $request->COMET_CHAT_AUTH_KEY;
+        $apikey = $request->COMET_CHAT_API_KEY;
+        $widgetId = $request->COMET_CHAT_WIDGET_ID;
+        createStandaloneApp($event,$appId,$authkey,$apikey,$widgetId);
         // if($request->RECAPTCHA_SITE_KEY || $request->RECAPTCHA_SECRET_KEY){
         foreach ($request->except("_token") as $var => $key) {
             Api::updateOrCreate(

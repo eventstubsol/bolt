@@ -21,6 +21,23 @@ define("EXTENSIONS",[
    ]
 ]);
 
+function createStandaloneApp($event,$appId,$authkey,$apikey,$widgetId){
+    $name = $event->name;
+    $event_id = $event->id;
+    CometChat::where("event_id",$event_id)->delete();
+    $chat_app = new CometChat([
+        "appid"=>$appId,
+        "name"=>$name,
+        "state"=>"active",
+        "accessKey"=>null,
+        "authKey"=>$authkey,
+        "apiKey"=>$apikey,
+        "event_id"=>$event_id,
+    ]);
+    $chat_app->widgetId =  $widgetId;
+    $chat_app->save();
+    return $chat_app;
+}
 function createApp($event){
     $name = $event->name;
     $event_id = $event->id;
