@@ -387,6 +387,8 @@ h2,
 h3,
 .h3 {
   font-size: 1.575rem;
+  font-family: "Nunito", sans-serif;
+  text-align: center;
 }
 
 h4,
@@ -397,6 +399,8 @@ h4,
 h5,
 .h5 {
   font-size: 1.125rem;
+  font-family: "Nunito", sans-serif;
+  text-align: center;
 }
 
 h6,

@@ -29,7 +29,7 @@ class ActiveAdminMail extends Mailable
      */
     public function build()
     {
-        return $this->from('event-admin@eventstub.co', "Eventstub")->subject('Account Activation Email')->markdown('emails.activateAdmin')->with([
+        return $this->from('no-reply@eventstub.in', "Eventstub")->subject('Account Activation Email')->markdown('emails.activateAdmin')->with([
             'user' => $this->user,
         ]);
     }

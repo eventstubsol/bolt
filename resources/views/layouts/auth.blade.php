@@ -149,6 +149,10 @@
         }
 
         @endif
+        h4.mt-0.ml-2.mb-3 {
+         text-align: center;
+        font-size: 1.5rem;
+        }
     </style>
 
 </head>

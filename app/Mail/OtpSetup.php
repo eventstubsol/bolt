@@ -30,7 +30,7 @@ class OtpSetup extends Mailable
      */
     public function build()
     {
-        return $this->from('event-admin@eventstub.co', "Eventstub")->markdown('emails.otp')->with([
+        return $this->from('no-reply@eventstub.in', "Eventstub")->markdown('emails.otp')->with([
             'user' => $this->user,
             'otp' => $this->otp,
         ]);
