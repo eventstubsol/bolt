@@ -1933,7 +1933,7 @@ button.pb-button {
         font-size: 73%;
     }
 }
-@media (max-width: 1300px) {
+@media (max-width: 1170px) {
    
     .navbar-custom.theme-nav ul.menu {
         display: none;
