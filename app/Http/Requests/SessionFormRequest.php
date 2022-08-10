@@ -26,7 +26,7 @@ class SessionFormRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'description' => 'required|max:1000',
+            'description' => 'required|max:10000',
             'type' => 'required',
             'room_id' => 'required',
             'start_time' => ['required'],

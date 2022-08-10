@@ -25,7 +25,7 @@ class ScheduleFormRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'message' => 'required|max:1000',
+            'message' => 'required|max:10000',
             'sending_date' => 'required|date',
             'sending_at' => 'required|date_format:H:i'
         ];

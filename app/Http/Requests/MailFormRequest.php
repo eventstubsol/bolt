@@ -25,7 +25,7 @@ class MailFormRequest extends FormRequest
     {
         return [
             'subject' => 'required|max:255',
-            'message' => 'required|max:1000',
+            'message' => 'required|max:10000',
         ];
     }
 }
