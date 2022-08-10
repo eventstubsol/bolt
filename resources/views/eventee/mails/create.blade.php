@@ -96,7 +96,7 @@
                     </div>
                     <div class="form-group">
                         <label for="subject">Message<span style="color:red">*</span></label>
-                        <textarea name="message" id="summernote-basic" class="form-control  @error('message') is-invalid @enderror" cols="500" rows="1000" >{{ old('message') }}</textarea>
+                        <textarea name="message" id="summernote-basic" class="form-control  @error('message') is-invalid @enderror" cols="500" rows="1000" >{{ old('message') }} </textarea>
                         @error('message')
                             <span class="invalid-feedback" role="alert">{{ $message }}</span>
                         @enderror
