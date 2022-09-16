@@ -12,6 +12,7 @@ function initApp() {
         // $('.modal video').pause()
       });
 
+
       
    
     var pause_audio = $("#pause_li");
