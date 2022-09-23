@@ -1,7 +1,6 @@
 let loader = $(".loader");
 let setRoom = '';
 function initApp() {
-
     
     $('.modal').on('hidden.bs.modal', function (e) {
         // do something...
@@ -11,7 +10,7 @@ function initApp() {
         $(e.target).html(x)
         // $('.modal video').pause()
       });
-
+  
     var pause_audio = $("#pause_li");
     // function audioSetup(page){
         
