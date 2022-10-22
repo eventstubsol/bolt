@@ -234,6 +234,9 @@
 
     @include("event.modules.Profile")
 
+    @include("event.modules.AttendeeProfile")
+
+
     @if(isset($chat_app))
         @include("event.modules.chat")
     @endif
@@ -362,6 +365,18 @@
         const assetUrl = url => "{{ assetUrl('') }}" + url;
         window.assetUrl = assetUrl;
         window.config = config;
+        window.initializeFileUploads = () => {
+            const fileUploads = document.querySelectorAll('.file-upload');
+            fileUploads.forEach(fileUpload => {
+                const fileInput = fileUpload.querySelector('input[type="file"]');
+                const fileLabel = fileUpload.querySelector('label');
+                fileInput.addEventListener('change', () => {
+                    fileLabel.innerHTML = fileInput.files[0].name;
+                });
+            });
+        }
+        window.initializeFileUploads();
+        
     </script>
     {{-- <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> --}}
     <script src="{{ asset('assets/js/vendor.min.js') }}?cb=2187236762824"></script>
@@ -369,6 +384,7 @@
     <script src="{{ asset('event-assets/js/routie.min.js') }}?cb=2187236762824"></script>
     <script src="{{ asset('event-assets/js/app.js') }}?cb=2187236762824"></script>
     <script src="{{ asset('/js/profile/index.js') }}?cb=2187236762824"></script>
+    <script src="{{ asset('/js/attendeesprofile/attendeesprofile.js') }}?cb=2187236762824"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/YouTubePopUp.jquery.js') }}?cb=2187236762824"></script>
     <script src="{{ asset('event-assets/YouTubePopUp/PopupInit.js') }}?cb=2187236762824"></script>
     <script src="https://onesignal.github.io/emoji-picker/lib/js/config.js"></script>

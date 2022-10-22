@@ -341,7 +341,7 @@
                 @auth
                 {{-- <div class="custom-dropdown profile area" data-link="attendees"> --}}
                 <div class="custom-dropdown profile">
-                    <a href="javascript:void(0);" class="menu-trigger">
+                    <a data-link="attendees-profile" class="menu-trigger area">
                         <p class="pro-user-name m-0 mr-1">
                             <span>{{ Auth::user()->name }}</span>
                             {{-- <i class="mdi mdi-chevron-down mx-1"></i> --}}

@@ -2,7 +2,7 @@ let loader = $(".loader");
 let setRoom = '';
 function initApp() {
     
-    $('.modal').on('hidden.bs.modal', function (e) {
+    $('.modal.custom_modal').on('hidden.bs.modal', function (e) {
         // do something...
         console.log({e});
         let x = $(e.target).html()
@@ -786,6 +786,22 @@ function initApp() {
                 pageChangeActions();
             }
             recordPageView("attendees",'attendees','Attendees')
+        },
+        'attendees-profile': function () {
+            if (checkAuth()) {
+                routie("page/Lobby");
+            } else {
+                pages.hide();
+                let toShow = pages.filter("#attendees_profile").show();
+                if (toShow.length) {
+                    toShow.show();
+                    recordPageView("attendees_profile", "Profile");
+                } else {
+                    routie(notFoundRoute);
+                }
+                pageChangeActions();
+            }
+            // recordPageView("attendees",'attendees','Attendees')
         },
         'exterior': function () {
             // $("#cometchat__widget").hide();

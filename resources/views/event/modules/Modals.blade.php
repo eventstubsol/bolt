@@ -1,5 +1,5 @@
 @foreach($modals as $modal)
-    <div class="modal fade theme-modal" id="{{$modal->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade theme-modal @if($modal->embed_status) custom_modal @endif" id="{{$modal->id}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
