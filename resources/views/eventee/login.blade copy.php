@@ -28,12 +28,12 @@
 
 @section('form')
 
-<script>
+<!-- <script>
     $('#flash-overlay-modal').modal();
     /* setTimeout(function(){ 
         $('#flash-overlay-modal').modal('toggle'); 
     }, 2000); */
-</script>
+</script> -->
 
 <form action="{{ route('Eventee.login.confirm') }}" method="post">
     @csrf

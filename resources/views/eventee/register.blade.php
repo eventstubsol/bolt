@@ -214,12 +214,12 @@
 <script type="text/javascript" src="https://1cf5229636340d3e1dd5-0eccc4d82b7628eccb93a74a572fd3ee.ssl.cf1.rackcdn.com/testing/jquery.formatter.min.js"></script>
 <script type="text/javascript" src="https://1cf5229636340d3e1dd5-0eccc4d82b7628eccb93a74a572fd3ee.ssl.cf1.rackcdn.com/testing/intlTelInput.min.js"></script>
 
-<script>
+<!-- <script>
   $('#flash-overlay-modal').modal();
   /* setTimeout(function(){ 
       $('#flash-overlay-modal').modal('toggle'); 
   }, 2000); */
-</script>
+</script> -->
 <script>
 const intlPhoneNumber = function(countryCode) {
   // get the country data from the plugin

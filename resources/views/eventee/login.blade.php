@@ -190,10 +190,14 @@
 </div>
 
 </body>
-<script>
-    $('#flash-overlay-modal').modal();
+<!-- <script>
+    $(document).ready(function(){
+        setTimeout(function(){
+            $('.alert').fadeOut();
+        }, 3000);
+    });
     /* setTimeout(function(){ 
         $('#flash-overlay-modal').modal('toggle'); 
     }, 2000); */
-</script>
+</script> -->
 </html>
