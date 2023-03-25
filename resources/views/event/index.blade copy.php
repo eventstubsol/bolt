@@ -1060,7 +1060,7 @@ $user = Auth::user();
     </div> --}}
     </div>
     </div>
-    <script defer src="https://widget-js.cometchat.io/v2/cometchatwidget.js"></script>
+    <script defer src="https://widget-js.cometchat.io/v3/cometchatwidget.js"></script>
 
     <script>
         // $(document).ready(function(){

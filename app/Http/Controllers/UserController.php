@@ -203,7 +203,7 @@ class UserController extends Controller
         //             "Accept-Encoding"=> "deflate, gzip",
         //             "Content-Encoding"=> "gzip"
         //         ])
-        //             ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => FALSE]);
+        //             ->delete(env('COMET_CHAT_BASE_URL') . '/v3.0/users/' . $user->id, ["permanent" => FALSE]);
         //         $user->isCometChatAccountExist = FALSE;
         //         break;
         // }
@@ -216,7 +216,7 @@ class UserController extends Controller
                 "Accept-Encoding"=> "deflate, gzip",
                 "Content-Encoding"=> "gzip"
             ])
-                ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["name" => $userData["name"]]);
+                ->put(env('COMET_CHAT_BASE_URL') . '/v3.0/users/' . $user->id, ["name" => $userData["name"]]);
         }
 
         $user->name = $userData["name"];
@@ -241,7 +241,7 @@ class UserController extends Controller
             "Accept-Encoding"=> "deflate, gzip",
             "Content-Encoding"=> "gzip"
         ])
-            ->delete(env('COMET_CHAT_BASE_URL') . '/v2.0/users/' . $user->id, ["permanent" => TRUE]);
+            ->delete(env('COMET_CHAT_BASE_URL') . '/v3.0/users/' . $user->id, ["permanent" => TRUE]);
         $user->delete();
         return redirect()->to(route("user.index"));
     }

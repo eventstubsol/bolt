@@ -87,7 +87,7 @@ class ChatController extends Controller
                 $cicon = env("AWS_URL").$cicon;
             }
         }else{
-            $cicon = "https://widget-js.cometchat.io/v2/resources/chat_close.svg";
+            $cicon = "https://widget-js.cometchat.io/v3/resources/chat_close.svg";
         }
         $oicon = isset($request->docked_layout_icon_open) ? $request->docked_layout_icon_open :'';
         if(isset($request->docked_layout_icon_open)){
@@ -96,7 +96,7 @@ class ChatController extends Controller
                 $oicon = env("AWS_URL").$oicon;
             }
         }else{
-            $oicon = "https://widget-js.cometchat.io/v2/resources/chat_bubble.svg";
+            $oicon = "https://widget-js.cometchat.io/v3/resources/chat_bubble.svg";
         }
         $newsettings = (object)[
             "enable_video_calling"=>$request->enable_video_calling,

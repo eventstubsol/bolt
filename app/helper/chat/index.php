@@ -82,7 +82,7 @@ function getAuthToken($appId,$apiKey,$user_id){
         "Content-Type"=>"application/json",
         "Accept"=>"application/json",
         ])
-        ->post("https://$appId.api-eu.cometchat.io/v2"."/users/$user_id/auth_tokens", []);
+        ->post("https://$appId.api-eu.cometchat.io/v3"."/users/$user_id/auth_tokens", []);
     // return ($response);
     return  json_decode($response)->data->authToken;
 }
@@ -106,7 +106,7 @@ function createPoll($chat_app,$question,$options,$reciever,$reciever_type,$user_
         "Content-Type"=>"application/json",
         "Accept"=>"application/json",
         ])
-        ->post("https://polls-eu.cometchat.io/v2/create", $body);   
+        ->post("https://polls-eu.cometchat.io/v3/create", $body);   
     return $response;
     
 }
@@ -118,7 +118,7 @@ function getGroups($chat_app){
         "Content-Type"=>"application/json",
         "Accept"=>"application/json",
         ])
-        ->get("https://$chat_app->appid.api-eu.cometchat.io/v2"."/groups");
+        ->get("https://$chat_app->appid.api-eu.cometchat.io/v3"."/groups");
 
     return json_decode($response->body())->data;
     
@@ -133,8 +133,8 @@ function createWidget($chat_app){
             "version"=>"2",
             "style"=>[
                 "docked_layout_icon_background"=>"#03a9f4",
-                "docked_layout_icon_close"=>"https://widget-js.cometchat.io/v2/resources/chat_close.svg",
-                "docked_layout_icon_open"=>"https://widget-js.cometchat.io/v2/resources/chat_bubble.svg",
+                "docked_layout_icon_close"=>"https://widget-js.cometchat.io/v3/resources/chat_close.svg",
+                "docked_layout_icon_open"=>"https://widget-js.cometchat.io/v3/resources/chat_bubble.svg",
                 "custom_css"=>".option__videocall-group{ display: none }"
             ],
             "sidebar"=>[
@@ -295,7 +295,7 @@ function createUser($chat_app,$user){
             "appId" => $chat_app->appid,
             "Accept-Encoding" => "deflate, gzip",
             "Content-Encoding" => "gzip"
-        ])->post($url . '/v2.0/users', [
+        ])->post($url . '/v3.0/users', [
             'uid' => $user->id,
             'name' => $user->getFullName()
         ]);
@@ -309,7 +309,7 @@ function updateChatProfile($chat_app,$user){
             "appId" => $chat_app->appid,
             "Accept-Encoding" => "deflate, gzip",
             "Content-Encoding" => "gzip"
-        ])->put($url . '/v2.0/users/'. $user->id , [
+        ])->put($url . '/v3.0/users/'. $user->id , [
             'name' => $user->getFullName(),
             'avatar' => isset($user->profileImage) ? assetUrl($user->profileImage):''
         ]);
@@ -323,7 +323,7 @@ function deleteUser($chat_app,$user){
             "appId" => $chat_app->appid,
             "Accept-Encoding" => "deflate, gzip",
             "Content-Encoding" => "gzip"
-        ])->delete($url . '/v2.0/users/'.$user->id);
+        ])->delete($url . '/v3.0/users/'.$user->id);
         // dd($response->body());
 }
 function chatPostRequest($route,$body){
