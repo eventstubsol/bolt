@@ -21,7 +21,7 @@
     window.addEventListener('DOMContentLoaded', (event) => {
         CometChatWidget.init({
             "appID": "{{$chat_app->appid}}",
-            "appRegion": "eu",
+            "appRegion": "{{$chat_app->region}}",
             "authKey": "{{$chat_app->authKey}}"
         }).then(response => {
             console.log("Initialization completed successfully");

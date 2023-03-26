@@ -35,7 +35,7 @@
     <script type="text/javascript" src="https://unpkg.com/@cometchat-pro/chat@3.0.6/CometChat.js"></script>
     <script>
         let appID = "{{$chat_app->appid}}";
-        let region = "eu";
+        let region = "{{$chat_app->region}}";
         let appSetting = new CometChat.AppSettingsBuilder()
                             .subscribePresenceForAllUsers()
                             .setRegion(region)
