@@ -21,7 +21,7 @@ define("EXTENSIONS",[
    ]
 ]);
 
-function createStandaloneApp($event,$appId,$authkey,$apikey,$widgetId){
+function createStandaloneApp($event,$appId,$authkey,$apikey,$widgetId,$appRegion){
     $name = $event->name;
     $event_id = $event->id;
     CometChat::where("event_id",$event_id)->delete();
@@ -33,6 +33,7 @@ function createStandaloneApp($event,$appId,$authkey,$apikey,$widgetId){
         "authKey"=>$authkey,
         "apiKey"=>$apikey,
         "event_id"=>$event_id,
+        "region"=>$appRegion,
     ]);
     $chat_app->widgetId =  $widgetId;
     $chat_app->save();
@@ -75,14 +76,14 @@ function createApp($event){
     createWidget($chat_app);
     return $chat_app;
 }
-function getAuthToken($appId,$apiKey,$user_id){
+function getAuthToken($appId,$apiKey,$user_id,$region="eu"){
     // dd($appId);
     $response = Http::withHeaders([
         'apiKey' => $apiKey, 
         "Content-Type"=>"application/json",
         "Accept"=>"application/json",
         ])
-        ->post("https://$appId.api-eu.cometchat.io/v3"."/users/$user_id/auth_tokens", []);
+        ->post("https://$appId.api-$region.cometchat.io/v3"."/users/$user_id/auth_tokens", []);
     // return ($response);
     return  json_decode($response)->data->authToken;
 }
@@ -90,6 +91,7 @@ function getAuthToken($appId,$apiKey,$user_id){
 
 function createPoll($chat_app,$question,$options,$reciever,$reciever_type,$user_id){
     $appId = $chat_app->appid;
+    $region = $chat_app->region ? $chat_app->region : "eu";
     // $res = getGroups($chat_app);
     // dd($res);
     $body = [
@@ -99,26 +101,28 @@ function createPoll($chat_app,$question,$options,$reciever,$reciever_type,$user_
         "receiverType"  => $reciever_type,
     ];
 
-    $authToken = (getAuthToken($chat_app->appid,$chat_app->apiKey,$user_id));
+    $authToken = (getAuthToken($chat_app->appid,$chat_app->apiKey,$user_id,$region));
     $response = Http::withHeaders([
         'appId' => $appId,
         'authToken'=>$authToken,
         "Content-Type"=>"application/json",
         "Accept"=>"application/json",
         ])
-        ->post("https://polls-eu.cometchat.io/v3/create", $body);   
+        ->post("https://polls-$region.cometchat.io/v3/create", $body);   
     return $response;
     
 }
 
 
 function getGroups($chat_app){
+    
+    $region = $chat_app->region ? $chat_app->region : "eu";
     $response = Http::withHeaders([
         'apiKey' => $chat_app->apiKey, 
         "Content-Type"=>"application/json",
         "Accept"=>"application/json",
         ])
-        ->get("https://$chat_app->appid.api-eu.cometchat.io/v3"."/groups");
+        ->get("https://$chat_app->appid.api-$region.cometchat.io/v3"."/groups");
 
     return json_decode($response->body())->data;
     
@@ -274,7 +278,9 @@ function deleteChatApp($chat_app){
     chatDeleteRequest("/apps/".$chat_app->appid);
 }
 function createGroup($chat_app,$group){
-    $url = "https://api-eu.cometchat.io";
+    
+    $region = $chat_app->region ? $chat_app->region : "eu";
+    $url = "https://api-$region.cometchat.io";
     Http::withHeaders([
             "apiKey" => $chat_app->apiKey,
             "appId" => $chat_app->appid,
@@ -288,7 +294,8 @@ function createGroup($chat_app,$group){
             ]);
 }
 function createUser($chat_app,$user){
-    $url = "https://api-eu.cometchat.io";
+    $region = $chat_app->region ? $chat_app->region : "eu";
+    $url = "https://api-$region.cometchat.io";
     $response = Http::withHeaders(
         [
             "apiKey" => $chat_app->apiKey,
@@ -302,7 +309,8 @@ function createUser($chat_app,$user){
         // dd($response->body());
 }
 function updateChatProfile($chat_app,$user){
-    $url = "https://api-eu.cometchat.io";
+    $region = $chat_app->region ? $chat_app->region : "eu";
+    $url = "https://api-$region.cometchat.io";
     $response = Http::withHeaders(
         [
             "apiKey" => $chat_app->apiKey,
@@ -316,7 +324,8 @@ function updateChatProfile($chat_app,$user){
         // dd($response->body());
 }
 function deleteUser($chat_app,$user){
-    $url = "https://api-eu.cometchat.io";
+    $region = $chat_app->region ? $chat_app->region : "eu";
+    $url = "https://api-$region.cometchat.io";
     $response = Http::withHeaders(
         [
             "apiKey" => $chat_app->apiKey,

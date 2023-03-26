@@ -266,7 +266,7 @@ class EventController extends Controller
         $authkey = $request->COMET_CHAT_AUTH_KEY;
         $apikey = $request->COMET_CHAT_API_KEY;
         $widgetId = $request->COMET_CHAT_WIDGET_ID;
-        createStandaloneApp($event,$appId,$authkey,$apikey,$widgetId);
+        createStandaloneApp($event,$appId,$authkey,$apikey,$widgetId,$appRegion);
         // if($request->RECAPTCHA_SITE_KEY || $request->RECAPTCHA_SECRET_KEY){
         foreach ($request->except("_token") as $var => $key) {
             Api::updateOrCreate(

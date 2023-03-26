@@ -30,5 +30,5 @@ class CometChat extends Model
     use SoftDeletes;
     protected $table = 'comet_chat';
     protected $gaurded = [];
-    protected $fillable = ["id","name","accessKey","authKey","apiKey","event_id","widgetId","updated_at","created_at","settings","plan","trialEndsAt","appid"];
+    protected $fillable = ["id","name","accessKey","authKey","apiKey","event_id","widgetId","updated_at","created_at","settings","plan","trialEndsAt","appid","region"];
 }
