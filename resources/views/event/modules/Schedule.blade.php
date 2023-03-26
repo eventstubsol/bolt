@@ -165,7 +165,7 @@
                                                                         </div>
                                                                     </div>
                                                                 @endforeach
-                                                                @if(false)
+                                                                {{-- @if(false) --}}
                                                                     <a href="javascript: void(0);" data-id="{{ $id }}" class="btn agenda subscribe-to-event sa-{{$id}} btn-sm btn-link text-muted font-14 {{ in_array($id, $subscriptions) ? "hidden" : "" }}">
                                                                         <!-- <i class="mdi mdi-bell-ring mr-1"></i>  -->
                                                                         + Add to Personal Agenda
@@ -174,7 +174,7 @@
                                                                         <!-- <i class="mdi mdi-bell-off mr-1"></i> -->
                                                                             - Remove from Personal Agenda
                                                                     </a>
-                                                                @endif
+                                                                {{-- @endif --}}
                                                             </div>
                                                         </li>
                                                     </ul>
