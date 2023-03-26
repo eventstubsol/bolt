@@ -319,7 +319,7 @@ function initApp() {
         console.log( t);
         console.log( t.data("id"));
         t.prop("disabled", true);
-        if (t.data("id")) {
+        // if (t.data("id")) {
             $.ajax({
                 url: window.config.subscribeToEvent.replace("EVENT_ID", t.data("id")),
                 method: "POST",
@@ -337,7 +337,7 @@ function initApp() {
                     showMessage("Error occurred while subscribing to session. Please try again later or refresh page.", "error");
                 }
             })
-        }
+        // }
     });
     $(".unsubscribe-event").on("click", function (e) {
         e.preventDefault();
