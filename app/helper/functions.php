@@ -1611,13 +1611,14 @@ function getSchedule($event_id){
                 "room"=> $event->parentroom->name ?? $event->room,
                 "type" => $event->type,
                 "zoom_url"=>$event->zoom_url??'',
+                "eventid"=>$event->id,
             ];
 
             if($lastDate != $session['start_date']['m']){
                 $lastDate = $session['start_date']['m'];
             }
 
-            $session['id'] = $ids;
+            $session['id'] = $event->id;
             if(!isset($scheuleForDates[$lastDate])){
                 $scheuleForDates[$lastDate] = [];
             }
@@ -1626,6 +1627,7 @@ function getSchedule($event_id){
             }
             $scheuleForDates[$lastDate][$event->room][] = $session;
             $schedule[$event->room][$event->id] = $session;
+            // dd($schedule);
         }
     }
     // $lastDate = false;
@@ -1645,7 +1647,7 @@ function getSchedule($event_id){
     //     }
         // array_multisort($dates,SORT_ASC);
         // dd($dates);
-        // dd($schedule);
+        // dd($scheuleForDates);
     return $scheuleForDates;
 }
 // function getSchedule(){

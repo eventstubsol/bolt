@@ -196,8 +196,10 @@ function initApp() {
                             success: function () {
                                 // t.parent().find("a").prop("disabled", false).hide().filter(".subscribe-to-event").show();
                                 $(".sa-"+t.data("id")).show();
+                                $(".sr-"+t.data("id")).removeClass('hidden');
                                 $(".sr-"+t.data("id")).hide();
                                 t.hide().filter(".subscribe-to-event").show();
+                                t.parent().find("a").filter(".subscribe-to-event").removeClass('hidden');
                                 t.parent().find("a").filter(".subscribe-to-event").show();
                          
                                 t.parent().parent().hide();
@@ -329,7 +331,9 @@ function initApp() {
                 success: function () {
                     showMessage("Subscribed to session. You will now get a priority notification few minutes prior to session.", "success");
                     t.hide();
+                    console.log({here: t.data("id")})
                     $(".sa-"+t.data("id")).hide();
+                    $(".sr-"+t.data("id")).removeClass('hidden');
                     $(".sr-"+t.data("id")).show();
                     t.parent().find("a").filter(".unsubscribe-event").show();
                 },
@@ -355,6 +359,7 @@ function initApp() {
                 },
                 success: function () {
                     t.hide().filter(".subscribe-to-event").show();
+                    t.parent().find("a").filter(".subscribe-to-event").removeClass('hidden');
                     t.parent().find("a").filter(".subscribe-to-event").show();
                 },
                 error: function () {

@@ -92,7 +92,9 @@
                                                <!-- Print each event in schedule -->
                                                 @foreach($events as $id => $event)
                                                     @php 
-                                                        $id = $event['id'];
+                                                    // dd($event);
+
+                                                        $id = $event['eventid'];
                                                         $l++;
                                                     @endphp
                                                     <ul style="padding-left: 110px !important;" class="list-unstyled timeline-sm"> 
@@ -165,16 +167,19 @@
                                                                         </div>
                                                                     </div>
                                                                 @endforeach
+                                                                @if($event['status'] !== -1)
+                                                               
                                                                 {{-- @if(false) --}}
-                                                                    <a href="javascript: void(0);" data-id="{{ $id }}" class="btn agenda subscribe-to-event sa-{{$id}} btn-sm btn-link text-muted font-14 {{ in_array($id, $subscriptions) ? "hidden" : "" }}">
+                                                                    <a href="javascript: void(0);" data-id="{{$id }}" class="btn agenda subscribe-to-event sa-{{$id}} btn-sm btn-link text-muted font-14 {{ in_array($id, $subscriptions) ? "hidden" : "" }}">
                                                                         <!-- <i class="mdi mdi-bell-ring mr-1"></i>  -->
                                                                         + Add to Personal Agenda
                                                                     </a>
-                                                                    <a href="javascript: void(0);" data-id="{{ $id }}"class="btn agenda btn-danger unsubscribe-event sr-{{$id}} btn-sm btn-link text-muted font-14  {{ in_array($id, $subscriptions) ? "" : "hidden" }}">
+                                                                    <a href="javascript: void(0);" data-id="{{$id}}"class="btn agenda btn-danger unsubscribe-event sr-{{$id}} btn-sm btn-link text-muted font-14  {{ in_array($id, $subscriptions) ? "" : "hidden" }}">
                                                                         <!-- <i class="mdi mdi-bell-off mr-1"></i> -->
                                                                             - Remove from Personal Agenda
                                                                     </a>
                                                                 {{-- @endif --}}
+                                                                @endif
                                                             </div>
                                                         </li>
                                                     </ul>

@@ -8,24 +8,29 @@
             $lastDate = false;
             $i = 0;
             $dates = []; 
-                // foreach($schedule as $room => $scheduleForRoom){
-                //     foreach ($scheduleForRoom as $id => $event){
-                //         if($lastDate != $event['start_date']['m']){
-                //             $lastDate = $event['start_date']['m'];
-                //         }
-                //         if(  in_array($id,  $subscriptions))
-                //         {
-                //             $event['id'] = $id;
-                //             $dates[$lastDate][$room][] = $event;
-                //         }
+        // $duplicateSchedule = [];
+            foreach($schedule as $date => $rooms){
+                foreach ($rooms as $room => $events){
+                    foreach ($events as $id => $event) {
+                        // $event['id'] = $id;
+                        if(  in_array($event['eventid'],  $subscriptions))
+                    {
+                        $dates[$event['start_date']['m']][$room][] = $event;
+                    //     $duplicateSchedule[$event['start_date']['m']][$room][] = $event;
+                    //     // $dates[$lastDate][$room][] = $event;
+                    }
+                 }
+                    // if($lastDate != $event['start_date']['m']){
+                    //     $lastDate = $event['start_date']['m'];
+                    // }
+                    
 
-                //     }
-                // }
-
+                }
+            }
         @endphp
 
         <!-- Create Pills for Dates -->
-        @foreach($schedule as $date => $master_room)
+        @foreach($dates as $date => $master_room)
             @php
                 $i++;
             @endphp
@@ -42,7 +47,7 @@
         <!-- Tabs Content Start -->
         <div class="tab-content">
             <!-- Loop for Each Date  -->
-            @foreach($schedule as $date => $rooms)
+            @foreach($dates as $date => $rooms)
                 @php
                     $i++;
                 @endphp
@@ -92,7 +97,7 @@
                                                 <!-- Print each event in agnedule -->
                                                 @foreach($events as $id => $event)
                                                     @php 
-                                                        $id = $event['id'];
+                                                        $id = $event['eventid'];
                                                         $l++;
                                                     @endphp
                                                     <ul style="padding-left:110px !important;" class="list-unstyled timeline-sm"> 
@@ -153,7 +158,7 @@
                                                                         + Add to Personal Agenda
                                                                     </a> --}}
                                                                     @if($event['type'] !== 'PRIVATE_SESSION')
-                                                                        <a href="javascript: void(0);" data-id="{{ $id }}" class="btn btn-danger p-{{$id}} unsubscribe-agenda btn-sm btn-link text-muted font-14   {{ in_array($id, $subscriptions) ? "" : "hidden" }}">
+                                                                        <a href="javascript: void(0);" data-id="{{ $id }}" class="btn btn-danger p-{{$id}} unsubscribe-agenda btn-sm btn-link text-muted font-14   ">
                                                                             <!-- <i class="mdi mdi-bell-off mr-1"></i> -->
                                                                                 - Remove from Personal Agenda
                                                                         </a>
