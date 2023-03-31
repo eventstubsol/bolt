@@ -261,7 +261,7 @@ class UserController extends Controller
                 //         "Content-Encoding" => "gzip"
                 //     ]
                 // )
-                //     ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
+                //     ->post(env('COMET_CHAT_BASE_URL') . '/v3.0/users', [
                 //         'uid' => $user->id,
                 //         'name' => $user->name
                 //     ]);
@@ -406,7 +406,7 @@ class UserController extends Controller
             //             "Accept-Encoding" => "deflate, gzip",
             //             "Content-Encoding" => "gzip"
             //         ])
-            //             ->post(env('COMET_CHAT_BASE_URL') . '/v2.0/users', [
+            //             ->post(env('COMET_CHAT_BASE_URL') . '/v3.0/users', [
             //                 'uid' => $user->id,
             //                 'name' => $user->name
             //             ]);
@@ -419,7 +419,7 @@ class UserController extends Controller
             //                 "Accept-Encoding" => "deflate, gzip",
             //                 "Content-Encoding" => "gzip"
             //             ])
-            //                 ->put(env('COMET_CHAT_BASE_URL') . '/v2.0/users',  ['uidsToActivate' => [$user->id]]);
+            //                 ->put(env('COMET_CHAT_BASE_URL') . '/v3.0/users',  ['uidsToActivate' => [$user->id]]);
             //             $user->isCometChatAccountExist = TRUE;
             //         }
             //         break;
@@ -569,7 +569,7 @@ class UserController extends Controller
             //     "Accept-Encoding"=> "deflate, gzip",
             //     "Content-Encoding"=> "gzip"
             // ])
-            //     ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
+            //     ->post(env('COMET_CHAT_BASE_URL') . "/v3.0/groups", [
             //         "guid" => $booth->id,
             //         "name" => $booth->name,
             //         "type" => "public"

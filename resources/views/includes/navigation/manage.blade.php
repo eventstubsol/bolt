@@ -272,11 +272,11 @@
                     <span> Default  </span>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="{{ route("settings.chat",$id) }}">
                     <span> Chat</span>
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="{{ route("eventee.integrations",$id) }}">
                     <span> Integrations </span>

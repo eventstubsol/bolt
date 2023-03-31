@@ -67,7 +67,7 @@ class BoothController extends Controller
       "apiKey" => env("COMET_CHAT_API_KEY"),
       "appId" => env("COMET_CHAT_APP_ID")
     ])
-      ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
+      ->post(env('COMET_CHAT_BASE_URL') . "/v3.0/groups", [
         "type" => strtolower(env("COMET_CHAT_GROUP_TYPE")),
         "guid" => $booth->id,
         "name" => $booth->name
@@ -88,7 +88,7 @@ class BoothController extends Controller
       "Accept-Encoding"=> "deflate, gzip",
       "Content-Encoding"=> "gzip"
     ])
-      ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
+      ->post(env('COMET_CHAT_BASE_URL') . "/v3.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
     return redirect()->to(route("booth.index"));
   }
 
@@ -124,7 +124,7 @@ class BoothController extends Controller
           "Accept-Encoding"=> "deflate, gzip",
           "Content-Encoding"=> "gzip"
       ])
-          ->put(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id, ["name" => $request->get("name")]);
+          ->put(env('COMET_CHAT_BASE_URL') . "/v3.0/groups/" . $booth->id, ["name" => $request->get("name")]);
 
       //update users
       BoothAdmin::where("booth_id",$booth->id)->delete();
@@ -139,7 +139,7 @@ class BoothController extends Controller
 //      $response = Http::withHeaders([
 //          "apiKey" => env("COMET_CHAT_API_KEY"),
 //          "appId" => env("COMET_CHAT_APP_ID")
-//      ])->get(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members");
+//      ])->get(env('COMET_CHAT_BASE_URL') . "/v3.0/groups/" . $booth->id . "/members");
 
 //      $oldAdmins = array_map(function ($v) {
 //          return $v["uid"];
@@ -150,7 +150,7 @@ class BoothController extends Controller
 //          Http::withHeaders([
 //              "apiKey" => env("COMET_CHAT_API_KEY"),
 //              "appId" => env("COMET_CHAT_APP_ID")
-//          ])->delete(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members/" . $admin);
+//          ])->delete(env('COMET_CHAT_BASE_URL') . "/v3.0/groups/" . $booth->id . "/members/" . $admin);
 //      }
 
 //    $oldAdmins = array_map(function ($v) {
@@ -162,7 +162,7 @@ class BoothController extends Controller
 //      Http::withHeaders([
 //        "apiKey" => env("COMET_CHAT_API_KEY"),
 //        "appId" => env("COMET_CHAT_APP_ID")
-//      ])->delete(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members/" . $admin);
+//      ])->delete(env('COMET_CHAT_BASE_URL') . "/v3.0/groups/" . $booth->id . "/members/" . $admin);
 //    }
 
     // add new admins
@@ -170,7 +170,7 @@ class BoothController extends Controller
 //      "apiKey" => env("COMET_CHAT_API_KEY"),
 //      "appId" => env("COMET_CHAT_APP_ID")
 //    ])
-//      ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
+//      ->post(env('COMET_CHAT_BASE_URL') . "/v3.0/groups/" . $booth->id . "/members", ["admins" => $user_ids]);
 
     return redirect()->to(route("booth.index"));
   }
@@ -184,7 +184,7 @@ class BoothController extends Controller
       "Accept-Encoding"=> "deflate, gzip",
       "Content-Encoding"=> "gzip"
     ])
-      ->delete(env('COMET_CHAT_BASE_URL') . "/v2.0/groups/" . $booth->id);
+      ->delete(env('COMET_CHAT_BASE_URL') . "/v3.0/groups/" . $booth->id);
 
     $booth->delete();
     return redirect()->to(route("booth.index"));

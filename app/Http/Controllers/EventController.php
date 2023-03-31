@@ -186,7 +186,7 @@ class EventController extends Controller
         //     "appId" => env("COMET_CHAT_APP_ID"),
         //     "accept" => "application/json"
         // ])
-        //     ->post(env('COMET_CHAT_BASE_URL') . "/v2.0/groups", [
+        //     ->post(env('COMET_CHAT_BASE_URL') . "/v3.0/groups", [
         //         "guid" => $room,
         //         "name" =>  str_replace("Inc","Inc.",ucfirst(str_replace("_"," ",$room))) ,
         //         "type" => "public"

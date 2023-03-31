@@ -287,7 +287,7 @@ function createGroup($chat_app,$group){
             "Accept-Encoding" => "deflate, gzip",
             "Content-Encoding" => "gzip"
           ])
-            ->post($url . "/v2.0/groups", [
+            ->post($url . "/v3.0/groups", [
               "type" => strtolower(env("COMET_CHAT_GROUP_TYPE")),
               "guid" => $group->id,
               "name" => $group->name
