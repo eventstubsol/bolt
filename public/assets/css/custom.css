@@ -16,7 +16,7 @@ button[disabled] {
 }
 
 .embed-modal .close {
-    top: 0;
+    top: 5%;
     right: 0;
     position: absolute;
     z-index: 2;

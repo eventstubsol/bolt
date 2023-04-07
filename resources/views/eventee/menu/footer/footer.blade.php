@@ -117,7 +117,14 @@
 @endsection
 @section("scripts")
 
-<script src="https://coderthemes.com/ubold/layouts/default/assets/libs/nestable2/jquery.nestable.min.js"></script>
+
+<!-- <script src="https://coderthemes.com/ubold/layouts/default/assets/libs/nestable2/jquery.nestable.min.js"></script> -->
+<script src="https://coderthemes.com/ubold/layouts/default/assets/js/pages/nestable.init.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.js" integrity="sha512-7bS2beHr26eBtIOb/82sgllyFc1qMsDcOOkGK3NLrZ34yTbZX8uJi5sE0NNDYFNflwx1TtnDKkEq+k2DCGfb5w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.css" integrity="sha512-WLnZn2zeYB0crLeiqeyqmdh7tqN5UfBiJv9cYWL9nkUoAUMG5flJnjWGeeKIs8eqy8nMGGbMvDdpwKajJAWZ3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.js" integrity="sha512-82PG9+UohqLAGHC/K7Jxbm8RxGLTcPLiJtC9k/LkLhDHye/rlfls9jSIwqR7Co3776CqUfsD6Fo9ZVWWb9BSZg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.css" integrity="sha512-yOW3WV01iPnrQrlHYlpnfVooIAQl/hujmnCmiM3+u8F/6cCgA3BdFjqQfu8XaOtPilD/yYBJR3Io4PO8QUQKWA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
 
 <script type="text/javascript">
 var final;

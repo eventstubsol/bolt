@@ -35,6 +35,39 @@ class NotificationController extends Controller
 
         $resp = sendGeneralNotification($request->post("title"), $request->post("message"), $request->post("url", NULL), $request->post("roles"));
 
+        // Set the options for the notification
+$options = [
+    'body' => $request->message,
+    'icon' => '/path/to/icon.png',
+    'vibrate' => [100, 50, 100],
+    'data' => [
+        'url' => $request->post("url", NULL),
+    ],
+    'requireInteraction' => true,
+];
+
+// Create the notification
+$notification = [
+    'title' => $request->title,
+    'options' => $options,
+];
+
+// Set the options for the service worker
+$swOptions = [
+    'tag' => 'my-tag',
+    'data' => [
+        'url' => $request->post("url", NULL),
+    ],
+];
+
+// Send the push notification to all subscribed devices
+$users = User::has("devices")->with("devices")->get();
+foreach ($users as $user) {
+    foreach ($user->devices as $device) {
+        $device->notify(new \App\Notifications\PushNotification($notification, $swOptions));
+    }
+}
+
 
         if ($resp->successful()) {
             PushNotification::create([

@@ -174,7 +174,14 @@
 
             .modal-lg,
             .modal-xl {
-                max-width: 1024px
+                max-width: 82vw;
+                max-height: 90vh;
+            }
+            div#lounge_modal {
+                height: 100vh;
+                overflow: hidden;
+                background-color: #0000008c;
+
             }
         }
 

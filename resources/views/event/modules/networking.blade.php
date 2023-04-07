@@ -141,7 +141,7 @@
     }
 
     #networking{
-        background: #01493e;
+        background: {{ $event->primary_color }}; 
         padding-top:100px;
     }
 

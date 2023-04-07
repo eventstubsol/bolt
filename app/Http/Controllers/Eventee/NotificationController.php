@@ -61,6 +61,10 @@ class NotificationController extends Controller
             $location_type = null;
         }
         
+        // New Code
+
+
+        
         // PushNotification::create([
         //     "title" => $request->post("title"),
         //     "url" => $request->post("url", NULL),

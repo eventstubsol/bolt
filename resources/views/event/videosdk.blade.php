@@ -1,97 +1,139 @@
-<!DOCTYPE html>
-<head id="inner_head">
-    <title>Zoom</title>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <style>
-          #videosdk{
-              width: 100vw;
-              height: 100vh;
-          }
-      
-      </style>
-</head>
-<body>
-    <div id="video"></div>
-    
-    <script>
+
+<style>
+    #videosdk {
+        width: 100vw;
+        height: 100vh;
+    }
+</style>
+
+<!-- <div id="video"></div> -->
+
+<script>
     window.addEventListener('DOMContentLoaded', (event) => {
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      //
-      script.addEventListener("load", function (event) {
-        // Initialize the factory function
-        const meeting = new VideoSDKMeeting();
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        //
+        script.addEventListener("load", function(event) {
+            // Initialize the factory function
+            const meeting = new VideoSDKMeeting();
 
-        // Set apikey, meetingId and participant name
-        const apiKey = "1a850e75-02d7-4444-bb30-3e8b5f32d8cb"; // generated from app.videosdk.live
-        const name = "{{Auth::user()->name}}";
+            // Set apikey, meetingId and participant name
+            const apiKey = "47f76aef-bd6e-4741-9fa4-2e1551113a34"; // generated from app.videosdk.live
+            const name = "{{Auth::user()->name}}";
+            const user_type = "{{Auth::user()->type}}";
 
-        const config = {
-          name: name,
-          apiKey: "1a850e75-02d7-4444-bb30-3e8b5f32d8cb",
-          meetingId: "{{$meetingId}}",
+            const permissions = {
+                askToJoin: true, // Ask joined participants for entry in meeting
+                toggleParticipantMic: false, // Can toggle other participant's mic
+                toggleParticipantWebcam: false, // Can toggle other participant's webcam
+                toggleLivestream: false,
+                changeLayout: false,
+                drawOnWhiteboard: false,
+                toggleWhiteboard: false,
+                toggleRecording: false,
+                pin: false,
+                removeParticipant: false,
+                endMeeting: false,
+                // toggleHls: true,
+            };
 
-          containerId: "{{$containerId === 'video_play_area' ? 'video_play_area' : 'session-content-'.$containerId}}",
-          
-          micEnabled: false,
-          webcamEnabled: false,
-          participantCanToggleSelfWebcam: true,
-          participantCanToggleSelfMic: true,
-          // redirectOnLeave: ,
+            // Set permissions for speaker user type
+            if (user_type === "speaker") {
+                permissions.askToJoin = false;
+                permissions.toggleParticipantMic = true;
+                permissions.toggleParticipantWebcam = true;
+                permissions.toggleLivestream = true;
+                permissions.changeLayout = true;
+                permissions.drawOnWhiteboard = true;
+                permissions.toggleWhiteboard = true;
+                permissions.toggleRecording = true;
+                permissions.pin = true;
+                permissions.removeParticipant = true;
+                permissions.participantCanToggleRecording = true;
+                permissions.canCreatePoll = true;
+                permissions.endMeeting = true;
+                permissions.screenShareEnabled = true;
+                permissions.toggleParticipantMode = true;
+                permissions.toggleHls = true;                
+            }
 
-          chatEnabled: true,
-          screenShareEnabled: true,
-          pollEnabled: true,
-          whiteBoardEnabled: true,
-          raiseHandEnabled: true,
+            const config = {
+                name: name,
+                apiKey: "47f76aef-bd6e-4741-9fa4-2e1551113a34",
+                meetingId: "{{$meetingId}}",
 
-          recordingEnabled: true,
-          recordingWebhookUrl: "https://www.videosdk.live/callback",
-          participantCanToggleRecording: false,
+                containerId: "{{$containerId === 'video_play_area' ? 'video_play_area' : 'session-content-'.$containerId}}",
 
-          brandingEnabled: false,
-          brandLogoURL: "",
-          brandName: "",
-          poweredBy: false,
+                micEnabled: false,
+                webcamEnabled: false,
+                participantCanToggleSelfWebcam: true,
+                participantCanToggleSelfMic: true,
+                // redirectOnLeave: ,
 
-          participantCanLeave: false, // if false, leave button won't be visible
+                chatEnabled: true,
+                screenShareEnabled: false,
+                pollEnabled: true,
+                whiteBoardEnabled: true,
+                raiseHandEnabled: true,
 
-          // Live stream meeting to youtube
-          livestream: {
-            autoStart: true,
-            outputs: [
-              // {
-              //   url: "rtmp://broadcast.api.video/s",
-              //   streamKey: "5a7b8009-e0fb-45fa-9e5a-9105ac4efc99",
-              // },
-              // {
-              //   url:"rtmps://rtmp-global.cloud.vimeo.com:443/live",
-              //   streamKey:"084545eb-1fed-41a3-8aaa-f406079a117c",
-              // }
-            ],
-          },
-        permissions: {
-          askToJoin: false, // Ask joined participants for entry in meeting
-          toggleParticipantMic: false, // Can toggle other participant's mic
-          toggleParticipantWebcam: false, // Can toggle other participant's webcam
-          cantoggleLivestream: true,
-          changeLayout: true,
-          drawOnWhiteboard: true,
-          toggleWhiteboard: true,
-          toggleRecording: true,
-          pin: true,
-          removeParticipant: true,
-        },
- 
-        joinScreen: {
-          visible: false, // Show the join screen ?
-          title: "Daily scrum", // Meeting title
-          meetingUrl: window.location.href, // Meeting joining url
-        },
-      };
-      console.log(config);
+                hls: {
+                    enabled: true,
+                    autoStart: true,
+                    theme: "LIGHT", // DARK || LIGHT || DEFAULT
+                },
+                
+
+                recording: {
+                        enabled: true,
+                        webhookUrl: "https://www.videosdk.live/callback",
+                        // awsDirPath: `/meeting-recordings/${meetingId}/`, // Pass it only after configuring your S3 Bucket credentials on Video SDK dashboard
+                        autoStart: false,
+                        theme: "DARK", // DARK || LIGHT || DEFAULT
+
+                        layout: {
+                            type: "SIDEBAR", // "SPOTLIGHT" | "SIDEBAR" | "GRID"
+                            priority: "PIN", // "SPEAKER" | "PIN",
+                            gridSize: 3,
+                        },
+                        },
+                participantCanToggleRecording: false,
+
+                branding: {
+                    enabled: false,
+                    // logoURL:
+                    // "https://dfnvrl6dq2wfj.cloudfront.net/uploads/zS5ITKgKnQ58bHVQGA8YtR3qNEKfSRRSEgwQC9L7.gif", // Add the event event
+                    // name: "Eventsibles",
+                    poweredBy: false,
+                },
+
+                theme: "LIGHT", // DARK || LIGHT || DEFAULT
+
+                participantCanLeave: true, // if false, leave button won't be visible
+
+                // Live stream meeting to youtube
+                livestream: {
+                    autoStart: false,
+                    enabled: true,
+                    outputs: [
+                        // {
+                        //   url: "rtmp://broadcast.api.video/s",
+                        //   streamKey: "5a7b8009-e0fb-45fa-9e5a-9105ac4efc99",
+                        // },
+                        // {
+                        //   url:"rtmps://rtmp-global.cloud.vimeo.com:443/live",
+                        //   streamKey:"084545eb-1fed-41a3-8aaa-f406079a117c",
+                        // }
+                    ],
+                },
+                permissions: permissions,
+
+                joinScreen: {
+                    visible: false, // Show the join screen ?
+                    title: "Daily scrum", // Meeting title
+                    meetingUrl: window.location.href, // Meeting joining url
+                },
+            };
+            console.log(config);
 
         meeting.init(config);
       });
@@ -99,10 +141,8 @@
     //   let doc = document.getElementById("frame").contentDocument;
       
       script.src =
-        "https://sdk.videosdk.live/rtc-js-prebuilt/0.3.3/rtc-js-prebuilt.js";
+        "https://sdk.videosdk.live/rtc-js-prebuilt/0.3.23/rtc-js-prebuilt.js";
       document.getElementsByTagName("head")[0].appendChild(script);
     })
     //   doc.getElementById("inner_head").appendChild(script);
     </script>
-</body>
-</html>

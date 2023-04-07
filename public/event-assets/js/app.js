@@ -203,7 +203,7 @@ function initApp() {
                                 t.parent().find("a").filter(".subscribe-to-event").show();
                          
                                 t.parent().parent().hide();
-                                showMessage("Unsubscribed to session. ", "success");
+                                showMessage("Session removed from your Personal Agenda ", "success");
                             },
                             error: function () {
                                 showMessage("Error occurred while disabling session notification. Please try again later or refresh page.", "error");
@@ -329,7 +329,7 @@ function initApp() {
                     _token: window.config.token,
                 },
                 success: function () {
-                    showMessage("Subscribed to session. You will now get a priority notification few minutes prior to session.", "success");
+                    showMessage("This session was added to your Personal Agenda.", "success");
                     t.hide();
                     console.log({here: t.data("id")})
                     $(".sa-"+t.data("id")).hide();
