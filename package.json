@@ -50,6 +50,6 @@
         "react-tag-input": "^6.4.3",
         "react-toastify": "^6.0.8",
         "util": "^0.12.4",
-        "webpack": "^5.77.0"
+        "webpack": "^5.78.0"
     }
 }
