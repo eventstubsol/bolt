@@ -491,7 +491,7 @@ function initApp() {
                     $("#lounge-session-content").empty();
                 });
             }else{
-                $("#lounge-session-content").empty().append(`<h1>Table Seats Full</h1>`);
+                $("#lounge-session-content").empty().append(`<h1>No Seats Available At The Moment!.</h1><br><h2>Please come back after sometime.</h2>`);
                 // $("#lounge-session-content").append(`<div id="video_play_area"></div>`);
               
             }

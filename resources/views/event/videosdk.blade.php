@@ -34,15 +34,18 @@
                 pin: false,
                 removeParticipant: false,
                 endMeeting: false,
+                screenShareEnabled: false,
+                drawOnWhiteboard: true,
+                toggleWhiteboard: true, 
                 // toggleHls: true,
             };
 
             // Set permissions for speaker user type
-            if (user_type === "speaker") {
+            if (user_type === "speaker" || user_type === "attendee" || user_type === "exhibiter" || user_type === "delegate") {
                 permissions.askToJoin = false;
                 permissions.toggleParticipantMic = true;
                 permissions.toggleParticipantWebcam = true;
-                permissions.toggleLivestream = true;
+                permissions.toggleLivestream = false;
                 permissions.changeLayout = true;
                 permissions.drawOnWhiteboard = true;
                 permissions.toggleWhiteboard = true;
@@ -54,7 +57,7 @@
                 permissions.endMeeting = true;
                 permissions.screenShareEnabled = true;
                 permissions.toggleParticipantMode = true;
-                permissions.toggleHls = true;                
+                permissions.toggleHls = false;                
             }
 
             const config = {
@@ -71,29 +74,29 @@
                 // redirectOnLeave: ,
 
                 chatEnabled: true,
-                screenShareEnabled: false,
+                screenShareEnabled: true,
                 pollEnabled: true,
                 whiteBoardEnabled: true,
                 raiseHandEnabled: true,
 
                 hls: {
-                    enabled: true,
-                    autoStart: true,
+                    enabled: false,
+                    autoStart: false,
                     theme: "LIGHT", // DARK || LIGHT || DEFAULT
                 },
                 
 
                 recording: {
-                        enabled: true,
+                        enabled: false,
                         webhookUrl: "https://www.videosdk.live/callback",
                         // awsDirPath: `/meeting-recordings/${meetingId}/`, // Pass it only after configuring your S3 Bucket credentials on Video SDK dashboard
                         autoStart: false,
                         theme: "DARK", // DARK || LIGHT || DEFAULT
 
                         layout: {
-                            type: "SIDEBAR", // "SPOTLIGHT" | "SIDEBAR" | "GRID"
-                            priority: "PIN", // "SPEAKER" | "PIN",
-                            gridSize: 3,
+                            type: "GRID", // "SPOTLIGHT" | "SIDEBAR" | "GRID"
+                            priority: "SPEAKER", // "SPEAKER" | "PIN",
+                            gridSize: 6,
                         },
                         },
                 participantCanToggleRecording: false,
@@ -113,7 +116,7 @@
                 // Live stream meeting to youtube
                 livestream: {
                     autoStart: false,
-                    enabled: true,
+                    enabled: false,
                     outputs: [
                         // {
                         //   url: "rtmp://broadcast.api.video/s",

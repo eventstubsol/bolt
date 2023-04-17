@@ -287,7 +287,7 @@
             <!-- Import Font Awesome CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
-        HTML code for the full-screen icon
+        <!-- HTML code for the full-screen icon -->
         <a href="#" onclick="toggleFullScreen()">
         <i class="fas fa-regular fa-expand fa-2xs" style="font-size: 25px; font-weight:600; width: 50px;"></i>
         </a>
