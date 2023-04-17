@@ -42,7 +42,7 @@
 
             // Set permissions for speaker user type
             if (user_type === "speaker" || user_type === "attendee" || user_type === "exhibiter" || user_type === "delegate") {
-                permissions.askToJoin = true;
+                permissions.askToJoin = false;
                 permissions.toggleParticipantMic = true;
                 permissions.toggleParticipantWebcam = true;
                 permissions.toggleLivestream = false;
