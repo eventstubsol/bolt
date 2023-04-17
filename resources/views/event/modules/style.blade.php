@@ -174,7 +174,7 @@
 
             .modal-lg,
             .modal-xl {
-                max-width: 82vw;
+                max-width: 70vw;
                 max-height: 90vh;
             }
             div#lounge_modal {
