@@ -80,7 +80,7 @@ class LoungeController extends Controller
         }
         return true;
     }
-    public function removeParticipant(Request $request,$subdomain,NetworkingTable $table, $user)
+    public function removeParticipant(Request $request,$subdomain,$optionalSubdomain='',NetworkingTable $table, $user)
     {
         Participant::where(["table_id"=>$table->id,"user_id"=>$user])->delete();
         return true;
