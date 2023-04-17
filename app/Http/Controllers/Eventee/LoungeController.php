@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\Eventee;
 
 use App\Event;
@@ -11,73 +12,130 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoungeFormRequest;
 
+
 class LoungeController extends Controller
 {
     public function index($id)
     {
-        $tables = NetworkingTable::where("event_id", $id)->orderBy('seats', 'asc')->get();
-        return view("eventee.lounge.list", compact("tables", "id"));
+        $tables = NetworkingTable::where("event_id",$id)->orderBy('seats', 'asc')->get();
+        return view("eventee.lounge.list")->with(compact(["tables","id"]));
     }
-
     public function create($id)
     {
-        return view("eventee.lounge.createForm", compact("id"));
+        return view("eventee.lounge.createForm")->with(compact(["id"]));
     }
 
-    public function store($id, Request $request)
+    public function store($id,Request $request)
     {
+        // if(empty($request->name)){
+        //     flash("Name Field Cannot Be Left Blank")->error();
+        //     return redirect()->back();
+        // }
+        // else if(empty($request->seats)){
+        //     flash("Seats Field Cannot Be Left Blank")->error();
+        //     return redirect()->back();
+        // }
+        
+      
         $network = NetworkingTable::create([
-            "name" => $request->name,
-            "seats" => $request->seats,
-            "meeting_id" => $request->meetingId,
-            "event_id" => $id,
-            "logo" => $request->logo_url ?? null,
+            "name"=>$request->name,
+            "seats"=>$request->seats,
+            "meeting_id"=>$request->meetingId,
+            "event_id"=>$id,
+            "logo"=> isset($request->logo_url)? $request->logo_url: null
         ]);
-        return redirect(route("eventee.lounge.index", $id));
+        $network->save();
+        // dd("done");
+        return redirect(route("eventee.lounge.index",$id));
+        // dd($request->all());
     }
 
-    public function edit(NetworkingTable $table, $id)
+
+    public function edit(NetworkingTable $table,$id)
     {
-        return view("eventee.lounge.edit", compact("table", "id"));
+        return view("eventee.lounge.edit")->with(compact(["table","id"]));
     }
 
-    public function update(Request $request, NetworkingTable $table, $id)
+
+    public function update(Request $request,NetworkingTable $table,$id)
     {
+        // dd($request->all());
         $table->name = $request->name;
         $table->seats = $request->seats;
-        if ($request->has('logo_url')) {
+        if($request->has('logo_url')){
             $table->logo = $request->logo_url;
         }
         $table->save();
-        return redirect(route("eventee.lounge.index", $id));
+        return redirect(route("eventee.lounge.index",$id));
     }
-
-    public function appParticipant(Request $request, $subdomain, NetworkingTable $table, $user)
-    {
-        $participant = Participant::where("table_id", $table->id)->where("user_id", $user)->first();
-        if ($participant) {
-            $participant->update(["user_id" => $user, "updated_at" => Carbon::now("UTC")]);
-        } else {
-            $table->participants()->create([
-                "user_id" => $user
-            ]);
-        }
-        return true;
+    public function appParticipant(Request $request, $subdomain, $table_id, $user)
+{
+    $table = NetworkingTable::findOrFail($table_id);
+    $participant = Participant::where("table_id", $table->id)->where("user_id", $user)->first();
+    if ($participant) {
+        $participant->update(["user_id"=>$user,"updated_at"=>Carbon::now("UTC")]);
+    } else {
+        $table->participants()->create([
+            "user_id"=>$user
+        ]);
     }
+    return true;
+}
 
-    public function removeParticipant(Request $request, $subdomain, NetworkingTable $table, $user)
+    public function removeParticipant(Request $request,$subdomain,NetworkingTable $table, $user)
     {
-        Participant::where(["table_id" => $table->id, "user_id" => $user])->delete();
+        Participant::where(["table_id"=>$table->id,"user_id"=>$user])->delete();
         return true;
     }
 
     public function updateLounge($subdomain)
     {
-        $event = Event::where("slug", $subdomain)->first();
-        Participant::where("updated_at", '<=', Carbon::now("UTC")->subtract('30', 'seconds'))->delete();
+        $event = Event::where("slug",$subdomain)->first();
+        Participant::where("updated_at", '<=', Carbon::now("UTC")->subtract('1','seconds'))->delete();
 
-        $tables =  NetworkingTable::where("event_id", $event->id)->orderBy('seats', 'asc')->with('participants.user')->get();
+        $tables =  NetworkingTable::where("event_id",$event->id)->orderBy('seats', 'asc')->get();
         
-        return view("event.modules.loungeTables", compact("tables"));
+        $tables->load(["participants.user"]);
+        // dd($tables);
+
+        
+        return view("event.modules.loungeTables")->with(compact("tables"));
     }
+
+
+
+    public function destroy($id,NetworkingTable $table)
+    {
+        // dd($table);
+        $table->delete();
+        return true;
+    }
+
+    public function BulkDelete(Request $req){
+        $ids = $req->ids;
+        $totalcount = 0;
+        for($i = 0 ; $i < count($ids); $i++){
+            $page = NetworkingTable::findOrFail($ids[$i]);
+            $page->delete();
+            $pageCount = NetworkingTable::where('id',$ids[$i])->count();
+            if($pageCount > 0){
+                $totalcount++;
+            }
+
+        }
+        if(($totalcount)>0){
+        return response()->json(['code'=>500,"Message"=>"Something Went Wrong"]);
+        }
+        else{
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+        }
+    }
+    public function DeleteAll(Request $req){
+        $tables = NetworkingTable::where('event_id',$req->id)->get();
+        foreach($tables as $table){
+            $table->delete();
+        }
+        return response()->json(['code'=>200,"Message"=>"Deleted SuccessFully"]);
+    }
+
 }

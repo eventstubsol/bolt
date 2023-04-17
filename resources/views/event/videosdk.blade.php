@@ -54,7 +54,7 @@
                 permissions.removeParticipant = true;
                 permissions.participantCanToggleRecording = true;
                 permissions.canCreatePoll = true;
-                permissions.endMeeting = true;
+                permissions.endMeeting = false;
                 permissions.screenShareEnabled = true;
                 permissions.toggleParticipantMode = true;
                 permissions.toggleHls = false;                

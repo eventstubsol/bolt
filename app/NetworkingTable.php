@@ -12,7 +12,7 @@ class NetworkingTable extends Model
 
 
     public function participants(){
-        return $this->hasMany("\App\Participant", "table_id");
+        return $this->hasMany("\App\Participant", "table_id", "id");
     }
 
     public function availableSeats()
