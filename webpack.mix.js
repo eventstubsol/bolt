@@ -16,7 +16,15 @@ const mix = require('laravel-mix');
 // mix.react('resources/js/sessionManager/index.js', 'public/js/session-manager');
 // mix.react('resources/js/sessionModerator/index.js', 'public/js/session-poll-app');
 // mix.react('resources/js/Profile/index.js', 'public/js/profile');
-mix.react('resources/js/Profile/attendeesprofile.js', 'public/js/attendeesprofile');
+mix.js('resources/js/Profile/attendeesprofile.js', 'public/js/attendeesprofile')
+    .react();
+
+    mix.webpackConfig({
+        resolve: {
+          extensions: ['.js', '.jsx', '.json']
+        }
+      });
+      
 
 //Sass
 // mix.sass('resources/sass/custom.scss', 'public/assets/css/custom.css');
