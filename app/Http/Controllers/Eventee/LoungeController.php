@@ -68,7 +68,7 @@ class LoungeController extends Controller
         $table->save();
         return redirect(route("eventee.lounge.index",$id));
     }
-    public function appParticipant(Request $request,$subdomain,NetworkingTable $table, $user)
+    public function appParticipant(Request $request,NetworkingTable $table, $user,$subdomain)
     {
         $participant = Participant::where("table_id",$table->id)->where("user_id",$user)->first();
         if($participant){
@@ -80,7 +80,7 @@ class LoungeController extends Controller
         }
         return true;
     }
-    public function removeParticipant(Request $request,$subdomain,$optionalSubdomain='',NetworkingTable $table, $user)
+    public function removeParticipant(Request $request,NetworkingTable $table, $user,$subdomain)
     {
         Participant::where(["table_id"=>$table->id,"user_id"=>$user])->delete();
         return true;
