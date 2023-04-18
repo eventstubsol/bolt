@@ -520,7 +520,7 @@ function initApp() {
                         setLoungeLinks();
                     }
                 });
-        },30000);
+        },10000);
     }
     let addingParticipant = false;
     let last_add = 0;
