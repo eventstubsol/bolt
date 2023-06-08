@@ -262,6 +262,7 @@ function initApp() {
                 skipped=true;
                 $("#skip_flyin").hide();
                 flyIn.hide();
+                flyIn.get(0).pause(); 
             })
             flyIn.attr('src', flyin);
             // loader.fadeOut()

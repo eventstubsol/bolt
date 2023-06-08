@@ -6,7 +6,7 @@
                     
                     @foreach($page->links as $link)
                         @if($link->flyin)
-                            <video muted class="full-width-videos page_video flyin-{{ $page->name }}" src="{{assetUrl($link->flyin->url)}}"></video>
+                            <video unmuted class="full-width-videos page_video flyin-{{ $page->name }}" src="{{assetUrl($link->flyin->url)}}"></video>
                     @endforeach
                 </div>
             </div>
@@ -18,7 +18,7 @@
 
 <div class="page flyin" id="flyin">
     <div class="video-containers positioned">
-        <video class="full-width-videos" src="" id="flyin_view" autoplay muted></video>
+        <video class="full-width-videos" src="" id="flyin_view" autoplay></video>
     </div>
    
 </div>
